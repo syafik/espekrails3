@@ -1,0 +1,195 @@
+<style>
+b               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<div align="center">
+<%= error_messages_for 'reservation' %>
+</div>
+<!--[form:reservation]-->
+  <table width="95%" border="0" align="center" bgcolor="#FFFFFF">
+  <tr bgcolor="#000000">
+    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT KURSUS </font></b></td>
+    </tr>
+  <tr>
+    <td align="right"><b>Kod/Nama Kursus: </b></td>
+    <td colspan=3>&nbsp;<%= nof{@course_implementation.code}%> <%= "("+nof{@course_implementation.course.name} + ")" %></td>
+  </tr>
+   <tr>
+    <td align="right"><b>Tarikh Mula Kursus: </b></td>
+    <td>&nbsp;<%= nof{@course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %></td>
+    <td align="right"><b>Tarikh Tamat Kursus: </b></td>
+    <td>&nbsp;<%=
+	         if !@course_implementation.date_end
+			 	@course_implementation.date_plan_end.to_formatted_s(:my_format_4)
+			 else
+			 	@course_implementation.date_end.to_formatted_s(:my_format_4)
+			 end
+				-%>    </td>
+  </tr>
+   <tr>
+    <td align="right"><b>Tarikh/Waktu Check In: </b></td>
+    <td>&nbsp;<%= nof{@course_implementation.check_in.to_formatted_s(:my_format_7)} %></td>
+    <td align="right"><b>Tarikh/Waktu Check Out: </b></td>
+    <td>&nbsp;<%= nof{@course_implementation.check_out.to_formatted_s(:my_format_7)} %></td>
+  </tr>
+  <tr>
+    <td align="right"><b>Bil. Peserta Kursus (Lelaki): </b></td>
+    <td colspan=3><%= text_field 'reservation', 'male_total', :value=>@male.size, :maxlength=>4, :size=>4  %></td>
+  </tr>
+
+    <tr>
+    <td align="right"><b>Bil. Peserta Kursus (Perempuan): </b></td>
+    <td><%= text_field 'reservation', 'female_total', :value=>@female.size, :maxlength=>4, :size=>4  %></td>
+  </tr>
+  
+  
+    <tr>
+      <td align="CENTER" colspan="4">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="CENTER" colspan="4">
+	   <fieldset style="width:90%"><legend><b>Penyediaan Makanan</b></legend>
+	    <table width="95%" align="center" border=0>
+		  <tr>
+		    <td>&nbsp;</td>
+		    <td><a style="color: blue; text-decoration: underline;" href="javascript:checkall(0)">None</a>
+		|
+		<a style="color: blue; text-decoration: underline;" href="javascript:checkall(1)">Check all</a></td>
+	      </tr>
+
+<%
+	  	  ds = @course_implementation.date_start
+		  de = @course_implementation.date_end
+		  howlong = (de-ds).to_i+1
+		  @options = Array.new;
+		  @days = Array.new
+		  howlong.times do |i|
+		  	b = ds+i
+			c = dmy(b,"-","/");
+		  	@options.push([c,ds+i]);
+		  end
+		  @days = @options;
+		
+		  @days.each { |day|
+%>
+		  <tr>
+		    <td width="100" align="right"><%=day[0]%>:</td>
+			<td><input type="checkbox" name="hari[<%=day[1]%>][breakfast]" value="1">
+			  Sarapan
+		        <input type="checkbox" name="hari[<%=day[1]%>][morning_tea]" value="1">
+		        Minum Pagi 
+		        <input type="checkbox" name="hari[<%=day[1]%>][lunch]" value="1">
+		        Makan Tengahari
+		        <input type="checkbox" name="hari[<%=day[1]%>][evening_tea]" value="1">
+		        Minum Petang 
+		        <input type="checkbox" name="hari[<%=day[1]%>][dinner]" value="1">
+		        Makan Malam </td>
+		  </tr>
+<%        } %>
+		</table>
+	   </fieldset>	  </td>
+    </tr>
+    
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <td align="right"><b>Bil. Penceramah Kursus: </b></td>
+    <td><%= text_field 'reservation', 'trainer_total', :value=>0, :maxlength=>4, :size=>4  %>
+    <%= hidden_field 'reservation', 'date_plan_start', :value=> @course_implementation.date_plan_start %>
+    <%= hidden_field 'reservation', 'date_plan_end', :value=> @course_implementation.date_plan_end %>
+    <%= hidden_field 'reservation', 'course_implementation_id', :value=> @course_implementation.id %>
+    <%= hidden_field 'reservation', 'course_id', :value=> @course_implementation.course.id %></td>
+  </tr>
+   <tr>
+    <td align="right"><b>Bil. Urusetia: </b></td>
+    <td><%= text_field 'reservation', 'urusetia_total', :value=>2, :maxlength=>4, :size=>4  %></td>
+  </tr>
+   <tr>
+    <td align="right"><b>Bil. VIP: </b></td>
+    <td><%= text_field 'reservation', 'vip_total', :value=>0, :maxlength=>4, :size=>4  %></td>
+  </tr>
+   <tr bgcolor="000000">
+     <td colspan="4" align="CENTER" bgcolor="#FFFFFF">&nbsp;</td>
+   </tr>
+   <tr bgcolor="000000">
+    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PENYELARAS </font></b></td>
+    </tr>
+    <tr>
+    <td align="right"><b>Penyelaras 1: </b></td>
+    <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.name.upcase}%></td>
+  </tr>
+      <tr>
+    <td align="right"><b>No. Telefon: </b></td>
+    <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.phone}%> (PEJ)</td>
+    <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.mobile}%> (HP)</td>
+  </tr>
+      <tr>
+    <td align="right"><b>Penyelaras 2: </b></td>
+    <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.name.upcase}%></td>
+  </tr>
+      <tr>
+    <td align="right"><b>No. Telefon: </b></td>
+    <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.phone}%> (PEJ)</td>
+    <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.mobile}%> (HP)</td>
+  </tr>
+  
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right"><b>Ditempah Oleh :</b></td>
+    <td><select id="ditempah_oleh" name="reservation[staff_id]" style="">
+      <option value="0">Sila Pilih</option>
+      <% @coordinators.each do |c| %>
+      <option value="<%= c.id %>"
+         	<%= ' selected' if c.id == @coordinator.to_i %>> <%= c.profile.name.upcase %> </option>
+      <% end %>
+    </select></td>
+    <td align="RIGHT">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right"><b>Tarikh Tempahan:</b></td>
+    <td>&nbsp;
+      <input id="day_check_in" type=text name="day_check_in" value="<%=@day%>" size=2 maxlength=2 >
+-
+<input id="month_check_in" type=text name="month_check_in" value="<%=@month%>" size=2 maxlength=2 >
+-
+<input id="year_check_in" type=text name="year_check_in" value="<%=@year%>" size=4 maxlength=4></td>
+    <td align="RIGHT">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</BR>
+<!--[eoform:reservation]-->
+
+<script src="/javascripts/form_validator.js"></script>
+
+<script>
+function checkall(val) {
+	n = document.forms[0].elements.length
+	for (i=0;i<n;i++) {
+		obj = document.forms[0].elements[i];
+		if (obj.type == "checkbox")
+			obj.checked = val;
+			
+	}
+}
+
+function GoSubmit(df) {
+
+	if (!checkSelection(strRegExp,document.getElementById('ditempah_oleh'),'Pegawai yang membuat tempahan')) return false;	
+
+	return true;
+}
+
+
+</script>
+

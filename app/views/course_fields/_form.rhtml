@@ -1,0 +1,29 @@
+<%= error_messages_for 'course_field' %>
+
+<!--[form:state]-->
+  <table width="90%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td align="right"><strong>Bahagian :</strong></td>
+      <td>&nbsp;
+      <select name="course_field[course_department_id]">
+      <% @course_departments.each do |course_department| %>
+        <option value="<%= course_department.id %>"
+        <%= ' selected' if course_department.id == @course_field.course_department_id %>> <%= course_department.description %> </option>
+        <% end %>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Kod :</strong></td>
+      <td>&nbsp;
+        <%= text_field 'course_field', 'code', :size => 20, :maxlength => 20  %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Nama :</strong></td>
+      <td>&nbsp;
+        <%= text_field 'course_field', 'description', :size => 30, :maxlength => 100  %></td>
+    </tr>
+  </table>
+  
+<!--[eoform:state]-->
+

@@ -1,0 +1,4 @@
+<h1><%=@facility.name%></h1>
+<%@facility_reservations.each do |facility_reservation|%>
+	<%=facility_reservation.date_from%> <br/>
+	<%end%>

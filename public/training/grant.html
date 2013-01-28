@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>PostgreSQL Training INSTUN</title>
+	
+	<meta name="DESCRIPTION" content="PostgreSQL Administration training information. For over a decade, OTG's instructors have been developing, deploying, and training others to use IT solutions that promote openness and interoperability. Click now for more about PostgreSQL Administration today.">
+	<meta name="keywords" content="training">	<link rel="stylesheet" type="text/css" href="course_outline_files/styles-otg.css">
+	<link rel="SHORTCUT ICON" href="http://www.otg-nc.com/favicon.ico">
+    <link rel="alternate" title="OTG RSS" href="http://www.otg-nc.com/rss20.php" type="application/rss+xml">
+	<script src="course_outline_files/urchin" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-226179-1";
+urchinTracker("/training-courses/coursedetail.php-40");
+</script>
+<style type="text/css">
+<!--
+.style1 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 18px;
+}
+.style7 {font-size: 12px}
+-->
+</style>
+</head> 
+
+
+<body><center>
+<table class="maintable" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="42" width="18%"><img src="course_outline_files/training-photo-1.jpg" alt="" border="0" height="42" width="146"></td>
+<td height="42" colspan="2" valign="middle" class="training-header"><span class="style1"> PostgreSQL Training for INSTUN </span></td>
+</tr>
+<tr>
+<td class="leftcolumn"><img src="course_outline_files/training-photo-2.jpg" alt="" border="0" height="111" width="146">
+   <table cellpadding="0" cellspacing="0" height="100%" width="100%">
+   <tbody><tr>
+   <td class="leftinnercolumn">
+   <p><b><a href="index.html">PostgreSQL</a></b><br>
+   </p>
+   <p></p>   </td></tr></tbody></table></td>
+<td class="maintext"><b><h2 class="header">&nbsp;</h2>
+</b><b></b>
+<table width="100%" border="0" cellspacing="2" cellpadding="0" style="width:inherit">
+  <tr>
+    <td><p><strong>Privileges</strong></p>
+      <div>
+        <p> When an object is created, it is assigned an owner. The owner is  normally the role that executed the creation statement. For most kinds  of objects, the initial state is that only the owner (or a superuser)  can do anything with the object. To allow other roles to use it, <em>privileges</em> must be    granted.    There are several different kinds of privilege: SELECT,    INSERT, UPDATE, DELETE,    RULE, REFERENCES, TRIGGER,    CREATE, TEMPORARY, EXECUTE,    and USAGE. For more    information on the different types of privileges supported by    PostgreSQL, see the <a href="http://www.postgresql.org/docs/8.1/static/sql-grant.html"><em>GRANT</em></a> reference page. </p>
+        <p> To assign privileges, the GRANT command is    used. So, if joe is an existing role, and    accounts is an existing table, the privilege to    update the table can be granted with</p>
+        <pre class="style7">GRANT UPDATE ON accounts TO joe;</pre>
+        <p> The special name PUBLIC can    be used to grant a privilege to every role on the system. Writing    ALL in place of a specific privilege specifies that all    privileges that apply to the object will be granted. </p>
+        <p> To revoke a privilege, use the fittingly named <a href="http://www.postgresql.org/docs/8.1/static/sql-revoke.html"><em>REVOKE</em></a> command:</p>
+        <pre class="style7">REVOKE ALL ON accounts FROM PUBLIC; </pre>
+        <p> The special privileges of an object's owner (i.e., the right to modify  or destroy the object) are always implicit in being the owner, and  cannot be granted or revoked. But the owner can choose to revoke his  own ordinary privileges, for example to make a table read-only for  himself as well as others. </p>
+        <p> An object can be assigned to a new owner with an ALTER  command of the appropriate kind for the object. Superusers can always  do this; ordinary roles can only do it if they are both the current  owner of the object (or a member of the owning role) and a member of  the new owning role. </p>
+      </div>      <p><br>
+        <br>
+      </p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="30%" align="left"><a href="db_management.html">&laquo;Previous</a></td>
+    <td width="30%" align="center"><a href="index.html"></a></td>
+    <td width="30%" align="right"><a href="backup.html">Next&raquo;</a></td>
+  </tr>
+</table>
+</td>
+<td class="training-rightcolumn">
+<p align="center"> <img src="course_outline_files/PostgreSQLlogo.gif"> </p>
+<p align="center">
+
+</p>
+</td>
+</tr>
+<tr><td colspan="3" align="center" valign="middle" class="copyright-cell">
+<p class="smalltext" align="center">
+<br>
+<script type="text/javascript"><!--
+google_ad_client = "pub-6396164641827107";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</p>
+
+</td></tr>
+</tbody></table><br>
+
+</center>
+
+
+</body></html>

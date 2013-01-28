@@ -1,0 +1,68 @@
+<form name="list_form">
+<%if @course_implementation%>
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">
+	  <%=@course_implementation.course.name.upcase%>
+	  &nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+    </tr>
+ </table>
+ <br>
+<%end%>
+
+  <div width="95%" style="background-color:#FFFFFF">
+  <table class="seven" width="95%" border="<%=list_border%>" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <!--td class="el" width="2%" valign="top" align="center"><font color="#FFFFFF"><input type="checkbox" name="check_all" value="0" onclick="checkAll(document.list_form)"></font></td-->
+      <td class="el" width="2%" valign="top"  border="10">&nbsp;</td>
+      <!--td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama Pemohon </a></strong></td-->
+      <!--td class="el" width="8%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('nric','<%= "DESC" if (@orderby=="nric" && @arrow=="ASC") %>')">Gred Jawatan </a></strong></td-->
+      <td class="el" width="" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Kod</strong></font></td>
+      <td class="el" width="40%" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Nama Kursus</strong></font></td>
+      <td class="el" align="center" <%=list_font_size%>><strong><a style="color: white" href="javascript: findAndSortWith('date_plan_start','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')">Tarikh Mula</a></strong></td>
+      <td class="el" align="center" <%=list_font_size%>><strong><a style="color: white" href="javascript: findAndSortWith('date_plan_end','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')">Tarikh Akhir</a></strong></td>
+      <td class="el" align="center" <%=list_font_size%>><strong><a style="color: white" href="javascript: findAndSortWith('comp_name','<%= "DESC" if (@orderby=="comp_name" && @arrow=="ASC") %>')">Tarikh Mohon </a></strong></td>
+      <td class="el" align="center" <%=list_font_size%>><strong><a style="color: white" href="javascript: findAndSortWith('comp_name','<%= "DESC" if (@orderby=="comp_name" && @arrow=="ASC") %>')">Status</a></strong></td>
+    </tr>
+
+<%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#fffffE" if (even == false)
+  even = !even
+  
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  if (student.profile.employments[0] && student.profile.employments[0].job_profile)
+  	jawatan = student.profile.employments[0].job_profile.job_grade
+    pejabat = student.profile.employments[0].place.name if student.profile.employments[0].place
+  else
+    jawatan = ""
+	pejabat = ""
+  end
+    
+  show_menu = "show_with_no_restraint"
+  show_menu = "show" if student.student_status_id == 5
+  onmousedown="menuLayers.#{show_menu}('popmenu', '/user_applications', '#{student.id}', '#{student.profile.name.upcase}', event)"
+%>
+
+    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="<%=onmousedown%>">
+      <!--td class="el" align="center"><input type="checkbox" name="course_application_ids[]" value="<%=student.id%>"></td-->
+      <td class="el" height="20" style="font-size: 10px">&nbsp;<%= i.to_s %>.</td>
+      <!--td class="el" ><%=h student.profile.name.upcase %></td-->
+      <!--td class="el" align="center"><%=h jawatan %></td-->
+      <td class="el" align="left" <%=list_font_size%>><%= student.course_implementation.code %></td>
+      <td class="el" align="left" <%=list_font_size%>><%= student.course_implementation.course.name.upcase %></td>
+      <td class="el" align="center" <%=list_font_size%>><%= student.course_implementation.date_plan_start.to_formatted_s(:my_format_4) %></td>
+      <td class="el" align="center" <%=list_font_size%>><%= student.course_implementation.date_plan_end.to_formatted_s(:my_format_4) %></td>
+      <td class="el" align="center" <%=list_font_size%>><%= student.date_apply.to_formatted_s(:my_format_4) if student.date_apply %></td>
+      <td class="el" align="center" <%=list_font_size%>><%= student.student_status.description if student.student_status %></td>
+    </tr>
+<% end %>
+  </table>
+  </div>
+</form>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>

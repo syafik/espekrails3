@@ -1,0 +1,74 @@
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 190;
+    $('popmenu').innerHTML = "<ul>" + 
+                             "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat Permohonan</a>" +
+                             //"<li><a target=\"blank\" href=\""  + controller + "/cetak_surat_tawaran_user/" + objid + "\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
+			                 "<hr size=1>" +
+			                 "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Pengesahan Kehadiran</font>" +
+			                 "<li><a href=\"javascript: cetakSuratTawaran(" + objid + ")\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
+					        "</ul>"
+     
+}
+
+function rewritePopupContentNoRestraint(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" + 
+                             "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat Permohonan</a>" +
+                             //"<li><a target=\"blank\" href=\""  + controller + "/cetak_surat_tawaran_user/" + objid + "\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
+			                 "<hr size=1>" +
+			                 "<li><a href=\"javascript: sahHadirSelected(" + objid + ")\">&nbsp;&nbsp;Pengesahan Kehadiran</a>" +
+			                 "<li><a href=\"javascript: cetakSuratTawaran(" + objid + ")\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
+					       "</ul>"
+     
+}
+
+</script>
+
+<script>
+
+function sahHadirSelected(student_id) {
+  location.href = "/user_applications/akuan_sah_hadir/?course_application_ids%5B%5D=" + student_id
+}
+
+function cetakSuratTawaran(student_id) {
+	MM_openBrWindow( "/user_applications/print_offer_letter/" + student_id + "?course_application_ids%5B%5D=" + student_id,'','scrollbars=yes,width=800,height=600')
+}
+
+
+function checkAll(df) {
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       df.elements[i].checked = df.check_all.checked
+     } 
+  }
+}
+
+function goCetak(ctr,act,objid) {
+	MM_openBrWindow(ctr + '/' + act + '/' + objid,'','scrollbars=yes,width=800,height=600')
+}
+</script>
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+	    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI PENGESAHAN KEHADIRAN</font></b></td>
+    </tr>
+ </table>
+  <br>
+<%#= render :partial => 'my_header'%>
+<%= render :partial => 'offered'%>
+
+
+<!-- incremental search initial layer----->
+<div id="label" style="clear: both; visibility: hidden">Bonner</div>

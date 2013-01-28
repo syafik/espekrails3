@@ -1,0 +1,106 @@
+<form action="/report/kursus_online">
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="100%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI PERMOHONAN KURSUS</font></b></td>
+    </tr>
+  </table>
+     <div align="center">
+        <%= flash[:notice] %></div>
+  <br>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center">Tarikh Mohon Kursus:
+          <%= calendar_field 'report1', '',
+     { :class => 'date',
+        :value => @report_date_from,
+        :field_title => 'report1',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+
+
+    &nbsp;&nbsp;Hingga:
+          <%= calendar_field 'report2', '',
+     { :class => 'date',
+        :value => @report_date_to,
+        :field_title => 'report2',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+
+        </td>
+	    </tr>
+	    <tr>
+	    <td align="center">Pilihan:
+        <select name="course_department_id">
+          <option value="">Pilih Bahagian</option>
+          <% @course_departments.each do |cf| %>
+          <option value="<%= cf.id %>"
+         	<%= ' selected' if cf.id == params[:course_department_id].to_i %>> <%= cf.description.upcase %> </option>
+          <% end %>
+        </select>
+<script>
+function goSubmit() {
+	if ( $('report1_').value == "" && $('report2_').value == "") {
+		alert("Sila masukkan tarikh");
+		$('report1_').focus()
+		return false;
+	}
+	if ( $('report1_').value == "") {
+		alert("Sila masukkan tarikh mula");
+		$('report1_').focus()
+		return false;
+	}
+	if ( $('report2_').value == "") {
+		alert("Sila masukkan tarikh akhir");
+		$('report2_').focus()
+		return false;
+	}
+	
+	document.forms[0].submit();
+}
+</script>
+        <input type="button" value="Papar" onclick="goSubmit()">
+      </td>
+    </tr>
+  </table>
+    </form>
+  <br>
+    <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999" >
+      <td align="center"><font color="#FFFFFF"><strong>Bil</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Nama</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Gred</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Jabatan</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Kod Kursus</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Nama Kursus</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Tarikh Mohon</strong></font></td>
+    </tr>
+<%
+i = 0;
+even = true;
+
+for student in @students
+        i = i + 1
+        bgclr = "#CCCCFF" if (even == true)
+        bgclr = "#FFFFFF" if (even == false)
+        even = !even
+%>
+<tr bgcolor="<%=bgclr%>" class="list">
+        <td align=left valign=top><%= i.to_s %></td>
+        <td align=left valign=top><%=h nof{student.personal_name.upcase} %></td>
+        <td align=left><%=h nof{student.profile.employments[0].job_profile.job_grade} %>&nbsp;</td>
+	    <td align=left valign=top><%=h nof{student.profile.employments[0].place.name} %>&nbsp;</td>
+        <td align=left valign=top><%=h nof{student.course_implementation.code} %>&nbsp;</td>
+        <td align=left valign=top><%=h nof{student.course.name} %>&nbsp;</td>
+        <td align=left valign=top><%=h nof{student.date_apply.to_formatted_s(:my_format_4)} %>&nbsp;</td>
+        </tr>
+ <% end %>

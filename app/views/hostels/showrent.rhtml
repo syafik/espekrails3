@@ -1,0 +1,130 @@
+<form action="/hostels/iwannarent/<%=@profile.id%>">
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">PILIHAN BILIK UNTUK CHECK IN </font></strong></td>
+    </tr>
+ </table>
+  <br />
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1">
+    <tr>
+      <td align="right"><strong>No KP :<span class="blockintro">&nbsp;</span></strong></td>
+      <td><span class="blockintro"><%=nof{@profile.ic_number} %> </span></td>
+    </tr>
+    <tr>
+      <td width="30%" align="right"><strong>&nbsp;Nama Penuh :<span class="blockintro">&nbsp;</span></strong></td>
+      <td colspan="3"><span class="blockintro"><%=nof{@profile.name.upcase} %> </span></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Jantina :<span class="blockintro">&nbsp;</span></strong></td>
+      <td width="20%"><span class="blockintro"><%=h nof{@profile.gender.description} %> </span></td>
+      <td align="RIGHT" width="10%">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Agama :<span class="blockintro">&nbsp;</span></strong></td>
+      <td width="20%"><span class="blockintro"><%=h nof{@profile.religion.description} %> </span></td>
+      <td align="RIGHT" width="10%">&nbsp;</td>
+      <td align="right"><strong>Keturunan :<span class="blockintro">&nbsp;</span></strong></td><td>&nbsp;</td>
+      <td width="20%"><span class="blockintro"><%=h nof{@profile.race.description} %> </span></td>
+      <td align="RIGHT" width="10%">&nbsp;</td>
+      <td>&nbsp;</td>
+   </tr>
+    <tr>
+      <td align="right"><strong>Alamat :<span class="blockintro"></span></strong></td>
+      <td><span class="blockintro"><%=nof{@profile.address1.upcase}%></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>(Surat Menyurat):<span class="blockintro"></span></strong></td>
+      <td><span class="clockintro"><%=nof{@profile.address2.upcase}%></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td><span class="clockintro"><%=nof{@profile.address3.upcase}%></td>
+    </tr>
+      <td align="right"><strong>Negeri :<span class="blockintro">&nbsp;</span></strong></td>
+      <td width="20%"><span class="blockintro"><%=h nof{@profile.state.description} %> </span></td>
+      <td align="RIGHT" width="10%">&nbsp;</td>
+  </table>
+ 
+  <table width="70%" align="center">
+   <tr>
+<%
+@myroom = Hostel.find_by_sql("select * from hostel_profiles where profile_id=#{@profile.id}")
+@myroom = Hostel.find(@myroom.first.hostel_id)
+%>
+    <td style="color: blue" align="CENTER">Penyewa telah didaftarkan di bilik: 
+	<%=@myroom.block.description%>-
+	<%=@myroom.level%>-
+	<%=@myroom.room%>
+	<br />
+	Sila klik pada nombor bilik untuk menukar bilik. </td>
+   </tr>
+  </table>
+
+
+
+
+
+<hr size="1" width="70%">  
+  
+  <br />
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+      <td align="center"> <a href="new_one"></a>Blok : 
+          <select name="block_id" onchange="document.forms[0].submit()">
+	        <option value="">Sila Pilih</option>
+            <% @hostel_blocks.each do |b| %>
+            <option value="<%= b.id %>"
+         	<%= ' selected' if b.id == params[:block_id].to_i %>> <%= b.description.upcase %> </option>
+            <% end %>
+          </select>
+      </td>    
+  </tr>
+  </table>
+
+<% if @hostel_block.max_room_by_level < 30%>  
+<%= render :partial => 'list_chkin'%>
+<% else %>
+<%= render :partial => 'list_above30_chkin'%>
+<% end %>
+  
+  <br>
+  <center>
+  <div id="room_properties" style="width: 95%;background:#FFFFFF; font-weight:bold">
+&nbsp;  </div>
+  </center>
+
+<div id="bapa_kertas" align="center" style="width: inherit; visibility:hidden">
+<IFRAME id="kertas" SRC="/hostels/blank" TITLE="The Famous Recipe" width="95%" frameborder="0">
+<!-- Alternate content for non-supporting browsers -->
+<H2>The Famous Recipe</H2>
+<H3>Ingredients</H3>
+...
+</IFRAME>
+</div>
+<script>
+function checkThatGuyIn(lvl,room,room_gdr,profile_gdr) {
+	url = "/hostels/change_room_rent/<%=@profile.id%>?profile_id=<%=@profile.id%>&block_id=<%=@hostel_block.id%>" + 
+	      "&level=" + lvl +  
+	      "&room="  + room  
+		  
+	if (room_gdr != profile_gdr) {
+		if (confirm("Peserta tidak boleh tukar bilik di blok ini. Teruskan?")) {
+			location.href = url
+		}
+	}
+	else {
+		if (confirm("Adakah anda pasti untuk membuat penukaran bilik?")) {
+			location.href = url
+		}
+	}
+}
+
+function hide() {
+	$('room_properties').style.visibility = "hidden"
+	$('bapa_kertas').style.visibility = "hidden"
+}
+</script>
+</form>
+
+<div id="popmenu" class="menu"></div>

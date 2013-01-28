@@ -1,0 +1,28 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">TAMBAH TANDATANGAN </font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th>
+	<%= link_to 'Kembali', :action => 'list_popup' %> ke senarai Tandatangan
+    </th>
+    </tr>
+  </table>
+  <BR>
+
+
+<%#= start_form_tag :action => 'create' , '',:enctype=>"multipart/form-data"%>
+<!--form action="create" method="post" enctype="multipart/form-data"-->
+<%=start_form_tag({:action=>'create_popup'}, :multipart=>true)%>
+
+  <%= render :partial => 'form' %>
+  <BR>
+  <div align=center>
+  <%= submit_tag "Simpan" %>
+  </div>
+</form>
+

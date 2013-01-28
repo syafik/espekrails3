@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en_US">
+<head>
+<title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link rel="StyleSheet" href="/stylesheets/global.css" type="text/css" />
+<link rel="StyleSheet" href="/stylesheets/dtree.css" type="text/css" />
+<script type="text/javascript" src="/javascripts/dtree.js"></script>
+<style>
+body {
+	background-color: #FFFFFF;
+	}
+</style>
+</head>
+	
+<body bgcolor="#FFFFFF">	
+<br>
+<div align="center"><img src="/images/menu3.jpg"></div>
+<%= render :partial => 'header'%>
+
+<script type="text/javascript">
+		<!--
+
+		d = new dTree('d');
+		
+		d.config.useCookies=false;
+		d.config.useLines=false;
+		
+		d.icon.root = "/images/menutree/home.gif";
+		//d.icon.root = "/images/menutree/kpmlogo.gif";
+		d.config.target = "main";
+		
+		d.add(60, 0, 'Sijil', '', 'Pengendalian Kursus','main','/images/menutree/folder.gif');
+		d.add(68, 60, 'Pengesahan Tempahan', '/course_management/sijil_select_course?next_action=edit_tempah_sijil', 'Pengesahan Tempahan Sijil','main');
+		d.add(69, 60, 'Jana Sijil', '/course_management/sijil_select_course?next_action=cetak_sijil', 'Cetakan Sijil','main');
+
+		d.add(290,0,'Lihat Profil','/profiles/view','','main','/images/menutree/page.gif');
+		d.add(0,-1,' eSPEK : Pegawai Sijil');
+		
+		document.write(d);
+		d.o(0)
+
+		//-->
+	</script>
+
+</div>
+
+<br>
+<div align="center">
+| <a target="main" href="/profiles/edit_password/<%= session[:user].profile.id %>">Tukar Kata Laluan</a> |
+</div>
+
+<br>
+</body></html>

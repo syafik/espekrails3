@@ -1,0 +1,144 @@
+<script type="text/javascript">
+function goSubmit() {
+        if ( $('report1_').value == "" && $('report2_').value == "") {
+                alert("Sila masukkan tarikh");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report1_').value == "") {
+                alert("Sila masukkan tarikh mula");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report2_').value == "") {
+                alert("Sila masukkan tarikh akhir");
+                $('report2_').focus()
+                return false;
+        }
+
+        document.forms[0].submit();
+}
+</script>
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">STATISTIK KUTIPAN YURAN MENGIKUT BAHAGIAN </font></strong></td>
+    </tr>
+ </table>
+  <style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form">
+  <br />
+
+  <div width="95%" style="background: #FFFFFF">
+  <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+  <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">Tarikh Kursus: <%= calendar_field 'report1', '',
+     { :class => 'date',
+        :value => @report_date_from,
+        :field_title => 'report1',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %> &nbsp;&nbsp;Hingga: <%= calendar_field 'report2', '',
+     { :class => 'date',
+        :value => @report_date_to,
+        :field_title => 'report2',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+          <input name="button" type="button" value="Papar" onclick="goSubmit()">
+      </td>
+    </tr>
+  </table>
+  <br />
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Bahagian</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Bilangan<br />
+        Peserta
+</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Jumlah<br />
+        Yuran      </strong></font></td>
+    </tr>
+
+<%
+#sums
+sum_bil = 0
+sum_ang = 0
+sum_had = 0
+sum_yuran = 0
+
+for department in @course_departments
+bgclr = 'white'
+%>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">&nbsp;<%=department.description%></td>
+
+<%
+
+#bil kursus
+sql = "SELECT count(id) FROM vw_ci WHERE course_department_id=#{department.id} AND date_start>='#{@p}' AND date_end<='#{@q}'"
+@cis = CourseImplementation.find_by_sql(sql)
+sum_bil = sum_bil + @cis.first.count.to_i
+
+#anggaran peserta
+sql = "SELECT count(id) FROM vw_ci_ca WHERE course_department_id=#{department.id} AND date_start>='#{@p}' AND date_end<='#{@q}'"
+@cicas = CourseApplication.find_by_sql(sql)
+sum_ang = sum_ang + @cicas.first.count.to_i
+
+#kehadiran
+sql = "SELECT count(id) FROM vw_ci_ca WHERE course_department_id=#{department.id} AND student_status_id IN(5,8) AND date_start>='#{@p}' AND date_end<='#{@q}'"
+@hadir = CourseApplication.find_by_sql(sql)
+sum_had = sum_had + @hadir.first.count.to_i
+
+#jumlah yuran
+sql = "SELECT sum(fee_amount) FROM vw_ci_ca WHERE course_department_id=#{department.id} AND student_status_id IN(5,8) AND date_start>='#{@p}' AND date_end<='#{@q}'"
+@jumlah_yuran = CourseApplication.find_by_sql(sql)
+sum_yuran = sum_yuran + @jumlah_yuran.first.sum.to_i
+
+%>
+      <td class="el" align="center">&nbsp;<%=@hadir.first.count%></td>
+      <td class="el" align="center">&nbsp;<%=@jumlah_yuran.first.sum%></td>
+    </tr>
+<% end %>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20" align="RIGHT"><strong>Jumlah:</strong></td>
+      <td class="el" align="center"><%=sum_had%></td>
+      <td class="el" align="center"><%=f2(sum_yuran.to_f)%></td>
+    </tr>
+  </table>
+  </div>
+  <div align="center"><br />
+  </div>
+</form>
+
+<!-- popup menu initial layer----->
+<div id="popmenu" class="menu"></div>
+
+
+<script>
+
+function a(id) {
+	MM_openBrWindow('/evaluations/user_hyouka?klm=1&ca_id='+id,'','scrollbars=yes,width=800,height=700')
+}
+function b(id) {
+	MM_openBrWindow('/evaluations/user_hyouka_answer?klm=1&ca_id='+id,'','scrollbars=yes,width=800,height=700')
+}
+
+</script>

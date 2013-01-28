@@ -1,0 +1,553 @@
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<style type="text/css">	
+<% require 'date' %>
+/* These are the style specifications for the menu layers.  
+   Set width to get more browsers corporation  */
+div.menu  { 
+  position:absolute; visibility:hidden; 
+  width:110px; left:0; top:0; z-index:500; 
+  font: 12px/1.3 verdana, arial, helvetica, sans-serif;
+  font-size:12px; 
+  background-color: #e6e6e6; color:#000;
+  border: 2px solid;	
+  border-color: #f7faff #99a #99a #f7faff; 
+  z-index:500;
+}
+
+/* Style specifications for menu items and links  */
+div.menu ul { margin:0; padding:0 }
+/* Need to set padding of at least one pixel or ie sets very large margin */
+div.menu ul li { 
+  padding:1px; margin:0;
+  list-style-type:none
+  }
+
+/* Set display block and position relative so clicks on list items activate links  */  
+div.menu a { 
+  cursor:default;
+  padding:.1em .2em; margin:0; 
+  background-color:transparent; 
+  display:block; position:relative; 
+  text-decoration:none 
+  }
+  
+div.menu a:link { color:#33b }
+div.menu a:visited { color:#339 }
+div.menu a:hover { color:#fff; background-color:#338; text-decoration:none  }
+
+</style>
+
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+  function launchCenter(url) {
+    var NEW_WIN = null;
+    var str = "height=" + 350 + ",innerHeight=" + 450;
+    //var str = "height=" + 300 + ",innerHeight=" + 300;
+    str += ",width=" + 450 + ",innerWidth=" + 550;
+    if (window.screen) {
+      var ah = screen.availHeight - 20;
+      var aw = screen.availWidth - 10;
+
+      var xc = (aw - 300) / 2;
+      var yc = (ah - 300) / 2;
+
+      str += ",left=" + 290 + ",screenX=" + xc;
+      str += ",top=" + 200 + ",screenY=" + yc;
+
+  }
+  str += ",directories=no,status=no,scrollbars=yes,resizable=no,menubar=no";
+  //NEW_WIN = window.open(url, '_blank', 'width=450, height=180', name, str);
+  NEW_WIN = window.open(url, '_blank', 'width=900, height=500', name, str);
+  NEW_WIN.location.href = url;
+}
+
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+
+</script>
+
+<script src="/javascripts/popupmenu/isohunt.js" type="text/javascript"></script>
+
+<script src="/javascripts/popupmenu/dw_viewport.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*************************************************************************
+  This code is from Dynamic Web Coding at http://www.dyn-web.com/
+  Copyright 2003 by Sharon Paine 
+  See Terms of Use at http://www.dyn-web.com/bus/terms.html
+  regarding conditions under which you may use this code.
+  This notice must be retained in the code as is!
+*************************************************************************/
+
+var menuLayers = {
+  timer: null,
+  activeMenuID: null,
+  offX: 4,   // horizontal offset 
+  offY: 6,   // vertical offset 
+
+  show: function(id, controller, objid, objname, e) {
+    var mnu = document.getElementById? document.getElementById(id): null;
+    if (!mnu) return;
+    this.activeMenuID = id;
+    if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
+    if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
+    viewport.getAll();
+
+    //objid = controller + "/" + action + "/" + objid
+
+document.getElementById('popmenu').innerHTML = "<ul><li><a href=\"" + controller + "/show/" + objid + 
+                                               "\">&nbsp;&nbsp;View Detail</a><li><a href=\""  + controller + "/edit/" + objid +
+					       "\">&nbsp;&nbsp;Edit</a><li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a></ul>"
+//document.getElementById('jongos').innerHTML = "<a>ssssssss</a>"
+    this.position(mnu,e);
+  },
+  
+  hide: function() {
+    this.clearTimer();
+    if (this.activeMenuID && document.getElementById) 
+      this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
+  },
+  
+  position: function(mnu, e) {
+    var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
+    var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
+    
+    if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
+      x = x - mnu.offsetWidth - this.offX;
+    else x = x + this.offX;
+  
+    if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
+      y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
+    else y = y + this.offY;
+    
+    mnu.style.left = x + "px"; mnu.style.top = y + "px";
+    this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
+  },
+  
+  mouseoutCheck: function(e) {
+    e = e? e: window.event;
+    // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
+    var mnu = document.getElementById(menuLayers.activeMenuID);
+    var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
+    if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
+  },
+  
+  // returns true of oNode is contained by oCont (container)
+  contained: function(oNode, oCont) {
+    if (!oNode) return; // in case alt-tab away while hovering (prevent error)
+    while ( oNode = oNode.parentNode ) 
+      if ( oNode == oCont ) return true;
+    return false;
+  },
+
+  clearTimer: function() {
+    if (menuLayers.timer) clearTimeout(menuLayers.timer);
+  }
+  
+}
+</script>
+
+<script>
+function confirmAndGo(url, objname) {
+	if (confirm("Are you sure to delete " + objname + "?")) {
+		location = url
+	}
+	
+}
+</script>
+<%
+cid = params[:id]  #ambil data dari link_to
+@cid = cid.to_s
+%>    
+
+<form action="/timetable/list">
+
+<%
+i = 0;
+even = true;
+
+courses =  CourseImplementation.find_by_sql("SELECT date_plan_start, date_plan_end, time_start, time_end, code, name FROM vw_detailed_courses WHERE id = '"+ @cid +"'")
+
+#utk masa_array
+arrtime1 = Array.new
+arrtime2 = Array.new
+
+for course in courses
+    @start = course.time_start
+    @end = course.time_end
+    @start_hari = course.date_plan_start.to_s
+    @end_hari = course.date_plan_end.to_s
+    @code = course.code
+    @cname = course.name
+
+    #
+    #earliest = Timetable.find(:first, :conditions=>"course_implementation_id = #{params[:id]}", :order=> "time_start")
+    earliest = Timetable.find_by_sql("select time_start from timetables where course_implementation_id = #{params[:id]} order by time_start limit 1")
+    @start = earliest[0].time_start if earliest[0]
+    @start = @start.to_formatted_s(:my_format_6)
+    @end = @end.to_formatted_s(:my_format_6)
+  %>
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"> JADUAL KURSUS <%= @code %> <%=@cname%></font></b></td>
+    </tr>
+  </table>
+  <br>
+  <div align="center">
+  <%@course_implementation = CourseImplementation.find(params[:id])%>
+  <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+      <td align="RIGHT"><strong>Kod:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.code%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tempat:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tarikh:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.tempoh%></font></td>
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+      <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
+      </font></td>
+      <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
+      <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile%></font></td>
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+      <td><font><%=@course_implementation.penyelaras2.profile.name%></font></td>
+      <td align="RIGHT"><font><b>No Tel:</b></font></td>
+      <td><font><b></b><%=@course_implementation.penyelaras2.profile.mobile%></font></td>
+    </tr>
+  </table>
+  </div>
+  <br>
+  <%
+    
+    jumlahs = CourseImplementation.find_by_sql( "SELECT (time '" + @end + "' - time '" + @start + "') AS later")
+    for jumlah in jumlahs 
+      w = jumlah.later
+      wws = w.split(' ')
+      p = wws[1]
+      p = p.to_i
+      
+      @slot = (p * 2) + 1
+        
+      #if (p > 8 ) 
+      #  @slot = (p * 2) + 1
+      #else 
+      #  @slot = p * 2
+      #end
+      
+    end  #jumlah
+    
+    bil = 0
+    @slot.times do  #kena kira time slot
+        if (bil == 0)
+          #@initial_time = course.time_start.to_formatted_s(:my_format_6)
+          @initial_time = @start
+        else 
+          @initial_time = @to_time
+        end
+               
+		masas = Course.find_by_sql( "SELECT (time '"+ @initial_time + "' + interval '30 minutes') AS later")	
+    	for masa in masas
+    	@to_time = masa.later
+	    #@to_time = @to_time[6, 4]
+	    @to_time = @to_time.slice(0..4)  # x jumpak substr so ini je la
+    	arrtime1.push(@initial_time)
+    	arrtime2.push(@to_time)
+    	end
+	    
+	    bil +=1 
+    end  #timeslot
+
+	if (@end_hari != @start_hari)
+	haris = Course.find_by_sql( "SELECT age ('" + @end_hari.to_s + "','" + @start_hari.to_s + "')" )    
+    bil_hari = haris.size
+    for hari in haris
+    xhari = hari.age
+    jum_all = xhari.split(' ')
+    @jum_hari = jum_all[1]
+	end
+	end
+	
+	#Khas utk tukar format dari yyyy-dd-mm
+	@start_hari2 = @start_hari.to_s
+	hari_ini = @start_hari2.split('-')
+    y = hari_ini[0]
+    m = hari_ini[1]
+    d = hari_ini[2]        
+    @tod = d+"/"+m+"/"+y
+	
+    #dapatkan hari
+    @pusing = @jum_hari.to_i 
+
+	days = Array.new
+	xbil = 0
+    
+    @pusing.times do
+    if (xbil == 0)
+      @initial_hari = @start_hari
+      days.push(@initial_hari)
+    else 
+      @initial_hari = @to_hari.to_s
+    end
+
+    tarikhis = Course.find_by_sql( "SELECT date('"+ @initial_hari + "'::date + 1) AS later")	
+   	for tarikhi in tarikhis
+    	@to_hari = tarikhi.later
+    	days.push(@to_hari)
+    end	#for
+    xbil += 1 
+    end #jum_hari
+    
+    if (@pusing == 0)
+      days.push(@start_hari)
+    end
+
+end   # for course planning
+
+jum_jam = arrtime1.size   # berapa hari
+jum_jam2 = arrtime2.size   # berapa hari
+jum_hari = days.size
+
+
+%>
+  <table class="seven" width="95%" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777">
+  <!--table width="95%" <%=list_border%> align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>"-->
+    <tr>
+      <td  class="el" align=center bgcolor="#CCCCCC"><b>Tarikh/Masa </b></td>
+      <% 
+#Time di atas sekali...
+k = 0
+jum_jam.times do
+if (arrtime1[k] == "13:00") 
+	%>
+      <td class="el" align=center bgcolor="#CCCCCC">1:00 p.m<br>
+      -<br>2:30 p.m</td>
+      <%	
+else 
+	itime = arrtime1[k].split(':')
+    ttime = itime[0]
+	pm_time_h = ttime.to_i - 12
+    ttime2 = itime[1]
+	pm = "#{pm_time_h}:#{ttime2} a.m" if ttime.to_i < 12
+	pm = "#{pm_time_h}:#{ttime2} p.m" if ttime.to_i > 11
+    
+  	etime = arrtime2[k].split(':')
+    xtime = etime[0]
+	pm_time_h = xtime.to_i - 12
+    xtime2 = etime[1]
+	pm2 = "#{pm_time_h}:#{xtime2} a.m" if xtime.to_i < 12
+	pm2 = "#{pm_time_h}:#{xtime2} p.m" if xtime.to_i > 11
+ 
+	if (( arrtime1[k] >= "14:30"))
+	%>
+      <td class="el" align=center bgcolor="#CCCCCC"><%=pm%><br>
+        -<br>
+      <%=pm2%></td>
+      <%
+	end
+    if (( ttime < "13") )
+		if ttime > "11"
+			am = "#{ttime}:#{ttime2} p.m"
+		else
+			am = "#{ttime}:#{ttime2} a.m"
+		end
+
+		if xtime > "11"
+			if xtime.to_i > 12
+				xtime = xtime.to_i - 12
+			end
+			am2 = "#{xtime}:#{xtime2} p.m"
+		else
+			am2 = "#{xtime}:#{xtime2} a.m"
+		end
+	 %>
+      <td class="el" align=center bgcolor="#CCCCCC"><%= am %><br>
+        -<br>
+      <%= am2%></td>
+      <%    
+	end #if
+end #if else
+k = k + 1
+end #slot
+%>
+    </tr>
+    <%
+
+for course in courses
+@dstart = course.date_plan_start
+@dend = course.date_plan_end
+x = 0
+rod = ""
+@rehat1_already = 0
+for day in days  #TARIKH
+   #kasik lawa yg kuar pd user
+   if (x == 0)
+   hari_ini = days[x].split('-')
+   y = hari_ini[0]
+   m = hari_ini[1]
+   d = hari_ini[2]
+   rod = d+"/"+m+"/"+y
+   rod_ymd = y+"-"+m+"-"+d
+   else
+   hari_ini = days[x].split('/')   
+   m = hari_ini[0]
+   d = hari_ini[1]
+   y = hari_ini[2]
+   rod = d+"/"+m+"/"+y
+   rod_ymd = y+"-"+m+"-"+d
+   #rod = days[x]
+   #to_formatted_s(:my_format_4)
+   end 
+  
+%>
+    <tr bgcolor="white">
+      <td class="el" align=center bgcolor="white"><%=rod%></td>
+      <%
+
+k = 0
+jum_jam.times do 
+@harini = days[x]
+@time1 = arrtime1[k]
+@time2 = arrtime2[k]
+total = 0
+timetables= Timetable.find_by_sql( " select * from timetables WHERE course_implementation_id = '"+ @cid +"' AND date = '"+ @harini +"' AND time_start = '"+ @time1 +"' AND time_end = '"+ @time2 +"'")
+total = timetables.size
+if (total == 0) 
+  timetables= Timetable.find_by_sql( " select * from timetables WHERE course_implementation_id = '"+ @cid +"' AND date = '"+ @harini +"' AND time_start = '"+ @time1 +"' AND time_end >= '"+ @time2 +"'")
+  total = timetables.size
+end #total = 0
+
+if (total == 0) 
+  timetables= Timetable.find_by_sql( " select * from timetables WHERE course_implementation_id = '"+ @cid +"' AND date = '"+ @harini +"' AND time_start <= '"+ @time1 +"' AND time_end >= '"+ @time2 +"'")
+  total = timetables.size
+end #total = 0
+
+if (total == 0) 
+  timetables= Timetable.find_by_sql( " select * from timetables WHERE course_implementation_id = '"+ @cid +"' AND date = '"+ @harini +"' AND time_start <= '"+ @time1 +"' AND time_end = '"+ @time2 +"'")
+  total = timetables.size
+end #total = 0
+
+time_start = " "
+time_end = " "
+timetable_id = nil
+for timetable in timetables
+  @timetable_id = timetable.id
+  @topic = timetable.topic
+  @time_start1 = timetable.time_start.to_formatted_s(:my_format_6)
+  @time_end1 = timetable.time_end.to_formatted_s(:my_format_6)
+end  #for
+
+# waktu makan
+if ( ((arrtime1[k] == "13:00") && (arrtime2[k] == "13:30")) ||
+     ((arrtime1[k] == "13:30") && (arrtime2[k] == "14:00")) ||
+     ((arrtime1[k] == "14:00") && (arrtime2[k] == "14:30")) ||
+     ((arrtime1[k] == "10:30") && (arrtime2[k] == "11:00"))  ) 
+   xcolor= "#cccccc"  
+   makan = 1
+else
+   xcolor="white"
+   makan = 0
+end
+
+if (total == 0)  
+if ((arrtime1[k] == "13:00") || (arrtime1[k] == "10:30"))
+	%>
+	
+	<%if @rehat1_already == 0%>
+      <td class="el" bgcolor="<%=xcolor%>" align="center" rowspan="<%=jum_hari%>">R<br>
+      E<br>H<br>A<br>T</td>
+	<%@rehat1_already = 1 if arrtime1[k] == "13:00"%>
+	<%end%>  
+	
+	<%	
+else 
+	itime = arrtime1[k].split(':')
+    ttime = itime[1]
+	if (( arrtime1[k] >= "14:30") )
+		if @course_implementation.editable?(session[:user])
+			link_tambah = "<a href=\"javascript: MM_openBrWindow('/timetables/new?course_implementation_id=#{@cid}&date=#{rod_ymd}&time_start=#{arrtime1[k]}&time_end=#{arrtime2[k]}','','scrollbars=yes,width=600,height=400')\">Tambah</a>"
+		else
+			link_tambah = "&nbsp;"
+		end
+	%>
+      <td class="el" align=center><%=link_tambah%></td>
+      <%
+	end
+    if (( arrtime1[k] < "13") )
+		if @course_implementation.editable?(session[:user])
+			link_tambah = "<a href=\"javascript: MM_openBrWindow('/timetables/new?course_implementation_id=#{@cid}&date=#{rod_ymd}&time_start=#{arrtime1[k]}&time_end=#{arrtime2[k]}','','scrollbars=yes,width=600,height=400')\">Tambah</a>"
+		else
+			link_tambah = "&nbsp;"
+		end
+	%>
+      <td class="el" align=center><%=link_tambah%></td>
+      <%    
+	end #if
+end #if else
+else  
+if ((@time1 != @time_start1) || (@time2 != @time_end1)) 
+  #$gettime = "SELECT (time '$masa2' - time'$masa1') AS later";
+  gettimes = Timetable.find_by_sql( "SELECT (time '"+ @time_end1 +"' - time'"+ @time_start1 +"') AS later")	
+  for gettime in gettimes
+    dapat = gettime.later
+    dpt = dapat.split(' ')
+    tjam = dpt[1]
+    tminit = dpt[3]
+    tjam = tjam.to_i
+    tminit = tminit.to_i
+    if (tminit != 0) 
+      @tinggal = (tjam * 2) + 1
+    else
+      @tinggal = tjam * 2
+    end
+  end # for
+else 
+  @tinggal = 1
+end #time1 != 
+
+if (@time_start1 == @time1) 
+	if @course_implementation.editable?(session[:user])
+		link_tambah = "<a href=\"javascript: MM_openBrWindow('/timetables/edit?id=#{@timetable_id}&course_implementation_id=#{@cid}&date=#{rod_ymd}&time_start=#{@time_start1}&time_end=#{@time_end1}','','scrollbars=yes,width=600,height=400')\">#{@topic}</a>"
+	else
+		link_tambah = "#{@topic}"
+	end
+%>
+      <td class="el" colspan=<%= @tinggal %> align=center>
+      <%=link_tambah%>
+
+<br/>
+<%@timetable = Timetable.find(@timetable_id)%>
+<b>Penceramah :</b>
+<%=@timetable.trainers[0].profile.name.titleize unless @timetable.trainers[0].nil?%> 
+</td>
+      <%
+end  #@time_start1 == @time1
+
+end # if (total == " ")
+
+k = k + 1
+end # times jum_jam
+%>
+    </tr>
+    <% 
+
+x = x + 1
+end  # brapa kali -day
+
+end  #course
+
+%>
+  </table>
+</form>

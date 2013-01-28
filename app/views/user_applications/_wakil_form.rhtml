@@ -1,0 +1,233 @@
+<!--[form:profile]-->
+<%
+ dob = @profile.date_of_birth if @profile
+ if (dob != nil)
+  tarikh =  dob.to_s
+  tarikh = tarikh.split('-')
+  y = tarikh[0]
+  m = tarikh[1]
+  d = tarikh[2]        
+ end
+%>
+<div align="center">
+<%= error_messages_for 'profile' %>
+<%#= error_messages_for 'course_application' %></div>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+  <tr bgcolor="000000">
+    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT WAKIL </font></b></td>
+    </tr>
+    <tr>
+      <td colspan="4" align="right">&nbsp;</td>
+    </tr>
+<script>
+function updateCourseName() {
+	var code = $('course_implementation_code').value
+	
+	//404 eraa wo boushisurutame
+	code = code.replace(/\//g,"_");
+	
+	data = "code=" + code
+	if ($('course_implementation_code').value!="") {
+		find_course_name_by_code('/ajax/find_course_by_code', data)
+	}
+}
+
+function find_course_name_by_code(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: find_course_name_by_code_response}
+    );
+}
+
+function find_course_name_by_code_response(originalRequest) {
+	a = originalRequest.responseText
+	
+	if (a == 0) {
+		$('course_name').innerHTML = ""
+		alert('Kod kursus tidak wujud. Sila masukkan kod yang lain.');
+		
+		HighLightTextField($('course_implementation_code'));
+		$('course_implementation_code').focus();
+		$('course_implementation_code').select();
+	}
+	else {
+		$('course_name').innerHTML = a
+	}
+}
+</script>
+
+    <tr>
+      <td align="right" valign="top" width="20%"><b>Nama Penuh :</b></td>
+      <td>&nbsp; <%= text_field 'profile', 'name', :maxlength=>80, :size=>50, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+      <td align="RIGHT" width="20%">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right" valign="top"><b>No K/P: </b></td>
+      <td>&nbsp;
+      <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>15, :onchange=>"checkNRIC()"  %><span id="node_identification_memo"> </span></td>
+      <td align="RIGHT">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+<script>
+var node = $("profile_ic_number");
+var node_identification_memo = $("node_identification_memo");
+
+function checkNRIC() {
+	if ( icnumRegExp.test(node.value) ) {
+		node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange>Sistem sedang memeriksa no kp<br>&nbsp;Sila tunggu..</font>"
+		ajax_request("/ajax/ajax_nric", "ic_number="+node.value)
+	}
+	
+}
+
+function ajax_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'get', parameters: data, onComplete: ajax_response}
+    );
+}
+
+function ajax_response(originalRequest) {
+	//alert(originalRequest.responseText)
+	if (originalRequest.responseText == 1) {
+		node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange> Data pemohon sudah ada.<br>&nbsp; Loading..</font>"
+<%
+dr = ""
+dr = "dr=1" if params[:dr]
+%>
+		document.forms[0].action = "/course_applications/new_but_peserta_already_exist?<%=dr%>";
+		document.forms[0].submit();
+	}
+	else {
+		node_identification_memo.innerHTML = "<font color=orange><br>&nbsp; Data pemohon belum ada.</font>"
+	}
+}
+</script>
+
+<script>
+//jabatan selection
+function checkJabatan() {
+	$('employment_place_id').value = $('kementerian_id').value
+	$('pejabat_selection').innerHTML = "<font color=orange>Sila pilih jabatan</font>"
+	$('department_selection').innerHTML = "<font color=orange>Carian jabatan...sila tunggu</font>"
+	ajax_department_request("/ajax/children_of_place", "id="+$("kementerian_id").value)
+}
+
+function ajax_department_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_department_response}
+    );
+}
+
+function ajax_department_response(originalRequest) {
+	if (originalRequest.responseText != 0) {
+		var a = originalRequest.responseText.split("$$")
+		var k = new Array(a.length)
+		for (i=0; i<k.length; i++) {
+			k[i] = a[i].split("=")
+		}
+		//alert(originalRequest.responseText)
+		
+		str  = "<select  id=\"jabatan_id\" name=\"jabatan_id]\" class=\"px200\" onchange=\"checkPejabat()\">\n";
+		str += "<option value=\"\">Sila Pilih</option>\n"
+		for (i=0; i<k.length; i++) {
+			str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+		}
+		str += "</select>\n";
+		$("department_selection").innerHTML = str;
+	}
+	else {
+		$('department_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
+	}
+}
+//EO department selection
+
+//pejabat selection
+function checkPejabat() {
+	$('employment_place_id').value = $('jabatan_id').value
+	$('pejabat_selection').innerHTML = "<font color=orange>Carian pejabat...sila tunggu</font>"
+	ajax_pejabat_request("/ajax/grand_and_children_of_place", "id="+$("jabatan_id").value)
+}
+
+function ajax_pejabat_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_pejabat_response}
+    );
+}
+
+function ajax_pejabat_response(originalRequest) {
+	if (originalRequest.responseText != 0) {
+		var a = originalRequest.responseText.split("$$")
+		var k = new Array(a.length)
+		for (i=0; i<k.length; i++) {
+			k[i] = a[i].split("=")
+		}
+		//alert(originalRequest.responseText)
+	
+		str  = "<select  id=\"pejabat_id\" name=\"pejabat_id]\" class=\"px200\" onchange=\"updatePlaceId()\">\n";
+		str += "<option value=\"\">Sila Pilih</option>\n"
+		for (i=0; i<k.length; i++) {
+			str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+		}
+		str += "</select>\n";
+		$("pejabat_selection").innerHTML = str;
+	}
+	else {
+		$('pejabat_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
+	}
+}
+//EO pejabat selection
+
+function updatePlaceId() {
+	$('employment_place_id').value = $('pejabat_id').value
+}
+
+</script>
+
+    <tr>
+      <td align="right"><b>Gred/Jawatan :</b></td>
+      <td colspan="3">&nbsp; <%= text_field 'profile', 'designation', :maxlength=>50, :size=>50, :onchange=>"this.value=this.value.toUpperCase()" %> <font color="orange">*cth:Penolong Pengarah</font></td>
+    </tr>
+    <tr>
+      <td align="right"><b>E-Mel :</b></td>
+      <td>&nbsp; <%= text_field 'profile', 'email', :maxlength=>60, :size=>30, :class=>"email"  %></td>      
+      <td align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+ 	<tr>
+ 	<td colspan=4>&nbsp;</td>
+ 	</tr>
+      </table>
+
+<div id="label" style="clear: both; visibility: hidden">Bonner</div>
+<style>
+div.auto_complete {
+width: 350px;
+background: #fff;
+cursor: pointer;
+}
+div.auto_complete ul {
+border:1px solid #888;
+margin:0;
+padding:0;
+width:100%;
+list-style-type:none;
+}
+div.auto_complete ul li {
+margin:0;
+padding:3px;
+}
+div.auto_complete ul li.selected {
+background-color: #ffb;
+}
+div.auto_complete ul strong.highlight {
+color: #800;
+margin:0;
+padding:0;
+}
+</style>
+

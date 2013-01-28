@@ -1,0 +1,33 @@
+<div align=center><%= error_messages_for 'scale' %></div>
+
+<!--[form:scale]-->
+
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+<tr>
+      <td align="right"><b>Jenis Skala :</b></td>
+      <td><select name="scale[scale_type_id]">
+            <% @scale_types.each do |scale_type| %>
+            <option value="<%= scale_type.id %>"
+         		<%= ' selected' if scale_type.id == @scale.scale_type_id %>> <%= scale_type.description %> </option>
+            <% end %>
+          </select>
+    |
+	<%= link_to 'Tambah', :controller => 'scale_types', :action => 'new' %> jenis skala
+      </td>
+    </tr>
+<tr>
+	<td align=right><b>Keterangan :</b></td>
+	<td><%= text_field 'scale', 'description', :maxlength=>100, :size=>30  %></td>	
+</tr>
+<tr>
+	<td align=right><b>Rating :</b></td>
+	<td><%= text_field 'scale', 'rating', :maxlength=>3, :size=>3  %></td>	
+</tr>
+<tr>
+	<td align=right><b>Mata :</b></td>
+	<td><%= text_field 'scale', 'point', :maxlength=>3, :size=>3  %></td>	
+</tr>
+</table>
+
+<!--[eoform:scale]-->
+

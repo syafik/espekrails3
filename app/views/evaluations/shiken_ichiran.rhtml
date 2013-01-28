@@ -1,0 +1,114 @@
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Are you sure to delete " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function rewritePopupContentNoRestraint(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" + 
+    						"<li><a href=\""  + "/quizzes" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini Ujian</a>" + 
+						    "<li><a href=\"javascript: confirmAndGo('"  + "/quizzes" + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Ujian</a>" +
+    					    "<hr size=1>" +
+						    //"<li><a href=\""  + "/quiz_questions" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Soalan</a>" +
+						    "<li><a href=\""  + "/quiz_questions" + "/list_soalan/" + objid + "\">&nbsp;&nbsp;Senarai Soalan</a>" +
+						    "<hr size=1>" +
+                            "<li><a href=\""  + "/user_applications" + "/exam_before_admin/" + objid + "\">&nbsp;&nbsp;Ujian 1</a>" + 
+					        "<li><a href=\""  + "/user_applications" + "/exam_after_admin/" + objid + "\">&nbsp;&nbsp;Ujian 2</a>" + 
+						    "<hr size=1>" +
+						    "<li><a href=\""  + "/quiz_questions" + "/list_peserta/" + objid + "\">&nbsp;&nbsp;Keputusan Ujian</a>" +
+						    //"<li><a href=\""  + "/quiz_questions" + "/list_peserta2/" + objid + "\">&nbsp;&nbsp;Senarai Markah (Ujian 2)</a>" +
+                           "</ul>"
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" +
+    						//"<li><a href=\""  + "/quizzes" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini Ujian</a>" + 
+						    //"<li><a href=\"javascript: confirmAndGo('"  + "/quizzes" + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Ujian</a>" +
+    					    //"<hr size=1>" +
+						    //"<li><a href=\""  + "/quiz_questions" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Soalan</a>" +
+						    //"<li><a href=\""  + "/quiz_questions" + "/list_soalan/" + objid + "\">&nbsp;&nbsp;Senarai Soalan</a>" +
+						    //"<hr size=1>" +
+						    "<li><a href=\""  + "/quiz_questions" + "/list_peserta/" + objid + "\">&nbsp;&nbsp;Keputusan Ujian</a>" +
+						    //"<li><a href=\""  + "/quiz_questions" + "/list_peserta2/" + objid + "\">&nbsp;&nbsp;Senarai Markah (Ujian 2)</a>" +
+						    "</ul>"
+}
+
+function findAndSortWith(orderby,arrow) {
+	var df = document.list
+	//var arrow = "DESC"
+	
+	df.orderby.value = orderby
+	df.arrow.value = arrow
+	df.submit();
+}
+
+function checkAll(df) {
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       df.elements[i].checked = df.check_all.checked
+     } 
+  }
+}
+
+</script>
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI UJIAN UNTUK KURSUS <%=@ci.course.name.upcase%> (<%=@ci.code%>)</font></th>
+    </tr>
+  </table>
+  <BR>
+  <div align=center style="font-weight:bold">
+  <a href="/quizzes/shinki/<%=@ci.id%>">Tambah Ujian</a>
+  </div>
+  <br />
+  <table width="80%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999">
+  <td width="5%"><b><font color="#FFFFFF">Bil</font></b></td>
+  <td width="10%"><b><font color="#FFFFFF">&nbsp;Kod</font></b></td>
+  <td width="40%"><b><font color="#FFFFFF">&nbsp;Nama Kursus</font></b></td>
+  <td width="10%"><b><font color="#FFFFFF">&nbsp;Tarikh Mula</font></b></td>
+  <td width="10%"><b><font color="#FFFFFF">&nbsp;Tarikh Akhir</font></b></td>
+  <td width="30%" align=left><b><font color="#FFFFFF">&nbsp;Nama Ujian</font></b></td>
+   </tr>
+
+
+<%
+i = 0;
+even = true;
+#for quiz in @quizzes
+for quiz in @ci.quizzes
+ 	i = i + 1
+  	bgclr = "#CCCCFF" if (even == true)
+  	bgclr = "#FFFFFF" if (even == false)
+  	even = !even
+  
+  show_menu = "show"
+  show_menu = "show_with_no_restraint" if quiz.course_implementation.editable?(session[:user])
+  onmousedown = "menuLayers.#{show_menu}('popmenu','/quizzes', '#{quiz.id}', '#{quiz.name}', event)"
+ 
+
+%>
+<tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+      onmousedown="//menuLayers.<%=show_menu%>('popmenu', '/quizzes', '<%=h quiz.id %>', '<%= quiz.name %>', event)">
+ 
+    <td align=center onmousedown="<%=onmousedown%>"><%=h nof{i.to_s} %></td>
+    <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.code} %></td>
+    <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.course.name} %></td>
+    <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %></td>
+    <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.date_plan_end.to_formatted_s(:my_format_4)} %></td>
+	<td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.name} %></td>
+   </tr>
+ 
+<% end %>
+</table>
+<br>
+<div align=center>
+</div>
+<br />

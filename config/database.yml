@@ -1,0 +1,22 @@
+development:
+  adapter: postgresql
+  database: instun_d
+  username: pgsql
+  pool: 5
+  password: password
+  host: localhost
+
+test:
+  adapter: postgresql
+  database: instun_t
+  username: pgsql
+  password:
+  pool: 5
+  host: localhost
+
+production:
+  adapter: postgresql
+  database: instun
+  username: pgsql
+  password:
+  host: localhost

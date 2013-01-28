@@ -1,0 +1,51 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">REKOD KURSUS <%=h @profile.name %></font></b></td>
+    </tr>
+  </table>
+  <table align=center border=1 width=95% bgcolor="#EEEDDD">
+    <tr>
+      <!--th width="15%" bgcolor="#EEEEEE"><%= link_to 'Peribadi', :action => 'view' %></th>
+      <th width="15%" bgcolor="#EEEEEE"><%= link_to 'Waris', :action => 'view_waris', :id => @profile %></th>
+<th width="15%" bgcolor="#EEEEEE"><%= link_to 'Perkhidmatan', :action => 'view_khidmat', :id => @profile %></th>
+<th width="15%" bgcolor="#EEEEEE"><%= link_to 'Akademik', :action => 'view_akademik', :id => @profile %></th>
+      <th width="15%" bgcolor="#EEEEEE"><%= link_to 'Rekod Kursus', :action => 'view_kursus' %></th>
+      <!--th width="15%" bgcolor="#EEEEEE"><%= link_to 'Tukar Kata Laluan', :action => 'edit_password' %></th-->
+    </tr>
+  </table>
+  <BR><BR>
+
+    <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999" id="pisang">
+      <td width="2%" align="center"><b><font color="#FFFFFF">Bil</font></b></td>
+      <td width="5%" align="center"><font color="#FFFFFF"><strong> Kod </strong></font></td>
+      <td width="30%" align="center"><font color="#FFFFFF"><strong> Kursus </strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong> Tarikh Mohon </strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong> Tarikh Mula </strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong> Tarikh Akhir </strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong> Status </strong></font></td>
+      </tr>
+
+  
+	<%	
+	i = 0
+	even = true
+	for student in @students
+		i = i + 1
+		bgclr = "#CCCCFF" if (even == true)
+		bgclr = "#FFFFFF" if (even == false)
+		even = !even
+		%>
+ <tr bgcolor="<%=bgclr%>" align=center>
+      <td><%= i.to_s %>.</td>
+      <td><%=h student.course_implementation.code.upcase %></td>
+      <td><%=h student.course_implementation.course.name.upcase %></td>
+      <td><%= student.date_apply.to_formatted_s(:my_format_4) if student.date_apply %></td>
+      <td><%=h student.course_implementation.date_plan_start.to_formatted_s(:my_format_4) %></td>
+      <td><%=h student.course_implementation.date_plan_end.to_formatted_s(:my_format_4) %></td>
+      <td><%=h student.student_status.description if student.student_status %>
+
+    </tr>
+ <%end %>
+
+  </table>

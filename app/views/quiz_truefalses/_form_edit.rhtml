@@ -1,0 +1,19 @@
+<%= error_messages_for 'quiz_truefalse' %>
+
+<!--[form:quiz_truefalse]-->
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+<tr>
+	<td align=right><b>Jawapan :</b></td>
+	<td><select id="quiz_truefalse_answer" name="quiz_truefalse[answer]">
+	<option value="Salah">Salah</option>
+	<option value="Betul">Betul</option></select>
+	</td>	
+</tr>
+
+<tr>
+	<td align=right><b>Keterangan Jawapan :</b></td>
+	<td><%= text_field 'quiz_truefalse', 'trueanswer'  %></td>	
+</tr>
+
+</table>
+<!--[eoform:quiz_truefalse]-->

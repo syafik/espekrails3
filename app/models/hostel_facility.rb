@@ -1,0 +1,23 @@
+# -*- encoding : utf-8 -*-
+class HostelFacility < ActiveRecord::Base
+    belongs_to :hostel_facility_type
+    belongs_to :facility_status
+    
+    validates_presence_of :description, :code, 
+                          :message => ": masukkan nilai."
+    
+    validates_uniqueness_of :code ,
+						    :on			  => :create,
+							:message  => "sudah wujud."
+							
+	validates_format_of :code,
+						:with				=> /^\w+$/,
+						:message    => ": kod tidak sah."													
+
+	#length													
+    validates_length_of :code,	:maximum =>50,
+						:message => "tidak melebihi 50 aksara."
+    
+    
+    
+end

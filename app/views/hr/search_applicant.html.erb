@@ -1,0 +1,176 @@
+<script type="text/javascript">
+/*************************************************************************
+  This code is from Dynamic Web Coding at http://www.dyn-web.com/
+  Copyright 2003 by Sharon Paine 
+  See Terms of Use at http://www.dyn-web.com/bus/terms.html
+  regarding conditions under which you may use this code.
+  This notice must be retained in the code as is!
+*************************************************************************/
+
+var menuLayers = {
+  timer: null,
+  activeMenuID: null,
+  offX: 4,   // horizontal offset 
+  offY: 6,   // vertical offset 
+
+  show: function(id, controller, objid, objname, e) {
+    var mnu = document.getElementById? document.getElementById(id): null;
+    if (!mnu) return;
+    this.activeMenuID = id;
+    if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
+    if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
+    viewport.getAll();
+
+    //objid = controller + "/" + action + "/" + objid
+
+    document.getElementById('popmenu').innerHTML = "<ul>" + 
+                           "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+					       "<li><a href=\""  + controller + "/history/" + objid + "\">&nbsp;&nbsp;Semakan</a>" +
+					       "</ul>"
+    this.position(mnu,e);
+  },
+  
+  hide: function() {
+    this.clearTimer();
+    if (this.activeMenuID && document.getElementById) 
+      this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
+  },
+  
+  position: function(mnu, e) {
+    var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
+    var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
+    
+    if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
+      x = x - mnu.offsetWidth - this.offX;
+    else x = x + this.offX;
+  
+    if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
+      y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
+    else y = y + this.offY;
+    
+    mnu.style.left = x + "px"; mnu.style.top = y + "px";
+    this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
+  },
+  
+  mouseoutCheck: function(e) {
+    e = e? e: window.event;
+    // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
+    var mnu = document.getElementById(menuLayers.activeMenuID);
+    var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
+    if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
+  },
+  
+  // returns true of oNode is contained by oCont (container)
+  contained: function(oNode, oCont) {
+    if (!oNode) return; // in case alt-tab away while hovering (prevent error)
+    while ( oNode = oNode.parentNode ) 
+      if ( oNode == oCont ) return true;
+    return false;
+  },
+
+  clearTimer: function() {
+    if (menuLayers.timer) clearTimeout(menuLayers.timer);
+  }
+  
+}
+</script>
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+	    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">CARIAN PESERTA KURSUS</font></b></td>
+    </tr>
+</table>
+     <div align="center">
+        <%= flash[:notice] %></div>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="0" cellspacing="3">
+    <tr>
+      <td align="RIGHT" width="40%" valign="TOP"><strong>Nama Peserta:</strong></td>
+      <td align="LEFT"><form action="/hr/search_by_name" method="post" name="list">
+          <input type="text" name="search_name">
+          <input name="Submit2" type="submit" value="Cari">
+      </form></td>
+    </tr>
+    <tr>
+      <td align="RIGHT" valign="TOP"><strong>No KP Peserta:</strong> </td>
+      <td align="LEFT"><form action="/hr/search_by_ic" method="post" name="list">
+          <input type="text" name="search_code">
+          <input name="Submit2" type="submit" value="Cari">
+      </form></td>
+    </tr>
+    <tr>
+      <td align="RIGHT" width="40%" valign="TOP"><strong>Nama Kementerian/Jabatan/Pejabat:</strong></td>
+      <td align="LEFT"><form action="/hr/search_by_ministry" method="post" name="list">
+          <input type="text" name="search_min_name">
+          <input name="Submit2" type="submit" value="Cari">
+      </form></td>
+    </tr>
+    <!--tr>
+      <td align="RIGHT" width="40%"><strong>Kod Kementerian/Jabatan/Pejabat:</strong></td>
+      <td align="LEFT"><form action="/hr/search_by_ministry_code" method="post" name="list">
+          <input type="text" name="search_min_code">
+          <input name="Submit2" type="submit" value="Cari">
+      </form></td>
+    </tr-->
+
+  </table>
+  <br>
+
+
+  <div width="95%" style="background: #FFFFFF">
+<% if @profiles %>
+<table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+  <tr bgcolor="#999999">
+    <td class="el" width="2%" height="20" valign="top" rowspan="1">&nbsp;</td>
+    <td class="el" width="23%" align="center" style="color: white"><strong>Nama</strong></td>
+    <td class="el" width="5%" align="center" style="color: white"><strong>No KP</strong></td>
+    <td class="el" width="15%" align="center" style="color: white"><strong>Jawatan</strong></td>
+    <td class="el" width="5%" align="center" style="color: white"><strong>Gred</strong></td>
+    <td class="el" width="15%" align="center" style="color: white"><strong>Kementerian</strong></td>
+    <td class="el" width="15%" align="center" style="color: white"><strong>Jabatan</strong></td>
+    <td class="el" width="15%" align="center" style="color: white"><strong>Pejabat</strong></td>
+ </tr>
+<%
+  i = 0;
+  even = true;
+  sum = 0;
+  for profile in @profiles
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  employment = Employment.find_by_profile_id(profile.id)
+    if nof{employment.place}
+        if employment.place.place_type_id == 3
+                shou = nof{employment.place.name}
+                kenchou = ""
+                jimusho = ""
+        end
+        if employment.place.place_type_id == 1
+                kenchou = nof{employment.place.name}
+                shou = nof{employment.place.parent.name}
+                jimusho = ""
+        end
+        if employment.place.place_type_id == 2
+                jimusho = nof{employment.place.name}
+                kenchou = nof{employment.place.parent.name}
+                shou = nof{employment.place.parent.parent.name}
+        end
+    end
+
+%>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.show('popmenu', '/profiles', '<%=h profile.id %>', '<%=h profile.ic_number %>', event)">
+      <td class="el">&nbsp;<%= i.to_s %>.</td>
+      <td class="el"><%=h profile.name.upcase %></td>
+      <td class="el" align="left"><%= profile.ic_number %></td>
+      <td class="el" align="left"><%= nof{employment.job_profile.job_name} %>&nbsp;</td>
+      <td class="el" align="center">&nbsp;<%= nof{employment.job_profile.job_grade} %></td>
+      <td class="el" align="center"><%= shou %>&nbsp;</td>
+      <td class="el" align="center"><%= kenchou %>&nbsp;</td>
+      <td class="el" align="center"><%= jimusho %>&nbsp;</td>
+    </tr>
+<% end %>
+</table>
+<% end %>
+</div>

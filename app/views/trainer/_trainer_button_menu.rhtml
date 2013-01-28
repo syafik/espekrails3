@@ -1,0 +1,38 @@
+<style type="text/css">
+<!--
+.style1 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.style3 {color: #153E7E; font-weight: bold; }
+-->
+</style>
+
+<%
+if params[:what]
+  @show_what = params[:what]
+else
+  @show_what = "show_profile"
+end
+
+@bgcolor_show_profile = "#999999"
+@bgcolor_show_course = "#999999"
+@bgcolor_show_expertise  = "#999999"
+@bgcolor_show_qualification = "#999999"
+
+
+@bgcolor_show_profile     = "#D7EBD7" if @show_what == "show_profile"
+@bgcolor_show_course      = "#D7EBD7" if @show_what == "show_course"
+@bgcolor_show_expertise     = "#D7EBD7" if @show_what == "show_expertise"
+@bgcolor_show_qualification = "#D7EBD7" if @show_what == "show_qualification"
+
+%>
+<table align="CENTER" width="95%" border="0" bgcolor="#666666" cellspacing="1">
+  <tr>
+    <td bgcolor="<%=@bgcolor_show_profile%>" align="CENTER" height="21"><span class="style3"><a href="/trainer/show/<%=@trainer.id%>?what=show_profile">PROFAIL</a></span></td>
+    <td bgcolor="<%=@bgcolor_show_course%>" align="CENTER"><span class="style1"><a href="/trainer/show/<%=@trainer.id%>?what=show_course">KURSUS</a></span></td>
+    <td bgcolor="<%=@bgcolor_show_qualification%>" align="CENTER"><span class="style1"><a href="/trainer/show/<%=@trainer.id%>?what=show_qualification">KELAYAKAN</a></span></td>
+    <td bgcolor="<%=@bgcolor_show_expertise%>" align="CENTER"><span class="style1"><a href="/trainer/show/<%=@trainer.id%>?what=show_expertise">KEMAHIRAN</a></span></td>
+  </tr>
+</table>
+<br />

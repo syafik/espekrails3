@@ -1,0 +1,3 @@
+rem GENERATE FONT FPDF
+
+ttf2pt1.exe -b -L makefont\cp1252.map  fontsijil.ttf  fontsijil

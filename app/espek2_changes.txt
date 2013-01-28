@@ -1,0 +1,426 @@
+--sham 04/09/2008
+alter table course_applications add column cancel_reason text;
+alter table course_applications add column cancel_date date;
+alter table course_applications add column cancel_spv_name varchar(200);  --pegawai yg melulus pembatalan
+alter table course_applications add column cancel_spv_jawatan varchar(200);
+alter table course_applications add column cancel_spv_email varchar(200);
+
+insert into student_statuses(id,description) values(12,'BATAL');
+
+--sham 11/09/2008
+alter table course_applications add column nama_pejabat varchar(60);
+alter table course_applications add column address1 varchar(45);
+alter table course_applications add column address2 varchar(45);
+alter table course_applications add column address3 varchar(45);
+
+--sham 17/10/2008
+alter table attendances add column course_implementation_id int references course_implementations(id);
+
+drop table attendance_sessions; --*
+
+delete from attendances; --*
+alter table attendances drop column attendance_session_id;
+
+drop table session_codes; --*
+create table session_codes (
+	id serial primary key,
+	description varchar(100),
+	time_in_text varchar(50),
+	time_start time,
+	time_end time,
+	susunan int
+);
+
+drop table sesi_harian;
+create table sesi_harian (
+	id serial primary key,
+	course_implementation_id int references course_implementations(id),
+	tarikh date,
+	session_code_id int references session_codes(id),
+	is_counted char(1) default 1,
+	unique(course_implementation_id,tarikh,session_code_id)
+);
+
+drop table attendances;
+create table attendances (
+	id serial,
+	course_application_id int references course_applications(id),
+	date_attend date,
+	course_implementation_id int references course_implementations(id),
+	sesi_harian_id int references sesi_harian(id),
+	session_code_id int
+);
+
+--**tambah baru b4 migrate
+alter table attendances add column sesi_harian_id int references sesi_harian(id);
+alter table attendances add column session_code_id int;
+
+
+-- hafiz 21/10/2008
+DROP TABLE surat_lantik_content;
+CREATE TABLE surat_lantik_content (
+    user_id integer,
+    course_department_id integer,
+    ref_no character varying(50),
+    letter_date date,
+    perkara text,
+    tempoh character varying(200),
+    tandatangan_nama character varying(200),
+    tandatangan_jawatan character varying(200),
+    is_cetakan_komputer integer,
+    format_surat integer,
+    course_implementation_id integer,
+    perenggan4 text,
+    perenggan5 text,
+    perenggan3 text,
+    perenggan2 text,
+    perenggan1 text,
+    id serial
+);
+
+ALTER TABLE ONLY surat_lantik_content
+    ADD CONSTRAINT surat_lantik_content_course_department_id_fkey FOREIGN KEY (course_department_id) REFERENCES course_departments(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+DROP TABLE surat_sah_content;
+CREATE TABLE surat_sah_content (
+    user_id integer,
+    course_department_id integer,
+    ref_no character varying(50),
+    letter_date date,
+    perkara text,
+    tempoh character varying(200),
+    tandatangan_nama character varying(200),
+    tandatangan_jawatan character varying(200),
+    is_cetakan_komputer integer,
+    format_surat integer,
+    course_implementation_id integer,
+    perenggan4 text,
+    perenggan5 text,
+    perenggan3 text,
+    perenggan2 text,
+    perenggan1 text,
+    id serial
+);
+
+ALTER TABLE ONLY surat_sah_content
+    ADD CONSTRAINT surat_sah_content_course_department_id_fkey FOREIGN KEY (course_department_id) REFERENCES course_departments(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY surat_sah_content
+    ADD CONSTRAINT surat_sah_content_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE;
+
+DROP TABLE latest_approve_references;
+CREATE TABLE latest_approve_references (
+    course_department_id integer,
+    latest_ref_no character varying(50),
+    id serial
+);
+
+ALTER TABLE ONLY latest_approve_references
+    ADD CONSTRAINT latest_approve_references_course_department_id_fkey FOREIGN KEY (course_department_id) REFERENCES course_departments(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+DROP TABLE latest_appoint_references;
+CREATE TABLE latest_appoint_references (
+    course_department_id integer,
+    latest_ref_no character varying(50),
+    id serial
+);
+
+ALTER TABLE ONLY latest_appoint_references
+    ADD CONSTRAINT latest_appoint_references_course_department_id_fkey FOREIGN KEY (course_department_id) REFERENCES course_departments(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+-- maz 22/10/2008
+ALTER TABLE ONLY course_applications ADD COLUMN fee_amount numeric(4,2);
+ALTER TABLE ONLY course_applications ADD COLUMN receipt_no varchar(30);
+ALTER TABLE ONLY course_applications ADD COLUMN payment_date date;
+
+-- hafiz 23/10/2008
+DROP TABLE notifications;
+CREATE TABLE notifications (
+    id serial,
+	course_implementation_id integer references course_implementations(id),
+    created_on timestamp without time zone,
+    updated_on timestamp without time zone,
+    course_id integer references courses(id),
+	user_id integer references users(id),
+	profile_id integer references profiles(id),
+	course_location_id integer references course_locations(id),
+    trainer_total integer,
+    male_total integer,
+    female_total integer,
+    vip_total integer DEFAULT 0,
+    urusetia_total integer DEFAULT 2,
+    date_plan_start date,
+    date_plan_end date,
+	approved_on date,
+	remark text
+);
+
+--sham 27/10/2008
+alter table profiles alter column address1 type varchar(50);
+alter table profiles alter column address2 type varchar(50);
+alter table profiles alter column address3 type varchar(50);
+
+CREATE TABLE cert_policy(
+	id serial primary key,
+	course_implementation_id int references course_implementations(id),
+	kehadiran_minima int,
+	wajib_yuran char(1)
+);
+
+ALTER TABLE course_applications add column layak_sijil char(1) default null;
+ALTER TABLE course_applications add cert_remark varchar(200);
+
+DROP TABLE tempahan_sijil;
+CREATE TABLE tempahan_sijil(
+	id serial primary key,
+	course_implementation_id int references course_implementations(id),
+	penerima varchar(200),
+	anjuran varchar(200),
+	tempat varchar(200),
+	bahagian varchar(5),
+	tarikh date,
+	kategori_sijil char(1),
+	log_hantaran text
+);
+
+CREATE TABLE topics(
+	id serial primary key,
+	course_implementation_id int references course_implementations(id),
+	trainer_id int references trainers(id),
+	title varchar(200),
+	description text
+);
+
+alter table evaluation_trainer_rankings add column topic_id int references topics(id);
+
+alter table evaluation_answers add column kelompok char(1) default '0';
+alter table evaluation_comments add column kelompok char(1) default '0';
+
+
+--hafiz 03/11/2008
+
+ALTER TABLE quizzes drop timelimit;
+ALTER TABLE quizzes add timelimit integer;
+
+
+--03/11/08 maz
+insert into roles (name, description, omnipotent, system_role) values ('Sumber Manusia','Sumber Manusia','f','t');
+insert into users_roles values(201,8);
+ALTER TABLE quiz_questions add file varchar(45);
+
+--sham 03/11/08
+drop table sesi_makanan;
+create table sesi_makanan (
+	id serial primary key,
+	course_implementation_id int references course_implementations(id),
+	tarikh date,
+	breakfast   char(1),
+	morning_tea char(1),
+	lunch       char(1),
+	evening_tea char(1),
+	dinner      char(1),
+	unique(course_implementation_id,tarikh)
+);
+
+alter table reservations add column staff_id int references staffs(id);
+alter table reservations add column status char(1) default '0'; -- 0: baru , 1: disahkan 
+alter table reservations add column disahkan_oleh int default null;
+alter table reservations add column tarikh_sah date default null;
+alter table reservations add column disahkan_oleh_user varchar(80);
+
+drop table reservation_trainers;
+create table reservation_trainers(
+	id serial primary key,
+	course_implementation_id int references course_implementations(id),
+	created_on timestamp without time zone,
+	updated_on timestamp without time zone,
+	staff_id int references staffs(id), --ditempah oleh
+	trainer_id int references trainers(id),
+	trainer_checkin timestamp without time zone,
+	trainer_checkout timestamp without time zone,
+	disahkan_oleh int default null,
+	tarikh_sah date default null,
+	disahkan_oleh_user varchar(80),
+	unique(course_implementation_id)	
+);
+
+alter table hostel_blocks add column gender int default null ; -- 2:Perempuan 1:Lelaki
+update hostel_blocks set gender=1 where description='A';
+update hostel_blocks set gender=2 where description='B';
+
+alter table hostels add column tarikh_ditutup date default null;
+alter table hostels add column sebab_tutup text;
+
+alter table hostel_profiles add column no_tel varchar(15);
+alter table hostel_profiles add column no_kenderaan varchar(15);
+alter table hostel_profiles add column no_kunci varchar(15);
+alter table hostel_profiles add column isroomok_after_out char(1) default '1';
+
+alter table hostel_profiles add column category int; --1:peserta 2:penceramah 3:penyewa
+alter table hostel_profiles add column course_implementation_id int default null;
+
+
+alter table hostel_penghuni add column no_tel varchar(15);
+alter table hostel_penghuni add column no_kenderaan varchar(15);
+alter table hostel_penghuni add column no_kunci varchar(15);
+alter table hostel_penghuni add column category int default 1; --1:peserta 2:penceramah 3:penyewa
+alter table hostel_penghuni add column course_implementation_id int default null;
+alter table hostel_penghuni add column expected_date_out date;
+
+DROP VIEW vw_detail_penghuni_asrama;
+CREATE VIEW vw_detail_penghuni_asrama AS
+    SELECT h.block_id, hb.description AS block_desc, h."level", h.room, hp.*, p.name, p.ic_number 
+	FROM (((hostel_penghuni hp JOIN profiles p ON ((p.id = hp.profile_id))) 
+	JOIN hostels h ON ((h.id = hp.hostel_id))) 
+	JOIN hostel_blocks hb ON ((hb.id = h.block_id))) ORDER BY p.name;
+
+--hafiz 23/11/2008
+ALTER TABLE facility_reservations add to_profile_id int references profiles(id);
+ALTER TABLE facility_reservations add cc_profile_id int references profiles(id);
+ALTER TABLE facility_reservations add course_implementation_id int references course_implementations(id);
+alter table facility_reservations add status char(1) default '0';
+alter table facility_reservations add disahkan_oleh int default null references profiles(id);
+alter table facility_reservations add tarikh_sah date default null;
+
+--sham 23/11/2008
+alter table reservation_trainers drop constraint "reservation_trainers_course_implementation_id_key";
+alter table reservation_trainers add column status char(1) default '0';
+
+alter table course_applications drop column markah_ujian_akhir;
+alter table course_applications drop column markah_penilaian_peserta;
+alter table course_applications add column markah_ujian_akhir numeric;
+alter table course_applications add column markah_penilaian_peserta numeric;
+alter table course_applications add column ulasan_urusetia varchar(200);
+
+DROP TABLE participant_evaluations;
+CREATE TABLE participant_evaluations (
+	id serial,
+	course_implementation_id int references course_implementations(id),
+	best_student_id integer default null,
+	best_student varchar(80),
+	ulasan_keseluruhan text
+);
+
+--sham 25/11/2008
+DROP VIEW vw_ci CASCADE;
+ CREATE VIEW vw_ci AS
+ SELECT ci.id,ci.date_start,ci.date_end,ci.code,
+  c.name,
+  d.id as course_department_id,d.description,
+  cf.id as course_field_id, cf.description as course_field_description 
+  FROM course_implementations ci
+  INNER JOIN courses c ON c.id=ci.course_id
+  INNER JOIN course_departments d ON d.id=c.course_department_id
+  INNER JOIN course_fields cf ON cf.id=c.course_field_id
+  ORDER BY d.id
+  ;
+
+DROP VIEW vw_ci_ca;
+CREATE VIEW vw_ci_ca AS
+SELECT ca.id,ca.student_status_id,ca.markah_ujian_akhir,ca.fee_amount,
+       ci.id as cimp_id,ci.course_department_id,ci.description,ci.date_start,ci.date_end,
+	   course_field_description,course_field_id
+	   FROM course_applications ca
+	   INNER JOIN vw_ci ci ON ci.id=ca.course_implementation_id
+;
+
+--senarai ulasan/komen
+DROP VIEW vw_comment;
+CREATE VIEW vw_comment AS
+SELECT ec.comment,ci.course_department_id,ci.code,ci.name,ci.date_start,ci.date_end
+ FROM evaluation_comments ec
+ INNER JOIN vw_ci ci ON ci.id=ec.course_implementation_id
+;
+
+DROP TABLE audit_trails;
+CREATE TABLE audit_trails (
+	id serial primary key,
+	action_type varchar(200),
+	modul varchar(80),
+	submodul varchar(80),
+	rail_controller varchar(30),
+	rail_action varchar(30),
+	created_at date,
+	created_on timestamp without time zone,
+	login varchar(80),
+	user_id integer REFERENCES users(id),
+	role_id integer REFERENCES roles(id) default null,
+	url varchar(200)
+);
+
+-- apis 9/12/2008
+alter table notifications add status char(1) default '0';
+
+--sham 10/12/2008
+alter table course_applications add column no_sijil varchar(10);
+
+DROP VIEW vw_detailed_peserta;
+CREATE VIEW vw_detailed_peserta AS 
+SELECT p.name AS personal_name, ca.id AS course_application_id, ca.profile_id, ca.date_apply, ca.date_approval, ca.no_sijil,
+ca.supervisor_profile_id, ca.course_implementation_id, ca.course_id, ca.reason, ca.student_status_id, ca.approval_id, c.course_department_id, ca.is_apply_online
+  FROM course_applications ca
+  JOIN profiles p ON ca.profile_id = p.id
+  JOIN course_implementations ci ON ca.course_implementation_id = ci.id
+  JOIN courses c ON ci.course_id = c.id
+;
+
+--sham 13/12/2008
+alter table permissions add column modul varchar(50);
+alter table permissions add column submodul varchar(50);
+alter table permissions add column action_type char(1);
+alter table permissions add column auditable integer default null;
+update permissions set action_type='C',auditable=1 where action ilike '%create%';
+update permissions set action_type='U',auditable=1 where action ilike '%update%';
+update permissions set action_type='D',auditable=1 where action ilike '%delete%';
+update permissions set action_type='D',auditable=1 where action ilike '%destroy%';
+
+update permissions set modul='Permohonan Kursus' where controller='course_applications';
+update permissions set modul='Perancangan Kursus' where controller='course_implementations';
+update permissions set modul='Pengendalian Kursus' where controller='course_management';
+update permissions set modul='Penilaian Kursus' where controller='evaluations';
+update permissions set modul='Asrama' where controller='hostels';
+update permissions set modul='Sumber Manusia' where controller='hr';
+update permissions set modul='Pengguna Luar' where controller='user_applications';
+
+insert into permissions(controller,action) values('laporan','audit_trail');
+insert into permissions(controller,action,modul,action_type,auditable) values('hr','apply_for_course','Sumber Manusia','C',1);
+insert into permissions(controller,action,modul) values('hr','select_course_mohon_kursus','Sumber Manusia');
+
+DROP TABLE audit_trails;
+CREATE TABLE audit_trails (
+	id serial primary key,
+	action_type varchar(200),
+	modul varchar(100),
+	submodul varchar(100),
+	rail_controller varchar(100),
+	rail_action varchar(100),
+	created_at date,
+	created_on timestamp without time zone,
+	login varchar(80),
+	user_id integer REFERENCES users(id),
+	role_id integer REFERENCES roles(id) default null,
+	url text
+);
+
+--sham 17/12/2008
+alter table tempahan_sijil add column status char(1) default '0'; -- 0: baru , 1: disahkan 
+alter table tempahan_sijil add column disahkan_oleh int default null;
+alter table tempahan_sijil add column tarikh_sah date default null;
+alter table tempahan_sijil add column disahkan_oleh_user varchar(80);
+
+alter table reservations drop column  to_staff_id;
+alter table reservations drop column  cc_staff_id;
+alter table reservations add column to_staff_id int default null references staffs(id) on delete cascade on update cascade;
+alter table reservations add column cc_staff_id int default null references staffs(id) on delete cascade on update cascade;
+
+--sham 19/12/2008
+alter table hostel_penghuni add column created_at timestamp without time zone;
+alter table hostel_penghuni add column updated_at timestamp without time zone;
+alter table reservation_trainers add column status int default 0;
+
+
+
+insert into roles (name, description, omnipotent, system_role) values ('Pegawai Sijil','Pegawai Sijil','f','t');
+insert into roles (name, description, omnipotent, system_role) values ('Keselamatan','Keselamatan','f','t');
+insert into users_roles values(201,7);
+insert into users_roles values(201,8);

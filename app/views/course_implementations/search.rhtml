@@ -1,0 +1,256 @@
+
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Are you sure to delete " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" + 
+					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
+					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" + 
+					       "<hr size=1>" +
+					       "<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
+					       //"<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tempahan Asrama</font>" + 
+					       //"<li><a href=\"" + controller + "/calendar/" + objid + "\">&nbsp;&nbsp;Kalendar Tahunan</a>" + 
+					       "<hr size=1>" +
+					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tambah Permohonan</font>" + 
+					       "<li><a href=\"" + "/course_applications" + "/all/" + objid + "\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" + 
+					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Jana Surat Tawaran</font>" + 
+					       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
+					       "</ul>"
+     
+}
+
+function rewritePopupContentNoRestraint(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" +
+                                               "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+                                               "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
+                                               "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" +
+					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+                                               "<hr size=1>" +
+                                               "<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" +
+                                               //    "<li><a href=\"" + "javascript: jw(" + "" + objid + ")\">&nbsp;&nbsp;Jadual Waktu</a>" +
+                                                 //  "<li><a href=\"" + "javascript: z(" + "" + objid + ")\">&nbsp;&nbsp;Tambah Jadual Waktu</a>" +
+                                                   "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Tambah Penceramah</a>" +
+                                                   "<hr size=1>" +
+                                                   "<li><a href=\"" + "javascript: u(" + "" + objid + ")\">&nbsp;&nbsp;Ujian</a>" +
+                                                   "<li><a href=\"" + "javascript: p(" + "" + objid + ")\">&nbsp;&nbsp;Penilaian(Set Soalan)</a>" +
+                                                   "<li><a href=\"" + "javascript: pk(" + "" + objid + ")\">&nbsp;&nbsp;Penilaian Berkelompok</a>" +
+                                                   "<hr size=1>" +
+                                                   "<li><a href=\"" + "javascript: b(" + "" + objid + ")\">&nbsp;&nbsp;Tempahan Asrama (Peserta)</a>" +
+                                                   "<li><a href=\"" + "javascript: tap(" + "" + objid + ")\">&nbsp;&nbsp;Tempahan Asrama (Penceramah)</a>" +
+                                               //    "<li><a href=\"" + "javascript: tkk(" + "" + objid + ")\">&nbsp;&nbsp;Tempahan Kemudahan Kursus</a>" +
+                                                        "<li><a href=\"" + "javascript: mkk(" + "" + objid + ")\">&nbsp;&nbsp;Makluman Keselamatan</a>" +
+                                               //"<li><a href=\""  + controller + "/new/" + objid + "\">&nbsp;&nbsp;Tempah Fasiliti</a>" +
+                                               "<hr size=1>" +
+                                               "<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Permohonan</a>" +
+                                               "<li><a href=\""  + "/course_applications" + "/all/" + objid + "?apply_status=all" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" + 
+                                               "<hr size=1>" +
+                                                   "<li><a href=\"" + "javascript: laksana(" + "" + objid + ")\">&nbsp;&nbsp;Status Perlaksanaan</a>" +
+                                               //"<li><a href=\""  + "/course_applications" + "/edit_surat_tawaran_select_peserta/" + objid + "\">&nbsp;&nbsp
+                                               //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;
+                                               "</ul>"
+     
+}
+
+function findAndSortWith(orderby,arrow) {
+	var df = document.list
+	//var arrow = "DESC"
+	
+	df.orderby.value = orderby
+	df.arrow.value = arrow
+	df.submit();
+}
+
+function checkAll(df) {
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       df.elements[i].checked = df.check_all.checked
+     } 
+  }
+}
+
+function a(id) {
+	MM_openBrWindow('/course_implementations/add_course_trainer/'+id,'','scrollbars=yes,width=700,height=600')
+}
+
+function z(id) {
+	MM_openBrWindow('/course_implementations/add_timetable/'+id,'','scrollbars=yes,width=700,height=600')
+}
+
+function b(id) {
+	MM_openBrWindow('/reservations/new_popup/'+id,'','scrollbars=yes,width=800,height=600')
+}
+
+function tap(id) {
+	MM_openBrWindow('/reservations/trainer_book/'+id,'','scrollbars=yes,width=800,height=600')
+}
+
+function tkk(id) {
+	MM_openBrWindow('/facility_reservations/new/'+id,'','scrollbars=yes,width=800,height=600')
+}
+
+function mkk(id) {
+	MM_openBrWindow('/notifications/new/'+id,'','scrollbars=yes,width=800,height=600')
+}
+
+function jw(id) {
+	MM_openBrWindow('/course_implementations/show_timetable/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+
+function u(id) {
+	MM_openBrWindow('/quizzes/shiken_ichiran/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+
+function p(id) {
+	MM_openBrWindow('/evaluations/show/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+
+function pk(id) {
+	MM_openBrWindow('/course_management/evaluation_kelompok/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+
+function laksana(id) {
+	MM_openBrWindow('/laporan/status_perlaksanaan/'+id,'','scrollbars=yes,width=800,height=600')
+}
+
+</script>
+
+<%
+ months = ["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"]
+ bulans = ["01","02","03","04","05","06","07","08","09","10","11","12"]
+ %>
+
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">CARIAN KURSUS</font></b></td>
+    </tr>
+</table>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="0" cellspacing="3">
+    
+    <tr>
+      <td align="RIGHT" width="40%"><strong>Nama Kursus:</strong></td>
+      <td align="LEFT">
+      <form name="list" action="/course_implementations/search" method="post">
+        <input type="text" name="search_name" onkeyup="this.value=this.value.toUpperCase()">
+       <input name="Submit2" type="submit" value="Cari">
+      </form>	  </td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Kod Kursus:</strong> </td>
+      <td align="LEFT">
+      <form name="list" action="/course_implementations/search" method="post">
+        <input type="text" name="search_code" onkeyup="this.value=this.value.toUpperCase()">
+       <input name="Submit2" type="submit" value="Cari">
+      </form>	  </td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tarikh Mula Kursus:</strong> </td>
+      <td align="LEFT">
+      <form name="list" action="/course_implementations/search" method="post">
+        <%= calendar_field 'search_date', '',
+     { :class => 'date',
+        :field_title => 'search_date',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+
+       <input name="Submit2" type="submit" value="Cari">
+      </form>	  </td>
+    </tr>
+  </table>
+  <br>
+  <table align="CENTER" width="95%" border="0" cellspacing="0" cellpadding="1">
+    <tr>
+      <!--td><input name="button" type="button" value="Surat Iklan" onclick="">
+        <input name="button4" type="button" value="Surat Tawaran" onclick=""></td>
+      <td align="RIGHT"><input name="button2" type="button" value="Cetak" onclick="window.print()"></td-->
+    </tr>
+  </table>
+  <table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999" id="pisang" onclick="//servOC(20,'/course/show/3','#999999')">
+      <td id="name20" width="2%" valign="MIDDLE" bgcolor="#999999"><input name="check_all" type="checkbox" class="" onclick="checkAll(document.list)" value="0"></td>
+      <td width="2%" valign="top" id="name20"><font color="#FFFFFF">&nbsp;</font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
+      <td width="30%" align="left"><font color="#FFFFFF">&nbsp;<strong>Nama Kursus</strong></font></td>
+      <td width="30%" align="left"><font color="#FFFFFF">&nbsp;<strong>Kump. Sasaran</strong></font></td>
+      <td width="5%" align="center"><font color="#FFFFFF"><strong>Tempoh (hari)</strong></font></td>
+      <td width="" align="center"><strong><a title="Sila klik untuk susunan menaik/menurun" style="color: #FFFFFF" href="javascript: findAndSortWith('date_plan_start','<%= "DESC" if (@orderby=="date_plan_start" && @arrow=="ASC") %>')">Tarikh Mula</a></strong></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Tarikh Akhir</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Status</strong></font></td>      
+    </tr>
+<tr style="display: none;" id="ihtr20"><td colspan="8" bgcolor="#ececd9">
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody><tr><td width="10"></td><td style="border: 3px solid rgb(0, 51, 102);">
+   <iframe id="ihif20" frameborder="0" width="100%"></iframe>
+   </td></tr>
+   </tbody>
+  </table></td></tr>
+<%
+i = 0;
+even = true;
+
+for query in @course_implementations
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  
+  @jum_hari = (query.day_end.to_i-query.day_start.to_i) + 1
+  
+  cimp = CourseImplementation.find(query.id)
+  
+  show_menu = "show"
+  show_menu = "show_with_no_restraint" if query.editable?(session[:user])
+
+ 
+ onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{query.id}', '#{query.name}', event)"
+
+%>
+    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.<%=show_menu%>('popmenu', '/course_implementations', '<%=h query.id %>', '<%= query.name %>', event)">
+      <td id="name<%=h query.id %>" align="right"><input type="checkbox" name="schedule_ids[]" value="<%=query.id%>" class=""></td>
+      <td id="name<%=h query.id %>" align="right" onmousedown="<%=onmousedown%>"><%= i.to_s %>.</td>
+      <td align=center onmousedown="<%=onmousedown%>"><%=h query.code.upcase %></td>
+      <td align="left" onmousedown="<%=onmousedown%>"><%=h query.name.upcase %></td>
+      <td align="left" onmousedown="<%=onmousedown%>"><%=h query.target_group %></td>
+      <td align="center" onmousedown="<%=onmousedown%>"><%=h query.jumlah_hari %></td>
+      <td align="center" onmousedown="<%=onmousedown%>">&nbsp;<%=h query.date_plan_start.to_formatted_s(:my_format_4) %></td>
+      <td align="center" onmousedown="<%=onmousedown%>">&nbsp;<%=h query.date_plan_end.to_formatted_s(:my_format_4) %></td>
+      <td align="center" onmousedown="<%=onmousedown%>"><%=h query.course.course_status.description.upcase %></td>
+    </tr>
+
+    <tr style="display: none;" id="ihtr<%=h query.id %>"><td colspan="8" bgcolor="#ececd9">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody><tr><td width="10"></td><td style="border: 0px solid rgb(0, 51, 102);">
+         <iframe id="ihif<%=h query.id %>" frameborder="0" width="100%"></iframe>
+         </td></tr>
+       </tbody>
+     </table>
+     </td>
+    </tr>
+
+<% end %>
+  </table>
+
+<%if @course_implementations.size == 0 %>
+<br>
+<div align="center">
+<b><font color="orange">Carian tidak berjaya</font></b>
+</div>
+<%end%>
+

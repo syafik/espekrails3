@@ -1,0 +1,25 @@
+<%= error_messages_for 'place_contact' %>
+
+<!--[form:place_contact]-->
+<p><label for="place_contact_name">Name</label><br/>
+<%= text_field 'place_contact', 'name'  %></p>
+
+<p><label for="place_contact_position">Position</label><br/>
+<%= text_field 'place_contact', 'position'  %></p>
+
+<p><label for="place_contact_phone">Phone</label><br/>
+<%= text_field 'place_contact', 'phone'  %></p>
+
+<p><label for="place_contact_fax">Fax</label><br/>
+<%= text_field 'place_contact', 'fax'  %></p>
+
+<p><label for="place_contact_email">Email</label><br/>
+<%= text_field 'place_contact', 'email'  %></p>
+
+<p><label for="place_contact_updated_on">Updated on</label><br/>
+<%= date_select 'place_contact', 'updated_on'  %></p>
+
+<p><label for="place_contact_created_on">Created on</label><br/>
+<%= date_select 'place_contact', 'created_on'  %></p>
+<!--[eoform:place_contact]-->
+

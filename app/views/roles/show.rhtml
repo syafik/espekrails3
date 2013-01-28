@@ -1,0 +1,28 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI PERANAN</font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th>
+    <%= link_to 'Edit', :action => 'edit', :id => @role %> |
+	<a href="javascript: history.back()">Kembali</a>
+    </th>
+    </tr>
+  </table>
+  <BR>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+   <tr>
+  <td align=right><b>Nama Peranan :</b></td>
+  <td><%=h @role.name %></td>
+  </tr>
+   <tr>
+  <td align=right><b>Keterangan :</b></td>
+  <td><%=h @role.info %></td>
+  </tr>
+  
+	</table>
+

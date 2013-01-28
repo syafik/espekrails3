@@ -1,0 +1,26 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">KEMASKINI STATUS PERKAHWINAN</font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th>
+    <%= link_to 'Lihat', :action => 'show', :id => @marital_status %> |
+	<a href="javascript: history.back()">Kembali</a>
+    </th>
+    </tr>
+  </table>
+  <BR>
+
+
+
+<%= start_form_tag :action => 'update', :id => @marital_status %>
+  <%= render :partial => 'form' %>
+  <BR>
+  <div align=center>
+  <%= submit_tag 'Edit' %>
+  </div>
+<%= end_form_tag %>

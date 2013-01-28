@@ -1,0 +1,8 @@
+<% for column in QuizQuestion.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @quiz_question.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @quiz_question %> |
+<%= link_to 'Back', :action => 'list' %>

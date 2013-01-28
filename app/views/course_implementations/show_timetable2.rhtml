@@ -1,0 +1,11 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">LIHAT JADUAL WAKTU (PDF)</font></b></td>
+    </tr>
+</table>
+<br>
+<div align=center>
+<%#= start_form_tag :action => 'create', '',:name=>"ci_form", :onsubmit=>"return GoSubmit(df)" %>
+  <%= render :partial => 'show_timetable2' %>
+  <br><input type="button" value="Kembali" onclick="self.close()">
+</form>

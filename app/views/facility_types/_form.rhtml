@@ -1,0 +1,26 @@
+
+  <table width="90%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td align="right"><strong>Kategori:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="facility_type[facility_category_id]">
+       <% @facility_category.each do |facility_category| %>
+        <option value="<%= facility_category.id %>"
+        <%= ' selected' if facility_category.id == @facility_type.facility_category_id %>> <%= facility_category.description %> </option>
+        <% end %>  
+      </select>
+      </span>
+      </td>
+    </tr>
+    <tr>
+      <td width=40% align="right"><strong>Kod :</strong></td>
+      <td>&nbsp;
+        <%= text_field 'facility_type', 'code', :maxlength=>25, :size=>25  %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Keterangan :</strong></td>
+      <td>&nbsp;
+        <%= text_field 'facility_type', 'description', :maxlength=>100, :size=>30  %></td>
+    </tr>
+  </table>
+  

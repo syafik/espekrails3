@@ -1,0 +1,35 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999"><font color="#FFFFFF">MAKLUMAT TANDATANGAN</font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th>
+    <%= link_to 'Kemaskini', :action => 'edit', :id => @signature %> |
+	<a href="javascript: history.back()">Kembali</a>
+    </th>
+    </tr>
+  </table>
+  <BR>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+	<tr>
+	<td width="35%" align=right><b>Nama :</b></td>
+	<td><%=h @signature.description %></td>	
+	</tr>
+	<tr>
+	  <td align=right><b>Jawatan :</b></td>
+	  <td><%=h @signature.description %></td>
+    </tr>
+	<!--tr>
+	  <td align=right><b>Keterangan :</b></td>
+	  <td><%=h @signature.description %></td>
+    </tr-->
+	<tr>
+	  <td align=right><b>Tandatangan :</b></td>
+	  <td><%if signature.filename and signature.filename != ""%>
+        <img src="/signatures/<%=h signature.filename %>" height="150">
+        <%end%></td>
+    </tr>
+	</table>

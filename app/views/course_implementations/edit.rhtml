@@ -1,0 +1,60 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">KEMASKINI KURSUS</font></b></td>
+    </tr>
+</table>
+<br>
+
+<%#= start_form_tag :action => 'update', :id => @course_implementation, :course_id => @course %>
+<!--form name=ci_form method=post action="/course_implementations/update/<%=@course_implementation.id%>" 
+	enctype="multipart/form-data" onsubmit="return GoSubmit(ci_form)"-->
+<form name=ci_form method=post action="/course_implementations/update/<%=@course_implementation.id%>"
+         onsubmit="return GoSubmit(ci_form)">
+
+  <%= render :partial => 'form' %>
+  <br>
+  <div align="center">
+  <br><%= submit_tag 'Simpan' %>
+  </div>
+<%= end_form_tag %>
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+$('course_implementation_code').style.background = "#eeeeee";
+//$('course_implementation_code').disabled = "disabled"
+
+function GoSubmit(df) {
+
+	if (!checkSelection(strRegExp,document.getElementById('course_department_id'),'Bahagian')) return false;
+	if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
+	if (!checkInput(slashRegExp,document.getElementById('course_implementation_code'),'Kod Kursus')) return false;
+	if (!checkInput(anythingRegExp,$('course_name'),'Nama Kursus')) return false;
+
+	if (!checkInput(dateDayformat,$('day_start'),'Tarikh Mula Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('month_start'),'Tarikh Mula Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('year_start'),'Tarikh Mula Kursus(tahun)')) return false;
+
+	if (!checkInput(dateDayformat,$('day_end'),'Tarikh Akhir Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('month_end'),'Tarikh Akhir Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('year_end'),'Tarikh Akhir Kursus(tahun)')) return false;
+
+	if (!checkInput(dateDayformat,$('day_apply_end'),'Tarikh Tutup Permohonan Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('month_apply_end'),'Tarikh Tutup Permohonan Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('year_apply_end'),'Tarikh Tutup Permohonan Kursus(tahun)')) return false;
+
+	if (!checkInput(numRegExp,$('course_implementation_capacity'),'Bilangan Peserta')) return false;
+	
+	if (!checkSelection(strRegExp,$('course_course_location_id'),'Tempat')) return false;
+	//if (!checkFormat(fileRegExp,$('course_implementation_file'),'Hanya Format PDF dibenarkan')) return false;
+	if (!checkInput(moneyRegExp,$('course_fee'),'Yuran Kursus')) return false;
+
+	if (!checkSelection(strRegExp,$('course_implementation_coordinator1'),'Penyelaras')) return false;
+	if (!checkSelection(strRegExp,$('course_implementation_coordinator2'),'Penolong Penyelaras')) return false;
+
+	return true;
+}
+
+
+</script>
+
+

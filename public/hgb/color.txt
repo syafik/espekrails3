@@ -1,0 +1,18 @@
+BOX-COLOR = "#F8DFC9"
+BODY-COLOER = "#cdcdcd"
+FONT-COLOER = "#004400"
+ODD-MESSAGE-COLOER = "#DFDFEE"
+EVEN-MESSAGE-COLOER = "#FEEEEF"
+
+-----------------------------------------------------
+Note: Dont remove the first three lines
+
+For changing the color. e.g:
+BOX-COLOR = "#999999"   to  BOX-COLOR = "#232323"
+
+<!-- (c) copyright 2004, HIOX INDIA 		    -->
+<!-- This  is  a free tool provided by hioxidia.com -->
+<!-- Please get in touch with us for using          -->
+<!-- this product in a commercial site.             -->
+
+-----------------------------------------------------

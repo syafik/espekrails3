@@ -1,0 +1,117 @@
+<script type="text/javascript">
+function goSubmit() {
+        if ( $('report1_').value == "" && $('report2_').value == "") {
+                alert("Sila masukkan tarikh");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report1_').value == "") {
+                alert("Sila masukkan tarikh mula");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report2_').value == "") {
+                alert("Sila masukkan tarikh akhir");
+                $('report2_').focus()
+                return false;
+        }
+
+        document.forms[0].submit();
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 200;
+    $('popmenu').innerHTML = "<ul>" + 
+                           // "<li><a href=\""  + "/trainer" + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+					       // "<li><a href=\""  + "/trainer" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+					       // "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					       // "<hr size=1>" +
+							 
+					        "<li><a href=\""  + "/notifications" + "/detail/" + objid + "\">&nbsp;&nbsp;Papar Senarai Terperinci</a>" + 
+							"</ul>"
+     
+}
+</script>
+<form action="/notifications/listp">
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI STATUS MAKLUMAN PELAKSANAAN KURSUS</font></th>
+    </tr>
+  </table>
+<BR>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center">Tarikh Kursus:
+    <%= calendar_field 'report1', '',
+     { :class => 'date',
+        :value => @report_date_from,
+        :field_title => 'report1',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+    
+    &nbsp;&nbsp;Hingga:
+          <%= calendar_field 'report2', '',
+     { :class => 'date',
+        :value => @report_date_to,
+        :field_title => 'report2',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+      <input type="button" value="Papar" onclick="goSubmit()">
+      </td>
+    </tr>
+  </table>
+  </form>
+<BR>            
+<table width="90%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999">
+  <td width="3%" align="CENTER"><b><font color="#FFFFFF">Bil</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Kod Kursus</font></b></td>
+  <td width="25%" align="CENTER"><b><font color="#FFFFFF">Nama Kursus</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Tarikh Pemakluman</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Status</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Tarikh Pengesahan</font></b></td>
+  <td width="" align="CENTER"><b><font color="#FFFFFF">Ulasan</font></b></td>
+   </tr>
+
+<%
+i = 0;
+even = true;
+sum = 0
+for notification in @notifications
+        i = i + 1
+        bgclr = "#CCCCFF" if (even == true)
+        bgclr = "#FFFFFF" if (even == false)
+        even = !even
+        sum = nof {notification.trainer_total + notification.male_total + notification.female_total + notification.urusetia_total + notification.vip_total}
+	status =""
+        status = "Diluluskan" if (notification.approved_on and notification.status=='1')
+        status = "Tidak Diluluskan" if (notification.approved_on and notification.status=='0')
+		status = 'Dalam Proses' if (notification.approved_on.nil? and notification.status=='0')
+
+%>
+<tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+        onmousedown="menuLayers.show('popmenu', '/notifications', '<%=h notification.id %>', '<%=h notification.id %>', event)" class="list">
+        <td align=left valign=top><%= i.to_s %></td>
+        <td align=left valign=top><b><%=h nof{notification.course_implementation.code} %></b></td>
+        <td align=left valign=top><%=h nof{notification.course.name.upcase} %></td>
+        <td align=center valign=top><%=h nof{notification.created_on.to_formatted_s(:my_format_4)} %></td>
+        <td align=center valign=top><%=h status %></td>
+        <td align=center valign=top><%if status == 'Dalam Proses'%> <%=status%><%end%><%=h nof{notification.approved_on.to_formatted_s(:my_format_4)} %></td>
+        <td align=center valign=top><%=h nof{notification.remark} %></td>
+        </tr>
+ <% end %>
+</table> 
+</form>
+<br />
+

@@ -1,0 +1,47 @@
+<!--[form:profile]-->
+<div align="center">
+<%= error_messages_for 'profile' %>
+</div>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+ <tr bgcolor="000000">
+    	<td colspan="4" align="center"><b><font color="#FFFFFF">MAKLUMAT PERKHIDMATAN</font></b></td>
+    </tr>
+    <tr>
+      <td colspan="4" align="right">&nbsp;</td>
+    </tr>
+   <tr>
+      <td align="right"><b>Pejabat :</b></td>
+      <td colspan="3">&nbsp;
+     <select name="employment[place_id]">
+        <% @places.each do |place| %>
+        <option value="<%= place.id %>"
+         		<%= ' selected' if place.id == @employment.place_id %>> <%= place.name %> </option>
+        <% end %>
+      </select>      
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><b>Bahagian/Unit :</b></td>
+      <td colspan=3>&nbsp;
+      <%= text_field 'employment', 'unit', :maxlength=>100, :size=>50  %></td>
+    </tr>
+     <tr>
+      <td align="right"><b>Gred :</b></td>
+      <td>&nbsp;
+ 	<select name="employment[job_profile_id]">
+        <% @job_profiles.each do |jp| %>
+        <option value="<%= jp.id %>"
+         		<%= ' selected' if jp.id == @employment.job_profile_id %>> <%= jp.job_grade %> </option>
+        <% end %>
+      </select></td>
+      <td align="right"><b>Jawatan :</b></td>
+      <td>&nbsp;
+      <%= text_field 'job_profile', 'job_name', :maxlength=>50, :size=>50  %></td>
+     
+    </tr>
+  	<tr>
+ 	<td colspan=4>&nbsp;</td>
+ 	</tr>
+       </table>
+<!--[eoform:profile]-->

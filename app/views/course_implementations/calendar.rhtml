@@ -1,0 +1,190 @@
+<script>
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" + 
+					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
+					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" + 
+					    //   "<hr size=1>" +
+					     //  "<li><a href=\"" + "/course_implementations" + "/show_timetable/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
+					       //"<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tempahan Asrama</font>" + 
+					       //"<li><a href=\"" + controller + "/calendar/" + objid + "\">&nbsp;&nbsp;Kalendar Tahunan</a>" + 
+					       "<hr size=1>" +
+					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tambah Permohonan</font>" + 
+					       "<li><a href=\"" + "/course_applications" + "/all/" + objid + "\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" + 
+					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Jana Surat Tawaran</font>" + 
+					       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
+					       "</ul>"
+     
+}
+
+function rewritePopupContentNoRestraint(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
+					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					     //  "<hr size=1>" +
+					       //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
+						//	"<li><a href=\"" + "/course_implementations" + "/show_timetable/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
+					       //"<li><a href=\"" + controller + "/booking_hostel/" + objid + "\">&nbsp;&nbsp;Tempahan Asrama</a>" + 
+					       "<hr size=1>" +
+					       "<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Permohonan</a>" + 
+					       "<li><a href=\""  + "/course_applications" + "/all/" + objid + "?apply_status=all" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" + 
+					       "<li><a href=\""  + "/course_applications" + "/edit_surat_tawaran_select_peserta/" + objid + "\">&nbsp;&nbsp;Jana Surat Tawaran</a>" + 
+					       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
+					       //"<hr size=1>" +
+					       //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Pensyarah</a>" + 
+					       //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Pilih Pensyarah</a>" + 
+					       //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tempah Fasiliti</a>" + 
+					       "</ul>"
+     
+}
+
+
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah Anda Pasti Untuk Memadam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function onEnterSchedule(obj) {
+	obj.style.background='#7777ff'
+}
+
+function onExitSchedule(obj) {
+	obj.style.background=''
+}
+</script>
+
+<%
+  t = Time.now
+  current_year= t.strftime("%Y")
+  the_year = params[:planning_year]
+%>    
+<form action="/course_implementations/calendar">
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">KALENDAR KURSUS</font></b></td>
+    </tr>
+  </table>
+  <br>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">Tahun: 
+        <select name = "planning_year">
+         <% @planning_years.each do |cf| %>
+         <%
+         if (the_year == nil)
+         %>
+         <option value="<%= cf.year %>"
+         <%= ' selected' if cf.year.to_s == current_year.to_s %>> <%= cf.year %> </option>
+         <%
+         else
+         %>
+         <option value="<%= cf.year %>"
+         <%= ' selected' if cf.year == params[:planning_year] %>> <%= cf.year %> </option>
+         <% end %>
+         <% end %>
+	    </select> 
+        <select name="course_department_id">
+          <option value="">Pilih Bahagian</option>
+          <% @course_departments.each do |cf| %>
+          <option value="<%= cf.id %>"
+         	<%= ' selected' if cf.id == params[:course_department_id].to_i %>> <%= cf.description.upcase %> </option>
+          <% end %>
+        </select>
+        <input type="button" value="Cari" onclick="document.forms[0].submit()">
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table align="CENTER" width="95%" border="0" cellspacing="0" cellpadding="1">
+    <tr>
+      <td align="RIGHT">&nbsp;</td>
+    </tr>
+  </table>
+
+  <div width="95%" style="background: #FFFFFF">  
+  <table class="seven" width="95%" border="0" align="center" cellpadding="3" cellspacing="0" bgcolor="#777777">
+    <tr bgcolor="#999999" >
+      <td class="el" width="2%" valign="top" id="name20"><font color="#FFFFFF">&nbsp;</font></td>
+      <td class="el" width="5%" align="center"><font color="#FFFFFF"><strong>Kod </strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Nama Kursus</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Jan</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Feb</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Mac</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Apr</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Mei</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Jun</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Jul</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Ogo</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Sep</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Okt</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Nov</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Dis</strong></font></td>
+      <!--td class="el" align="center"><font color="#FFFFFF">Action</font></td-->
+    </tr>
+<tr style="display: none;" id="ihtr20"><td colspan="7" bgcolor="#ececd9">
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody><tr><td width="10"></td><td style="border: 3px solid rgb(0, 51, 102);">
+   <iframe id="ihif20" frameborder="0" width="100%"></iframe>
+   </td></tr>
+   </tbody>
+  </table></td></tr>
+<%
+t = Time.now
+current_year = t.strftime("%Y")
+
+i = 0;
+even = true;
+
+if !params[:planning_year]
+  sch_year = current_year   #2006
+else
+  sch_year = params[:planning_year]
+end
+
+if params[:course_department_id] != nil
+	@course_implementations = CourseImplementation.find_by_sql("select * from vw_detailed_courses where course_department_id = '#{params[:course_department_id]}' AND year_start=#{sch_year.to_i} ORDER BY code")
+else
+	@course_implementations = CourseImplementation.find_by_sql("select * from vw_detailed_courses where year_start=#{sch_year.to_i} ORDER BY code")
+end
+
+for query in @course_implementations
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+
+  show_menu = "show"
+  show_menu = "show_with_no_restraint" if query.editable?(session[:user])
+  onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{query.id}', '#{query.name}', event)"
+%>
+	
+    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+         onmousedown="<%=onmousedown%>" >
+      <td class="el" style="font-size: 10px" id="name<%=h query.id %>"><%= i.to_s %>.</td>
+      <td class="el" style="font-size: 10px"><%=h query.code %></td>
+      <td class="el" style="font-size: 10px"><%=h query.name.upcase %></td>
+        <% 12.times do |n| %>
+        <% n = n + 1 %>
+      <td class="el" style="font-size: 10px">
+        <% if query.date_plan_start.month == n %>
+                <%=h query.date_plan_start.day.to_s + "-" + query.date_plan_end.day.to_s %>
+		<% else%>
+		&nbsp;
+        <% end %></td>
+        <% end %>
+    </tr>
+<%
+end
+%>
+  </table>
+</div>
+</form>

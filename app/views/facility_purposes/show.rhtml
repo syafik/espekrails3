@@ -1,0 +1,8 @@
+<% for column in FacilityPurpose.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @facility_purpose.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @facility_purpose %> |
+<%= link_to 'Back', :action => 'list' %>

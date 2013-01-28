@@ -1,0 +1,215 @@
+<script type="text/javascript">
+/*************************************************************************
+  This code is from Dynamic Web Coding at http://www.dyn-web.com/
+  Copyright 2003 by Sharon Paine 
+  See Terms of Use at http://www.dyn-web.com/bus/terms.html
+  regarding conditions under which you may use this code.
+  This notice must be retained in the code as is!
+*************************************************************************/
+
+var menuLayers = {
+  timer: null,
+  activeMenuID: null,
+  offX: 4,   // horizontal offset 
+  offY: 6,   // vertical offset 
+
+  show: function(id, controller, objid, objname, e) {
+    var mnu = document.getElementById? document.getElementById(id): null;
+    if (!mnu) return;
+    this.activeMenuID = id;
+    if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
+    if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
+    viewport.getAll();
+
+    //objid = controller + "/" + action + "/" + objid
+
+	document.getElementById('popmenu').style.width = "250";
+    document.getElementById('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\""  + controller + "/edit_sah/" + objid + "\">&nbsp;&nbsp;Pengesahan Tempahan</a>" + 
+					       "<li><a href=\""  + controller + "/detail/" + objid + "\">&nbsp;&nbsp;Senarai Terperinci Tempahan</a>" + 
+                           //"<hr size=1>" +
+					       //"<li><a href=\""  + controller + "/edit_trainer_book_sah/" + objid + "\">&nbsp;&nbsp;Pengesahan Tempahan (Penceramah)</a>" + 
+					       //"<li><a href=\"javascript: confirmAndGoTrainer('"  + controller + "/destroy_resv_trainer/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Tempahan (Penceramah)</a>" +
+					       "</ul>"
+    this.position(mnu,e);
+  },
+  
+  hide: function() {
+    this.clearTimer();
+    if (this.activeMenuID && document.getElementById) 
+      this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
+  },
+  
+  position: function(mnu, e) {
+    var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
+    var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
+    
+    if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
+      x = x - mnu.offsetWidth - this.offX;
+    else x = x + this.offX;
+  
+    if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
+      y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
+    else y = y + this.offY;
+    
+    mnu.style.left = x + "px"; mnu.style.top = y + "px";
+    this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
+  },
+  
+  mouseoutCheck: function(e) {
+    e = e? e: window.event;
+    // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
+    var mnu = document.getElementById(menuLayers.activeMenuID);
+    var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
+    if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
+  },
+  
+  // returns true of oNode is contained by oCont (container)
+  contained: function(oNode, oCont) {
+    if (!oNode) return; // in case alt-tab away while hovering (prevent error)
+    while ( oNode = oNode.parentNode ) 
+      if ( oNode == oCont ) return true;
+    return false;
+  },
+
+  clearTimer: function() {
+    if (menuLayers.timer) clearTimeout(menuLayers.timer);
+  }
+  
+}
+</script>
+
+<script type="text/javascript">
+function confirmAndGo(url, objname) {
+	if (confirm("Are you sure to delete " + objname + "?")) {
+		location = url
+	}
+	
+}
+</script>
+
+<script type="text/javascript">
+function goSubmit() {
+        if ( $('report1_').value == "" && $('report2_').value == "") {
+                alert("Sila masukkan tarikh");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report1_').value == "") {
+                alert("Sila masukkan tarikh mula");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report2_').value == "") {
+                alert("Sila masukkan tarikh akhir");
+                $('report2_').focus()
+                return false;
+        }
+
+        document.forms[0].submit();
+}
+</script>
+
+<form action="/reservations/listp">
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI TEMPAHAN ASRAMA</font></th>
+    </tr>
+  </table>
+<BR>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center">Tarikh Kursus:
+    <%= calendar_field 'report1', '',
+     { :class => 'date',
+        :value => @report_date_from,
+        :field_title => 'report1',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+    
+    &nbsp;&nbsp;Hingga:
+          <%= calendar_field 'report2', '',
+     { :class => 'date',
+        :value => @report_date_to,
+        :field_title => 'report2',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+      <input type="button" value="Papar" onclick="goSubmit()">
+      </td>
+    </tr>
+  </table>
+</form>
+<BR>            
+<table width="90%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999">
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Bil</font></b></td>
+  <td width="10%" align="CENTER"><b><font color="#FFFFFF">Kod Kursus</font></b></td>
+  <td width="25%" align="CENTER"><b><font color="#FFFFFF">Nama Kursus</font></b></td>
+  <td width="" align="CENTER"><b><font color="#FFFFFF">Penyelaras</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Tarikh<br />
+  Tempahan</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Status<br />
+  Tempahan</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Bil Penceramah</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Bil Peserta (L)</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Bil Peserta (P)</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Bil Urusetia</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Bil VIP</font></b></td>
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Jumlah</font></b></td>
+   </tr>
+
+<%
+i = 0;
+even = true;
+sum = 0
+for reservation in @reservations
+        i = i + 1
+        bgclr = "#CCCCFF" if (even == true)
+        bgclr = "#FFFFFF" if (even == false)
+        even = !even
+        sum = nof {reservation.trainer_total + reservation.male_total + reservation.female_total + reservation.urusetia_total + reservation.vip_total}
+%>
+<tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+        onmousedown="menuLayers.show('popmenu', '/reservations', '<%=h reservation.id %>', '<%=h reservation.id %>', event)" class="list">
+        <td align=left valign=top><%= i.to_s %></td>
+        <td align=left valign=top><b><%=h nof{reservation.course_implementation.code} %></b>
+        <%=h nof{reservation.course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %>
+        Hingga
+        <%=
+                 if !reservation.course_implementation.date_end
+                                nof{reservation.course_implementation.date_plan_end.to_formatted_s(:my_format_4)}
+                         else
+                                nof{reservation.course_implementation.date_end.to_formatted_s(:my_format_4)}
+                         end
+                                -%></td>
+        <td align=left valign=top><%=h nof{reservation.course.name.upcase} %></td>
+	    <td align=left valign=top>
+	    <%=h nof{reservation.course_implementation.penyelaras1.profile.name.upcase} %> [<%= nof{reservation.course_implementation.penyelaras1.profile.phone}%>,<%= nof{reservation.course_implementation.penyelaras1.profile.mobile}%>]<BR>
+	    <%=h nof{reservation.course_implementation.penyelaras2.profile.name.upcase} %> [<%= nof{reservation.course_implementation.penyelaras2.profile.phone}%>,<%= nof{reservation.course_implementation.penyelaras2.profile.mobile}%>]	    </td>
+        <td align=center valign=MIDDLE><%=nof{reservation.created_on.to_formatted_s(:my_format_4)} %></td>
+        <td align=center valign=MIDDLE><%="BARU" if reservation.status=="0" %><%="DISAHKAN" if reservation.status=="1" %></td>
+        <td align=center valign=MIDDLE><%=h nof{reservation.trainer_total} %></td>
+        <td align=center valign=MIDDLE><%=h nof{reservation.male_total} %></td>
+        <td align=center valign=MIDDLE><%=h nof{reservation.female_total} %></td>
+        <td align=center valign=MIDDLE><%=h nof{reservation.urusetia_total} %></td>
+        <td align=center valign=MIDDLE><%=h nof{reservation.vip_total} %></td>
+        <td align=center valign=MIDDLE><%=h nof{sum} %></td>
+        </tr>
+ <% end %>
+</table>  
+
+<%# link_to 'Previous page', { :page => @reservation_pages.current.previous } if @reservation_pages.current.previous %>
+<%# link_to 'Next page', { :page => @reservation_pages.current.next } if @reservation_pages.current.next %> 
+
+<br />

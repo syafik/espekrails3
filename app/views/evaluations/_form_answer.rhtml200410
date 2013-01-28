@@ -1,0 +1,241 @@
+<center><b></b></center>
+<p>
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF"><%=@evaluation.name.upcase%><br> NAMA PESERTA:
+	  <% if params[:klm] != nil%>
+	      PESERTA<%=@student.get_index[0]+1%>
+	  <% else %>
+	  <%= @student.profile.name%>
+	  <% end %>
+	  	    </font></th>
+    </tr>
+  </table>
+  
+  <BR>
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td colspan="2" bgcolor="#999999"><b>A. MAKLUMAT KURSUS DIHADIRI</b></td>
+    </tr>
+    <tr>
+      <td colspan=2><strong>MODUL:</strong> <%=@evaluation.course_implementation.course.name.upcase%></td>
+    </tr>
+    <tr>
+      <td width="30%"><strong>KOD KURSUS:</strong></td>
+      <td><%=@evaluation.course_implementation.code%></td>
+    </tr>
+    <tr>
+      <td><strong>TARIKH: </strong></td>
+      <td><%=@evaluation.course_implementation.duration_formal_2%> (<%=@evaluation.course_implementation.jumlah_hari%> hari) </td>
+    </tr>
+  </table>
+  <br />
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+	<tr>
+		<td colspan="3" bgcolor="#999999"><b>B.PENILAIAN PENCERAMAH </b></td>
+	</tr>
+    <tr>
+      <td width="50%">&nbsp;</td>
+      <td width="20%">&nbsp;</td>
+      <td align="center">Ulasan</td>
+    </tr>
+	
+<%
+   for topic in @topics
+%>
+		<tr>
+		  <td colspan="3" bgcolor="#dddddd">
+		  Topik: <%=topic.title%><br />
+		  Pensyarah: <%=topic.trainer.profile.name%>		  </td>
+        </tr>
+		
+		<% for ranking in topic.evaluation_trainer_rankings	%>
+		<tr>
+		  <td width="50%">
+			<table><tr><td>&nbsp;</td><td><%=ranking.evaluation_question.questiontext%></td></tr></table>
+		  </td>
+		  <td width="20%" nowrap>
+		  <% ranking.max_ranking.times do |i|%>
+		  <% 
+		    if ranking.evaluation_question.student_answer(@student.id) != nil	
+			if ranking.evaluation_question.student_answer(@student.id).answer==i+1
+				checked = "checked"
+				choice = "<span style=\"color:orange;font-weight:bold;\">#{i+1}</span>"
+			 else
+				checked = ""
+				choice = "#{i+1}"
+			 end
+		    end
+		  %>
+		  <input name="<%=ranking.evaluation_question.id%>" type="radio" value="<%=i+1%>" style="height: 11px" <%=checked%> disabled=disabled><%=choice%>
+		  <% end %>
+		  </td>
+		  <td>
+		  <input name="comment_<%=ranking.evaluation_question.id%>" type="text" size="40" 
+value="<%=nof{ranking.evaluation_question.student_answer(@student.id).answer_comment}%>" disabled=disabled style="background:#eeeeee"></td>
+       </tr>
+
+<% 
+		end
+  end
+%>
+</table>
+  <br />
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td colspan="3" bgcolor="#999999"><b>C.PENILAIAN KURSUS </b></td>
+    </tr>
+    <tr>
+      <td colspan="3" bgcolor="#dddddd" align="center">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK 5:CEMERLANG </td>
+    </tr>
+
+    <tr>
+      <td width="50%">&nbsp;</td>
+      <td width="20%">&nbsp;</td>
+      <td align="center">Ulasan</td>
+    </tr>
+		
+	<% for subc in EvaluationSection.find(3).evaluation_subsections%>
+    <tr>
+      <td colspan="2"><b><%=subc.description%></b></td>
+      <td>&nbsp;</td>
+    </tr>
+
+	<% 
+		if subc.evaluation_questions.size > 0
+			@evaluation_questions = EvaluationQuestion.find(:all, 
+			                        :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
+			for eq in @evaluation_questions				
+	%>
+	<tr>
+		<td><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
+	  <td nowrap><%#=eq.student_answer(@student.id).answer%>
+	<%		if eq.evaluation_type_id == 5%>	
+	<% 			eq.evaluation_ranking.max_ranking.times do |i|%>
+		  <% if eq.student_answer(@student.id).answer==i+1
+				checked = "checked"
+				choice = "<span style=\"color:orange;font-weight:bold;\">#{i+1}</span>"
+			 else
+				checked = ""
+				choice = "#{i+1}"
+			 end
+		  %>
+          <input name="<%=eq.id%>" type="radio" value="<%=i+1%>" style="height: 11px" disabled=disabled <%=checked%>><%=choice%>
+    <% 			end
+			end
+	%>
+
+	<%		if eq.evaluation_type_id == 6%>
+	<%			if eq.student_answer(@student.id).answer == 1
+					ya = "<span style=\"color:orange;font-weight:bold;\">Ya</span>"
+					ya_checked = "checked"
+					tidak = "Tidak"
+					tidak_checked = ""
+				elsif eq.student_answer(@student.id).answer == 0
+					ya = "Ya"
+					ya_checked = ""
+					tidak = "<span style=\"color:orange;font-weight:bold;\">Tidak</span>"
+					tidak_checked = "checked"
+				else
+					ya = "Ya"
+					tidak = "Tidak";
+					ya_checked = "";
+					tidak_checked = "";
+				end
+	
+	%>
+          <input name="<%=eq.id%>" type="radio" value="1" style="height: 11px" disabled=disabled <%=ya_checked%>><%=ya%>
+          <input name="<%=eq.id%>" type="radio" value="0" style="height: 11px" disabled=disabled <%=tidak_checked%>><%=tidak%>
+    <%		end
+	%>	  </td>
+	  <td>
+	     <input name="comment_<%=eq.id%>" type="text" size="40" disabled=disabled value="<%=eq.student_answer(@student.id).answer_comment%>" style="background:#eeeeee">	  </td>
+	</tr>
+	<%
+			end
+		 end
+		end
+	%>
+  </table>
+  <br />
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td colspan="3" bgcolor="#999999"><b>D.PENILAIAN KEMUDAHAN </b></td>
+    </tr>
+
+    <tr>
+      <td width="50%">&nbsp;</td>
+      <td width="20%">&nbsp;</td>
+      <td align="center">Ulasan</td>
+    </tr>
+    
+    <% for subc in EvaluationSection.find(4).evaluation_subsections%>
+    <tr>
+      <td colspan="2"><b><%=subc.description%></b></td>
+      <td>&nbsp;</td>
+    </tr>
+    <% 
+		if subc.evaluation_questions.size > 0
+		@evaluation_questions = EvaluationQuestion.find(:all, 
+			                                            :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
+
+			for eq in @evaluation_questions				
+	%>
+    <tr>
+      <td><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
+      <td nowrap><%#=eq.student_answer(@student.id).answer%>
+	  <%		if eq.evaluation_type_id == 5%>
+          <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
+		  <% if eq.student_answer(@student.id).answer==i+1
+				checked = "checked"
+				choice = "<span style=\"color:orange;font-weight:bold;\">#{i+1}</span>"
+			 else
+				checked = ""
+				choice = "#{i+1}"
+			 end
+			
+		  %>
+          <input name="<%=eq.id%>" type="radio" value="<%=i+1%>" style="height: 11px" disabled=disabled <%=checked%>><%=choice%>
+          <%
+		   				end
+					end
+	%>
+    <%		if eq.evaluation_type_id == 6%>
+        <input name="<%=eq.id%>" type="radio" value="1" style="height: 11px">Ya
+        <input name="<%=eq.id%>" type="radio" value="0" style="height: 11px">Tidak
+    <%		end
+	%>	  </td>
+	  <td><input name="comment_<%=eq.id%>" type="text" size="40" disabled=disabled style="background:#eeeeee;" value="<%=eq.student_answer(@student.id).answer_comment%>"></td>
+    </tr>
+    <%
+			end
+		 end
+		end
+	%>
+  </table>
+  <br />
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td width="50%" bgcolor="#999999"><b>E.KOMEN DAN CADANGAN </b></td>
+    </tr>
+    
+    <% for subc in EvaluationSection.find(5).evaluation_subsections%>
+    <tr>
+      <td><b><%=subc.description%></b></td>
+    </tr>
+	<%		
+			i = 0;
+			for comment in EvaluationComment.find_by_sql("select * from evaluation_comments where course_application_id=#{@student.id}")%>
+	<tr>
+      <td valign="middle"><%=i+1%>.
+      <textarea name="comments[]" rows="1" style="width: 650px" disabled=disabled><%=comment.comment%></textarea></td>
+    </tr>
+
+    <%
+				i = i+1
+			end
+	   end
+	%>
+
+  </table>

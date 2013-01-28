@@ -1,0 +1,231 @@
+<%
+if @course_implementation
+	@schedule = @course_implementation
+	@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " +
+	      "HINGGA " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_e_month).upcase} " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+end
+%>
+
+
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">PENGESAHAN TEMPAHAN  SIJIL: <%=@course_implementation.code%>&nbsp; <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+    </tr>
+ </table>
+  <br>
+
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<%if @course_implementation%>
+<br />
+ <form name="list_form" method="post" action="/course_management/update_polisi_sijil/<%=@course_implementation.id%>" onsubmit="return GoSubmit(this.list_form)">
+    <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+    <!--tr>
+      <td align="RIGHT"><strong>Kod:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.code%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tempat:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+    </tr-->
+    <tr>
+      <td align="RIGHT"><strong>Penyelaras :</strong></td>
+      <td><font><%=@course_implementation.penyelaras1.profile.name%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Penolong Penyelaras :</strong></td>
+      <td><font><%= nof{@course_implementation.penyelaras2.profile.name} %></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Penerima Tempahan :</strong></td>
+      <td><select name="tempahan_sijil[penerima]">
+	<option value="0">Sila Pilih</option>
+	<% @coordinators.each do |c| %>
+	<option value="<%= c.id %>"
+		<%= ' selected' if c.id == @tempahan_sijil.penerima.to_i %>> <%= c.profile.name.upcase %> </option>
+	<% end %>
+      </select></td>
+    </tr>
+    <tr>
+      <td align="RIGHT">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Kursus :</strong></td>
+      <td><font><%=@course_implementation.course.name.upcase%> (<%=@course_implementation.code%>)</font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tarikh Kursus :</strong></td>
+      <td><font><%=@course_implementation.tempoh%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Anjuran :</strong></td>
+	  <% anjuran = "INSTUN"
+	     anjuran = @tempahan_sijil.anjuran if @tempahan_sijil.anjuran != nil
+	  %>
+      <td><input name="tempahan_sijil[anjuran]" id="tempahan_ajuran" value="<%=anjuran%>" type="text" size="50"></td>
+    </tr>
+
+    <tr>
+      <td align="RIGHT"><strong>Tempat Kursus :</strong></td>
+      <td><font><%#=@course_implementation.course.course_location.description%>
+	<input name="tempahan_sijil[tempat]" id="tempahan_sijil_tempat" value="<%=@tempahan_sijil.tempat%>" type="text" size="50">
+      </font></td>
+    </tr>
+
+    <tr>
+      <td align="RIGHT">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Bahagian :</strong></td>
+      <td><select id="tempahan_sijil_bahagian" name="tempahan_sijil[bahagian]">
+	<option value="">Sila Pilih</option>
+	<% @course_departments.each do |course_department| %>
+	<option value="<%= course_department.id %>"
+	<%= ' selected' if @tempahan_sijil.bahagian.to_i == course_department.id %>> <%= course_department.description %> </option>
+	<% end %>
+      </select></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tarikh Tempahan :</strong></td>
+      <td><input name="tempahan_sijil[tarikh]" type="text" size="12" id="tempahan_tarikh" value="<%=nof{@tempahan_sijil.tarikh.to_formatted_s(:my_format_4)}%>">
+	&nbsp;<font color="orange">[dd/mm/yyyy]</font></td>
+    </tr>
+
+    <tr>
+      <td align="RIGHT"><strong>Kategori Sijil :</strong></td>
+      <td>
+	  <%
+	    checked_1 = checked_2 = ""
+		if @course_implementation.tempahan_sijil
+			checked_1 = "checked" if @tempahan_sijil.kategori_sijil == "1"
+			checked_2 = "checked" if @tempahan_sijil.kategori_sijil == "2"
+		end
+	  %>
+
+	  <input name="tempahan_sijil[kategori_sijil]" type="radio" value="1" <%=checked_1%>>
+	Sijil Penghargaan
+	  <input name="tempahan_sijil[kategori_sijil]" type="radio" value="2" <%=checked_2%>>
+	Sijil Penyertaan </td>
+    </tr>
+
+    <tr>
+      <td align="RIGHT"><strong>Status :</strong></td>
+      <td>
+	  <%
+	    checked_1 = checked_2 = ""
+		if @course_implementation.tempahan_sijil
+			checked_1 = "checked" if @course_implementation.tempahan_sijil.status == "0"
+			checked_2 = "checked" if @course_implementation.tempahan_sijil.status == "1"
+		end
+	  %>
+
+	  <input name="tempahan_sijil[status]" type="radio" value="1" <%=checked_1%>>
+	Baru
+	  <input name="tempahan_sijil[status]" type="radio" value="2" <%=checked_2%>>
+	Disahkan </td>
+    </tr>
+
+    <tr>
+      <td align="CENTER" colspan="2">&nbsp;</td>
+      </tr>
+
+
+
+    <tr>
+      <td valign="TOP" align="center" colspan="2">&nbsp;</td>
+    </tr>
+    <!--tr>
+      <td valign="TOP" align="center" colspan="2"><input type="button" name="Submit2" value="Batal" onclick="window.close();">
+      <input type="button" name="Submit" value="Cetak" onclick="ct(<%=@course_implementation.id%>)">
+      <input type="button" name="Submit3" value="Hantar Tempahan" onclick="ht(<%=@course_implementation.id%>)"></td>
+    </tr-->
+  </table>
+</form>
+ <div width="95%" style="background: #FFFFFF">
+    <table width="95%" align="center" border="0" cellpadding="0" cellspacing="0">
+      <tbody>
+	<tr>
+	  <td valign="bottom" align="LEFT" style="padding-bottom: 5px;">Senarai Nama Peserta:</td>
+	  <td valign="bottom" align="right" style="padding-bottom: 5px;">&nbsp;</td>
+	</tr>
+      </tbody>
+    </table>
+    <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+   <table class="seven" width="95%" <%=list_border%> align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+      <tr bgcolor="#999999">
+	<td class="el" width="2%" valign="top">&nbsp;</td>
+	<td class="el" width="70%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama</a></strong></td>
+	<td class="el" align="center"><font color="#FFFFFF"><strong>No KP </strong></font></td>
+      </tr>
+      <%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFE" if (even == false)
+  even = !even
+
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  jawatan = nof{student.profile.employments[0].job_profile.job_grade}
+  pejabat = nof{student.profile.employments[0].place.name}
+
+  arr = Array.new
+  for ca in student.profile.course_applications
+	arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
+  end
+  related = arr.join(",")
+
+%>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+	onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+	<td class="el" height="20">&nbsp;<%= i.to_s %>.</td>
+	<td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)"><%=h student.profile.name.upcase %></td>
+	<td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center">&nbsp;<%=student.profile.ic_number%></td>
+      </tr>
+      <% end %>
+   </table>
+    <br />
+
+<center>
+  <input type="button" name="Submit32" value="Sah Terima Tempahan" onclick="ht(<%=@course_implementation.id%>)">
+</center>
+ </div>
+  <br>
+  <%end%>
+  <script src="/javascripts/form_validator.js" type="text/javascript"></script>
+
+<script>
+
+function GoSubmit(df) {
+
+	//if (!checkSelection(strRegExp,$('sesi_harian_tarikh'),'Tarikh')) return false;
+	//cert_policy_kehadiran_minima
+
+	return true;
+}
+
+function ct(id) {
+	document.forms[0].action = "/course_management/cetak_tempahan/<%=@course_implementation.id%>"
+	document.forms[0].submit()
+}
+
+function ht(id) {
+	document.forms[0].action = "/course_management/sah_tempahan_sijil/<%=@course_implementation.id%>"
+	document.forms[0].submit()
+}
+
+
+</script>

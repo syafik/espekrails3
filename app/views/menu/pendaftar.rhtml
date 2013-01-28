@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en_US">
+<head>
+<title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link rel="StyleSheet" href="/stylesheets/global.css" type="text/css" />
+<link rel="StyleSheet" href="/stylesheets/dtree.css" type="text/css" />
+<script type="text/javascript" src="/javascripts/dtree.js"></script>
+<style>
+body {
+	background-color: #FFFFFF;
+	}
+</style>
+</head>
+	
+<body bgcolor="#FFFFFF">	
+<br>
+<div align="center"><img src="/images/menu3.jpg"></div>
+<div id="objTreeMenu_1_node_1" style="display: inline;" class="treeMenuDefault"><nobr> 
+  <div align="center"><br>
+    USER <%= session[:user].login %><br>
+	<a target="_top" href="/user/logout">| Logout |</a>
+    <br>
+    <br>
+  </div>
+  </nobr></div>
+<div class="dtree">
+<script type="text/javascript">
+		<!--
+
+		d = new dTree('d');
+		
+		d.config.useCookies=false;
+		d.config.useLines=false;
+		
+		d.icon.root = "/images/menutree/home.gif";
+		//d.icon.root = "/images/menutree/kpmlogo.gif";
+		d.config.target = "main";
+		
+
+		d.add(40, 0,  'Asrama', '', 'Pendaftaran Asrama','main','/images/menutree/folder.gif');
+		d.add(41, 40, 'Daftar Peserta', '/hostel_profiles/list', 'Senarai Peserta Yang Datang','main');
+		d.add(42, 40, 'Kursus Semasa', '/user_applications/list_course', 'Senarai Kursus Semasa','main');
+		//d.add(43, 40, 'Senarai Dipilih', '/user_applications/offered', 'Senarai Kursus Yang Ditawarkan','main');
+		//d.add(44, 40, 'Kursus Dihadiri', '/user_applications/attend', 'Senarai Kursus Yang Sedang Dihadiri','main');
+		//d.add(45, 40, 'Senarai Tamat Kursus', '/user_applications/completed', 'Senarai Kursus Yang Selesai Dihadiri','main');
+
+		//d.add(80, 0, 'Ujian/Penilaian', '', 'Pengurusan Permohonan','main','/images/menutree/folder.gif');
+		//d.add(81, 80, 'Sebelum Kursus', '/course_implementations/iklan', 'Iklan Kursus','main');
+		//d.add(82, 80, 'Selepas Kursus', '/student/list', 'Senarai Pemohon','main');
+		//d.add(83, 80, 'Penilaian Kursus', '/student/new', 'Tambah Permohonan','main');		
+			
+		
+		d.add(0,-1,' INSTUN : eSPEK');
+
+		//d.add(160, 0, 'Kakitangan', '', 'Pengurusan Kakitangan INSTUN','main','/images/menutree/folder.gif');
+		//d.add(161, 160, 'Tambah', '/profiles/new', 'Tambah Kakitangan','main');
+		//d.add(162, 160, 'Senarai', '/profiles/list', 'Senarai Kakitangan','main');
+
+	
+		d.add(150,0,'Lihat Profil','/profiles/view/<%= session[:user].id %>','','main','/images/menutree/page.gif');
+
+		//d.add(150,0,'Permohonan Kursus','','','main','/images/menutree/folder.gif');
+		//d.add(151,150,'Iklan Kursus','/pemohon/','','main');
+		//d.add(152,150,'Status Permohonan','/pemohon/','','main');		
+		//d.add(153,150,'Maklumbalas Kehadiran','/pemohon/','','main');				
+		
+		document.write(d);
+
+		d.o(0)
+
+		//-->
+	</script> 
+
+</div>
+
+<br>
+</body></html>

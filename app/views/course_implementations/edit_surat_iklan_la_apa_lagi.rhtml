@@ -1,0 +1,25 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">KEMASKINI KANDUNGAN SURAT PELAWAAN</font></strong></td>
+    </tr>
+</table>
+<br>
+<div align="center"><b><font color="">Pilih Kursus</font> &#8250; <font color="">Pilih Pejabat </font>&#8250; <font color="blue">Kemaskini Isi Surat</font> </b> </div>
+<br>
+
+<form name="iklan_form" action="/course_implementations/cetak_surat_iklan" method="post">
+  <%= render :partial => 'edit_surat_iklan' %>
+  <br>
+  <div align="center">
+  <br><%= submit_tag 'Papar' %>
+  </div>
+
+<% 
+for id in params[:place_ids]
+%>
+<input type="hidden" name="place_ids[]" value="<%=id%>">
+<%
+end
+%>
+<%= end_form_tag %>
+

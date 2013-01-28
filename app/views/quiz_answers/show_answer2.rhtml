@@ -1,0 +1,39 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">JAWAPAN <%=h nof{@quiz.name} %></font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr><th>Nama: <%= nof{@profile.name} %></th></tr>
+    <tr><th>Nama dan Kod Kursus: <%= nof{@quiz.course_implementation.course.name} %>(<%= nof{@quiz.course_implementation.code} %>)</th></tr>
+    <tr><th>Tempoh Kursus: <%= nof{@quiz.course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %> hingga <%= nof{@quiz.course_implementation.date_plan_end.to_formatted_s(:my_format_4)} %></th></tr>
+    <tr><th>Tarikh dan Masa Ujian: <%= nof{@quiz.timeopen.to_formatted_s(:my_format_7)} %></th></tr>
+    <tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <th>
+    <%= link_to 'Kembali', :controller => 'quiz_questions', :action => 'list_peserta', :id => @quiz.id %> ke senarai markah peserta
+    </th>
+    </tr>
+  </table>
+  <BR>
+  				<% if @check %>
+				<%= start_form_tag :action => 'tambah_update', :id => @quiz.id, :profile_id => @profile.id %>
+				<%= render :partial => 'show_answer2' %>
+				<BR>
+				<div align=center>
+				<%= submit_tag "Kemaskini" %>
+				</div>
+				<%= end_form_tag %>
+				<% else %>
+				<%= start_form_tag :action => 'tambah', :id => @quiz.id, :profile_id => @profile.id %>
+				<%= render :partial => 'show_answer2' %>
+				<BR>
+				<div align=center>
+				<%= submit_tag "Simpan" %>
+				</div>
+				<%= end_form_tag %>
+				<% end %>

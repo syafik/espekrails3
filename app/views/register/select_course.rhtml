@@ -1,0 +1,27 @@
+<script>
+function checkFormDulu(df) {
+	var is_apply_checked = 0
+	var idx = 0;
+
+	if (df.course_implementation_code.value=="") {
+		alert('Sila Masukkan Kod Kursus');
+		df.course_implementation_code.focus()
+		return false;
+	}
+
+	df.action  = "/course_management/<%= params[:next_action]%>"
+	df.action +=  "/?course_implementation_code=" + df.course_implementation_code.value
+	return true;
+}
+
+
+</script>
+<form method="post" name="incremental" action="" onsubmit="return checkFormDulu(document.incremental)">
+  <br>
+<div align="center"><br />
+  Masukkan Kod Kursus : 
+  
+<input type="text" id="course_implementation_code" name="course_implementation_code" value="" onchange="this.value=this.value.toUpperCase()">
+<input type="submit" value="Cari" class="btn60">
+</div>
+</form>

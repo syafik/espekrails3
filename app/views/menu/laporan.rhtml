@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en_US">
+<head>
+<title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link rel="StyleSheet" href="/stylesheets/global.css" type="text/css" />
+<link rel="StyleSheet" href="/stylesheets/dtree.css" type="text/css" />
+<script type="text/javascript" src="/javascripts/dtree.js"></script>
+<style>
+body {
+	background-color: #FFFFFF;
+	}
+</style>
+</head>
+	
+<body bgcolor="#FFFFFF">	
+<br>
+<div align="center"><img src="/images/menu3.jpg"></div>
+<%= render :partial => 'header'%>
+
+<script type="text/javascript">
+		<!--
+
+		d = new dTree('d');
+		
+		d.config.useCookies=false;
+		d.config.useLines=false;
+		
+		d.icon.root = "/images/menutree/home.gif";
+		//d.icon.root = "/images/menutree/kpmlogo.gif";
+		d.config.target = "main";
+		
+		d.add(0,-1,' eSPEK : Laporan(R&D)');
+
+		//d.add(190, 0, 'Peserta', '', 'Pengurusan Rekod Peserta','main','/images/menutree/folder.gif');
+		//d.add(191, 190, 'Carian', '/course_applications/search_applicant', 'Carian Peserta','main');
+		//d.add(192, 190, 'Senarai', '/course_applications/applicant', 'Senarai Peserta','main');
+
+		d.add(300, 0, 'Laporan', '', 'Laporan Eksekutif','main','/images/menutree/folder.gif');
+		d.add(307, 300, 'Senarai Laporan', '/laporan/', 'Senarai Laporan','main');
+	        d.add(301, 300, 'Permohonan Online', '/report/kursus_online', 'Senarai Permohonan Kursus Secara Online','main');
+        	d.add(302, 300, 'Senarai Kursus Semasa', '/report/kursus_semasa', 'Senarai Kursus Semasa','main');
+		d.add(303, 300, 'Ringkasan Ujian', '/report/ringkasan_ujian', 'Ringkasan Keputusan Ujian','main');
+        	d.add(306, 300, 'Penilaian Kursus', '/course_management/evaluated_courses', 'Senarai Kursus Yang Telah dinilai oleh Peserta','main');
+        	//d.add(303, 300, 'Pencapaian Ujian(Bhg)', '/report/ujian', 'Pencapaian Ujian Mengikut Bahagian','main');
+        	//d.add(303, 300, 'Pencapaian Ujian', '/report/ujian', 'Pencapaian Ujian','main');
+        	//d.add(304, 300, 'Analisa Penilaian', '/report/penilaian', 'Analisa Penilaian(Pensyarah)','main');
+		
+		d.add(280, 0, 'Profil', '', 'MyProfile','main','/images/menutree/folder.gif');
+		d.add(281,280,'Lihat','/profiles/view','','main','/images/menutree/page.gif');
+		d.add(282,280,'Kemaskini','/profiles/edit_peribadi','','main','/images/menutree/page.gif');
+		
+		document.write(d);
+		
+
+
+		//-->
+	</script>
+</div>
+
+<br>
+<div align="center">
+| <a target="main" href="/profiles/edit_password">Tukar Kata Laluan</a> | 
+</div>
+<br>
+</body></html>

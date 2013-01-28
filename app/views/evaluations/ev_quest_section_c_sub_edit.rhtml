@@ -1,0 +1,39 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">EDIT SOALAN <%=@eq.evaluation.name.upcase%></font></th>
+    </tr>
+    
+    
+  </table>
+  <br>
+  <br />
+<form action="/evaluations/ev_quest_section_c_sub_update/<%=@eq.id%>" method="post">
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+	
+		<tr>
+		  <td width="50%">
+			<table><tr>
+				<td>&nbsp;</td>
+				<td><input name="questiontext" type="text" value="<%=@eq.questiontext%>" size="50"></td>
+			</tr>
+			</table>
+		  </td>
+		  <td width="20%" nowrap>Skala Ranking:
+		  <select name="max_ranking">
+			<% 10.times do |i|
+					selected = "selected" if @eq.evaluation_ranking.max_ranking == i+1
+			%>
+			<option value="<%=i+1%>" <%=selected%>><%=i+1%></option>
+			<% end%>
+		  </select>
+		  </td>
+       </tr>
+
+</table>
+  <br />
+  <center>
+  <input type="button" value="<<Kembali" onclick="history.back();">
+  <input type="submit" value="Simpan">
+  </center>
+</form>

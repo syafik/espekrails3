@@ -1,0 +1,51 @@
+<script>
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 200;
+    $('popmenu').innerHTML = "<ul>" + 
+					        //"<li><a href=\"javascript: daftarPeserta(document.list_form)\">&nbsp;&nbsp;Simpan</a>" +
+					        "<li><a href=\"javascript: ListSignature(<%=@course_implementation.id if @course_implementation%>)\">&nbsp;&nbsp;Cetak Senarai Tandatangan</a>" +
+					        //"<hr size=1>" +
+					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
+					        "</ul>"
+}
+</script>
+
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI LAPORAN </font></b></td>
+    </tr>
+ </table>
+  <br />
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    
+    <%
+  #bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFE"
+%>
+    <tr bgcolor="<%=bgclr%>" onmouseover="//this.style.background='#FFFFCC'" onmouseout="//this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.show('popmenu', '/course_applications', '', '', event)" >
+      <td class="el" align="left" height="20"><br /> 
+	  <ol>
+	    <li><a href="/laporan/mohon_espek">Senarai permohonan pengguna sistem eSPEK mengikut tarikh</a></li>
+	    <li><a href="/laporan/statistik_kursus_tarikh">Statistik perlaksanaan kursus mengikut tarikh</a></li>
+	    <li><a href="/laporan/pencapaian_ujian_bidang">Statistik pencapaian ujian mengikut Bidang Kursus dan Bahagian</a></li>
+	    <li><a href="/laporan/pencapaian_ujian">Statistik pencapaian ujian Bahagian</a></li>
+	    <li><a href="/laporan/penilaian_penceramah">Statistik penilaian penceramah mengikut Bahagian</a></li>
+	    <li><a href="/laporan/penilaian_kemudahan">Statistik penilaian Kemudahan Kursus</a></li>
+	    <li><a href="/laporan/penilaian_penyelarasan">Statistik penilaian Penyelarasan Kursus</a></li>
+	    <li><a href="/laporan/penilaian_isi_kandungan">Statistik penilaian isi kandungan kursus</a></li>
+	    <li><a href="/laporan/senarai_ulasan">Senarai ulasan keseluruhan pelaksanaan kursus</a></li>
+	    <li><a href="/laporan/kutipan_yuran">Statistik kutipan yuran kursus</a></li>
+	    <li><a href="/laporan/kutipan_yuran_bhg">Statistik kutipan yuran kursus mengikut Bahagian </a></li>
+	    <!--li><a href="/laporan/status_perlaksanaan">Status pelaksanaan setiap kursus </a></li-->
+  </ol>  </td>
+    </tr>
+  </table>
+
+<!-- popup menu initial layer----->
+<div id="popmenu" class="menu"></div>
+
+
+

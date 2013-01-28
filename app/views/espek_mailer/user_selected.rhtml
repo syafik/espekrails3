@@ -1,0 +1,18 @@
+Tahniah diucapkan kerana anda telah dipilih untuk menyertai kursus
+<%=@course_name%>
+Sila lapor diri ke INSTUN sehari sebelum tarikh kursus.
+
+<% if @coordinator1 %>
+Untuk maklumat lanjut sila hubungi:
+1. <%=@coordinator1%>
+   <%="email : #{@coordinator1_email}" if @coordinator1_email != ""%>
+   <%="no tel: #{@coordinator1_phone}" if @coordinator1_phone != ""%>
+<% end %>
+
+<% if @coordinator2 and (@coordinator2 != @coordinator1)%>
+2. <%=@coordinator2%>
+   <%="email : #{@coordinator2_email}" if @coordinator2_email != ""%>
+   <%="no tel: #{@coordinator2_phone}" if @coordinator2_phone != ""%>
+<% end %>
+
+Terima kasih.

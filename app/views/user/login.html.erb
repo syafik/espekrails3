@@ -1,0 +1,199 @@
+<style>
+  body {
+    background-image: url(../images/bg.jpg);
+    background-repeat:repeat-y;
+  }
+
+  .button {
+    background-color: #003333;
+    border: solid 1px #336666;
+    font: Verdana, Arial, Helvetica, sans-serif small;
+    color: #FFFFFF;
+  }
+
+  .content {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+  }
+
+  .contentbold {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; font-weight: bold; }
+
+  .contenttitle {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold;color: #003333}
+  .style9 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; color: #990000; }
+  .ayatcontent {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; }
+</style>
+
+<script>
+  //alert("Peningkatan sedang dijalankan. Sistem mungkin menghadapi ralat yang tidak dijangkakan. Sila hubungi pihak Instun. Terima kasih.");
+</script>
+<div align="center" style="position: absolute; top: 1px; width: 638px; left: 100px;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><img src="../images/index2.jpg" width="750" height="450" /></td>
+    </tr>
+  </table>
+</div>
+
+<div style="position:absolute; top:10px; left 800px;">
+</div>
+
+<div style="position:absolute; top: 81px; left: 607px; width: 197px; height: 71px;">
+  <table>
+    <tr>
+      <td class="content">Anda belum mempunyai akaun di eSPEK? <span class="contenttitle"><u><strong><%= link_to 'Daftarlah Sekarang', :action => 'register' %></strong></u></span><strong>!</strong> <br />
+        dan dapatkan maklumat mengenai kursus/seminar/latihan terkini di INSTUN.</td>
+    </tr>
+  </table>
+</div>
+
+<div style="position:absolute; top: 162px; left: 606px; width: 226px; height: 71px;">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td height="12" class="style1"><table width="42%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="14" align="center" class="contenttitle"><u>LOGIN eSPEK</u></td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr>
+      <td height="15" class="content"></td>
+    </tr>
+    <tr>
+<%#= start_form_tag :action => 'login'  %>
+<%=  form_tag authenticate_user_index_path  do %>
+      <td class="content"><table width="100%" border="0" cellspacing="1" cellpadding="1">
+          <tr>
+            <td width="32%"><strong>No. Kad Pengenalan </strong></td>
+            <td width="5%"><strong>:</strong></td>
+            <td width="63%"><%= text_field 'user', 'ic_number', :size=>15 %></td>
+          </tr>
+          <tr>
+            <td><strong>Kata Laluan </strong></td>
+            <td><strong>:</strong></td>
+            <td><%= password_field 'user', 'password', :size=>15 %></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td><label>
+                <%= submit_tag 'Login' %>
+                &nbsp;
+
+
+              <% end  %>
+<!--input type="submit" name="Submit" value="Login" class="button" />
+                <input type="submit" name="Submit2" value="Reset" class="button" /-->
+              </label></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+<%=flash[:notice]%>
+</div>
+<div style="position:absolute; top: 283px; left: 607px; width: 197px; height: 45px;">
+  <table>
+    <tr>
+      <td class="content"><u><span class="style9"><%= link_to 'Lupa kata laluan', :action => 'forgot_password' %></span></u><span class="style9">? </span><br />
+        Klik untuk mendapatkan kata laluan yang baru. </td>
+    </tr>
+  </table>
+</div>
+<div style="position:absolute; top: 406px; left: 148px; width: 656px; height: 34px;">
+  <table width="660" height="22">
+    <tr>
+      <td align="center" width="652" class="content">Segala masalah berkenaan sistem sila hubungi:<br /> Bahagian Teknologi Maklumat, INSTUN | 05-4542825 atau espek@instun.gov.my<br /> 
+        &nbsp;&nbsp;&nbsp;&copy;Hakcipta Terpelihara&nbsp; 2006 | Institut Tanah dan Ukur Negara</td>
+    </tr>
+  </table>
+</div>
+<div style="position:absolute; top: 370px; left: 328px; width: 511px; height: 23px;">
+  <table width="514" height="22">
+    <tr>
+      <td width="84" align="center" class="contentbold">Download &gt;&gt;</td>
+      <td align="center" width="17" class="content"><img src="../images/manual.jpg" width="17" height="17" /></td>
+      <td align="left" width="110" class="content"><a href="/manual/user.pdf">Manual Pengguna</a> </td>
+      <td align="center" width="17" class="content"><img src="../images/acrobat.jpg" width="17" height="17" /></td>
+      <td align="left" width="92" class="content"><a href="http://ardownload.adobe.com/pub/adobe/reader/win/8.x/8.0/enu/pase30_rdr80_DLM_en_US.exe">Acrobat Reader</a> </td>
+      <td align="center" width="17" class="content"><img src="../images/list.jpg" width="17" height="17" /></td>
+      <td align="left" width="145" class="content"><a href="/course_implementations/list_public" target="_blank">Senarai Kursus Tahunan..</a></td>
+    </tr>
+  </table>
+</div>
+
+
+
+
+<!-- yang lama
+<table border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr align="center">
+      <td valign="TOP" align="RIGHT"><font color="red"><img src="../images/logo-nre.jpg" alt="espek"></font></td>
+      <td><font color="red"><img src="../images/home.jpg" alt="espek" width="500" height="350"> </font></td> 
+      <td valign="TOP" align="LEFT"><font color="red"><img src="../images/logo-instun.gif" alt="espek"></font></td>
+    </tr>
+     </tbody>
+</table>
+
+<table border="0" cellspacing="0" cellpadding="0" width="60%" align="center">
+    <tr> 
+      <th width="100%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SILA LOGIN</font></th>
+    </tr>
+</table>
+  <div class="form-padding">
+    <div align="center"></div>
+<%  form_tag :action => 'login'  do %>
+  <table width="60%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+	<tr>
+	<td width=30% align=right>Login ID :</td>
+	<td width=40%>&nbsp;
+<%= text_field 'user', 'login', :size=>30 %> 	
+      </td>
+    </tr>
+	<tr>
+	<td width=30% align=right>Kata Laluan :</td>
+	<td width=40%>&nbsp;
+<%= password_field 'user', 'password', :size=>30 %> 	
+      </td>
+    </tr>
+    	<tr>
+	<td>&nbsp;</td>
+	<td>&nbsp;
+<%= submit_tag 'Login' %>
+        &nbsp;
+<%= link_to 'Daftar akaun', :action => 'register' %> |
+<%= link_to 'Lupa kata laluan', :action => 'forgot_password' %> 
+<% end %>
+      </td>
+      </tr>
+
+  </table>
+  <br />
+  <table align="CENTER" width="60%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="LEFT" valign="BOTTOM"><img src="../images/pdf.gif" alt="espek"><a href="http://www.adobe.com/products/acrobat/readstep2.html">Download Acrobat Reader</a></td>
+      <td align="RIGHT" valign="BOTTOM"><a href="/manual/user.pdf" target="_blank">Download Manual Pengguna</a>
+|
+	  <a href="/course_implementations/list_public" target="_blank">Senarai Kursus Tahunan..</a>	  </td>
+    </tr>
+    <tr>
+      <td align="CENTER" colspan="2"><br />
+        <font size="-3">S</font><font size="-3">egala masalah berkenaan sistem sila hubungi:<br />
+      Bahagian Teknologi Maklumat, INSTUN 05-4542825 atau espek@instun.gov.my <br />
+&copy;Hakcipta Terpelihara&nbsp; 2006 
+Institut Tanah dan Ukur                                                   Negara </font></td>
+    </tr>
+  </table>
+
+</div-->
+
+<!-- Start of StatCounter Code -->
+<%#*<script type="text/javascript">%>
+<%#*var sc_project=2962115;%>
+<%#*var sc_invisible=0;%>
+<%#*var sc_partition=32;%>
+<%#*var sc_security="d9dfa70b";%>
+<%#*</script>%>
+
+<%#*<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c33.statcounter.com/2962115/0/d9dfa70b/0/" alt="page hit counter" /></a></div></noscript>%>
+<!-- End of StatCounter Code -->

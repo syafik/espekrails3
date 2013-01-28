@@ -1,0 +1,127 @@
+<script>
+function checkFormDulu(df) {
+	var is_apply_checked = 0
+	var idx = 0;
+
+	if (df.course_name.value=="") {
+		alert('Please enter course name');
+		df.course_name.focus()
+		return false;
+	}
+	for (i=0; i<df.apply_status.length ; i++ ) {
+		if (df.apply_status[i].checked == true) {
+			is_apply_checked++;
+			idx = i;
+		}
+	}
+	if (is_apply_checked == 0) {
+		alert('Please select status(unprocessed,accepted or rejected)');
+		return false
+	}
+	df.action = "/apply_individu/" + df.apply_status[idx].value
+	return true;
+}
+
+function findAndSortWith(orderby,arrow) {
+	var df = document.incremental
+	//var arrow = "<%="DESC"%>"
+	
+	if (checkFormDulu(df)) {
+		df.action += "?orderby=" + orderby
+		if (arrow!="") {
+			df.action += "&arrow=" + arrow
+		}
+		df.submit();
+	}
+	else {
+		alert('ng');
+	}
+	
+}
+
+function updateCourseId(course_name) {
+	for(var i = 0; i < list.length; i++) {
+	  if (list[i].name == course_name) {
+		$("course_id").value = list[i].id
+		//alert($("course_id").value);
+		checkScheme()
+	  }
+	}	
+}
+
+</script>
+<form method="post" name="incremental" action="" onsubmit="return checkFormDulu(document.incremental)">
+
+<br>
+  <table width="" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+     <td align="right">View by Course: </td>
+     <td>&nbsp;
+       <input type="text" id="course_name" name="course_name" size="80" onfocus="this.select()" value="<%=@course.name if @course %>">
+       <input type="hidden" id="course_id" name="id" size="3" value="<%=@course.id if @course %>">
+     </td>
+    </tr>
+    
+    <tr>
+     <td height="5"></td>
+     </tr>
+<script>
+//course duration(schedule) selection
+node_course_id = $("course_id");
+node_schedule_selection = $("schedule_selection");
+function checkScheme() {
+	$('schedule_selection').innerHTML = "<font color=orange>loading schedules...please wait</font>"
+	ajax_scheme_request("/ajax/ajax_find_course_schedule", "id="+$("course_id").value)
+}
+
+function ajax_scheme_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_scheme_response}
+    );
+}
+
+function ajax_scheme_response(originalRequest) {
+	var a = originalRequest.responseText.split(",")
+	var k = new Array(a.length)
+	for (i=0; i<k.length; i++) {
+		k[i] = a[i].split("=")
+	}
+	//alert(originalRequest.responseText)
+	
+	str  = "<select  id=\"schedule_id\" name=\"schedule_id\" class=\"px200\">\n";
+	str += "<option value=\"0\">Select schedule</option>\n"
+	for (i=0; i<k.length; i++) {
+
+		str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+	}
+	str += "</select>\n";
+
+	$("schedule_selection").innerHTML = str;
+}
+//eo course duration(schedule) selection
+</script>
+
+    <tr>
+      <td align="right">Schedule: </td>
+      <td>&nbsp;
+        <%= hidden_field 'student', 'date_start', :size=>15 %>
+	<%= hidden_field 'student', 'date_end', :size=>15 %>
+	<span id="schedule_selection">
+	 <select id="schedule_id" name="schedule_id" class="px200">
+	 <% if @course%>
+	  <option value="0">Select schedule</option>
+          <% for schedule in @course.schedules %>
+          <option value="<%= schedule.id %>" <%= 'selected' if (schedule.id == @selected_schedule_id.to_i) %> >
+            <%= schedule.date_start.to_formatted_s(:my_format_2) %> to <%= schedule.date_end.to_formatted_s(:my_format_2) %></option>
+          <% end %>
+	<% end %>
+         </select>
+	</span>
+
+
+       <input type="submit" value="Find" class="btn60">
+      </td>
+    </tr>
+  </table>
+</form>

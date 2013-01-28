@@ -1,0 +1,81 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+	<tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">PENANGGUHAN KURSUS</font></b></td>
+    </tr>
+</table>
+<br>
+
+<%#= start_form_tag :action => 'update', :id => @course_implementation, :course_id => @course %>
+<form name="ci_form" method="post" action="/course_implementations/postpone_update/<%=@course_implementation.id%>" onsubmit="return GoSubmit(ci_form)">
+  <%= render :partial => 'form' %>
+  <br>
+  <div align="center">
+  <br><%= submit_tag 'Simpan', :id=>"submit_btn" %>
+  </div>
+<%= end_form_tag %>
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+$('course_implementation_code').style.background = "#eeeeee";
+
+function GoSubmit(df) {
+
+	if (!checkSelection(strRegExp,document.getElementById('course_department_id'),'Bahagian')) return false;
+	if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
+	if (!checkInput(slashRegExp,document.getElementById('course_implementation_code'),'Kod Kursus')) return false;
+	if (!checkInput(anythingRegExp,$('course_name'),'Nama Kursus')) return false;
+
+	if (!checkInput(dateDayformat,$('start_day'),'Tarikh Mula Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('start_month'),'Tarikh Mula Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('start_year'),'Tarikh Mula Kursus(tahun)')) return false;
+
+	if (!checkInput(dateDayformat,$('end_day'),'Tarikh Akhir Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('end_month'),'Tarikh Akhir Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('end_year'),'Tarikh Akhir Kursus(tahun)')) return false;
+
+	if (!checkInput(numRegExp,$('course_implementation_capacity'),'Bilangan Peserta')) return false;
+	
+	if (!checkSelection(strRegExp,$('course_course_location_id'),'Tempat')) return false;
+
+	if (!checkInput(moneyRegExp,$('course_fee'),'Yuran Kursus')) return false;
+
+	if (!checkSelection(strRegExp,$('course_implementation_coordinator1'),'Penyelaras')) return false;
+	if (!checkSelection(strRegExp,$('course_implementation_coordinator2'),'Penolong Penyelaras')) return false;
+
+	if (!checkInput(dateDayformat,$('last_day'),'Tarikh Tutup Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('last_month'),'Tarikh Tutup Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('last_year'),'Tarikh Tutup Kursus(tahun)')) return false;
+
+	return true;
+}
+</script>
+
+<script>
+//when postpone only date_start & date_end can be updated
+//enable only dates_.. and submit button
+for(i=0;i<document.forms[0].elements.length;i++) {
+
+	obj = document.forms[0].elements[i]
+	obj.style.background = "#dddddd"
+	obj.disabled = "disabled"
+}
+
+arr = ['start', 'end', 'publish','apply_start','apply_end', 'evaluation_end', 'check'];
+for (i=0;i<arr.length;i++) {
+	$('day_' + arr[i]).disabled   = ""
+	$('month_' + arr[i]).disabled = ""
+	$('year_' + arr[i]).disabled  = ""
+}
+
+arr_2 = ['start','end']	
+for (i=0;i<arr_2.length;i++) {
+	$('day_' + arr[i]).style.background   = "white"
+	$('month_' + arr[i]).style.background = "white"
+	$('year_' + arr[i]).style.background  = "white"
+}
+
+$('submit_btn').disabled = ""
+
+</script>
+
+

@@ -1,0 +1,62 @@
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"><%= link_to 'Kemaskini', :action => 'edit', :id => @staff %></td>
+    </tr>
+  </table>
+<br>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    
+    <tr>
+      <td colspan="2" align="CENTER" bgcolor="#999999"><strong><font color="#FFFFFF">MAKLUMAT WARIS</font></strong></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><strong>Nama Penuh : </strong></td>
+      <td><%= @profile.title.description.upcase if @profile.title %> <%= @staff.profile.name.upcase %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>No KP Baru : </strong></td>
+      <td><%= @staff.profile.ic_number %></td>
+    </tr>
+</table>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    
+    <tr>
+      <td colspan="2" align="right">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><strong>Nama : </strong></td>
+      <td><%= @relative.name if @relative %></td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><strong>Hubungan : </strong></td>
+      <td><%= @relative.relationship.description if @relative %></td>
+    </tr>
+    <tr>
+      <td align="right" valign="top"><strong>Alamat :</strong></td>
+      <td><%= @relative.address1 if @relative %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td><%= @relative.address2 if @relative %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td><%= @relative.address3 if @relative %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Negeri :</strong></td>
+      <td><%= @relative.state.description if @relative %> </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>No Telefon Rumah :</strong></td>
+      <td><%= @relative.phone if @relative %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>No Telefon Bimbit :</strong></td>
+      <td><%= @relative.mobile if @relative %></td>
+    </tr>
+  </table>

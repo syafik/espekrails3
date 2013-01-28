@@ -1,0 +1,38 @@
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">LAPORAN JUMLAH SYARIKAT MENGIKUT STATUS </font></b></td>
+    </tr>
+  </table>
+  <br>
+  
+<form action="/report/statistik_syarikat_ikut_bidang_industri">
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+	<tr bgcolor="#999999">
+      <td width="200" align="center" valign="top"><strong><font color="#FFFFFF">Status Syarikat </font></strong></td>
+      <td width="50" valign="top" align="center" ><font color="#FFFFFF"><strong>Bilangan </strong></font></td>
+    </tr>
+
+<%
+@organization_statuses = OrganizationStatus.find(:all, :order=>"description")
+@x_row = Array.new
+sum = 0
+for organization_status in @organization_statuses
+  this_cell = Student.find_by_sql("select count(id) as value from organizations where organization_status_id=#{organization_status.id}")
+  sum = sum + this_cell.first.value.to_i
+%>
+    <tr bgcolor="#CCCCFF">
+      <td valign="top" nowrap><%= organization_status.description.upcase %></td>
+      <td valign="top" align="center"><%= this_cell.first.value %></td>
+    </tr>
+<%
+end
+%>
+    <tr bgcolor="#CCCCFF">
+      <td valign="top" nowrap><b>Total</b></td>
+      <td valign="top" align="center"><b><%= sum %></b></td>
+    </tr>
+
+	
+  </table> 
+  <br />
+</form> 

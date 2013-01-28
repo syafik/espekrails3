@@ -1,0 +1,61 @@
+# -*- encoding : utf-8 -*-
+class CourseTypesController < ApplicationController
+  def index
+    list
+    render :action => 'list'
+  end
+
+  def list
+    @course_type_pages, @course_types = paginate :course_types, :per_page => 10
+  end
+
+  def show
+    @course_type = CourseType.find(params[:id])
+  end
+  
+  def new_popup
+    @course_type = CourseType.new
+  end
+  
+  def create_popup
+    @course_type = CourseType.new(params[:course_type])
+    if @course_type.save
+      #redirect_to :action => 'list'
+    else
+      #render :action => 'new'
+    end
+  end
+
+  def new
+    @course_type = CourseType.new
+  end
+
+  def create
+    @course_type = CourseType.new(params[:course_type])
+    if @course_type.save
+      flash[:notice] = 'CourseType was successfully created.'
+      redirect_to :action => 'list'
+    else
+      render :action => 'new'
+    end
+  end
+
+  def edit
+    @course_type = CourseType.find(params[:id])
+  end
+
+  def update
+    @course_type = CourseType.find(params[:id])
+    if @course_type.update_attributes(params[:course_type])
+      flash[:notice] = 'CourseType was successfully updated.'
+      redirect_to :action => 'show', :id => @course_type
+    else
+      render :action => 'edit'
+    end
+  end
+
+  def destroy
+    CourseType.find(params[:id]).destroy
+    redirect_to :action => 'list'
+  end
+end

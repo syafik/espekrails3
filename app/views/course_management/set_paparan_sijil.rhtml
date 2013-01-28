@@ -1,0 +1,478 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">SET PAPARAN SIJIL</font></strong></td>
+    </tr>
+</table>
+<br>
+
+<%= start_form_tag :action => 'cetak_surat_tawaran', :id => @course_implementation, :course_id => @course %>
+
+<% 
+###set default value
+t = Time.now
+@current_day= t.strftime("%d")
+@current_month= t.strftime("%m")
+@current_year= t.strftime("%Y")
+
+#@schedule = CourseImplementation.find_by_code(params[:course_implementation_code])
+if params[:id] 
+	@schedule = CourseImplementation.find(params[:id])
+elsif params[:course_implementation_code]
+	@schedule = CourseImplementation.find_by_code(params[:course_implementation_code])
+else
+	#"Sila cari jalan how to exit from this point"
+	#@schedule = CourseImplementation.find_by_code(params[:course_implementation_code]
+end
+
+@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " +
+		  "#{$MONTH_NAMES[@schedule.date_plan_start.to_formatted_s(:my_format_month).to_i - 1].upcase} " +
+                  "#{@schedule.date_plan_start.to_formatted_s(:my_format_year)}" +  " HINGGA " +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " + 
+		  "#{$MONTH_NAMES[@schedule.date_plan_end.to_formatted_s(:my_format_month).to_i - 1].upcase} " +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+		  
+@tarikh_tutup_kursus = "" +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " + 
+		  "#{$MONTH_NAMES[@schedule.date_plan_end.to_formatted_s(:my_format_month).to_i - 1].upcase} " +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+
+baris1 = "TAWARAN MENGHADIRI KURSUS DI INSTITUT TANAH DAN UKUR NEGARA"
+baris2 = "#{@schedule.code} - #{@schedule.course.name.upcase}"
+baris3 = "PADA #{@tempoh}"
+baris_arr = Array.new
+baris_arr.push(baris1)
+baris_arr.push(baris2)
+baris_arr.push(baris3)
+perkara_arr = baris_arr.join("\n")
+@perkara = "#{perkara_arr}"
+
+course = Course.find(@schedule.course_id)
+dept = CourseDepartment.find(course.course_department.id)
+ref = LatestOfferReference.find_by_course_department_id(dept.id)
+@rujukan_kami = ""
+@rujukan_kami = ref.latest_ref_no if ref
+
+if @schedule.penyelaras1
+	@coordinator = Profile.find(@schedule.penyelaras1.profile.id)
+	@employment = Employment.find_by_profile_id(@schedule.penyelaras1.profile.id)
+else
+	@coordinator = Profile.new
+	@employment  = Employment.new
+end
+
+
+@tempat_pendaftaran = "Lobi Pendaftaran Pejabat Domestik INSTUN"
+@schedule.date_plan_start = @schedule.date_plan_start - 1
+#@check_in = "#{@schedule.date_plan_start.to_formatted_s(:my_format_3)}"
+@check_in = msian_date_very_formal(@schedule.check_in) if @schedule.check_in !=nil
+@check_out = msian_date_very_formal(@schedule.check_out) if @schedule.check_out !=nil
+@briefing = msian_date_very_formal(@schedule.briefing) if @schedule.briefing !=nil
+@check_in_hour = @schedule.check_in.to_formatted_s(:my_format_hour) if @schedule.check_in !=nil
+@check_in_minute = @schedule.check_in.to_formatted_s(:my_format_minute) if @schedule.check_in !=nil
+@check_out_hour = @schedule.check_out.to_formatted_s(:my_format_hour) if @schedule.check_out !=nil
+@check_out_minute = @schedule.check_out.to_formatted_s(:my_format_minute) if @schedule.check_out !=nil
+@briefing_hour = @schedule.briefing.to_formatted_s(:my_format_hour)  if @schedule.briefing !=nil
+@briefing_minute = @schedule.briefing.to_formatted_s(:my_format_minute) if @schedule.briefing !=nil
+
+dateline = @schedule.date_plan_start - 7
+
+@penyelaras_nama = "Sila masukkan nama penyelaras"
+@penyelaras_nama = @coordinator.name.upcase if @coordinator and @coordinator.name
+@penyelaras_jawatan = @employment.job_profile.job_name if (@employment && @employment.job_profile)
+#@penyelaras_telefon = "05-4542825"
+@penyelaras_ext = ""
+#@penyelaras_faks = "05-4542843"
+#@penyelaras_email = @coordinator.email
+dateline_new = msian_date_very_formal(dateline)
+@perenggan1 = "Dengan hormatnya saya diarah merujuk kepada perkara di atas."
+@perenggan2 = "2.     Sukacita dimaklumkan bahawa pegawai seperti nama di atas telah dipilih untuk menghadiri kursus #{@schedule.course.name.upcase} (#{@schedule.code}) di Institut Tanah dan Ukur Negara (INSTUN), Kementerian Sumber Asli dan Alam Sekitar."
+@perenggan3 = "3.     Bersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu:
+				3.1 Borang Pengesahan Kehadiran seperti di Lampiran A 
+				3.2 Maklumat kursus seperti di Lampiran B"
+@perenggan4 = "4.    Peserta dikehendaki membaca / meneliti dokumen-dokumen di para 3 di atas.Peserta juga akan dikenakan bayaran pendaftaran kursus sebanyak RM30.00 (tunai). Resit rasmi akan dikeluarkan bagi membolehkan para peserta membuat tuntutan semula daripada Jabatan/Agensi masing-masing."
+@perenggan5 = "5.     Kerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di <b>Lampiran A</b> yang disertakan atau secara on-line di laman web INSTUN http://www.instun.gov.my <c:uline>pada atau sebelum #{dateline_new}</c:uline>."
+
+surat_tawaran_content = SuratTawaranContent.find_by_course_implementation_id(@schedule.id)
+cetak_komputer = "1"
+cetak_komputer = surat_tawaran_content.is_cetakan_komputer if surat_tawaran_content
+format_surat = "1"
+format_surat = surat_tawaran_content.format_surat if surat_tawaran_content
+perkara = @perkara
+perkara = surat_tawaran_content.perkara if surat_tawaran_content
+perenggan1 = @perenggan1
+perenggan1 = surat_tawaran_content.perenggan1 if surat_tawaran_content
+perenggan2 = @perenggan2
+perenggan2 = surat_tawaran_content.perenggan2 if surat_tawaran_content
+perenggan3 = @perenggan3
+perenggan3 = surat_tawaran_content.perenggan3 if surat_tawaran_content
+perenggan4 = @perenggan4
+perenggan4 = surat_tawaran_content.perenggan4 if surat_tawaran_content
+perenggan5 = @perenggan5
+perenggan5 = surat_tawaran_content.perenggan5 if surat_tawaran_content
+%>
+
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+</script>
+
+<SCRIPT LANGUAGE="JavaScript">
+function formHandler(){
+var URL = document.form.dept.options[document.form.dept.selectedIndex].value;
+window.location.href = URL;
+}
+</SCRIPT>
+<body onLoad="checkTime(<%=@check_in_hour%>,<%=@check_out_hour%>)">
+<div align="center">
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"> <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+  </tr>
+</table>
+<br />
+<div align="center"><b>Jana No Sijil  &#8250; <font color="blue">Set Paparan Sijil</font> &#8250; Jana Sijil </b></div>
+<br />
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td align="right" valign=top width="40%">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right" valign=top><strong>Nama Peserta :</strong></td>
+    <td><span class="blockintro">Saiz font: 
+      <input name="fontsize_nama" type="text" value="10" size=6 id="fontsize_nama">
+    </span> Jenis Font: <span class="blockintro">
+    <select id="select" name="fontstyle_nama">
+      <option value="">Sila Pilih</option>
+      <option value="arial">Arial</option>
+      <option value="times" selected="selected">Times</option>
+      <option value="fontsijil">EdwardianScriptITC</option>
+      <option value="euclid">Euclid</option>
+      <option value="marigold">Marigold</option>
+            </select>
+    </span></td>
+  </tr>
+
+  <tr>
+    <td align="right" valign=top><strong>No KP  :</strong></td>
+    <td><span class="blockintro">Saiz font: 
+        <input name="fontsize_nokp" type="text" value="10" size=6 id="fontstyle_nama">
+    </span> Jenis Font:<span class="blockintro">
+    <select id="select3" name="fontstyle_nokp">
+      <option value="">Sila Pilih</option>
+      <option value="arial">Arial</option>
+      <option value="times" selected="selected">Times</option>
+      <option value="fontsijil">EdwardianScriptITC</option>
+      <option value="euclid">Euclid</option>
+      <option value="marigold">Marigold</option>
+        </select>
+    </span></td>
+  </tr>
+  <tr>
+    <td align="right" valign=top><strong>Nama Kursus :</strong></td>
+    <td><span class="blockintro">Saiz font: 
+        <input name="fontsize_kursus" type="text" value="15" size=6 id="fontstyle_nama2">
+    </span> Jenis Font:<span class="blockintro">
+    <select id="select4" name="fontstyle_kursus">
+      <option value="">Sila Pilih</option>
+      <option value="arial">Arial</option>
+      <option value="times" selected="selected">Times</option>
+      <option value="fontsijil">EdwardianScriptITC</option>
+      <option value="euclid">Euclid</option>
+      <option value="marigold">Marigold</option>
+        </select>
+    </span></td>
+  </tr>
+  <tr>
+    <td align="right" valign=top><strong>Tempat Kursus  :</strong></td>
+    <td><span class="blockintro">Saiz font: 
+        <input name="fontsize_tempat" type="text" value="15" size=6 id="fontstyle_nama3">
+    </span> Jenis Font:<span class="blockintro">
+    <select id="select5" name="fontstyle_tempat">
+      <option value="">Sila Pilih</option>
+      <option value="arial">Arial</option>
+      <option value="times" selected="selected">Times</option>
+      <option value="fontsijil">EdwardianScriptITC</option>
+      <option value="euclid">Euclid</option>
+      <option value="marigold">Marigold</option>
+        </select>
+    </span></td>
+  </tr>
+  <tr>
+    <td align="right" valign=top><strong>Tarikh Kursus  :</strong></td>
+    <td><span class="blockintro">Saiz font: 
+        <input name="fontsize_tarikh" type="text" value="15" size=6 id="fontstyle_nama4">
+    </span> Jenis Font:<span class="blockintro">
+    <select id="select6" name="fontstyle_tarikh">
+      <option value="">Sila Pilih</option>
+      <option value="arial">Arial</option>
+      <option value="times" selected="selected">Times</option>
+      <option value="fontsijil">EdwardianScriptITC</option>
+      <option value="euclid">Euclid</option>
+      <option value="marigold">Marigold</option>
+        </select>
+    </span></td>
+  </tr>
+  <tr>
+    <td align="right" valign=top><strong>Penganjur :</strong></td>
+    <td><span class="blockintro">Saiz font: 
+        <input name="fontsize_penganjur" type="text" value="15" size=6 id="fontstyle_nama5">
+    </span> Jenis Font:<span class="blockintro">
+    <select id="select7" name="fontstyle_penganjur">
+      <option value="">Sila Pilih</option>
+      <option value="arial">Arial</option>
+      <option value="times" selected="selected">Times</option>
+      <option value="fontsijil">EdwardianScriptITC</option>
+      <option value="euclid">Euclid</option>
+      <option value="marigold">Marigold</option>
+        </select>
+    </span></td>
+  </tr>
+  <tr>
+    <td align="right" valign=top><strong>No Siri  :</strong></td>
+    <td><span class="blockintro">Saiz font: 
+        <input name="fontsize_nosiri" type="text" value="10" size=6 id="fontstyle_nama5">
+    </span> Jenis Font:<span class="blockintro">
+    <select id="select7" name="fontstyle_nosiri">
+      <option value="">Sila Pilih</option>
+      <option value="arial">Arial</option>
+      <option value="times" selected="selected">Times</option>
+      <option value="fontsijil">EdwardianScriptITC</option>
+      <option value="euclid">Euclid</option>
+      <option value="marigold">Marigold</option>
+    </select>
+    </span></td>
+  </tr>
+
+  
+  <!--tr>
+    <td align="right"><strong>Tempoh Kursus:</strong></td>
+    <td><span class="blockintro">&nbsp;
+          <input type="text" name="tempoh" size="70" value="<%=@tempoh%>" onchange="this.value=this.value.toUpperCase()" style="width: 500">
+    </span> </td>
+  </tr-->
+  
+
+<script>
+
+function checkClosedTime(hour){
+	if (hour >= 12){
+		if((hour -12) == 0){document.getElementById("hour_closed2").value = 12;}
+                else {document.getElementById("hour_closed2").value = (hour - 12);}
+		if ((hour - 12)<=8)
+                        document.getElementById("timing_closed").value = "petang";
+                else
+                        document.getElementById("timing_closed").value = "malam";
+        }
+	else
+                document.getElementById("timing_closed").value = "pagi";
+
+}
+
+function  checkTime(hour,ohour){
+	if (hour >= 12){
+		if((hour -12) == 0){document.getElementById("check_in_hour").value = 12;}
+		else {document.getElementById("check_in_hour").value = (hour - 12);}
+		
+		if ((hour - 12)<=8)
+			document.getElementById("timing").value = "petang";
+		else
+			document.getElementById("timing").value = "malam";	
+	}	
+	else
+		document.getElementById("timing").value = "pagi";
+	if (ohour !='x'){
+		if (ohour >= 12){
+			if((ohour -12) == 0){document.getElementById("check_out_hour").value = 12;}
+			else {document.getElementById("check_out_hour").value = (ohour - 12);}
+                	if ((ohour - 12)<=8)
+                        	document.getElementById("timing_out").value = "petang";
+                	else
+                        	document.getElementById("timing_out").value = "malam";
+        	}
+        	else
+                	document.getElementById("timing_out").value = "pagi";
+
+	}
+}
+
+function  checkTimeOut(hour){
+        if (hour >= 12){
+		if((hour -12) == 0){document.getElementById("check_out_hour").value = 12;}
+                else {document.getElementById("check_out_hour").value = (hour - 12);}c
+                if ((hour - 12)<=8)
+                        document.getElementById("timing_out").value = "petang";
+                else
+                        document.getElementById("timing_out").value = "malam";
+        }
+        else
+                document.getElementById("timing_out").value = "pagi";
+}
+
+function updateJawatan() {
+	var staff_id  = $('contact_officer_id').value
+	data = "staff_id=" + staff_id
+	
+	if ($('contact_officer_id').value!="") {
+		//$('intr_date_start').innerHTML = "checking date.."
+		ajax_find_jawatan('/ajax/staff_find_jawatan', data)
+	}
+}
+
+function ajax_find_jawatan(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_find_jawatan_respon}
+    );
+}
+
+function ajax_find_jawatan_respon(originalRequest) {
+//alert(originalRequest.responseText );return;
+	if (originalRequest.responseText == "0") {
+		alert("Staff not found");
+		return;
+	}
+
+	var dlist = originalRequest.responseText.split(",");
+	var jawatan = dlist[0]
+	var email   = dlist[1]
+	var fax		= dlist[2]
+	var office 	= dlist[3]
+
+	$('penyelaras_jawatan').value   = jawatan
+	$('penyelaras_email').value = email
+	$('penyelaras_fax').value = fax
+	$('penyelaras_telefon').value = office
+
+}
+
+function updateJawatan2() {
+        var staff_id  = $('contact_officer_id2').value
+        data = "staff_id=" + staff_id
+
+        if ($('contact_officer_id2').value!="") {
+                //$('intr_date_start').innerHTML = "checking date.."
+                ajax_find_jawatan2('/ajax/staff_find_jawatan', data)
+        }
+}
+
+function ajax_find_jawatan2(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_find_jawatan_respon2}
+    );
+}
+
+function ajax_find_jawatan_respon2(originalRequest) {
+//alert(originalRequest.responseText );return;
+        if (originalRequest.responseText == "0") {
+                alert("Staff not found");
+                return;
+        }
+
+        var dlist = originalRequest.responseText.split(",");
+        var jawatan = dlist[0]
+        var email   = dlist[1]
+		var fax		= dlist[2]
+		var office 	= dlist[3]
+
+        $('penyelaras_jawatan2').value   = jawatan
+        $('penyelaras_email2').value = email
+		$('penyelaras_fax2').value = fax
+		$('penyelaras_telefon2').value = office
+
+}
+
+</script>
+
+  <tr>
+    <td align="right"><strong>Format Sijil:</strong></td>
+    <td><span class="blockintro">&nbsp;</span>
+      <input id="format_surat_1" name="format_surat" type="radio" value="1" <%="checked" if format_surat=1%>>
+      <label for="format_surat_1" title="Senarai agihan alamat dicetak kesemuanya pada satu halaman sahaja">Penyertaan</label>
+      <!--span class="blockintro">&nbsp;</span>
+        <input id="format_surat_2" name="format_surat" type="radio" value="2" <%="checked" if format_surat=2%>>
+        <label for="format_surat_2"  title="Alamat dicetak pada setiap surat untuk setiap pejabat">Format 2</label-->
+      <span class="blockintro">&nbsp;</span>
+      <input id="radio" name="format_surat" type="radio" value="1" <%="checked" if format_surat=1%>>
+      <label for="radio" title="Senarai agihan alamat dicetak kesemuanya pada satu halaman sahaja">Penghargaan</label>
+    <!--span class="blockintro">&nbsp;</span>
+        <input id="format_surat_2" name="format_surat" type="radio" value="2" <%="checked" if format_surat=2%>>
+        <label for="format_surat_2"  title="Alamat dicetak pada setiap surat untuk setiap pejabat">Format 2</label--></td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<input type="hidden" name="course_name" value="<%=@course_implementation.course.name%>">
+<input type="hidden" name="course_implementation_name" value ="<%=@schedule.course.name%>">
+<input type="hidden" name="course_implementation_code" value ="<%=@schedule.code%>">
+<input type="hidden" name="course_implementation_id" value ="<%=@schedule.id%>">
+<input type="hidden" name="briefing_minute" value="<%=@briefing_minute%>" size=2 maxlength=2&quot;>
+<input type="hidden" name="briefing_hour" value="<%=@briefing_hour%>" size=2 maxlength=2&quot;>
+<input type="hidden" name="briefing" value="<%=@briefing%>">
+<%= hidden_field 'surat_tawaran_content', 'user_id', :value=>session[:user].id %>
+<% 
+for id in params[:course_application_ids]
+%>
+<input type="hidden" name="course_application_ids[]" value="<%=id%>">
+
+<%
+end
+%>
+
+
+  <br>
+<div align="center">
+  <br>
+  <input name="Submit3" type="button" value="Jana Sijil" onclick="printPeserta(document.forms[0])">
+</div>
+
+<%= end_form_tag %>
+
+</body>
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+
+function GoSubmit(df) {
+
+	if (!checkSelection(strRegExp,$('contact_officer_id'),'Pegawai Untuk Dihubungi')) return false;
+        if (!checkSelection(strRegExp,$('contact_officer_id2'),'Pegawai Untuk Dihubungi')) return false;
+	if (!checkInput(anythingRegExp,$('penyelaras_jawatan'),'Jawatan Pegawai Untuk Dihubungi')) return false;
+	if (!checkInput(anythingRegExp,$('dateline'),'Tarikh tutup')) return false;
+	df.submit()
+
+}
+
+function printPeserta(df) {
+  var sum_checked = 0
+
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       if (df.elements[i].checked == true) {
+         sum_checked++
+       }
+     } 
+  }
+  
+  if (1) {
+   window.open (" ","mywindow","menubar=0,statusbar=0,resizable=0,width=500,height=800");
+    //df.action = "/course_management/jana_sijil"
+    //df.action = "http://localhost/ruby/fpdf153/cetak_sijil.php"
+    df.action = "http://espek.instun.gov.my/fpdf153/cetak_sijil.php"
+	df.target = "mywindow"
+    df.submit()
+  }
+  else {
+    alert("Sila Pilih Peserta")
+  }
+}
+
+</script>
+
+

@@ -1,0 +1,265 @@
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+</script>
+
+<SCRIPT LANGUAGE="JavaScript">
+function formHandler(){
+
+ccode = $("course_code");
+cname = $("course_name");
+
+var URL = document.form.dept.options[document.form.dept.selectedIndex].value;
+window.location.href = URL;
+
+
+}
+</SCRIPT>
+
+<div align="center">
+<%#= error_messages_for 'course' %>
+<%= error_messages_for 'course_implementation' %>
+</div>
+
+
+<!--[form:course]-->
+<%
+ theid = params[:id]
+ course_id = params[:course_id]  #ambil data dari link_to
+ 
+ jams = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+ minits = ["00","30"]
+ 
+ time_start = "08:00"
+ time_end = "16:30"
+ @cc = @course.code
+ if @cc != nil
+ qs = Course.find_by_sql("SELECT * FROM courses WHERE code = '"+ @cc +"' ")
+ jumscrs = qs.size
+ for q in qs
+ %><input type=hidden name=course_id value="<%=q.id%>"><%
+ end
+ end
+%>	 
+
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"><%=@crsid%>&nbsp; <a href="/course_implementations/list"><u>Kembali</u></a> ke Senarai Perancangan Kursus  </td>
+    </tr>
+    
+  </table>
+  <!--input type=radio name=type_course value=<?=$qid?> onClick="location.href='<?="$PHP_SELF?action=add_course"?>&type_course=<?=$qid?>'" <? dothis($type_course,$qid,checked); ?>><?=$qnama?!-->
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td align="right"><strong> Kod Kursus:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <%#if jumcrs = nil%>
+      <%= hidden_field 'course', 'id' %>
+      <%#end%>
+      <%= text_field 'course', 'code', :maxlength=>10, :size=>20  %>
+      </span></td>
+      <input type=hidden name=time_start value="<%=time_start%>">
+      <input type=hidden name=time_end value="<%=time_end%>">
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>Nama Kursus: </strong></td>
+      <td><span class="blockintro"> &nbsp;
+      <%= text_field 'course', 'name', :maxlength=>100, :size=>50  %>      </span>
+      </td>
+    </tr>
+    
+    
+    <% 
+    cd = params[:course_department] 
+    if cd == nil
+      cd = 1
+    end
+    %>
+    
+    <tr>
+      <td align="right"><strong>CD-<%=cd%>&nbsp;Bahagian:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="dept" onChange="javascript:formHandler()">
+      <% @course_departments.each do |course_department| %>
+        <option value="/course_implementations/new2/<%=@course.id%>?course_name=<%=@course.name%>&course_department=<%= course_department.id%>"
+        <%= ' selected' if course_department.id.to_i == cd.to_i %>> <%= course_department.description %></option>
+      <% end %>
+      </select>
+      </span></td>
+    </tr>
+    
+    
+    <% cf = params[:course_field] %>
+    <input type=hidden name="course_department_id" value="<%=cd%>">
+        
+    <tr>
+      <td align="right"><strong><%=cd%>Bidang:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="course[course_field_id]">
+      <% 
+      #@course_fields.each do |course_field| 
+      course_fields = CourseField.find_by_sql("SELECT * FROM course_fields WHERE course_department_id = #{cd}")
+      for course_field in course_fields
+      %>
+        <option value="<%= course_field.id %>"
+        <%= ' selected' if course_field.id == @course.course_field_id %>> <%= course_field.description %> </option>
+        <% end %>  
+      </select>
+      <a href="javascript: MM_openBrWindow('/course_fields/new_popup','','scrollbars=yes,width=600,height=400')">Tambah</a>
+      </span></td>
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>Others ::&nbsp;Bahagian:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="dept" onChange="javascript:formHandler2()">
+      <% @course_departments.each do |course_department| %>
+        <option value="/course_implementations/new2/<%=@course.id%>?course_name=<%=@course.name%>&course_department=<%= course_department.id%>"
+        <%= ' selected' if course_department.id.to_i == cd.to_i %>> <%= course_department.description %></option>
+      <% end %>
+      </select>
+      </span></td>
+    </tr>
+    
+    
+    <tr>
+      <td align="right" valign=top><strong>Kumpulan Sasar:</strong></td>
+      <td><span class="blockintro"> &nbsp;
+      <%= text_field 'course', 'target_group', :size=>35  %>      </span>
+      </td>
+	</tr>    
+    <tr>
+      <td align="right"><strong> Tarikh Mula:</strong></td>
+      <td>&nbsp;
+        <input type=text name="start_day" value="<%=@day_start%>" size=2 maxlength=2> - 
+        <input type=text name="start_month" value="<%=@month_start%>" size=2 maxlength=2> - 
+        <input type=text name="start_year" value="<%=@year_start%>" size=4 maxlength=4> &nbsp;<font color=red>dd mm yyyy</font>
+
+        </td>
+    </tr>
+    <tr>
+      <td align="right"><strong> Tarikh Akhir:</strong></td>
+      <td>&nbsp;
+        <input type=text name="end_day" value="<%=@day_end%>" size=2 maxlength=2> - 
+        <input type=text name="end_month" value="<%=@month_end%>" size=2 maxlength=2> - 
+        <input type=text name="end_year" value="<%=@year_end%>" size=4 maxlength=4> &nbsp;<font color=red>dd mm yyyy</font>
+        </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Bil. Peserta:</strong></td>
+      <td><span class="blockintro">&nbsp;
+          <%= text_field 'course_implementation', 'capacity', :maxlength=>10, :size=>10  %>      </span></td>
+    </tr>    
+    <tr>
+      <td align="right"><strong>Tempat:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="course[course_location_id]">
+       <% @course_locations.each do |course_location| %>
+        <option value="<%= course_location.id %>"
+        <%= ' selected' if course_location.id == @course.course_location_id %>> <%= course_location.description %> </option>
+        <% end %>  
+      </select>
+      </span>
+      <a href="javascript: MM_openBrWindow('/course_locations/new_popup','','scrollbars=yes,width=600,height=400')">Tambah</a>
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Objektif:</strong></td>
+      <td><span class="blockintro">&nbsp; 
+            <%= text_area 'course', 'objective', :rows=>3 , :cols=>35 %></span></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Kandungan:</strong></td>
+      <td><span class="blockintro">&nbsp; 
+            <%= text_area 'course', 'content', :rows=>3 , :cols=>35 %></span></td>
+    </tr>
+        
+    <tr>
+      <td align="right" valign=top><strong>Metodologi:</strong></td>
+      <td><span class="blockintro">
+	  <% Methodology.find(:all).each do |g| %>
+      <input type="checkbox" name="course[methodology_ids][]" value="<%= g.id %>" 
+       <% if @course.methodologies.include?(g) %> checked="checked" <% end %> />
+      <%= g.description %>  
+
+      <br>
+      <% end %>
+    </tr>
+    <tr>
+      <td align="right"><strong>Yuran:</strong></td>
+      <td><span class="blockintro">&nbsp;RM
+      <%= text_field 'course', 'fee', :maxlength=>11, :size=>10  %>      </span></td>
+    </tr>
+    
+    <% 
+      cid = @course_implementation.id
+      arrprofile = Array.new
+      if (cid != nil)
+      querys = CourseImplementation.find_by_sql("select * from course_implementations_profiles where course_implementation_id=#{cid} ORDER BY sort")
+      for query in querys
+      	@to_time = query.profile_id
+		arrprofile.push(@to_time)
+      end
+      jum = querys.size
+      end
+    %>  
+    
+    <tr>
+      <td align="right"><strong>Penyelaras:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="course_implementation[coordinator1]">
+       <% @profiles.each do |profile| %>
+        <option value="<%= profile.id %>"
+        <%= ' selected' if profile.id == @course_implementation.coordinator1 %>> <%= profile.name %> </option>
+        <% end %>  
+      </select>
+  	  </select>
+      </span></td>
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>Penolong Penyelaras:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="course_implementation[coordinator2]">
+       <option value="">Sila Pilih</option>
+       <% @profiles.each do |profile| %>
+        <option value="<%= profile.id %>"
+        <%= ' selected' if profile.id == @course_implementation.coordinator2 %>> <%= profile.name %> </option>
+        <% end %>  
+      </select>
+  	  </select>
+      </span></td>
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>Status:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="course[course_status_id]">
+      <% @course_statuses.each do |course_status| %>
+        <option value="<%= course_status.id %>"
+        <%= ' selected' if course_status.id == @course.course_status_id %>> <%= course_status.description %> </option>
+        <% end %>  
+      </select>
+      </span></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Tarikh Tutup Permohonan:</strong></td>
+      <td>&nbsp;
+        <input type=text name="last_day" value="<%=@day_last%>" size=2 maxlength=2> - 
+        <input type=text name="last_month" value="<%=@month_last%>" size=2 maxlength=2> - 
+        <input type=text name="last_year" value="<%=@year_last%>" size=4 maxlength=4> &nbsp;<font color=red>dd mm yyyy</font>
+        </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Tarikh Semakan Status Permohonan:</strong></td>
+      <td>&nbsp;
+        <input type=text name="check_day" value="<%=@day_check%>" size=2 maxlength=2> - 
+        <input type=text name="check_month" value="<%=@month_check%>" size=2 maxlength=2> - 
+        <input type=text name="check_year" value="<%=@year_check%>" size=4 maxlength=4> &nbsp;<font color=red>dd mm yyyy</font>
+        </td>
+    </tr>
+  </table>
+  

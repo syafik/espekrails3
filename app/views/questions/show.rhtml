@@ -1,0 +1,57 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">PAPARAN FORMAT</font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th>
+    <%= link_to 'Edit', :action => 'edit', :id => @question %> |
+	<%= link_to 'Kembali', :controller => 'question_templates', :action => 'list' %> ke senarai
+    </th>
+    </tr>
+  </table>
+  <BR>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+	<tr>
+	<td align=right width=30%><b>Jenis Borang :</b></td>
+	<td><%=h @question_section.question_type.description if @question_section.question_type_id = @question_type.id %></td>
+	</tr>
+	<tr>
+	<td align=right width=30%><b>Format Borang:</b></td>
+	<td><%=h @question.question_section.description if @question.question_section_id = @question_section.id %></td>
+	</tr>
+	<tr>
+	<td align=right><b>Keterangan :</b></td>
+	<td><%=h @question.description %></td>	
+	</tr>
+	<tr>
+	<td align=right valign=top><b>Skala Penilaian :</b></td>
+	<td>
+	<table border=0>
+	<% for question_scale_type in @question.scale_types %>
+	<tr><td><%=h question_scale_type.description %><BR></td></tr>	
+	<% for scale in @scales
+	if scale.scale_type_id == question_scale_type.id
+	if scale.description != ""
+	%>
+	<tr>
+	<td align=left>
+	<input type=radio name=radio value=1>&nbsp;<%=h scale.description %><BR></td></tr>
+	<%else %>
+	<tr>
+	<td align=left><hr width=100%></td></tr>
+	<%end %>
+	<%end %>
+	<%end %>
+	<%end %>
+	
+	</table>
+	</td>
+	</tr>
+	<tr>
+	
+	
+	</table>

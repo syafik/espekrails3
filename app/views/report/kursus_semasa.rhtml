@@ -1,0 +1,130 @@
+<form action="/report/kursus_semasa">
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="100%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI KURSUS SEMASA<br />
+      </font></b>
+	  </td>
+    </tr>
+  </table>
+     <div align="center">
+        <%= flash[:notice] %></div>
+  <br>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="4">
+    <tr>
+        <td align="center">Tarikh Mula:
+          <%= calendar_field 'report1', '',
+     { :class => 'date',
+        :value => @report_date_from,
+        :field_title => 'report1',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+
+
+    &nbsp;&nbsp;Hingga:
+          <%= calendar_field 'report2', '',
+     { :class => 'date',
+        :value => @report_date_to,
+        :field_title => 'report2',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+
+        </td>
+    </tr>
+	    <tr>
+	    <td align="center">Pilihan:
+        <select name="course_department_id">
+          <option value="">Pilih Bahagian</option>
+          <% @course_departments.each do |cf| %>
+          <option value="<%= cf.id %>"
+         	<%= ' selected' if cf.id == params[:course_department_id].to_i %>> <%= cf.description.upcase %> </option>
+          <% end %>
+        </select>
+<script>
+function goSubmit() {
+	if ( $('report1_').value == "" && $('report2_').value == "") {
+		alert("Sila masukkan tarikh");
+		$('report1_').focus()
+		return false;
+	}
+	if ( $('report1_').value == "") {
+		alert("Sila masukkan tarikh mula");
+		$('report1_').focus()
+		return false;
+	}
+	if ( $('report2_').value == "") {
+		alert("Sila masukkan tarikh akhir");
+		$('report2_').focus()
+		return false;
+	}
+	
+	document.forms[0].submit();
+}
+</script>
+        <input type="button" value="Papar" onclick="goSubmit()">
+      </td>
+    </tr>
+  </table>
+    </form>
+  <br>
+    <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999" >
+      <td align="center"><font color="#FFFFFF"><strong>Bil</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Nama Kursus</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Tarikh Mula Kursus</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Tarikh Tamat Kursus</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Anggaran Peserta</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Bil Permohonan</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Bil Sah Kehadiran</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Bil Hadir</strong></font></td>
+    </tr>
+<%
+i = 0;
+even = true;
+sum_peserta    = 0
+sum_bil_permhn = 0
+sum_sah_hadir  = 0
+sum_daftar     = 0
+
+for student in @students
+        i = i + 1
+        bgclr = "#CCCCFF" if (even == true)
+        bgclr = "#FFFFFF" if (even == false)
+        even = !even
+		
+		sum_peserta    = sum_peserta + nof{student.capacity}
+		sum_bil_permhn = sum_bil_permhn + nof{student.total_application}
+		sum_sah_hadir  = sum_sah_hadir + nof{student.total_confirmed}
+		sum_daftar     = sum_daftar + nof{student.total_registered}
+%>
+	<tr bgcolor="<%=bgclr%>" class="list">
+        <td align=left valign=top><%= i.to_s %></td>
+        <td align=left valign=top><%=h nof{student.code.upcase} %></td>
+        <td align=left><%=h nof{student.name.upcase} %>&nbsp;</td>
+	    <td align=CENTER valign=top><%=h nof{student.date_plan_start.to_formatted_s(:my_format_4)} %>&nbsp;</td>
+        <td align=CENTER valign=top><%=h nof{student.date_plan_end.to_formatted_s(:my_format_4)} %>&nbsp;</td>
+        <td align=left valign=top><%=h nof{student.capacity} %>&nbsp;</td>
+        <td align=left valign=top><%=h nof{student.total_application} %>&nbsp;</td>
+        <td align=left valign=top><%=h nof{student.total_confirmed} %>&nbsp;</td>
+        <td align=left valign=top><%=h nof{student.total_registered} %>&nbsp;</td>
+        </tr>
+ <% end %>
+
+    <tr bgcolor="#999999" >
+      <td align="RIGHT" colspan="5" bgcolor="#CCCCCC"><strong>Total:</strong></td>
+      <td bgcolor="#CCCCCC"><b><%=h sum_peserta %></b></td>
+      <td bgcolor="#CCCCCC"><b><%=h sum_bil_permhn %></b></td>
+      <td bgcolor="#CCCCCC"><b><%=h sum_sah_hadir %></b></td>
+      <td bgcolor="#CCCCCC"><b><%=h sum_daftar %></b></td>
+    </tr>
+</table>

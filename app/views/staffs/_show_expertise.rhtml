@@ -1,0 +1,20 @@
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"><%= link_to 'Kemaskini Tenaga Pengajar', :action => 'edit', :id => @trainer %> | <%= link_to 'Tambah Kemahiran Baru', :action => 'edit', :id => @trainer %></td>
+    </tr>
+  </table>
+<br>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    
+    <tr>
+      <td width="20%" align="right"><strong>Nama Tenaga Pengajar: </strong></td>
+      <td><span class="blockintro">&nbsp; </span><%= @trainer.profile.name.upcase %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>No KPT #: </strong></td>
+      <td>&nbsp; <%= @trainer.profile.ic_number %></td>
+    </tr>
+    
+   
+</table>
+  <br>

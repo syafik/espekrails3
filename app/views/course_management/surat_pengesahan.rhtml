@@ -1,0 +1,97 @@
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function findAndSortWith(orderby,arrow) {
+	var df = document.list_form
+	//var arrow = "<%="DESC"%>"
+	df.action  = "/course_management/surat_pengesahan"
+	// if (checkFormDulu(df)) {
+		df.action += "?orderby=" + orderby
+		if (arrow!="") {
+			df.action += "&arrow=" + arrow
+		}
+		df.submit();
+	//}
+	//else {
+	//	alert('ng');
+	//}
+	
+}
+
+function EditSuratPengesahan(df) {
+    df.action = "/course_management/edit_surat_pengesahan/<%=@course_implementation.id if @course_implementation%>"
+    df.submit()
+}
+
+function JanaSuratTawaran(schedule_id) {
+	url = '/course_applications/cetak_surat_tawaran/' + schedule_id
+	MM_openBrWindow(url,'','scrollbars=yes,width=600,height=400')
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 150;
+    $('popmenu').innerHTML = "<ul>" + 
+					        "<li><a href=\"javascript:printPeserta(document.list_form)\">&nbsp;&nbsp;Jana Sijil</a>" +
+					        //"<li><a href=\"javascript:printPeserta(document.list_form)\">&nbsp;&nbsp;Jana Sijil Utk Perserta Ini</a>" +
+					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
+					        //"<hr size=1>" +
+					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
+					        "</ul>"
+}
+</script>
+
+<script>
+function printPeserta(df) {
+  var sum_checked = 0
+
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       if (df.elements[i].checked == true) {
+         sum_checked++
+       }
+     } 
+  }
+  
+  if (1) {
+   window.open (" ","mywindow","menubar=0,statusbar=0,resizable=0,width=500,height=800");
+    //df.action = "/course_management/jana_sijil"
+    //df.action = "http://localhost/ruby/fpdf153/cetak_sijil.php"
+    df.action = "/fpdf153/cetak_sijil.php?course_application_ids[]=73"
+	df.target = "mywindow"
+    df.submit()
+  }
+  else {
+    alert("Sila Pilih Peserta")
+  }
+}
+
+function checkAll(df) {
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       df.elements[i].checked = df.check_all.checked
+     } 
+  }
+}
+
+
+</script>
+    
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI PESERTA UNTUK CETAKAN SURAT PENGESAHAN KEHADIRAN </font></b></td>
+    </tr>
+ </table>
+  <br>
+<%#= render :partial => 'apply_header'%>
+
+<%= render :partial => 'surat_pengesahan'%>
+

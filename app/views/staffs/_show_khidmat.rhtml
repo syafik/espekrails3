@@ -1,0 +1,47 @@
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"><%= link_to 'Kemaskini', :action => 'edit', :id => @staff %></td>
+    </tr>
+  </table>
+<br>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    
+    <tr>
+      <td align="CENTER" colspan="2" bgcolor="#999999"><strong><font color="#FFFFFF">MAKLUMAT PERKHIDMATAN</font></strong></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><strong>Nama Penuh : </strong></td>
+      <td><%= @profile.title.description.upcase if @profile.title %> <%= @staff.profile.name.upcase %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>No KP Baru : </strong></td>
+      <td><%= @staff.profile.ic_number %></td>
+    </tr>
+  </table>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    
+    <tr>
+      <td colspan="2" align="right">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right" width="20%"><strong>No Kakitangan :</strong></td>
+      <td><%= @employment.staf_id if @employment %> </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Jabatan :</strong></td>
+      <td><%#= @employment.place.name if @employment.place %><%=@staff.course_department.description%> </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Gred :</strong></td>
+      <td><%= @employment.job_profile.job_grade if @employment %> </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Jawatan :</strong></td>
+      <td><%= @employment.job_profile.job_name if @employment %> </td>
+    </tr>
+  </table>
+  <br>

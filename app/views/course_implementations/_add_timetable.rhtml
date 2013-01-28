@@ -1,0 +1,21 @@
+<div align="center">
+<%#= error_messages_for 'timetable' %>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <% #@course_implementation = CourseImplementation.find(31)%>
+      <td align="right"><strong>Nama Kursus:</strong></td>
+      <td>&nbsp;<%=@course_implementation.course.name.upcase%></td>
+    </tr>
+    
+    
+    <tr>
+      <td align="right" valign="TOP"><strong>Kod Kursus:</strong></td>
+      <td>&nbsp;<%=@course_implementation.code%></td>
+    </tr>
+    <tr>
+			<td align="right" valign="TOP"><strong>Upload Jadual Waktu :</strong></td>
+	    	<td>&nbsp;<span class="blockintro">
+			<%= file_column_field "course_implementation", "file" %></span></td>
+		</tr>
+  </table>

@@ -1,0 +1,40 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI PENGUMUMAN/BERITA UMUM</font></th>
+    </tr>
+</table>
+  <BR>
+  <table width="90%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999">
+  <td width="5%" align="CENTER"><b><font color="#FFFFFF">Bil</font></b></td>
+  <td width="15%" align="CENTER"><b><font color="#FFFFFF">Kursus</font></b></td>
+  <td width="15%" align="CENTER"><b><font color="#FFFFFF">Tajuk</font></b></td>
+  <td width="40%" align="CENTER"><b><font color="#FFFFFF">Mesej</font></b></td>
+  <td width="" align="CENTER"><b><font color="#FFFFFF">Tarikh Mesej</font></b></td>
+  <td width="" align="CENTER"><b><font color="#FFFFFF">Daripada</font></b></td>
+   </tr>
+  
+<%
+i = 0;
+even = true;
+
+for post_course in @post_courses
+        i = i + 1
+        bgclr = "#CCCCFF" if (even == true)
+        bgclr = "#FFFFFF" if (even == false)
+        even = !even
+%>
+
+        <tr bgcolor="<%=bgclr%>" class="list">
+        <td align=left valign=top><%= i.to_s %></td>
+        <td align=left valign=top><%=h nof{post_course.course_implementation.course.name.upcase} %></td>
+        <td align=left valign=top><%=h nof{post_course.title} %></td>
+        <td align=left><%= nl2br(post_course.post) %></td>
+        <td align=left valign=top><%=h nof{post_course.updated_on.to_formatted_s(:my_format_4)} %></td>
+        <td align=left valign=top><%=h nof{post_course.profile.name.upcase} %></td>
+        </tr>
+ <% end %>
+</table>
+
+<br />

@@ -1,0 +1,72 @@
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+</script>
+
+<script language="JavaScript">
+function check_form(f) {
+
+    if (f.bilangan.value == "") {
+                alert("Sila masukkan bilangan sumber kemudahan.");
+                f.bilangan.focus();
+                return(false);
+    }
+    return (true);
+}
+</script>
+
+<div align="center">
+<%= error_messages_for 'hostel_facility' %>
+</div>
+
+<!--[form:hostel_facility]-->
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"> <a href="/facilities/list"><u>Kembali</u></a> ke Senarai Sumber Kemudahan  </td>
+    </tr>
+  </table>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td width=40% align="right"><strong>Jenis:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <select name="hostel_facility[hostel_facility_type_id]">
+       <% @hostel_facility_types.each do |hostel_facility_type| %>
+        <option value="<%= hostel_facility_type.id %>"
+        <%= ' selected' if hostel_facility_type.id == @hostel_facility.hostel_facility_type_id %>> <%= hostel_facility_type.description %> </option>
+        <% end %>  
+      </select>
+      </span>
+      <a href="javascript: MM_openBrWindow('/hostel_facility_types/new_popup','','scrollbars=yes,width=600,height=400')">Tambah</a>
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Bilangan:</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <%#= text_field 'hostel_facility', 'code', :maxlength=>25, :size=>20  %>
+      <input type=text name=bilangan size=10 maxlength=2>
+      </span></td>
+      <%= hidden_field 'hostel_facility', 'facility_status_id', :value=>1 %>
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>Nama:</strong></td>
+      <td><span class="blockintro">&nbsp; 
+      <%= text_field 'hostel_facility', 'description', :maxlength=>250, :size=>20 %></span></td>
+    </tr>
+    
+    <!--tr>
+      <td align="right"><strong>Kapasiti:</strong></td>
+      <td><span class="blockintro">&nbsp; 
+      <%= text_field 'hostel_facility', 'capacity', :size=>20 %></span></td>
+    </tr!-->
+        
+    <tr>
+      <td align="right"><strong>Harga:</strong></td>
+      <td><span class="blockintro">&nbsp;RM
+      <%= text_field 'hostel_facility', 'price', :maxlength=>11, :size=>10  %>      </span></td>
+    </tr>
+    
+    </table>
+  

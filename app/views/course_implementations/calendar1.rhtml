@@ -1,0 +1,186 @@
+
+<script>
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 170;
+    $('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					       "<hr size=1>" +
+					       "<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
+					       //"<li><a href=\"" + controller + "/calendar/" + objid + "\">&nbsp;&nbsp;Kalendar Tahunan</a>" + 
+					       "<hr size=1>" +
+					       "<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Permohonan</a>" + 
+					       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
+					       "</ul>"
+     
+}
+
+function confirmAndDelete(url, objname) {
+	if (confirm("Are you sure to delete " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function onEnterSchedule(obj) {
+	obj.style.background='#7777ff'
+}
+
+function onExitSchedule(obj) {
+	obj.style.background=''
+}
+</script>
+
+<%
+  t = Time.now
+  current_year= t.strftime("%Y")
+
+  the_year = params[:planning_year]
+  
+  
+%>    
+ <!----------------------------------------------------------------------------------------->
+<form action="/course_implementations/calendar">
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">KALENDAR KURSUS PERUNDANGAN DAN PENTADBIRAN TANAH</font></b></td>
+    </tr>
+  </table>
+  <br>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">Tahun: 
+        <select name = "planning_year">
+         <% @planning_years.each do |cf| %>
+         <%
+         if (the_year == nil)
+         %>
+         <option value="<%= cf.year %>"
+         <%= ' selected' if cf.year.to_s == current_year.to_s %>> <%= cf.year %> </option>
+         <%
+         else
+         %>
+         <option value="<%= cf.year %>"
+         <%= ' selected' if cf.year == params[:planning_year] %>> <%= cf.year %> </option>
+         <% end %>
+         <% end %>
+	    </select>
+	    
+	    
+	    <input type="button" value="Cari" onclick="document.forms[0].submit()">
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999" >
+      <td width="2%" valign="top" id="name20"><font color="#FFFFFF">&nbsp;</font></td>
+      <td width="5%" align="center"><font color="#FFFFFF"><strong>Kod </strong></font></td>
+      <td width="25%" align="center"><font color="#FFFFFF"><strong>Nama Kursus</strong></font></td>
+      <td align="center"><font color="#FFFFFF"><strong>Jan</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Feb</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Mac</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Apr</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Mei</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Jun</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Jul</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Ogos</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Sep</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Okt</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Nov</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Des</strong></font></td>
+      <!--td align="center"><font color="#FFFFFF">Action</font></td-->
+    </tr>
+<tr style="display: none;" id="ihtr20"><td colspan="7" bgcolor="#ececd9">
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody><tr><td width="10"></td><td style="border: 3px solid rgb(0, 51, 102);">
+   <iframe id="ihif20" frameborder="0" width="100%"></iframe>
+   </td></tr>
+   </tbody>
+  </table></td></tr>
+<%
+#testing
+t = Time.now
+current_year = t.strftime("%Y")
+
+i = 0;
+even = true;
+
+if !params[:planning_year]
+  sch_year = current_year   #2006
+else
+  sch_year = params[:planning_year]
+end
+
+querys = CourseImplementation.find_by_sql("select * from vw_detailed_courses where course_department_id = '1' AND year_start=#{sch_year.to_i} ORDER BY 1")
+for query in querys
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  
+  @tid = query.id.to_s
+  #@cid = query.course_id.to_s
+  #@src = Course.find(@cid)
+  
+%>
+	
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.show('popmenu', '/course_implementations', '<%=h query.id %>?course_id=<%=h query.course_id %>', '<%= query.name %>', event)"  >
+      <td id="name<%=h query.id %>"><%= i.to_s %>.</td>
+      <td><%=h query.code %></td>
+      <td><%=h query.name.upcase %></td>
+
+<%
+  j = 1
+
+  
+  while j < 13 do
+    @thedate = "%"+j.to_s+"/"+sch_year.to_s
+    dates = Course.find_by_sql("select * from vw_detailed_courses where id=#{@tid} AND year_start=#{sch_year.to_i} AND month_start=#{j} ORDER BY day_start,month_start")
+    if dates.size > 0
+    for date in dates
+        course_id = date.course_id
+        @sch = Course.find(course_id)
+        b = date.send('day_start')  #suppose day_start
+        c = date.send('day_end')
+        d = "-"
+        treal = b+""+d+""+c
+    end #for
+    else 
+    treal = ""
+    end #if else
+
+    %> <td align="center"><%=treal%><%#= link_to treal, :controller => 'timetables', :action => 'list', :id => @tid, :course_id => @tid %>
+    </td> <%
+    j = j + 1
+  end
+%>
+    </tr>
+    <tr style="display: none;" id="ihtr<%=h query.id %>"><td colspan="7" bgcolor="#ececd9">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody><tr><td width="10"></td><td style="border: 0px solid rgb(0, 51, 102);">
+         <iframe id="ihif<%=h query.id %>" frameborder="0" width="100%"></iframe>
+         </td></tr>
+       </tbody>
+     </table>
+     </td>
+    </tr>
+
+<%
+end
+%>
+  </table>
+</form>
+<!--The popup menu initial layer----->
+<div id="popmenu" class="menu">
+  <ul>
+  	<li id="jongos"><a href="#">Menu 1 link 1</a></li>
+  	<li><a href="#">link two</a></li>
+  	<li><a href="#">link three</a></li>
+  	<li><a href="#">link four</a></li>
+    <li><a href="#">link five</a></li>
+  </ul>
+</div>

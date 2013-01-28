@@ -1,0 +1,451 @@
+
+/* HOME PAGE STYLES */
+
+.home-greybar {
+   height: 20px;
+   background-color: #333333;
+  }
+  
+.home-logos {
+  border-top: 1px solid #999999;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  }
+  
+.home-logos-images {
+  margin-right: 7px;
+  margin-left: 7px;
+  vertical-align: middle;
+  border-style: none;
+}
+
+.home-photo {
+   width: 299;
+   padding: 0px;
+   background-color: #67999A;
+}
+
+.home-square {
+   margin-bottom: 5px;
+   margin-right: 5px;
+}
+
+.home-tagline {
+   width: 501;
+   padding: 0px;
+   background-color: #67999A;
+   vertical-align: top;
+   padding-right: 10px;
+}
+
+.home-tagtext {
+   color: white;
+}
+
+.home-blue {
+   color: #5981B4;
+}
+
+.home-purple {
+   color: #6F658B;
+}
+
+.home-green {
+   color: #6F7C43;
+}
+
+/* ABOUT US - PURPLE STYLES */
+
+.about-header {
+   background-color: #6F658B;
+   padding-left: 15px;
+   width: 59.88%;
+   }
+
+.about-rightcolumn {
+   width: 21.88%;
+   background-color: #C1BEC9;
+   padding-top: 10px;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+.img-strip {
+   margin-bottom: 5px;
+   margin-left: 5px;
+   border: 1px solid #666666;
+}
+
+.photo-strip {
+   float: right;
+   margin-left: 15px;
+}
+
+.slideshow-photo {
+   padding: 20px;
+   border: 1px solid #666666;
+   margin-left: 5px;
+}
+
+/* CONTACT US - GREEN STYLES */
+
+.contact-header {
+   background-color: #92A061;
+   padding-left: 15px;
+   width: 59.88%;
+   }
+
+.contact-rightcolumn {
+   width: 21.88%;
+   background-color: #C4D099;
+   padding-top: 10px;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+/* TRAINING & COURSES - BLUE STYLES */
+
+.training-header {
+   background-color: #5981B4;
+   padding-left: 15px;
+   width: 59.88%;
+   }
+
+.training-rightcolumn {
+   width: 21.88%;
+   background-color: #BCC5D0;
+   padding-top: 10px;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+.course-cell {
+  font-size: 10px;
+}
+
+
+.nc-cell A:link {
+  color: #003399;
+}
+.nc-cell A:visited {
+  color: #003399;
+}
+
+
+.nc-cell {
+  font-size: 10px;
+  color: #003399;
+  font-weight: bold;
+}
+
+.ca-cell A:link {
+  color: #006633;
+}
+.ca-cell A:visited {
+  color: #006633; 
+}
+.ca-cell {
+  font-size: 10px;
+  color: #006633;
+  font-weight: bold;
+}
+
+.highlighted-courselist {
+  font-size: 11px;
+  background-color: #E3EAF2;
+  border: 1px solid #BCC5D0;
+  padding: 10px;
+}
+
+.coursetable {
+  width: 100%;
+}
+ 
+/* 404 PAGE - RED STYLES */
+
+.pnf-header {
+   background-color: #B52424;
+   padding-left: 15px;
+   width: 59.88%;
+   }
+
+.pnf-rightcolumn {
+   width: 21.88%;
+   background-color: #CCCCCC;
+   padding-top: 10px;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+
+/* SEARCH - LIGHT BLUE STYLES */
+
+.search-header {
+   background-color: #67999A;
+   padding-left: 15px;
+   }
+
+   
+/* COMMON STYLES */
+
+/* Style for bullet in left-navigation links */
+.bullet {
+   border: 0px;
+   margin-right: 8px;
+}
+
+/* This is the style for copyright text. */
+.copyright {
+   background-color: #FFFFFF;
+   color: #333333;
+   font-size: 10px;
+   font-family: Verdana,Arial;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   text-align: center;
+}
+
+/* This is the style for the table cell holding the copyright. */
+
+.copyright-cell {
+   border-top: 1px solid #999999;
+}
+  
+
+/* This is the style for text form fields. */
+.formbutton {
+   font-size: 10px;
+   font-family: Verdana,Arial;
+}
+
+
+/* This is the style for text form fields. */
+.formfield {
+   font-size: 10px;
+   font-family: Verdana,Arial;
+   margin-bottom: 5px;
+   border: 1px solid #7F9DB9;
+}
+
+.leftcolumn {
+   background-color: #EEEEEE;
+   width: 18.25%;
+}
+
+.leftinnercolumn {
+   width: 100%;
+   height: 100%;
+   border-right: 1px dotted black;
+   padding-top: 10px;
+   padding-left: 8px;
+   padding-right: 5px;
+}
+
+/* Style for lists showing up in the left column */
+.link-list {
+   margin-left: 15px;
+   list-style-position: outside;
+   list-style-image: url(images/bullet-square.gif);
+}
+
+.link-list-li-bold {
+   font-weight: bold;
+   margin-bottom: 7px;
+}
+
+.link-list-li {
+   margin-bottom: 7px;
+}
+
+/* Style for main bounding table for print */
+.catalogtableprint {
+   width: 650px; 
+   height: 100%; 
+   padding: 0px; 
+   margin: 0px; 
+   border: 1px solid #666666;
+   }
+ 
+/* Style for main bounding table */
+/* Style for main bounding table for print */
+.maintableprint {
+   width: 600px; 
+   height: 100%; 
+   padding: 0px; 
+   margin: 0px; 
+   border: 1px solid #666666;
+   }
+ 
+/* Style for main bounding table */
+.maintable {
+   width: 800px; 
+   height: 100%; 
+   padding: 0px; 
+   margin: 0px; 
+   border: 1px solid #666666;
+   }
+ 
+/* Style for main text area */
+.maintext {
+   background-color: #FFFFFF;
+   padding: 15px;
+   width: 59.88%;
+}
+
+/* Style for unnumbered lists that should not be indented. */
+.nonindentedlist {
+      list-style-position: outside;
+	  margin-left: 15px;
+	  padding-left: 0px; 
+	  margin-top: 10px;
+	  margin-bottom: 5px;
+      }
+
+/* Style for list items under non-indended lists */
+.list-item {
+     margin-bottom: 5px;
+}
+
+.list-item-bold {
+     margin-bottom: 5px;
+	 font-weight: bold;
+	 
+}
+
+/* Style for photos within text */
+.photo {
+    border: 1px solid #CCCCCC;
+	float: right;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-bottom: 5px;
+}
+
+
+/*  Style for anything right-aligned */
+.rightaligned {
+     text-align: right;
+}
+	  
+/* Style for table cell containing search box */
+.searchbox {
+   vertical-align: bottom;
+   text-align: right;
+   padding-right: 10px;
+}
+
+/* Style for global site search form */
+.searchform {
+    padding: 0px; 
+	margin: 0px;
+
+}
+
+/* Style for right sidebar testimonial */
+.sidebar-testimonial {
+  font-style: italic;
+  margin-left: 10px;
+  margin-right: 15px;
+}
+
+.sidebar-testimonial-author {
+   text-align: right;
+   margin-right: 15px;
+}
+
+/* Style for disclaimer-style text */
+.smalltext {
+   font-size: 10px;
+}
+
+/* Style for superscripting text */
+.superscript {
+   line-height: 10px;
+}
+
+/* Style for table cell containing logo */
+.toplogo {
+   vertical-align: bottom;
+}
+
+/* STYLES APPLYING TO ALL TAGS */
+
+a:link { color: #5780B5; }
+a:visited { color: #52486F; } 
+a:hover { color: #33557E; text-decoration: none; } 
+a:active { color: #33557E; text-decoration: none; }
+
+a.dark:link { color: #40365B; text-decoration: none; }
+a.dark:visited { color: #40365B; text-decoration: none; } 
+a.dark:hover { color: #355379; text-decoration: none; } 
+a.dark:active { color: #355379; text-decoration: none; }
+
+a.sidebarlink-green:link { color: #616F32; text-decoration: underline; font-weight: bold;}
+a.sidebarlink-green:visited { color: #616F32; text-decoration: underline; font-weight: bold;} 
+a.sidebarlink-green:hover { color: #92A061; text-decoration: none; font-weight: bold;} 
+a.sidebarlink-green:active { color: #92A061; text-decoration: none; font-weight: bold;}
+
+a.sidebarlink-blue:link { color: #32527A; text-decoration: underline; font-weight: bold;}
+a.sidebarlink-blue:visited { color: #32527A; text-decoration: underline; font-weight: bold;} 
+a.sidebarlink-blue:hover { color: #5D728C; text-decoration: none; font-weight: bold;} 
+a.sidebarlink-blue:active { color: #5D728C; text-decoration: none; font-weight: bold;}
+
+a.sidebarlink-purple:link { color: #574B76; text-decoration: underline; font-weight: bold;}
+a.sidebarlink-purple:visited { color: #574B76; text-decoration: underline; font-weight: bold;} 
+a.sidebarlink-purple:hover { color: #7A738D; text-decoration: none; font-weight: bold;} 
+a.sidebarlink-purple:active { color: #7A738D; text-decoration: none; font-weight: bold;}
+
+a.sidebarlink-category:link { color: #13355F; text-decoration: underline; }
+a.sidebarlink-category:visited { color: #13355F; text-decoration: underline; } 
+a.sidebarlink-category:hover { color: #2E5687; text-decoration: none; } 
+a.sidebarlink-category:active { color: #2E5687; text-decoration: none; }
+
+
+body {
+   font-family: Verdana,Arial;
+}
+
+p {
+   font-size: 11px;
+   font-family: Verdana,Arial;
+}
+
+td {
+   font-size: 11px;
+   vertical-align: top;
+}
+
+th {
+   font-size: 11px;
+   text-align: left;
+   vertical-align: top;
+   background-color: #E3EAF2;
+}
+
+
+ul {
+      list-style-position: outside;
+	  margin-left: 15px;
+	  padding-left: 0px;
+	  padding-left: 5px;
+      }
+
+li {
+      font-size: 11px;
+      font-family: Verdana,Arial;
+	  list-style-type: square;
+      }
+.h1 {
+  	  font-size: 11px;
+  	  background-color: #E3EAF2;
+      vertical-align:top;
+      }
+h1,h2,h3,h4,h5,h6{
+margin: 0px 0px 0px 0px;
+padding: 0px 0px 0px 0px;
+}
+.header{
+ 	  font-size: 11px;
+  	  vertical-align:top;
+	  }

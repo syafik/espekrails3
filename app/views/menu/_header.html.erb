@@ -1,0 +1,18 @@
+
+<div id="objTreeMenu_1_node_1" style="display: inline;" class="treeMenuDefault"><nobr> 
+  <div align="center"><br>
+  No. Kad Pengenalan : <br/>
+<%= session[:user].ic_number rescue nil%><br>
+<% if session[:user] && session[:user].roles.size > 1%>
+	|
+        <%= link_to "Tukar Peranan", menu_index_path %>
+	<%#*<a href="index">Tukar Peranan</a>%>
+<% end -%>
+	|
+	<a target="_top" href="/user/logout">Logout</a>
+    |
+	<br>
+    <br>
+  </div>
+  </nobr></div>
+<div class="dtree">

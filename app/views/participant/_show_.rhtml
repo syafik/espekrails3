@@ -1,0 +1,37 @@
+<br>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" id="pisang">
+    <td width="2%" valign="top"><b><font color="#FFFFFF">Bil</font></b></td>
+    <td width="30%" align=left><font color="#FFFFFF"><strong> Modul </strong></font></td>
+    <td width="20%" align="left"><font color="#FFFFFF"><strong> Tempat </strong></font></td>
+    <td width="10%" align="center"><font color="#FFFFFF"><strong> Tarikh/Tahun </strong></font></td>
+  </tr>
+  <tr style="display: none;" id="ihtr20">
+    <td colspan="7" bgcolor="#ececd9"><table border="1" cellpadding="0" cellspacing="0" width="100%">
+      <tbody>
+        <tr>
+          <td width="10"></td>
+          <td style="border: 3px solid rgb(0, 51, 102);"><iframe id="ihif20" frameborder="0" width="100%"></iframe></td>
+        </tr>
+      </tbody>
+    </table></td>
+  </tr>
+  <%	
+	i = 0
+	even = true
+	for q in @profile.trainings
+	#for q in @qualification
+		i = i + 1
+		bgclr = "#CCCCFF" if (even == true)
+		bgclr = "#FFFFFF" if (even == false)
+		even = !even
+		%>
+  <tr bgcolor="<%=bgclr%>" align=center>
+    <td><%= i.to_s %>.</td>
+    <td><%=h q.course.name %></td>
+    <td><%=h q.course.location %></td>
+    <td><%=h q.course_implementation.date_plan_end %></td>
+  </tr>
+  <%end %>
+</table>
+<br>

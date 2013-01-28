@@ -1,0 +1,75 @@
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function JanaSuratTawaran(schedule_id) {
+	url = '/course_applications/cetak_surat_tawaran/' + schedule_id
+	MM_openBrWindow(url,'','scrollbars=yes,width=600,height=400')
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 150;
+    $('popmenu').innerHTML = "<ul>" + 
+					        "<li><a href=\"javascript: daftarPeserta(document.list_form)\">&nbsp;&nbsp;Simpan</a>" +
+					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
+					        //"<hr size=1>" +
+					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
+					        "</ul>"
+}
+</script>
+
+<script>
+function GoSubmit(df) {
+        return true;
+}
+
+function daftarPeserta(df) {
+    df.action = "/course_management/make_payment"
+    df.submit()
+}
+
+function printPeserta(df) {
+    df.action = "/course_management/cetak_yuran"
+    df.submit()
+}
+
+function checkAll(df) {
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       df.elements[i].checked = df.check_all.checked
+     } 
+  }
+}
+
+
+</script>
+
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+	  <%if @course_implementation%>
+      	<td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=@course_implementation.code%>&nbsp; <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+ 	  <%else%>
+		<td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=params[:course_implementation_code]%></font></b></td>
+	  <%end%>
+    </tr>
+ </table>
+  <br>
+<%= render :partial => 'apply_header'%>
+
+<%= render :partial => 'yuran_list'%>
+
+<!-- popup menu initial layer----->
+<div id="popmenu" class="menu"></div>
+
+<!-- incremental search initial layer----->
+<div id="label" style="clear: both; visibility: hidden">Bonner</div>
+
+
+

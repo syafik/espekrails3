@@ -1,0 +1,74 @@
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <!--tr>
+      <td height="21" align="LEFT">eSPEK&gt;Perancangan Kursus&gt;<a href="/course_implementations/">Senarai Kursus</a>&gt;Maklumat Kursus</td>
+    </tr>
+    <tr>
+      <td height="21" align="center">&nbsp;</td>
+    </tr-->
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT KURSUS</font></b></td>
+    </tr>
+  </table>
+  <br>
+<div align="center"><u>
+<%=
+ if session[:user].roles[0].name == "Admin" 
+ 	link_to 'Kemaskini', :action => 'edit', :id => @course_implementation, :course_id => @course 
+ else
+ 	if session[:user].profile.staff
+		if (session[:user].profile.staff.id == @course_implementation.coordinator1 ||
+		    session[:user].profile.staff.id == @course_implementation.coordinator2 )
+		   		link_to 'Kemaskini', :action => 'edit', :id => @course_implementation, :course_id => @course
+		end
+	end
+ end
+%></u></div>
+
+  <%= render :partial => 'show' %>
+<br>
+<div align="center">
+  <table align="center" width="95%" border="0" cellspacing="0" cellpadding="1">
+    <tr>
+      <td align="center">
+<%if session[:user].roles[0].name == "Admin" %>
+	  <% if @course_implementation.course.course_status_id == 2 %>
+	  <input name="button2" type="button" value="Buka" class="button" onClick="location='/course_implementations/open/<%=params[:id]%>'">
+	  <% end %>
+	  <% if @course_implementation.course.course_status_id == 1 %>
+      <input name="button22" type="button" value="Tangguh" class="button" onClick="location='/course_implementations/postpone/<%=params[:id]%>'">
+	  <% end %>
+	  <% if @course_implementation.course.course_status_id != 2%>
+      <input name="button223" type="button" value="Tutup" class="button" onClick="location='/course_implementations/close/<%=params[:id]%>'">
+	  <% end %>
+<%else
+ 	if session[:user].profile.staff
+		if (session[:user].profile.staff.id == @course_implementation.coordinator1 ||
+		    session[:user].profile.staff.id == @course_implementation.coordinator2 ) %>
+	  <% if @course_implementation.course.course_status_id == 2 %>
+	  <input name="button2" type="button" value="Buka" class="button" onClick="location='/course_implementations/open/<%=params[:id]%>'">
+	  <% end %>
+	  <% if @course_implementation.course.course_status_id == 1 %>
+      <input name="button22" type="button" value="Tangguh" class="button" onClick="location='/course_implementations/postpone/<%=params[:id]%>'">
+	  <% end %>
+	  <% if @course_implementation.course.course_status_id != 2%>
+      <input name="button223" type="button" value="Tutup" class="button" onClick="location='/course_implementations/close/<%=params[:id]%>'">
+	  <% end %>
+
+<%  	end
+    end%>
+<%end%>
+      <input name="button222" type="button" value="Salin" class="button" onClick="location='/course_implementations/copy_and_new/<%=params[:id]%>'">
+      </td>
+    </tr>
+  </table>
+</div>
+<script>
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+
+function PrintCourseImpToPdf(crs_imp_id) {
+	//MM_openBrWindow('/course_implementations/show_pdf/'+ crs_imp_id ,'','scrollbars=yes,width=1000,height=800,url=yes')
+	MM_openBrWindow('/course_implementations/show_to_print/'+ crs_imp_id ,'','scrollbars=yes,width=1000,height=800,url=yes')
+}
+</script>

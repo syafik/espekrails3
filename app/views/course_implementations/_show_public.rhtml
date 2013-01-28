@@ -1,0 +1,177 @@
+<%
+ course_id = params[:course_id]  #ambil data dari link_to
+ %>
+<br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td width="40%" align="right" valign="TOP"><strong>Kod Kursus</strong></td>
+      <td align="LEFT" width="2%" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%=h @course_implementation.code.upcase %> </span></td>
+      <input type=hidden name=course_id value="<%=@course.id%>">
+    </tr>
+    
+    <tr>
+      <td align="right" valign="TOP"><strong>Nama Kursus </strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%=h @course.name.upcase %>      </span>      </td>
+    </tr>
+    
+    <tr>
+      <td align="right" valign="TOP"><strong>Bahagian</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%=h @course.course_department.description.upcase  %>
+      </span></td>
+    </tr>
+    <tr>
+      <td align="right" valign="TOP"><strong>Bidang</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%=h @course.course_field.description.upcase      %>
+      </span></td>
+    </tr>
+    
+    <tr>
+      <td align="right" valign=TOP><strong>Kumpulan Sasaran</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=h @course.target_group %></td>
+	</tr>    
+    <tr>
+      <td align="center" valign="TOP" colspan="3"><hr size="1" width="70%"></td>
+    </tr>
+
+
+    <tr>
+      <td align="right" valign="TOP"><strong>Tarikh Mula</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=@course_implementation.date_plan_start.to_formatted_s(:my_format_4) if @course_implementation.date_plan_start%></td>
+    </tr>
+    <tr>
+      <td align="right" valign="TOP"><strong>Tarikh Tamat</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=
+	         if !@course_implementation.date_end
+			 	@course_implementation.date_plan_end.to_formatted_s(:my_format_4)
+			 else
+			 	@course_implementation.date_end.to_formatted_s(:my_format_4)
+			 end
+				-%></td>
+    </tr>
+
+    <!--tr>
+      <td align="right" valign="TOP"><strong>Tarikh Siar</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=@course_implementation.date_publish.to_formatted_s(:my_format_4) if @course_implementation.date_publish%></td>
+    </tr-->
+    <!--tr>
+      <td align="right" valign="TOP"><strong>Tarikh Mula Permohonan</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=@course_implementation.date_apply_start.to_formatted_s(:my_format_4) if @course_implementation.date_apply_start %></td>
+    </tr-->
+    <tr>
+      <td align="right" valign="TOP"><strong>Tarikh Tutup Permohonan</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=@course_implementation.date_apply_end.to_formatted_s(:my_format_4) if @course_implementation.date_apply_end %></td>
+    </tr>
+    <!--tr>
+      <td align="right" valign="TOP"><strong>Tarikh Semakan Status Permohonan</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=@course_implementation.date_check.to_formatted_s(:my_format_4) if @course_implementation.date_check %></td>
+    </tr-->
+
+    <!--tr>
+      <td align="right" valign="TOP"><strong>Tarikh Tutup Penilaian</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=@course_implementation.date_evaluation_end.to_formatted_s(:my_format_4) if @course_implementation.date_evaluation_end%></td>
+    </tr-->
+    <tr>
+      <td align="center" valign="TOP" colspan="3"><hr size="1" width="70%"></td>
+    </tr>
+
+    <tr>
+      <td align="right" valign="TOP"><strong>Bil. Peserta</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%=h @course_implementation.capacity %></span></td>
+    </tr>    
+    <tr>
+      <td align="right" valign="TOP"><strong>Tempat</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%=h @course.course_location.description  %>
+      </span></td>
+    </tr>
+    <tr>
+      <td align="right" valign="TOP"><strong>Objektif</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=@course.objective.split("\n").join("<br>")%></td>
+    </tr>
+    <tr>
+      <td align="right" valign="TOP"><strong>Kandungan</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><%=@course.content.split("\n").join("<br>")%></td>
+    </tr>
+        
+    <tr>
+      <td align="right" valign=TOP><strong>Metodologi</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong>      
+      <td>
+	    <% 
+	if @course_implementation.course.methodologies and @course_implementation.course.methodologies.size > 0
+
+	     	 arr = Array.new
+		 last_methodology = @course_implementation.course.methodologies.last.description
+		 arr1 = @course_implementation.course.methodologies
+		 arr1.pop
+		 for methodology in arr1
+		 arr.push(methodology.description)
+		 end
+		 
+		 if arr.size > 0
+		 	str = arr.join(', ') + " dan " + last_methodology + "." 
+		 else
+		 	str = last_methodology + "."
+		 end
+	else
+		str = "&nbsp;"
+	end
+
+	   -%> 
+	   <%=str%>	</tr>
+    <tr>
+      <td align="right" valign="TOP"><strong>Yuran</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"> RM
+      <%=h @course.fee.to_i.to_s + ".00" %></span></td>
+    </tr>
+    
+    <tr>
+      <td align="right" valign="TOP"><strong>Penyelaras</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%= @course_implementation.penyelaras1.profile.name.upcase if @course_implementation.penyelaras1%>
+      </span></td>
+    </tr>
+    
+    <tr>
+      <td align="right" valign="TOP"><strong>Penolong Penyelaras</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%= @course_implementation.penyelaras2.profile.name.upcase if @course_implementation.penyelaras2%>
+      </span></td>
+    </tr>
+    
+    <tr>
+      <td align="right" valign="TOP"><strong>Status</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td><span class="blockintro"><%=h @course.course_status.description %></span></td>
+    </tr>
+
+    <tr>
+      <td align="center" valign="TOP" colspan="3"><hr size="1" width="70%"></td>
+    </tr>
+
+    <tr>
+      <td align="right" valign="TOP"><strong>Kursus Berkaitan</strong></td>
+      <td align="LEFT" valign="TOP"><strong>:</strong></td>
+      <td>
+	  <%=@course_implementation.course.prerequisites[0].course_implementation.code if @course_implementation.course.prerequisites.size > 0%>
+	  <%="("+@course_implementation.course.prerequisites[0].course_implementation.course.name+")" if @course_implementation.course.prerequisites.size > 0%>
+	  	  </td>
+    </tr>
+   
+</table>

@@ -1,0 +1,24 @@
+<div align="center">
+<%#= error_messages_for 'timetable' %>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <% #@course_implementation = CourseImplementation.find(31)%>
+      <td align="right"><strong>Nama Kursus:</strong></td>
+      <td>&nbsp;<%=@course_implementation.course.name.upcase%></td>
+    </tr>
+    
+    
+    <tr>
+      <td align="right" valign="TOP"><strong>Kod Kursus:</strong></td>
+      <td>&nbsp;<%=@course_implementation.code%></td>
+    </tr>
+    <tr>
+			<td align="right" valign="TOP"><strong>Jadual Waktu :</strong></td>
+	    	<td>&nbsp;<span class="blockintro">
+				<% if @course_implementation.file%>
+				<% nof{@course_implementation = CourseImplementation.find(@course_implementation.id)}   %>
+				<a href="<%= url_for_file_column("course_implementation", "file") %>"><font color="red">Download File PDF</font></a>
+				<%end%></span></td>
+		</tr>
+  </table>

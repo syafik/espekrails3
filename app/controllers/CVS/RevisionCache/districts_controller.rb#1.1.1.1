@@ -1,0 +1,54 @@
+class DistrictsController < ApplicationController
+  layout "standard-layout"
+
+	def initialize
+	    @states = State.find(:all, :order=>"description")
+	end
+
+  def index
+    list
+    render :action => 'list'
+  end
+
+  def list
+    #@district_pages, @districts = paginate :district, :per_page => 100
+	@districts = District.find_all
+  end
+
+  def show
+    @district = District.find(params[:id])
+  end
+
+  def new
+    @district = District.new
+  end
+
+  def create
+    @district = District.new(params[:district])
+    if @district.save
+      flash[:notice] = 'District was successfully created.'
+      redirect_to :action => 'list'
+    else
+      render :action => 'new'
+    end
+  end
+
+  def edit
+    @district = District.find(params[:id])
+  end
+
+  def update
+    @district = District.find(params[:id])
+    if @district.update_attributes(params[:district])
+      flash[:notice] = 'District was successfully updated.'
+      redirect_to :action => 'show', :id => @district
+    else
+      render :action => 'edit'
+    end
+  end
+
+  def destroy
+    District.find(params[:id]).destroy
+    redirect_to :action => 'list'
+  end
+end

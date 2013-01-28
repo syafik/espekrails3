@@ -1,0 +1,111 @@
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">PARTICIPANT'S PAYMENT INFO</font></b></td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">
+      <%= link_to 'View this participant', :action => 'show', :id => @personal %>
+      |
+      <%= link_to 'Payment history', :action => 'show_payment', :id => @personal %>
+      |
+      <%= link_to 'Add payment', :action => 'add_payment', :id => @personal %>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <!--tr>
+      <td align="right" valign="top"><b>Course:</b></td>
+      <td><%= @student.personal.courses[0].name %>
+      <%= "<p>" if @student.personal.courses[0].name.size > 40 %>
+      &nbsp;<b>Schedule:</b>&nbsp; <%= @personal.courses[0].schedules[0].date_start.to_s + " to " + @personal.courses[0].schedules[0].date_end.to_s %>     
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><b>Date apply:</b></td>
+      <td><%= @student.date_apply  %></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Type:</b></td>
+      <td><%= @student.student_type.description %> <%= "&nbsp;&nbsp;<b>Company Name:</b>&nbsp; #{@personal.organization.name}"  if (@personal.organization && @student.student_type_id==4)%></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr-->
+    <tr>
+      <td width="20%" align="right"><strong>Participant Name: </strong></td>
+      <td>
+          <%= @student.personal.name %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>NRIC #: </strong></td>
+      <td>
+          <%= @student.personal.nric %></td>
+    </tr>
+</table>
+
+
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr>
+      <td colspan="6" bgcolor="#FFFFFF">Course: &nbsp;<%= @student.personal.schedules[0].course.name %>
+         (<%=@student.personal.schedules[0].date_start%> to <%=@student.personal.schedules[0].date_end%>)
+      </td>
+    </tr>
+    <tr bgcolor="#999999">
+      <td width="2%" valign="top"><font color="#FFFFFF">&nbsp;</font></td>
+      <!--td width="30%" align="center"><font color="#FFFFFF"><strong>Course </strong></font></td-->
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>Amount(RM) </strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>Date Paid</strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>Payment Type</strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>Receipt No</strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>Full Payment?</strong></font></td>
+    </tr>
+
+<%
+i = 0;
+even = true;
+payment_sum = 0
+previous_course = "" 
+
+for payment in @personal.payments
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+
+  payment_sum = payment_sum + payment.amount
+
+  if previous_course == payment.schedule.course.name
+   course_name = "&nbsp"
+  else
+    course_name = payment.schedule.course.name
+  end
+
+%>  
+  <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.show('popmenu', '/participant', '<%=h payment.id %>', '<%= payment.id %>', event)" >
+    <td><%= i.to_s %>.</td>
+    <!--td><%= course_name %></td-->
+    <td align="center"><%= payment.amount %></td>
+    <td align="center"><%= payment.date %></td>
+    <td align="center"><%= payment.payment_type.description %></td>
+    <td><%= payment.receipt_no %></td>
+    <td align="center"><%= "Yes" if payment.is_full_payment==1 %><%= "No" if payment.is_full_payment==0 %></td>
+  </tr>
+<% 
+  previous_course = course_name 
+end
+%>
+  <tr colspan="7" bgcolor="#FFFFFF">
+    <td></td>
+    <td colspan="6"><b>Paid Up:</b> &nbsp;RM<%=payment_sum%>&nbsp;&nbsp;&nbsp;<b>Accrued:</b> &nbsp;RM<%=@student.personal.schedules[0].course.fee - payment_sum%>&nbsp</td>
+  </tr>
+</table>
+    <br>
+  

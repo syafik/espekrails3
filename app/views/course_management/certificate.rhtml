@@ -1,0 +1,104 @@
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function JanaSuratTawaran(schedule_id) {
+	url = '/course_applications/cetak_surat_tawaran/' + schedule_id
+	MM_openBrWindow(url,'','scrollbars=yes,width=600,height=400')
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 150;
+    $('popmenu').innerHTML = "<ul>" + 
+					        "<li><a href=\"javascript: daftarPeserta(document.list_form)\">&nbsp;&nbsp;Jana Sijil</a>" +
+					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
+					        //"<hr size=1>" +
+					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
+					        "</ul>"
+}
+</script>
+
+<script>
+function daftarPeserta(df) {
+  var sum_checked = 0
+
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       if (df.elements[i].checked == true) {
+         sum_checked++
+       }
+     } 
+  }
+  if (1) {
+    df.action = "/course_management/set_kelayakan_sijil"
+    df.submit()
+  }
+  else {
+    alert("Sila Pilih Peserta")
+  }
+}
+
+function checkAll(df) {
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       df.elements[i].checked = df.check_all.checked
+     } 
+  }
+}
+
+
+</script>
+    
+ <!----------------------------------------------------------------------------------------->
+<%if @course_implementation%>
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=@course_implementation.code%>&nbsp; <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+    </tr>
+ </table>
+  <br>
+<%= render :partial => 'apply_header'%>
+
+<%= render :partial => 'certificate_list'%>
+
+<%else%>
+<script>
+alert("Kursus tidak wujud. Sila masukkan kursus yang betul");
+history.back();
+</script>
+<%end%>
+
+<!-- popup menu initial layer----->
+<div id="popmenu" class="menu"></div>
+
+<script>
+function set_polisi(id) {
+	MM_openBrWindow('/course_management/new_polisi_sijil/'+id,'','scrollbars=yes,width=800,height=600')
+}
+
+function confirmJana() {
+	if (confirm("Proses ini akan mengemaskini kelayakan sijil secara automatik. \nAdakah anda pasti?")) {
+		location = '/course_management/jana_kelayakan/<%=@course_implementation.id%>'
+	}
+}
+
+function tempah_sijil(id) {
+	MM_openBrWindow('/course_management/tempah_sijil/'+id,'','scrollbars=yes,width=800,height=600')
+}
+
+function tempah_sijil_iso(id) {
+	MM_openBrWindow('/course_management/tempah_sijil_iso/'+id,'','scrollbars=yes,width=800,height=600')
+}
+
+</script>
+
+
+

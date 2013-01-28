@@ -1,0 +1,51 @@
+<form name="ca_form" method="post" action="/course_applications/update/<%=@course_application.id%>" enctype="multipart/form-data" onsubmit="return GoSubmit(ca_form)">
+<input type="hidden" name="by_user" value="1">
+  <%= render :partial => 'form' %>
+  
+  <br>
+   <div id="apply_button" align="center" style="visibility: visible">
+  <%= submit_tag 'Simpan' %></div>
+<%= end_form_tag %>
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+$('chkbox').checked = true;
+$('chkbox_ketua_jabatan').checked = true;
+$('course_implementation_code').disabled = 'disabled';
+$('course_implementation_code').style.background = '#eeeeee';
+
+function GoSubmit(df) {
+
+	if (!checkInput(anythingRegExp,$('course_implementation_code'),'Kod Kursus')) return false;
+	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
+	if (!checkSelection(strRegExp,$('profile_title_id'),'Gelaran')) return false;
+	if (!checkInput(anythingRegExp,$('profile_name'),'Nama Penuh Pemohon')) return false;
+	if (!checkInput(dateDayformat,$('d_dob'),'Hari Tarikh Lahir')) return false;
+	if (!checkInput(dateMonthformat,$('m_dob'),'Bulan Tarikh Lahir')) return false;
+	if (!checkInput(dateAllYearformat,$('y_dob'),'Tahun Tarikh Lahir')) return false;
+	if (!checkSelection(strRegExp,$('profile_gender_id'),'Jantina')) return false;
+	if (!checkSelection(strRegExp,$('profile_religion_id'),'Agama')) return false;
+	if (!checkSelection(strRegExp,$('profile_marital_status_id'),'Taraf Perkahwinan')) return false;
+	if (!checkSelection(strRegExp,$('profile_race_id'),'Keturunan')) return false;
+	if (!checkFormat(imageRegExp,$('profile_image'),'Hanya Format JPG/JPEG dibenarkan')) return false;
+
+	//if (!checkInput(anythingRegExp,$('course_application_supervisor_name'),'Perakuan Ketua Jabatan(Nama)')) return false;
+	//if (!checkInput(anythingRegExp,$('course_application_supervisor_jawatan'),'Perakuan Ketua Jabatan(Jawatan)')) return false;
+
+
+	//if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
+	
+	if (!$('chkbox').checked) {
+		alert('Sila sahkan pengakuan');
+		$('chkbox').focus()
+		return false;
+	}
+    if (!$('chkbox_ketua_jabatan').checked) {
+		alert('Sila sahkan perakuan ketua jabatan');
+		$('chkbox_ketua_jabatan').focus()
+		return false;
+	}
+
+	return true;
+}
+</script>

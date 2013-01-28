@@ -1,0 +1,132 @@
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">REGISTRATION</font></b></td>
+    </tr>
+  </table>
+
+
+<%= start_form_tag :action => 'enroll', :id => @student %>
+  <%= render :partial => 'beauty_form' %>
+  <br>
+  <div id="enroll_button" align="center" style="visibility: visible">
+   <!--<%= submit_tag "Register this applicant" ,:class=>"btn150" %> -->
+   <input type="button" value="Register this applicant" class="btn300" onclick="GoSubmit(document.forms[0])">
+  </div>
+<%= end_form_tag %>
+
+<script>
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+
+function GoSubmit(df) {
+	if (document.getElementById('student_schedule_id').value == 0) {
+		alert('Please select schedule')
+		document.getElementById('student_schedule_id').style.background='red'
+		document.getElementById('student_schedule_id').focus()
+		return false;
+	}
+
+	if ( (document.getElementById('student_type_id').value == 4) && (document.getElementById('personal_organization_id').value == "") ) {
+		alert('Please select company!!! @@')
+		document.getElementById('personal_organization_id').style.background='red'
+		document.getElementById('personal_organization_id').focus()
+		return false;
+	}
+
+	df.submit()
+}
+</script>
+
+<div id="label" style="clear: both; visibility: hidden">Bonner</div>
+
+<script type="text/javascript">
+//<![CDATA[
+
+var list = [
+
+<% @courses.each do |course| %>
+<%= "{name: \"#{course.name}\", id: \"#{course.id}\"}," %>
+<% end %>
+{name: "  ", id: "00000"}
+];
+
+var company_list = [
+
+<% @organizations.each do |org| %>
+<%= "{name: \"#{org.name}\", id: \"#{org.id}\"}," %>
+<% end %>
+{name: "  ", id: "00000"}
+];
+
+//
+function getNames(o, search){
+	if(search = search.toLowerCase())
+		for(var i = -1, l = list.length; ++i < l;){
+			//
+			for(var j = 0, indices = []; j = list[i].name.toLowerCase().indexOf(search, j) + 1;
+				indices[indices.length] = j - 1);
+			//
+			if(indices.length)
+				o.add(list[i].name, indices);
+		}
+	o.show();
+}
+
+
+function getComps(o, search){
+	if(search = search.toLowerCase())
+		for(var i = -1, l = company_list.length; ++i < l;){
+			//
+			for(var j = 0, indices = []; j = company_list[i].name.toLowerCase().indexOf(search, j) + 1;
+				indices[indices.length] = j - 1);
+			//
+			if(indices.length)
+				o.add(company_list[i].name, indices);
+		}
+	o.show();
+}
+
+new IncrementalSearch(document.forms[0].course_name, getNames, "autocomplete");
+new IncrementalSearchCompany(document.forms[0].organization_name, getComps, "autocomplete");
+
+//]]>
+
+////company
+function getCompanyById(comp_id) {
+	for(var i = 0; i < company_list.length; i++) {
+	  if (company_list[i].id == comp_id) {
+		return company_list[i].name
+	  }
+	}	
+}
+
+function updateCompanyName() {
+	if ($("personal_organization_id").value != "")
+	{
+		$("organization_name").value = getCompanyById($("personal_organization_id").value)
+	}
+}
+
+updateCompanyName()
+
+////course
+function getCourseById(course_id) {
+	for(var i = 0; i < list.length; i++) {
+	  if (list[i].id == course_id) {
+		return list[i].name
+	  }
+	}	
+}
+
+function updateCourseName() {
+	if ($("student_course_id").value != "")
+	{
+		$("course_name").value = getCourseById($("student_course_id").value)
+	}
+}
+
+updateCourseName()
+$('course_name').style.background = '#eeeeee'; $('course_name').disabled = true;
+
+</script>

@@ -1,0 +1,136 @@
+
+<!--[form:notification]-->
+  <table width="85%" border="0" align="center" bgcolor="#FFFFFF">
+  <tr bgcolor="#000000">
+    	<td colspan="4" align="LEFT" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PEMOHON</font></b></td>
+    </tr>
+  <tr>
+    <td align="left"><b>Nama Pemohon</b></td>
+    <td colspan=3>:&nbsp;<%= nof{@notification.user.profile.name}%></td>
+  </tr>
+<%
+employment = Employment.find_by_profile_id(@notification.user.profile_id)
+%>
+  <tr>
+    <td align="left"><b>Bahagian</b></td>
+    <td colspan=3>:&nbsp;<%= nof{employment.unit.upcase}%></td>
+  </tr>
+  <tr>
+    <td align="left"><b>Tujuan</b></td>
+    <td colspan=3>:&nbsp;<%= nof{@course_implementation.course.name}%></td>
+  </tr>
+  <tr>
+    <td align="left"><b>No. Samb.</b></td>
+    <td colspan=3>:&nbsp;</td>
+    <td>
+    <%= hidden_field 'notification', 'date_plan_start', :value=> @course_implementation.date_plan_start %>
+    <%= hidden_field 'notification', 'date_plan_end', :value=> @course_implementation.date_plan_end %>
+    <%= hidden_field 'notification', 'course_implementation_id', :value=> @course_implementation.id %>
+    <%= hidden_field 'notification', 'course_id', :value=> @course_implementation.course.id %>
+	<%= hidden_field 'notification', 'profile_id', :value=>session[:user].profile_id %></td>
+  </tr>
+	<tr>
+		<td>&nbsp;</td>
+		</tr>
+		<tr bgcolor="000000">
+	   	<td colspan="4" align="LEFT" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT BILIK YANG DIPOHON</font></b></td>
+	   </tr>
+		<tr>
+			<td>&nbsp;</td>
+			</tr>
+		<tr>
+  	<tr>
+    <td align="CENTER" colspan="4">
+	   <fieldset style="width:90%">
+	    <table width="95%" align="center" border=0>
+<%#
+	  	  ds = @course_implementation.date_start
+		  de = @course_implementation.date_end
+		  howlong = (de-ds).to_i+1
+		  @options = Array.new;
+		  @days = Array.new
+		  howlong.times do |i|
+		  	b = ds+i
+			c = dmy(b,"-","/");
+		  	@options.push([c,ds+i]);
+		  end
+		  @days = @options;
+%>
+		 <%# @days.each do |day|%>
+		<%@checksama = @facility_reservations.sort_by { |e| e[:facility_id] }.inject([]) { |m,e| m.last.nil? ? [e] : m.last[:facility_id] == e[:facility_id] ? m : m << e }%>
+		<%if @checksama.size == 1%>
+		
+		<%#kalau sama keluarkan start date dengan end date sajalah%>
+			<tr>
+				<td width="195" align="right"><%if @facility_reservations.size == 1%>
+				 <%=@facility_reservations[0].date_from.strftime("%d-%m-%Y")%>
+				 <%else%>
+				 Dari <%=@facility_reservations[0].date_from.strftime("%d-%m-%Y")%> hingga <%=@facility_reservations[@facility_reservations.size-1].date_from.strftime("%d-%m-%Y")%>
+				 <%end%>:</td>
+				<td width="501">
+<%#fr = FacilityReservation.find(:first, :conditions =>"course_implementation_id='#{@course_implementation.id}' and date_from='#{day[1]}'")%>
+				<%=nof{@facility_reservations[0].facility.facility_type.description}%> - <%=nof{@facility_reservations[0].facility.name}%>				</td>
+			</tr>
+		<%else%>
+		<%@facility_reservations.each do |facility_reservation|%>
+		<%#nak kena check semua data pakai bilik sama ke ? kalau sama pakai start date dengan end date aje %>
+
+			<tr>
+				<td width="195" align="right"><%=facility_reservation.date_from%>:</td>
+				<td>
+<%#fr = FacilityReservation.find(:first, :conditions =>"course_implementation_id='#{@course_implementation.id}' and date_from='#{day[1]}'")%>
+				<%=nof{facility_reservation.facility.facility_type.description}%> - <%=nof{facility_reservation.facility.name}%>
+
+				</td>
+			</tr>
+		<% end %>
+		<% end %>
+		
+		
+		</table>
+	   </fieldset>	  </td>
+  </tr>
+ <tr>
+	<td align="left">Tarikh Permohonan</td>
+	<td>:&nbsp;<%= nof{@notification.created_on.to_formatted_s(:my_format_4)} %></td>
+    </tr>
+   <tr bgcolor="000000">
+     <td colspan="4" align="CENTER" bgcolor="#FFFFFF">&nbsp;</td>
+   </tr>
+	<tr bgcolor="000000">
+	    	<td colspan="4" align="LEFT" bgcolor="#999999"><b><font color="#FFFFFF">UNTUK KEGUNAAN SEKSYEN KESELAMATAN </font></b></td>
+	    </tr>
+	    <tr>
+	    <td colspan="4" align="left">Permohonan tuan/puan sepertimana yang dipohon telah :</td>
+	  </tr>
+	<tr>
+    <td align="CENTER"></td>
+	          <%
+	          checked_0 = checked_1 = ""
+	          checked_1 = "checked" if @notification.status == "1"
+	          checked_0 = "checked" if @notification.status == "0"
+	          %>
+	      <td><input name="notification[status]" type="radio" value="1" <%=checked_1%>>Diluluskan
+	      <input name="notification[status]" type="radio" value="0"<%=checked_0%>>Ditolak
+	          </td>
+	    </tr>
+	 <tr>
+	    <td align="left">Cadangan bilik lain</td>
+	    <td colspan="3"><%= text_field 'notification', 'remark', :maxlength=>50, :size=>50 %></td>
+	  </tr>
+	      <tr>
+	    <td colspan="4" align="left"><%=render :partial => 'pegawai_keselamatan'%></td>
+	  </tr>
+	    <tr>
+		<td align="left">Tarikh Kelulusan</td>
+		  <td>:&nbsp;
+	      <input id="day_approve" type=text name="day_approve" value="<%=@day%>" size=2 maxlength=2 >
+	-
+	  <input id="month_approve" type=text name="month_approve" value="<%=@month%>" size=2 maxlength=2 >
+	-
+	<input id="year_approve" type=text name="year_approve" value="<%=@year%>" size=4 maxlength=4></td>
+	    </tr>	
+</table>
+</BR>
+<!--[eoform:notification]-->
+

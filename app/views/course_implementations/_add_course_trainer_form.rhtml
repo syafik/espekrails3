@@ -1,0 +1,41 @@
+<div align="center">
+<%#= error_messages_for 'timetable' %>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <% #@course_implementation = CourseImplementation.find(31)%>
+      <td align="right"><strong>Nama Kursus:</strong></td>
+      <td>&nbsp;<%=@course_implementation.course.name.upcase%></td>
+    </tr>
+    
+    
+    <tr>
+      <td align="right" valign="TOP"><strong>Kod Kursus:</strong></td>
+      <td>&nbsp;<%=@course_implementation.code%></td>
+    </tr>
+    <tr>
+      <td align="right" valign="TOP"><strong>Penceramah:</strong></td>
+      <td>
+	  <%
+	  #@trainers = Trainer.find(:all)
+	  sql = "SELECT t.* FROM trainers t,profiles p WHERE p.id=t.profile_id ORDER BY p.name"
+	  @trainers = Trainer.find_by_sql(sql)
+	  for trainer in @trainers
+	  %>
+	  <input type="checkbox" name="trainer_ids[]" value="<%=trainer.id%>" <%="checked" if @course_implementation.trainers.include?(trainer)%>><%=trainer.profile.name%><br>
+	  <%
+	  end
+	  %>	  </td>
+    </tr>
+  </table>
+
+<script>
+function goAddTrainer() {
+	document.forms[0].action = "/course_implementations/save_course_trainer/<%=@course_implementation.id%>"
+	document.forms[0].submit()
+}
+function goDeleteTrainer() {
+	document.forms[0].action = "/course_implementations/remove_course_trainer/<%=@course_implementation.id%>"
+	document.forms[0].submit()
+}
+</script>

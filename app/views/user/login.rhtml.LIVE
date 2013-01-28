@@ -1,0 +1,61 @@
+<table border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr align="center">
+      <td valign="TOP" align="RIGHT"><font color="red"><img src="../images/logo-nre.jpg" alt="espek"></font></td>
+      <td><font color="red"><img src="../images/home.jpg" alt="espek" width="500" height="350"> </font></td> 
+      <td valign="TOP" align="LEFT"><font color="red"><img src="../images/logo-instun.gif" alt="espek"></font></td>
+    </tr>
+     </tbody>
+</table>
+
+<table border="0" cellspacing="0" cellpadding="0" width="60%" align="center">
+    <tr> 
+      <th width="100%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SILA LOGIN</font></th>
+    </tr>
+</table>
+  <div class="form-padding">
+    <div align="center"></div>
+    <%= start_form_tag :action => 'login'  %>
+  <table width="60%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+	<tr>
+	<td width=30% align=right>Login ID :</td>
+	<td width=40%>&nbsp;
+       <%= text_field 'user', 'login', :size=>30 %> 	
+      </td>
+    </tr>
+	<tr>
+	<td width=30% align=right>Kata Laluan :</td>
+	<td width=40%>&nbsp;
+       <%= password_field 'user', 'password', :size=>30 %> 	
+      </td>
+    </tr>
+    	<tr>
+	<td>&nbsp;</td>
+	<td>&nbsp;
+        <%= submit_tag 'Login' %>
+        &nbsp;
+        <%= link_to 'Daftar akaun', :action => 'register' %> |
+        <%= link_to 'Lupa kata laluan', :action => 'forgot_password' %> 
+    <%= end_form_tag %>
+      </td>
+      </tr>
+    
+  </table>
+  <br />
+  <table align="CENTER" width="60%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="LEFT" valign="BOTTOM"><img src="../images/pdf.gif" alt="espek"><a href="http://www.adobe.com/products/acrobat/readstep2.html">Download Acrobat Reader</a></td>
+      <td align="RIGHT" valign="BOTTOM"><a href="/manual/user.pdf" target="_blank">Download Manual Pengguna</a>
+|
+	  <a href="/course_implementations/list_public" target="_blank">Senarai Kursus Tahunan..</a>	  </td>
+    </tr>
+    <tr>
+      <td align="CENTER" colspan="2"><br />
+        <font size="-3">S</font><font size="-3">egala masalah berkenaan sistem sila hubungi:<br />
+      Bahagian Teknologi Maklumat, INSTUN 05-4542825 atau espek@instun.gov.my <br />
+&copy;Hakcipta Terpelihara&nbsp; 2006 
+Institut Tanah dan Ukur                                                   Negara </font></td>
+    </tr>
+  </table>
+</div>

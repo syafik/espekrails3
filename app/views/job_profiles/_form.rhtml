@@ -1,0 +1,23 @@
+<div align="center"><%= error_messages_for 'job_profile' %></div>
+
+<!--[form:job_profile]-->
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+<tr>
+	<td align=right><b>Gred :</b></td>
+	<td><%= text_field 'job_profile', 'job_grade', :maxlength=>10, :size=>10 %></td>	
+</tr>
+<tr>
+        <td align=right><b>Kod Skim :</b></td>
+        <td><%= text_field 'job_profile', 'code', :maxlength=>15, :size=>15 %></td>
+</tr>
+<tr>
+	<td align=right><b>Skim Perkhidmatan :</b></td>
+	<td><%= text_field 'job_profile', 'job_name', :maxlength=>50, :size=>30  %></td>	
+</tr>
+<tr>
+	<td align=right><b>Ranking :</b></td>
+	<td><%= text_field 'job_profile', 'ranking', :maxlength=>4, :size=>4  %></td>	
+</tr>
+</table>
+<!--[eoform:job_profile]-->
+

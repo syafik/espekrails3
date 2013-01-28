@@ -1,0 +1,329 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">TEMPAHAN ASRAMA : <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+    </tr>
+</table>
+<br>
+<div align=center>
+
+<form name=ci_form method=post action="/course_implementations/booking_hostel_create" onsubmit="return GoSubmit(ci_form)">
+
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    
+    <script>
+//bidang selection
+node_bahagian_id = $("course_department_id");
+node_bidang_selection = $("field_selection");
+function checkField() {
+	str  = "<select  id=\"course_field_id\" name=\"course[course_field_id]\"  style=\"width: 150; color: orange;\">\n";
+	str += "<option value=\"\">Tunggu..</option>\n"
+	str += "</select>\n";
+	$('field_selection').innerHTML = str + ""
+	ajax_field_request("/ajax/ajax_find_course_field", "id="+$("course_department_id").value)
+	ajax_coordinator1_request("/ajax/ajax_find_coordinator", "id="+$("course_department_id").value)
+	ajax_coordinator2_request("/ajax/ajax_find_coordinator", "id="+$("course_department_id").value)
+}
+
+function ajax_field_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_field_response}
+    );
+}
+
+function ajax_coordinator1_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_coordinator1_response}
+    );
+}
+function ajax_coordinator2_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_coordinator2_response}
+    );
+}
+
+function ajax_field_response(originalRequest) {
+	var a = originalRequest.responseText.split(",")
+	//alert(a)
+	var k = new Array(a.length)
+	for (i=0; i<k.length; i++) {
+		k[i] = a[i].split("=")
+	}
+	//alert(originalRequest.responseText)
+	
+	str  = "<select  id=\"course_field_id\" name=\"course[course_field_id]\" style=\"width: 150;\">\n";
+	str += "<option value=\"\">Pilih Bidang</option>\n"
+	for (i=0; i<k.length; i++) {
+
+		str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+	}
+	str += "</select>\n";
+
+	$("field_selection").innerHTML = str;
+}
+
+function ajax_coordinator1_response(originalRequest) {
+	var a = originalRequest.responseText.split(",")
+	//alert(a)
+	var k = new Array(a.length)
+	for (i=0; i<k.length; i++) {
+		k[i] = a[i].split("=")
+	}
+	//alert(originalRequest.responseText)
+	
+	
+	str  = "<select  id=\"course_implementation_coordinator1\" name=\"course_implementation[coordinator1]\" style=\"width: 250;\">\n";
+	str += "<option value=\"\">Pilih Penyelaras</option>\n"
+	for (i=0; i<k.length; i++) {
+
+		str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+	}
+	str += "</select>\n";
+
+	//$("coordinator1_selection").innerHTML = str;
+}
+
+function ajax_coordinator2_response(originalRequest) {
+	var a = originalRequest.responseText.split(",")
+	//alert(a)
+	var k = new Array(a.length)
+	for (i=0; i<k.length; i++) {
+		k[i] = a[i].split("=")
+	}
+	//alert(originalRequest.responseText)
+	
+	str  = "<select  id=\"course_implementation_coordinator2\" name=\"course_implementation[coordinator2]\" style=\"width: 250;\">\n";
+	str += "<option value=\"\">Pilih Penyelaras</option>\n"
+	for (i=0; i<k.length; i++) {
+
+		str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+	}
+	str += "</select>\n";
+
+	$("coordinator2_selection").innerHTML = str;
+}
+//EO course field selection
+  </script>
+    
+    <tr>
+      <td align="CENTER" valign="TOP" colspan="3"><table border="0" cellspacing="1" cellpadding="2" width="60%">
+        <tr>
+          <td><strong><u>Maklumat kekosongan asrama sepanjang tempoh kursus:</u></strong></td>
+        </tr>
+        
+      </table>
+        <br />
+        <table border="0" cellspacing="1" cellpadding="2" bgcolor="#999999" width="60%">
+        
+        <tr>
+          <td bgcolor="#EEEEEE" align="CENTER"><strong>Tarikh</strong></td>
+          <td bgcolor="#EEEEEE" align="CENTER"><strong>Kekosongan</strong></td>
+          <td bgcolor="#EEEEEE" align="CENTER"><strong>Tempah</strong></td>
+        </tr>
+        <tr>
+          <td bgcolor="#EEEEEE" align="CENTER">01/01/2006</td>
+          <td bgcolor="#EEEEEE" align="CENTER">Blok A: 10 Blok B: 200 
+Blok C: 300</td>
+          <td bgcolor="#EEEEEE" align="CENTER"><input id="year_start" type=text name="year_start" value="<%=@year_start%>" size=4 maxlength=4 onfocus="if (this.value=='') this.value='200'" onchange="updateTarikhTutup()">
+          <input id="year_start2" type=text name="year_start2" value="<%=@year_start%>" size=4 maxlength=4 onfocus="if (this.value=='') this.value='200'" onchange="updateTarikhTutup()">
+          <input id="year_start3" type=text name="year_start3" value="<%=@year_start%>" size=4 maxlength=4 onfocus="if (this.value=='') this.value='200'" onchange="updateTarikhTutup()"></td>
+        </tr>
+        <tr>
+          <td bgcolor="#EEEEEE">&nbsp;</td>
+          <td bgcolor="#EEEEEE">&nbsp;</td>
+          <td bgcolor="#EEEEEE">&nbsp;</td>
+        </tr>
+      </table></td>
+    </tr>
+    
+    <script>
+function checkCodeExistence() {
+	data = "course_implementation_code=" + $('course_implementation_code').value
+	if ($('course_implementation_code').value!="") {
+		check_existence_of_course_implementation_code('/ajax/check_existence_of_course_implementation_code', data)
+	}
+}
+
+function check_existence_of_course_implementation_code(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: check_existence_of_course_implementation_code_response}
+    );
+}
+
+function check_existence_of_course_implementation_code_response(originalRequest) {
+	a = originalRequest.responseText
+	
+	if (a == 1) {
+		alert('Kod sudah wujud. Sila masukkan kod yang lain.');
+		
+		HighLightTextField($('course_implementation_code'));
+		$('course_implementation_code').focus();
+		$('course_implementation_code').select();
+	}
+}
+  </script>
+    <tr>
+      <td align="right" valign="TOP">&nbsp;</td>
+      <td align="CENTER" valign="TOP" width="1%">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <% cd = params[:course_department] %>
+    
+    <script>
+function updateTarikhTutup() {
+	var year  = $('year_start').value
+	var month = $('month_start').value
+	var day   = $('day_start').value
+	data = "start_year=" + year + "&start_month=" + month + "&start_day=" + day
+	
+	if ( ($('day_start').value!="") && ($('month_start').value!="") && ($('year_start').value!="") ) {
+		ajax_tarikh_tutup_request('/ajax/auto_tarikh_tutup', data)
+	}
+}
+
+function ajax_tarikh_tutup_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_tarikh_tutup_response}
+    );
+}
+
+function ajax_tarikh_tutup_response(originalRequest) {
+	var a = originalRequest.responseText.split("/")
+	var year  = a[2]
+	var month = a[0]
+	var day   = a[1]
+	//alert(year + "-" + month + "-" + day)
+	
+	$('year_apply_end').value  = year;
+	$('month_apply_end').value = month;
+	$('day_apply_end').value   = day;
+
+	$('year_check').value  = year;
+	$('month_check').value = month;
+	$('day_check').value   = day;
+}
+  </script>
+    
+    <script>
+function updateTarikhTutupPenilaian() {
+	
+	if ( ($('day_end').value!="") && ($('month_end').value!="") && ($('year_end').value!="") ) {
+		$('day_evaluation_end').value   = $('day_end').value
+		$('month_evaluation_end').value = $('month_end').value
+		$('year_evaluation_end').value  = $('year_end').value
+
+	}
+}
+
+  </script>
+    
+    <script>
+arr = ['publish','apply_start','apply_end', 'evaluation_end', 'check'];
+for (i=0;i<arr.length;i++) {
+	$('day_' + arr[i]).style.background = "#dddddd"
+	$('month_' + arr[i]).style.background = "#dddddd"
+	$('year_' + arr[i]).style.background = "#dddddd"
+	
+	//alert('day_' + arr[i])
+}
+
+
+  </script>
+    <!--tr>
+      <td align="right" valign="TOP">&nbsp;</td>
+      <td align="CENTER" valign="TOP">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="center" valign="TOP" colspan="3">
+	  
+	  <fieldset style="width: 600">
+	   <legend><b>Tarikh</b></legend>
+	  </fieldset>
+	  
+	  </td>
+    </tr>
+    <tr>
+      <td align="right" valign="TOP">&nbsp;</td>
+      <td align="CENTER" valign="TOP">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr-->
+    
+    
+    <% 
+      cid = @course_implementation.id
+      arrprofile = Array.new
+      if (cid != nil)
+      querys = CourseImplementation.find_by_sql("select * from course_implementations_profiles where course_implementation_id=#{cid} ORDER BY sort")
+      for query in querys
+      	@to_time = query.profile_id
+		arrprofile.push(@to_time)
+      end
+      jum = querys.size
+      end
+    %>
+  </table>
+  <br><%= submit_tag "Simpan" %>
+<%= end_form_tag %>
+
+<script>
+<% if session[:user].profile.staff && session[:user].profile.staff.course_department_id%>
+$('course_department_id').value = <%=session[:user].profile.staff.course_department_id%>
+checkField();
+<% end %>
+
+//date
+today = new Date();
+todayDay   = today.getDate()
+todayMonth = today.getMonth() + 1
+todayYear  = today.getFullYear()
+
+
+$('day_publish').value   = todayDay
+$('month_publish').value = todayMonth
+$('year_publish').value  = todayYear
+
+$('day_apply_start').value   = todayDay
+$('month_apply_start').value = todayMonth
+$('year_apply_start').value  = todayYear
+</script>
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+function GoSubmit(df) {
+
+	if (!checkSelection(strRegExp,document.getElementById('course_department_id'),'Bahagian')) return false;
+	if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
+	if (!checkInput(slashRegExp,document.getElementById('course_implementation_code'),'Kod Kursus')) return false;
+	if (!checkInput(anythingRegExp,$('course_name'),'Nama Kursus')) return false;
+
+	if (!checkInput(dateDayformat,$('day_start'),'Tarikh Mula Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('month_start'),'Tarikh Mula Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('year_start'),'Tarikh Mula Kursus(tahun)')) return false;
+
+	if (!checkInput(dateDayformat,$('day_end'),'Tarikh Akhir Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('month_end'),'Tarikh Akhir Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('year_end'),'Tarikh Akhir Kursus(tahun)')) return false;
+
+	if (!checkInput(dateDayformat,$('day_apply_end'),'Tarikh Tutup Permohonan Kursus(hari)')) return false;
+	if (!checkInput(dateMonthformat,$('month_apply_end'),'Tarikh Tutup Permohonan Kursus(bulan)')) return false;
+	if (!checkInput(dateYearformat,$('year_apply_end'),'Tarikh Tutup Permohonan Kursus(tahun)')) return false;
+
+	if (!checkInput(numRegExp,$('course_implementation_capacity'),'Bilangan Peserta')) return false;
+	
+	if (!checkSelection(strRegExp,$('course_course_location_id'),'Tempat')) return false;
+
+	if (!checkInput(moneyRegExp,$('course_fee'),'Yuran Kursus')) return false;
+
+	if (!checkSelection(strRegExp,$('course_implementation_coordinator1'),'Penyelaras')) return false;
+	if (!checkSelection(strRegExp,$('course_implementation_coordinator2'),'Penolong Penyelaras')) return false;
+
+
+	return true;
+}
+
+</script>

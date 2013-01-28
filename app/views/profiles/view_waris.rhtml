@@ -1,0 +1,77 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">WARIS <%=h @profile.name %></font></th>
+    </tr>
+  </table>
+  <BR>
+<table border=1 align=center width=95% cellpadding=2 cellspacing=1 bgcolor="#EEEEEE">
+<tr>
+<th width="15%"><%= link_to 'Peribadi', :action => 'view', :id => @profile %></th>
+<th width="15%"><%= link_to 'Waris', :action => 'view_waris', :id => @profile %></th>
+<th width="15%"><%= link_to 'Perkhidmatan', :action => 'view_khidmat', :id => @profile %></th>
+<th width="15%"><%= link_to 'Akademik', :action => 'view_akademik', :id => @profile %></th>
+<th width="15%"><%= link_to 'Kursus', :action => 'view_kursus', :id => @profile %></th>
+<th width="15%"><%= link_to 'Tukar Kata Laluan', :action => 'edit_password', :id => @profile %></th>
+</tr>
+</table>
+<BR>
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"><strong>
+      <%= link_to 'Kemaskini Waris', :action => 'edit_waris', :id => @profile %></strong></td>
+    </tr>
+  </table>
+<BR>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+  <tr bgcolor="000000">
+    	<td colspan="2" align="center"><strong><font color="#FFFFFF">MAKLUMAT WARIS</font></strong></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><strong>Nama: </strong></td>
+      <td> &nbsp;
+          <%= @relative.name if @relative %></td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><strong>Hubungan: </strong></td>
+      <td> &nbsp;
+          <%= @relative.relationship.description if @relative and @relative.relationship%></td>
+    </tr>
+     <tr>
+      <td align="right" valign="top"><strong>Alamat:</strong></td>
+      <td>&nbsp;
+          <%= @relative.address1 if @relative %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td>&nbsp;
+          <%= @relative.address2 if @relative %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td>&nbsp;
+          <%= @relative.address3 if @relative %></td>
+    </tr>
+   
+    <tr>
+      <td align="right"><strong>Negeri:</strong></td>
+      <td>&nbsp;
+	  <%= @relative.state.description if @relative and @relative.state %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>No Telefon Rumah:</strong></td>
+      <td>&nbsp;
+      <%= @relative.phone if @relative %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>No Telefon Bimbit:</strong></td>
+      <td>&nbsp;
+      <%= @relative.mobile if @relative %></td>
+    </tr>
+  </table>

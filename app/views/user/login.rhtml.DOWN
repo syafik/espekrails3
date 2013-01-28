@@ -1,0 +1,38 @@
+<table border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr align="center">
+      <td valign="TOP" align="RIGHT"><font color="red"><img src="../images/logo-nre.jpg" alt="espek"></font></td>
+      <td><font color="red"><img src="../images/home.jpg" alt="espek" width="500" height="350"> </font></td> 
+      <td valign="TOP" align="LEFT"><font color="red"><img src="../images/logo-instun.gif" alt="espek"></font></td>
+    </tr>
+     </tbody>
+</table>
+
+<table border="0" cellspacing="0" cellpadding="0" width="60%" align="center">
+    <tr> 
+      <th width="100%" height="20" bgcolor="#999999"><font color="#FFFF00">-PEMBERITAHUAN-</font></th>
+    </tr>
+</table>
+  <div class="form-padding">
+    <div align="center"></div>
+    <%= start_form_tag :action => 'login'  %>
+  <table width="60%" border="0" align="center" cellpadding="20" cellspacing="1" bgcolor="#eeeeee">
+	
+    	
+    	<tr>
+    	  <td align="CENTER"><font color="#FF0000"><strong>PENAIKTARAFAN SISTEM SEDANG DIJALANKAN.<br />
+SEGALA KESULITAN AMATLAH DIKESALI. </strong></font></td>
+   	  </tr>
+  </table>
+  <br />
+  <table align="CENTER" width="60%" border="0" cellspacing="0" cellpadding="0">
+    
+    <tr>
+      <td align="CENTER" colspan="2"><br />
+        <font size="-3">S</font><font size="-3">egala masalah berkenaan sistem sila hubungi:<br />
+      Bahagian Teknologi Maklumat, INSTUN 05-4542825 atau espek@instun.gov.my <br />
+&copy;Hakcipta Terpelihara&nbsp; 2006 
+Institut Tanah dan Ukur                                                   Negara </font></td>
+    </tr>
+  </table>
+</div>

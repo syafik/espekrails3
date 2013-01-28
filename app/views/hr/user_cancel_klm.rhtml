@@ -1,0 +1,108 @@
+<form method="post" action="/hr/update_user_cancel_klm/<%=@course_implementation.id%>" onsubmit="return GoSubmit(this)">
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr bgcolor="000000">
+      <td colspan="4" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI PESERTA</font></b></td>
+    </tr>
+  </table>
+  <br />
+  <table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+    <tr>
+      <td width="2%" id="name20"><font color="#FFFFFF">&nbsp;</font><b><font color="#FFFFFF">Bil</font></b></td>
+      <td width="38%" align="center"><font color="#FFFFFF"><strong>Nama</strong></font></td>
+      <td width="10" align="center"><b><font color="#FFFFFF">No. KP</font></b></td>
+      <td width="45%" align="center"><font color="#FFFFFF"><strong>Jawatan (Gred)</strong></font></td>
+    </tr>
+    <%
+i = 0;
+even = true;
+for id in params[:employ_ids]
+i = i + 1
+profile = Profile.find(id)
+employment = Employment.find_by_profile_id(profile.id)
+%>
+    <tr bgcolor="#FFFFFF" >
+      <td align="right" id="name<%=h id %>"><%= i.to_s %>.</td>
+      <td align="left"><%=h profile.name.upcase %></td>
+      <td align="center"><%=h profile.ic_number %></td>
+      <td align="left"><%=h nof{employment.job_profile.job_name.upcase} %>
+          <%if employment.job_profile %>
+        (<%=h nof{employment.job_profile.job_grade.upcase} %>)
+        <%end%></td>
+    </tr>
+    <%
+end
+%>
+  </table>
+  <br />
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr bgcolor="000000">
+    <td colspan="3" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PEMBATALAN PERMOHONAN KURSUS SECARA BERKELOMPOK </font></b></td>
+  </tr>
+  <tr>
+    <td colspan="3" align="right">&nbsp;</td>
+  </tr>
+  
+    <tr>
+      <td align="right" width="20%"><b>Kursus  :</b></td>
+      <td colspan="2" width="160">&nbsp; <%= nof{@course_implementation.code}%> <%= "("+nof{@course_implementation.course.name} + ")" %></td>
+    </tr>
+    
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td colspan="2">Saya memohon membatalkan permohonan kursus di  atas dan mengesahkan permohonan pembatalan ini telah diluluskan oleh Ketua  Jabatan</td>
+    </tr>
+    <tr>
+      <td align="right" valign="TOP"><b>Sebab Pembatalan   :</b></td>
+      <td colspan="2">&nbsp;<textarea name="cancel_reason" cols="60"></textarea></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Nama Pegawai :</b></td>
+      <td colspan="2">&nbsp;<input type="text" value="<%=nof{@course_application.supervisor_name}%>" size="60" onchange="this.value=this.value.toUpperCase()" name="cancel_spv_name" maxlength="80" id="course_application_cancel_spv_name"/></td>
+    </tr>
+  
+  <tr>
+    <td align="right"><b>Jawatan :</b></td>
+    <td colspan="2" >&nbsp;<input type="text" value="<%= nof{@course_application.supervisor_jawatan.upcase}%>" size="50" onchange="this.value=this.value.toUpperCase()" name="cancel_spv_jawatan" id="course_application[cancel_spv_jawatan]" /></td>
+  </tr>
+  <tr>
+    <td align="right"><b>E-Mel :</b></td>
+    <td colspan="2" >&nbsp;<input type="text" value="<%= nof{@course_application.supervisor_email}%>" size="50" onchange="this.value=this.value.toUpperCase()" name="course_application[cancel_spv_email]" id="course_application[cancel_spv_email]" /></td>
+  </tr>
+  <tr>
+    <td align="right"><b>Tarikh Diluluskan:</b></td>
+    <td colspan="2" >&nbsp;<input type="text" value="<%=Time.now.strftime("%d/%m/%Y")%>" size="12" onchange="this.value=this.value.toUpperCase()" name="course_application[cancel_date]" id="course_application[cancel_date" /> 
+	<font color="orange">dd/mm/yyyy</font></td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td colspan="2" >&nbsp;</td>
+  </tr>
+</table>
+  <BR>
+   <div id="apply_button" align="center" style="visibility: visible">
+<% 
+for id in params[:employ_ids]
+%>
+<input type="hidden" name="employ_ids[]" value="<%=id%>">
+<%
+end
+%>
+  <%= submit_tag "Batalkan Permohonan" %>
+  </div>
+</form>
+<br />
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+
+function GoSubmit(df) {
+	//if (!checkInput(anythingRegExp,$('course_implementation_code'),'Kod Kursus')) return false;
+	//if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
+	
+	if (confirm("Adakah anda pasti untuk membatalkan kursus ini?"))
+		return true;
+	else
+		return false;
+}
+
+</script>

@@ -1,0 +1,81 @@
+<!--[form:profile]-->
+<div align="center">
+<%= error_messages_for 'profile' %>
+</div>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+  <tr bgcolor="000000">
+    	<td colspan="4" align="center"><b><font color="#FFFFFF">MAKLUMAT WARIS</font></b></td>
+    </tr>
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+	<tr>
+      <td width="20%" align="right"><b>Nama : </b></td>
+      <td colspan=3> &nbsp;
+          <%= text_field 'relative', 'name', :maxlength=>80, :size=>40  %></td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><b>Hubungan : </b></td>
+      <td colspan=3> &nbsp;
+		<select name="relative[relationship_id]">
+              <% @relationships.each do |relationship| %>
+              <option value="<%= relationship.id %>" 
+ 			  <%= ' selected' if relationship.id == @relative.relationship_id %>> <%= relationship.description %> </option>
+              <% end %>
+            </select>
+        </td>
+    </tr>
+     <tr>
+      <td align="right" valign="top"><b>Alamat :</b></td>
+      <td colspan=3>&nbsp;
+          <%= text_field 'relative', 'address1', :maxlength=>30, :size=>30  %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td colspan=3>&nbsp;
+          <%= text_field 'relative', 'address2', :maxlength=>30, :size=>30  %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td colspan=3>&nbsp;
+          <%= text_field 'relative', 'address3', :maxlength=>30, :size=>30  %></td>
+    </tr>    
+    <tr>
+      <td align="right"><b>Negeri :</b></td>
+      <td colspan=3>&nbsp;
+	  <select name="relative[state_id]">
+              <% @states.each do |state| %>
+              <option value="<%= state.id %>" 
+ 			  <%= ' selected' if state.id == @relative.state_id %>> <%= state.description %> </option>
+              <% end %>
+            </select>
+      </td>
+    </tr>
+    <!--tr>
+      <td align="right"><b>Negara :</b></td>
+      <td colspan=3>&nbsp;
+	  <select name="relative[country_id]">
+              <% @countries.each do |country| %>
+              <option value="<%= country.id %>"
+  				<%= ' selected' if country.id == @relative.country_id %>> <%= country.description %> </option>
+              <% end %>
+            </select>
+      </td>
+    </tr-->
+    <tr>
+      <td align="right"><b>No Telefon Rumah :</b></td>
+      <td colspan=3>&nbsp;
+      <%= text_field 'relative', 'phone', :maxlength=>12, :size=>12  %>      </td>
+    </tr>
+    <tr>
+      <td align="right"><b>No Telefon Bimbit :</b></td>
+      <td colspan=3>&nbsp;
+      <%= text_field 'relative', 'mobile', :maxlength=>12, :size=>12  %>      </td>
+    </tr>
+ 	<tr>
+ 	<td colspan=4>&nbsp;</td>
+ 	</tr> 
+
+      </table>
+<!--[eoform:profile]-->

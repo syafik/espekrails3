@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>PostgreSQL Training INSTUN</title>
+	
+	<meta name="DESCRIPTION" content="PostgreSQL Administration training information. For over a decade, OTG's instructors have been developing, deploying, and training others to use IT solutions that promote openness and interoperability. Click now for more about PostgreSQL Administration today.">
+	<meta name="keywords" content="training">	<link rel="stylesheet" type="text/css" href="course_outline_files/styles-otg.css">
+	<link rel="SHORTCUT ICON" href="http://www.otg-nc.com/favicon.ico">
+    <link rel="alternate" title="OTG RSS" href="http://www.otg-nc.com/rss20.php" type="application/rss+xml">
+	<script src="course_outline_files/urchin" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-226179-1";
+urchinTracker("/training-courses/coursedetail.php-40");
+</script>
+<style type="text/css">
+<!--
+.style1 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 18px;
+}
+.style2 {font-size: 14}
+-->
+</style>
+</head> 
+
+
+<body><center>
+<table class="maintable" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="42" width="18%"><img src="course_outline_files/training-photo-1.jpg" alt="" border="0" height="42" width="146"></td>
+<td height="42" colspan="2" valign="middle" class="training-header"><span class="style1"> PostgreSQL Training for INSTUN </span></td>
+</tr>
+<tr>
+<td class="leftcolumn"><img src="course_outline_files/training-photo-2.jpg" alt="" border="0" height="111" width="146">
+   <table cellpadding="0" cellspacing="0" height="100%" width="100%">
+   <tbody><tr>
+   <td class="leftinnercolumn">
+   <p><b><a href="index.html">PostgreSQL</a></b><br>
+   </p>
+   <p></p>   </td></tr></tbody></table></td>
+<td class="maintext"><b>
+<h2 class="header">Linux Installation </h2>
+</b></p>
+
+<pre class="style2">
+./configure
+gmake
+su
+gmake install
+adduser postgres
+mkdir /usr/local/pgsql/data
+chown postgres /usr/local/pgsql/data
+su - postgres
+/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data
+/usr/local/pgsql/bin/postmaster -D /usr/local/pgsql/data &gt;logfile 2&gt;&amp;1 &amp;
+
+/usr/local/pgsql/bin/createdb test
+/usr/local/pgsql/bin/psql test<br><b></b>
+
+</pre>
+
+<b>
+<h3 class="header">Windows Installation </h3>
+</b>
+<p>Postgres is easily installed and administered on Windows. <br>
+  Double click the executable file and follow the instruction, as described below:<br>
+</p>
+<table width="100%" border="0" cellspacing="2" cellpadding="0">
+  <tr>
+    <td width="10">1.</td>
+    <td><strong>Select language </strong><br>
+      Select the language you want to use for the installer. This only sets the language  used in the install wizard - the actual installed PostgreSQL can be installed with or without language support and  has it's own language choice independent from the installer.<br>
+You can also select if you want the installer to create a detailed logfile of the installation process.<em>Note that this logfile will contain both the service user and database superuser password if created</em>. <br>
+<img src="images/install01.png" alt="select language" width="506" height="392"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>2.</td>
+    <td><strong>Introduction screen</strong><br>
+      Introduction message. Just click Next to get started. </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>3.</td>
+    <td><strong>Welcome message and instructions</strong><br>
+As always, please read the <em>complete</em> instructions before you continue. </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>4.</td>
+    <td><strong>Feature selection</strong><br>
+      Select what you want to install. The server part will only be available on NT based platforms.   Note that the 'Data Directory' option may only be installed on an NTFS   partition. If you wish to install the data directory on any other partition   type, you will need to run initdb.exe manually after installation.<br>
+You can change the directory of the entire installation by selecting the feature <em>PostgreSQL</em> and click <em>Browse</em> to pick the new directory. You can also  change the directory of an individual feature (such as the server, or pgAdmin) by  selecting that feature and clicking Browse. </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>5.</td>
+    <td><strong>Service installation</strong><br>
+        Choose whether you want PostgreSQL installed   as a service, and if so specify which account should be used. This account will  be created and granted the <em>Logon On as a Service</em> right if required.</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>6.</td>
+    <td><strong>Initdb</strong><br>
+        Chose whether you want a database cluster to be  initialized in the database. If so, choose character set and encoding  for your database, and specify login details for the database  superuser.  You may also specify a non-default port number to run the server on,  and opt to  listen for connections on all IP addresses on the system rather than  just  localhost. Note that you will still have to enable access in the host  based authentication  configuration (<em>pg_hba.conf</em>) to allow remote users to connecto the server.<br>
+        <em>This dialog is only available if you chose to install PostgreSQL as a service. </em></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>7.</td>
+    <td><strong>Procedural languages</strong><br>
+        Chose the procedural languages you want activated in <em>template1</em>.  All PL files are always installed, this step just activates them by default in <em>all</em> your databases. <br>
+        <em>This dialog is only available if you chose to install PostgreSQL as a service, and chose to have a database cluster initialized.</em> <br>
+        Only the languages where the corresponding runtimes were found installed on the system are available for selection. <br>
+        PL/perl requires <a href="http://www.activestate.com">ActiveState Perl 5.8</a> to be installed. <br>
+        PL/python requires <a href="http://www.python.org">Python 2.3</a> to be installed <br>
+        PL/tcl requires <a href="http://www.activestate.com">ActiveState Tcl 8.4</a> to be installed. <br>
+        PL/java requires a valid Sun Java Runtime Environment to be installed. </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>8.</td>
+    <td><strong>Contrib modules</strong><br>
+        Select the contrib modules to activate in <em> template1. </em>All contrib files are always installed, this step just activates  them by default in <em>all</em> your databases. <br>
+        <em>This dialog is only available if you chose to install PostgreSQL as a service, and chose to have a database cluster initialized.</em> <br>
+        Note: The Admin81 module is installed by  default because pgAdmin will use it to provide enhanced functionality. It  may be removed if you do not want it to be installed in all databases; pgAdmin  will simply not offer the enhanced functionality it allows.</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>9.</td>
+    <td><strong>PostGIS</strong><br>
+Choose if you want to enable PostGIS template1. This will enable PostGIS in <em>all</em> your created databases. If you don't enable PostGIS here you can still enable it in  individual databases later.<br>
+<em>This dialog is only available if you chose to install PostGIS Spatial Extensions</em> </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>10.</td>
+    <td><strong>Ready to install</strong><br>
+      Just click Next to start the actual installation. </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>11.</td>
+    <td><strong>Installing</strong><br>
+      A progress bar is shown during the installation.<br>
+On some versions of Windows (notably Windows XP before Service Pack 2 and Windows 2003  before Service Pack 1 - see Microsoft Knowledge Base article <a href="http://support.microsoft.com/?kbid=818858">Q818858</a>) a Command Prompt   window will appear during the "Initializing  database cluster" step. Don't close this window - it will automatically close once the  operation is complete.<br>
+<img src="images/install11.png" alt="select language" width="506" height="392"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>12.</td>
+    <td><strong>Finished</strong><br>
+        Installation is complete. You acn now go ahead and test your  installation and subscribe to the pgsql-announce mailing list to keep up to date.<br>
+        If you need to add or remove a feature from PostgreSQL, use the Add/remove programs  feature in the Control Panel.<br>
+        <img src="images/install12.png" alt="select language" width="506" height="392"></td>
+  </tr>
+</table>
+<p> 
+  <br>
+</p>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="30%" align="left"><a href="download.html">&laquo;Previous</a></td>
+    <td width="30%" align="center"><a href="index.html"></a></td>
+    <td width="30%" align="right"><a href="pg_hba.html">Next&raquo;</a></td>
+  </tr>
+</table>
+<p><a href="http://www.otg-nc.com/training-courses/category.php?cat_id="></a></p></td>
+<td class="training-rightcolumn">
+<p align="center"> <img src="course_outline_files/PostgreSQLlogo.gif"> </p><p>&nbsp;</p>
+</td>
+</tr>
+<tr><td colspan="3" class="copyright-cell">
+<p class="smalltext" align="center">
+<br>
+<script type="text/javascript"><!--
+google_ad_client = "pub-6396164641827107";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</p>
+</td></tr>
+</tbody></table>
+</center>
+
+
+</body></html>

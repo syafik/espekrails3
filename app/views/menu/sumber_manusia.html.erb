@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en_US">
+<head>
+<title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link rel="StyleSheet" href="/stylesheets/global.css" type="text/css" />
+<link rel="StyleSheet" href="/stylesheets/dtree.css" type="text/css" />
+<script type="text/javascript" src="/javascripts/dtree.js"></script>
+<style>
+body {
+	background-color: #FFFFFF;
+	}
+</style>
+</head>
+	
+<body bgcolor="#FFFFFF">	
+<br>
+<div align="center"><img src="/images/menu3.jpg"></div>
+<%= render :partial => 'header'%>
+
+<script type="text/javascript">
+		<!--
+
+		d = new dTree('d');
+		
+		d.config.useCookies=false;
+		d.config.useLines=false;
+		
+		d.icon.root = "/images/menutree/home.gif";
+		//d.icon.root = "/images/menutree/kpmlogo.gif";
+		d.config.target = "main";
+		
+
+		d.add(40, 0,  'Kursus', '', 'Pengurusan Permohonan','main','/images/menutree/folder.gif');
+		//d.add(41, 40, 'Carian Kursus', '/course_implementations/search_for_user', 'Carian Kursus Yang Akan dijalankan','main');
+		d.add(42, 40, 'Senarai Kursus', '/hr/list_courses_from_today_to_future', 'Senarai Kursus Yang Akan dijalankan','main');						// 		
+		//d.add(43, 40, 'Kalendar Kursus', '/course_implementations/calendar_user', 'Kalendar Kursus Tahunan','main');
+		d.add(44, 40, 'Carian Peserta Kursus', '/hr/search_applicant', 'Carian Peserta Kursus','main');
+		//d.add(45, 40, 'Permohonan Kursus', '/hr/select_course', 'Permohonan Kursus','main');
+		d.add(51, 40, 'Pembatalan Permohonan', '/hr/select_course_batal', 'Pembatalan Permohonan','main');
+		d.add(46, 40, 'Semak Permohonan', '/hr/search_applicant_status', 'Semak Status Permohonan Kursus','main');
+		d.add(47, 40, 'Rekod Maklumat Kursus', '/hr/course_record', 'Rekod Maklumat Kursus Kakitangan','main');
+		//d.add(48, 40, 'Laporan Penilaian', '/course_management/evaluated_courses', 'Laporan Penilaian Penyelaras Kursus','main');
+		d.add(49, 40, 'Maklumat Ujian', '/hr/select_quiz', 'Maklumat Ujian Peserta Kursus','main');
+		d.add(50, 40, 'Senarai Rekod', '/hr/rekod_mohon_hadir', 'Senarai Rekod Permohonan dan Kehadiran Kursus','main');
+		
+		d.add(0,-1,' eSPEK : Sumber Manusia');
+		
+		d.add(290,0,'Lihat Profil','/profiles/view','','main','/images/menutree/page.gif');
+
+		document.write(d);
+
+		d.o(0)
+
+		//-->
+	</script> 
+
+</div>
+<br>
+<div align="center">
+| <a target="main" href="/profiles/edit_password">Tukar Kata Laluan</a> |
+</div>
+
+<br>
+</body></html>

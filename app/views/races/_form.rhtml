@@ -1,0 +1,16 @@
+<div align="center"><%= error_messages_for 'race' %></div>
+
+<!--[form:race]-->
+
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+<tr>
+	<td align=right><b>Kod Bangsa :</b></td>
+	<td><%= text_field 'race', 'code', :maxlength=>1, :size=>1  %></td>	
+</tr>
+<tr>
+	<td align=right><b>Keterangan :</b></td>
+	<td><%= text_field 'race', 'description', :maxlength=>10, :size=>10  %></td>	
+</tr>
+</table>
+<!--[eoform:race]-->
+

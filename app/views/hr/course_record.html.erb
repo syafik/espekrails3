@@ -1,0 +1,118 @@
+<script>
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" + 
+							"<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian oleh Penyelaras</a>" +
+					        "</ul>"
+}
+
+function rewritePopupContentNoRestraint(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" + 
+							"<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian oleh Penyelaras</a>" +
+					        "</ul>"
+     
+}
+
+function a(id) {
+	MM_openBrWindow('/hr/p_evaluation_report/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+
+
+</script>
+
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+	    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">REKOD MAKLUMAT KURSUS KAKITANGAN</font></b></td>
+    </tr>
+</table>
+     <div align="center">
+        <%= flash[:notice] %></div>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="0" cellspacing="3">
+    <tr>
+      <td align="RIGHT" valign="TOP"><strong>No KP Kakitangan: </strong> </td>
+      <td align="LEFT"><form action="/hr/course_record" method="post" name="list">
+          <input type="text" name="search_code">
+          <input name="Submit2" type="submit" value="Cari">
+      </form></td>
+    </tr>
+</table>
+    <br />
+
+<% if @students.size != 0%>
+    <center>
+      <fieldset style="width:50%">
+      <legend>Maklumat Peserta</legend>
+        <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+          <td align="RIGHT"><strong>Nama:</strong></td>
+          <td colspan="3" width=""><%=nof{@check.name}%></td>
+        </tr>
+        <tr>
+          <td align="RIGHT"><strong>No KP :</strong></td>
+          <td colspan="3"><%=nof{@check.ic_number}%></td>
+        </tr>
+        <tr>
+          <td align="RIGHT"><strong>Jawatan/Gred:</strong></td>
+          <td colspan="3"><%=nof{@employment.job_profile.job_name}%>/<%=nof{@employment.job_profile.job_grade}%></td>
+        </tr>
+      </table>
+      </fieldset>
+    </center>
+    <br>
+<% else %>
+
+<center><font style="font-weight: bold;color:red">Tiada Rekod</font></center>
+<br/>&nbsp;
+
+<% end %>
+
+  <div width="95%" style="background: #FFFFFF">
+<table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+  <tr bgcolor="#999999">
+    <td class="el" width="2%" height="20" valign="top" rowspan="1">&nbsp;</td>
+    <td class="el" width="8%" align="center" style="color: white"><strong>Kod Kursus</strong></td>
+    <td class="el" width="30%" align="center" style="color: white"><strong>Nama Kursus</strong></td>
+    <td class="el" width="10%" align="center" style="color: white"><strong>Tarikh Mula</strong></td>
+    <td class="el" width="10%" align="center" style="color: white"><strong>Tarikh Tamat</strong></td>
+    <td class="el" width="5%" align="center" style="color: white"><strong>Peratus Kehadiran</strong></td>
+    <td class="el" width="5%" align="center" style="color: white"><strong>Markah Ujian</strong></td>
+    <td class="el" width="5%" align="center" style="color: white"><strong>Markah Penilaian</strong></td>
+    <td class="el" width="5%" align="center" style="color: white"><strong>No. Sijil</strong></td>
+ </tr>
+    <%
+i = 0;
+even = true;
+sum = 0
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+
+  if student.no_sijil
+  	a = student.course_implementation.course.course_department.code
+  	b = student.course_implementation.date_start.to_formatted_s(:my_format_y)
+  else
+	a = ''
+        b = ''
+  end
+%>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.show('popmenu', '/profiles', '<%=h student.id %>', '<%=h student.profile.ic_number %>', event)">
+      <td class="el">&nbsp;<%= i.to_s %>.</td>
+      <td class="el">&nbsp;<%=h student.course_implementation.code %></td>
+      <td class="el" align="left"><%= student.course_implementation.course.name %></td>
+      <td class="el" align="center">&nbsp;<%= student.course_implementation.date_plan_start.to_formatted_s(:my_format_4) %></td>
+      <td class="el" align="center">&nbsp;<%= student.course_implementation.date_plan_end.to_formatted_s(:my_format_4) %></td>
+      <td class="el" align="center"><%= getAttPercent(student.id) %></td>
+      <td class="el" align="center">&nbsp;<%= student.markah_ujian_akhir %>&nbsp;</td>
+      <td class="el" align="center">&nbsp;<%= student.markah_penilaian_peserta %>&nbsp;</td>
+      <td class="el" align="center">&nbsp;<%=a%><%= student.no_sijil %><%=b%>&nbsp;</td>
+    </tr>
+<% end %>  
+
+</table>
+</div>

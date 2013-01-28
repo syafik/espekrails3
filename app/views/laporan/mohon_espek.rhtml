@@ -1,0 +1,177 @@
+<script type="text/javascript">
+function goSubmit() {
+        if ( $('report1_').value == "" && $('report2_').value == "") {
+                alert("Sila masukkan tarikh");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report1_').value == "") {
+                alert("Sila masukkan tarikh mula");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report2_').value == "") {
+                alert("Sila masukkan tarikh akhir");
+                $('report2_').focus()
+                return false;
+        }
+
+        document.forms[0].submit();
+}
+</script>
+
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">INSTITUT TANAH DAN UKUR NEGARA(INSTUN) </font></strong></td>
+    </tr>
+ </table>
+  <br>
+
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form">
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">Senarai permohonan akaun eSPEK mengikut tarikh</font></strong></td>
+    </tr>
+ </table>
+ <br />
+ <br>
+
+  <div width="95%" style="background: #FFFFFF">
+  <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+  <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">Tarikh Mohon Akaun: <%= calendar_field 'report1', '',
+     { :class => 'date',
+        :value => @report_date_from,
+        :field_title => 'report1',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %> &nbsp;&nbsp;Hingga: <%= calendar_field 'report2', '',
+     { :class => 'date',
+        :value => @report_date_to,
+        :field_title => 'report2',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+          <input name="button" type="button" value="Papar" onclick="goSubmit()">
+      </td>
+    </tr>
+  </table>
+  <br />
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" valign="top">&nbsp;</td>
+      <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama Pemohon </a></strong></td>
+      <td class="el" width="8%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('job_grade','<%= "DESC" if (@orderby=="job_grade" && @arrow=="ASC") %>')">Gred Jawatan </a></strong></td>
+      <td class="el" width="24%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('opis','<%= "DESC" if (@orderby=="opis" && @arrow=="ASC") %>')">Pejabat </a></strong></td>
+      <td class="el" align="center" width="100"><strong><a style="color: white" href="javascript: findAndSortWith('date_apply','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')">Tarikh<br />
+        Mohon </a></strong></td>
+      <td class="el" width="100" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('date_apply','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')">Tarikh<br />
+      Lulus</a></strong></td>
+      <td class="el" width="25%" align="center"><font color="FFFFFF"><strong>Kategori<br />
+        Pengguna </strong></font></td>
+    </tr>
+    <%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFE" if (even == false)
+  even = !even
+
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  employments = Employment.find(:all, :conditions=>"profile_id = #{student.profile.id}")
+  if employments.size > 0
+  			place = nof{employments[0].place}
+			if place
+				addr1 = nof{place.address1.split(" ").map! {|e| e.capitalize}.join(" ") }
+				addr2 = nof{place.address2.split(" ").map! {|e| e.capitalize}.join(" ") }
+				addr3 = nof{place.address3.split(" ").map! {|e| e.capitalize}.join(" ") }
+				state = nof{place.state.description.split(" ").map! {|e| e.capitalize}.join(" ") }
+
+				addr_arr = Array.new
+				addr_arr.push(place.name.upcase) if place.name != ""
+				addr_arr.push(addr1) if place.address1 != ""
+				addr_arr.push(addr2) if place.address2 != ""
+				addr_arr.push(addr3) if place.address3 != ""
+	                        addr_arr.push(state.upcase) if place.state !=nil
+				company_addr = addr_arr.join("\n")
+				company_addr = company_addr.tr_s(',' , ',')
+			else
+				addr_arr = Array.new
+				addr_arr.push(" ")
+				addr_arr.push(" ")
+				addr_arr.push(" ")
+				addr_arr.push(" ")
+				addr_arr.push(" ")
+				company_addr = addr_arr.join(" \n")
+				company_addr = company_addr.tr_s(',' , ',')
+			end
+		
+  		if employments[0].job_profile
+			jawatan = employments[0].job_profile.job_grade
+		else 
+			jawatan = ""
+		end
+  else
+    jawatan = ""
+    pejabat = ""
+  end
+
+  pejabat= student.profile.opis
+    
+  show_menu = "show_with_no_restraint"
+  #onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{query.id}', '#{query.name}', event)"
+
+  student.profile.name = student.profile.name.gsub(/\'/, '`')
+
+%>
+    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.<%=show_menu%>('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name %>', event)" >
+      <td class="el" height="20">&nbsp;<%= i.to_s %>.</td>
+      <td class="el"><%=h student.profile.name.upcase %></td>
+      <td class="el" align="center"><%=h nof{student.profile.employments.first.job_profile.job_grade} %>&nbsp;</td>
+      <td class="el" align="left"><%=h pejabat %>&nbsp;</td>
+      <td class="el" align="center">&nbsp;<%= student.date_apply.to_formatted_s(:my_format_4) if student.date_apply %>&nbsp;</td>
+      <td class="el" align="center"><%= student.date_apply.to_formatted_s(:my_format_4) if student.date_apply %></td>
+      <td class="el" align="center">&nbsp;<%= nof{student.profile.user.roles.first.name} %></td>
+    </tr>
+    <% end %>
+  </table>
+  </div>
+  <div align="center"></div>
+</form>
+
+<!-- popup menu initial layer----->
+<div id="popmenu" class="menu"></div>
+
+
+<script>
+
+function a(id) {
+	MM_openBrWindow('/evaluations/user_hyouka?klm=1&ca_id='+id,'','scrollbars=yes,width=800,height=700')
+}
+function b(id) {
+	MM_openBrWindow('/evaluations/user_hyouka_answer?klm=1&ca_id='+id,'','scrollbars=yes,width=800,height=700')
+}
+
+</script>

@@ -1,0 +1,973 @@
+<html>
+<head>
+  <title>ApplyIndividu: new</title>
+  <link href="/stylesheets/style.css" media="screen" rel="Stylesheet" type="text/css" />
+</head>
+<body onload="//initListGroup('chainedmenu', document.listmenu0.firstlevel, document.listmenu0.secondlevel, document.listmenu0.thirdlevel, 'savestate')">
+
+<p style="color: green"><div align="center"></div></p>
+
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">ADD NEW APPLICANT</font></b></td>
+
+    </tr>
+  </table>
+
+<form action="/apply_individu/create" method="post">
+  <!--incremental search setting-->
+<link rel="stylesheet" type="text/css" href="/stylesheets/incremental-search.css" />
+<script src="/javascripts/event.js" type="text/javascript"></script>
+<script src="/javascripts/incremental-search.js" type="text/javascript"></script>
+<!--incremental search setting end-->
+
+<script src="/javascripts/prototype.js" type="text/javascript"></script>
+
+<script>
+function toggleStudentTypeSelection() {
+if (document.getElementById('student_type_id').value == 4) {
+document.getElementById('select_organization').style.color = '#000000';
+$("organization_name").style.background = '#ffffff';
+$("organization_name").disabled=false
+}
+else {
+document.getElementById('select_organization').style.color = '#dddddd';
+$("organization_name").style.background = '#eeeeee';
+$("organization_name").value="";
+$("personal_organization_id").value="";
+$("organization_name").disabled=true;
+}
+
+}
+
+function hideAllSelectMenu() {
+var df = document.forms[0]
+for (i=0; i<df.length; i++) {
+if (df.elements[i].type == "select-one") df.elements[i].style.visibility='hidden'
+}
+}
+function showAllSelectMenu() {
+var df = document.forms[0]
+for (i=0; i<df.length; i++) {
+if (df.elements[i].type == "select-one") df.elements[i].style.visibility='visible'
+}
+}
+
+function findCompanyId(comp_name) {
+for(var i = 0; i < company_list.length; i++) {
+   if (company_list[i].name == comp_name) {
+//alert(company_list[i].name);
+$("personal_organization_id").value = company_list[i].id
+   }
+}
+}
+
+function updateCourseId(course_name) {
+for(var i = 0; i < list.length; i++) {
+   if (list[i].name == course_name) {
+//alert(list[i].name);
+$("student_course_id").value = list[i].id
+   }
+}
+}
+
+</script>
+
+<div align="center">
+
+
+
+</div>
+
+<!--[form:organization]-->
+
+
+<br />
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+
+      <td align="center"> <a href="/apply_individu/list"><u>Cancel</u></a> and goto applicant list</td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+
+      <td align="right"><b>Course:</b></td>
+      <td colspan="3"> 
+   <input id="course_name" maxlength="100" name="course[name]" onfocus="this.select()" size="80" type="text" />
+   <input id="student_course_id" name="student[course_id]" type="hidden" />      </td>
+    </tr>
+    <tr>
+      <td align="right"><b>Scheme:</b></td>
+      <td colspan="3"> 
+        <span id="scheme_selection"></span>      </td>
+
+    </tr>
+<script>
+node_course_id = $("student_course_id");
+node_scheme_selection = $("scheme_selection");
+function checkScheme() {
+node_scheme_selection.innerHTML = "<font color=orange>checking schemes...please wait</font>"
+ajax_scheme_request("/ajax/ajax_find_course_scheme", "course_id="+node_course_id.value)
+}
+
+function ajax_scheme_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_scheme_response}
+    );
+}
+
+function ajax_scheme_response(originalRequest) {
+var a = originalRequest.responseText.split(",")
+var k = new Array(a.length)
+for (i=0; i<k.length; i++) {
+k[i] = a[i].split("=")
+}
+
+str = ""
+for (i=0; i<k.length; i++) {
+str += "<input name=\"student[course_scheme_id]\" type=\"radio\" value=\"" + k[i][1] + "\"checked><label for=\"student_course_scheme_id\">" +
+                                   k[i][0] +
+   "</label>\n";
+}
+node_scheme_selection.innerHTML = str;
+}
+</script>
+    
+    <tr>
+      <td align="right"><b>Date apply:</b></td>
+      <td colspan="3"><span class="blockintro">  </span><select name="student[date_apply(3i)]">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17" selected="selected">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+
+<option value="31">31</option>
+</select>
+<select name="student[date_apply(2i)]">
+<option value="1">January</option>
+<option value="2" selected="selected">February</option>
+<option value="3">March</option>
+<option value="4">April</option>
+<option value="5">May</option>
+<option value="6">June</option>
+<option value="7">July</option>
+
+<option value="8">August</option>
+<option value="9">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+<select name="student[date_apply(1i)]">
+<option value="1990">1990</option>
+<option value="1991">1991</option>
+<option value="1992">1992</option>
+
+<option value="1993">1993</option>
+<option value="1994">1994</option>
+<option value="1995">1995</option>
+<option value="1996">1996</option>
+<option value="1997">1997</option>
+<option value="1998">1998</option>
+<option value="1999">1999</option>
+<option value="2000">2000</option>
+<option value="2001">2001</option>
+
+<option value="2002">2002</option>
+<option value="2003">2003</option>
+<option value="2004">2004</option>
+<option value="2005">2005</option>
+<option value="2006" selected="selected">2006</option>
+<option value="2007">2007</option>
+<option value="2008">2008</option>
+<option value="2009">2009</option>
+<option value="2010">2010</option>
+
+<option value="2011">2011</option>
+</select>
+</td>
+    </tr>
+    <tr>
+      <td align="right" valign="top"><b>Type:</b></td>
+      <td colspan="3"> 
+        <select id="student_type_id" name="student[student_type_id]" onchange="toggleStudentTypeSelection()">
+          
+          <option value="1"
+    
+    
+     > Individu</option>
+
+          
+          <option value="2"
+    
+    
+     > Lepasan SPM</option>
+          
+          <option value="3"
+    
+    
+     > Graduate</option>
+          
+          <option value="4"
+    
+    
+     > Company</option>
+          
+          <option value="5"
+    
+    
+     > Wanita</option>
+          
+        </select>      </td>
+
+    </tr>
+
+    <tr>
+     <td align="right"><span id="select_organization" style="color: #dddddd"><b>Company Name:</b></span></td>
+      <td colspan="3"> 
+          <input id="organization_name" maxlength="100" name="organization[name]" onfocus="this.select()" size="80" type="text" />
+   <input id="personal_organization_id" name="personal[organization_id]" type="hidden" />
+         [add new]</td>         
+    </tr>
+
+    <tr>
+      <td colspan="4" align="right"><hr width="95%" size="1"></td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><strong>Applicant's Name: </strong></td>
+      <td colspan="3"><span class="blockintro">  
+          <input id="personal_name" maxlength="100" name="personal[name]" onchange="this.value=this.value.toUpperCase()" size="73" type="text" /></span></td>
+    </tr>
+
+    <tr>
+      <td align="right"><strong>NRIC #: </strong></td>
+      <td> 
+       <input class="px200" id="personal_nric" maxlength="12" name="personal[nric]" onchange="checkNRIC()" size="12" type="text" />      </td>
+      <td align="right"><strong>Old NRIC #:</strong></td>
+      <td><span class="style2">  <input class="px200" id="personal_old_nric" maxlength="10" name="personal[old_nric]" size="10" type="text" /></span></td>
+    </tr>
+
+<script>
+node = $("personal_nric");
+function checkNRIC() {
+ajax_request("ajax_nric", "nric="+node.value)
+}
+
+function ajax_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'get', parameters: data, onComplete: ajax_response}
+    );
+}
+
+function ajax_response(originalRequest) {
+//alert(originalRequest.responseText)
+if (originalRequest.responseText == 1) {
+alert('dah ada');
+document.forms[0].action = "new_but_student_already_exist";
+document.forms[0].submit();
+}
+else {
+alert('takde')
+document.forms[0].action = "create";
+}
+}
+</script>
+    <tr>
+      <td align="right"><span class="blockintro"><span class="style2"><strong>Birth Certificate #:</strong></span></span></td>
+      <td><span class="blockintro"><span class="style2">  <input class="px200" id="personal_birth_cert_no" maxlength="10" name="personal[birth_cert_no]" size="10" type="text" />
+       </span></td>
+      <td align="right"><strong>Passport:</strong></td>
+      <td><span class="style2">  <input class="px200" id="personal_passport" maxlength="12" name="personal[passport]" size="12" type="text" /></span></td>
+
+    </tr>
+    <tr>
+      <td align="right"><span class="blockintro"><span class="style2"><strong>Race:</strong></span></span></td>
+      <td> 
+          <select name="personal[race_id]" class="px200">
+            
+            <option value=" 1"
+         > MALAY </option>
+            
+            <option value=" 4"
+         > IBAN </option>
+
+            
+            <option value=" 2"
+         > INDIAN </option>
+            
+            <option value=" 3"
+         > CHINESE </option>
+            
+          </select></td>
+      <td align="right"><strong>Nationality:</strong></td>
+      <td nowrap="nowrap"><span class="blockintro">  </span>
+        <select name="personal[nationality_id]" class="px200">
+
+          
+          <option value=" 1"
+         > MALAYSIA </option>
+          
+          <option value=" 3"
+         > INDONESIA </option>
+          
+          <option value=" 2"
+         > SINGAPORE </option>
+          
+      </select></td>
+    </tr>
+    <tr>
+
+      <td align="right"><strong>Gender:</strong></td>
+      <td> 
+        <select name="personal[gender_id]" class="px200">
+        
+        <option value="1"
+         > male </option>
+        
+        <option value="2"
+         > female </option>
+        
+      </select></td>
+
+      <td align="right" nowrap="nowrap"><strong>Marital Status:</strong></td>
+      <td> 
+        <select name="personal[marital_status_id]" class="px200">
+          
+          <option value=" 1"
+        > single </option>
+          
+          <option value=" 2"
+        > married </option>
+          
+        </select></td>
+
+    </tr>
+    <!--tr>
+      <td align="right"><strong>Personal Status :</strong></td>
+      <td><span class="blockintro">  </span>
+        <select name="personal[personal_status_id]">
+        
+        <option value="2"
+         > staff </option>
+        
+        <option value="3"
+         > trainer </option>
+        
+        <option value="1"
+         > student </option>
+        
+      </select></td>
+    </tr-->
+    <tr>
+      <td align="right"><strong>Religion:</strong></td>
+      <td> 
+        <select name="personal[religion_id]" class="px200">
+          
+          <option value=" 1"
+         > ISLAM </option>
+
+          
+          <option value=" 5"
+         > OTHER </option>
+          
+          <option value=" 4"
+         > KRISTIAN </option>
+          
+          <option value=" 3"
+         > BUDDHA </option>
+          
+          <option value=" 2"
+         > HINDU </option>
+          
+        </select></td>
+
+      <td align="right" nowrap="nowrap"> </td>
+      <td> </td>
+    </tr>
+    <tr>
+     <td align="right"><strong>Tel #:</strong></td>
+     <td nowrap="nowrap"><span class="blockintro">  <input class="px200" id="personal_phone" maxlength="12" name="personal[phone]" size="30" type="text" />  Home</span></td>
+        <td align="right"><strong>Fax #:</strong></td>
+
+        <td><span class="blockintro">  <input class="px200" id="personal_fax" maxlength="12" name="personal[fax]" size="30" type="text" /></span></td>
+    </tr>
+   <tr>
+     <td> </td>
+     <td><span class="blockintro">  <input class="px200" id="personal_handphone" maxlength="12" name="personal[handphone]" size="30" type="text" />  Mobile</span></td>
+        <td align="right"> </td>
+        <td> </td>
+
+   </tr>
+    <tr>
+      <td align="right"><strong>Position:</strong></td>
+      <td colspan="3"><span class="blockintro">  <input id="personal_position" maxlength="45" name="personal[position]" onchange="this.value=this.value.toUpperCase()" size="40" type="text" /></span> </td>
+    </tr>
+    <tr>
+      <td align="right" valign="top"><strong>Email:</strong></td>
+
+      <td colspan="3"><span class="style2">  <input id="personal_email" maxlength="60" name="personal[email]" size="40" type="text" /></span></td>
+    </tr>
+    
+    <tr>
+      <td align="right" valign="top"> </td>
+      <td colspan="3"> </td>
+    </tr>
+    <tr>
+      <td align="right" valign="top"><strong>Address:</strong></td>
+
+      <td colspan="3"><span class="blockintro"> 
+          <input class="px300" id="personal_address1" maxlength="45" name="personal[address1]" onchange="this.value=this.value.toUpperCase()" size="40" type="text" /></span>
+       </td>
+    </tr>
+    <tr>
+      <td align="right"> </td>
+      <td colspan="3"><span class="blockintro"> 
+          <input class="px300" id="personal_address2" maxlength="45" name="personal[address2]" onchange="this.value=this.value.toUpperCase()" size="40" type="text" /></span>
+ </td>
+
+    </tr>
+    <tr>
+      <td align="right"> </td>
+      <td colspan="3"><span class="blockintro"> 
+          <input class="px300" id="personal_address3" maxlength="45" name="personal[address3]" onchange="this.value=this.value.toUpperCase()" size="40" type="text" /></span></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Postcode:</strong></td>
+
+      <td colspan="3"><span class="style2">  <input id="personal_postcode" maxlength="5" name="personal[postcode]" size="20" type="text" /></span></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>City:</strong></td>
+      <td colspan="3"><span class="style2">  <input class="px200" id="personal_city" maxlength="30" name="personal[city]" onchange="this.value=this.value.toUpperCase()" size="20" type="text" /></span></td>
+    </tr>
+    <tr>
+
+      <td align="right"><strong>State:</strong></td>
+      <td colspan="3"><span class="blockintro"> 
+   <select name="personal[state_id]" class="px200">
+              
+              <option value="1"
+         > JOHOR </option>
+              
+              <option value="2"
+         > KEDAH </option>
+              
+              <option value="3"
+         > KELANTAN </option>
+
+              
+              <option value="4"
+         > MELAKA </option>
+              
+              <option value="5"
+         > NEGERI SEMBILAN </option>
+              
+              <option value="6"
+         > PAHANG </option>
+              
+              <option value="7"
+         > PERAK </option>
+              
+              <option value="8"
+         > PERLIS </option>
+
+              
+              <option value="9"
+         > PULAU PINANG </option>
+              
+              <option value="10"
+         > SABAH </option>
+              
+              <option value="11"
+         > SARAWAK </option>
+              
+              <option value="12"
+         > SELANGOR </option>
+              
+              <option value="15"
+         > TERENGGANU </option>
+
+              
+              <option value="13"
+         > WILAYAH PERSEKUTUAN KUALA LUMPUR </option>
+              
+              <option value="14"
+         > WILAYAH PERSEKUTUAN LABUAN </option>
+              
+            </select>
+      </span></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Country:</strong></td>
+
+      <td colspan="3"><span class="blockintro"> 
+   <select name="personal[country_id]" class="px200">
+              
+              <option value="1"
+         > MALAYSIA </option>
+              
+              <option value="2"
+         > INDONESIA </option>
+              
+              <option value="3"
+         > SINGAPORE </option>
+              
+            </select>
+
+      </span></td>
+    </tr>
+  </table>
+
+<script>
+toggleStudentTypeSelection()
+</script>
+
+
+
+  <br>
+  <div align="center">
+  <!--<input class="btn60" name="commit" type="submit" value="Save" /> -->
+
+  <input type="button" value="Save" class="btn60" onclick="GoSubmit(document.forms[0])">
+  </div>
+</form>
+
+<script>
+function GoSubmit(df) {
+c = $("student_course_id"),cn = $("course_name");
+a = $("personal_name");
+ogn = $("organization_name");
+sid = $("student_type_id");
+oid = $("personal_organization_id");
+n = $("personal_nric");
+o = $("personal_old_nric");
+b = $("personal_birth_cert_no");
+p = $("personal_passport");
+
+if (c.value=="") {
+alert('Please enter course name');
+cn.style.borderColor = 'red'; cn.focus(); return;
+}
+
+if ( (sid.value==4) && (oid.value=="") ) {
+alert('Please enter company name');
+ogn.style.borderColor = 'red'; ogn.focus(); return;
+}
+
+if (a.value=="") {
+alert('Please enter applicant name');
+a.style.borderColor = 'red'; a.focus(); return;
+}
+
+if ( (n.value=="") && (o.value=="") && (b.value=="") && (p.value=="") ) {
+alert('Please enter at least one idenfication no');
+n.style.borderColor = o.style.borderColor = b.style.borderColor = p.style.borderColor = 'red';
+n.focus();return;
+}
+
+df.submit()
+
+}
+
+</script>
+<div id="label" style="clear: both; visibility: hidden">Bonner</div>
+
+<script type="text/javascript">
+//<![CDATA[
+
+var list = [
+
+
+{name: "AC MOTOR CONTROL (BASIC)", id: "92"},
+
+{name: "ADVANCED BOILER TECHNOLOGY", id: "36"},
+
+{name: "ADVANCED ELECTRO PNEUMATICS", id: "117"},
+
+{name: "ADVANCED MICROSOFT EXCEL 2000 ", id: "48"},
+
+{name: "ADVANCED MICROSOFT POWER POINT 2000 ", id: "49"},
+
+{name: "ADVANCED MICROSOFT WORD 2000 ", id: "47"},
+
+{name: "ALIGNMENT PRINCIPLES AND TECHNOLOGY", id: "38"},
+
+{name: "APPLICATION AND TROUBLE SHOOTING OF ELECTRIC MOTOR (BASIC)", id: "85"},
+
+{name: "APPLICATION n TROUBLE SHOOTING OF ELC. MOTOR (INTERMEDIATE)", id: "86"},
+
+{name: "AUTHORISED GAS TESTER", id: "63"},
+
+{name: "AUTOCAD 3D APPLICATION", id: "71"},
+
+{name: "AUTOCAD LEVEL 1 REL. 2000", id: "41"},
+
+{name: "AUTOCAD LEVEL 2 REL. 2000", id: "72"},
+
+{name: "BASIC BOILER TECHNOLOGY", id: "35"},
+
+{name: "BASIC COMMUNICATION ENGLISH", id: "107"},
+
+{name: "BASIC FIRE FIGHTING SQUAD", id: "66"},
+
+{name: "BASIC FIRST AID", id: "40"},
+
+{name: "BASIC VIBRATION ANALYSIS", id: "33"},
+
+{name: "BEARING MAINTENANCE", id: "30"},
+
+{name: "BUILDING BETTER GRAPHICAL INTERFACE USING PHOTOSHOP LEVEL 1", id: "57"},
+
+{name: "CERTIFICATE ON MECHATRONICS", id: "114"},
+
+{name: "CNC PROGRAMMING-MILING (LEVEL 1)", id: "76"},
+
+{name: "COMPRESSOR MAINTENANCE", id: "32"},
+
+{name: "CONFINED WORK SAFETY", id: "64"},
+
+{name: "CONVENTIONAL LATHE", id: "79"},
+
+{name: "DASAR SYARIAH DAN HALAL DI DALAM TEKNOLOGI MAKANAN", id: "95"},
+
+{name: "DOMESTIC/INDUSTRIAL ELECTRICAL WIRING (BASIC)", id: "87"},
+
+{name: "DOMESTIC/INDUSTRIAL ELECTRICAL WIRING (INTERMEDIATE)", id: "88"},
+
+{name: "EFFECTIVE EQUIPMENT MANAGEMENT SYSTEM", id: "28"},
+
+{name: "EFFECTIVE SOLDERING AND REWORK TECHNIQUE", id: "134"},
+
+{name: "ELECTRICAL", id: "9"},
+
+{name: "ELECTRICAL INSTALLATION AND MAINTENANCE (BASIC)", id: "81"},
+
+{name: "ELECTRICAL INSTALLATION AND MAINTENANCE (INTERMEDIATE)", id: "82"},
+
+{name: "ELECTRICAL SWITCHBOARD", id: "91"},
+
+{name: "ELECTRICAL TECHNOLOGY (BASIC)", id: "83"},
+
+{name: "ELECTRICAL TECHNOLOGY (INTERMEDIATE)", id: "84"},
+
+{name: "ELECTRONIC DIGITAL", id: "135"},
+
+{name: "EMERGENCY RESPONSE PLAN", id: "68"},
+
+{name: "ENGINEERING MAINTENANCE AND SERVICES", id: "139"},
+
+{name: "FACTORY MANAGEMENT", id: "108"},
+
+{name: "FIRE INDUCTION", id: "67"},
+
+{name: "FLUX-CORED ARC WELDING (CARBON STEEL)", id: "22"},
+
+{name: "FLUX-CORED ARC WELDING (STAINLES STEEL)", id: "23"},
+
+{name: "FUNDAMENTAL OF CNC LATHE PROG. (MAZAK)", id: "73"},
+
+{name: "FUNDAMENTAL OF CNC LATHE PROG. (OKUMA)", id: "74"},
+
+{name: "FUNDAMENTAL OF CNC MACHINING MILING", id: "75"},
+
+{name: "GAS METAL ARC WELDING (ALUMINIUM)", id: "18"},
+
+{name: "GAS METAL ARC WELDING (CARBON STEEL)", id: "16"},
+
+{name: "GAS METAL ARC WELDING (STAINLESS STEEL)", id: "17"},
+
+{name: "GAS TUNGSTEN ARC WELDING (ALUMINIUM)", id: "21"},
+
+{name: "GAS TUNGSTEN ARC WELDING (CARBON STEEL)", id: "19"},
+
+{name: "GAS TUNGSTEN ARC WELDING (STAINLES STEEL)", id: "20"},
+
+{name: "GEMBA KAIZEN AND CONTINOUS IMPROVEMENT", id: "113"},
+
+{name: "heheh", id: "148"},
+
+{name: "HOUSEKEEPING - 5s", id: "112"},
+
+{name: "IND. AUTOMATION FOR WORKERS IN THE MANUFACTURING INDUSTRIES", id: "129"},
+
+{name: "INDUSTRIAL ELECTRO-HYDRAULICS", id: "132"},
+
+{name: "INDUSTRIAL ELECTRO PNEUMATICS", id: "116"},
+
+{name: "INDUSTRIAL ELECTRONIC", id: "141"},
+
+{name: "INDUSTRIAL ERGONOMICS", id: "61"},
+
+{name: "INDUSTRIAL HYDRAULIC", id: "131"},
+
+{name: "INDUSTRIAL PNEUMATICS", id: "115"},
+
+{name: "INDUSTRIAL SAFETY AND HEALTH ENVIRONMENT", id: "60"},
+
+{name: "INFORMATION COMMUNICATION TECHNOLOGY", id: "10"},
+
+{name: "INST. & MAINTENANCE OF AIR CONDITIONING UNIT (ADVANCED)", id: "90"},
+
+{name: "INSTALLATION & MAINTENANCE OF AIR CONDITIONING UNIT (BASIC)", id: "89"},
+
+{name: "INTERMEDIATE MICROSOFT ACCESS", id: "50"},
+
+{name: "INTERNET", id: "51"},
+
+{name: "JUST IN TIME", id: "111"},
+
+{name: "KECEMERLANGAN HUBUNGAN PELANGGAN", id: "102"},
+
+{name: "KEMAHIRAN KOMUNIKASI DAN PERUNDINGAN", id: "106"},
+
+{name: "KEMAHIRAN PERUNDINGAN", id: "104"},
+
+{name: "KEMAHIRAN SENGGARAAN PC (PC MAINTENANCE SKILLS)", id: "55"},
+
+{name: "LUBRICANTS AND ITS APPLICATIONS", id: "29"},
+
+{name: "MACHINE MAINTENANCE (ELECTRICAL) & TROUBLE SHOOTING", id: "80"},
+
+{name: "MACHINE MAINTENANCE (MECHANICAL)", id: "8"},
+
+{name: "MACHINING", id: "143"},
+
+{name: "MAINTENANCE AND SERVICING STEAM BOILER", id: "37"},
+
+{name: "MAINTENANCE AND TROUBLE SHOOTING OF PLC", id: "125"},
+
+{name: "MANUAL METAL ARC WELDING (LEVEL 1)", id: "13"},
+
+{name: "MANUAL METAL ARC WELDING (LEVEL II)", id: "14"},
+
+{name: "MANUAL METAL ARC WELDING (LEVEL III)", id: "15"},
+
+{name: "MASTER CAM LEVEL 1", id: "77"},
+
+{name: "MASTER CAM LEVEL 2", id: "78"},
+
+{name: "MENGHASILKAN CD-ROM MENGGUNAKAN MACROMEDIA DIRECTOR", id: "53"},
+
+{name: "MEREKA-CIPTA LAMAN WEB", id: "52"},
+
+{name: "MICROSOFT ACCESS", id: "46"},
+
+{name: "MICROSOFT EXCEL", id: "44"},
+
+{name: "MICROSOFT POWER POINT", id: "45"},
+
+{name: "MICROSOFT WORD", id: "43"},
+
+{name: "MS WINDOWS 98", id: "42"},
+
+{name: "NETWORK", id: "56"},
+
+{name: "OCCUPATIONAL SAFETY AND HEALTH OFFICER", id: "39"},
+
+{name: "OIL ANALYSIS & PROACTIVE MAINTENANCE", id: "34"},
+
+{name: "ORGANISASI PENGESAHAN HALAL LUAR NEGARA", id: "101"},
+
+{name: "PASTIC INJECTION MOULDING", id: "69"},
+
+{name: "PCN WELDING INSPECTION", id: "138"},
+
+{name: "PEMBUNGKUSAN DAN PELABELAN", id: "103"},
+
+{name: "PENGENALAN - DASAR DAN PASARAN PRODUK HALAL MALAYSIA", id: "93"},
+
+{name: "PENGIKLANAN", id: "105"},
+
+{name: "PENYAJIAN DAN PENGENDALIAN MAKANAN HALAL", id: "99"},
+
+{name: "PENYEMBELIHAN & TEKNOLOGI PENYEMBELIHAN RUMAH PENYEMBELIHAN", id: "100"},
+
+{name: "PERSIJILAN HALAL DALAM PRODUK PERUBATAN", id: "98"},
+
+{name: "PERSIJILAN HALAL DAN HUBUNGAN HCCP/GHP & GMP", id: "97"},
+
+{name: "PERSIJILAN HALAL DAN UNDANG-UNDANG MALAYSIA", id: "94"},
+
+{name: "PHOTOSHOP LEVEL 2 (IMAGE EDITING WITH ADOBE PHOTOSHOP)", id: "58"},
+
+{name: "PLANNING FOR COMPUTERIZED MAINTENANCE MANAGEMENT SYSTEM", id: "27"},
+
+{name: "PLASTIC TECHNOLOGY", id: "142"},
+
+{name: "PLC MITSUBISHI WITH MEDOC / FXGPWIN SOFTWARE", id: "119"},
+
+{name: "PLC NATIONAL (NAIS) WITH NPST SOFTWARE", id: "121"},
+
+{name: "PLC OMRON WITH PROGRAMMING SOFTWARE - SYSWIN & CX-PROGRAMMER", id: "124"},
+
+{name: "PLC OMRON WITH SYSMAC SUPPORT SOFTWARE (SSS) - PART 1", id: "122"},
+
+{name: "PLC OMRON WITH SYSMAC SUPPORT SOFTWARE (SSS) - PART 2", id: "123"},
+
+{name: "PLC SIEMENS SISMATIC S7-200", id: "126"},
+
+{name: "PLC SIEMENS SISMATIC S7-300", id: "127"},
+
+{name: "PLC SIEMENS SISMATIC S7-TROUBLE SHOOTING", id: "128"},
+
+{name: "PRODUCTION PLANNINNG AND CONTROL", id: "110"},
+
+{name: "PROGRAMMABLE LOGIC CONTROLLER", id: "118"},
+
+{name: "PROSEDUR PERSIJILAN HALAL MALAYSIA", id: "96"},
+
+{name: "PUMP MAINTENANCE", id: "31"},
+
+{name: "RAKAN IT-SEKOLAH MENENGAH", id: "120"},
+
+{name: "RAKAN IT-SEKOLAH RENDAH", id: "130"},
+
+{name: "SAFE HANDLING FORKLIFT", id: "62"},
+
+{name: "SAFETY AND HEALTH OFFICER", id: "136"},
+
+{name: "SAFETY AUDIT", id: "65"},
+
+{name: "SUBMERGED ARC WELDING", id: "24"},
+
+{name: "SUPERVISORY MANAGEMENT", id: "59"},
+
+{name: "TEKNIK AUDIO DIGITAL MENGGUNAKAN ADOBE PREMIER", id: "54"},
+
+{name: "test lagi", id: "149"},
+
+{name: "TOTAL QUALITY MANAGEMENT", id: "109"},
+
+{name: "TROUBLE-SHOOTING FOR  INJECTION MOULDING ", id: "70"},
+
+{name: "UNDERSTANDING SURFACE MOUNT TECHNOLOGY ASSEMBLY PROCESS", id: "133"},
+
+{name: "VIBRATION TECHNOLOGY AND MAINTENANCE MANAGEMENT", id: "137"},
+
+{name: "WELDING INSPECTOR 3.0", id: "25"},
+
+{name: "WELDING INSPECTOR 3.1", id: "26"},
+
+{name: "WELDING TECHNOLOGY", id: "12"},
+
+{name: "WELDING TECHNOLOGY", id: "140"},
+
+{name: "  ", id: "00000"}
+];
+
+var company_list = [
+
+
+{name: "  ", id: "00000"}
+];
+
+//
+function getNames(o, search){
+if(search = search.toLowerCase())
+for(var i = -1, l = list.length; ++i < l;){
+//
+for(var j = 0, indices = []; j = list[i].name.toLowerCase().indexOf(search, j) + 1;
+indices[indices.length] = j - 1);
+//
+if(indices.length)
+o.add(list[i].name, indices);
+}
+o.show();
+}
+
+
+function getComps(o, search){
+if(search = search.toLowerCase())
+for(var i = -1, l = company_list.length; ++i < l;){
+//
+for(var j = 0, indices = []; j = company_list[i].name.toLowerCase().indexOf(search, j) + 1;
+indices[indices.length] = j - 1);
+//
+if(indices.length)
+o.add(company_list[i].name, indices);
+}
+o.show();
+}
+
+new IncrementalSearch(document.forms[0].course_name, getNames, "autocomplete");
+new IncrementalSearchCompany(document.forms[0].organization_name, getComps, "autocomplete");
+
+//]]>
+
+////company
+function getCompanyById(comp_id) {
+for(var i = 0; i < company_list.length; i++) {
+   if (company_list[i].id == comp_id) {
+return company_list[i].name
+   }
+}
+}
+
+function updateCompanyName() {
+if ($("personal_organization_id").value != "")
+{
+$("organization_name").value = getCompanyById($("personal_organization_id").value)
+}
+}
+
+updateCompanyName()
+
+////course
+function getCourseById(course_id) {
+for(var i = 0; i < list.length; i++) {
+   if (list[i].id == course_id) {
+return list[i].name
+   }
+}
+}
+
+function updateCourseName() {
+if ($("student_course_id").value != "")
+{
+$("course_name").value = getCourseById($("student_course_id").value)
+}
+}
+
+updateCourseName()
+
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH PENCERAMAH KURSUS</font></b></td>
+    </tr>
+</table>
+<br>
+<div align=center>
+<%#= start_form_tag :action => 'create', '',:name=>"ci_form", :onsubmit=>"return GoSubmit(df)" %>
+<form name=ci_form method=get action="/course_implementations/save_course_trainer/<%=@course_implementation.id%>" onsubmit="//return GoSubmit(ci_form)">
+  <%= render :partial => 'add_course_trainer_form' %>
+  <br><input type="button" value="Selesai" onclick="self.close()"> <%= submit_tag "Simpan" %>
+</form>
+
+<script>
+<% if session[:user].profile.staff && session[:user].profile.staff.course_department_id%>
+//$('course_department_id').value = <%=session[:user].profile.staff.course_department_id%>
+//checkField();
+<% end %>
+
+//date
+//today = new Date();
+//todayDay   = today.getDate()
+//todayMonth = today.getMonth() + 1
+//todayYear  = today.getFullYear()
+
+</script>
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+function GoSubmit(df) {
+
+	//if (!checkSelection(strRegExp,document.getElementById('course_department_id'),'Bahagian')) return false;
+	//if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
+	//if (!checkInput(slashRegExp,document.getElementById('course_implementation_code'),'Kod Kursus')) return false;
+	//if (!checkInput(anythingRegExp,$('course_name'),'Nama Kursus')) return false;
+
+	return true;
+}
+
+</script>

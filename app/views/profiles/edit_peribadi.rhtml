@@ -1,0 +1,17 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">KEMASKINI PROFIL <%=h @profile.name %></font></th>
+    </tr>
+     <tr>
+   <td>&nbsp;</td>
+    </tr>
+   </table>
+
+<%= start_form_tag ({:action => 'update_peribadi'}, :enctype => 'multipart/form-data') %>
+  <%= render :partial => 'form_peribadi' %>
+  <BR>
+  <div align=center>
+  <%= submit_tag 'Simpan' %>
+  </div>
+<%= end_form_tag %>

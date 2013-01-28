@@ -1,0 +1,149 @@
+<script>
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 210;
+    $('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\""  + "/course_management" + "/<%= params[:next_action]%>/" + objid + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Senarai Peserta</a>" + 
+					       "</ul>"
+     
+}
+
+function rewritePopupContentNoRestraint(controller, objid, objname) {
+    $('popmenu').style.width = 210;
+    $('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\""  + "/course_management" + "/<%= params[:next_action]%>/" + objid + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Senarai Peserta</a>" + 
+					       "</ul>"
+     
+}
+
+function checkFormDulu(df) {
+	var is_apply_checked = 0
+	var idx = 0;
+
+	if (df.course_implementation_code.value=="") {
+		alert('Sila Masukkan Kod Kursus');
+		df.course_implementation_code.focus()
+		return false;
+	}
+
+	df.action  = "/course_management/<%= params[:next_action]%>"
+	return true;
+}
+
+
+</script>
+<form method="post" name="incremental" action="" onsubmit="return checkFormDulu(document.incremental)">
+  <br>
+<div align="center"><br />
+  Masukkan Kod Kursus : 
+  
+<input type="text" id="course_implementation_code" name="course_implementation_code" value="" onchange="this.value=this.value.toUpperCase()">
+<input type="submit" value="Cari" class="btn60">
+</div>
+</form>
+
+<hr size="1" width="60%">
+<br>
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI  KURSUS DIBAWAH KOORDINASI <%=session[:user].profile.name.upcase%></font></b></td>
+  </tr>
+</table>
+<br />
+<table border="0" cellspacing="0" cellpadding="2" width="95%" align="center">
+  <tr>
+    <td align="CENTER">Tahun:
+      <select name="year_start" style="font-size:10px" onchange="location='/course_management/select_course?next_action=<%=params[:next_action]%>&year_start=' + this.value">
+      <% @planning_years.each do |cf| %>
+      <option value="<%= cf.year %>" <%= 'selected' if cf.year.to_s == params[:year_start].to_s %>> <%= cf.year %> </option>
+      <% end %>
+    </select></td>
+  </tr>
+</table>
+<br />
+<table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" id="pisang" onclick="//servOC(20,'/course/show/3','#999999')">
+    <td width="3%" valign="top" id="name20"><font color="#FFFFFF">&nbsp;</font></td>
+    <td width="" align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
+    <td width="30%" align="left"><font color="#FFFFFF">&nbsp;<strong>Nama Kursus</strong></font></td>
+    <td align="center"><strong><font color="#FFFFFF">Penyelaras</font></strong></td>
+    <td align="center"><strong><font color="#FFFFFF">Pen.<br /> 
+    Penyelaras </font></strong></td>
+    <td align="center"><strong><font color="#FFFFFF">Dalam<br /> 
+    Proses </font></strong></td>
+    <td width="" align="center"><strong><font color="#FFFFFF">Dipilih</font></strong></td>
+    <td width="" align="center"><strong><font color="#FFFFFF">Sah<br />
+Hadir</font></strong></td>
+    <td width="" align="center"><strong><font color="#FFFFFF">Daftar</font></strong></td>
+    <td width="" align="center"><strong><font color="#FFFFFF">Ditolak</font></strong></td>
+    <td width="" align="center"><strong><font color="#FFFFFF">Jumlah</font></strong></td>
+  </tr>
+  <tr style="display: none;" id="ihtr20">
+    <td colspan="7" bgcolor="#ececd9"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tbody>
+        <tr>
+          <td width="10"></td>
+          <td style="border: 3px solid rgb(0, 51, 102);"><iframe id="ihif20" frameborder="0" width="100%"></iframe></td>
+        </tr>
+      </tbody>
+    </table></td>
+  </tr>
+  <%
+i = 0;
+even = true;
+for course in @course_implementations
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  
+  show_menu = "show"
+  show_menu = "show_with_no_restraint" if course.editable?(session[:user])
+  onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{course.id}', '#{course.course.name}', event)"
+ 
+%>
+  <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.<%=show_menu%>('popmenu', '/course_implementations', '<%=h course.id %>', '<%= course.course.name %>', event)">
+    <td id="name<%=h course.id %>" align="right" onmousedown="<%=onmousedown%>"><%= i.to_s %>.</td>
+    <td align=center onmousedown="<%=onmousedown%>"><%=h course.code.upcase %></td>
+    <td align="left" onmousedown="<%=onmousedown%>"><%=h course.course.name.upcase %></td>
+    <td align="CENTER" onmousedown="<%=onmousedown%>"><%=h course.penyelaras1.profile.user.login %></td>
+    <td onmousedown="<%=onmousedown%>" align="CENTER"><%=h nof{course.penyelaras2.profile.user.login} %></td>
+    <td align="center" onmousedown="<%=onmousedown%>"><%=h course.total_inprocess %></td>
+    <td align="center" onmousedown="<%=onmousedown%>"><%=h course.total_selected %>&nbsp;</td>
+    <td align="center" onmousedown="<%=onmousedown%>"><%=h course.total_confirmed %></td>
+    <td align="center" onmousedown="<%=onmousedown%>"><%=h course.total_registered %></td>
+    <td align="center" onmousedown="<%=onmousedown%>"><%=h course.total_rejected %></td>
+    <td align="center" onmousedown="<%=onmousedown%>"><%=h course.course_applications.size %></td>
+  </tr>
+  <tr style="display: none;" id="ihtr<%=h course.id %>">
+    <td colspan="7" bgcolor="#ececd9"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tbody>
+        <tr>
+          <td width="10"></td>
+          <td style="border: 0px solid rgb(0, 51, 102);"><iframe id="ihif<%=h course.id %>" frameborder="0" width="100%"></iframe></td>
+        </tr>
+      </tbody>
+    </table></td>
+  </tr>
+  <% end %>
+</table>
+
+<script>
+function tr(id) {
+	MM_openBrWindow('/evaluations/trainer_report/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+function mr(id) {
+	MM_openBrWindow('/evaluations/management_report/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+function fr(id) {
+	MM_openBrWindow('/evaluations/facility_report/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+function ct(id) {
+	MM_openBrWindow('/evaluations/content_report/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+function cm(id) {
+	MM_openBrWindow('/evaluations/comment_report/'+id,'','scrollbars=yes,width=1000,height=600')
+}
+
+
+</script>

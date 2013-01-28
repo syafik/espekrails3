@@ -1,0 +1,9 @@
+<%#= start_form_tag :action => 'hyouka_hozon' %>
+<form action="/evaluations/user_hyouka_update/<%=@course_implementation.id%>?ca_id=<%=@student.id%><%="&klm=1" if params[:klm]=="1"%>" method="post">
+  <%= render :partial => 'form_edit' %>
+  <BR>
+  <div align=center>
+  <%#= submit_tag "Simpan" %>
+  <input type="submit" value="Simpan(Kemaskini)" onclick="//window.close();">
+  </div>
+<%= end_form_tag %>

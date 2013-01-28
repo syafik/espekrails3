@@ -1,0 +1,27 @@
+<h1>Listing employments</h1>
+
+<table>
+  <tr>
+  <% for column in Employment.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for employment in @employments %>
+  <tr>
+  <% for column in Employment.content_columns %>
+    <td><%=h employment.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => employment %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => employment %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => employment }, :confirm => 'Are you sure?' %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @employment_pages.current.previous } if @employment_pages.current.previous %>
+<%= link_to 'Next page', { :page => @employment_pages.current.next } if @employment_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New employment', :action => 'new' %>

@@ -1,0 +1,23 @@
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT KURSUS</font></b></td>
+    </tr>
+    
+  </table>
+  <form action="/course_applications/new_for_logged_in_user/<%=params[:id]%>">
+  <%= render :partial => 'show_4_peserta' %> <br>
+<div align="center">
+<% if ( @course_implementation.online_apply == 0 or @course_implementation.can_still_apply(session[:user]) == 0)
+		if @course_implementation.online_apply == 0 %>
+ <font style="color: red; font-size: 11px">*Permohonan secara online tidak dibenarkan bagi kursus ini</font>
+<% 
+   		end
+   else %>
+   <% if @course_implementation.can_still_apply(session[:user]) %>
+<%if @course_application.nil?%>
+<input type="submit" value="Mohon">
+<%end%>
+   <% end %>
+<% end %>
+</div>
+

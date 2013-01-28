@@ -1,0 +1,96 @@
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">LAPORAN JUMLAH PESERTA MENGIKUT STATUS BUMI/NON-BUMI DARI TAHUN <%=@report_date_start%> HINGGA TAHUN <%=@report_date_end%></font></b></td>
+    </tr>
+  </table>
+  <br>
+  
+<form action="/report/statistik_peserta_status_bumi_nonbumi">
+<table border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center">From:
+      <select name="report_date_start">
+          <option value="1990">Select Year</option>
+		  <% a = 2007 %>
+          <% for i in 1990..a %>
+          <option value="<%= i %>" <%=" selected" if i==@report_date_start.to_i%>> <%= i %> </option>
+          <% end %>
+        </select>
+    </td>
+    <td align="center">&nbsp;&nbsp;To:
+      <select name="report_date_end">
+        <option value="1990">Select Year</option>
+        <% a = 2007 %>
+        <% for i in 1990..a %>
+        <option value="<%= i %>" <%=" selected" if i==@report_date_end.to_i%>> <%= i %> </option>
+        <% end %>
+      </select></td>
+    <td>&nbsp;&nbsp;
+      <input name="button2" type="button" value="Generate Report" onclick="document.forms[0].submit()" style="background: #CCCCCC"></td>
+  </tr>
+</table>
+<br> 
+  
+ 
+  
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+	<tr bgcolor="#999999">
+      <td width="100" align="center" valign="top"><font color="#FFFFFF"><strong>Bangsa</strong></font></td>
+      <% for year in @report_date_start.to_i..@report_date_end.to_i %>
+      <td width="50" valign="top" align="center" bgcolor="#999999"><font color="#FFFFFF"><strong><%=h year %></strong></font></td>
+      <% end %>
+      <td width="50" valign="top" align="center" ><font color="#FFFFFF"><strong>Total </strong></font></td>
+    </tr>
+	
+<%
+
+@bumi_statuses = [1,2]
+@y_axis = Array.new
+for status in @bumi_statuses
+  status_description = "BUMI" if status==1
+  status_description = "NON-BUMI" if status==2
+%>
+    <tr bgcolor="#CCCCFF">
+      <td valign="top"><%= status_description %></td>
+      <% 
+         this_row_date_start = @report_date_start.to_s + "-01-01"
+         this_row_date_end   = @report_date_end.to_s   + "-12-31"
+	 j=0
+         for year in @report_date_start.to_i..@report_date_end.to_i
+	     curr_year_start = year.to_s + "-01-01"
+	     curr_year_end   = year.to_s + "-12-31"
+	     participant = Student.find_by_sql("select get_bumistatus_total(#{status},'#{curr_year_start}','#{curr_year_end}') as race_total")
+             @y_axis[j] = @y_axis[j].to_i + participant[0].race_total.to_i
+	     this_race = Student.find_by_sql("select get_bumistatus_total(#{status},'#{this_row_date_start}','#{this_row_date_end}') as total")
+      %>
+      <td valign="top" align="center"><%= participant[0].race_total %></td>
+      <%
+	 j = j + 1
+	 end
+      %>
+      <td valign="top" align="center" ><b><%= this_race[0].total %></b></td>
+    </tr>
+<%
+end
+%>
+<!--Total y axis-->
+   <tr bgcolor="#CCCCFF">
+      <td valign="top"><b><%= "TOTAL"%></b></td>
+      <% 
+         j = 0
+	 sum_y_axis = 0
+         for year in @report_date_start.to_i..@report_date_end.to_i
+      %>
+      <td valign="top" align="center"><b><%= @y_axis[j] %></b></td>
+      <% 
+         sum_y_axis = sum_y_axis.to_i + @y_axis[j].to_i
+	 j = j+1
+	 end
+      %>
+      <td valign="top" align="center" ><b><%= sum_y_axis %></b></td>
+    </tr>
+<!--EO Total y axis-->
+	
+    
+    </table> 
+  </form> 

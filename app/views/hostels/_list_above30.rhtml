@@ -1,0 +1,72 @@
+
+  <div align="center">
+    <h2><u>BLOK <%=nof{@hostel_block.description}%> (<%=@hostel_block.gender.description.upcase%>)</u></h2>
+  </div>
+  <table align="CENTER" width="95%" border="0" cellspacing="2" cellpadding="0">
+    <tr>
+      <td align="CENTER">&nbsp; 
+	  &nbsp;<span style="background:red">&nbsp;&nbsp;&nbsp;</span> Tiada kekosongan 
+	  &nbsp;<span style="background:orange">&nbsp;&nbsp;&nbsp;</span> Masih ada kekosongan 
+	  &nbsp;<span style="background:<%=@color_kosong%>">&nbsp;&nbsp;&nbsp;</span> Kosong
+	  &nbsp;<span style="background:<%=@color_close%>">&nbsp;&nbsp;&nbsp;</span> Tutup/Senggara</td>
+    </tr>
+  </table>
+  <br />
+  <table class="seven" width="90%" border="1" align="center" cellpadding="2" cellspacing="0">
+   <tr bgcolor="#dddddd">
+     <th class="el" width="50" align="center">Aras</th>
+	 <th class="el" colspan="<%=@hostel_block.max_room_by_level%>" align="center">No Bilik</th>
+   </tr>
+
+<% if nof{@hostel_block.total_level} != nil %>
+<% @hostel_block.total_level.times do |i|%>
+   <tr>
+     <td class="el" align="center" bgcolor="#dddddd"><b><%= i+1 %></b></td>
+	 <% #@hostel_block.total_room_at_level(i+1).times do |j|%>
+	 <% @hostel_block.max_room_by_level.times do |j|%>
+	 <%# 32.times do |j|%>
+	 <!--td>&nbsp;<%="#{@hostel_block.description}-#{i+1}-#{j+1}"%>&nbsp;</td-->
+	 <% 	st_sql = "SELECT * from hostels WHERE block_id=#{@hostel_block.id} AND level=#{i+1} AND room=#{j+1}"
+	 		rooms = Hostel.find(:all, :conditions=> "block_id=#{@hostel_block.id} AND level=#{i+1} AND room=#{j+1}")
+			room = rooms.first
+			room_font_style = "normal"
+			room_font_style = "bold" if room !=nil and room.hostel_type_id == 2
+			r_name= nof{room.room_no}
+			the_room = "<a href=\"javascript: showProperties(#{i+1},#{j+1})\">#{r_name}</a>"
+			
+			@room_bg = "#FFFFFF"
+			if rooms.size != 0
+				@room_bg = @color_close if rooms.first.hostel_status_id == 4 #close for maintenance,dll
+
+				if rooms.first.hostel_status_id == 1
+					@room_bg = @color_kosong
+					
+					
+					#if room.sejumlah_penghuni.size > 0 and room.sejumlah_penghuni.size < room.capacity
+					if room.sejumlah_penghuni.size > 0
+						@room_bg = "orange" 
+					end
+					if room.sejumlah_penghuni.size == room.capacity
+						@room_bg = "red"
+					end
+				end
+				if rooms.first.hostel_status_id == 2 or rooms.first.hostel_status_id == 3
+					@room_bg = @color_close
+				end
+				the_title = "title=\"#{@hostel_block.description}-#{i+1}-#{j+1}\""
+
+			else
+				@room_bg = "#888888"
+				the_room = ""
+				the_title = ""
+			end
+			
+			%>
+	 <td bgcolor="<%=@room_bg%>" class="el" align="center" <%=the_title%>>&nbsp;<font style="font-weight: <%=room_font_style%>"><%=the_room%></font>&nbsp;</td>
+	 
+	 <% end%>
+   </tr>
+<% end %>
+<%end %>
+
+  </table>

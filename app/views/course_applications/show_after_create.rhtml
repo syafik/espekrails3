@@ -1,0 +1,3 @@
+<div align="center"> <%= link_to 'Tambah pemohon seterusnya', :action => 'new', :id => @course_application.course_implementation.id %> | <a href="/course_applications/unprocessed/<%=@course_application.course_implementation.id%>">Lihat senarai pemohon </a></div>
+<br />
+<%= render :partial => "show" %>

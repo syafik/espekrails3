@@ -1,0 +1,60 @@
+<form name="list_form">
+<%if @course_implementation%>
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">
+	  <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+    </tr>
+ </table>
+ <br>
+<%end%>
+
+  <table width="95%" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999">
+      <td width="2%" valign="top" align="center"><font color="#FFFFFF"><input type="checkbox" name="check_all" value="0" onclick="checkAll(document.list_form)"></font></td>
+      <td width="2%" valign="top">&nbsp;</td>
+      <td width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama Pemohon </a></strong></td>
+      <td width="8%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('nric','<%= "DESC" if (@orderby=="nric" && @arrow=="ASC") %>')">Gred Jawatan </a></strong></td>
+      <td align="center"><font color="#FFFFFF"><strong>Peratus <br />
+      Kehadiran </strong></font></td>
+      <td align="center"><strong><a style="color: white" href="javascript: findAndSortWith('comp_name','<%= "DESC" if (@orderby=="comp_name" && @arrow=="ASC") %>')">Status Sijil </a></strong></td>
+    </tr>
+
+<%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  jawatan = student.profile.employments[0].job_profile.job_grade if student.profile.employments[0].job_profile
+  pejabat = student.profile.employments[0].place.name if student.profile.employments[0].place
+  
+  arr = Array.new
+  for ca in student.profile.course_applications
+  	arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
+  end
+  related = arr.join(",")
+
+%>
+
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+      <td align="center" height="20">
+	    <% if student.student_status_id == 4 %>
+	    <input type="checkbox" name="course_application_ids[]" value="<%=student.id%>">
+		<% end %>	  </td>
+      <td>&nbsp;<%= i.to_s %>.</td>
+      <td onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)"><%=h student.profile.name.upcase %></td>
+      <td onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%=h jawatan %></td>
+      <td onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%= student.attendance_percentage%></td>
+      <td onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%= "OK" if student.attendance_percentage>=50 %><%= "<font color=red>NG</font>" if student.attendance_percentage < 50 %></td>
+    </tr>
+<% end %>
+  </table>
+<input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation.code%>">
+</form>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>

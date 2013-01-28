@@ -1,0 +1,148 @@
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form">
+<%if @course_implementation%>
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI SEMUA PERMOHONAN</font></b></td>
+    </tr>
+ </table>
+ <br>
+<%end%>
+
+  <div width="95%" style="background: #FFFFFF">
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" valign="top">&nbsp;</td>
+      <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama Pemohon </a></strong></td>
+      <td class="el" width="8%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('job_grade','<%= "DESC" if (@orderby=="job_grade" && @arrow=="ASC") %>')">Gred Jawatan </a></strong></td>
+      <td class="el" width="24%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('opis','<%= "DESC" if (@orderby=="opis" && @arrow=="ASC") %>')">Pejabat </a></strong></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Kursus<br>Berkaitan</strong></font></td>
+      <td class="el" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('date_apply','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')">Tarikh Mohon </a></strong></td>
+      <td class="el" width="25%" align="center"><font color="FFFFFF"><strong>Status</strong></font></td>
+    </tr>
+
+<%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFE" if (even == false)
+  even = !even
+
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  employments = Employment.find(:all, :conditions=>"profile_id = #{student.profile.id}")
+  if employments.size > 0
+  			place = nof{employments[0].place}
+			if place
+				addr1 = nof{place.address1.split(" ").map! {|e| e.capitalize}.join(" ") }
+				addr2 = nof{place.address2.split(" ").map! {|e| e.capitalize}.join(" ") }
+				addr3 = nof{place.address3.split(" ").map! {|e| e.capitalize}.join(" ") }
+				state = nof{place.state.description.split(" ").map! {|e| e.capitalize}.join(" ") }
+
+				addr_arr = Array.new
+				addr_arr.push(place.name.upcase) if place.name != ""
+				addr_arr.push(addr1) if place.address1 != ""
+				addr_arr.push(addr2) if place.address2 != ""
+				addr_arr.push(addr3) if place.address3 != ""
+	                        addr_arr.push(state.upcase) if place.state !=nil
+				company_addr = addr_arr.join("\n")
+				company_addr = company_addr.tr_s(',' , ',')
+			else
+				addr_arr = Array.new
+				addr_arr.push(" ")
+				addr_arr.push(" ")
+				addr_arr.push(" ")
+				addr_arr.push(" ")
+				addr_arr.push(" ")
+				company_addr = addr_arr.join(" \n")
+				company_addr = company_addr.tr_s(',' , ',')
+			end
+		
+  		if employments[0].job_profile
+			jawatan = employments[0].job_profile.job_grade
+		else 
+			jawatan = ""
+		end
+  else
+    jawatan = ""
+    pejabat = ""
+  end
+
+  pejabat= student.profile.opis
+  @p = @course_implementation.course.prerequisites
+  p_codes = @p.map { |c| [c.course_implementation.code]}
+  
+  @c = student.profile.completed_course_applications.map { |a| [a.course_implementation.code]}
+  
+  arr = Array.new
+  for code in p_codes
+  	#arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
+	if @c.include? code
+		arr.push(code)
+	end
+  end
+  related = arr.join(",")
+  
+  show_menu = "show"
+  show_menu = "show_with_no_restraint" if @course_implementation.editable?(session[:user])
+  #onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{query.id}', '#{query.name}', event)"
+
+  student.profile.name = student.profile.name.gsub(/\'/, '`')
+
+%>
+<%=render :partial => 'find_employment', :locals => {:student => student}%>
+    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.<%=show_menu%>('popmenu', '/course_applications', '<%=h student.course_application_id %>', '<%= student.profile.name %>', event)" >
+      
+      <td class="el" height="20">&nbsp;<%= i.to_s %>.</td>
+      <td class="el"><%=h student.profile.name.upcase %></td>
+		<td class="el" align="center"><%=h student.job_grade %>&nbsp;</td>
+      <td class="el" align="left"><%=render :partial => 'find_employment_list'%></td>
+      <td class="el" align="center">&nbsp;<%=related%></td>
+      <td class="el" align="center">&nbsp;<%= student.date_apply.to_formatted_s(:my_format_4) if student.date_apply %>&nbsp;</td>
+      <td class="el" align="center"><%= student.student_status.description %></td>
+    </tr>
+<% end %>
+  </table>
+  </div>
+</form>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+
+<style>
+.el {
+	border-top-width: 1;
+	border-right-width: 1;
+	border-bottom-width: 1;
+	border-left-width: 1;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #666666;
+	border-right-color: #666666;
+	border-bottom-color: #666666;
+	border-left-color: #666666;
+}
+.seven {
+	border-top-width: 1;
+	border-right-width: 1;
+	border-bottom-width: 1;
+	border-left-width: 1;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-top-color: #666666;
+	border-right-color: #666666;
+	border-bottom-color: #666666;
+	border-left-color: #666666;
+}
+</style>

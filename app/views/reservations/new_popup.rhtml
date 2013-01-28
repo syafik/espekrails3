@@ -1,0 +1,26 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">TEMPAHAN ASRAMA</font></th>
+    </tr>
+  </table>
+<BR>
+<% if !@check %>
+<%#= start_form_tag :action => 'create', :id=>@course_implementation.id %>
+<form method="post" action="/reservations/create/<%=@course_implementation.id%>" onsubmit="return GoSubmit(this)">
+
+  <%= render :partial => 'form' %>
+  <div align="center">
+  <input name="ispopup" type="hidden" value="1">
+  <%= submit_tag "Simpan" %>
+  </div>
+<%= end_form_tag %>
+<% else %>
+<%= start_form_tag :action => 'update', :id => @check %>
+  <%= render :partial => 'form_edit' %>
+  <div align="center">
+  <input name="ispopup" type="hidden" value="1">
+  <%= submit_tag 'Kemaskini' %>
+  </div>
+<%= end_form_tag %>
+<% end %>

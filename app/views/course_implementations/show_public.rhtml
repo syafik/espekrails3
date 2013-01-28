@@ -1,0 +1,19 @@
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT KURSUS</font></b></td>
+    </tr>
+  </table>
+  <br>
+
+  <%= render :partial => 'show_public' %>
+<br>
+<script>
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+
+function PrintCourseImpToPdf(crs_imp_id) {
+	//MM_openBrWindow('/course_implementations/show_pdf/'+ crs_imp_id ,'','scrollbars=yes,width=1000,height=800,url=yes')
+	MM_openBrWindow('/course_implementations/show_to_print/'+ crs_imp_id ,'','scrollbars=yes,width=1000,height=800,url=yes')
+}
+</script>

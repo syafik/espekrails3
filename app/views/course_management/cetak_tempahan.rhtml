@@ -1,0 +1,145 @@
+<%
+if @course_implementation
+	@schedule = @course_implementation
+	@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " + 
+    	      "HINGGA " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " + 
+		 	  "#{@schedule.date_plan_end.to_formatted_s(:my_format_e_month).upcase} " +
+		 	  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+end
+%>
+
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">BORANG PERMOHONAN SIJIL </font></strong></td>
+    </tr>
+ </table>
+  <br>
+
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<%if @course_implementation%>
+<br />
+ <form name="list_form" method="get" action="/course_management/update_polisi_sijil/<%=@course_implementation.id%>" onsubmit="return GoSubmit(this.list_form)">
+    <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+    <!--tr>
+      <td align="RIGHT"><strong>Kod:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.code%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tempat:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+    </tr-->
+    
+    <tr>
+      <td align="RIGHT">&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>TAJUK KURSUS :</strong></td>
+      <td><font><%=@course_implementation.course.name.upcase%></font></td>     
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>ANJURAN :</strong></td>
+      <td><font><%=@course_implementation.tempahan_sijil.anjuran.upcase%></font></td>     
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>TARIKH KURSUS  :</strong></td>
+      <td><font><%=@course_implementation.tempoh%></font></td>
+    </tr>
+    
+    <tr>
+      <td align="RIGHT"><strong>KOD KURSUS  :</strong></td>
+      <td><font><%=@course_implementation.code%></font></td>
+    </tr>
+    
+    <tr>
+      <td align="RIGHT"><strong>BAHAGIAN :</strong></td>
+      <td><font><%#=CourseDepartment.find(@course_implementation.tempahan_sijil.bahagian).description.upcase%></font></td>
+    </tr>
+    
+    <tr>
+      <td align="CENTER" colspan="2">&nbsp;</td>
+      </tr>
+  </table>
+</form>
+ <div width="95%" style="background: #FFFFFF">
+   <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+<table class="seven" width="95%" <%=list_border%> align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+      <tr bgcolor="#999999">
+        <td class="el" width="2%" valign="top">&nbsp;</td>
+        <td class="el" width="20%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama</a></strong></td>
+        <td class="el" align="center"><font color="#FFFFFF"><strong>No Kad <br />
+        Pengenalan </strong></font></td>
+        <td class="el" align="center"><font color="#FFFFFF"><strong>Jabatan</strong></font></td>
+        <td class="el" align="center"><font color="#FFFFFF"><strong>No Sijil<br />
+          (Utk Kegunaan <br />
+        Bhg R&amp;D)
+</strong></font></td>
+      </tr>
+      <%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFE" if (even == false)
+  even = !even
+  
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  jawatan = nof{student.profile.employments[0].job_profile.job_grade}
+  pejabat = nof{student.profile.employments[0].place.name}
+  
+  arr = Array.new
+  for ca in student.profile.course_applications
+  	arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
+  end
+  related = arr.join(",")
+
+%>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+        <td class="el" height="20">&nbsp;<%= i.to_s %>.</td>
+        <td nowrap class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)"><%=h student.profile.name.upcase %></td>
+        <td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%=student.profile.ic_number%></td>
+        <td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%=student.profile.opis%></td>
+        <td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center">&nbsp;<%=student.id%></td>
+      </tr>
+      <% end %>
+   </table>
+ </div>
+ <br>
+  <%end%>
+  <script src="/javascripts/form_validator.js" type="text/javascript"></script>
+
+<script>
+
+function GoSubmit(df) {
+
+	//if (!checkSelection(strRegExp,$('sesi_harian_tarikh'),'Tarikh')) return false;
+	//cert_policy_kehadiran_minima
+
+	return true;
+}
+
+function ct(id) {
+	document.forms[0].action = "/course_management/cetak_tempahan/<%=@course_implementation.id%>"
+	document.forms[0].submit()
+}
+
+function ht(id) {
+	document.forms[0].action = "/course_management/hantar_tempahan/<%=@course_implementation.id%>"
+	document.forms[0].submit()
+}
+
+document.getElementById('button_cetak_head').style.visibility = "hidden"
+window.print();
+</script>

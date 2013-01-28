@@ -1,0 +1,128 @@
+  <br>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"> <a href="/facility_reservations/list_people"><u>Kembali</u></a> ke Senarai Tempahan Sumber Kemudahan  </td>
+    </tr>
+  </table>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td width="30%" align="right"><strong>Nama : </strong></td>
+      <td><span class="blockintro"> &nbsp;
+      <%=h @profile.name %>      </span>
+      </td>
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>No KP : </strong></td>
+      <td><span class="blockintro"> &nbsp;
+      <%=h @profile.ic_number %>      </span>
+      </td>
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>Bahagian : </strong></td>
+      <td><span class="blockintro"> &nbsp;
+      <%=h @place.name %>      </span>
+      </td>
+    </tr>
+    
+    <% for tdate in @facilitydate %>
+    <tr>
+      <td align="right"><strong>Tarikh Tempahan : </strong></td>
+      <td><span class="blockintro"> &nbsp;
+      <%=h tdate.date_from.to_formatted_s(:my_format_4) %> - <%=h tdate.date_to.to_formatted_s(:my_format_4) %> </span>
+      </td>
+    </tr>
+    
+    <tr>
+      <td align="right"><strong>Tujuan : </strong></td>
+      <td><span class="blockintro"> &nbsp;
+      <%=h tdate.description %>      </span>
+      </td>
+    </tr>
+    
+    <% end %>
+    
+    <tr>
+      <td align="right"><strong>&nbsp;</strong></td>
+      <td><span class="blockintro"><b>Maklumat Tempahan</b></span>
+      </td>
+    </tr>
+    
+    <tr>
+    <td>
+    </td><td>
+    <table width="65%" border="1" align="left" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr>
+      <td align="right"><strong>&nbsp;</strong></td>
+      <td ><span class="blockintro"><b>Nama</b></span>
+      <td width=20% align=center><span class="blockintro"><b>Kuantiti</b></span>
+      <% if @edit == '2' %>
+      <td align=center><span class="blockintro"><b>Batal</b></span>
+      <% end %>
+      </td>
+    </tr>
+    <% 
+    i = 0;
+	even = true;
+    for fc in @facility_reservation 
+      i = i + 1
+	  bgclr = "#CCCCFF" if (even == true)
+	  bgclr = "#FFFFFF" if (even == false)
+	  even = !even
+	  
+	  dcat = FacilityCategory.find_by_id(fc.facility_category_id)
+	  j = FacilityReservation.find_by_sql("SELECT * FROM facility_reservations INNER JOIN facilities ON facilities.id = facility_id WHERE facility_category_id = '"+fc.facility_category_id+"' AND date_from = '"+fc.date_from.to_formatted_s(:my_format_7)+"' AND date_to = '"+fc.date_to.to_formatted_s(:my_format_7)+"'")
+	  jumc = j.size
+	  
+    %>
+    <tr bgcolor="<%=bgclr%>">
+    <td align="right"><strong><%=i%></strong></td>
+      <td><span class="blockintro"><%=dcat.description%></span>
+      <input type=hidden name=date_from value="<%=fc.date_from.to_formatted_s(:my_format_7)%>">
+      <input type=hidden name=date_to value="<%=fc.date_to.to_formatted_s(:my_format_7)%>">
+      <td align=center><span class="blockintro"><%=jumc%> </span>
+      <% if @edit == '2' %>
+      <td align=center><span class="blockintro">
+      <INPUT TYPE=checkbox name="pilih[]" value="<%=fc.facility_category_id%>" >
+      </span>
+      <% end %>
+      </td>
+    </tr>
+    <% end %>
+    </td>
+    </tr>
+    </table>
+    
+    <% if @edit != '2' %>
+    <tr>
+      <td align="right"><strong>&nbsp; </strong></td>
+      <td><span class="blockintro"> &nbsp;</b></span>
+      </td>
+    </tr>
+        
+    <tr>
+      <td align="right"><strong>&nbsp; </strong></td>
+      <td><span class="blockintro"> &nbsp;<b>Kegunaan Pejabat</b></span>
+      </td>
+    </tr>
+    <% for byr in @bayaran %>
+    <tr>
+      <td align="right"><strong>Jumlah Perlu Dibayar : </strong></td>
+      <td><span class="blockintro"> RM <%=byr.harga %>    </span>
+      </td>
+    </tr> 
+    <% end %> 
+    <tr>
+      <td align="right"><strong>Bayaran Telah Dibuat : </strong></td>
+      <td><span class="blockintro">
+		<INPUT TYPE=radio name="radio" value="1" >Ya
+		<INPUT TYPE=radio name="radio" value="0" checked>Tidak
+      </span>
+      </td>
+    </tr> 
+    <% end %> 
+  </table>
+  
+  

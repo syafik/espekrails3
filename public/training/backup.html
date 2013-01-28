@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>PostgreSQL Training INSTUN</title>
+	
+	<meta name="DESCRIPTION" content="PostgreSQL Administration training information. For over a decade, OTG's instructors have been developing, deploying, and training others to use IT solutions that promote openness and interoperability. Click now for more about PostgreSQL Administration today.">
+	<meta name="keywords" content="training">	<link rel="stylesheet" type="text/css" href="course_outline_files/styles-otg.css">
+	<link rel="SHORTCUT ICON" href="http://www.otg-nc.com/favicon.ico">
+    <link rel="alternate" title="OTG RSS" href="http://www.otg-nc.com/rss20.php" type="application/rss+xml">
+	<script src="course_outline_files/urchin" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-226179-1";
+urchinTracker("/training-courses/coursedetail.php-40");
+</script>
+<style type="text/css">
+<!--
+.style1 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 18px;
+}
+.style9 {font-size: 12px}
+.style11 {font-size: 12pt}
+-->
+</style>
+</head> 
+
+
+<body><center>
+<table class="maintable" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="42" width="18%"><img src="course_outline_files/training-photo-1.jpg" alt="" border="0" height="42" width="146"></td>
+<td height="42" colspan="2" valign="middle" class="training-header"><span class="style1"> PostgreSQL Training for INSTUN </span></td>
+</tr>
+<tr>
+<td class="leftcolumn"><img src="course_outline_files/training-photo-2.jpg" alt="" border="0" height="111" width="146">
+   <table cellpadding="0" cellspacing="0" height="100%" width="100%">
+   <tbody><tr>
+   <td class="leftinnercolumn">
+   <p><b><a href="index.html">PostgreSQL</a></b><br>
+   </p>
+   <p></p>   </td></tr></tbody></table></td>
+<td class="maintext"><b><h2 class="header">&nbsp;</h2>
+</b><b></b>
+<table width="100%" border="0" cellspacing="2" cellpadding="0" style="width:inherit">
+  <tr>
+    <td><p><strong>Backup and Restore </strong></p>
+      <div>
+        <p> As with everything that contains valuable data, PostgreSQL  databases should be backed up regularly. While the procedure is  essentially simple, it is important to have a basic understanding of  the underlying techniques and assumptions. </p>
+        <p> Fundamentall  approache to backing up   PostgreSQL data: </p>
+        <ul>
+          <li>
+            <p><acronym>SQL</acronym> dump</p>
+          </li>
+          </ul>
+        <p><strong> SQL Dump</strong></p>
+        <p>The idea behind the SQL-dump method is to generate a text file with SQL  commands that, when fed back to the server, will recreate the database  in the same state as it was at the time of the dump. PostgreSQL provides the utility program <a href="http://www.postgresql.org/docs/8.1/static/app-pgdump.html">pg_dump</a> for this purpose. The basic usage of this    command is:</p>
+        <pre><span class="style9">pg_dump <em>dbname</em> &gt; <em>outfile</em></span></pre>
+        <p> As you see, pg_dump writes its results to the    standard output. We will see below how this can be useful. </p>
+        <p> pg_dump is a regular PostgreSQL  client application (albeit a particularly clever one). This means that  you can do this backup procedure from any remote host that has access  to the database. But remember that pg_dump  does not operate with special permissions. In particular, it must have  read access to all tables that you want to back up, so in practice you  almost always have to run it as a database superuser. </p>
+        <p> To specify which database server pg_dump should    contact, use the command line options -h <em>host</em> and -p <em>port</em>. The    default host is the local host or whatever your    PGHOST environment variable specifies. Similarly,    the default port is indicated by the PGPORT  environment variable or, failing that, by the compiled-in default.  (Conveniently, the server will normally have the same compiled-in  default.) </p>
+        <p> As any other PostgreSQL client application,    pg_dump  will by default connect with the database user name that is equal to  the current operating system user name. To override this, either  specify the -U option or set the    environment variable PGUSER. Remember that    pg_dump connections are subject to the normal    client authentication mechanisms.</p>
+        <p> Dumps created by pg_dump are internally consistent,    that is, updates to the database while pg_dump is    running will not be in the dump. pg_dump  does not block other operations on the database while it is working.  (Exceptions are those operations that need to operate with an exclusive  lock, such as VACUUM FULL.) </p>
+        <strong>Restoring the dump</strong>
+        <p> The text files created by pg_dump are intended to     be read in by the psql program. The     general command form to restore a dump is</p>
+        <pre class="style9">psql <em>dbname</em> &lt; <em>infile</em></pre>
+</div>      
+      <p><br>
+        <br>
+      </p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="30%" align="left"><a href="grant.html">&laquo;Previous</a></td>
+    <td width="30%" align="center"><a href="index.html"></a></td>
+    <td width="30%" align="right"><a href="#">Next&raquo;</a></td>
+  </tr>
+</table>
+</td>
+<td class="training-rightcolumn">
+<p align="center"> <img src="course_outline_files/PostgreSQLlogo.gif"> </p>
+<p align="center">
+
+</p>
+</td>
+</tr>
+<tr><td colspan="3" align="center" valign="middle" class="copyright-cell">
+<p class="smalltext" align="center">
+<br>
+<script type="text/javascript"><!--
+google_ad_client = "pub-6396164641827107";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</p>
+
+</td></tr>
+</tbody></table><br>
+
+</center>
+
+
+</body></html>

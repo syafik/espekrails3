@@ -1,0 +1,99 @@
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 230;
+    $('popmenu').innerHTML = "<ul>" + 
+
+                            "<li><a href=\""  + "/profiles" + "/setrole/" + objid + "\">&nbsp;&nbsp;Set Peranan</a>" +
+                                                "<li><a href=\""  + "/profiles" + "/modrole/" + objid + "\">&nbsp;&nbsp;Gantung Akaun</a>" +
+                                                "<li><a href=\""  + "/profiles" + "/edit_password2/" + objid + "\">&nbsp;&nbsp;Tukar Kata Laluan</a>" +
+                                                "<li><a href=\""  + "/profiles" + "/show_profile/" + objid + "\">&nbsp;&nbsp;Lihat Profil</a>" +
+                                                "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/delete_user/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+                                                //"<hr size=1>" +
+                                                //"<li><a href=\"javascript: acceptSelected(document.unprocess_form)\">&nbsp;&nbsp;Diterima</a>" +
+                                                "</ul>"
+
+}
+
+</script>
+    
+ <!----------------------------------------------------------------------------------------->
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999"><font color="#FFFFFF">CARIAN AKAUN PENGGUNA </font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th>
+	<a href="javascript: history.back()">Kembali</a>
+    akaun</th>
+    </tr>
+  </table>
+  <BR>
+
+<form action="/profiles/search_akaun">
+  <table align="CENTER" width="50%" border="0" cellspacing="2" cellpadding="0">
+    <tr>
+      <td width="100"><strong>Login Id:</strong></td>
+      <td><input name="login" type="text" id="login"> <input type="submit" name="Submit" value="Cari"></td>
+    </tr>
+    <tr>
+      <td><strong>Nama: </strong></td>
+      <td><input name="name" type="text" id="name">
+      <input type="submit" name="Submit2" value="Cari"></td>
+    </tr>
+    <tr>
+      <td><strong>No KP: </strong></td>
+      <td><input name="ic_number" type="text" id="ic_number">
+      <input type="submit" name="Submit3" value="Cari"></td>
+    </tr>
+  </table>
+
+
+  <br />
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999">
+      <td width="2%" valign="top"><font color="#FFFFFF">&nbsp;</font></td>
+      <td width="25%" align="center"><font color="#FFFFFF"><strong>Nama </strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>No KP </strong></font></td>
+      <td width="20%" align="center"><font color="#FFFFFF"><strong>Jabatan </strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>Telefon</strong></font></td>
+      <td width="5%" align="center"><strong><font color="#FFFFFF">Emel</font></strong></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>Login ID</strong></font></td>
+      <td width="10%" align="center"><font color="#FFFFFF"><strong>Tarikh Mohon</strong></font></td>
+      <!--td align="center"><font color="#FFFFFF">Action</font></td-->
+    </tr>
+    <% 
+i = 0;
+even = true;
+for user in @result_users
+ 	i = i + 1
+  	bgclr = "#CCCCFF" if (even == true)
+  	bgclr = "#FFFFFF" if (even == false)
+  	even = !even
+%>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.show('popmenu', '/profiles', '<%=h user.id %>', '<%= nof{user.name.upcase} %>', event)" >
+      <td><%= i.to_s %>.</td>
+      <td align=left> <%=h nof{user.name.upcase} %></td>
+      <td align=left>&nbsp;<%=h nof{user.ic_number} %></td>
+      <td align=left>
+<%=render :partial => 'profile_department',:locals => {:user => user}%>
+	  </td>
+      <td align=left>&nbsp;<%=h nof{user.phone} %></td>
+      <td align=left><%=h nof{user.email} %></td>
+      <td align=left>&nbsp;<%=h nof{user.login} %></td>
+      <td align=left>&nbsp;<%=h nof{user.created_at.to_formatted_s(:my_format_4)} %></td>
+    </tr>
+    <% end %>
+  </table>
+</form>
+

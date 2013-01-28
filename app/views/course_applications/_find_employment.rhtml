@@ -1,0 +1,18 @@
+<% 
+@employment = Employment.find_by_profile_id(student.profile_id)
+if nof{@employment.place}
+				if @employment.place.place_type_id == 3
+					@grandparent = @employment.place
+					@parent = nil 
+					@child = nil
+				elsif @employment.place.place_type_id == 1
+					@grandparent = @employment.place.parent
+					@parent = @employment.place
+					@child = nil
+				else
+					@grandparent = @employment.place.parent.parent
+					@parent = @employment.place.parent
+					@child = @employment.place
+				end
+  end
+  %>

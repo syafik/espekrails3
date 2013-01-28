@@ -1,0 +1,203 @@
+<script type="text/javascript">
+function goSubmit() {
+        if ( $('report1_').value == "" && $('report2_').value == "") {
+                alert("Sila masukkan tarikh");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report1_').value == "") {
+                alert("Sila masukkan tarikh mula");
+                $('report1_').focus()
+                return false;
+        }
+        if ( $('report2_').value == "") {
+                alert("Sila masukkan tarikh akhir");
+                $('report2_').focus()
+                return false;
+        }
+
+        document.forms[0].submit();
+}
+</script>
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">ANALISA PENILAIAN ISI KANDUNGAN KURSUS </font></strong></td>
+    </tr>
+ </table>
+  <style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form">
+  <br />
+
+  <div width="95%" style="background: #FFFFFF">
+  <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+  <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">Tarikh Kursus: <%= calendar_field 'report1', '',
+     { :class => 'date',
+        :value => @report_date_from,
+        :field_title => 'report1',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %> &nbsp;&nbsp;Hingga: <%= calendar_field 'report2', '',
+     { :class => 'date',
+        :value => @report_date_to,
+        :field_title => 'report2',
+       :button_title => 'Kalendar' },
+     { :firstDay => 1,
+       :range => [2005, 2015],
+      :step => 1,
+      :showOthers => true,
+      :cache => true }
+      %>
+          <input name="button" type="button" value="Papar" onclick="goSubmit()">
+      </td>
+    </tr>
+  </table>
+  <br />
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" align="center"><strong><font color="#FFFFFF">Perkara</font></strong></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Bilangan<br />
+        Penilai      </strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Purata Skor
+      </strong></font></td>
+    </tr>
+
+<%
+#sums
+sum_bil = 0
+sum_had = 0
+sum_purata = 0
+
+bgclr = 'white'
+%>
+
+
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">Kesinambungan Topik-topik</td>
+
+      <%
+
+#bilangan penilai
+sql = "SELECT distinct(stu.id) from evaluation_answers ea 
+       INNER JOIN evaluation_questions eq ON eq.id=ea.evaluation_question_id
+	   INNER JOIN vw_ci_ca stu ON stu.id=ea.course_application_id
+	   WHERE evaluation_section_id=3 AND 
+	   questiontext ilike 'Kesinambungan Topik-topik' AND
+	   student_status_id IN(5,8) AND date_start>='#{@p}' AND date_end<='#{@q}'
+"
+@bil_penilai = CourseImplementation.find_by_sql(sql).size
+
+#bilangan dijawab
+sql = "SELECT stu.id from evaluation_answers ea 
+       INNER JOIN evaluation_questions eq ON eq.id=ea.evaluation_question_id
+	   INNER JOIN vw_ci_ca stu ON stu.id=ea.course_application_id
+	   WHERE evaluation_section_id=3 AND 
+	   questiontext ilike 'Kesinambungan Topik-topik' AND
+	   student_status_id IN(5,8) AND date_start>='#{@p}' AND date_end<='#{@q}'
+"
+@bil_jawab = CourseImplementation.find_by_sql(sql).size
+
+#Interaksi
+sql = "SELECT sum(answer) from evaluation_answers ea 
+       INNER JOIN evaluation_questions eq ON eq.id=ea.evaluation_question_id
+	   INNER JOIN vw_ci_ca stu ON stu.id=ea.course_application_id
+	   WHERE evaluation_section_id=3 AND 
+	   questiontext ilike '%Kesinambungan Topik-topik%' AND
+	   student_status_id IN(5,8) AND date_start>='#{@p}' AND date_end<='#{@q}'
+"
+@skor_interaksi = CourseApplication.find_by_sql(sql)
+
+if @skor_interaksi.first.sum != nil
+	@purata_skor_interaksi = f2(@skor_interaksi.first.sum.to_f/@bil_jawab)
+else
+	@purata_skor_interaksi = 0
+end
+
+##########Terima Maklumbalas
+sql = "SELECT sum(answer) from evaluation_answers ea 
+       INNER JOIN evaluation_questions eq ON eq.id=ea.evaluation_question_id
+	   INNER JOIN vw_ci_ca stu ON stu.id=ea.course_application_id
+	   WHERE evaluation_section_id=3 AND 
+	   questiontext ilike '%Penekanan kepada teori%' AND
+	   student_status_id IN(5,8) AND date_start>='#{@p}' AND date_end<='#{@q}'
+"
+@skor_terima = CourseApplication.find_by_sql(sql)
+
+if @skor_terima.first.sum != nil
+	@purata_skor_terima = f2(@skor_terima.first.sum.to_f/@bil_jawab)
+else
+	@purata_skor_terima = 0
+end
+
+##########Bertindak atas maklumbalas
+sql = "SELECT sum(answer) from evaluation_answers ea 
+       INNER JOIN evaluation_questions eq ON eq.id=ea.evaluation_question_id
+	   INNER JOIN vw_ci_ca stu ON stu.id=ea.course_application_id
+	   WHERE evaluation_section_id=3 AND 
+	   questiontext ilike '%Penekanan kepada praktis%' AND
+	   student_status_id IN(5,8) AND date_start>='#{@p}' AND date_end<='#{@q}'
+"
+@skor_tindak = CourseApplication.find_by_sql(sql)
+
+if @skor_tindak.first.sum != nil
+	@purata_skor_tindak = f2(@skor_tindak.first.sum.to_f/@bil_jawab)
+else
+	@purata_skor_tindak = 0
+end
+
+%>
+
+      <td class="el" align="center">&nbsp;<%=@bil_penilai%>&nbsp;</td>
+      <td class="el" align="center"><%=@purata_skor_interaksi%></td>
+    </tr>
+
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">Penekanan kepada teori</td>
+      <td class="el" align="center"><%=@bil_penilai%></td>
+      <td class="el" align="center"><%=@purata_skor_terima%></td>
+    </tr>
+
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">Penekanan kepada praktis</td>
+      <td class="el" align="center"><%=@bil_penilai%></td>
+      <td class="el" align="center"><%=@purata_skor_tindak%></td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20" align="RIGHT"><strong>Purata:</strong></td>
+      <td class="el" align="center"><%=f2(@bil_penilai*3/3)%></td>
+      <td class="el" align="center"><%=f2((@purata_skor_interaksi+@purata_skor_terima+@purata_skor_tindak)/3)%></td>
+    </tr>
+  </table>
+  </div>
+  <div align="center"><br />
+  </div>
+</form>
+
+<!-- popup menu initial layer----->
+<div id="popmenu" class="menu"></div>
+
+
+<script>
+
+function a(id) {
+	MM_openBrWindow('/evaluations/user_hyouka?klm=1&ca_id='+id,'','scrollbars=yes,width=800,height=700')
+}
+function b(id) {
+	MM_openBrWindow('/evaluations/user_hyouka_answer?klm=1&ca_id='+id,'','scrollbars=yes,width=800,height=700')
+}
+
+</script>

@@ -1,0 +1,82 @@
+<!--incremental search setting-->
+<link rel="stylesheet" type="text/css" href="/stylesheets/incremental-search.css" />
+<script src="/javascripts/event.js" type="text/javascript"></script>
+<script src="/javascripts/incremental-search-course.js" type="text/javascript"></script>
+<!--incremental search setting end-->
+
+<script src="/javascripts/prototype.js" type="text/javascript"></script>
+<script src="/javascripts/popupmenu/isohunt.js" type="text/javascript"></script>
+
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">ADD TRAINER'S COURSE </font></b></td>
+    </tr>
+  </table>
+  <br>
+
+<%= start_form_tag :action => 'create_teaching_course', :id=>@trainer %>
+  <%= render :partial => 'teaching_course_form' %>
+  <div align="center"><%= submit_tag "Save" %></center>
+<%= end_form_tag %>
+<div id="label" style="clear: both; visibility: hidden">Bonner</div>
+
+<script type="text/javascript">
+//<![CDATA[
+
+var list = [
+
+<% @courses.each do |course| %>
+<%= "{name: \"#{course.name}\", id: \"#{course.id}\"}," %>
+<% end %>
+{name: "  ", id: "00000"}
+];
+
+//
+function getNames(o, search){
+	if(search = search.toLowerCase())
+		for(var i = -1, l = list.length; ++i < l;){
+			//
+			for(var j = 0, indices = []; j = list[i].name.toLowerCase().indexOf(search, j) + 1;
+				indices[indices.length] = j - 1);
+			//
+			if(indices.length)
+				o.add(list[i].name, indices);
+		}
+	o.show();
+}
+
+new IncrementalSearchCourse(document.forms[0].course_names_1, getNames, "autocomplete");
+
+//]]>
+
+////course
+function getCourseById(course_id) {
+	for(var i = 0; i < list.length; i++) {
+	  if (list[i].id == course_id) {
+		return list[i].name
+	  }
+	}	
+}
+
+function updateCourseName() {
+	if ($("course_id_1").value != "")
+	{
+		$("course_names_1").value = getCourseById($("course_id_1").value)
+	}
+}
+
+function updateCourseId(course_name) {
+	for(var i = 0; i < list.length; i++) {
+	  if (list[i].name == course_name) {
+		//alert(list[i].name);
+		$("course_id_1").value = list[i].id
+	  }
+	}
+
+}
+
+//updateCourseName();
+
+</script>
+
+

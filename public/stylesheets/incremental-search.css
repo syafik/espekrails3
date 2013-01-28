@@ -1,0 +1,13 @@
+/*container da lista*/
+.autocomplete{
+	cursor: pointer;
+	border: 1px solid #999;
+	border-top: none;
+	background: #eee;
+}
+/*items da listagem*/
+.autocomplete .normal{border-top: 1px solid #999;}
+/*item selecionado*/
+.autocomplete .selected{background: #ddf;}
+/*caracteres que combinaram*/
+.autocomplete .highlited{font-weight: bold; color: #008;}
