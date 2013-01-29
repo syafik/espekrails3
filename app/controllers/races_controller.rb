@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class RacesController < ApplicationController
-  layout "standard-layout"
+#  layout "standard-layout"
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @race_pages, @races = paginate :races, :per_page => 10
+    @races = Race.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

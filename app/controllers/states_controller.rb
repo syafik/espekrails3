@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class StatesController < ApplicationController
-  layout "standard-layout"
+#  layout "standard-layout"
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @state_pages, @states = paginate :states, :per_page => 20, :order_by => 'code'
+    @states = State.paginate(:page => params[:page], :per_page => 20).order('code ASC')
   end
 
   def show

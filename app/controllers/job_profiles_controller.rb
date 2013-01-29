@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class JobProfilesController < ApplicationController
-  layout "standard-layout"
+#  layout "standard-layout"
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @job_profile_pages, @job_profiles = paginate :job_profiles, :per_page => 50, :order_by => "job_grade ASC, job_name ASC"
+    @job_profiles = JobProfile.paginate(:per_page => 50, :page => params[:page]).order("job_grade ASC, job_name ASC")
   end
 
   def show

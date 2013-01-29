@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class CourseImplementationsController < ApplicationController
-  require "pdf/writer"
+#  require "pdf/writer"
   layout "standard-layout"
 
   def initialize
@@ -11,7 +11,7 @@ class CourseImplementationsController < ApplicationController
     @course_locations = CourseLocation.find(:all, :order=>"description")    
     @course_statuses = CourseStatus.find(:all, :order=>"id")        
     #@profiles = Profile.find_all    
-    @methodologies = Methodology.find_all
+    @methodologies = Methodology.all
     @course_departments = CourseDepartment.find(:all, :order=>"id")
     @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")    
     #@list_dates = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses")    

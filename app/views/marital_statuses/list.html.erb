@@ -88,43 +88,35 @@ function confirmAndGo(url, objname) {
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <th width="85%" height="20" bgcolor="#999999">
-      <font color="#FFFFFF">SENARAI NEGERI</font></th>
+      <font color="#FFFFFF">SENARAI STATUS PERKAHWINAN</font></th>
     </tr>
     <tr>
     <td>&nbsp;</td>
     </tr>
     <tr>
-    <th><%= link_to 'Tambah', :action => 'new' %> negeri</th>
+    <th><%= link_to 'Tambah', :action => 'new' %> status perkahwinan</th>
     </tr>
   </table>
   <BR>
   <table width="50%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
   <tr bgcolor="#999999">
   <td width="5%"><b><font color="#FFFFFF">Bil</font></b></td>
-  <td width="10%"><b><font color="#FFFFFF">&nbsp;Kod Negeri</font></b></td>
+  <td width="10%"><b><font color="#FFFFFF">&nbsp;Kod Status</font></b></td>
   <td width="25%" align=left><b><font color="#FFFFFF">&nbsp;Keterangan</font></b></td>
    </tr>
-  
-<% 
-i = 0;
-even = true;
-for state in @states 
- 	i = i + 1
-  	bgclr = "#CCCCFF" if (even == true)
-  	bgclr = "#FFFFFF" if (even == false)
-  	even = !even
-%>
-  <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-        onmousedown="menuLayers.show('popmenu', '/states', '<%=h state.id %>', '<%= state.code %>', event)" >
-    <td><%= i.to_s %></td>
-	<td><%=h state.code %></td>
-	<td align=left>&nbsp;<%=h state.description %></td>	
+ 
+   <% @marital_statuses.each_with_index do |ms, i| %>
+<tr bgcolor="<%=cycle("#CCCCFF","#FFFFFF")%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=cycle("#CCCCFF","#FFFFFF")%>'"
+        onmousedown="menuLayers.show('popmenu', '/marital_statuses', '<%=h ms.id %>', '<%= ms.code %>', event)" >
+    <td><%= i+1 %></td>
+	<td><%=h ms.code %></td>
+	<td align=left>&nbsp;<%=h ms.description %></td>	
    </tr>
  <% end %>
 </table>
 <BR><BR>
-<div align=center>  
-<%= link_to 'Laman sebelum <<', { :page => @state_pages.current.previous } if @state_pages.current.previous %>
-<%= link_to 'Laman selepas >>', { :page => @state_pages.current.next } if @state_pages.current.next %> 
+<div align=center>
+  <%= will_paginate @marital_statuses %>
+<%#= link_to 'Previous page', { :page => @marital_status_pages.current.previous } if @marital_status_pages.current.previous %>
+<%#= link_to 'Next page', { :page => @marital_status_pages.current.next } if @marital_status_pages.current.next %>
 </div>
-<br />

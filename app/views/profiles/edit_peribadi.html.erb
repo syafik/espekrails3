@@ -8,10 +8,10 @@
     </tr>
    </table>
 
-<%= start_form_tag ({:action => 'update_peribadi'}, :enctype => 'multipart/form-data') %>
+<%= form_tag update_peribadi_profiles_path, :multipart=> true do %>
   <%= render :partial => 'form_peribadi' %>
   <BR>
   <div align=center>
   <%= submit_tag 'Simpan' %>
   </div>
-<%= end_form_tag %>
+<% end %>

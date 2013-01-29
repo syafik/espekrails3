@@ -20,6 +20,9 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 gem 'acts_as_tree_rails3'
+gem 'calendar_helper'
+gem 'will_paginate', '~> 3.0'
+
 #gem 'magic_encoding'
 #gem 'pdf-writer'
 #gem 'jquery-rails'

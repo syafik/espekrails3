@@ -13,6 +13,133 @@ InstunRails3::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+  resources :job_profiles
+  resources :religions
+  resources :states
+  resources :genders
+  resources :races
+  resources :marital_statuses
+  resources :countries
+  resources :relationships
+  resources :cert_levels
+  resources :titles
+  resources :handicaps
+  resources :permission
+  resources :role
+  
+  resources :question_templates
+  resources :question_types
+  resources :question_sections
+  resources :scale_types
+  resources :scales
+
+  resources :hostel_statuses
+  resources :hostel_types
+  resources :hostel_policies
+  resources :hostel_fixtures
+
+  resources :facility_statuses
+  resources :facility_types
+  resources :facility_categories
+  
+  resources :course_departments
+  resources :course_statuses
+  resources :course_fields
+  resources :course_locations
+  resources :methodologies
+
+  resources :facilities
+  resources :facility_reservations do
+    collection do
+      get 'list'
+    end
+  end
+
+  resources :places do
+    collection do
+      get 'search'
+      get 'list_kementerian'
+    end
+  end
+
+  resources :trainer do
+    collection do
+      get 'list'
+      get 'search'
+    end
+  end
+  
+  resources :report do
+    collection do
+      get 'list'
+      get 'kursus_online'
+      get 'kursus_semasa'
+      get 'ringkasan_ujian'
+    end
+  end
+
+  resources :laporan do
+    collection do
+      get 'list_laporan'
+    end
+  end
+  
+  resources :reservations do
+    collection do
+      get 'list'
+      get 'listp'
+
+    end
+  end
+
+  resources :notifications do
+    collection do
+      get 'list'
+      get 'report'
+      get 'senaraibilik'
+      get 'jadual_bilik_kuliah'
+      get 'listp'
+      get 'urushubung'
+    end
+  end
+
+  resources :hostels do
+    collection do
+      get 'list'
+      get 'new_penghuni'
+      get 'chkin_by_course'
+      get 'find_checkout'
+      get 'list_tutup'
+      get 'find_guest'
+      get 'rekod_guna_bilik'
+    end
+  end
+  resources :quizzes do
+    collection do
+      get 'list'
+    end
+  end
+  resources :course_management do
+    collection do
+      get 'select_course'
+      get 'sijil_select_course'
+      get 'evaluated_courses'
+    end
+  end
+  resources :course_applications do
+    collection do
+      get 'search'
+      get 'edit_surat_tunda_select_peserta'
+    end
+  end
+  resources :course_implementations do
+    collection do
+      get 'search'
+      get 'search_for_user'
+      get 'calendar'
+      get 'edit_surat_iklan_select_kursus'
+    end
+  end
   resources :user do
     collection do
       get 'home'
@@ -26,6 +153,13 @@ InstunRails3::Application.routes.draw do
   resources :profiles do
     collection do
       get 'view'
+      get 'view_waris'
+      get 'view_khidmat'
+      get 'view_akademik'
+      get 'view_kursus'
+      get 'edit_password'
+      get 'edit_peribadi'
+      put 'update_peribadi'
     end
   end
   resources :hr do
@@ -43,6 +177,14 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'admin'
       get 'sumber_manusia'
+      get 'user'
+      get 'penyelaras'
+      get 'pendaftar'
+      get 'domestik'
+      get 'keselamatan'
+      get 'pegawai_sijil'
+      get 'rnd'
+      get 'laporan'
     end
   end
   resources :main do

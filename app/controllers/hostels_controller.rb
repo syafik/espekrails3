@@ -4,12 +4,12 @@ class HostelsController < ApplicationController
   def initialize
     @religions = Religion.find(:all, :order=>"id")
     @races = Race.find(:all, :order=>"id")
-    @marital_statuses = MaritalStatus.find_all
+    @marital_statuses = MaritalStatus.all
     @handicaps = Handicap.find(:all, :order=>"id")
     @states = State.find(:all, :order=>"description")
-    @relationships = Relationship.find_all
+    @relationships = Relationship.all
     @titles = Title.find(:all, :order=>"description")
-    @course_departments = CourseDepartment.find_all
+    @course_departments = CourseDepartment.all
     @hostel_types = HostelType.find(:all, :order=>"id")
     @hostel_statuses = HostelStatus.find(:all, :order=>"id")
     @hostel_blocks = HostelBlock.find(:all, :order=>"id")

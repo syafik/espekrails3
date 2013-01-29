@@ -1,7 +1,7 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <th width="85%" height="20" bgcolor="#999999">
-      <font color="#FFFFFF">TAMBAH AGAMA</font></th>
+      <font color="#FFFFFF">TAMBAH NEGERI</font></th>
     </tr>
     <tr>
     <td>&nbsp;</td>
@@ -13,11 +13,12 @@
     </tr>
   </table>
   <BR>
-
-<%= start_form_tag :action => 'create' %>
-  <%= render :partial => 'form' %>
+<%= form_for(@state) do |f| %>
+<%#= start_form_tag :action => 'create' %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
   <BR>
   <div align=center>
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+<%  end %>
+

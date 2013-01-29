@@ -19,7 +19,7 @@
     <br>
     <div align="center"><b>Sila Pilih Peranan:</b></div>
     <% for role in session[:user].roles %>
-    <li><a href="<%= role.name.downcase%>"><%= role.name.downcase%></a>
+    <li><a href="/menu/<%= role.name.downcase.gsub(" ", "_") %>"><%= role.name.downcase%></a>
     <% end %>
     <br>
   </body></html>

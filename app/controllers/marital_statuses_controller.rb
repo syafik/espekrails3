@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class MaritalStatusesController < ApplicationController
-  layout "standard-layout"
+#  layout "standard-layout"
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @marital_status_pages, @marital_statuses = paginate :marital_statuses, :per_page => 10
+    @marital_statuses = MaritalStatus.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

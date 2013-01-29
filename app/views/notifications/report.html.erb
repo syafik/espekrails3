@@ -15,6 +15,7 @@
   <td width="25%" align="CENTER"><b><font color="#FFFFFF">Nama Bilik</font></b></td>
   <td width="10%" align="CENTER"><b><font color="#FFFFFF">Kod</font></b></td>
   <td width="10%" align="CENTER"><b><font color="#FFFFFF">Lokasi</font></b></td>
+  <td width="15%" align="CENTER"><b><font color="#FFFFFF">Kekerapan(Hari)</font></b></td>
    </tr>
 <%
 i = 0;
@@ -26,25 +27,15 @@ for facility in @facilities
         bgclr = "#CCCCFF" if (even == true)
         bgclr = "#FFFFFF" if (even == false)
         even = !even
-	fr = FacilityReservation.count(:facility_id => "=#{facility.id}") 
+	fr = FacilityReservation.where(:facility_id => "=#{facility.id}").count
 %>
 <tr bgcolor="<%=bgclr%>" class="list">
         <td align=left valign=top><%= i.to_s %></td>
-        <td align=left valign=top><%=link_to nof{facility.name}, :controller => 'notifications',:action => 'jadual_bilik_kuliah', :id => facility.id %></td>
+        <td align=left valign=top><%=h nof{facility.name} %></td>
         <td align=left valign=top><%=h nof{facility.code.upcase} %></td>
         <td align=left valign=top><%=h nof{facility.facility_type.description} %></td>
+        <td align=center valign=top><%=h fr %></td>
         </tr>
  <% end %>
 </table>  
 <br />
-
-
-
-
-
-
-
-
-
-
-

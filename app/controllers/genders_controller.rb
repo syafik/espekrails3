@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class GendersController < ApplicationController
-  layout "standard-layout"
+#  layout "standard-layout"
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @gender_pages, @genders = paginate :genders, :per_page => 10
+    @genders = Gender.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

@@ -26,7 +26,7 @@ class MenuController < ApplicationController
   def sumber_manusia
   end
 
-  def pegawaisijil
+  def pegawai_sijil
   end
 
   def rnd

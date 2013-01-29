@@ -14,11 +14,11 @@
     </tr>
   </table>
   <BR>
-
-<%= start_form_tag :action => 'update', :id => @state %>
-  <%= render :partial => 'form' %>
+<%= form_for(@state) do |f| %>
+<%#= start_form_tag :action => 'update', :id => @state %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
   <BR>
   <div align=center>
   <%= submit_tag 'Edit' %>
   </div>
-<%= end_form_tag %>
+<% end %>

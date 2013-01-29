@@ -24,9 +24,9 @@ var menuLayers = {
     //objid = controller + "/" + action + "/" + objid
 
     document.getElementById('popmenu').innerHTML = "<ul>" + 
-                                               "<li><a href=\""  + controller + "/new/" + objid + "\">&nbsp;&nbsp;New</a>" +
-					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Edit</a>" + 
-					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
+                                               "<li><a href=\""  + controller + "/new/" + objid + "\">&nbsp;&nbsp;Tambah</a>" +
+					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					       "</ul>"
     this.position(mnu,e);
   },
@@ -88,43 +88,40 @@ function confirmAndGo(url, objname) {
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <th width="85%" height="20" bgcolor="#999999">
-      <font color="#FFFFFF">SENARAI JANTINA</font></th>
+      <font color="#FFFFFF">SENARAI SKIM PERKHIDMATAN</font></th>
     </tr>
     <tr>
     <td>&nbsp;</td>
     </tr>
     <tr>
-    <th><%= link_to 'Tambah', :action => 'new' %> jantina</th>
+    <th><%= link_to 'Tambah', :action => 'new' %> skim perkhidmatan</th>
     </tr>
   </table>
   <BR>
   <table width="50%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
   <tr bgcolor="#999999">
   <td width="5%"><b><font color="#FFFFFF">Bil</font></b></td>
-  <td width="10%"><b><font color="#FFFFFF">&nbsp;Kod Jantina</font></b></td>
-  <td width="25%" align=left><b><font color="#FFFFFF">&nbsp;Keterangan</font></b></td>
+  <td width="10%"><b><font color="#FFFFFF">&nbsp;Gred</font></b></td>
+  <td width="25%" align=left><b><font color="#FFFFFF">&nbsp;Skim Perkhidmatan</font></b></td>
+  <td width="10%"><b><font color="#FFFFFF">&nbsp;Kod Skim</font></b></td>
+  <td width="10%"><b><font color="#FFFFFF">&nbsp;Ranking</font></b></td>
    </tr>
-<% 
-i = 0;
-even = true;
-for gender in @genders
- 	i = i + 1
-  	bgclr = "#CCCCFF" if (even == true)
-  	bgclr = "#FFFFFF" if (even == false)
-  	even = !even
-%>
-  <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-        onmousedown="menuLayers.show('popmenu', '/genders', '<%=h gender.id %>', '<%= gender.code %>', event)" >
-    <td><%= i.to_s %></td>
-	<td><%=h gender.code %></td>
-	<td align=left>&nbsp;<%=h gender.description %></td>	
-   </tr>
- 
+  
+   <% @job_profiles.each_with_index do |jp, i| %>
+   <tr bgcolor="<%= cycle("#CCCCFF", "#FFFFFF")%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=  cycle("#CCCCFF", "#FFFFFF")%>'"
+        onmousedown="menuLayers.show('popmenu', '/job_profiles', '<%=h jp.id %>', '<%= jp.job_grade %>', event)" >
+    <td><%= i+1 %></td>
+	<td><%=h jp.job_grade %></td>
+	<td align=left><%=h jp.job_name %></td>
+	<td><%=h jp.code %></td>
+	<td><%=h jp.ranking %></td> 
+  </tr>
  <% end %>
 </table>
 <BR><BR>
-<div align=center>  
-<%= link_to 'Previous page', { :page => @gender_pages.current.previous } if @gender_pages.current.previous %>
-<%= link_to 'Next page', { :page => @gender_pages.current.next } if @gender_pages.current.next %> 
+<div align=center>
+  <%= will_paginate @job_profiles %>
+<%#= link_to 'Kembali', { :page => @job_profile_pages.current.previous } if @job_profile_pages.current.previous %>
+<%#= ' | ' if @job_profile_pages.current.previous and @job_profile_pages.current.next %>
+<%#= link_to 'Laman Seterusnya', { :page => @job_profile_pages.current.next } if @job_profile_pages.current.next %>
 </div>
-<br />

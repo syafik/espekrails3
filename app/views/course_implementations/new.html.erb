@@ -9,8 +9,8 @@
 <form name=ci_form method=post action="/course_implementations/create" enctype="multipart/form-data" onsubmit="return GoSubmit(ci_form)">
   <%= render :partial => 'form' %>
   <br><%= submit_tag "Simpan" %>
-<%= end_form_tag %>
-
+</form>
+  
 <script>
 <% if session[:user].profile.staff && session[:user].profile.staff.course_department_id%>
 $('course_department_id').value = <%=session[:user].profile.staff.course_department_id%>

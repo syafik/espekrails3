@@ -1,22 +1,22 @@
 # -*- encoding : utf-8 -*-
 class TrainerController < ApplicationController
-  layout "standard-layout"
+#  layout "standard-layout"
   def initialize
 	    @states = State.find(:all, :order=>"description")
-	    @genders = Gender.find_all
+	    @genders = Gender.all
 	    @races = Race.find(:all, :order=>"id")
-	    @profile_statuses = ProfileStatus.find_all
+	    @profile_statuses = ProfileStatus.all
 	    @handicaps = Handicap.find(:all, :order=>"id")
 	    @religions = Religion.find(:all, :order=>"id")
-	    @countries = Country.find_all
-	    @marital_statuses = MaritalStatus.find_all
+	    @countries = Country.all
+	    @marital_statuses = MaritalStatus.all
 	    @places = Place.find(:all, :conditions => "place_type_id = '2'")
-	    @relationships = Relationship.find_all
-	    @cert_levels = CertLevel.find_all
-	    @majors = Major.find_all
-	    @job_profiles = JobProfile.find_all
+	    @relationships = Relationship.all
+	    @cert_levels = CertLevel.all
+	    @majors = Major.all
+	    @job_profiles = JobProfile.all
 	    @titles = Title.find(:all, :order=>"description")
-	    @course_departments = CourseDepartment.find_all
+	    @course_departments = CourseDepartment.all
   end
   
   def index

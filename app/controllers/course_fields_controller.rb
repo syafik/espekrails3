@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class CourseFieldsController < ApplicationController
-  layout "standard-layout"
+  #  layout "standard-layout"
   def initialize
     @course_departments = CourseDepartment.find(:all, :order=>"id")
   end
@@ -11,7 +11,7 @@ class CourseFieldsController < ApplicationController
   end
 
   def list
-    @course_field_pages, @course_fields = paginate :course_fields, :per_page => 100, :order_by => 'course_department_id'
+    @course_field_pages, @course_fields = CourseField.paginate(:per_page => 100, :page => params[:page]).order('course_department_id ASC')
   end
 
   def show
@@ -64,7 +64,7 @@ class CourseFieldsController < ApplicationController
     CourseField.find(params[:id]).destroy
     flash[:notice]='Course Field Successfully Deleted'
     redirect_to :action => 'list'
-    rescue
+  rescue
     logger.error("Attempt to delete entry with reference key")
     flash[:notice] = 'Deletion Prohobited'
     redirect_to :action => 'list'

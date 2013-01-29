@@ -3,20 +3,20 @@ class ProfilesController < ApplicationController
 	layout "standard-layout"
 	def initialize
     @states = State.find(:all, :order=>"description")
-    @genders = Gender.find_all
+    @genders = Gender.all
     @races = Race.find(:all, :order=>"id")
     @handicaps = Handicap.find(:all, :order=>"id")
-    @profile_statuses = ProfileStatus.find_all
+    @profile_statuses = ProfileStatus.all
     @religions = Religion.find(:all, :order=>"id")
-    @countries = Country.find_all
-    @marital_statuses = MaritalStatus.find_all
+    @countries = Country.all
+    @marital_statuses = MaritalStatus.all
     @places = Place.find(:all, :conditions => "place_type_id = '2'")
-    @relationships = Relationship.find_all
-    @cert_levels = CertLevel.find_all
-    @majors = Major.find_all
-    @job_profiles = JobProfile.find_all
+    @relationships = Relationship.all
+    @cert_levels = CertLevel.all
+    @majors = Major.all
+    @job_profiles = JobProfile.all
     @titles = Title.find(:all, :order=>"description")
-    @course_departments = CourseDepartment.find_all
+    @course_departments = CourseDepartment.all
 	end
 
   def index
@@ -89,7 +89,7 @@ class ProfilesController < ApplicationController
 
   def setrole
     @user = User.find(params[:id])
-    @all_roles = Role.find_all.select { |r| r.name != UserEngine.config(:guest_role_name) }
+    @all_roles = Role.all.select { |r| r.name != UserEngine.config(:guest_role_name) }
   end
 
   def update_role_old
@@ -241,8 +241,8 @@ class ProfilesController < ApplicationController
   end
 
   def new_peserta
-    @courses = Course.find_all
-    @course_implementations = CourseImplementation.find_all
+    @courses = Course.all
+    @course_implementations = CourseImplementation.all
     @profile = Profile.new
     @relative = Relative.new
     @employment = Employment.new
