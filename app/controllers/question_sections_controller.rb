@@ -11,7 +11,7 @@ class QuestionSectionsController < ApplicationController
   end
 
   def list
-    @question_section_pages, @question_sections = paginate :question_sections, :per_page => 50, :order_by => "description"
+    @question_sections = QuestionSection.paginate(:per_page => 50, :page => params[:page]).order("description ASC")
   end
 
   def show

@@ -7,7 +7,7 @@ class TitlesController < ApplicationController
   end
 
   def list
-    @title_pages, @titles = paginate :titles, :per_page => 10
+    @titles = Title.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

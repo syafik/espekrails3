@@ -15,12 +15,9 @@
   </table>
   <BR>
 
-
-
-<%= start_form_tag :action => 'update', :id => @marital_status %>
+<%= form_for(@marital_status) do |f| %>
   <%= render :partial => 'form' %>
-  <BR>
   <div align=center>
   <%= submit_tag 'Edit' %>
   </div>
-<%= end_form_tag %>
+<% end %>

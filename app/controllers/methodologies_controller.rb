@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class MethodologiesController < ApplicationController
-#  layout "standard-layout"
+  layout "standard-layout"
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @methodology_pages, @methodologies = Methodology.paginate(:per_page => 20, :page => params[:page])
+    @methodologies = Methodology.paginate(:per_page => 20, :page => params[:page])
   end
 
   def show

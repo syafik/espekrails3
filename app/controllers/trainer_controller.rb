@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class TrainerController < ApplicationController
-#  layout "standard-layout"
+  layout "standard-layout"
   def initialize
 	    @states = State.find(:all, :order=>"description")
 	    @genders = Gender.all

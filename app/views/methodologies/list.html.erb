@@ -102,25 +102,16 @@ function confirmAndGo(url, objname) {
       <td width="20" valign="top"><font color="#FFFFFF">&nbsp;</font></td>
       <td width="" align="center"><font color="#FFFFFF"><strong>Keterangan </strong></font></td>
     </tr>
-<% 
-i = 0;
-even = true;
-for methodology in @methodologies
- 	i = i + 1
-  	bgclr = "#CCCCFF" if (even == true)
-  	bgclr = "#FFFFFF" if (even == false)
-  	even = !even
-%>
-   <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+    <% @methodologies.each_with_index do |methodology, i| %>
+   <tr bgcolor="<%=cycle("#CCCCFF","#FFFFFF")%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=cycle("#CCCCFF","#FFFFFF")%>'"
         onmousedown="menuLayers.show('popmenu', '/methodologies', '<%=h methodology.id %>', '<%= methodology.description %>', event)" >
-    <td><%= i.to_s %></td>
+    <td><%= i + 1 %></td>
 	<td align=left>&nbsp;<%=h methodology.description %></td>
   
   </tr>
  <% end %>
 </table>
 <BR><BR>
-<div align=center>  
-<%= link_to 'Previous page', { :page => @methodology_pages.current.previous } if @methodology_pages.current.previous %>
-<%= link_to 'Next page', { :page => @methodology_pages.current.next } if @methodology_pages.current.next %> 
+<div align=center>
+  <%= will_paginate @methodologies %>
 </div>

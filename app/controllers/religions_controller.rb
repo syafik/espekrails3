@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class ReligionsController < ApplicationController
-#  layout "standard-layout"
+  layout "standard-layout"
   def index
     list
     render :action => 'list'

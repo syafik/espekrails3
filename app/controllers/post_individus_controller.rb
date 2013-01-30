@@ -12,7 +12,7 @@ class PostIndividusController < ApplicationController
 
   def list
     today = Time.new
-    @post_individu_pages, @post_individus = paginate :post_individus, :per_page => 50, :conditions => "user_id = '#{session[:user].id}' AND timeopen < '#{today}' AND timeclose > '#{today}'"
+    @post_individus = PostIndividu.where("user_id = '#{session[:user].id}' AND timeopen < '#{today}' AND timeclose > '#{today}'").paginate(:per_page => 50, :page => params[:page])
   end
 
   def show

@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class CourseDepartmentsController < ApplicationController
-#  layout "standard-layout"
+  layout "standard-layout"
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @course_department_pages, @course_departments = CourseDepartment.paginate(:per_page => 10, :page => params[:page])
+    @course_departments = CourseDepartment.paginate(:per_page => 10, :page => params[:page])
 #    @course_department_pages, @course_departments = paginate :course_departments, :per_page => 10
   end
 

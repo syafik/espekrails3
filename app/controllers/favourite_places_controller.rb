@@ -3,7 +3,7 @@ class FavouritePlacesController < ApplicationController
   layout "standard-layout"
   
   def initialize
-    @states = State.find_all
+    @states = State.all
   end
   
   def index
@@ -13,8 +13,8 @@ class FavouritePlacesController < ApplicationController
   
   def list
     #@place_pages, @places = paginate :places, :per_page => 1000
-    @places = Place.find(:all)
-    @place_pages, @places = paginate :places, :per_page => 1000, :order_by=>"code ASC"
+#    @places = Place.find(:all)
+    @places = Place.paginate(:per_page => 1000, :page => params[:page]).order("code ASC")
   end
   
   def create

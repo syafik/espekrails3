@@ -85,6 +85,7 @@ class CourseManagementController < ApplicationController
     else
       @course_implementations = []
     end
+    render :layout => "standard-layout"
   end
 
   def register
@@ -980,6 +981,7 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
+    
   end
 
   def set_kelayakan_sijil

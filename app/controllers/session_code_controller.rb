@@ -7,7 +7,7 @@ class SessionCodeController < ApplicationController
   end
 
   def list
-    @session_code_pages, @session_code = paginate :session_code, :per_page => 20
+    @session_code = SessionCode.paginate(:per_page => 20, :page => params[:page])
   end
 
   def show

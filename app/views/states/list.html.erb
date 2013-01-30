@@ -25,7 +25,7 @@
 
       document.getElementById('popmenu').innerHTML = "<ul>" +
         "<li><a href=\""  + controller + "/new/" + objid + "\">&nbsp;&nbsp;New</a>" +
-        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Edit</a>" +
+        "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Edit</a>" +
         "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
         "</ul>"
       this.position(mnu,e);

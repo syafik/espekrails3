@@ -7,7 +7,7 @@ class ScaleTypesController < ApplicationController
   end
 
   def list
-    @scale_type_pages, @scale_types = paginate :scale_types, :per_page => 50
+    @scale_types = ScaleType.paginate(:per_page => 50, :page => params[:page])
   end
 
   def show

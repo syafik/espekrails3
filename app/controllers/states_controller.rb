@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class StatesController < ApplicationController
-#  layout "standard-layout"
+  layout "standard-layout"
   def index
     list
     render :action => 'list'

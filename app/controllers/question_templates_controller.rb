@@ -8,7 +8,7 @@ class QuestionTemplatesController < ApplicationController
   end
 
   def list
-    @question_template_pages, @question_templates = paginate :question_template, :per_page => 100
+    @question_templates = QuestionTemplate.paginate(:per_page => 100, :page => params[:page])
   end
 
   def course

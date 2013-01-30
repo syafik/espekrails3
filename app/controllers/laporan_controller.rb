@@ -2,7 +2,7 @@
 class LaporanController < ApplicationController
 #  	require "pdf/writer"
 #  	require "pdf/simpletable"
-#	layout "standard-layout"
+	layout "standard-layout"
 
 	def initialize
 	    @states = State.find(:all, :order=>"description")

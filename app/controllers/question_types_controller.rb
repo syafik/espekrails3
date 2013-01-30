@@ -7,7 +7,7 @@ class QuestionTypesController < ApplicationController
   end
 
   def list
-    @question_type_pages, @question_types = paginate :question_types, :per_page => 10, :order_by => 'description'
+    @question_types = QuestionType.paginate(:per_page => 10, :page => params[:page]).order('description ASC')
   end
 
   def show

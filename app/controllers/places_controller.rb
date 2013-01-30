@@ -1,10 +1,10 @@
 # -*- encoding : utf-8 -*-
 class PlacesController < ApplicationController
-  layout "standard-layout"
-  auto_complete_for :place, :name
+ layout "standard-layout"
+  #  auto_complete_for :place, :name
   
   def initialize
-    @states = State.find_all
+    @states = State.all
   end
   
   def index
@@ -13,20 +13,20 @@ class PlacesController < ApplicationController
   end
   
   def list_kementerian
-    @place_pages, @places = paginate :places, :per_page => 100, :conditions => "place_type_id = '3'", :order => "code"
+    @places = Place.where("place_type_id = '3'").paginate(:per_page => 100, :page => params[:page]).order("code ASC")
   end
 
   def list
-    @place_pages, @places = paginate :places, :per_page => 100, :conditions => "place_type_id = '1'", :order => "code"
+    @places = Place.where("place_type_id = '1'").paginate(:per_page => 100, :page => params[:page]).order("code ASC")
   end
 
   def list_pejabat
-    @place_pages, @places = paginate :places, :per_page => 100, :conditions => "place_type_id = '2'", :order => "code"
-#	for place in @places
-#		if place.code =~ /0000/
-#			place.update_attributes(:place_type_id => "1")
-#		end
-#	end
+    @places = Place.where("place_type_id = '2'").paginate(:per_page => 100, :page => params[:page]).order("code ASC")
+    #	for place in @places
+    #		if place.code =~ /0000/
+    #			place.update_attributes(:place_type_id => "1")
+    #		end
+    #	end
 
   end
   
@@ -139,12 +139,12 @@ class PlacesController < ApplicationController
   def update_kementerian
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
-	if @place_contact
-	@place_contact.destroy
-	end
-        @place_contact = PlaceContact.create(params[:place_contact])
-        @place_contact.place = @place
-        @place_contact.save
+    if @place_contact
+      @place_contact.destroy
+    end
+    @place_contact = PlaceContact.create(params[:place_contact])
+    @place_contact.place = @place
+    @place_contact.save
 
     if @place.update_attributes(params[:place])
       flash[:notice] = 'Data kementerian telah dikemaskini.'
@@ -157,12 +157,12 @@ class PlacesController < ApplicationController
   def update
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
-        if @place_contact
-        @place_contact.destroy
-        end
-        @place_contact = PlaceContact.create(params[:place_contact])
-        @place_contact.place = @place
-        @place_contact.save
+    if @place_contact
+      @place_contact.destroy
+    end
+    @place_contact = PlaceContact.create(params[:place_contact])
+    @place_contact.place = @place
+    @place_contact.save
 
     if @place.update_attributes(params[:place])
       flash[:notice] = 'Data jabatan telah dikemaskini.'
@@ -175,12 +175,12 @@ class PlacesController < ApplicationController
   def update_pejabat
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
-        if @place_contact
-        @place_contact.destroy
-        end
-        @place_contact = PlaceContact.create(params[:place_contact])
-        @place_contact.place = @place
-        @place_contact.save
+    if @place_contact
+      @place_contact.destroy
+    end
+    @place_contact = PlaceContact.create(params[:place_contact])
+    @place_contact.place = @place
+    @place_contact.save
 
     if @place.update_attributes(params[:place])
       flash[:notice] = 'Data pejabat telah dikemaskini.'
@@ -200,7 +200,7 @@ class PlacesController < ApplicationController
     redirect_to :action => 'list_pejabat'
   end
   
-    def destroy
+  def destroy
     Place.find(params[:id]).destroy
     redirect_to :action => 'list'
   end

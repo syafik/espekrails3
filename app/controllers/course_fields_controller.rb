@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 class CourseFieldsController < ApplicationController
-  #  layout "standard-layout"
+  layout "standard-layout"
+  
   def initialize
     @course_departments = CourseDepartment.find(:all, :order=>"id")
   end
@@ -11,7 +12,7 @@ class CourseFieldsController < ApplicationController
   end
 
   def list
-    @course_field_pages, @course_fields = CourseField.paginate(:per_page => 100, :page => params[:page]).order('course_department_id ASC')
+    @course_fields = CourseField.paginate(:per_page => 100, :page => params[:page]).order('course_department_id ASC')
   end
 
   def show

@@ -1,0 +1,120 @@
+<script type="text/javascript">
+  /*************************************************************************
+  This code is from Dynamic Web Coding at http://www.dyn-web.com/
+  Copyright 2003 by Sharon Paine 
+  See Terms of Use at http://www.dyn-web.com/bus/terms.html
+  regarding conditions under which you may use this code.
+  This notice must be retained in the code as is!
+   *************************************************************************/
+
+  var menuLayers = {
+    timer: null,
+    activeMenuID: null,
+    offX: 4,   // horizontal offset
+    offY: 6,   // vertical offset
+
+    show: function(id, controller, objid, objname, e) {
+      var mnu = document.getElementById? document.getElementById(id): null;
+      if (!mnu) return;
+      this.activeMenuID = id;
+      if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
+      if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
+      viewport.getAll();
+
+      //objid = controller + "/" + action + "/" + objid
+
+      document.getElementById('popmenu').innerHTML = "<ul>" +
+        "<li><a href=\""  + controller + "/new/" + objid + "\">&nbsp;&nbsp;Tambah</a>" +
+        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
+        "<li><a href=\""  + "/questions" + "/list/" + objid + "\">&nbsp;&nbsp;Lihat Borang Penilaian</a>" +
+        "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+        "</ul>"
+      this.position(mnu,e);
+    },
+  
+    hide: function() {
+      this.clearTimer();
+      if (this.activeMenuID && document.getElementById)
+        this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
+    },
+  
+    position: function(mnu, e) {
+      var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
+      var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
+    
+      if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
+        x = x - mnu.offsetWidth - this.offX;
+      else x = x + this.offX;
+  
+      if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
+        y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
+      else y = y + this.offY;
+    
+      mnu.style.left = x + "px"; mnu.style.top = y + "px";
+      this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
+    },
+  
+    mouseoutCheck: function(e) {
+      e = e? e: window.event;
+      // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
+      var mnu = document.getElementById(menuLayers.activeMenuID);
+      var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
+      if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
+    },
+  
+    // returns true of oNode is contained by oCont (container)
+    contained: function(oNode, oCont) {
+      if (!oNode) return; // in case alt-tab away while hovering (prevent error)
+      while ( oNode = oNode.parentNode )
+        if ( oNode == oCont ) return true;
+      return false;
+    },
+
+    clearTimer: function() {
+      if (menuLayers.timer) clearTimeout(menuLayers.timer);
+    }
+  
+  }
+</script>
+
+<script>
+  function confirmAndGo(url, objname) {
+    if (confirm("Are you sure to delete " + objname + "?")) {
+      location = url
+    }
+	
+  }
+</script>
+
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI JENIS TEMPLATE</font></th>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <th><%= link_to 'Tambah', :action => 'new' %> jenis template</th>
+  </tr>
+</table>
+<BR>
+<table width="70%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999">
+    <td width="5%"><b><font color="#FFFFFF">Bil</font></b></td>
+    <td width="35%"><b><font color="#FFFFFF">&nbsp;Keterangan</font></b></td>
+  </tr>
+  <% @question_templates.each_with_index do |question_template, i|%>
+    <tr bgcolor="<%=cycle("#CCCCFF","#FFFFFF")%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=cycle("#CCCCFF","#FFFFFF")%>'"
+        onmousedown="menuLayers.show('popmenu', '/question_templates', '<%=h question_template.id %>', '<%= question_template.description %>', event)" >
+      <td><%= i+1 %></td>
+      <td align=left>&nbsp;<%=h question_template.description %></td>
+    </tr>
+  <% end %>
+</table>
+<BR><BR>
+<div align=center>
+  <%= will_paginate @question_templates %>
+  <%#= link_to 'Laman Sebelum', { :page => @question_template_pages.current.previous } if @question_template_pages.current.previous %>
+  <%#= link_to 'Laman Selepas', { :page => @question_template_pages.current.next } if @question_template_pages.current.next %>
+</div>

@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
   end
 
   def list
-    @question_pages, @questions = paginate :questions, :per_page => 100, :order_by => "description", :conditions => "question_template_id = #{params[:id]}"
+    @questions = Question.where("question_template_id = #{params[:id]}").paginate(:per_page => 100, :page => params[:page]).order("description ASC")
   end
 
   def list_course

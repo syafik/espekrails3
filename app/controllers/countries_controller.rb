@@ -7,7 +7,7 @@ class CountriesController < ApplicationController
   end
 
   def list
-    @country_pages, @countries = paginate :countries, :per_page => 20
+    @countries = Country.paginate(:per_page => 20, :page => params[:page])
   end
 
   def show

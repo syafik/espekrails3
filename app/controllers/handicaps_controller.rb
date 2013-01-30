@@ -7,7 +7,7 @@ class HandicapsController < ApplicationController
   end
 
   def list
-    @handicap_pages, @handicaps = paginate :handicap, :per_page => 10
+    @handicaps = Handicap.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

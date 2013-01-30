@@ -7,7 +7,7 @@ class CertLevelsController < ApplicationController
   end
 
   def list
-    @cert_level_pages, @cert_levels = paginate :cert_levels, :per_page => 10
+    @cert_levels = CertLevel.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

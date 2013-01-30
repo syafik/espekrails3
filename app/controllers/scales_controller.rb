@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 class ScalesController < ApplicationController
   layout "standard-layout"
+  
   def initialize
     @scale_types = ScaleType.find(:all, :order=>"description")
   end
@@ -10,7 +11,7 @@ class ScalesController < ApplicationController
   end
 
   def list
-    @scale_pages, @scales = paginate :scales, :per_page => 50, :order_by => "rating"
+    @scales = Scale.paginate(:per_page => 50, :page => params[:page]).order("rating ASC")
   end
 
   def show

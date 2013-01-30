@@ -13,11 +13,11 @@
     </tr>
   </table>
   <BR>
-
-<%= start_form_tag :action => 'create' %>
+  <%= form_tag(@gender) do |f| %>
+<%#= start_form_tag :action => 'create' %>
   <%= render :partial => 'form' %>
   <BR>
   <div align=center>
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+<% end %>

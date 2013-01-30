@@ -13,6 +13,46 @@ InstunRails3::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+  resources :session_code do
+    
+  end
+  resources :permission do
+    collection do
+      get 'list'
+    end
+  end
+  resources :favourite_places do
+    collection do
+      get 'list'
+    end
+  end
+  resources :user_applications do
+    collection do 
+      get 'applied'
+      get 'offered'
+      get 'surat_tawaran'
+      get 'attend'
+      get 'history'
+    end
+  end
+  resources :post_individus do
+    collection do
+      get 'list'
+    end
+  end
+
+  resources :post_courses do
+    collection do
+      get 'list'
+    end
+  end
+
+  resources :posts do
+    collection do
+      get 'list'
+    end
+  end
+  
   resources :job_profiles
   resources :religions
   resources :states
@@ -28,10 +68,26 @@ InstunRails3::Application.routes.draw do
   resources :role
   
   resources :question_templates
-  resources :question_types
-  resources :question_sections
-  resources :scale_types
-  resources :scales
+  resources :question_types do
+    collection do
+      get 'list'
+    end
+  end
+  resources :question_sections do
+    collection do
+      get 'list'
+    end
+  end
+  resources :scale_types do
+    collection do
+      get 'list'
+    end
+  end
+  resources :scales do
+    collection do
+      get 'list'
+    end
+  end
 
   resources :hostel_statuses
   resources :hostel_types
@@ -59,6 +115,9 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'search'
       get 'list_kementerian'
+      get 'list_pejabat'
+      get 'new_kementerian'
+      get 'new_pejabat'
     end
   end
 
@@ -81,6 +140,16 @@ InstunRails3::Application.routes.draw do
   resources :laporan do
     collection do
       get 'list_laporan'
+      get 'pencapaian_ujian_bidang'
+      get 'mohon_espek'
+      get 'statistik_kursus_tarikh'
+      get 'pencapaian_ujian'
+      get 'penilaian_penceramah'
+      get 'penilaian_kemudahan'
+      get 'penilaian_isi_kandungan'
+      get 'senarai_ulasan'
+      get 'kutipan_yuran'
+      get 'kutipan_yuran_bhg'
     end
   end
   
@@ -134,10 +203,13 @@ InstunRails3::Application.routes.draw do
   end
   resources :course_implementations do
     collection do
+      get 'list'
       get 'search'
       get 'search_for_user'
       get 'calendar'
       get 'edit_surat_iklan_select_kursus'
+      get 'list_courses_from_today_to_future'
+      get 'calendar_user'
     end
   end
   resources :user do

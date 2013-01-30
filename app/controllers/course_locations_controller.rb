@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class CourseLocationsController < ApplicationController
-#  layout "standard-layout"
+  layout "standard-layout"
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @course_location_pages, @course_locations = CourseLocation.paginate(:per_page => 100, :page => params[:page]).order("description ASC")
+    @course_locations = CourseLocation.paginate(:per_page => 100, :page => params[:page]).order("description ASC")
   end
 
   def show

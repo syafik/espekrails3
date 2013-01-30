@@ -7,7 +7,7 @@ class RelationshipsController < ApplicationController
   end
 
   def list
-    @relationship_pages, @relationships = paginate :relationships, :per_page => 10
+    @relationships = Relationship.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

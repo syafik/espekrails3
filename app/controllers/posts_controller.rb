@@ -8,11 +8,11 @@ class PostsController < ApplicationController
 
   def list
     today = Time.new
-    @post_pages, @posts = paginate :posts, :per_page => 50, :conditions => "timeopen < '#{today}' AND timeclose > '#{today}'"
+    @posts = Post.where("timeopen < '#{today}' AND timeclose > '#{today}'").paginate(:per_page => 50, :page => params[:page])
   end
 
   def list_all
-    @post_pages, @posts = paginate :posts, :per_page => 50
+    @posts = Post.paginate(:per_page => 50, :page => params[:page])
   end
 
   def show
