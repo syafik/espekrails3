@@ -226,6 +226,7 @@ InstunRails3::Application.routes.draw do
       get 'add_course_trainer_refresh_opener'
       get 'add_course_trainer'
       get 'save_course_trainer_refresh_opener'
+      get 'show_only_for_peserta'
     end
   end
   resources :user do
@@ -260,6 +261,9 @@ InstunRails3::Application.routes.draw do
       get 'course_record'
       get 'select_quiz'
       get 'rekod_mohon_hadir'
+    end
+    member do
+      get 'show_timetable2'
     end
   end
   resources :menu do

@@ -16,6 +16,7 @@ class HrController < ApplicationController
   
   def list_courses_from_today_to_future
     @course_implementations = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses WHERE date_plan_start > current_date AND course_status_id=1 ")
+    render 	:layout => "standard-layout"
   end
 
   def rekod_mohon_hadir
@@ -23,6 +24,7 @@ class HrController < ApplicationController
       params[:employment] = Hash.new
       params[:employment]['place_id'] = ''
     end
+     render 	:layout => "standard-layout"
   end
 
   def search_record
@@ -53,6 +55,7 @@ class HrController < ApplicationController
       @check = []
       @students = []
     end
+    render 	:layout => "standard-layout"
   end
 
   def p_evaluation_report
@@ -60,6 +63,7 @@ class HrController < ApplicationController
   end 
   
   def search_applicant
+    render 	:layout => "standard-layout"
   end 
   
   def search_by_name
@@ -88,6 +92,7 @@ class HrController < ApplicationController
   end
 
   def search_applicant_status
+    render 	:layout => "standard-layout"
   end 
 
   def semak_by_name
@@ -132,10 +137,12 @@ class HrController < ApplicationController
   def select_course   
   end
 
-  def select_course_batal   
+  def select_course_batal
+    render 	:layout => "standard-layout"
   end
 
-  def select_quiz 
+  def select_quiz
+    render 	:layout => "standard-layout"
   end
   
   def mylist_peserta_quiz

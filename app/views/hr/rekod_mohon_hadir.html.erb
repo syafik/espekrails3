@@ -109,7 +109,7 @@ var menuLayers = {
 				@grandparent = Place.new
 			end
 			@grandparent = Place.new if @grandparent == nil
-			select(:grandparent, :id, @options, '', :id=> "kementerian_id", :name=> "kementerian_id", :onchange=>"checkJabatan()")
+			select(:grandparent, :id, @options, :id=> "kementerian_id", :name=> "kementerian_id", :onchange=>"checkJabatan()")
 	  %></span>	  </td>
     </tr>
    <tr>
@@ -137,7 +137,7 @@ var menuLayers = {
 		  end
 		  @options = @departments.map { |t| [t.name.upcase, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:parent, :id, @options, '', :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
+		  select(:parent, :id, @options, :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
 	  %></span>    </tr>
    <tr>
       <td align="right"><b>Pejabat :</b></td>
@@ -172,7 +172,7 @@ var menuLayers = {
 		  
 		  @options = @offices.map { |t| [t.name.upcase, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:office, :id, @options, '', :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
+		  select(:office, :id, @options, :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
 	  %></span>
 	  <%= hidden_field 'employment', 'place_id', :size=>3 ,:value=>params[:employment]['place_id']  %></td>
     </tr>

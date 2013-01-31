@@ -8,9 +8,9 @@ function confirmAndDelete(url, objname) {
 
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 180;
-    $('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show_only_for_peserta/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+  document.getElementById('popmenu').style.width = 180;
+    document.getElementById('popmenu').innerHTML = "<ul>" +
+					       "<li><a href=\"" + controller + "/" + objid + "/show_only_for_peserta\">&nbsp;&nbsp;Lihat</a>" +
 					       "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Jadual Waktu</a>" + 
 					       "<li><a href=\""  + "/hr" + "/select_course_select_peserta/" + objid + "\">&nbsp;&nbsp;Mohon Berkelompok</a>" + 
 					       "<li><a href=\""  + "/hr" + "/semak_status_mohon/" + objid + "\">&nbsp;&nbsp;Semak Status Permohonan</a>" + 
@@ -19,9 +19,9 @@ function rewritePopupContentNoRestraint(controller, objid, objname) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 180;
-    $('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show_only_for_peserta/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+    document.getElementById('popmenu').style.width = 180;
+    document.getElementById('popmenu').innerHTML = "<ul>" +
+					       "<li><a href=\"" + controller + "/" + objid + "/show_only_for_peserta\">&nbsp;&nbsp;Lihat</a>" +
 					       "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Jadual Waktu</a>" + 
 					       "<li><a href=\""  + "/hr" + "/select_course_select_peserta/" + objid + "\">&nbsp;&nbsp;Mohon Berkelompok</a>" + 
 					       "<li><a href=\""  + "/hr" + "/semak_status_mohon/" + objid + "\">&nbsp;&nbsp;Semak Status Permohonan</a>" + 
@@ -30,7 +30,7 @@ function rewritePopupContent(controller, objid, objname) {
 }
 
 function a(id) {
-	MM_openBrWindow('/course_implementations/show_timetable2/'+id,'','scrollbars=yes,width=1000,height=600')
+	MM_openBrWindow('/course_implementations/'+id+'show_timetable2','','scrollbars=yes,width=1000,height=600')
 }
 
 
@@ -132,7 +132,7 @@ else
   sch_year = params[:planning_year]
 end
 
-if !params[:planning_month]
+if params[:planning_month].blank?
   sch_month = nil
 else
   if params[:planning_month] == 0
@@ -142,7 +142,7 @@ else
   end
 end
 
-if !params[:course_department_id]
+if params[:course_department_id].blank?
   sch_dept = nil
 else
   sch_dept = "AND course_department_id = "+params[:course_department_id]

@@ -71,19 +71,17 @@
       <td align="right" valign="TOP"><strong>Objektif</strong></td>
       <td align="LEFT" valign="TOP"><strong>:</strong></td>
       <%
-      $_ = @course.objective
-      gsub(/&#\d+;/i, "&#8226;")
+      $_ = @course.objective.gsub(/&#\d+;/i, "&#8226;")
       %>
-      <td><%=split("\n").join("<br>")%></td>
+      <td><%=$_.split("\n").join("<br>")%></td>
     </tr>
     <tr>
       <td align="right" valign="TOP"><strong>Kandungan</strong></td>
       <td align="LEFT" valign="TOP"><strong>:</strong></td>
       <%
-      $_ = @course.content
-      gsub(/&#\d+;/i, "&#8226;")
+      $_ = @course.content.gsub(/&#\d+;/i, "&#8226;")
       %>
-<td><%=split("\n").join("<br>")%></td>
+<td><%= $_.split("\n").join("<br>")%></td>
     </tr>
         
     <tr>
