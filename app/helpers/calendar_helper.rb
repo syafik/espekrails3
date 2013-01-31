@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # The Calendar Helper methods create HTML code for different variants of the
 # Dynarch DHTML/JavaScript Calendar.
 #
@@ -116,13 +117,13 @@ module ActionView::Helpers::CalendarHelper
   #  %>
   #
   def calendar_field(object, method, html_options = {}, calendar_options = {})
-    _calendar(object, method, true, true, html_options, calendar_options)
+    _calendar(object, method, true, true, html_options, calendar_options).html_safe
   end
 
   private
 
   def _calendar(object, method, show_field = true, popup = true, html_options = {}, calendar_options = {})
-    button_image = html_options[:button_image] || 'calendar'
+    button_image = html_options[:button_image] || 'calendar.gif'
     date = value(object, method)
 
     input_field_id = "#{object}_#{method}" 

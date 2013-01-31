@@ -47,7 +47,7 @@ module UserEngine
         "permission"
       end
     end
- # Join tables for users <-> roles, and roles <-> permissions
+    # Join tables for users <-> roles, and roles <-> permissions
     case key
     when :user_role_table
       "#{LoginEngine.config(:user_table)}_#{self.config(:role_table)}"
@@ -71,12 +71,12 @@ module UserEngine
       false
     end
   
-  #  # The controller/action
-  #  @config :login_page, {:controller => 'user', :action => 'login'}
-  #
-  #  # If this is set to true, authorization failure messages won't volunteer
-  #  # any extra information, and missing actions will not be flagged as such.
-  #  @config :stealth, false
+    #  # The controller/action
+    #  @config :login_page, {:controller => 'user', :action => 'login'}
+    #
+    #  # If this is set to true, authorization failure messages won't volunteer
+    #  # any extra information, and missing actions will not be flagged as such.
+    #  @config :stealth, false
   end
   #  @config = {}
   #--

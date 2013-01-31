@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Copyright (c) 2005 James Adam
 #
 # This is the MIT license, the license Ruby on Rails itself is licensed 

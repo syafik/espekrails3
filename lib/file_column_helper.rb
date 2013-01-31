@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # This module contains helper methods for displaying and uploading files
 # for attributes created by +FileColumn+'s +file_column+ method. It will be
 # automatically included into ActionView::Base, thereby making this module's

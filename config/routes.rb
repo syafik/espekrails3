@@ -13,6 +13,12 @@ InstunRails3::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+  resources :timetables do 
+    member do
+      get 'list'
+    end
+  end
+
   resources :session_code do
     
   end
@@ -100,7 +106,12 @@ InstunRails3::Application.routes.draw do
   
   resources :course_departments
   resources :course_statuses
-  resources :course_fields
+  resources :course_fields do
+    collection do
+      get 'new_popup'
+      post 'create_popup'
+    end
+  end
   resources :course_locations
   resources :methodologies
 
@@ -210,6 +221,11 @@ InstunRails3::Application.routes.draw do
       get 'edit_surat_iklan_select_kursus'
       get 'list_courses_from_today_to_future'
       get 'calendar_user'
+    end
+    member do
+      get 'add_course_trainer_refresh_opener'
+      get 'add_course_trainer'
+      get 'save_course_trainer_refresh_opener'
     end
   end
   resources :user do

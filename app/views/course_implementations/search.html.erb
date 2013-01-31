@@ -157,7 +157,7 @@ function laksana(id) {
     <tr>
       <td align="RIGHT"><strong>Tarikh Mula Kursus:</strong> </td>
       <td align="LEFT">
-      <form name="list" action="/course_implementations/search" method="post">
+      <form name="list" action="/course_implementations/search" method="get">
         <%= calendar_field 'search_date', '',
      { :class => 'date',
         :field_title => 'search_date',
