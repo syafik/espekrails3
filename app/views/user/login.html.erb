@@ -88,7 +88,7 @@
         </table></td>
     </tr>
   </table>
-<%=flash[:notice].html_safe%>
+<%=flash[:notice].html_safe if flash[:notice]%>
 </div>
 <div style="position:absolute; top: 283px; left: 607px; width: 197px; height: 45px;">
   <table>
