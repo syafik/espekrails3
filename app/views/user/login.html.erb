@@ -63,14 +63,14 @@
 <%=  form_tag authenticate_user_index_path  do %>
       <td class="content"><table width="100%" border="0" cellspacing="1" cellpadding="1">
           <tr>
-            <td width="32%"><strong>No. Kad Pengenalan </strong></td>
-            <td width="5%"><strong>:</strong></td>
-            <td width="63%"><%= text_field 'user', 'ic_number', :size=>15 %></td>
+            <td width="32%" class="content"><strong>No. Kad Pengenalan </strong></td>
+            <td width="5%" class="content"><strong>:</strong></td>
+            <td width="63%" class="content"><%= text_field 'user', 'ic_number', :size=>15, :class=>"content" %></td>
           </tr>
           <tr>
-            <td><strong>Kata Laluan </strong></td>
-            <td><strong>:</strong></td>
-            <td><%= password_field 'user', 'password', :size=>15 %></td>
+            <td class="content"><strong>Kata Laluan </strong></td>
+            <td class="content"><strong>:</strong></td>
+            <td><%= password_field 'user', 'password', :size=>15, :class=>"content" %></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -88,7 +88,7 @@
         </table></td>
     </tr>
   </table>
-<%=flash[:notice]%>
+<%=flash[:notice].html_safe%>
 </div>
 <div style="position:absolute; top: 283px; left: 607px; width: 197px; height: 45px;">
   <table>

@@ -232,6 +232,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'home'
       get 'login'
+      get 'logout'
       get 'register'
       get 'forgot_password'
       post 'authenticate'
