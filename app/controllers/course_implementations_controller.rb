@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CourseImplementationsController < ApplicationController
   #  require "pdf/writer"
   layout "standard-layout"
@@ -47,6 +48,7 @@ class CourseImplementationsController < ApplicationController
   
   def add_course_trainer_refresh_opener
     add_course_trainer
+    render :layout => "standard-layout"
   end
 
   def save_course_trainer
@@ -75,8 +77,8 @@ class CourseImplementationsController < ApplicationController
   end
 
   def index
-    list
-    render :action => 'list'
+    #    list
+    redirect_to :action => 'list'
   end
   
   def iklan
@@ -102,7 +104,7 @@ class CourseImplementationsController < ApplicationController
 
     @cond = Array.new()
     @cond.push("year_start="  +  params[:year_start])
-    @cond.push("month_start=" +  params[:month_start]) if params[:month_start] != nil
+    @cond.push("month_start=" +  params[:month_start]) unless params[:month_start].blank? 
     @cond.push("course_department_id=" +  params[:course_department_id]) unless params[:course_department_id].blank?
 
     @where_sql = @cond.join(" AND ")
@@ -126,12 +128,12 @@ class CourseImplementationsController < ApplicationController
     end
 
 
-    params[:orderby] = "date_plan_start" if !params[:orderby]
+    params[:orderby] = "date_plan_start" if params[:orderby].blank?
     @orderby = params[:orderby]
     params[:arrow] = "ASC" if !params[:arrow]
 
     @cimps = CourseImplementation.find_by_sql("select * from vw_detailed_courses WHERE #{@where_sql} ORDER BY #{@orderby} #{params[:arrow]}")
-  
+    render :layout => "standard-layout" 
   end
 
   def list_public
@@ -205,7 +207,7 @@ class CourseImplementationsController < ApplicationController
       else
         @course_implementations = []
       end
-	
+	render :layout => "standard-layout"
     rescue
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search'
@@ -299,6 +301,7 @@ class CourseImplementationsController < ApplicationController
     @course = Course.new
     @course_implementation = CourseImplementation.new
     @course_implementation.course = @course
+    render :layout => "standard-layout"
   end
 
 

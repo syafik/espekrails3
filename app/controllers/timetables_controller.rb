@@ -3,10 +3,10 @@ class TimetablesController < ApplicationController
   layout "standard-layout"
 
   def initialize
-	@courses = Course.find(:all, :order=>"name")
-	@course_implementations = CourseImplementation.find(:all, :order=>"id")
-    @profiles = Profile.find_all 
-    @facilities = Facility.find_all
+    @courses = Course.find(:all, :order=>"name")
+    @course_implementations = CourseImplementation.find(:all, :order=>"id")
+    @profiles = Profile.all
+    @facilities = Facility.all
     
     @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")    
   end
@@ -17,7 +17,7 @@ class TimetablesController < ApplicationController
   end
 
   def list
-  #  @timetables = Timetable.find_all_by_course_implementation_id(21)
+    #  @timetables = Timetable.find_all_by_course_implementation_id(21)
   end
 
   def timetable_for_user
@@ -26,13 +26,16 @@ class TimetablesController < ApplicationController
 
   def show
     @timetable = Timetable.find(params[:id])
+    render :layout => "standard-layout"
+
   end
 
   def new
     @timetable = Timetable.new
     @timetable.date = params[:date]
     @timetable.course_implementation_id = params[:course_implementation_id]
-	@course_implementation = CourseImplementation.find(params[:course_implementation_id])
+    @course_implementation = CourseImplementation.find(params[:course_implementation_id])
+    render :layout => "standard-layout"
   end
 
   def create
@@ -40,12 +43,19 @@ class TimetablesController < ApplicationController
     @timetable.time_start = params[:start_hour]+":"+params[:start_minute]
     @timetable.time_end = params[:end_hour]+":"+params[:end_minute]
 	
-	#render :text => params[:timetable][:trainer_ids]  and return
-	#@timetable.trainer_ids = params[:timetable][:trainer_ids] if params[:timetable][:trainer_ids]            
-    #@timetable.facilities = Facility.find(params[:facility_ids]) if params[:facility_ids]            
+    #render :text => params[:timetable][:trainer_ids]  and return
+    #@timetable.trainer_ids = params[:timetable][:trainer_ids] if params[:timetable][:trainer_ids]
+    #@timetable.facilities = Facility.find(params[:facility_ids]) if params[:facility_ids]
     if @timetable.save
-		Timetable.find_by_sql("insert into timetables_trainers(timetable_id,trainer_id) values(#{@timetable.id},#{params[:timetable][:trainer_ids] })")
-		flash[:notice] = 'Jadual waktu berjaya ditambah'
+      ids = @timetable.trainers.collect{|x| x.id }.join(",")
+      Timetable.find_by_sql("DELETE FROM timetables_trainers WHERE timetable_id =#{@timetable.id} AND trainer_id IN (#{ids})")
+      params[:timetable][:trainer_ids].each do |tr|
+        @timetable.trainers << Trainer.find(tr)
+      end
+      @timetable.save
+      #      Timetable.find_by_sql("INSERT INTO timetables_trainers(timetable_id,trainer_id) values(#{@timetable.id},(#{params[:timetable][:trainer_ids].join(",") })) ")
+      
+      flash[:notice] = 'Jadual waktu berjaya ditambah'
       #redirect_to :action => 'list', :id => @timetable.course_implementation_id
     else
       render :action => 'new'
@@ -54,7 +64,8 @@ class TimetablesController < ApplicationController
 
   def edit
     @timetable = Timetable.find(params[:id])
-	@course_implementation = CourseImplementation.find(params[:course_implementation_id])
+    @course_implementation = CourseImplementation.find(params[:course_implementation_id])
+    render :layout => "standard-layout"
   end
 
   def update

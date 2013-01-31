@@ -8,9 +8,9 @@ function confirmAndDelete(url, objname) {
 
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+    document.getElementById('popmenu').style.width = 230;
+    document.getElementById('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" + 
 					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
 					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" + 
@@ -28,14 +28,14 @@ function rewritePopupContent(controller, objid, objname) {
 }
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+    document.getElementById('popmenu').style.width = 230;
+    document.getElementById('popmenu').innerHTML = "<ul>" + 
+					       "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
 					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
 					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					       "<hr size=1>" +
-					       "<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
+					       "<li><a href=\"" + "/timetables" + "/" + objid + "/list\">&nbsp;&nbsp;Jadual Waktu</a>" +
 						   //"<li><a href=\"" + "javascript: jw(" + "" + objid + ")\">&nbsp;&nbsp;Jadual Waktu</a>" +
 						   //"<li><a href=\"" + "javascript: z(" + "" + objid + ")\">&nbsp;&nbsp;Tambah Jadual Waktu</a>" +
 						   "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Tambah Penceramah</a>" +
@@ -80,7 +80,7 @@ function checkAll(df) {
 }
 
 function a(id) {
-	MM_openBrWindow('/course_implementations/add_course_trainer/'+id,'','scrollbars=yes,width=700,height=600')
+	MM_openBrWindow('/course_implementations/'+id+'/add_course_trainer','','scrollbars=yes,width=700,height=600')
 }
 
 function z(id) {
@@ -251,7 +251,7 @@ for query in @querys
       <td class="el" id="name<%=h query.id %>" align="right" onmousedown="<%=onmousedown%>"><%= i.to_s %>.</td>
       <td class="el" align=center onmousedown="<%=onmousedown%>"><%=h query.code.upcase %></td>
       <td class="el" align="left" onmousedown="<%=onmousedown%>"><%=h query.name.upcase %></td>
-      <td class="el" align="left" onmousedown="<%=onmousedown%>"><%=h query.target_group %></td>
+      <td class="el" align="left" onmousedown="<%=onmousedown%>"><%= query.target_group.encode('UTF-8') %></td>
       <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h query.jumlah_hari %></td>
       <td class="el" align="center" onmousedown="<%=onmousedown%>">&nbsp;<%=h query.date_plan_start.to_formatted_s(:my_format_4) %></td>
       <td class="el" align="center" onmousedown="<%=onmousedown%>">&nbsp;<%=h query.date_plan_end.to_formatted_s(:my_format_4) %></td>

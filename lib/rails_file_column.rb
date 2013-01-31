@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # require this file from your "config/environment.rb" (after rails has been loaded)
 # to integrate the file_column extension into rails.
 

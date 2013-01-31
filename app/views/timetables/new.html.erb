@@ -1,0 +1,11 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH JADUAL WAKTU  KURSUS</font></b></td>
+  </tr>
+</table>
+<%= form_for(@timetable) do |f|  %>
+<%= render :partial => 'form' %>
+<br>
+<input name="submit" type="button" class="button" value="Keluar" onClick="if  (window.opener) {  window.opener.location.reload();window.close() } else { location='?'}">
+<%= submit_tag "Simpan" %><% end %>
+

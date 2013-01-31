@@ -1,21 +1,22 @@
 <SCRIPT LANGUAGE="JavaScript">
-function confirm_delete(url) {
+  function confirm_delete(url) {
     var answer = confirm("Adakah anda pasti untuk memadam data ini?");
-	if (answer) {
-               	location=url;
-	}
-}
+    if (answer) {
+      location=url;
+    }
+  }
 </script>
 
 <h1 align=center>Kemaskini Jadual Waktu</h1>
-<%= start_form_tag :action => 'update', :id => @timetable %>
-<% @tid = @timetable.id %>
+<%#= start_form_tag :action => 'update', :id => @timetable %>
+<%= form_for(@timetable) do |f|  %>
+  <% @tid = @timetable.id %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Kemaskini' %>
 
-  <!--input name="submit" type="button" class="button" value="Padam" onClick="location.href='/timetables/destroy?id=<%=@tid%>'"!-->
+    <!--input name="submit" type="button" class="button" value="Padam" onClick="location.href='/timetables/destroy?id=<%=@tid%>'"!-->
 
   <input name="submit" type="button" class="button" value="Padam" onClick="return confirm_delete('/timetables/destroy?id=<%=@tid%>')">
   <input name="submit" type="button" class="button" value="Kembali" onClick="if  (window.opener) {  window.opener.location.reload();window.close() } else { location='?'}">
-<%= end_form_tag %>
+<% end  %>
 

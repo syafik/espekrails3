@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class UserApplicationsController < ApplicationController
 	layout "standard-layout"
 #	require "pdf/writer"

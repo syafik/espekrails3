@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'fileutils'
 require 'tempfile'
 require 'magick_file_column'
