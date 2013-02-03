@@ -1,0 +1,90 @@
+<div title="<%= title_helper %>" class="form"></div>
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">DAFTAR AKAUN SISTEM eSPEK</font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+  </table>
+  <BR>
+
+  <div class="form-padding">
+   <div align="center">
+	<p style="color: red"><%= flash[:notice] %></p></div>
+  	<%= start_form_tag :action => 'signup' %>
+     <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+	<tr>
+	<td align=right width=30%>No KP :</td>
+	<td width=40%>&nbsp;
+       <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>12, :class=>"px200", :onchange=>"checkNRIC()"  %> 
+       <span id="node_identification_memo"> </span>    </td>
+	</tr>
+	
+<script>
+node = $("profile_ic_number");
+//node_identification_memo = $("node_identification_memo");
+
+function checkNRIC() {
+        node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>Carian No KP didalam sistem. Sila Tunggu.</font>"
+        ajax_request("ajax_nric", "ic_number="+node.value)
+}
+
+function ajax_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+	{method: 'get', parameters: data, onComplete: ajax_response}
+    );
+}
+
+function ajax_response(originalRequest) {
+        if (originalRequest.responseText == 1) {
+                node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Data ada didalam sistem.<br>&nbsp;Jana login ID dan kata laluan. Sila Tunggu.</font>"
+                document.forms[0].action = "new_but_student_already_exist";
+                document.forms[0].submit();
+        }
+        else if (originalRequest.responseText == 2) {
+                node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Pengguna sudah ada login ID didalam sistem.<br>&nbsp;Sila Login.</font>"
+                document.forms[0].action = "logout";
+                document.forms[0].submit();
+        }
+        else {
+                node_identification_memo.innerHTML = "<br><font color=red>Pengguna tiada lagi data didalam sistem.<br>&nbsp;Sila Daftar.</font>"
+        }
+}
+</script>
+
+   <tr>
+      <td align="right" valign="top">Nama:</td>
+      <td>&nbsp;
+       <%= text_field 'profile', 'name', :maxlength=>40  %></td>
+       </tr>
+	<tr>
+	<td align=right width=30%>ID Pengguna :</td>
+	<td width=40%>&nbsp;
+       <%= text_field 'user', 'login', :size=>30 %> 
+	</td>
+	</tr>
+	<tr>
+	<td align=right width=30%>Kata Laluan :</td>
+	<td width=40%>&nbsp;
+       <%= password_field 'user', 'password', :size=>30 %> 
+	</td>
+	</tr>
+	<tr>
+	<td align=right width=30%>Pengesahan Kata Laluan :</td>
+	<td width=40%>&nbsp;
+       <%= password_field 'user', 'password_confirmation', :size=>30 %> 
+	</td>
+	</tr>
+	<tr>
+	<td>&nbsp;</td>
+	<td>&nbsp;
+        <%= submit_tag 'Daftar' %>
+        <%= link_to 'Kembali ke laman utama', :action => 'login' %>
+      </td>
+      </tr>
+      </table>
+    <%= end_form_tag %>
+</div>
