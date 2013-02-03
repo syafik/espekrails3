@@ -1,0 +1,27 @@
+<h1>Listing trainer_evaluations</h1>
+
+<table>
+  <tr>
+  <% for column in TrainerEvaluation.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for trainer_evaluation in @trainer_evaluations %>
+  <tr>
+  <% for column in TrainerEvaluation.content_columns %>
+    <td><%=h trainer_evaluation.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => trainer_evaluation %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => trainer_evaluation %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => trainer_evaluation }, :confirm => 'Are you sure?' %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @trainer_evaluation_pages.current.previous } if @trainer_evaluation_pages.current.previous %>
+<%= link_to 'Next page', { :page => @trainer_evaluation_pages.current.next } if @trainer_evaluation_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New trainer_evaluation', :action => 'new' %>
