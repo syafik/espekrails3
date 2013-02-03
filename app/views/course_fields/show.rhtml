@@ -1,8 +1,0 @@
-<% for column in CourseField.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @course_area.send(column.name) %>
-</p>
-<% end %>
-
-<%= link_to 'Edit', :action => 'edit', :id => @course_field %> |
-<%= link_to 'Back', :action => 'list' %>

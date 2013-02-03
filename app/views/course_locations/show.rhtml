@@ -1,8 +1,0 @@
-<% for column in CourseLocation.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @course_location.send(column.name) %>
-</p>
-<% end %>
-
-<%= link_to 'Edit', :action => 'edit', :id => @course_location %> |
-<%= link_to 'Back', :action => 'list' %>

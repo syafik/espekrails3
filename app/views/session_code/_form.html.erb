@@ -1,0 +1,27 @@
+<div align="center"><%= error_messages_for 'session_code' %></div>
+
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+<tr>
+	<td align=right width="40%"><b>Keterangan :</b></td>
+	<td><%= text_field 'session_code', 'description', :maxlength=>250, :size=>30  %> <span style="color:orange;">*cth: sesi pagi</span></td>	
+</tr>
+<tr>
+  <td align=right><b>Masa :</b></td>
+  <td><%= text_field 'session_code', 'time_in_text', :maxlength=>250, :size=>30  %> <span style="color:orange;">*cth: 8:30 - 10:30</span></td>
+</tr>
+<tr>
+  <td align=right><b>Waktu Mula  :</b></td>
+  <td><%= text_field 'session_code', 'time_start', :maxlength=>250, :size=>30  %></td>
+</tr>
+<tr>
+  <td align=right><b>Waktu Tamat  :</b></td>
+  <td><%= text_field 'session_code', 'time_end', :maxlength=>250, :size=>30  %></td>
+</tr>
+<tr>
+  <td align=right><b>Susunan  :</b></td>
+  <td><%= text_field 'session_code', 'susunan', :maxlength=>250, :size=>30  %></td>
+</tr>
+</table>
+
+

@@ -1,4 +1,0 @@
-var places = new Array(<%= @places.size %>);
-<% @places.each_with_index do |p, index| %>
-places[<%= index %>] = "<%= p.name.upcase %> (<%= p.state.description.upcase %>)";
-<% end %>

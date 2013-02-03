@@ -1,0 +1,40 @@
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 9px;
+	color: #CC0000;
+}
+-->
+</style>
+<div align="center"><%= error_messages_for 'signature' %></div>
+
+<!--[form:signature]-->
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+<tr>
+  <td align=right><b>Nama :</b></td>
+  <td><%= text_field 'signature', 'person_name', :maxlength=>250, :size=>30  %></td>
+</tr>
+<tr>
+  <td align=right><b>Jawatan :</b></td>
+  <td><%= text_field 'signature', 'person_position', :maxlength=>250, :size=>30  %></td>
+</tr>
+<!--tr>
+	<td align=right width="50%"><b>Keterangan :</b></td>
+	<td><%#= text_field 'signature', 'description', :maxlength=>250, :size=>30  %></td>	
+</tr-->
+<tr>
+  <td align=right valign="TOP"><b>Tandatangan :</b></td>
+  <td>
+  <%= hidden_field 'signature', 'filename', :maxlength=>250, :size=>30  %>
+  <%if @signature.filename and @signature.filename != ""%>
+  <img width="300" src="/signatures/<%=@signature.filename%>"><br>
+  <%end%>
+  <%= file_field 'signature', 'filename', :maxlength=>250, :size=>30, :name=>"file2upload"  %><br/>
+  <span class="style1">*saiz maksimum: 300x200 </span><span class="style1"><br />
+  *format imej yang dibenarkan ialah JPEG dan PNG sahaja </span></td>
+</tr>
+</table>
+
+<!--[eoform:signature]-->
+

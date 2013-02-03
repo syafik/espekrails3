@@ -1,8 +1,0 @@
-<% for column in HostelReservation.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @hostel_reservation.send(column.name) %>
-</p>
-<% end %>
-
-<%= link_to 'Edit', :action => 'edit', :id => @hostel_reservation %> |
-<%= link_to 'Back', :action => 'list' %>

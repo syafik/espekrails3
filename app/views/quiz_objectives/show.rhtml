@@ -1,8 +1,0 @@
-<% for column in QuizObjective.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @quiz_objective.send(column.name) %>
-</p>
-<% end %>
-
-<%= link_to 'Edit', :action => 'edit', :id => @quiz_objective %> |
-<%= link_to 'Back', :action => 'list' %>

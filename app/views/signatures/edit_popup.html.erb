@@ -1,0 +1,25 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">KEMASKINI TANDATANGAN </font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th>
+    <a href="javascript: history.back()">Kembali</a> Tandatangan
+    </th>
+    </tr>
+  </table>
+  <BR>
+
+<%#= start_form_tag :action => 'update', :id => @signature %>
+<%=start_form_tag({:action=>'update_popup', :id => @signature}, :multipart=>true)%>
+
+  <%= render :partial => 'form' %>
+  <BR>
+  <div align=center>
+  <%= submit_tag 'Simpan' %>
+  </div>
+<%= end_form_tag %>
