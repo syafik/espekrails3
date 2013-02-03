@@ -1,0 +1,105 @@
+<script>
+function checkFormDulu(df) {
+	df.action  = "/trainer/";return true;
+}
+
+function findAndSortWith(orderby,arrow) {
+	var df = document.incremental
+	
+	if (checkFormDulu(df)) {
+		df.action += "?orderby=" + orderby
+		if (arrow!="") {
+			df.action += "&arrow=" + arrow
+		}
+		df.submit();
+	}
+	else {
+		alert('ng');
+	}
+	
+}
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 150;
+    $('popmenu').innerHTML = "<ul>" + 
+                            "<li><a href=\""  + "/trainer" + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+					        "<li><a href=\""  + "/trainer" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					        "<hr size=1>" +
+							"<li><a href=\""  + "/trainer" + "/offer/" + objid + "\">&nbsp;&nbsp;Jana Surat Lantikan</a>" + 
+					        "<li><a href=\""  + "/trainer" + "/eval/" + objid + "\">&nbsp;&nbsp;Papar Rekod Penilaian</a>" + 
+							"</ul>"
+     
+}
+</script>
+<form method="post" name="incremental" action="" onsubmit="return checkFormDulu(document.incremental)">
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI TENAGA PENGAJAR</font></b></td>
+    </tr>
+ </table>
+  <br>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"> <a href="new"><u>Tambah Tenaga Pengajar</u></a></td>
+    </tr>
+  </table>
+  <br>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999">
+      <td width="2%" valign="top"><font color="#FFFFFF">Bil</font></td>
+	  <td width="20%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('name','<%= "DESC" if (@orderby=="name" && @arrow=="ASC") %>')">Nama </a></strong></td>
+	  <td width="" align="center"><font color="#FFFFFF"><strong>Telefon</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Alamat</strong></font></td>
+      <td width="" align="center"><strong><font color="#FFFFFF">Kepakaran</font></strong></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Kategori Penceramah</strong></font></td>
+      <!--td align="center"><font color="#FFFFFF">Action</font></td-->
+    </tr>
+
+<%
+i = 0;
+even = true;
+for trainer in @trainers
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+
+  addr_arr = Array.new
+
+  #company_addr = organization.send("address1")
+  addr_arr.push(trainer.profile.address1) if trainer.profile.address1 != ""
+  addr_arr.push(trainer.profile.address2) if trainer.profile.address2 != ""
+  addr_arr.push(trainer.profile.address3) if trainer.profile.address3 != ""
+  #addr_arr.push(trainer.profile.postcode + " " + trainer.profile.city) if trainer.profile.postcode != ""
+  #addr_arr.push(trainer.profile.state.description) if trainer.profile.state != ""
+  trainer_addr = addr_arr.join(', ')
+  #company_addr = " #{company_addr}  #{organization.address2}  #{organization.address3} "
+  trainer_addr = trainer_addr.tr_s(',' , ',')
+  expertises =Expertise.find(:all, :conditions=>"profile_id = #{trainer.profile_id}")
+  new_id = Trainer.find_by_profile_id(trainer.profile.id)
+%>
+
+    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.show('popmenu', '/trainer', '<%=h new_id.id %>', '<%= trainer.profile.name %>', event)" >
+      <td><%= i.to_s %>.</td>
+      <td><%=h trainer.profile.name %></td>
+	  <td><%=h trainer.profile.mobile %></td>
+      <td><%=h trainer_addr %></td>
+      <td align="left">
+	<% for expertise in expertises%>
+<%= nof{expertise.kepakaran} %></br>
+<% end %>
+</td>
+      <td align="center"><%=h "Dalaman" if trainer.is_internal==1%><%=h "Luaran" if trainer.is_internal==0%></td>
+      <!--td align="center" nowrap><%= link_to 'Detail', :action => 'show', :id => trainer %> | <%= link_to 'Edit', :action => 'edit', :id => trainer %></td-->
+    </tr>
+<% end %>
+  </table>
+</form>

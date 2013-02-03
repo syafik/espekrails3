@@ -1,0 +1,157 @@
+<div align="center">
+
+<!--[form:organization]-->
+
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"> <a href="javascript: history.back()"><u>Kembali</u></a></td>
+    </tr>
+  </table>
+  <br />
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <script>
+//course duration(schedule) selection
+node_course_id = $("student_course_id");
+node_schedule_selection = $("schedule_selection");
+function checkSchedule() {
+	$('schedule_selection').innerHTML = "<font color=orange>loading schedules...please wait</font>"
+	ajax_schedule_request("/ajax/ajax_find_course_schedule", "id="+$("student_course_id").value)
+}
+
+function ajax_schedule_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_schedule_response}
+    );
+}
+
+function ajax_schedule_response(originalRequest) {
+	var a = originalRequest.responseText.split(",")
+	var k = new Array(a.length)
+	for (i=0; i<k.length; i++) {
+		k[i] = a[i].split("=")
+	}
+	//alert(originalRequest.responseText)
+	
+	str  = "<select  id=\"student_schedule_id\" name=\"student[schedule_id]\" class=\"px200\">\n";
+	str += "<option value=\"\">Select schedule</option>\n"
+	for (i=0; i<k.length; i++) {
+
+		str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+	}
+	str += "</select>\n";
+
+	$("schedule_selection").innerHTML = str;
+}
+//eo course duration(schedule) selection
+  </script>
+    <script>
+node_course_id = $("student_course_id");
+node_scheme_selection = $("scheme_selection");
+function checkScheme() {
+	node_scheme_selection.innerHTML = "<font color=orange>checking schemes...please wait</font>"
+	ajax_scheme_request("/ajax/ajax_find_course_scheme", "course_id="+node_course_id.value)
+}
+
+function ajax_scheme_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_scheme_response}
+    );
+}
+
+function ajax_scheme_response(originalRequest) {
+	var a = originalRequest.responseText.split(",")
+	var k = new Array(a.length)
+	for (i=0; i<k.length; i++) {
+		k[i] = a[i].split("=")
+	}
+	
+	str = ""
+	for (i=0; i<k.length; i++) {
+		str += "<input name=\"student[course_scheme_id]\" type=\"radio\" value=\"" + k[i][1] + "\"checked><label for=\"student_course_scheme_id\">" +
+	                                  k[i][0] +
+					  "</label>\n";
+	}
+	node_scheme_selection.innerHTML = str;
+}
+  </script>
+    <tr>
+      <td width="20%" align="right"><strong>Nama Tenaga Pengajar: </strong></td>
+      <td><span class="blockintro"> &nbsp;<%= @trainer.profile.name.upcase %></span></td>
+    </tr>
+    <tr>
+      <td align="right" colspan="2"><hr size="1"></td>
+    </tr>
+    <script>
+node = $("profile_nric");
+node_identification_memo = $("node_identification_memo");
+
+function checkNRIC() {
+	node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange>checking if already exist...please wait</font>"
+	ajax_request("/ajax/ajax_nric", "nric="+node.value)
+}
+
+function ajax_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'get', parameters: data, onComplete: ajax_response}
+    );
+}
+
+function ajax_response(originalRequest) {
+	//alert(originalRequest.responseText)
+	if (originalRequest.responseText == 1) {
+		node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange>Applicant found.<br>&nbsp;Loading info..please wait</font>"
+		document.forms[0].action = "new_but_student_already_exist";
+		document.forms[0].submit();
+	}
+	else {
+		node_identification_memo.innerHTML = "<font color=orange>Applicant not found.</font>"
+		node_identification_memo.innerHTML = ""
+		document.forms[0].action = "create";
+	}
+}
+  </script>
+    
+    <!--tr>
+      <td align="right"><strong>profile Status :</strong></td>
+      <td><span class="blockintro">&nbsp; </span>
+        <select name="profile[profile_status_id]">
+        <% @profile_statuses.each do |profile_status| %>
+        <option value="<%= profile_status.id %>"
+         		<%= ' selected' if profile_status.id == @profile.profile_status_id %>> <%= profile_status.description %> </option>
+        <% end %>
+      </select></td>
+    </tr-->
+    
+    <tr>
+      <td align="right"><strong><u>Kelayakan</u><span class="blockintro">&nbsp; </span> <span class="blockintro">&nbsp; </span> <span class="blockintro">&nbsp; </span> </strong></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Kategori:</strong></td>
+      <td><span class="blockintro">&nbsp;
+            <select name="qualification[cert_level_id]">
+              <% @cert_levels.each do |cert_level| %>
+              <option value="<%= cert_level.id %>"
+         		<%= ' selected' if cert_level.id == @qualification.cert_level_id %>> <%= cert_level.description %> </option>
+              <% end %>
+            </select>
+            </span></td>
+    </tr>
+
+    <tr>
+      <td align="right"><strong>Institusi:</strong></td>
+      <td>&nbsp; <%= text_field 'qualification', 'institution', :maxlength=>100, :size=>50 , :onchange=>"this.value=this.value.toUpperCase()" %></td>
+    </tr>
+    <tr>
+      <td align="right"><strong>Tahun Akhir:</strong></td>
+      <td>&nbsp; <%= text_field 'qualification', 'year_end', :maxlength=>4, :size=>4  %></td>
+    </tr>
+  </table>
+  <br>
+
+<!--[form:trainer]-->
+<label for="trainer_rate"></label>
+<!--[eoform:trainer]-->

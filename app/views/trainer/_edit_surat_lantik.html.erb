@@ -1,0 +1,382 @@
+<% 
+t = Time.now
+@current_day= t.strftime("%d")
+@current_month= t.strftime("%m")
+@current_year= t.strftime("%Y")
+
+if params[:id] 
+	@schedule = CourseImplementation.find(params[:id])
+elsif params[:course_implementation_code]
+	@schedule = CourseImplementation.find_by_code(params[:course_implementation_code])
+else
+	#"Sila cari jalan how to exit from this point"
+	#@schedule = CourseImplementation.find_by_code(params[:course_implementation_code]
+end
+
+@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " +
+		  "#{$MONTH_NAMES[@schedule.date_plan_start.to_formatted_s(:my_format_month).to_i - 1].upcase} " +
+                  "#{@schedule.date_plan_start.to_formatted_s(:my_format_year)}" +  " HINGGA " +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " + 
+		  "#{$MONTH_NAMES[@schedule.date_plan_end.to_formatted_s(:my_format_month).to_i - 1].upcase} " +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+		  
+@tarikh_tutup_kursus = "" +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " + 
+		  "#{$MONTH_NAMES[@schedule.date_plan_end.to_formatted_s(:my_format_month).to_i - 1].upcase} " +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+
+baris1 = "TAWARAN LANTIKAN PENCERAMAH DI INSTITUT TANAH DAN UKUR NEGARA"
+baris2 = "#{@schedule.code} - #{@schedule.course.name.upcase}"
+baris3 = "PADA #{@tempoh}"
+baris_arr = Array.new
+baris_arr.push(baris1)
+baris_arr.push(baris2)
+baris_arr.push(baris3)
+perkara_arr = baris_arr.join("\n")
+@perkara = "#{perkara_arr}"
+
+course = Course.find(@schedule.course_id)
+dept = CourseDepartment.find(course.course_department.id)
+ref = LatestAppointReference.find_by_course_department_id(dept.id)
+@rujukan_kami = ""
+@rujukan_kami = ref.latest_ref_no if ref
+
+if @schedule.penyelaras1
+	@coordinator = Profile.find(@schedule.penyelaras1.profile.id)
+	@employment = Employment.find_by_profile_id(@schedule.penyelaras1.profile.id)
+else
+	@coordinator = Profile.new
+	@employment  = Employment.new
+end
+
+
+@tempat_pendaftaran = "Lobi Pendaftaran Pejabat Domestik INSTUN"
+@schedule.date_plan_start = @schedule.date_plan_start - 1
+#@check_in = "#{@schedule.date_plan_start.to_formatted_s(:my_format_3)}"
+@check_in = msian_date_very_formal(@schedule.check_in) if @schedule.check_in !=nil
+@check_out = msian_date_very_formal(@schedule.check_out) if @schedule.check_out !=nil
+@briefing = msian_date_very_formal(@schedule.briefing) if @schedule.briefing !=nil
+@check_in_hour = @schedule.check_in.to_formatted_s(:my_format_hour) if @schedule.check_in !=nil
+@check_in_minute = @schedule.check_in.to_formatted_s(:my_format_minute) if @schedule.check_in !=nil
+@check_out_hour = @schedule.check_out.to_formatted_s(:my_format_hour) if @schedule.check_out !=nil
+@check_out_minute = @schedule.check_out.to_formatted_s(:my_format_minute) if @schedule.check_out !=nil
+@briefing_hour = @schedule.briefing.to_formatted_s(:my_format_hour)  if @schedule.briefing !=nil
+@briefing_minute = @schedule.briefing.to_formatted_s(:my_format_minute) if @schedule.briefing !=nil
+
+dateline = @schedule.date_plan_start - 7
+
+@penyelaras_nama = "Sila masukkan nama penyelaras"
+@penyelaras_nama = @coordinator.name.upcase if @coordinator and @coordinator.name
+@penyelaras_jawatan = @employment.job_profile.job_name if (@employment && @employment.job_profile)
+@penyelaras_ext = ""
+dateline_new = msian_date_very_formal(dateline)
+@perenggan1 = "Dengan hormatnya saya diarah merujuk kepada perkara di atas."
+@perenggan2 = "2.     Sukacita dimaklumkan bahawa pegawai seperti nama di atas telah dilantik sebagai penceremah untuk kursus #{@schedule.course.name.upcase} (#{@schedule.code}) di Institut Tanah dan Ukur Negara (INSTUN), Kementerian Sumber Asli dan Alam Sekitar."
+@perenggan3 = "3.	Perenggan 3"
+@perenggan4 = "4.	Perenggan 4"
+@perenggan5 = "5.	Perenggan 5"
+
+surat_lantik_content = SuratLantikContent.find_by_course_implementation_id(@schedule.id)
+cetak_komputer = "1"
+cetak_komputer = surat_lantik_content.is_cetakan_komputer if surat_lantik_content
+format_surat = "1"
+format_surat = surat_lantik_content.format_surat if surat_lantik_content
+perkara = @perkara
+perkara = surat_lantik_content.perkara if surat_lantik_content
+perenggan1 = @perenggan1
+perenggan1 = surat_lantik_content.perenggan1 if surat_lantik_content
+perenggan2 = @perenggan2
+perenggan2 = surat_lantik_content.perenggan2 if surat_lantik_content
+perenggan3 = @perenggan3
+perenggan3 = surat_lantik_content.perenggan3 if surat_lantik_content
+perenggan4 = @perenggan4
+perenggan4 = surat_lantik_content.perenggan4 if surat_lantik_content
+perenggan5 = @perenggan5
+perenggan5 = surat_lantik_content.perenggan5 if surat_lantik_content
+%>
+
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+</script>
+
+<SCRIPT LANGUAGE="JavaScript">
+function formHandler(){
+var URL = document.form.dept.options[document.form.dept.selectedIndex].value;
+window.location.href = URL;
+}
+</SCRIPT>
+<div align="center">
+<br>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td align="right" valign=top><strong>Rujukan Kami:</strong></td>
+    <td><span class="blockintro">&nbsp;
+          <input type="text" name="rujukan_kami" size="30" maxlength="50" value="<%=@rujukan_kami%>" onchange="this.value=this.value.toUpperCase()">
+    </span>&nbsp;<!--font style="color: blue;size: 9px"><i>No rujukan terkini:&nbsp;</i><%="#{@rujukan_kami}"%></font-->
+<a href="javascript: MM_openBrWindow('/trainer/rujukan_kami/<%=@schedule.course.course_department.id %>','','scrollbars=yes,width=500,height=300')"><font style="color: blue;size: 9px"><i>No. Rujukan Terkini</i></font></a><br />
+    <input type="hidden" name="nama_kursus" value="<%="#{@schedule.course.name.upcase}"%>">
+	<input type="hidden" name="tempoh" value="PADA <%="#{@tempoh}"%>">
+    <input type="hidden" name="duration" value="<%=@tempoh%>">
+	<input type="hidden" name="course_department" value="<%=@schedule.course.course_department.description%>">
+    <input type="hidden" name="tarikh_tutup_kursus" value="<%= msian_date_very_formal(@schedule.date_plan_end)%>"></td>
+  </tr>
+	<%if surat_lantik_content %>
+	<% filename = "surat_lantik_"+ "#{@schedule.id}.pdf"%>
+	<tr>
+		<td align="right">&nbsp;</td>
+	<td>&nbsp;<a href="/surat/<%=filename%>"><font style="color:red;size:9px">Download Surat Lantikan dijana pada <%=surat_lantik_content.letter_date.to_formatted_s(:my_format_4)%></font></a>
+		</font></td>
+		</tr>
+		<%end%>
+  <tr>
+    <td align="right"><strong>Tarikh :</strong></td>
+    <td>&nbsp;
+        <input type=text name="tarikh_surat_day" value="<%=@current_day%>" size=2 maxlength=2>
+      -
+      <input type=text name="tarikh_surat_month" value="<%=@current_month%>" size=2 maxlength=2>
+      -
+      <input type=text name="tarikh_surat_year" value="<%=@current_year%>" size=4 maxlength=4>
+      &nbsp;<font color="red">dd mm yyyy</font></td>
+  </tr>
+  <tr>
+    <td align="right"><strong>Perkara:</strong></td>
+    <td><span class="blockintro">&nbsp;
+          <textarea id="surat_lantik_content_perkara" name="surat_lantik_content[perkara]" rows="3" cols="65" style="width: 500;"><%=@perkara%></textarea>
+    </span></td>
+  </tr>
+
+
+
+
+<script>
+
+function updateJawatan() {
+	var staff_id  = $('contact_officer_id').value
+	data = "staff_id=" + staff_id
+	
+	if ($('contact_officer_id').value!="") {
+		//$('intr_date_start').innerHTML = "checking date.."
+		ajax_find_jawatan('/ajax/staff_find_jawatan', data)
+	}
+}
+
+function ajax_find_jawatan(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_find_jawatan_respon}
+    );
+}
+
+function ajax_find_jawatan_respon(originalRequest) {
+//alert(originalRequest.responseText );return;
+	if (originalRequest.responseText == "0") {
+		alert("Staff not found");
+		return;
+	}
+
+	var dlist = originalRequest.responseText.split(",");
+	var jawatan = dlist[0]
+	var email   = dlist[1]
+	var fax		= dlist[2]
+	var office 	= dlist[3]
+
+	$('penyelaras_jawatan').value   = jawatan
+	$('penyelaras_email').value = email
+	$('penyelaras_fax').value = fax
+	$('penyelaras_telefon').value = office
+
+}
+
+function updateJawatan2() {
+        var staff_id  = $('contact_officer_id2').value
+        data = "staff_id=" + staff_id
+
+        if ($('contact_officer_id2').value!="") {
+                //$('intr_date_start').innerHTML = "checking date.."
+                ajax_find_jawatan2('/ajax/staff_find_jawatan', data)
+        }
+}
+
+function ajax_find_jawatan2(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_find_jawatan_respon2}
+    );
+}
+
+function ajax_find_jawatan_respon2(originalRequest) {
+//alert(originalRequest.responseText );return;
+        if (originalRequest.responseText == "0") {
+                alert("Staff not found");
+                return;
+        }
+
+        var dlist = originalRequest.responseText.split(",");
+        var jawatan = dlist[0]
+        var email   = dlist[1]
+		var fax		= dlist[2]
+		var office 	= dlist[3]
+
+        $('penyelaras_jawatan2').value   = jawatan
+        $('penyelaras_email2').value = email
+		//$('penyelaras_fax2').value = fax
+		//$('penyelaras_telefon2').value = office
+
+}
+
+</script>
+
+  <!--tr>
+    <td align="right"><strong>Pegawai Untuk Dihubungi:</strong></td>
+    <td><span class="blockintro">&nbsp;</span> <span class="blockintro">
+        <%
+                  s = @schedule
+                  a = s.k_program
+                  b = s.pen_k_program
+                  c = s.penyelaras1
+                  d = s.penyelaras2
+                -%>
+                <select id="contact_officer_id" name="contact_officer_id" onchange="updateJawatan()">
+                 <option value="">Sila Pilih</option>
+                 <option value="<%=nof{a.id}%>"><%=nof{a.profile.name}%> (ketua program)</option>
+                 <option value="<%=nof{b.id}%>"><%=nof{b.profile.name}%> (pen ketua program)</option>
+                 <option value="<%=nof{c.id}%>"><%=nof{c.profile.name}%> (penyelaras)</option>
+                 <option value="<%=nof{d.id}%>"><%=nof{d.profile.name}%> (pen penyelaras)</option>
+                </select>
+                </span></td>
+  </tr>
+
+  <tr>
+    <td align="right"><strong>Jawatan:</strong></td>
+    <td><span class="blockintro">&nbsp;</span> <span class="blockintro">
+    <input type="text" id="penyelaras_jawatan" name="penyelaras_jawatan" size="70" value="" onchange="this.value=this.value.toUpperCase()" style="width: 500">
+    </span></td>
+  </tr>
+
+  <tr>
+    <td align="right"><strong>Emel:</strong></td>
+    <td><span class="blockintro">&nbsp;</span> <span class="blockintro">
+    <input type="text" id="penyelaras_email" name="penyelaras_email" size="70" value="" onchange="//this.value=this.value.toUpperCase()" style="width: 500">
+    </span></td>
+  </tr>
+
+   <tr>
+    <td align="right"><strong>Pegawai Untuk Dihubungi:</strong></td>
+    <td><span class="blockintro">&nbsp;</span> <span class="blockintro">
+    <%
+                  s = @schedule
+                  a = s.k_program
+                  b = s.pen_k_program
+                  c = s.penyelaras1
+                  d = s.penyelaras2
+                -%>
+                <select id="contact_officer_id2" name="contact_officer_id2" onchange="updateJawatan2()">
+                 <option value="">Sila Pilih</option>
+                 <option value="<%=nof{a.id}%>"><%=nof{a.profile.name}%> (ketua program)</option>
+                 <option value="<%=nof{b.id}%>"><%=nof{b.profile.name}%> (pen ketua program)</option>
+                 <option value="<%=nof{c.id}%>"><%=nof{c.profile.name}%> (penyelaras)</option>
+                 <option value="<%=nof{d.id}%>"><%=nof{d.profile.name}%> (pen penyelaras)</option>
+                </select>
+                </span></td>
+  </tr>
+
+  <tr>
+    <td align="right"><strong>Jawatan:</strong></td>
+    <td><span class="blockintro">&nbsp;</span> <span class="blockintro">
+    <input type="text" id="penyelaras_jawatan2" name="penyelaras_jawatan2" size="70" value="" onchange="this.value=this.value.toUpperCase()" style="width: 500">
+    </span></td>
+  </tr>
+
+  <tr>
+    <td align="right"><strong>Emel:</strong></td>
+    <td><span class="blockintro">&nbsp;</span> <span class="blockintro">
+    <input type="text" id="penyelaras_email2" name="penyelaras_email2" size="70" value="" onchange="//this.value=this.value.toUpperCase()" style="width: 500">
+    </span></td>
+  </tr>
+
+  <tr>
+    <td align="right"><strong>No Telefon:</strong></td>
+    <td><span class="blockintro">&nbsp;</span> <span class="blockintro">
+    <input type="text" id="penyelaras_telefon" name="penyelaras_telefon" size="12" maxlength="20" value="">
+	<b>&nbsp;&nbsp;Ext:&nbsp;</b>
+	<input type="text" id="penyelaras_ext" name="penyelaras_ext" size="10" value="" style="width: 50"></span></td>
+  </tr>
+  <tr>
+    <td align="right"><strong>No Faks:</strong></td>
+    <td><span class="blockintro">&nbsp;</span> <span class="blockintro">
+     <input type="text" id="penyelaras_fax" name="penyelaras_fax" size="12" maxlength="20" value="">
+    </span></td>
+  </tr-->
+	<tr>
+  <td align="right"><strong>Perenggan 1:</strong></td>
+  <td><span class="blockintro">&nbsp; </span>
+		<textarea id="surat_lantik_content_perenggan1" name="surat_lantik_content[perenggan1]" cols="80" rows="4" style="width: 550"><%=perenggan1%></textarea></td>
+</tr>
+	<tr>
+  <td align="right"><strong>Perenggan 2:</strong></td>
+  <td><span class="blockintro">&nbsp; </span>
+		<textarea id="surat_lantik_content_perenggan2" name="surat_lantik_content[perenggan2]" cols="80" rows="4" style="width: 550"><%=perenggan2%></textarea></td>
+</tr>
+	<tr>
+  <td align="right"><strong>Perenggan 3:</strong></td>
+  <td><span class="blockintro">&nbsp; </span>
+		<textarea id="surat_lantik_content_perenggan3" name="surat_lantik_content[perenggan3]" cols="80" rows="4" style="width: 550"><%=perenggan3%></textarea></td>
+</tr>
+	<tr>
+    <td align="right"><strong>Perenggan 4:</strong></td>
+    <td><span class="blockintro">&nbsp; </span>
+		<textarea id="surat_lantik_content_perenggan4" name="surat_lantik_content[perenggan4]" cols="80" rows="4" style="width: 550"><%=perenggan4%></textarea></td>
+  </tr>
+	<tr>
+    <td align="right"><strong>Perenggan 5:</strong></td>
+    <td><span class="blockintro">&nbsp; </span>
+		<textarea id="surat_lantik_content_perenggan5" name="surat_lantik_content[perenggan5]" cols="80" rows="4" style="width: 550"><%=perenggan5%></textarea></td>
+  </tr>
+  <tr>
+    <td align="right" valign="TOP">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+ <tr>
+      <td align="right" valign="TOP"><strong>Tandatangan      :</strong></td>
+      <td>&nbsp; <%=
+		  @signatures = Signature.find(:all, :order=>"person_name")
+		  @options = @signatures.map { |t| [t.person_name, t.filename] }
+		  @options.unshift(["Sila Pilih", ""])
+		  @signature = Signature.new
+		  select(:signature, :filename, @options, "" , :name=>"signature_file", :onchange=>"displaySignature(this.value)", :style=>"width: 300;")
+		%> <span class="blockintro"> <a href="javascript: MM_openBrWindow('/signatures/list_popup','','scrollbars=yes,width=700,height=400')">Tambah/Kemaskini/Padam</a></span><br />
+        <span id="gambar_sain"></span>
+		<%= hidden_field 'surat_lantik_content', 'tandatangan_nama', :value=>@signature.person_name%>		
+		<%= hidden_field 'surat_lantik_content', 'tandatangan_jawatan', :value=>@signature.person_position%></td>
+<script>
+function displaySignature(file) {
+	if (file != "") {
+		$('gambar_sain').innerHTML = '&nbsp; <img border=1 src="/signatures/' + file + '" height="150" >'
+	}
+	else {
+		$('gambar_sain').innerHTML = ''
+	}
+}
+</script>
+    </tr>
+	  <tr>
+	      <td align="right"><strong>Komputer/Tandatangan?:</strong></td>
+	      <td><span class="blockintro">&nbsp;</span>
+	        <input id="is_cetakan_komputer_1" name="is_cetakan_komputer" type="radio" value="1" <%="checked" if cetak_komputer=='1'%>>
+	<label for="is_cetakan_komputer_1">Cetakan Komputer</label><span class="blockintro">&nbsp;</span>
+	<input id="is_cetakan_komputer_0" name="is_cetakan_komputer" type="radio" value="0" <%="checked" if cetak_komputer=='0'%>>
+	<label for="is_cetakan_komputer_0">Tandatangan</label></td>
+	    </tr>
+
+</table></body>
+<input type="hidden" name="trainer_name" value ="<%=@trainer.profile.name%>">
+<input type="hidden" name="course_implementation_name" value ="<%=@schedule.course.name%>">
+<input type="hidden" name="course_implementation_code" value ="<%=@schedule.code%>">
+<input type="hidden" name="course_implementation_id" value ="<%=@schedule.id%>">
+<input type="hidden" name="briefing_minute" value="<%=@briefing_minute%>" size=2 maxlength=2&quot;>
+<input type="hidden" name="briefing_hour" value="<%=@briefing_hour%>" size=2 maxlength=2&quot;>
+<input type="hidden" name="briefing" value="<%=@briefing%>">
+<input type="hidden" name="format_surat" value="1">
+<%= hidden_field 'surat_lantik_content', 'user_id', :value=>@trainer.profile.id %>
