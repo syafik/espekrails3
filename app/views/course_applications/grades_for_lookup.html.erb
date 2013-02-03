@@ -1,0 +1,4 @@
+var grades = new Array(<%= @job_profiles.size %>);
+<% @job_profiles.each_with_index do |p, index| %>
+grades[<%= index %>] = "<%= p.job_grade %>,<%= p.job_name.upcase %>";
+<% end %>

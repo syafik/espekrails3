@@ -1,0 +1,73 @@
+
+<div align="center"></div>
+<br />
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  
+  <tr>
+    <td colspan="4" align="CENTER"><span lang="fi" xml:lang="fi">STATUS: PERMOHONAN ANDA SEDANG DIPROSES.<br />
+    TERIMA KASIH KERANA MEMOHON...</span> </td>
+  </tr>
+  
+  <tr>
+    <td colspan="4" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="center"><table width="75%" border="1" cellspacing="1" cellpadding="2">
+      <tr>
+        <td>TARIKH PERMOHONAN:</td>
+        <td><%=@course_application.created_at.to_formatted_s(:my_format_4)%></td>
+      </tr>
+      <tr>
+        <td>MASA:</td>
+        <td><%=@course_application.created_on.to_formatted_s(:my_format_hour)%>:<%=@course_application.created_on.to_formatted_s(:my_format_minute)%></td>
+      </tr>
+      <tr>
+        <td>LOGIN ID:</td>
+        <td><%=session[:user].login%></td>
+      </tr>
+      <tr>
+        <td>NAMA:</td>
+        <td><%=@course_application.profile.name.upcase%></td>
+      </tr>
+      <tr>
+        <td>NO KP:</td>
+        <td><%=@course_application.profile.ic_number%></td>
+      </tr>
+      <tr>
+        <td>KOD KURSUS:</td>
+        <td><%=@course_application.course_implementation.code%></td>
+      </tr>
+      <tr>
+        <td>NAMA KURSUS: </td>
+        <td><%=@course_application.course_implementation.course.name.upcase%></td>
+      </tr>
+      <tr>
+        <td>TARIKH KURSUS: </td>
+        <td><%=@course_application.course_implementation.tempoh_3%></td>
+      </tr>
+      <tr>
+        <td>NOTA:</td>
+        <td>&nbsp;</td>
+      </tr>
+      
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td colspan="4" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="center"><span lang="fi" xml:lang="fi">PERMOHONAN  YANG BERJAYA AKAN MENERIMA SURAT PANGGILAN KURSUS DARIPADA INSTUN</span> </td>
+  </tr>
+</table>
+<br />
+<div align="center">
+  <input type="button" name="Submit" value="Keluar" onclick="location='/course_implementations/list_courses_from_today_to_future'">
+  <input type="button" name="Submit2" value="Cetak" onclick="CetakForLoggedInUser(<%=@course_application.id%>)">
+</div>
+
+<script>
+function CetakForLoggedInUser(id) {
+	window.open('/course_applications/cetak_for_logged_in_user/'+id,'_blank','scrollbars=yes,width=700,height=450')
+}
+</script>

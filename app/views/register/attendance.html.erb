@@ -1,0 +1,119 @@
+<%
+if @course_implementation
+	@schedule = @course_implementation
+	@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " + 
+    	      "HINGGA " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " + 
+		 	  "#{@schedule.date_plan_end.to_formatted_s(:my_format_e_month).upcase} " +
+		 	  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+end
+%>
+
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+function JanaSuratTawaran(schedule_id) {
+	url = '/course_applications/cetak_surat_tawaran/' + schedule_id
+	MM_openBrWindow(url,'','scrollbars=yes,width=600,height=400')
+}
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 150;
+    $('popmenu').innerHTML = "<ul>" + 
+					        "<li><a href=\"javascript: daftarPeserta(document.list_form)\">&nbsp;&nbsp;Daftar</a>" +
+					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
+					        //"<hr size=1>" +
+					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
+					        "</ul>"
+}
+</script>
+
+<script>
+
+function checkAll(df) {
+  for (i=1; i<df.elements.length; i++ )
+  {
+     if (df.elements[i].type == "checkbox")
+     {
+       df.elements[i].checked = df.check_all.checked
+     } 
+  }
+}
+
+
+</script>
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">REKOD KEHADIRAN PESERTA</font></b></td>
+    </tr>
+ </table>
+  <br>
+<%= render :partial => 'attendance_header'%>
+
+<%= render :partial => 'attendance_list'%>
+
+<!-- popup menu initial layer----->
+<div id="popmenu" class="menu"></div>
+
+<!-- incremental search initial layer----->
+<div id="label" style="clear: both; visibility: hidden"></div>
+
+<script type="text/javascript">
+//<![CDATA[
+
+var list = [
+
+<% @courses.each do |course| %>
+<%= "{name: \"#{course.name}\", id: \"#{course.id}\"}," %>
+<% end %>
+{name: "  ", id: "00000"}
+];
+
+//
+function getNames(o, search){
+	if(search = search.toLowerCase())
+		for(var i = -1, l = list.length; ++i < l;){
+			//
+			for(var j = 0, indices = []; j = list[i].name.toLowerCase().indexOf(search, j) + 1;
+				indices[indices.length] = j - 1);
+			//
+			if(indices.length)
+				o.add(list[i].name, indices);
+		}
+	o.show();
+}
+
+new IncrementalSearchCourse(document.forms[0].course_name, getNames, "autocomplete");
+
+//]]>
+
+////course
+function getCourseById(course_id) {
+	for(var i = 0; i < list.length; i++) {
+	  if (list[i].id == course_id) {
+		return list[i].name
+	  }
+	}	
+}
+
+function updateCourseName() {
+	if ($("course_id").value != "")
+	{
+		$("course_name").value = getCourseById($("course_id").value)
+	}
+}
+
+updateCourseName()
+$('popmenu').style.width="130" //set width of popmenu for this page
+
+</script>
+
+
+

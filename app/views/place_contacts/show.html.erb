@@ -1,0 +1,8 @@
+<% for column in PlaceContact.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @place_contact.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @place_contact %> |
+<%= link_to 'Back', :action => 'list' %>

@@ -1,0 +1,21 @@
+  <%@profile = Profile.find(user.profile_id)%>
+	  <%@employment = Employment.find_by_profile_id(@profile.id)%>
+<% if nof{@employment.place}
+				if @employment.place.place_type_id == 3
+					grandparent = @employment.place
+					parent = nil 
+					child = nil
+				elsif @employment.place.place_type_id == 1
+					grandparent = @employment.place.parent
+					parent = @employment.place
+					child = nil
+				else
+					grandparent = @employment.place.parent.parent
+					parent = @employment.place.parent
+					child = @employment.place
+				end
+  end
+  %>
+<%= nof{grandparent.name.upcase}%> <%='/' unless parent.nil?%>
+<%= nof{parent.name.upcase}%> <%='/' unless child.nil?%> 
+<%= nof{child.name.upcase} %>

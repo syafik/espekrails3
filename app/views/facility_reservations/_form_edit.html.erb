@@ -1,0 +1,253 @@
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+</script>
+
+<script language="JavaScript">
+function check_form(f) {
+
+    if (f.chkin_date1.value == "") {
+                alert("Sila masukkan tarikh.");
+                f.chkin_date1.focus();
+                return(false);
+    }
+    if (f.chkin_date2.value == "") {
+                alert("Sila masukkan tarikh.");
+                f.chkin_date2.focus();
+                return(false);
+    }
+    if (f.chkin_date3.value == "") {
+                alert("Sila masukkan tarikh.");
+                f.chkin_date3.focus();
+                return(false);
+    }
+    if (f.chkout_date1.value == "") {
+                alert("Sila masukkan tarikh.");
+                f.chkout_date1.focus();
+                return(false);
+    }
+    if (f.chkout_date2.value == "") {
+                alert("Sila masukkan tarikh.");
+                f.chkout_date2.focus();
+                return(false);
+    }
+    if (f.chkout_date3.value == "") {
+                alert("Sila masukkan tarikh.");
+                f.chkout_date3.focus();
+                return(false);
+    }
+    return (true);
+}
+</script>
+
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+function do_that()
+{
+  a1 = $("d1").value;
+  a2 = $("d2").value;
+  a3 = $("d3").value;
+  b1 = $("dt1").value;
+  b2 = $("dt2").value;
+  b3 = $("dt3").value;
+  tid = $("facility_reservation_profile_id").value;
+  pid = $("facility_reservation_course_implementation_id").value;
+  
+  var URL = "/facility_reservations/new/?"
+  //var URL = document.form.dome.options[document.form.dome.selectedIndex].value;
+  document.form.action = URL+"&id1="+a1+"&id2="+a2+"&id3="+a3+"&io1="+b1+"&io2="+b2+"&io3="+b3+"&tid="+tid+"&id="+pid;
+  document.form.submit();
+}
+</SCRIPT>
+
+<script language="javascript" type="text/javascript">
+function intOnly(i) {
+	if(i.value.length>0) {
+		i.value = i.value.replace(/[^\d]+/g, ''); 
+	}
+}
+</script>
+
+<!--[form:facility_reservation]-->
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <%
+    tid = params[:tid]
+    #if (tid != nil)
+    chkin1 = params[:id1]
+    chkin2 = params[:id2]
+    chkin3 = params[:id3]
+    chkout1 = params[:io1]
+    chkout2 = params[:io2]
+    chkout3 = params[:io3]
+    
+    if (chkin1 != nil)
+    datefrom = chkin2+"/"+chkin1+"/"+chkin3
+    dateto = chkout2+"/"+chkout1+"/"+chkout3
+    end
+    %>
+    <tr>
+      <td align="right"><strong>&nbsp;</strong></td>
+      <td><span class="blockintro">&nbsp;<b>Maklumat Permohonan</b></span></td>
+    </tr>
+      
+
+    
+    <% 
+    #for var yg diguna pakai
+    cd = params[:facility_purpose] 
+     if cd == nil
+      cd = nil
+	  end
+    %>
+    
+
+    
+    <tr>
+      <td align="right"><strong>Tarikh Penggunaan :</strong></td>
+      <td><span class="blockintro">&nbsp;<%=@date_from_edit%>
+      - 
+      <%=@date_to_edit%>
+      </span>
+      <%= hidden_field 'facility_reservation', 'date_from', :value=>@date_from_edit  %>
+      <%= hidden_field 'facility_reservation', 'date_to', :value=>@date_to_edit  %>
+      </td>
+    </tr>
+  </table>  
+  
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">  
+  <tr>
+  <td>
+  <table width="50%" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">  
+  <tr>
+      <td width=5% align="right"><strong>&nbsp;</strong></td>
+      <td width=20% align=left><span class="blockintro">&nbsp;<b>Sumber Kemudahan</b></span></td>
+      <td width=15% align=center><span class="blockintro">&nbsp;<b>Kuantiti Kemudahan</b></span></td>
+      <td width=15% align=center><span class="blockintro">&nbsp;<b>Kuantiti Tempahan</b></span></td>
+  </tr>
+  <%
+  if (@date_from_edit != nil)
+  i=0;
+  even = true;
+  #for facc in @facility_categories
+  @facs = Facility.find_by_sql("SELECT * FROM facilities WHERE facility_category_id = #{@check2.id} AND id NOT IN (SELECT facility_id FROM facility_reservations WHERE course_implementation_id = #{@ci.id} and (date_from BETWEEN '"+@date_from_edit+"' AND '"+@date_to_edit+"') OR (date_to BETWEEN '"+@date_from_edit+"' AND '"+@date_to_edit+"')) ORDER BY code")
+  total = @facs.size 
+  
+  @facs2 = Facility.find_by_sql("SELECT * FROM facilities WHERE facility_category_id = #{@check2.id} AND id IN (SELECT facility_id FROM facility_reservations WHERE course_implementation_id = #{@ci.id} and (date_from BETWEEN '"+@date_from_edit+"' AND '"+@date_to_edit+"') OR (date_to BETWEEN '"+@date_from_edit+"' AND '"+@date_to_edit+"')) ORDER BY code")
+  total2 = @facs2.size 
+  #if (total != 0)
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  %>
+  <tr bgcolor="<%=bgclr%>">
+      <td width=5% align="right"><strong>&nbsp;<%=i%></strong></td>
+      <td width=20% align=left><span class="blockintro">&nbsp;<%=@check2.description%></span></td>
+      <td width=15% align=center><span class="blockintro">&nbsp;<%=total%></span></td>
+      <td width=15% align=center><span class="blockintro">&nbsp;<%=total2%></span></td>
+  </tr>
+  <%
+  #end 
+  #end #cat
+  end  #if != nil
+  %>
+  
+  </table>
+  </td>
+  </tr>
+  </table>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+     <tr>
+      <td colspan="4" align="center"><span class="blockintro">&nbsp;<b>&nbsp;</b></span></td>
+    </tr>
+      <tr>
+      <td align="left"><b>Kepada :</b></td>
+      <td colspan="3">&nbsp;<%=@profile_to.name%>
+      </td>
+    </tr>
+           <tr>
+      <td align="left"><b>Salinan :</b></td>
+      <td colspan="3">&nbsp;<%=@profile_cc.name%>
+      </td>
+    </tr>
+         <tr>
+      <td colspan="4" align="center"><span class="blockintro">&nbsp;<b>&nbsp;</b></span></td>
+    </tr>
+           <tr>
+	   <td align="CENTER" valign="TOP" colspan="4"><hr size=1 width="100%"/></td>
+	   </tr>
+	   <tr>
+      <td colspan="4" align="center"><span class="blockintro">&nbsp;<b>Tujuan Penggunaan</b></span></td>
+    </tr>
+      <tr>
+      <td align="left"><b>Kursus :</b></td>
+      <td colspan="3">&nbsp;<%=@ci.course.name%>(<%=@ci.code%>)    
+      <%= hidden_field 'facility_reservation', 'course_implementation_id', :value=>@ci.id  %>
+      </td>
+    </tr>
+    <tr>
+    <td align="left"><b>Penyelaras :</b></td>
+    <td colspan="3">&nbsp;<%= nof{@ci.penyelaras1.profile.name}%></td>
+  </tr>
+    <tr>
+    <td align="left"><b>Pen. Penyelaras :</b></td>
+    <td colspan="3">&nbsp;<%= nof{@ci.penyelaras2.profile.name}%></td>
+  </tr>
+  <tr>
+    <td align="left"><b>Tarikh Kursus :</b></td>
+    <td colspan="3">&nbsp;<%= nof{@ci.date_plan_start.to_formatted_s(:my_format_4)} %> hingga <%= nof{@ci.date_plan_end.to_formatted_s(:my_format_4)} %></td>
+  </tr>
+  <tr>
+      <td colspan="4" align="left"><strong>Perakuan: Saya mengaku bahawa tempahan berkenaan adalah untuk urusan rasmi dan 
+      saya bertanggungjawab keatasnya sepanjang tempoh penggunaannya.
+      Permohonan ini telah diluluskan oleh Ketua Bahagian / Ketua Program.</strong></td>
+    </tr>
+        <tr>
+    <td align="left"><b>Bahagian: </b></td>
+    <td colspan="3">&nbsp;<%= nof{@ci.course.course_department.description}%></td>
+  </tr>
+      <tr>
+      <td align="left"><b>Nama Pemohon:</b></td>
+      <td colspan="3"><span class="blockintro">&nbsp;<%=@check.profile.name%>      
+      <%= hidden_field 'facility_reservation', 'profile_id', :value=>@check.profile.id  %>
+      </span></td>
+    </tr>
+  <tr>
+        <td align="left"><b>Tarikh Tempahan:</b></td>
+	<td colspan="3">&nbsp;<span class="blockintro">&nbsp;<%=@check.created_on.to_formatted_s(:my_format_4)%>
+	</span></td>
+    </tr>
+     <tr>
+     <td align="CENTER" valign="TOP" colspan="4"><hr size=1 width="100%"/></td>
+     </tr>
+     <tr>
+      <td colspan="4" align="center"><span class="blockintro">&nbsp;<b>Kelulusan Permohonan</b></span></td>
+    </tr>
+     <tr>
+      <td align="left"><b>Status Permohonan:</b></td>
+
+          <%
+          checked_0 = checked_1 = ""
+          checked_1 = "checked" if @status == "1"
+          checked_0 = "checked" if @status == "0"
+          %>
+      <td><input id="facility_reservation_status" name="facility_reservation[status]" type="radio" value="0" <%=checked_0%>>Tidak Diluluskan
+      <input id="facility_reservation_status" name="facility_reservation[status]" type="radio" value="1"<%=checked_1%>>Diluluskan
+          </td>
+    </tr>
+    <tr>
+      <td align="left"><b>Nama:</b></td>
+      <td colspan="3"><span class="blockintro">&nbsp;<%=@profile_sah.name%>      
+      </span></td>
+    </tr>
+  <tr>
+        <td align="left"><b>Tarikh:</b></td>
+	<td colspan="3">&nbsp;
+      <input id="day_sah" type=text name="day_sah" value="<%=@day%>" size=2 maxlength=2 >
+-
+  <input id="month_sah" type=text name="month_sah" value="<%=@month%>" size=2 maxlength=2 >
+-
+<input id="year_sah" type=text name="year_sah" value="<%=@year%>" size=4 maxlength=4></td>
+    </tr>
+
+    </table>

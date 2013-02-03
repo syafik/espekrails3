@@ -1,0 +1,52 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI PERANAN</font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th><%= link_to 'Tambah', :action => 'new' %> peranan</th>
+    </tr>
+  </table>
+  <BR>
+<table border=0 cellpadding=0 cellspacing=2 align=center width="95%">
+  <tr bgcolor="#999999" align=center>
+  <td width="5%"><b><font color="#FFFFFF">Bil</font></b></td>
+  <td align=left><b><font color="#FFFFFF">&nbsp;Nama Peranan</font></b></td>
+  <td align=left><b><font color="#FFFFFF">&nbsp;Keterangan</font></b></td>
+  <td align=left><b><font color="#FFFFFF">&nbsp;Menu</font></b></td>
+  <td colspan=3><b><font color="#FFFFFF">Tindakan</font></b></td>
+  </tr>
+  
+<% 
+i = 0;
+even = true;
+for role in @roles 
+ 	i = i + 1
+  	bgclr = "#CCCCFF" if (even == true)
+  	bgclr = "#FFFFFF" if (even == false)
+  	even = !even
+%>
+  <tr align=center bgcolor="<%=bgclr%>">
+    <td><%= i.to_s %></td>
+  <% for column in Role.content_columns %>
+    <td align=left>&nbsp;<%=h role.send(column.name) %></td>
+  <% end %>
+	 <td align=left> 
+  	<%for permission in role.permissions %> 
+  	<%= permission.info %>
+  		<%end %> </td>
+
+    <td><%= link_to 'Lihat', :action => 'show', :id => role %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => role %></td>
+    <td><%= link_to 'Padam', { :action => 'destroy', :id => role }, :confirm => 'Are you sure?' %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @role_pages.current.previous } if @role_pages.current.previous %>
+<%= link_to 'Next page', { :page => @role_pages.current.next } if @role_pages.current.next %> 
+
+<br />

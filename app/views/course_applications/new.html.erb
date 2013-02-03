@@ -1,0 +1,70 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">TAMBAH PERMOHONAN BARU</font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    <tr>
+    <th>
+	<a href="/course_implementations/list">Kembali</a>
+    </th>
+    </tr>
+  </table>
+  <BR>
+
+<%#= start_form_tag :action => 'create' %>
+<form name=ca_form method=post action="/course_applications/create" enctype="multipart/form-data" onsubmit="return GoSubmit(ca_form)">
+  <%= render :partial => 'form' %>
+  <BR>
+   <div id="apply_button" align="center" style="visibility: visible">
+  <%= submit_tag "Simpan" %>
+  </div>
+<%= end_form_tag %>
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+
+function GoSubmit(df) {
+
+	if (!checkInput(anythingRegExp,$('course_implementation_code'),'Kod Kursus')) return false;
+	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
+	//if (!checkInput(armyicnumRegExp,$('profile_army_ic_number'),'No KP Tentera')) return false;
+	if (!checkSelection(strRegExp,$('profile_title_id'),'Gelaran')) return false;
+	if (!checkInput(anythingRegExp,$('profile_name'),'Nama Penuh Pemohon')) return false;
+	if (!checkInput(dateDayformat,$('d_dob'),'Hari Tarikh Lahir')) return false;
+	if (!checkInput(dateMonthformat,$('m_dob'),'Bulan Tarikh Lahir')) return false;
+	if (!checkInput(dateAllYearformat,$('y_dob'),'Tahun Tarikh Lahir')) return false;
+	if (!checkSelection(strRegExp,$('profile_gender_id'),'Jantina')) return false;
+	if (!checkSelection(strRegExp,$('profile_religion_id'),'Agama')) return false;
+	if (!checkSelection(strRegExp,$('profile_marital_status_id'),'Taraf Perkahwinan')) return false;
+	if (!checkSelection(strRegExp,$('profile_race_id'),'Keturunan')) return false;
+	if (!checkFormat(imageRegExp,$('profile_image'),'Hanya Format JPG/JPEG dibenarkan')) return false;
+	if (!checkInput(anything,$('profile_fax'),'Nombor Fax')) return false;
+
+
+	//if (!checkInput(anythingRegExp,$('employment_place_id'),'Kementerian/Jabatan/Pejabat')) return false;
+	
+	if (!checkInput(anythingRegExp,$('job_profile_name'),'Gred/Jawatan')) return false;
+	
+	
+	//if (!checkInput(anythingRegExp,$('course_application_supervisor_name'),'Perakuan Ketua Jabatan(Nama)')) return false;
+	//if (!checkInput(anythingRegExp,$('course_application_supervisor_jawatan'),'Perakuan Ketua Jabatan(Jawatan)')) return false;
+	//if (!checkInput(emailRegExp,$('course_application_supervisor_email'),'Emel Ketua Jabatan')) return false;
+
+    if (!$('chkbox').checked) {
+		alert('Sila sahkan pengakuan');
+		$('chkbox').focus()
+		return false;
+	}
+    if (!$('chkbox_ketua_jabatan').checked) {
+		alert('Sila sahkan perakuan ketua jabatan');
+		$('chkbox_ketua_jabatan').focus()
+		return false;
+	}
+
+	return true;
+}
+
+</script>

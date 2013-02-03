@@ -1,0 +1,29 @@
+<div align=center><%= error_messages_for 'role' %></div>
+
+<!--[form:role]-->
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+    <tr>
+      <td align="right"><b>Nama :</b></td>
+      <td>&nbsp;
+        <%= text_field 'role', 'name'  %></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Keterangan :</b></td>
+      <td>&nbsp;
+        <%= text_field 'role', 'info'  %></td>
+   </tr>
+  <tr>
+      <td align="right" valign=top><b>Menu :</b></td>
+      <td>&nbsp;
+	<% for permission in @permissions %>
+	<input type="checkbox" name="permission_ids[]" 
+          value="<%= permission.id %>" 
+          <% if @role.permissions.include?(permission) %> checked="checked" <% end %> />
+		<%= permission.info %>
+		<BR>&nbsp;
+	<% end %>
+   </tr>
+ </table>
+<!--[eoform:role]-->
+

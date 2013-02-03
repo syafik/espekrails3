@@ -1,0 +1,8 @@
+<% for column in NationalityStatus.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @nationality_status.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @nationality_status %> |
+<%= link_to 'Back', :action => 'list' %>

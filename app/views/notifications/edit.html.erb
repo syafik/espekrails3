@@ -1,0 +1,14 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">MAKLUMAN PELAKSANAAN KURSUS KEPADA SEKSYEN KESELAMATAN</font></th>
+    </tr>
+  </table>
+<BR>
+	
+<%= start_form_tag :action => 'approve', :id => @notification %>
+  <%= render :partial => 'form_approve' %>
+  <div align="center">
+  <%= submit_tag 'Kemaskini' %>
+  </div>
+<%= end_form_tag %>

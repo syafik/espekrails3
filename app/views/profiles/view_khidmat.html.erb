@@ -1,0 +1,57 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="85%" height="20" align="center" bgcolor="#999999"><b>
+      <font color="#FFFFFF">PERKHIDMATAN <%=h @profile.name %></font></b></td>
+    </tr>
+  </table>
+<br>
+<table border=1 align=center width=95% cellpadding=2 cellspacing=1 bgcolor="#EEEEEE">
+<tr>
+<th width="15%"><%= link_to 'Peribadi', :action => 'view', :id => @profile %></th>
+<th width="15%"><%= link_to 'Waris', :action => 'view_waris', :id => @profile %></th>
+<th width="15%"><%= link_to 'Perkhidmatan', :action => 'view_khidmat', :id => @profile %></th>
+<th width="15%"><%= link_to 'Akademik', :action => 'view_akademik', :id => @profile %></th>
+<th width="15%"><%= link_to 'Kursus', :action => 'view_kursus', :id => @profile %></th>
+<th width="15%"><%= link_to 'Tukar Kata Laluan', :action => 'edit_password', :id => @profile %></th>
+</tr>
+</table>
+<BR>
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"><strong>
+      <%= link_to 'Kemaskini', :action => 'edit_khidmat', :id => @profile %></strong></td>
+    </tr>
+  </table>
+<BR>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">    
+  <tr bgcolor="000000">
+    	<td colspan="2" align="center"><strong><font color="#FFFFFF">MAKLUMAT PERKHIDMATAN</font></strong></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right">&nbsp;</td>
+    </tr>
+       <tr>
+       <td width="20%" align="right"><strong>Jabatan: </strong></td>
+      <td> &nbsp;
+      <%= nof{@employment.place.name} %>
+      </td>
+    </tr>
+      <tr>
+      <td width="20%" align="right"><strong>Bahagian/Unit: </strong></td>
+      <td> &nbsp;
+      <%= nof{@employment.unit} %>
+      </td>
+    </tr>
+     <tr>
+     <td width="20%" align="right"><strong>Gred: </strong></td>
+      <td> &nbsp;
+      <%= nof{@employment.job_profile.job_grade} %>
+      </td>
+    </tr>
+    <tr>
+    <td width="20%" align="right"><strong>Jawatan: </strong></td>
+      <td> &nbsp;
+      <%= nof{@employment.job_profile.job_name} %>
+      </td>
+    </tr>
+    </table>

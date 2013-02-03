@@ -1,0 +1,136 @@
+<style>
+b               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form" action="/course_management/create_attendance">
+  <%if @course_implementation%>
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">REKOD KEHADIRAN PESERTA</font></b></td>
+    </tr>
+  </table>
+  <br />
+  <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+      <td align="RIGHT"><strong>Kod:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.code%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tempat:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tarikh:</strong></td>
+      <!--td colspan="3"><font><%=@course_implementation.tempoh%></font></td-->
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+      <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
+      </font></td>
+      <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
+      <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile%></font></td>
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+      <td><font><%= nof{@course_implementation.penyelaras2.profile.name} %></font></td>
+      <td align="RIGHT"><font><b>No Tel:</b></font></td>
+      <td><font><b></b><%= nof{@course_implementation.penyelaras2.profile.mobile} %></font></td>
+    </tr>
+  </table>
+  <br>
+  <%end%>
+
+  <div width="95%" style="background: #FFFFFF">
+  <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <!--tr bgcolor="#999999">
+      <td colspan="7" bgcolor="#FFFFFF"><u>Unprocess</u></td>
+    </tr-->
+    <tr bgcolor="#999999">
+      <td class="el" rowspan="2" width="2%" height="20" valign="top">&nbsp;</td>
+      <td class="el" rowspan="2" width="30%" align="center" style="color: white"><strong>Nama</strong></td>
+ <%
+        @jumlah_hari = @course_implementation.date_plan_end-@course_implementation.date_plan_start+1 if @course_implementation
+        @jumlah_hari.to_i.times do |i|
+                date = @course_implementation.date_plan_start + i
+%>
+      <td class="el" align="center" height="20" colspan="3" style="color: white"><strong><%= date.to_formatted_s(:my_format_day)%>/<%= date.to_formatted_s(:my_format_month)%> <%end%>
+      <td class="el" rowspan="2" width="5%" align="center" style="color: white"><strong>Peratus</strong></td>
+    </tr>
+
+<!--2nd row-->
+    <tr bgcolor="#999999">
+      <%
+        @jumlah_hari.to_i.times do |i|
+                date = @course_implementation.date_plan_start + i
+%>
+            <td class="el" align="center" height="20" style="color: white"><strong><span>Pagi</span></strong></td>
+            <td class="el" align="center" height="20" style="color: white"><strong>Tgh</strong></td>
+            <td class="el" align="center" style="color: white"><strong>Ptg</strong></td>
+      <%end%>
+    </tr>
+<!--EO2nd row-->
+
+    <%
+i = 0;
+even = true;
+sum = 0
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  sum = sum + student.attendance_percentage
+%>
+    <tr bgcolor="<%=bgclr%>" >
+      <td class="el">&nbsp;<%= i.to_s %>.</td>
+      <td class="el">&nbsp;<%=h student.profile.name.upcase %></td>
+      <%
+        @jumlah_hari.to_i.times do |j|
+                date = @course_implementation.date_plan_start + j
+                        checkbox_date = "#{date.to_formatted_s(:my_format_day)}#{date.to_formatted_s(:my_format_month)}#{date.to_formatted_s(:my_format_year)}"
+
+                        cond_str = "course_application_id = #{student.id} AND date_attend = '#{date}'"
+                        attend_pagi_arr = Attendance.find(:all, :conditions=>"#{cond_str}  AND attendance_session_id = 1")
+                        attend_tgh_arr  = Attendance.find(:all, :conditions=>"#{cond_str}  AND attendance_session_id = 2")
+                        attend_ptg_arr  = Attendance.find(:all, :conditions=>"#{cond_str}  AND attendance_session_id = 3")
+
+                        checked_pagi = "checked" if attend_pagi_arr.size > 0
+                        checked_tgh  = "checked" if attend_tgh_arr.size > 0
+                        checked_ptg  = "checked" if attend_ptg_arr.size > 0
+
+%>
+      <td class="el" align="center" width="100"><input id="aaa" type="checkbox" name="pagi_<%=checkbox_date%>[<%=student.id%>]" value="1" <%="#{checked_pagi}"%>></td>
+
+ <td class="el" align="center" width="100"><input type="checkbox" name="tengahari_<%=checkbox_date%>[<%=student.id%>]" value="1" <%="#{checked_tgh}"%>></td>
+      <td class="el" align="center" width="100"><input type="checkbox" name="petang_<%=checkbox_date%>[<%=student.id%>]" value="1" <%="#{checked_ptg}"%>></td>
+      <%
+        end
+      %>
+          <td class="el" align="center" width="100"><%= student.attendance_percentage %></td>
+    </tr>
+<%
+end
+ave = sum/@students.size
+%>
+    <tr bgcolor="white">
+      <td class="el" colspan="<%=(@jumlah_hari.to_i*3)+2%>" align="right"><strong>Total</strong></td>
+      <td class="el" align="center"><b><%=ave%></b></td>
+    </tr>
+  </table>
+  </div>
+  <br>
+  <div align="center"><br />
+    <input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>">
+  <input type="Submit" value="Simpan"></div></form>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+
+
+
+

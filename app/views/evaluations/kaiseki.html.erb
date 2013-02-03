@@ -1,0 +1,195 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">ANALISIS </font><font color="#FFFFFF"><%=@evaluation.name.upcase%></font></th>
+    </tr>
+    
+    
+  </table>
+  <BR>
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td colspan="2" bgcolor="#999999"><b>A. MAKLUMAT KURSUS DIHADIRI</b></td>
+    </tr>
+    <tr>
+      <td colspan=2><strong>MODUL:</strong> <%=@evaluation.course_implementation.course.name.upcase%></td>
+    </tr>
+    <tr>
+      <td width="30%"><strong>KOD KURSUS:</strong></td>
+      <td><%=@evaluation.course_implementation.code%></td>
+    </tr>
+    <tr>
+      <td><strong>TARIKH: </strong></td>
+      <td><%=@evaluation.course_implementation.duration_formal_2%> (<%=@evaluation.course_implementation.jumlah_hari%> hari) </td>
+    </tr>
+  </table>
+  <br />
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+	<tr>
+		<td colspan="3" bgcolor="#999999"><b>B.PENILAIAN PENCERAMAH </b></td>
+	</tr>
+    
+	
+<%
+   @prev_tt_id = 0
+   for eval_quest in @section_b_list
+   		if eval_quest.evaluation_trainer_ranking.timetable.trainers.size > 0
+%>
+		<% if @prev_tt_id != eval_quest.evaluation_trainer_ranking.timetable.id %>
+		<tr>
+		  <td colspan="3" bgcolor="#dddddd">
+		  Topik: <%=eval_quest.evaluation_trainer_ranking.timetable.topic%><br />
+		  Pensyarah: <%=eval_quest.evaluation_trainer_ranking.timetable.trainers.first.profile.name%>		  </td>
+        </tr>
+		<% end %>
+		
+		<tr>
+		  <td width="50%">
+			<table><tr><td>&nbsp;</td><td><%=eval_quest.questiontext%></td></tr></table>		  </td>
+		  <td width="50%" colspan=2>
+		  <% eval_quest.evaluation_trainer_ranking.max_ranking.times do |i|%>
+		  <%=i+1%> : 
+		  <% 	sql = "select count(answer) as n from evaluation_answers where evaluation_question_id=#{eval_quest.id} and answer=#{i+1}"
+		  		n = EvaluationAnswer.find_by_sql(sql)
+				n = n.first.n	
+				
+				percentage = (n.to_i*100) / @course_implementation.evaluations.first.evaluation_questions.size
+		  %>
+		  <b><%=n%></b> <img src="/images/<%=i+1%>.gif" width="<%=percentage*5%>" height="9"><%=percentage%>%<br>
+		  
+		  <% end %>		  </td>
+       </tr>
+
+<% 
+		end
+		@prev_tt_id = eval_quest.evaluation_trainer_ranking.timetable.id
+  end
+%>
+</table>
+  <br />
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td colspan="3" bgcolor="#999999"><b>C.PENILAIAN KURSUS </b></td>
+    </tr>
+    <tr>
+      <td colspan="3" bgcolor="#dddddd" align="center">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK 5:CEMERLANG </td>
+    </tr>
+
+
+	<% for subc in EvaluationSection.find(3).evaluation_subsections%>
+    <tr>
+      <td colspan="3" width="20%"><b><%=subc.description%></b></td>
+    </tr>
+
+	<% 
+		if subc.evaluation_questions.size > 0
+			@evaluation_questions = EvaluationQuestion.find(:all, 
+			                       :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
+			for eq in @evaluation_questions				
+	%>
+	<tr>
+		<td width="50%"><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
+	  <td nowrap colspan=2>
+	<%		if eq.evaluation_type_id == 5%>	
+	<% 			eq.evaluation_ranking.max_ranking.times do |i|%>
+		  <%=i+1%> : 
+		  <% 	sql = "select count(answer) as n from evaluation_answers where evaluation_question_id=#{eval_quest.id} and answer=#{i+1}"
+		  		n = EvaluationAnswer.find_by_sql(sql)
+				n = n.first.n	
+				
+				percentage = (n.to_i*100) / @course_implementation.evaluations.first.evaluation_questions.size
+		  %>
+		  <b><%=n%></b> <img src="/images/<%=i+1%>.gif" width="<%=percentage*5%>" height="9"><%=percentage%>%<br>
+    <% 			end
+			end
+	%>
+
+	<%		truefalse_list = ["T","Y"]
+			if eq.evaluation_type_id == 6%>	
+	<% 			2.times do |i|%>
+		  <%=truefalse_list[i]%> : 
+		  <% 	sql = "select count(answer) as n from evaluation_answers where evaluation_question_id=#{eval_quest.id} and answer=#{i+1}"
+		  		n = EvaluationAnswer.find_by_sql(sql)
+				n = n.first.n	
+				
+				percentage = (n.to_i*100) / @course_implementation.evaluations.first.evaluation_questions.size
+		  %>
+		  <b><%=n%></b> <img src="/images/<%=i+1%>.gif" width="<%=percentage*5%>" height="9"><%=percentage%>%<br>
+    <%		end
+		end
+	%>	  </td>
+	</tr>
+	<%
+			end
+		 end
+		end
+	%>
+  </table>
+  <br />
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td colspan="2" bgcolor="#999999"><b>D.PENILAIAN KEMUDAHAN </b></td>
+    </tr>
+
+
+    <% for subc in EvaluationSection.find(4).evaluation_subsections%>
+    <tr>
+      <td colspan="2" width="20%"><b><%=subc.description%></b></td>
+    </tr>
+    <% 
+		if subc.evaluation_questions.size > 0
+		@evaluation_questions = EvaluationQuestion.find(:all, 
+			                                            :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=4")
+
+			for eq in @evaluation_questions				
+	%>
+    <tr>
+      <td width="50%"><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
+      <td nowrap><%		if eq.evaluation_type_id == 5%>
+          <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
+		  <%=i+1%> : 
+		  <% 	sql = "select count(answer) as n from evaluation_answers where evaluation_question_id=#{eval_quest.id} and answer=#{i+1}"
+		  		n = EvaluationAnswer.find_by_sql(sql)
+				n = n.first.n	
+				
+				percentage = (n.to_i*100) / @course_implementation.evaluations.first.evaluation_questions.size
+		  %>
+		  <b><%=n%></b> <img src="/images/<%=i+1%>.gif" width="<%=percentage*5%>" height="9"><%=percentage%>%<br>
+          <%
+		   				end
+					end
+	%>	  </td>
+    </tr>
+    <%
+			end
+		 end
+		end
+	%>
+  </table>
+  <br />
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td width="50%" bgcolor="#999999"><b>E.KOMEN DAN CADANGAN </b></td>
+    </tr>
+    
+	<%
+	@ec_list = EvaluationComment.find(:all,
+	                                 :conditions=>"course_implementation_id=#{@course_implementation.id}",
+									 :order=> "profile_id,created_by")
+	%>
+    <% @ec_list.size.times do |i|
+		ec = @ec_list[i]
+	%>
+    <tr>
+      <td><%=i+1%>.
+     <%=ec.comment%></td>
+    </tr>
+
+    <%
+	   end
+	%>
+  </table>
+  <br />
+  <center>
+  <input type="button" value="Keluar" onclick="window.close()">
+  </center>

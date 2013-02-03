@@ -1,0 +1,4 @@
+var courses = new Array(<%= @course_implementations.size %>);
+<% @course_implementations.each_with_index do |ci, index| %>
+courses[<%= index %>] = "<%= ci.code %> <%= ci.course.name %>";
+<% end %>

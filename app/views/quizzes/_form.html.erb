@@ -1,0 +1,56 @@
+<%= error_messages_for 'quiz' %>
+
+<!--[form:quiz]-->
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+ <tr>
+      <td align="right"><b>Kursus :</b></td>
+      <td>
+      <select name="quiz[course_implementation_id]">
+        <% @course_implementations.each do |course_implementation| %>
+        <option value="<%= course_implementation.id %>"
+         		<%= ' selected' if course_implementation.id == @quiz.course_implementation_id %>> <%= course_implementation.code %> [<%= course_implementation.course.name %>] </option>
+        <% end %>
+      </select>   
+      </td>
+   	</tr>
+  
+<tr>
+	<td valign=top align=right><b>Keterangan Ujian :</b></td>
+	<td><%= text_area 'quiz', 'intro', :rows=>5 , :cols=>50 %></td>	
+</tr>
+  <tr>
+      <td align="right" valign="TOP"><strong>Tarikh &amp; Masa Buka:</strong></td>
+      <td><span class="blockintro">&nbsp; </span>
+      <input id="day_check_in" type=text name="day_check_in" value="<%=@day%>" size=2 maxlength=2 >
+-
+  <input id="month_check_in" type=text name="month_check_in" value="<%=@month%>" size=2 maxlength=2 >
+-
+<input id="year_check_in" type=text name="year_check_in" value="<%=@year%>" size=4 maxlength=4>
+&nbsp; <input id="hour_check_in" type=text name="hour_check_in" value="<%=@hour%>" size=2 maxlength=2>
+: 
+<input id="minute_check_in" type=text name="minute_check_in" value="<%=@minute%>" size=2 maxlength=2> 
+<font color="red">dd mm yyyy hh:mm </font></td>
+    </tr>
+     <tr>
+      <td align="right" valign="TOP"><strong>Tarikh &amp; Masa Tutup:</strong></td>
+      <td><span class="blockintro">&nbsp; </span>
+      <input id="day_check_out" type=text name="day_check_out" value="<%=@day_next%>" size=2 maxlength=2>
+-
+  <input id="month_check_out" type=text name="month_check_out" value="<%=@month_next%>" size=2 maxlength=2>
+-
+<input id="year_check_out" type=text name="year_check_out" value="<%=@year_next%>" size=4 maxlength=4>
+&nbsp; <input id="hour_check_out" type=text name="hour_check_out" value="<%=@hour_next%>" size=2 maxlength=2> 
+: 
+<input id="minute_check_out" type=text name="minute_check_out" value="<%=@minute_next%>" size=2 maxlength=2> 
+<font color="red">dd mm yyyy hh:mm </font></td>
+    </tr>
+
+<tr>
+	<td align=right><b>Soalan Random :</b></td>
+	<td><%= check_box 'quiz', 'shufflequestions' %></td>
+</tr>
+
+</table>
+<!--[eoform:quiz]-->
+

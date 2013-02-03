@@ -1,0 +1,14 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">BATAL TEMPAHAN</font></b></td>
+    </tr>
+</table>
+<br>
+
+<%= start_form_tag :action => 'dodelete', :facility_category_id => @facility %>
+  <%= render :partial => 'formc' %>
+  <br>
+  <div align="center">
+  <%= submit_tag 'Batal Tempahan' %>
+  </div>
+<%= end_form_tag %>

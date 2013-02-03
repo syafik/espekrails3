@@ -1,0 +1,37 @@
+<%= error_messages_for 'hostel_policy' %>
+
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"> <a href="/hostel_policies/list"><u>Kembali</u></a> ke Senarai Polisi Asrama  </td>
+    </tr>
+</table>
+<br>
+<%
+@pilihans = ['Ya','Tidak']
+%>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <% for py in @policy_items %>
+    <tr>
+      <td width="40%" align="right"><strong><%=py.description%> :</strong></td>
+      <td><span class="blockintro">&nbsp;
+      <input type=hidden name=policy_item_id[] value="<%=py.id%>">
+      <% if (py.id == 1 || py.id == 2)%>
+      Ranking <input type=text name=desc1[] size= 5 maxlength=2 "> - 
+      <input type=text name=desc2[] size= 5 maxlength=2 ">
+      <%else%>
+      <select name="desc[]">
+       <% 
+       x=0
+       for pilihan in @pilihans %>
+        <option value="<%= @pilihans[x] %>"
+        <%= ' selected' if @pilihans[x] == @hostel_policy.description %>> <%= @pilihans[x] %> </option>
+        <% 
+        x=x+1
+        end %>  
+      </select>
+      <%end%>
+      </span></td>
+    </tr>
+    
+    <% end %>
+</table>  

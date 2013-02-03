@@ -1,0 +1,54 @@
+<%= start_form_tag :action=> "login" %>
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SILA LOGIN</font></th>
+    </tr>
+ </table>
+  <BR>
+
+<div title="Account login" id="loginform" class="form">
+    <% if @flash['notice'] %>
+      <div id="message"><%= @flash['notice'] %></div>
+    <% end %>
+
+<table border=0 width=70% align=center cellpadding=3 cellspacing=1>
+<tr>
+	<td width=25% align=right><b>ID Pengguna :</b></td>
+	<td width=45%>
+	<input type="text" name="user_login" id="user_login" size="30" value=""/></td>
+</tr>
+<tr>
+	<td align=right><b>Kata Laluan :</b>
+    <td>
+    <input type="password" name="user_password" id="user_password" size="30"/></td>
+</tr>    
+<tr>
+	<td>&nbsp;</td>
+	<td>
+	<input type="submit" name="login" value="Login >>"></td>
+</tr>
+</table>
+<%= end_form_tag %>
+
+<hr width=60% align=center>
+
+<form action="/pengguna/login" method="post" name="guestlogin">
+<table border=0 width=70% align=center cellpadding=3 cellspacing=1>
+<tr>
+	<td align=center>
+	Untuk melihat senarai kursus, <BR>
+	anda boleh gunakan id sebagai Guest.<BR><BR>
+          <input type="hidden" name="user_login" value="guest" />
+          <input type="hidden" name="user_password" value="guest" />
+          <input type="submit" value="Login sebagai Guest >> " />
+    </td>
+</tr>
+</table>          
+</form>
+
+  
+</div>
+
+<%= end_form_tag %>
+

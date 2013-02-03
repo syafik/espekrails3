@@ -1,0 +1,158 @@
+<script>
+function confirmAndDelete(url, objname) {
+	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+		location = url
+	}
+	
+}
+
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 150;
+    $('popmenu').innerHTML = "<ul>" + 
+                            "<ul><li><a href=\"" + controller + "/new/?profile_id=" + objid + "\">&nbsp;&nbsp;Daftar Asrama</a><li></ul>" +
+					        //"<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+					        "</ul>"
+}
+</script>
+  
+
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">PENDAFTARAN ASRAMA</font></b></td>
+    </tr>
+ </table>
+  <br>
+
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1">
+    <tr>
+      <td align="RIGHT" width="20%"><strong>Nama Peserta:</strong> </td>
+      <td>
+<form action="/hostel_profiles/list" method="post">
+      <input type=text name="nama" value="<%=params[:nama]%>" size="40">
+      <input type="submit" value="Cari">
+</form>      </td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Nama Kursus:</strong></td>
+      <td>
+<form action="/hostel_profiles/list" method="post">
+        <input type=text name="course_name" value="<%=params[:course_name]%>" size="80" onfocus="this.select()">
+		<input type="hidden" id="course_implementation_id" name="course_implementation_id" value="<%=nof{params[:course_implementation_id]}%>" size="4">
+        <input type="submit" value="Cari">
+</form>	  </td>
+    </tr>
+ </table>
+ <br>
+<%
+#check today date
+t = Time.now
+today = t.strftime("%m/%d/%Y")
+
+esoks = Profile.find_by_sql("SELECT date('"+today+"'::date + 1) as later")
+for esok in esoks
+tomorrow = esok.later
+end
+
+#today="04/03/2006"
+if params[:nama] != nil
+	#@applicants = VwDetailedApplicant.find(:all, :conditions=>"personal_name ilike '%#{params[:nama]}%' AND (date_plan_start='#{today}' OR date_plan_start='#{tomorrow}')")		
+	@applicants = VwDetailedApplicant.find(:all, :conditions=>"personal_name ilike '%#{params[:nama]}%'")
+elsif params[:course_implementation_id] != nil
+	@applicants = VwDetailedApplicant.find(:all, :conditions=>"course_implementation_id = #{params[:course_implementation_id]}")
+else
+	@applicants = []
+end
+
+if @applicants.size > 0
+	
+
+%>  
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1">
+<tr>
+<td align=left><b>Peserta Kursus</b></td>
+</tr>
+</table>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999" id="pisang" onclick="//servOC(20,'/hostel_profile/show/3','#999999')">
+      <td width="2%" valign="top" id="name20"><font color="#FFFFFF">&nbsp;</font></td>
+      <td width="30%" align="center"><font color="#FFFFFF"><strong>Nama</strong></font></td>
+      <td width="12%" align="center"><font color="#FFFFFF">&nbsp;<strong>No KP</strong></font></td>
+      <td width="25%" align="center"><font color="#FFFFFF">&nbsp;<strong>Kursus</strong></font></td>
+      <td width="20%" align="center"><font color="#FFFFFF">&nbsp;<strong>Tarikh Kursus</strong></font></td>
+    </tr>
+<% 
+i = 0;
+even = true;
+for query in @applicants
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  
+  student = CourseApplication.find(query.course_application_id)
+  @schedule = student.course_implementation
+
+@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " + 
+          "- " +
+		  "#{@schedule.date_plan_end.to_formatted_s(:my_format_3)}"
+%>
+    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.show('popmenu', '/hostel_profiles', '<%=h student.profile.id %>', '<%= student.profile.name.upcase %>', event)">
+      <td id="n"><%= i.to_s %>.</td>
+      <td align=left><%=h query.personal_name.upcase %></td>
+      <td align="left"><%=h student.profile.ic_number %></td>
+      <td align="left"><%= student.course.name.split(" ").map! {|e| e.upcase}.join(" ")%></td>
+      <td align="left"><%= "#{@schedule.date_plan_start.to_formatted_s(:my_format_4)} - #{@schedule.date_plan_end.to_formatted_s(:my_format_4)} "  %></td>
+    </tr>
+
+<% end %>
+</table>
+<% end
+if @applicants and @applicants.size < 0
+%>
+<div align="center" style="color: orange; font-weight: bold">Tiada Senarai.</div>
+<% end %>
+
+<br>
+<div id="label" style="clear: both; visibility: hidden">Bonner</div>
+<script src="/javascripts/incremental-search-course.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+
+var list = [
+
+<% @courses.each do |course|
+		d_start = "#{course.date_plan_start.to_formatted_s(:my_format_day)}/#{course.date_plan_start.to_formatted_s(:my_format_month)}" 
+		course_name_with_schedule = "#{d_start}-#{course.date_plan_end.to_formatted_s(:my_format_4)} #{course.code} #{course.name}"
+%>
+<%= "{name: \"#{course_name_with_schedule}\", course_name: \"#{course.name}\", id: \"#{course.id}\"}," %>
+<% end %>
+{name: "  ", id: "00000"}
+];
+
+function getNames(o, search){
+	if(search = search.toLowerCase())
+		for(var i = -1, l = list.length; ++i < l;){
+			//
+			for(var j = 0, indices = []; j = list[i].name.toLowerCase().indexOf(search, j) + 1;
+				indices[indices.length] = j - 1);
+			//
+			if(indices.length)
+				o.add(list[i].name, indices);
+		}
+	o.show();
+}
+
+new IncrementalSearchCourse(document.forms[1].course_name, getNames, "autocomplete");
+
+function updateCourseId(course_name) {
+	for(var i = 0; i < list.length; i++) {
+	  if (list[i].name == course_name) {
+		//alert(list[i].name);
+		$("course_implementation_id").value = list[i].id
+	  }
+	}
+	
+}
+</script>

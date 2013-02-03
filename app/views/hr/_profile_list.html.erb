@@ -1,0 +1,55 @@
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form">
+<%if @course_implementation%>
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">
+	  <%=@list_title%></font></b></td>
+    </tr>
+ </table>
+ <br>
+<%end%>
+<div style="background: white">
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" valign="top" align="center"><font color="#FFFFFF"><input type="checkbox" name="check_all" value="0" onclick="checkAll(document.list_form)"></font></td>
+      <td class="el" width="2%" valign="top">&nbsp;</td>
+      <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama Pemohon </a></strong></td>
+      <td class="el" width="10%" align="center"><font color="#FFFFFF"><strong>No KP</strong></font></td>
+      <td class="el" width="8%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('job_grade','<%= "DESC" if (@orderby=="job_grade" && @arrow=="ASC") %>')">Gred </a></strong></td>
+      <td class="el" width="24%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('opis','<%= "DESC" if (@orderby=="opis" && @arrow=="ASC") %>')">Pejabat</a></strong></td>
+      <td class="el" width="10%" align="center"><font color="#FFFFFF"><strong>Jawatan</strong></font></td>
+    </tr>
+<%
+  i=0
+  even=true
+  @applicants.each do |app|
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+%>
+	<tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.show('popmenu', '/profiles', '<%=h nof{app.staff.id} %>', '<%=h app.ic_number %>', event)" >
+		<td class="el"><input type="checkbox" name="ids[]" value="<%= app.id%>"></td>
+		<td class="el" ><%= i.to_s %>.</td>
+		<td class="el" ><%=h nof{app.name} %></td>
+		<td class="el" align="center"><%=h nof{app.ic_number} %></td>
+		<td class="el" align="center">&nbsp;<%=h nof{app.employments[0].job_profile.job_grade} %></td>
+		<td class="el" align="center">&nbsp;<%=h nof{app.employments[0].place.name} %></td>
+		<td class="el" align="center">&nbsp;<%=h nof{app.designation} %></td>
+	</tr>
+<% end %>
+  </table>
+	<input type="hidden" name="ci_id" value="<%=@course_implementation.id%>">
+	<div align="center"><br />
+  <input name="Submit" type="button" value="Simpan" onclick="apply_for_course(document.list_form)">
+</div>
+

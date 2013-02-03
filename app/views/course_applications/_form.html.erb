@@ -1,0 +1,803 @@
+<!--[form:profile]-->
+<%
+ dob = @profile.date_of_birth if @profile
+ if (dob != nil)
+  tarikh =  dob.to_s
+  tarikh = tarikh.split('-')
+  y = tarikh[0]
+  m = tarikh[1]
+  d = tarikh[2]        
+ end
+%>
+<!--div align="center">
+<%= error_messages_for 'profile' %>
+<%= error_messages_for 'course_application' %></div-->
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+  <tr bgcolor="000000">
+    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PEMOHON </font></b></td>
+    </tr>
+    <tr>
+      <td colspan="4" align="right">&nbsp;</td>
+    </tr>
+<script>
+function updateCourseName() {
+	var code = $('course_implementation_code').value
+	
+	//404 eraa wo boushisurutame
+	code = code.replace(/\//g,"_");
+	
+	data = "code=" + code
+	if ($('course_implementation_code').value!="") {
+		find_course_name_by_code('/ajax/find_course_by_code', data)
+	}
+}
+
+function find_course_name_by_code(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: find_course_name_by_code_response}
+    );
+}
+
+function find_course_name_by_code_response(originalRequest) {
+	a = originalRequest.responseText
+	
+	if (a == 0) {
+		$('course_name').innerHTML = ""
+		alert('Kod kursus tidak wujud. Sila masukkan kod yang lain.');
+		
+		HighLightTextField($('course_implementation_code'));
+		$('course_implementation_code').focus();
+		$('course_implementation_code').select();
+	}
+	else {
+		$('course_name').innerHTML = a
+	}
+}
+</script>
+
+    <tr>
+      <td align="right"><b>Kod Kursus  :</b></td>
+      <td colspan=3>&nbsp;
+	     <%= text_field 'course_implementation', 'code', :size=>"10", :onchange=>"this.value=this.value.toUpperCase(); updateCourseName();"  %>
+		 <%= hidden_field 'course_application', 'course_implementation_id', :size=>"3"  %>
+		 <span id="course_name"><%= ""+@course_implementation.course.name.upcase+"" if @course_implementation%></span>	  </td>
+    </tr>
+    <tr>
+      <td align="right" valign="top"><b>No K/P Baru : </b></td>
+      <td>&nbsp;
+      <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>15, :onchange=>"checkNRIC()"  %><span id="node_identification_memo"> </span></td></tr>
+	<tr>
+      <td align="right" valign="top"><b>No K/P Lama : </b></td>
+      <td>&nbsp; <%= text_field 'profile', 'old_ic_number', :maxlength=>8, :size=>10, :onchange=>"this.value=this.value.toUpperCase()"  %></td></tr>
+      <!--tr><td align="right" valign="top"><b>No K/P Tentera : </b></td-->
+      <!--td>&nbsp;<%= text_field 'profile', 'army_ic_number', :maxlength=>8, :size=>10, :onchange=>"this.value=this.value.toUpperCase()"  %></td></tr-->
+<script>
+var node = $("profile_ic_number");
+var node_identification_memo = $("node_identification_memo");
+
+function checkNRIC() {
+	if ( icnumRegExp.test(node.value) ) {
+		node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange>Sistem sedang memeriksa no kp<br>&nbsp;Sila tunggu..</font>"
+		ajax_request("/ajax/ajax_nric", "ic_number="+node.value)
+	}
+	
+}
+
+function ajax_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'get', parameters: data, onComplete: ajax_response}
+    );
+}
+
+function ajax_response(originalRequest) {
+	//alert(originalRequest.responseText)
+	if (originalRequest.responseText == 1) {
+		node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange> Data pemohon sudah ada.<br>&nbsp; Loading..</font>"
+<%
+dr = ""
+dr = "dr=1" if params[:dr]
+%>
+		document.forms[0].action = "/course_applications/new_but_peserta_already_exist?<%=dr%>";
+		document.forms[0].method = 'get';
+		document.forms[0].submit();
+	}
+	else if (originalRequest.responseText == 2) {
+		node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange> Data pemohon telah memohon.<br>&nbsp; Loading..</font>"
+		document.forms[0].action = "/course_applications/new";
+		document.forms[0].submit();
+	}
+	else {
+		node_identification_memo.innerHTML = "<font color=orange><br>&nbsp; Data pemohon belum ada.</font>"
+	}
+}
+</script>
+ <tr>
+      <td align="right"><b>Gelaran : </b></td>
+      <td colspan=3>&nbsp;
+	    <%=
+		  @id_titles = @titles.map { |t| [t.description, t.id] }
+		  @id_titles.unshift(["Sila Pilih", ""])
+		  select(:profile, :title_id, @id_titles, "" ,:style=>"width: 100;")
+		%>      </td>
+    </tr>    
+    <tr>
+      <td width="20%" align="right"><b>Nama Penuh : </b></td>
+      <td colspan=3>&nbsp;
+      <%= text_field 'profile', 'name', :maxlength=>80, :size=>50, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    </tr>
+        <tr>
+      <td align="right"><b>Jantina :</b></td>
+      <td colspan=3>&nbsp;
+	    <%=
+		  @options = @genders.map { |t| [t.description, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:profile, :gender_id, @options, "" ,:style=>"width: 100;")
+		%>	  </td>
+     
+      </tr>
+    <tr>
+      <td align="right"><b>Agama :</b></td>
+      <td>&nbsp;
+	  <%=
+		  @options = @religions.map { |t| [t.description, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:profile, :religion_id, @options, "" ,:style=>"width: 100;")
+	  %>       </td>
+		<td align="right" width=20%><b>Upload Gambar :</b></td>
+    	<td>&nbsp;
+		<%= file_column_field "profile", "image" %>
+			<!--input type="file" id=profile_image name="profile[image]"-->
+		</td>
+    </tr>
+    <tr>
+      <td align="right"><b>Taraf Perkahwinan :</b></td>
+      <td>&nbsp;
+	  <%=
+		  @options = @marital_statuses.map { |t| [t.description, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:profile, :marital_status_id, @options, "" ,:style=>"width: 100;")
+	  %>	  </td>
+	 <td align="right" width=20%><b>Tarikh Lahir :</b></td>
+      <td>&nbsp;
+      <input type=text id=d_dob name=d_dob maxlength=2 size=3 value="<%=d%>"> /
+      <input type=text id=m_dob name=m_dob maxlength=2 size=3 value="<%=m%>"> /
+      <input type=text id=y_dob name=y_dob maxlength=4 size=5 value="<%=y%>">	</td>
+      
+    </tr>
+    <tr>
+      <td align="right"><b>Vegetarian? :</b></td>
+<%
+ veg_0_checked = ""
+ veg_1_checked = ""
+ if @profile.is_vegetarian == 0
+ 	veg_1_checked = ""
+ 	veg_0_checked = "checked"
+ else
+	veg_1_checked = "checked"
+	veg_0_checked = ""
+end 	
+%>
+      <td>&nbsp; <input type="radio" id="is_vegetarian_1" name="profile[is_vegetarian]" value="1" <%=veg_1_checked%>>
+	             <label for="is_vegetarian_1">Ya</label>
+	      &nbsp; <input type="radio" id="is_vegetarian_0" name="profile[is_vegetarian]" value="0" <%=veg_0_checked%>>
+	             <label for="is_vegetarian_0">Tidak</label>	   </td>
+      <!--td align="right">&nbsp;</td>
+      <td colspan=3>&nbsp;</td-->
+	  <td align="right"><b>Keturunan :</b></td>
+      <td colspan=3>&nbsp;
+	  <%=
+		  @options = @races.map { |t| [t.description, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:profile, :race_id, @options, "" ,:style=>"width: 100;")
+	  %>      </td>
+    </tr>
+    <tr>
+      <td align="right"><b>No Telefon Bimbit :</b></td>
+      <td>&nbsp; <%= text_field 'profile', 'mobile', :maxlength=>12, :size=>15  %> </td>
+	<td align="right"><b>Kecacatan :</b></td>
+      <td colspan=3>&nbsp; <%=
+		  @options = @handicaps.map { |t| [t.description, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:profile, :handicap_id, @options, "" ,:style=>"width: 100;")
+	  %> </td>
+    </tr>
+    <tr>
+    <td colspan=4>&nbsp;</td>
+    </tr>
+  <tr bgcolor="000000">
+    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT WARIS</font></b></td>
+    </tr>
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+	<tr>
+      <td width="20%" align="right"><b>Nama : </b></td>
+      <td colspan=3> &nbsp;
+          <%= text_field 'relative', 'name', :size=>50, :maxlength=>80 ,:onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    </tr>
+    <tr>
+      <td width="20%" align="right"><b>Hubungan : </b></td>
+      <td colspan=3> &nbsp;
+	  <%=
+		  @options = @relationships.map { |t| [t.description, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:relative, :relationship_id, @options, "" ,:style=>"width: 100;")
+	  %>	  </td>
+    </tr>
+     <tr>
+      <td align="right" valign="top"><b>Alamat :</b></td>
+      <td colspan=3>&nbsp;
+          <%= text_field 'relative', 'address1', :maxlength=>50, :size=>50, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td colspan=3>&nbsp;
+          <%= text_field 'relative', 'address2', :maxlength=>50, :size=>50, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td colspan=3>&nbsp;
+          <%= text_field 'relative', 'address3', :maxlength=>50, :size=>50, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    </tr>    
+    <tr>
+      <td align="right"><b>Negeri :</b></td>
+      <td colspan=3>&nbsp;
+	  <%=
+		  @options = @states.map { |t| [t.description, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:relative, :state_id, @options)
+	  %>      </td>
+    </tr>
+
+    <tr>
+      <td align="right"><b>No Telefon Rumah :</b></td>
+      <td colspan=3>&nbsp;
+      <%= text_field 'relative', 'phone', :maxlength=>12, :size=>15  %>      </td>
+    </tr>
+    <tr>
+      <td align="right"><b>No Telefon Bimbit :</b></td>
+      <td colspan=3>&nbsp;
+      <%= text_field 'relative', 'mobile', :maxlength=>12, :size=>15  %>      </td>
+    </tr>
+ 	<tr>
+ 	<td colspan=4>&nbsp;</td>
+ 	</tr>
+  <tr bgcolor="000000">
+    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PERKHIDMATAN</font></b></td>
+    </tr>
+    <tr>
+      <td colspan="4" align="right">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right"><b>Kementerian :</b></td>
+      <td colspan="3">&nbsp; <span id="kementerian_selection">
+	  <%= 
+  		  	@ministries = Place.find(:all, :conditions => "place_type_id=3", :order=> "name")
+		  	@options = @ministries.map { |t| [t.name.upcase, t.id] }
+		  	@options.unshift(["Sila Pilih", ""])
+
+	  		if nof{@employment.place}
+				if @employment.place.place_type_id == 3
+					@grandparent = @employment.place
+				elsif @employment.place.place_type_id == 1
+					@grandparent = @employment.place.parent
+				elsif @employment.place.place_type_id == 2
+					@grandparent = nof{@employment.place.parent.parent}
+				else
+					@grandparent = Place.new
+				end
+			else
+				@grandparent = Place.new
+			end
+			@grandparent = Place.new if @grandparent == nil
+			select(:grandparent, :id, @options, '', :id=> "kementerian_id", :name=> "kementerian_id", :onchange=>"checkJabatan()")
+	  %></span>	  </td>
+    </tr>
+   <tr>
+      <td align="right"><b>Jabatan :</b></td>
+      <td colspan="3">&nbsp; <span id="department_selection">
+    <%= 
+		  if nof{@employment.place}
+		  	if @employment.place.place_type_id == 3
+				@departments = @employment.place.children
+				@parent = Place.new
+			elsif @employment.place.place_type_id == 1
+				#@departments = Place.find(:all, :conditions => "place_type_id=1")
+				@departments = @employment.place.parent.children
+				@parent = @employment.place
+			elsif @employment.place.place_type_id == 2
+				@departments = nof{@employment.place.parent.parent.children} || []
+				@parent = @employment.place.parent
+			else
+				@departments = []
+				@parent = Place.new
+			end
+		  else
+		  	@parent = Place.new
+		  	@departments = []
+		  end
+		  @options = @departments.map { |t| [t.name.upcase, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:parent, :id, @options, '', :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
+	  %></span>    </tr>
+   <tr>
+      <td align="right"><b>Pejabat :</b></td>
+      <td colspan="3">&nbsp; <span id="pejabat_selection">
+	  <%= 
+		  if nof{@employment.place}
+		  	if @employment.place.place_type_id == 2
+				@offices = nof{@employment.place.parent.children}
+				@child_ids = []
+				if @offices.size > 0
+					for o in @offices
+						if o.children.size > 0
+							@offices.push(o.children)
+						end
+					end
+				end
+				@office  = nof{@employment.place}
+		  	elsif @employment.place.place_type_id == 1
+				@offices = nof{@employment.place.children}
+				@office  = Place.new
+			else
+				@offices = []
+				@office = Place.new
+			end
+		  else
+		  	@office = Place.new
+		  	@offices = []
+		  end
+		  
+		  @offices = [] if @offices == nil
+		  @office = Place.new if @office == nil
+		  
+		  @options = @offices.map { |t| [t.name.upcase, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:office, :id, @options, '', :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
+	  %></span>
+	  <%= hidden_field 'employment', 'place_id', :size=>3  %>	  </td>
+	
+    </tr>
+<script>
+//jabatan selection
+function checkJabatan() {
+	$('employment_place_id').value = $('kementerian_id').value
+	$('pejabat_selection').innerHTML = "<font color=orange>Sila pilih jabatan</font>"
+	$('department_selection').innerHTML = "<font color=orange>Carian jabatan...sila tunggu</font>"
+	ajax_department_request("/ajax/children_of_place", "id="+$("kementerian_id").value)
+}
+
+function ajax_department_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_department_response}
+    );
+}
+
+function ajax_department_response(originalRequest) {
+	if (originalRequest.responseText != 0) {
+		var a = originalRequest.responseText.split("$$")
+		var k = new Array(a.length)
+		for (i=0; i<k.length; i++) {
+			k[i] = a[i].split("=")
+		}
+		//alert(originalRequest.responseText)
+		
+		str  = "<select  id=\"jabatan_id\" name=\"jabatan_id]\" class=\"px200\" onchange=\"checkPejabat()\">\n";
+		str += "<option value=\"\">Sila Pilih</option>\n"
+		for (i=0; i<k.length; i++) {
+			str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+		}
+		str += "</select>\n";
+		$("department_selection").innerHTML = str;
+	}
+	else {
+		$('department_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
+	}
+}
+//EO department selection
+
+//pejabat selection
+function checkPejabat() {
+	$('employment_place_id').value = $('jabatan_id').value
+	$('pejabat_selection').innerHTML = "<font color=orange>Carian pejabat...sila tunggu</font>"
+	ajax_pejabat_request("/ajax/grand_and_children_of_place", "id="+$("jabatan_id").value)
+}
+
+function ajax_pejabat_request(url, data) {
+    var myAjax = new Ajax.Request(
+        url,
+        {method: 'post', parameters: data, onComplete: ajax_pejabat_response}
+    );
+}
+
+function ajax_pejabat_response(originalRequest) {
+	if (originalRequest.responseText != 0) {
+		var a = originalRequest.responseText.split("$$")
+		var k = new Array(a.length)
+		for (i=0; i<k.length; i++) {
+			k[i] = a[i].split("=")
+		}
+		//alert(originalRequest.responseText)
+	
+		str  = "<select  id=\"pejabat_id\" name=\"pejabat_id]\" class=\"px200\" onchange=\"updatePlaceId()\">\n";
+		str += "<option value=\"\">Sila Pilih</option>\n"
+		for (i=0; i<k.length; i++) {
+			str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+		}
+		str += "</select>\n";
+		$("pejabat_selection").innerHTML = str;
+	}
+	else {
+		$('pejabat_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
+	}
+}
+//EO pejabat selection
+
+function updatePlaceId() {
+	$('employment_place_id').value = $('pejabat_id').value
+}
+
+</script>
+     <tr>
+     <td align="right"><b>Bahagian/Unit :</b></td>
+      <td>&nbsp; <%= text_field 'employment', 'unit', :maxlength=>100, :size=>30, :onchange=>"this.value=this.value.toUpperCase()"  %></td>      </tr>
+     <tr>
+<script src="/course_applications/grades_for_lookup" type="text/javascript"></script>
+       <td align="right"><b>Gred/Jawatan :</b></td>
+       <td colspan="3">
+	   <%=#
+		  #@options = @job_profiles.map { |t| [t.job_grade, t.id] }
+		  #@options.unshift(["Sila Pilih", ""])
+		  #select(:employment, :job_profile_id, @options, "", :onchange=>"checkDesignation()")
+	  %>
+	   <%
+	   	  @grade = nof{@employment.job_profile.job_grade}
+		  @job_name = nof{@employment.job_profile.job_name}
+		  @job_grade_and_job_name =  ""
+		  @job_grade_and_job_name =  "#{@grade},#{@job_name}" if (@grade != nil and @job_name != nil)
+	  -%>
+	  &nbsp; <input id="job_profile_name" name="job_profile_name" type="text" maxlength="100" size="80" value="<%=@job_grade_and_job_name%>" onfocus="this.select()">
+<div class="auto_complete" id="job_profile_name_auto_complete"></div>
+<%= javascript_tag("new Autocompleter.Local('job_profile_name' ,
+'job_profile_name_auto_complete' ,
+grades,
+{fullSearch: true,
+frequency: 0,
+minChars: 1
+}
+);") %>
+       <%= hidden_field 'employment', 'job_profile_id', :size=>3  %></td>
+     </tr>
+    <tr>
+      <td align="right"><b>Gelaran Jawatan :</b></td>
+      <td colspan="3">&nbsp; <%= text_field 'profile', 'designation', :maxlength=>50, :size=>50 %> <font color="orange">*cth:Penolong Pengarah</font></td>
+    </tr>
+    <tr>
+      <td align="right"><b>E-Mel :</b></td>
+      <td>&nbsp;
+      <%= text_field 'profile', 'email', :maxlength=>60, :size=>30, :class=>"email"  %></td>
+    </tr>
+    <tr bgcolor="000000">
+    	<td colspan="4" align="CENTER" bgcolor="white"><font color="red">Nama dan Alamat Lengkap Tempat Bertugas (Surat Tawaran akan Dikeluarkan Mengikut Alamat ini)</font></td>
+    </tr>
+	
+ 	<tr>
+ 	<td colspan=4>&nbsp;
+[<a style="color:red; font-weight:bold;" href="javascript: MM_openBrWindow('/course_applications/new_popup','','scrollbars=yes,width=600,height=400')">Panduan Kemasukan Maklumat Pejabat dan Alamat Tempat Bertugas</a>]</td>
+ 	</tr>
+    <tr>
+      <td align="right"><b>Gelaran Ketua Pejabat :</b></td>
+      <td colspan="3">&nbsp; <%= text_field 'profile', 'hod', :maxlength=>45, :size=>45 %> <font color="orange">*cth:Ketua Pengarah/Pengarah</font></td>
+    </tr>
+    <tr>
+      <td align="right"><b> Nama Pejabat :</b></td>
+      <td colspan="3">&nbsp; <%= text_field 'profile', 'opis', :maxlength=>60, :size=>60 %></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Alamat :</b></td>
+      <td colspan="3">&nbsp; <%= text_field 'profile', 'address1', :maxlength=>50, :size=>50 %></td>
+
+    </tr>
+    <tr>
+      <td align="right"><b>(Tempat Bertugas)</b></td>
+      <td colspan="3">&nbsp; <%= text_field 'profile', 'address2', :maxlength=>50, :size=>50 %></td>
+    </tr>
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td colspan="3">&nbsp; <%= text_field 'profile', 'address3', :maxlength=>50, :size=>50 %></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Negeri :</b></td>
+      <td colspan=3>&nbsp; <%=
+		  @options = @states.map { |t| [t.description, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+		  select(:profile, :state_id, @options)
+	  %> </td>
+    </tr>
+    <tr>
+      <td align="right"><b>No Telefon Pejabat :</b></td>
+      <td>&nbsp; <%= text_field 'profile', 'office_phone', :maxlength=>12, :size=>15  %> </td>
+      <td align="RIGHT"><b>No Fax :</b></td>
+      <td>&nbsp; <%= text_field 'profile', 'fax', :maxlength=>12, :size=>15  %> </td>
+    </tr>
+    <tr>
+      <td colspan=6><hr width="80%" size="1"></td>
+    </tr>
+
+  <tr bgcolor="000000">
+    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT AKADEMIK</font></b></td>
+    </tr>
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr>
+    <td valign=top align="center" colspan="5">
+    	<table id="qua_table" border="1" width="90%" align="center">
+    		<tr>
+    		 <th width="15%">KELAYAKAN</th>
+    		 <th width="25%">PENGKHUSUSAN</th>
+    		 <th width="25%">INSTITUSI/UNIVERSITI</th>
+    		 <th width="15%">TAHUN</th>            
+    			<th width="15%">&nbsp;</th>
+    		</tr>
+    <% 
+    i = 0
+    for @qualification in @profile.qualifications
+
+    i = i + 1
+    %>
+    		<tr align=center id="<%="row_#{i}"%>">
+    		 <td align="center">
+	 <%=
+		  @options = @cert_levels.map { |t| [t.description.capitalize, t.id] }
+		  @options.unshift(["Sila Pilih", ""])
+
+		  #@qualification = nof{@course_application.profile.qualifications[0]}
+		  select(:qualification, :cert_level_id, @options,'',:name=>"cert_level_ids[]")
+	 %>      </td>
+    		 <td>
+	 <%=
+		  #@options = @majors.map { |t| [t.description.capitalize, t.id] }
+		  #@options.unshift(["Sila Pilih", ""])
+		  #select(:qualification, :major_id, @options, '', :name=>"major_ids[]")
+	 %><%= text_field 'qualification', "pengkhususan", :maxlength=>100, :size=>30, :name=>"majors[]", :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    		 <td><%= text_field 'qualification', "institution", :maxlength=>100, :size=>30, :name=>"institutions[]", :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    		 <td><%= text_field 'qualification', 'year_end', :maxlength=>4, :size=>5, :name=>"year_ends[]"  %></td>
+    		 <td width="30"><a href="javascript: deleteQualificationRow('qua_table','<%="row_#{i}"%>')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a> </td>
+    		</tr>
+	  <%
+	  end
+	  %>
+		</table>
+		<table id="qua_table" border="0" width="90%" align="center">
+			<tr>
+			  <td align="right"><a href="javascript: addQualification('qua_table')"><font style="color: blue; font-size:10px;"><u>Tambah..</u></font> </a></td>
+			</tr>
+		</table>    </td>
+    <script>
+var cert_level_options = [
+  {name: "Sila Pilih", id: ""},
+<% @cert_levels.each do |cl| %>
+<%= "{name: \"#{cl.description}\", id: \"#{cl.id}\"}," %>
+<% end %>
+  {name: " ", id: "00"}
+];
+
+var major_options = [
+  {name: "Sila Pilih", id: ""},
+<% @majors.each do |m| %>
+<%= "{name: \"#{m.description}\", id: \"#{m.id}\"}," %>
+<% end %>
+  {name: " ", id: "00"}
+];
+
+function addQualification(tn) {
+	var tbl = $(tn);
+	var newRow = tbl.insertRow(tbl.rows.length);
+	row_id = "row_" + (tbl.rows.length-1);
+	if ($(row_id)) {
+		row_id = row_id + "_1"
+	}
+	newRow.id = row_id;
+	
+	option_strings = ""
+	for (i=0;i<cert_level_options.length;i++) {
+		option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
+	}
+	major_option_strings = ""
+	for (i=0;i<major_options.length;i++) {
+		major_option_strings += '<option value="'+major_options[i].id +'">'+major_options[i].name+'</option>'
+	}
+	var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
+	var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<input type="text" name="majors[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
+	var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
+	var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
+	var cell_4 = newRow.insertCell(4);cell_4.align="center";
+	cell_4.innerHTML = '<a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+}
+
+function deleteQualificationRow(tn,id) {
+	row = $(id)
+	tbl = row.parentNode.parentNode
+	for (i=1;i<tbl.rows.length;i++) {
+		//alert(tbl.rows[i].id)
+		
+		if (tbl.rows[i].id == row.id) {
+			tbl.deleteRow(i)
+		}
+	}
+}
+</script>
+	</tr>
+ 	<tr>
+ 	<td colspan=4>&nbsp;</td>
+ 	</tr>
+
+    <tr bgcolor="000000">
+    	<td colspan="4" align="center" bgcolor="#999999"><b><font color="#FFFFFF">PENGAKUAN PEMOHON</font></b></td>
+    </tr>
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+<%
+if @course_application.date_apply
+	@date_apply_day   = @course_application.date_apply.to_formatted_s(:my_format_day)
+	@date_apply_month = @course_application.date_apply.to_formatted_s(:my_format_month)
+	@date_apply_year  = @course_application.date_apply.to_formatted_s(:my_format_year)
+else
+	time = Time.now
+	@date_apply_day   = time.strftime("%d")
+	@date_apply_month = time.strftime("%m")
+	@date_apply_year  = time.strftime("%Y")
+end
+%>
+    <tr>
+      <td align="right"><b>Tarikh Mohon:</b></td>
+      <td align="left" colspan="3">&nbsp;
+        <input type="text" name="date_apply_day" maxlength="2" size="3" value="<%=@date_apply_day%>">
+/
+<input type="text" name="date_apply_month" maxlength="2" size="3" value="<%=@date_apply_month%>">
+/
+<input type="text" name="date_apply_year" maxlength="4" size="5" value="<%=@date_apply_year%>">
+<font color="orange">dd/mm/yyyy</font></td>
+    </tr>
+    <tr>
+      <td colspan="4" align="center">&nbsp;
+        <script>
+			function hideApply() {
+				document.getElementById('apply_button').style.visibility='visible'
+			}
+			function showApply() {
+				document.getElementById('apply_button').style.visibility='visible'
+			}
+        </script>
+        &nbsp;&nbsp;
+        <label for="chkbox"></label>
+        <table width="95%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="30" align="CENTER" valign="TOP"><input id="chkbox" type="checkbox" name="checkbox" value="1" onclick="if (this.checked) showApply(); else hideApply()"></td>
+    <td><label for="chkbox">SAYA MENGAKU BAHAWA SEMUA KETERANGAN DI ATAS ADALAH BENAR. SEKIRANYA KENYATAAN YANG DIBERIKAN ADALAH TIDAK BENAR, PIHAK INSTUN BERHAK MEMBATALKAN PERMOHONAN INI.</label>
+      </div></td>
+  </tr>
+</table></td>
+    </tr>
+     
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr bgcolor="000000">
+    	<td colspan="4" align="center" bgcolor="#999999">
+    	<font color="FFFFFF"><strong>PERAKUAN JABATAN</strong></font></td>
+    </tr> 
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>    
+    <tr>
+      <td colspan="4" align="center">&nbsp;
+        <script>
+			function hideApply() {
+				if ($('chkbox').checked && $('chkbox_ketua_jabatan').checked) {
+					//document.getElementById('apply_button').style.visibility='visible'
+				}
+				else {
+					//document.getElementById('apply_button').style.visibility='hidden'
+				
+				}
+			}
+			function showApply() {
+				if ($('chkbox').checked && $('chkbox_ketua_jabatan').checked) {
+					//document.getElementById('apply_button').style.visibility='visible'
+				}
+				else {
+					//document.getElementById('apply_button').style.visibility='hidden'
+				
+				}
+			}
+        </script>
+        
+            <!--input id="checkbox222" type="checkbox" name="checkbox" value="checkbox" onclick="if (this.checked) showApply(); else hideApply()"-->
+&nbsp;&nbsp;
+<table width="95%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="30" align="CENTER" valign="TOP"><input id="chkbox_ketua_jabatan" type="checkbox" name="chkbox_ketua_jabatan" value="1" onclick="if (this.checked) showApply(); else hideApply()"></td>
+    <td><label for="chkbox_ketua_jabatan">SAYA MENGESAHKAN BAHAWA PERMOHONAN UNTUK MENGIKUTI KURSUS INI TELAH DILULUSKAN OLEH KETUA JABATAN, DAN SAYA BERTANGGUNGJAWAB SEPENUHNYA KE ATAS PERAKUAN INI.MAKLUMAT PEGAWAI YANG MELULUSKAN ADALAH SEPERTI BERIKUT:</label></td>
+  </tr>
+</table></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Nama :</b></td>
+<% 
+if @profile
+	if @profile.course_applications.size > 0
+		ca = @profile.course_applications[0]
+		@course_application.supervisor_name    = ca.supervisor_name
+		@course_application.supervisor_jawatan = ca.supervisor_jawatan
+		@course_application.supervisor_email   = ca.supervisor_email
+	end
+end
+%>
+      <td colspan="3" >&nbsp;<%= text_field 'course_application', "supervisor_name", :maxlength=>80, :size=>80, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    </tr> 
+    <tr>
+      <td align="right"><b>Jawatan :</b></td>
+      <td colspan="3" >&nbsp;<%= text_field 'course_application', "supervisor_jawatan", :maxlength=>80, :size=>50  %> <font color="orange">*cth:Ketua Jabatan </font></td>
+    </tr>
+    <tr>
+      <td align="right"><b>E-Mel :</b></td>
+      <td colspan="3" >&nbsp;<%= text_field 'course_application', 'supervisor_email', :maxlength=>60, :size=>30, :class=>"email"  %></td>
+    </tr>
+<%
+if @course_application.date_approval
+	@date_approval_day   = @course_application.date_approval.to_formatted_s(:my_format_day)
+	@date_approval_month = @course_application.date_approval.to_formatted_s(:my_format_month)
+	@date_approval_year  = @course_application.date_approval.to_formatted_s(:my_format_year)
+else
+	time = Time.now
+	@date_approval_day   = time.strftime("%d")
+	@date_approval_month = time.strftime("%m")
+	@date_approval_year  = time.strftime("%Y")
+end
+%>
+    <tr>
+      <td align="right"><b>Tarikh Diluluskan:</b></td>
+      <td colspan="3" >&nbsp;<input type="text" name="date_approval_day" maxlength="2" size="3" value="<%=@date_approval_day%>">
+/
+<input type="text" name="date_approval_month" maxlength="2" size="3" value="<%=@date_approval_month%>">
+/
+<input type="text" name="date_approval_year" maxlength="4" size="5" value="<%=@date_approval_year%>"> 
+<font color="orange">dd/mm/yyyy</font></td>
+    </tr>
+      </table>
+
+<div id="label" style="clear: both; visibility: hidden">Bonner</div>
+<style>
+div.auto_complete {
+width: 350px;
+background: #fff;
+cursor: pointer;
+}
+div.auto_complete ul {
+border:1px solid #888;
+margin:0;
+padding:0;
+width:100%;
+list-style-type:none;
+}
+div.auto_complete ul li {
+margin:0;
+padding:3px;
+}
+div.auto_complete ul li.selected {
+background-color: #ffb;
+}
+div.auto_complete ul strong.highlight {
+color: #800;
+margin:0;
+padding:0;
+}
+</style>
+

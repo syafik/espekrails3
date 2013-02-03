@@ -1,0 +1,20 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH ASRAMA</font></b></td>
+    </tr>
+</table>
+<br>
+
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+ <tr>
+  <td align="left"><font color=red> Langkah 2</font></td>
+ </tr>
+</table>
+<br>
+
+<div align=center>
+<%= start_form_tag :action => 'create_two' %>
+  <%= render :partial => 'form_two' %>
+  <%= submit_tag "Simpan" %>
+<%= end_form_tag %>
+</div>

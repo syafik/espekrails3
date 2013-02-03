@@ -1,0 +1,65 @@
+<form name="list_form">
+  <div width="95%" style="background-color:#FFFFFF">
+	  <table align=center border=0 width=95% bgcolor="#FFFFFF">
+	    <tr>
+	      <th width="15%" align="left" bgcolor="#FFFFFF">Nama : <%=h @profile.name %></th>
+	      <th width="15%" align="left" bgcolor="#FFFFFF">No. KP :<%=h @profile.ic_number %></th>
+	    </tr>
+		<tr>
+	      <th width="15%" align="left" bgcolor="#FFFFFF">Gred/Jawatan : <%=h @employment.job_profile.job_grade %>/<%=h @employment.job_profile.job_name %></th></tr>
+		<tr>
+	      <th width="15%" align="left" bgcolor="#FFFFFF">Jabatan :<%=h @profile.opis %></th>
+	    </tr>
+	  </table>
+  <table class="seven" width="95%" border="<%=list_border%>" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" valign="top"  border="10">&nbsp;</td>
+      <td class="el" width="" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Kod</strong></font></td>
+      <td class="el" width="40%" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Nama Kursus</strong></font></td>
+      <td class="el" width="" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Tarikh Mula</strong></font></td>
+      <td class="el" width="" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Tarikh Tamat</strong></font></td>
+      <td class="el" width="" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Peratus Kehadiran</strong></font></td>
+	  <td class="el" width="" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Markah Ujian</strong></font></td>
+      <td class="el" width="" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>Markah Penilaian</strong></font></td>
+      <td class="el" width="" align="center" <%=list_font_size%>><font color="#FFFFFF"><strong>No Sijil</strong></font></td>
+   </tr>
+
+<%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#fffffE" if (even == false)
+  even = !even
+  @quiz = Quiz.find_by_course_implementation_id(student.course_implementation_id)
+  if @quiz
+betul1 = QuizAnswer.find_by_sql("SELECT count(*) FROM vw_markah WHERE q_id = '#{@quiz.id}' AND profile_id = '#{student.profile_id}' AND fraction = 'before' AND feedback='1'")
+total1 = QuizAnswer.find_by_sql("SELECT count(*) FROM vw_markah WHERE q_id = '#{@quiz.id}' AND profile_id = '#{student.profile_id}' AND fraction = 'before'")
+betul2 = QuizAnswer.find_by_sql("SELECT count(*) FROM vw_markah WHERE q_id = '#{@quiz.id}' AND profile_id = '#{student.profile_id}' AND fraction = 'after' AND feedback='1'")
+total2 = QuizAnswer.find_by_sql("SELECT count(*) FROM vw_markah WHERE q_id = '#{@quiz.id}' AND profile_id = '#{student.profile_id}' AND fraction = 'after'")
+result1 = nof {betul1[0].count.to_i * 100 / total1[0].count.to_i }
+result2 = nof {betul2[0].count.to_i * 100 / total2[0].count.to_i }
+result1 = 0 if result1.nil?
+result2 = 0 if result2.nil?
+beza = nof {result1 - result2}
+  end
+%>
+
+    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="menuLayers.show('popmenu', '/user_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+      <td class="el" height="20" style="font-size: 10px">&nbsp;<%= i.to_s %>.</td>
+      <td class="el" align="left" <%=list_font_size%>><%= nof{student.course_implementation.code} %></td>
+      <td class="el" align="left" <%=list_font_size%>><%= nof{student.course_implementation.course.name.upcase} %></td>
+      <td class="el" align="center" <%=list_font_size%>><%= nof{student.course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %></td>
+      <td class="el" align="center" <%=list_font_size%>><%= nof{student.course_implementation.date_plan_end.to_formatted_s(:my_format_4)} %></td>
+      <td class="el" align="center" <%=list_font_size%>><%= nof{student.attendance_percentage} %></td>
+      <td class="el" align="center" <%=list_font_size%>><%= nof{result1} %>&nbsp;</td>
+      <td class="el" align="center" <%=list_font_size%>><%= nof{result2} %>&nbsp;</td>
+      <td class="el" align="center" <%=list_font_size%>><%= nof{beza.abs} %>&nbsp;</td>
+    </tr>
+<% end %>
+  </table>
+  </div>
+</form>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>

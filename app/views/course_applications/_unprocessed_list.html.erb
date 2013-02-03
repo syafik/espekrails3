@@ -1,0 +1,51 @@
+<form name="list_form">
+<div style="background: white">
+  <table class="seven" width="95%" align="center" cellpadding="1" cellspacing="0" bgcolor="#777777">
+    <!--tr bgcolor="#999999">
+      <td colspan="7" bgcolor="#FFFFFF"><u>Title</u></td>
+    </tr-->
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" valign="top" align="center"><font color="#FFFFFF"><input type="checkbox" name="check_all" value="0" onclick="checkAll(document.list_form)"></font></td>
+      <td class="el" width="2%" valign="top">&nbsp;</td>
+      <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama Pemohon </a></strong></td>
+      <td class="el" width="8%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('nric','<%= "DESC" if (@orderby=="nric" && @arrow=="ASC") %>')">Gred Jawatan </a></strong></td>
+      <td class="el" width="24%" align="center"><font color="#FFFFFF"><strong>Jabatan</strong></font></td>
+      <td class="el" width="11%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('date_apply','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')">Kursus<br />
+        Berkaitan
+</a></strong></td>
+      <td class="el" width="25%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('comp_name','<%= "DESC" if (@orderby=="comp_name" && @arrow=="ASC") %>')">Tarikh Mohon </a></strong></td>
+    </tr>
+
+<%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  jawatan = student.profile.employments[0].job_profile.job_grade
+  pejabat = student.profile.employments[0].place.name
+  related_courses = CourseApplication.find(:all, :conditions=>"profile_id = #{student.profile.id} AND course_implementation_id != #{student.course_implementation_id}")
+  related = related_courses.size
+  related = "-" if related == 0
+
+%>
+
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+      <td class="el" align="center"><input type="checkbox" name="course_application_ids[]" value="<%=student.id%>"></td>
+      <td class="el">&nbsp;<%= i.to_s %>.</td>
+      <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)"> &nbsp;<%=h student.profile.name.upcase %></td>
+      <td class="el" align="center"><%=h jawatan %></td>
+      <td class="el" align="left">&nbsp;<%= pejabat %></td>
+      <td class="el" align="center"><%= related %></td>
+      <td class="el" align="center"><%= student.created_at.to_formatted_s(:my_format_4) %></td>
+    </tr>
+<% end %>
+  </table>
+</div>
+</form>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>

@@ -1,0 +1,137 @@
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form" method="post" action="/course_management/override_kelayakan/<%=@course_implementation.id%>">
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">PENGELUARAN SIJIL</font></b></td>
+    </tr>
+ </table>
+ <br />
+ <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+   <tr>
+     <td align="RIGHT"><strong>Kod:</strong></td>
+     <td colspan="3"><font><%=@course_implementation.code%></font></td>
+   </tr>
+   <tr>
+     <td align="RIGHT"><strong>Tempat:</strong></td>
+     <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+   </tr>
+   <tr>
+     <td align="RIGHT"><strong>Tarikh:</strong></td>
+     <td colspan="3"><font><%=@course_implementation.tempoh%></font></td>
+   </tr>
+   <tr>
+     <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+     <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
+     </font></td>
+     <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
+     <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile%></font></td>
+   </tr>
+   <tr>
+     <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+     <td><font><%= nof{@course_implementation.penyelaras2.profile.name} %></font></td>
+     <td align="RIGHT"><font><b>No Tel:</b></font></td>
+     <td><font><b></b><%= nof{@course_implementation.penyelaras2.profile.mobile} %></font></td>
+   </tr>
+ </table>
+ <br>
+
+<table align="center" width="95%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<%
+if @course_implementation.cert_policy
+	if @course_implementation.cert_policy.wajib_yuran == "1"
+		polisi_yuran = "Wajib"
+	else
+		polisi_yuran = "Tidak Wajib"
+	end
+else
+	polisi_yuran = ""
+end
+%>
+ <td align="CENTER" valign="BOTTOM">Pembayaran Yuran: <%=polisi_yuran%>
+   <br />
+   Kehadiran Minima: <%=nof{@course_implementation.cert_policy.kehadiran_minima}%>%   <br />
+   [<span style="padding-bottom: 5px;"><a style="color:blue; text-decoration:underline;" href="javascript: confirmJana()">Jana kelayakan menggunakan sistem</a></span>]</td>
+</tr>
+</table>
+  <div width="95%" style="background: #FFFFFF">
+    <table width="95%" align="center" border="0" cellpadding="0" cellspacing="0">
+      <tbody>
+        <tr>
+          <td valign="bottom" align="LEFT" style="padding-bottom: 5px;">&nbsp;</td>
+          <td valign="bottom" align="right" style="padding-bottom: 5px;"><input name="button" type="button" value="Set Polisi Sijil" title="Set polisi kelayakan sijil"  style="background: #eeeeee" onclick="set_polisi(<%=@course_implementation.id%>)">
+            <input name="button3" type="button" value="Tempah Sijil" title="Tempah sijil"  style="background: #eeeeee" onclick="tempah_sijil(<%=@course_implementation.id%>)">
+            <!--input name="button32" type="button" value="Cetak Tempahan Sijil (ISO)" title="Tempah sijil ISO"  style="background: #eeeeee" onclick="tempah_sijil_iso(<%=@course_implementation.id%>)"--></td>
+        </tr>
+      </tbody>
+    </table>
+  <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+  <table class="seven" width="95%" <%=list_border%> align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" valign="top">&nbsp;</td>
+      <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama</a></strong></td>
+      <!--td class="el" align="center"><font color="#FFFFFF"><strong>Status<br />
+        Yuran</strong></font></td-->
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Bayaran<br />
+      Yuran(RM)</strong></font></td>
+      <!--td class="el" align="center"><font color="#FFFFFF"><strong>Peratus <br />
+      Kehadiran </strong></font></td-->
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Kehadiran</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Keputusan</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Catatan</strong></font></td>
+    </tr>
+
+<%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFE" if (even == false)
+  even = !even
+  
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  jawatan = nof{student.profile.employments[0].job_profile.job_grade}
+  pejabat = nof{student.profile.employments[0].place.name}
+  
+  arr = Array.new
+  for ca in student.profile.course_applications
+  	arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
+  end
+  related = arr.join(",")
+
+%>
+
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+      <td class="el" height="20">&nbsp;<%= i.to_s %>.</td>
+      <td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)"><%=h student.profile.name.upcase %></td>
+      <!--td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%=student.fee_paid?%></td-->
+      <td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center">&nbsp;<%=student.fee_amount.to_i%></td>
+      <td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center">&nbsp;<%=getAttPercent(student.id)%>%</td>
+      <td class="el" align="center"><%
+	  taklayak_checked = layak_checked = ""
+	  layak_checked = "checked" if student.layak_sijil == "1"
+	  taklayak_checked = "checked" if student.layak_sijil == "0"
+	  %>
+        <input name="layak[<%=student.id%>]" type="radio" value="1" <%=layak_checked%>>
+        Layak 
+        <input name="layak[<%=student.id%>]" type="radio" value="0" <%=taklayak_checked%>>
+        Tidak</td>
+      <td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><input type="text" name="cert_remarks[<%=student.id%>]" size="25" maxlength="100" value="<%=nof{student.cert_remark}%>"></td>
+    </tr>
+<% end %>
+  </table>
+  </div>
+  <div align="center"> <br />
+  <input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>">
+  <input name="Submit2" type="submit" value="Kemaskini Kelayakan">
+  </div></form>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>

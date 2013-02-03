@@ -1,0 +1,58 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">TAMBAH TOPIK </font></th>
+    </tr>
+    
+    
+  </table>
+  <br>
+  <br />
+<form action="/evaluations/topic_create/<%=@evaluation.id%>" method="post">
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+		<tr>
+		  <td colspan="3" bgcolor="#dddddd">
+
+		  <%=EvaluationSection.find(params[:section]).description%>: <%=EvaluationSubsection.find(params[:subsection]).description%>		  </td>
+		</tr>
+	
+		<tr>
+		  <td>Topik: 
+	      <input name="topic[title]" type="text" value="" size="80"></td>
+		  <td nowrap>&nbsp;</td>
+    </tr>
+		<tr>
+		  <td>Penceramah:<br />
+	        <select name="topic[trainer_id]">
+              <option value="0">Sila Pilih</option>
+              <% @trainers.each do |c| %>
+              <option value="<%= c.id %>"
+         	<%= ' selected' if c.id == @coordinator.to_i %>> <%= c.profile.name.upcase %> </option>
+              <% end %>
+          </select></td>
+		  <td nowrap>&nbsp;</td>
+    </tr>
+		<tr>
+		  <td width="50%">
+			<table><tr>
+				<td>&nbsp;</td>
+				<td><input name="questiontext" type="hidden" value="" size="80"></td>
+			</tr>
+			</table>		  </td>
+		  <td width="20%" nowrap>Skala Ranking:
+		  <select name="max_ranking">
+			<% 10.times do |i|
+				selected = "selected" if i == 3
+			%>
+			<option value="<%=i+1%>" <%=selected%>><%=i+1%></option>
+			<% end%>
+		  </select>		  </td>
+       </tr>
+</table>
+  <br />
+  <center>
+    <input type="hidden" name="topic[course_implementation_id]" value="<%=@evaluation.course_implementation_id%>">
+  <input type="button" value="<<Kembali" onclick="history.back();">
+  <input type="submit" value="Simpan">
+  </center>
+</form>

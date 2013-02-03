@@ -1,0 +1,133 @@
+<%
+if @course_implementation
+	@schedule = @course_implementation
+	@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " +
+	      "HINGGA " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_e_month).upcase} " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+end
+%>
+
+
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI KEHADIRAN: <%=@course_implementation.code%>&nbsp; <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+    </tr>
+ </table>
+  <br>
+
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form" action="/course_management/create_attendance">
+  <%if @course_implementation%>
+
+  <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+    <!--tr>
+      <td align="RIGHT"><strong>Kod:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.code%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tempat:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+    </tr-->
+    <tr>
+      <td align="RIGHT"><strong>Kursus:</strong></td>
+      <td><font><%=@course_implementation.course.name.upcase%> (<%=@course_implementation.code%>)</font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tarikh Kursus:</strong></td>
+      <td><font><%=@course_implementation.tempoh%></font></td>
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+      <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
+      </font></td>
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+      <td><font><%= nof{@course_implementation.penyelaras2.profile.name} %></font></td>
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Jadual Kehadiran pada :</strong></td>
+      <td><%=dmy(@sesi_harian[0].tarikh,"-","/")%></td>
+    </tr>
+  </table>
+  <br>
+  <%end%>
+
+  <div width="95%" style="background: #FFFFFF">
+
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" height="20" valign="top" rowspan="2">&nbsp;</td>
+      <td class="el" width="22%" align="center" style="color: white" rowspan="2"><strong>Nama</strong></td>
+      <td class="el" width="20%" align="center" style="color: white" rowspan="2"><strong>Jabatan</strong></td>
+      <td class="el" width="5%" align="center" style="color: white" rowspan="2"><strong>Gred<br>Jawatan</strong></td>
+      <td class="el" width="7%" align="center" style="color: white" rowspan="2"><strong>No Kad<br>Pengenalan</strong></td>
+      <td class="el" width="15%" align="center" style="color: white" colspan="<%=@sesi_harian.size%>"><strong>Kehadiran</strong></td>
+   </tr>
+   <tr bgcolor="#999999">
+      <% @sesi_harian.each { |sesi_harian|
+	  %>
+      <td class="el" width="8%" align="center" style="color: white"><strong><%=sesi_harian.session_code.time_in_text%></strong></td>
+	  <% } %>
+   </tr>
+
+    <%
+i = 0;
+even = true;
+sum = 0
+for student in @students
+  i = i + 1
+  bgclr = "#FFFFFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+%>
+
+<% if i == 15%>
+</table>
+<p>
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" height="20" valign="top" rowspan="2">&nbsp;</td>
+      <td class="el" width="22%" align="center" style="color: white" rowspan="2"><strong>Nama</strong></td>
+      <td class="el" width="20%" align="center" style="color: white" rowspan="2"><strong>Jabatan</strong></td>
+      <td class="el" width="5%" align="center" style="color: white" rowspan="2"><strong>Gred<br>Jawatan</strong></td>
+      <td class="el" width="7%" align="center" style="color: white" rowspan="2"><strong>No Kad<br>Pengenalan</strong></td>
+      <td class="el" width="15%" align="center" style="color: white" colspan="<%=@sesi_harian.size%>"><strong>Kehadiran</strong></td>
+   </tr>
+   <tr bgcolor="#999999">
+      <% @sesi_harian.each { |sesi_harian|
+	  %>
+      <td class="el" width="8%" align="center" style="color: white"><strong><%=sesi_harian.session_code.time_in_text%></strong></td>
+	  <% } %>
+   </tr>
+
+<% end %>
+    <tr bgcolor="<%=bgclr%>" >
+      <td class="el" height="30">&nbsp;<%= i.to_s %>.</td>
+      <td class="el"><%=h student.profile.name.upcase %></td>
+      <td class="el" align="left" style="font-size:9px;"><%=nof{student.profile.opis}%></td>	
+      <td class="el" align="center">&nbsp;<%=nof{student.profile.employments.first.job_profile.job_grade}%></td>	
+      <td class="el" align="center"><%=nof{student.profile.ic_number}%></td>	
+      <% @sesi_harian.size.times do |j|%>
+      <td class="el">&nbsp;&nbsp;&nbsp;</td>
+	  <% end %>
+</tr><%end%>
+
+</table>
+
+
+
+
+

@@ -1,0 +1,138 @@
+<script>
+
+function rewritePopupContent(controller, objid, objname) {
+    $('popmenu').style.width = 200;
+    $('popmenu').innerHTML = "<ul>" + 
+						"<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Lihat Jawapan</a>" +
+					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
+					        //"<hr size=1>" +
+					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
+					        "</ul>"
+}
+</script>
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=@course_implementation.code if @course_implementation%>&nbsp; <%=@course_implementation.course.name.upcase if @course_implementation%>&nbsp;&nbsp;(<%=@course_implementation.tempoh if @course_implementation%>)</font></b></td>
+    </tr>
+ </table>
+  <br>
+
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form">
+<%if @course_implementation%>
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">PENILAIAN BERKELOMPOK</font></strong></td>
+    </tr>
+ </table>
+ <br />
+ <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+   <tr>
+     <td align="RIGHT"><strong>Kod:</strong></td>
+     <td colspan="3"><font><%=@course_implementation.code%></font></td>
+    </tr>
+   <tr>
+     <td align="RIGHT"><strong>Tempat:</strong></td>
+     <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+    </tr>
+   <tr>
+     <td align="RIGHT"><strong>Tarikh:</strong></td>
+     <td colspan="3"><font><%=@course_implementation.tempoh%></font></td>
+    </tr>
+   <tr>
+     <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+     <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
+     </font></td>
+     <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
+     <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile%></font></td>
+   </tr>
+   <tr>
+     <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+     <td><font><%= nof{@course_implementation.penyelaras2.profile.name} %></font></td>
+     <td align="RIGHT"><font><b>No Tel:</b></font></td>
+     <td><font><b></b><%= nof{@course_implementation.penyelaras2.profile.mobile} %></font></td>
+   </tr>
+ </table>
+ <br>
+<%end%>
+
+  <div width="95%" style="background: #FFFFFF">
+  <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+  <table class="seven" width="60%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" valign="top">&nbsp;</td>
+      <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama</a></strong></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Peserta Sudah Menjawab Soalan Penilaian?</strong></font></td>
+    </tr>
+
+<%
+i = 0;
+even = true;
+for student in @students
+  i = i + 1
+  bgclr = "#CCCCFF" if (even == true)
+  bgclr = "#FFFFFE" if (even == false)
+  even = !even
+  
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+  jawatan = nof{student.profile.employments[0].job_profile.job_grade}
+  pejabat = nof{student.profile.employments[0].place.name}
+  
+  arr = Array.new
+  for ca in student.profile.course_applications
+  	arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
+  end
+  related = arr.join(",")
+
+%>
+
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
+        onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+      <td class="el" height="20">&nbsp;<%= i.to_s %>.</td>
+      <td nowrap class="el">
+	    <%=h "PESERTA"+i.to_s %>
+	  </td>
+      <td class="el" align="center">
+	    &nbsp; 
+		<a style="color:blue; text-decoration:underline;" href="javascript: a(<%=h student.id %>)">Jawab Soalan</a>
+		| 
+		<% if student.done_evaluation? %>
+		  <a style="color:blue; text-decoration:underline;" href="javascript: b(<%=h student.id %>)">Lihat Jawapan</a>
+		<% else%>
+		  Lihat Jawapan
+		<% end%>
+	  </td>
+    </tr>
+<% end %>
+  </table>
+  </div>
+  <div align="center"><br />
+    <input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>">
+    <input name="Submit" type="button" value="&laquo;Kembali" onclick="history.back()">
+  </div>
+</form>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+
+<!-- popup menu initial layer----->
+<div id="popmenu" class="menu"></div>
+
+
+<script>
+
+function a(id) {
+	MM_openBrWindow('/evaluations/user_hyouka?klm=1&ca_id='+id,'','scrollbars=yes,width=800,height=700')
+}
+function b(id,next,prev) {
+	MM_openBrWindow('/evaluations/user_hyouka_answer?klm=1&ca_id='+id,'','scrollbars=yes,width=800,height=700')
+}
+
+</script>

@@ -1,0 +1,21 @@
+<%= error_messages_for 'quiz_objective' %>
+
+<!--[form:quiz_objective]-->
+<table width="" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+<tr>
+    <th>Pilihan Jawapan</th>
+    <th >Jawapan Betul</th>
+</tr>
+<% 5.times do |n| %>
+<tr>
+	<td>
+   	<%= text_area_tag "quiz_objective[#{n}][answer]"  %>
+	<%= hidden_field 'quiz_objective', 'quiz_question_id', :index => n, :value=> @quiz_question.id %></td>
+	<td><%= check_box 'quiz_objective', 'answer_type_id', :index => n %><BR></td>
+</tr>
+<%end %>
+
+
+</table>
+<!--[eoform:quiz_objective]-->
+

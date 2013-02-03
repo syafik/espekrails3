@@ -1,0 +1,80 @@
+<script>
+function submitForm(df) {
+	if (checkFormDulu(df)) {
+		df.submit();
+	}
+	else {
+		return false;
+	}
+}
+
+function checkFormDulu(df) {
+	var is_apply_checked = 0
+	var idx = 0;
+
+	if (df.course_implementation_code.value=="") {
+		alert('Sila Masukkan Kod Kursus');
+		df.course_implementation_code.focus()
+		return false;
+	}
+	for (i=0; i<df.apply_status.length ; i++ ) {
+		if (df.apply_status[i].checked == true) {
+			is_apply_checked++;
+			idx = i;
+		}
+	}
+	if (is_apply_checked == 0) {
+		alert('Sila Pilih Status Permohonan(Dalam Proses,Diterima atau Ditolak)');
+		return false
+	}
+	df.action  = "/course_applications/" + df.apply_status[idx].value 
+	df.action +=  "/?course_implementation_code=" + df.course_implementation_code.value
+	return true;
+}
+
+function findAndSortWith(orderby,arrow) {
+	var df = document.incremental
+	//var arrow = "<%="DESC"%>"
+	
+	if (checkFormDulu(df)) {
+		df.action += "?orderby=" + orderby
+		if (arrow!="") {
+			df.action += "&arrow=" + arrow
+		}
+		df.submit();
+	}
+	else {
+		alert('ng');
+	}
+	
+}
+
+function updateCourseId(course_name) {
+	for(var i = 0; i < list.length; i++) {
+	  if (list[i].name == course_name) {
+		//alert(list[i].name);
+		$("course_id").value = list[i].id
+	  }
+	}	
+}
+
+</script>
+<form method="post" name="incremental" action="" onsubmit="return checkFormDulu(document.incremental)">
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">
+
+			  <input type="radio" name="apply_status" id="apply_status_all" value="all" <%="checked" if ((params[:apply_status]=="all") || (!params[:apply_status]))%> onclick="submitForm(document.incremental)">
+			  <label for="apply_status_all">Semua Status </label>
+			  <input type="radio" name="apply_status" id="apply_status_unprocessed" value="unprocessed" <%="checked" if ((params[:apply_status]=="unprocessed") || (!params[:apply_status]))%>  onclick="submitForm(document.incremental)">
+			  <label for="apply_status_unprocessed">Dalam Proses </label>
+			  <input type="radio" name="apply_status" id="apply_status_accepted" value="accepted" <%="checked" if params[:apply_status]=="accepted"%>  onclick="submitForm(document.incremental)">
+			  <label for="apply_status_accepted">Diterima</label>
+			  <input type="radio" name="apply_status" id="apply_status_confirmed" value="confirmed" <%="checked" if params[:apply_status]=="confirmed"%> onclick="submitForm(document.incremental)">
+			  <label for="apply_status_confirmed">Disah hadir</label>
+			  <input type="radio" name="apply_status" id="apply_status_rejected" value="rejected" <%="checked" if params[:apply_status]=="rejected"%>  onclick="submitForm(document.incremental)">
+			  <label for="apply_status_rejected">Ditolak</label>
+	  </td>
+    </tr>
+  </table>
+</form>

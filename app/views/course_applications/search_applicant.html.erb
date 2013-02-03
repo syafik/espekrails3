@@ -1,0 +1,44 @@
+<p style="color: green"><div align="center"><%= flash[:notice] %></div></p>
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">CARIAN PESERTA</font></b></td>
+    </tr>
+  </table>
+  <br>
+   <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td align="right" nowrap>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right" valign="top"><strong>Nama Peserta: </strong></td>
+      <td>
+      <form action="/course_applications/search_by_name" method="get">
+      <input name="query" type="text" value="" size="30" maxlength="100"/>
+        <input type="submit" class="btn60"  value="Cari">
+      </form>
+     </td>
+    </tr>
+     <tr>
+      <td align="right" valign="top"><strong>No KP Peserta: </strong></td>
+      <td>
+      <form action="/course_applications/search_by_ic" method="post">
+      <input name="ic_number" type="text" value="" size="30" maxlength="100"/>
+        <input type="submit" class="btn60"  value="Cari">
+      </form>
+     </td>
+    </tr>
+     <tr>
+      <td align="right" valign="top"><strong>No Telefon#: </strong></td>
+      <td>
+      <form action="/course_applications/search_by_phone" method="post">
+      <input name="phone" type="text" value="" size="30" maxlength="100" />
+        <input type="submit" class="btn60" value="Cari">
+      </form>
+      </td>
+    </tr>
+    <tr>
+      <td align="right" nowrap>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+ </table>

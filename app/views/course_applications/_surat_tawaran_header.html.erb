@@ -1,0 +1,57 @@
+<script>
+function checkFormDulu(df) {
+	var is_apply_checked = 0
+	var idx = 0;
+
+	if (df.course_implementation_code.value=="") {
+		alert('Sila Masukkan Kod Kursus');
+		df.course_implementation_code.focus()
+		return false;
+	}
+
+	df.action  = "/course_applications/edit_surat_tawaran_select_peserta"
+	//df.action +=  "/?course_implementation_code=" + df.course_implementation_code.value
+	return true;
+}
+
+function findAndSortWith(orderby,arrow) {
+	var df = document.incremental
+	//var arrow = "<%="DESC"%>"
+	
+	if (checkFormDulu(df)) {
+		df.action += "?orderby=" + orderby
+		if (arrow!="") {
+			df.action += "&arrow=" + arrow
+		}
+		df.submit();
+	}
+	else {
+		alert('ng');
+	}
+	
+}
+
+function updateCourseId(course_name) {
+	for(var i = 0; i < list.length; i++) {
+	  if (list[i].name == course_name) {
+		//alert(list[i].name);
+		$("course_id").value = list[i].id
+	  }
+	}	
+}
+
+</script>
+<form method="post" name="incremental" action="" onsubmit="return checkFormDulu(document.incremental)">
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">&nbsp;</td>
+    </tr>
+  </table>
+<br>
+<div align="center">Kod Kursus : 
+  <input type="hidden" id="course_name" name="course_name" size="80" onfocus="this.select()" value="<%=@course.name if @course %>">
+		<input type="hidden" id="course_id" name="id" size="3" value="<%=@course.id if @course %>">
+		<input type="text" id="course_implementation_code" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>" onkeyup="this.value=this.value.toUpperCase()">
+<input type="submit" value="Cari" class="btn60">
+</div>
+</form>

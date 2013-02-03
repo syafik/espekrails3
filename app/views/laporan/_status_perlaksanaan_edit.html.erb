@@ -1,0 +1,199 @@
+ <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+   
+   <tr>
+     <td align="RIGHT"><strong>Kursus :</strong></td>
+     <td colspan="3"><font>(<%=@course_implementation.code%>)<%=@course_implementation.course.name%></font><%= hidden_field 'status_perlaksanaan', 'course_implementation_id', :value=> @course_implementation.id %></td>
+   </tr>
+   <tr>
+     <td align="RIGHT"><strong>Tarikh Kursus:</strong></td>
+     <td colspan="3"><font><%=@course_implementation.tempoh%></font></td>
+   </tr>
+   <tr>
+     <td valign="TOP" align="RIGHT"><strong>Tarikh Tutup:</strong></td>
+     <td nowrap="nowrap" colspan="3"><font><%=@course_implementation.date_apply_end.to_formatted_s(:my_format_4)%></font></td>
+   </tr>
+   <tr>
+     <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+     <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
+     </font></td>
+     <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
+     <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile%></font></td>
+   </tr>
+   <tr>
+     <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+     <td><font><%=@course_implementation.penyelaras2.profile.name%></font></td>
+     <td align="RIGHT"><font><b>No Tel:</b></font></td>
+     <td><font><b></b><%=@course_implementation.penyelaras2.profile.mobile%></font></td>
+   </tr>
+ </table>
+ <br>
+
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" valign="MIDDLE"><font color="#FFFFFF"><strong>Bil.</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Aktiviti</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Bilangan/Tarikh<br />
+      </strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Status</strong></font></td>
+      <td class="el" align="center"><font color="#FFFFFF"><strong>Catatan</strong></font></td>
+    </tr>
+
+<%
+bgclr = 'white'
+satu = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","1")
+dua = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","2")
+tiga = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","3")
+empat = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","4")
+lima = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","5")
+enam = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","6")
+tujuh = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","7")
+lapan = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","8")
+sembilan = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","9")
+sepuluh = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","10")
+one = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","11")
+two = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","12")
+three = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","13")
+four = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","14")
+five = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","15")
+six = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","16")
+seven = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","17")
+eight = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","18")
+nine = StatusPerlaksanaan.find_by_course_implementation_id_and_position("#{@check.course_implementation_id}","19")
+%>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">1.<%= hidden_field 'status_perlaksanaan', 'position', :index=> '1', :value=> '1' %></td>
+      <td class="el">Penjanaan Surat Pelawaan  Kursus</td>
+      <td class="el" align="center"><font>&nbsp;<%=nof{@course_implementation.surat_iklan_content.letter_date.to_formatted_s(:my_format_4)}%></font></td>
+	  <td class="el" align="center"><%=satu.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=satu.catatan%>&nbsp;</td>		
+      </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">2.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'2', :value=> '2' %></td>
+      <td class="el">Bilangan permohonan</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_application%></font></td>
+	  <td class="el" align="center"><%=dua.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=dua.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">3.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'3', :value=> '3' %></td>
+      <td class="el">Bilangan pembatalan  permohonan</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_cancelled%></font></td>
+	  <td class="el" align="center"><%=tiga.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=tiga.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">4.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'4', :value=> '4' %></td>
+      <td class="el">Bilangan permohonan  dipilih</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_selected%></font></td>
+	  <td class="el" align="center"><%=empat.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=empat.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">5.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'5', :value=> '5' %></td>
+      <td class="el">Bilangan permohonan  ditolak</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_rejected%></font></td>
+	  <td class="el" align="center"><%=lima.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=lima.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">6.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'6', :value=> '6' %></td>
+      <td class="el">Penjanaan Surat Tawaran</td>
+      <td class="el" align="center"><font>&nbsp;<%=nof{@course_implementation.surat_tawaran_content.letter_date.to_formatted_s(:my_format_4)}%></font></td>
+	  <td class="el" align="center"><%=enam.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=enam.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">7.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'7', :value=> '7' %></td>
+      <td class="el">Bilangan peserta  mengesahkan hadir</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_confirmed%></font></td>
+	  <td class="el" align="center"><%=tujuh.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=tujuh.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">8.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'8', :value=> '8' %></td>
+      <td class="el">Bilangan peserta  mengesahkan tidak hadir</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_unconfirmed%></font></td>
+	  <td class="el" align="center"><%=lapan.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=lapan.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">9.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'9', :value=> '9' %></td>
+      <td class="el">Tempahan asrama</td>
+      <td class="el" align="center"><font>&nbsp;<%=nof{@course_implementation.reservations.first.updated_on.to_formatted_s(:my_format_4)}%></font></td>
+	  <td class="el" align="center"><%=sembilan.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=sembilan.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">10.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'10', :value=> '10' %></td>
+      <td class="el">Tempahan bilik kuliah</td>
+      <td class="el" align="center"><font>&nbsp;<%=nof{@course_implementation.notifications.first.created_on.to_formatted_s(:my_format_4)}%></font></td>
+	  <td class="el" align="center"><%=sepuluh.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=sepuluh.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">11.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'11', :value=> '11' %></td>
+      <td class="el">Pemakluman kepada  Seksyen Keselamatan</td>
+      <td class="el" align="center"><font>&nbsp;<%=nof{@course_implementation.notifications.first.created_on.to_formatted_s(:my_format_4)}%></font></td>
+	  <td class="el" align="center"><%=one.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=one.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">12.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'12', :value=> '12' %></td>
+      <td class="el">Bilangan check-in asrama</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_checkin_hostel%></font></td>
+	  <td class="el" align="center"><%=two.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=two.catatan%>&nbsp;</td>
+    </tr>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">13.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'13', :value=> '13' %></td>
+      <td class="el" bgcolor="<%=bgclr%>">Bilangan peserta berdaftar</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_registered%></font></td>
+	  <td class="el" align="center"><%=three.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=three.catatan%>&nbsp;</td>
+    </tr>
+   <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+      <td class="el" height="20">14.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'14', :value=> '14' %></td>
+      <td class="el">Bilangan peserta  membayar yuran</td>
+      <td class="el" align="center"><font><%=@course_implementation.total_make_payment%></font></td>
+	  <td class="el" align="center"><%=four.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=four.catatan%>&nbsp;</td>
+    </tr>
+
+   <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+          <td class="el" height="20">15.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'15', :value=> '15' %></td>
+          <td class="el">Tempahan sijil</td>
+      <td class="el" align="center"><font><%=nof{@course_implementation.tempahan_sijil.tarikh.to_formatted_s(:my_format_4)}%></font></td>
+	  <td class="el" align="center"><%=five.status%>&nbsp;</td>
+ 	  <td class="el" align="center"><%=five.catatan%>&nbsp;</td>
+    </tr>
+	
+   <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+          <td class="el" height="20">16.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'16', :value=> '16' %></td>
+          <td class="el">Bilangan peserta  menduduki ujian</td>
+          <td class="el" align="center"><font><%=@course_implementation.total_jawab_ujian%></font></td>
+		  <td class="el" align="center"><%=six.status%>&nbsp;</td>
+	 	  <td class="el" align="center"><%=six.catatan%>&nbsp;</td>
+      </tr>
+   <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+          <td class="el" height="20">17.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'17', :value=> '17' %></td>
+          <td class="el">Bilangan peserta membuat  penilaian</td>
+          <td class="el" align="center"><font><%=@course_implementation.total_jawab_penilaian%></font></td>
+		  <td class="el" align="center"><%=seven.status%>&nbsp;</td>
+	 	  <td class="el" align="center"><%=seven.catatan%>&nbsp;</td>
+      </tr>
+   <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+          <td class="el" height="20">18.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'18', :value=> '18' %></td>
+          <td class="el">Bilangan peserta yang  dinilai</td>
+          <td class="el" align="center"><font><%=@course_implementation.total_peserta_dinilai%></font></td>
+		  <td class="el" align="center"><%=eight.status%>&nbsp;</td>
+	 	  <td class="el" align="center"><%=eight.catatan%>&nbsp;</td>
+      </tr>
+   <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+          <td class="el" height="20">19.<%= hidden_field 'status_perlaksanaan', 'position', :index=>'19', :value=> '19' %></td>
+          <td class="el">Penjanaan surat  pengesahan kehadiran kursus</td>
+          <td class="el" align="center"><font>&nbsp;<%=nof{@course_implementation.surat_sah_content.letter_date.to_formatted_s(:my_format_4)}%>&nbsp;</font></td>
+		  <td class="el" align="center"><%=nine.status%>&nbsp;</td>
+	 	  <td class="el" align="center"><%=nine.catatan%>&nbsp;</td>
+      </tr>
+  </table>
+<BR>

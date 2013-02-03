@@ -1,0 +1,62 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">PENDAFTARAN KURSUS : SILA KEMASKINI MAKLUMAT SEBELUM MENDAFTAR </font></th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    
+  </table>
+  <BR>
+
+<%#= start_form_tag :action => 'create_but_peserta_already_exist' %>
+<form name=ca_form method=post action="/course_applications/user_daftar_create/<%=@course_application.id%>" onsubmit="return GoSubmit(ca_form)">
+
+  <%= render :partial => 'form' %>
+   <div id="apply_button" align="center" style="visibility: visible">
+  <%= submit_tag "Daftar" %>
+  </div>
+<%= end_form_tag %>
+
+<script src="/javascripts/form_validator.js"></script>
+<script>
+
+function GoSubmit(df) {
+
+	if (!checkInput(anythingRegExp,$('course_implementation_code'),'Kod Kursus')) return false;
+	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
+	if (!checkSelection(strRegExp,$('profile_title_id'),'Gelaran')) return false;
+	if (!checkInput(anythingRegExp,$('profile_name'),'Nama Penuh Pemohon')) return false;
+	if (!checkSelection(strRegExp,$('profile_gender_id'),'Jantina')) return false;
+	if (!checkSelection(strRegExp,$('profile_religion_id'),'Agama')) return false;
+	//if (!checkSelection(strRegExp,$('profile_marital_status_id'),'Taraf Perkahwinan')) return false;
+	if (!checkSelection(strRegExp,$('profile_race_id'),'Keturunan')) return false;
+
+	//if (!checkInput(anythingRegExp,$('course_application_supervisor_name'),'Perakuan Ketua Jabatan(Nama)')) return false;
+	//if (!checkInput(anythingRegExp,$('course_application_supervisor_jawatan'),'Perakuan Ketua Jabatan(Jawatan)')) return false;
+	//if (!checkInput(emailRegExp,$('course_application_supervisor_email'),'Emel Ketua Jabatan')) return false;
+
+	
+
+    if (!$('chkbox').checked) {
+		alert('Sila sahkan pengakuan');
+		$('chkbox').focus()
+		return false;
+	}
+    if (!$('chkbox_ketua_jabatan').checked) {
+		alert('Sila sahkan perakuan ketua jabatan');
+		$('chkbox_ketua_jabatan').focus()
+		return false;
+	}
+
+	return true;
+}
+
+$('course_implementation_code').style.background = "#eeeeee"
+$('course_implementation_code').disabled = "disabled"
+$('chkbox').checked = true
+$('chkbox_ketua_jabatan').checked = true
+</script>
+
+

@@ -1,0 +1,17 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH TUJUAN TEMPAHAN</font></b></td>
+    </tr>
+</table>
+<br>
+
+<%= start_form_tag :action => 'create_popup' %>
+  <%= render :partial => 'form' %>
+  
+  <br>
+  <div align="center">
+  <%= submit_tag "Simpan" %>
+  <input name="submit" type="button" class="button" value="Kembali" onClick="if  (window.opener) {  window.opener.location.reload();window.close() } else { location='?'}">
+  </div>
+<%= end_form_tag %>
+

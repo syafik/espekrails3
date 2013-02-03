@@ -1,0 +1,147 @@
+<%
+if @course_implementation
+	@schedule = @course_implementation
+	@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " + 
+    	      "HINGGA " +
+			  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " + 
+		 	  "#{@schedule.date_plan_end.to_formatted_s(:my_format_e_month).upcase} " +
+		 	  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
+end
+%>
+
+    
+ <!----------------------------------------------------------------------------------------->
+ <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr> 
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI KEDATANGAN: <%=@course_implementation.code%>&nbsp; <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
+    </tr>
+ </table>
+  <br>
+
+<style>
+b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+.box {border: solid; border-width:1}
+</style>
+<form name="list_form" action="/course_management/create_attendance">
+  <%if @course_implementation%>
+ 
+  <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+    <!--tr>
+      <td align="RIGHT"><strong>Kod:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.code%></font></td>
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tempat:</strong></td>
+      <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+    </tr-->
+    <tr>
+      <td align="RIGHT"><strong>Kursus:</strong></td>
+      <td><font><%=@course_implementation.course.name.upcase%> (<%=@course_implementation.code%>)</font></td>     
+    </tr>
+    <tr>
+      <td align="RIGHT"><strong>Tarikh Kursus:</strong></td>
+      <td><font><%=@course_implementation.tempoh%></font></td>     
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+      <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
+      </font></td>
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+      <td><font><%= nof{@course_implementation.penyelaras2.profile.name} %></font></td>
+    </tr>
+    <tr>
+      <td valign="TOP" align="RIGHT"><strong>Jadual Kehadiran pada :</strong></td>
+      <td><%=params[:kehadiran_pada]%></td>
+    </tr>
+  </table>
+  <br>
+  <%end%>
+
+  <div width="95%" style="background: #FFFFFF">
+
+
+  <table  width="95%" border="0" align="center">
+    <tr>
+      <td width="" align="right" valign="top"><a style="color:blue; text-decoration:underline;" href="javascript:checkall()">select all</a></td>
+	</tr>
+  </table>
+  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+    <tr bgcolor="#999999">
+      <td class="el" width="2%" height="20" valign="top" rowspan="2">&nbsp;</td>
+      <td class="el" width="30%" align="center" style="color: white" rowspan="2"><strong>Nama</strong></td>
+      <!--td class="el" width="20%" align="center" style="color: white" rowspan="2"><strong>No K/P</strong></td-->
+      <td class="el" width="20%" align="center" style="color: white" rowspan="2"><strong>Jabatan</strong></td>
+      <%  colsum = 0;
+	      params[:sesi].size.times do |i|
+	     	next if params[:sesi][i] == nil;
+			colsum = colsum + 1;
+		  end
+	  %>
+
+	  <td class="el" width="16%" align="center" style="color: white" colspan="<%=colsum%>"><strong>Kedatangan</strong></td>
+   </tr>
+   <tr bgcolor="#999999">
+      <% params[:sesi].size.times do |i|
+	     	next if params[:sesi][i] == nil;
+	  %>
+      <td class="el" width="16%" align="center" style="color: white"><strong><%=params[:sesi][i]%></strong></td>
+	  <% end %>
+   </tr>
+
+    <%
+i = 0;
+even = true;
+sum = 0
+for student in @students
+  i = i + 1
+  bgclr = "#FFFFFF" if (even == true)
+  bgclr = "#FFFFFF" if (even == false)
+  even = !even
+  
+  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+%>
+    <tr bgcolor="<%=bgclr%>" >
+      <td class="el">&nbsp;<%= i.to_s %>.</td>
+      <td class="el"><%=h student.profile.name.upcase %></td>
+      <!--td class="el" align="center">&nbsp;<%=nof{student.profile.ic_number}%></td-->	
+      <td class="el" align="left"><%=nof{student.profile.opis}%></td>	
+      <% colsum.times do |j|%>
+      <td class="el" align="center" onclick="toggle('<%=nof{student.id}%>_<%=j%>')">&nbsp;<input type="checkbox" name="<%=nof{student.id}%>[]" id="<%=nof{student.id}%>_<%=j%>"/></td>
+	  <% end %>
+</tr><%end%>  
+
+</table>
+
+</div>
+</form>
+
+
+<script>
+function toggle(id) {
+	document.getElementById(id).checked = !document.getElementById(id).checked
+	if (document.getElementById(id).checked == true) {
+		document.getElementById(id).style.background = 'green'
+	}
+	else {
+		document.getElementById(id).style.background = 'red'
+	}
+}
+
+function checkall() {
+	n = document.forms[0].elements.length
+	for (i=0;i<n;i++) {
+		obj = document.forms[0].elements[i];
+		if (obj.type == "checkbox")
+			obj.checked = true;
+			
+	}
+}
+</script>
+
+

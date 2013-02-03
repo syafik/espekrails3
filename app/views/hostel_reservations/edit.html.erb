@@ -1,0 +1,9 @@
+<h1>Editing hostel_reservation</h1>
+
+<%= start_form_tag :action => 'update', :id => @hostel_reservation %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<%= end_form_tag %>
+
+<%= link_to 'Show', :action => 'show', :id => @hostel_reservation %> |
+<%= link_to 'Back', :action => 'list' %>

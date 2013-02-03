@@ -1,0 +1,44 @@
+<style type="text/css">
+<!--
+.style1 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.style3 {color: #153E7E; font-weight: bold; }
+-->
+</style>
+
+<%
+if params[:what]
+  @show_what = params[:what]
+else
+  @show_what = "show_profile"
+end
+
+@bgcolor_show_profile = "#999999"
+@bgcolor_show_waris = "#999999"
+@bgcolor_show_khidmat = "#999999"
+@bgcolor_show_akademik = "#999999"
+@bgcolor_show_kursus = "#999999"
+@bgcolor_show_sijil = "#999999"
+
+
+@bgcolor_show_profile     = "#D7EBD7" if @show_what == "show_profile"
+@bgcolor_show_waris      = "#D7EBD7" if @show_what == "show_waris"
+@bgcolor_show_khidmat     = "#D7EBD7" if @show_what == "show_khidmat"
+@bgcolor_show_akademik   = "#D7EBD7" if @show_what == "show_akademik"
+@bgcolor_show_kursus     = "#D7EBD7" if @show_what == "show_kursus"
+@bgcolor_show_sijil      = "#D7EBD7" if @show_what == "show_sijil"
+
+%>
+<table align="CENTER" width="95%" border="0" bgcolor="#666666" cellspacing="1">
+  <tr>
+    <td bgcolor="<%=@bgcolor_show_profile%>" align="CENTER" height="21"><span class="style3"><a href="/participant/show/<%=@student.id%>?what=show_profile">PERIBADI</a></span></td>
+    <td bgcolor="<%=@bgcolor_show_waris%>" align="CENTER" height="21"><span class="style3"><a href="/participant/show/<%=@student.id%>?what=show_waris">WARIS</a></span></td>
+    <td bgcolor="<%=@bgcolor_show_khidmat%>" align="CENTER"><span class="style1"><a href="/participant/show/<%=@student.id%>?what=show_khidmat">KHIDMAT</a></span></td>
+    <td bgcolor="<%=@bgcolor_show_akademik%>" align="CENTER"><span class="style1"><a href="/participant/show/<%=@student.id%>?what=show_akademik">AKADEMIK</a></span></td>
+    <td bgcolor="<%=@bgcolor_show_kursus%>" align="CENTER"><span class="style1"><a href="/participant/show/<%=@student.id%>?what=show_kursus">KURSUS</a></span></td>
+    <!--td bgcolor="<%=@bgcolor_show_sijil%>" align="CENTER"><span class="style1"><a href="/participant/show/<%=@student.id%>?what=show_sijil">SIJIL</a></span></td-->
+  </tr>
+</table>
+<br />
