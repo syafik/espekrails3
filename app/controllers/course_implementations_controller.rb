@@ -476,7 +476,7 @@ class CourseImplementationsController < ApplicationController
     @year_briefing  = schedule.briefing.to_formatted_s(:my_format_year)  if schedule.briefing
     @hour_briefing  = schedule.briefing.to_formatted_s(:my_format_hour)  if schedule.briefing
     @minute_briefing  = schedule.briefing.to_formatted_s(:my_format_minute)  if schedule.briefing
-
+    render :layout => "standard-layout" 
   end
 
   def update

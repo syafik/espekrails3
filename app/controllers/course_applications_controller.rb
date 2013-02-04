@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class CourseApplicationsController < ApplicationController
   layout "standard-layout"
-  require "pdf/writer"
+#  require "pdf/writer"
 
   def initialize
   end
@@ -381,9 +381,11 @@ class CourseApplicationsController < ApplicationController
       render :action => "search_not_found"
     end
     @courses = Course.find(:all, :order => "name")
+    render :layout => "standard-layout"
   end
 
   def search
+    render :layout => "standard-layout"
   end
 
   def search_not_found
@@ -417,7 +419,7 @@ class CourseApplicationsController < ApplicationController
 
   def new
     init_load
-    @courses = Course.find_all
+    @courses = Course.all
     @course_implementation = CourseImplementation.find(params[:id]) if params[:id]
     @profile = Profile.new
     @relative = Relative.new
@@ -428,7 +430,7 @@ class CourseApplicationsController < ApplicationController
 
   def new_peserta
     init_load
-    @courses = Course.find_all
+    @courses = Course.all
     @course_implementation = CourseImplementation.find(params[:id]) if params[:id]
     @profile = Profile.new
     @relative = Relative.new
@@ -2965,19 +2967,19 @@ class CourseApplicationsController < ApplicationController
 #################################################################################
   def init_load
     @states = State.find(:all, :order => "description")
-    @genders = Gender.find_all
+    @genders = Gender.all
     @races = Race.find(:all, :order => "id")
     @handicaps = Handicap.find(:all, :order => "id")
-    @profile_statuses = ProfileStatus.find_all
+    @profile_statuses = ProfileStatus.all
     @religions = Religion.find(:all, :order => "id")
-    @countries = Country.find_all
-    @marital_statuses = MaritalStatus.find_all
+    @countries = Country.all
+    @marital_statuses = MaritalStatus.all
     @places = Place.find(:all, :order => "state_id")
-    @relationships = Relationship.find_all
+    @relationships = Relationship.all
     @cert_levels = CertLevel.find(:all, :order => "id")
     @majors = Major.find(:all, :order => "id")
     @job_profiles = JobProfile.find(:all, :order => "job_grade")
     @titles = Title.find(:all, :order => "description")
-    @course_departments = CourseDepartment.find_all
+    @course_departments = CourseDepartment.all
   end
 end

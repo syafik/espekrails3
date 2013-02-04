@@ -1,198 +1,198 @@
 <style>
-b               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-th              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-td              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-a               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-.box {border: solid; border-width:1}
+  b               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  th              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  td              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  a               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  .box {border: solid; border-width:1}
 </style>
 <!--[form:reservation]-->
-  <table width="95%" border="0" align="center" bgcolor="#FFFFFF">
+<table width="95%" border="0" align="center" bgcolor="#FFFFFF">
   <tr bgcolor="#000000">
-    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT KURSUS </font></b></td>
-    </tr>
+    <td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT KURSUS </font></b></td>
+  </tr>
   <tr>
     <td align="right"><b>Kod/Nama Kursus: </b></td>
     <td colspan=3>&nbsp;<%= nof{@course_implementation.code}%> <%= "("+nof{@course_implementation.course.name} + ")" %></td>
   </tr>
-   <tr>
+  <tr>
     <td align="right"><b>Tarikh Mula Kursus: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %></td>
     <td align="right"><b>Tarikh Tamat Kursus: </b></td>
     <td>&nbsp;<%=
-	         if !@course_implementation.date_end
-			 	@course_implementation.date_plan_end.to_formatted_s(:my_format_4)
-			 else
-			 	@course_implementation.date_end.to_formatted_s(:my_format_4)
-			 end
-				-%>    </td>
+      if !@course_implementation.date_end
+        @course_implementation.date_plan_end.to_formatted_s(:my_format_4)
+      else
+        @course_implementation.date_end.to_formatted_s(:my_format_4)
+      end
+      -%>    </td>
   </tr>
-   <tr>
+  <tr>
     <td align="right"><b>Tarikh/Waktu Check In: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.check_in.to_formatted_s(:my_format_7)} %></td>
     <td align="right"><b>Tarikh/Waktu Check Out: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.check_out.to_formatted_s(:my_format_7)} %></td>
   </tr>
-  
 
 
-    <tr>
-      <td align="CENTER" colspan="4">&nbsp;</td>
-    </tr>
-    
-   <tr bgcolor="000000">
-    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PENYELARAS </font></b></td>
-    </tr>
-    <tr>
+
+  <tr>
+    <td align="CENTER" colspan="4">&nbsp;</td>
+  </tr>
+
+  <tr bgcolor="000000">
+    <td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PENYELARAS </font></b></td>
+  </tr>
+  <tr>
     <td align="right"><b>Penyelaras 1: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.name.upcase}%></td>
   </tr>
-      <tr>
+  <tr>
     <td align="right"><b>No. Telefon: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.phone}%> (PEJ)</td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.mobile}%> (HP)</td>
   </tr>
-      <tr>
+  <tr>
     <td align="right"><b>Penyelaras 2: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.name.upcase}%></td>
   </tr>
-      <tr>
+  <tr>
     <td align="right"><b>No. Telefon: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.phone}%> (PEJ)</td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.mobile}%> (HP)</td>
   </tr>
 </table>
-  <br />
+<br />
 
-  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
-    <tr bgcolor="#999999">
-      <td width="2%" valign="top"><strong><font color="#FFFFFF">Bil</font></strong></td>
-      <td width="20%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('name','<%= "DESC" if (@orderby=="name" && @arrow=="ASC") %>')">Nama Penceramah </a></strong></td>
-      <td width="150" align="center"><font color="#FFFFFF"><strong>Jabatan</strong></font></td>
-      <td width="50" align="center"><font color="#FFFFFF"><strong>Gred</strong></font></td>
-      <td width="" align="center"><strong><font color="#FFFFFF">Tarikh &amp; Waktu Check In </font></strong></td>
-      <td width="" align="center"><strong><font color="#FFFFFF">Tarikh &amp; Waktu Check Out </font></strong></td>
-      <!--td align="center"><font color="#FFFFFF">Action</font></td-->
-    </tr>
-    <%
-i = 0;
-even = true;
-for trainer in @trainers
-  i = i + 1
-  bgclr = "#CCCCFF" if (even == true)
-  bgclr = "#FFFFFF" if (even == false)
-  even = !even
-  
-  check_rt = ReservationTrainer.find(:first, :conditions=>"course_implementation_id=#{@course_implementation.id} AND trainer_id=#{trainer.id}")
-  if check_rt == nil
-  	year_check_in   = @year_check_in
-  	month_check_in  = @month_check_in
-  	day_check_in    = @day_check_in
-  	hour_check_in   = @hour_check_in
-  	minute_check_in = @minute_check_in
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999">
+    <td width="2%" valign="top"><strong><font color="#FFFFFF">Bil</font></strong></td>
+    <td width="20%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('name','<%= "DESC" if (@orderby=="name" && @arrow=="ASC") %>')">Nama Penceramah </a></strong></td>
+    <td width="150" align="center"><font color="#FFFFFF"><strong>Jabatan</strong></font></td>
+    <td width="50" align="center"><font color="#FFFFFF"><strong>Gred</strong></font></td>
+    <td width="" align="center"><strong><font color="#FFFFFF">Tarikh &amp; Waktu Check In </font></strong></td>
+    <td width="" align="center"><strong><font color="#FFFFFF">Tarikh &amp; Waktu Check Out </font></strong></td>
+    <!--td align="center"><font color="#FFFFFF">Action</font></td-->
+  </tr>
+  <%
+  i = 0;
+  even = true;
+  for trainer in @trainers
+    i = i + 1
+    bgclr = "#CCCCFF" if (even == true)
+    bgclr = "#FFFFFF" if (even == false)
+    even = !even
 
-  	year_check_out   = @year_check_out
-  	month_check_out  = @month_check_out
-  	day_check_out    = @day_check_out
-  	hour_check_out   = @hour_check_out
-  	minute_check_out = @minute_check_out
-  else
-  	year_check_in   = check_rt.trainer_checkin.to_formatted_s(:my_format_year)
-  	month_check_in  = check_rt.trainer_checkin.to_formatted_s(:my_format_month)
-  	day_check_in    = check_rt.trainer_checkin.to_formatted_s(:my_format_day)
-  	hour_check_in   = check_rt.trainer_checkin.to_formatted_s(:my_format_hour)
-  	minute_check_in = check_rt.trainer_checkin.to_formatted_s(:my_format_minute)
+    check_rt = ReservationTrainer.find(:first, :conditions=>"course_implementation_id=#{@course_implementation.id} AND trainer_id=#{trainer.id}")
+    if check_rt == nil
+      year_check_in   = @year_check_in
+      month_check_in  = @month_check_in
+      day_check_in    = @day_check_in
+      hour_check_in   = @hour_check_in
+      minute_check_in = @minute_check_in
 
-  	year_check_out   = check_rt.trainer_checkout.to_formatted_s(:my_format_year)
-  	month_check_out  = check_rt.trainer_checkout.to_formatted_s(:my_format_month)
-  	day_check_out    = check_rt.trainer_checkout.to_formatted_s(:my_format_day)
-  	hour_check_out   = check_rt.trainer_checkout.to_formatted_s(:my_format_hour)
-  	minute_check_out = check_rt.trainer_checkout.to_formatted_s(:my_format_minute)
-  end
-	
-%>
+      year_check_out   = @year_check_out
+      month_check_out  = @month_check_out
+      day_check_out    = @day_check_out
+      hour_check_out   = @hour_check_out
+      minute_check_out = @minute_check_out
+    else
+      year_check_in   = check_rt.trainer_checkin.to_formatted_s(:my_format_year)
+      month_check_in  = check_rt.trainer_checkin.to_formatted_s(:my_format_month)
+      day_check_in    = check_rt.trainer_checkin.to_formatted_s(:my_format_day)
+      hour_check_in   = check_rt.trainer_checkin.to_formatted_s(:my_format_hour)
+      minute_check_in = check_rt.trainer_checkin.to_formatted_s(:my_format_minute)
+
+      year_check_out   = check_rt.trainer_checkout.to_formatted_s(:my_format_year)
+      month_check_out  = check_rt.trainer_checkout.to_formatted_s(:my_format_month)
+      day_check_out    = check_rt.trainer_checkout.to_formatted_s(:my_format_day)
+      hour_check_out   = check_rt.trainer_checkout.to_formatted_s(:my_format_hour)
+      minute_check_out = check_rt.trainer_checkout.to_formatted_s(:my_format_minute)
+    end
+
+  %>
     <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
       <td><%= i.to_s %>.</td>
       <td><%=nof{trainer.profile.name} %></td>
       <td><%=nof{trainer.profile.opis} %></td>
       <td align="center"><%=nof{trainer.profile.employments.first.job_profile.job_grade} %></td>
       <td align="center" nowrap>&nbsp;
-<input id="day_check_in22" type=text name="day_check_in_<%=trainer.id%>" value="<%=day_check_in%>" size=2 maxlength=2 >
--
-<input id="month_check_in22" type=text name="month_check_in_<%=trainer.id%>" value="<%=month_check_in%>" size=2 maxlength=2 >
--
-<input id="year_check_in22" type=text name="year_check_in_<%=trainer.id%>" value="<%=year_check_in%>" size=4 maxlength=4> 
+        <input id="day_check_in22" type=text name="day_check_in_<%=trainer.id%>" value="<%=day_check_in%>" size=2 maxlength=2 >
+        -
+        <input id="month_check_in22" type=text name="month_check_in_<%=trainer.id%>" value="<%=month_check_in%>" size=2 maxlength=2 >
+        -
+        <input id="year_check_in22" type=text name="year_check_in_<%=trainer.id%>" value="<%=year_check_in%>" size=4 maxlength=4>
 
-<input id="day_check_in222" type=text name="hour_check_in_<%=trainer.id%>" value="<%=hour_check_in%>" size=2 maxlength=2 >
-:
-<input id="day_check_in223" type=text name="minute_check_in_<%=trainer.id%>" value="<%=minute_check_in%>" size=2 maxlength=2 >
+        <input id="day_check_in222" type=text name="hour_check_in_<%=trainer.id%>" value="<%=hour_check_in%>" size=2 maxlength=2 >
+        :
+        <input id="day_check_in223" type=text name="minute_check_in_<%=trainer.id%>" value="<%=minute_check_in%>" size=2 maxlength=2 >
       </td>
 
       <td align="center" nowrap="nowrap">&nbsp;
-<input id="day_check_in_<%=trainer.id%>" type=text name="day_check_out_<%=trainer.id%>" value="<%=day_check_out%>" size=2 maxlength=2 >
--
-<input id="month_check_in_<%=trainer.id%>" type=text name="month_check_out_<%=trainer.id%>" value="<%=month_check_out%>" size=2 maxlength=2 >
--
-<input id="year_check_in_<%=trainer.id%>" type=text name="year_check_out_<%=trainer.id%>" value="<%=year_check_out%>" size=4 maxlength=4>
+        <input id="day_check_in_<%=trainer.id%>" type=text name="day_check_out_<%=trainer.id%>" value="<%=day_check_out%>" size=2 maxlength=2 >
+        -
+        <input id="month_check_in_<%=trainer.id%>" type=text name="month_check_out_<%=trainer.id%>" value="<%=month_check_out%>" size=2 maxlength=2 >
+        -
+        <input id="year_check_in_<%=trainer.id%>" type=text name="year_check_out_<%=trainer.id%>" value="<%=year_check_out%>" size=4 maxlength=4>
 
-<input id="hour_check_in__<%=trainer.id%>" type=text name="hour_check_out_<%=trainer.id%>" value="<%=hour_check_out%>" size=2 maxlength=2 >
-:
-<input id="minute_check_in__<%=trainer.id%>" type=text name="minute_check_out_<%=trainer.id%>" value="<%=minute_check_out%>" size=2 maxlength=2 >
+        <input id="hour_check_in__<%=trainer.id%>" type=text name="hour_check_out_<%=trainer.id%>" value="<%=hour_check_out%>" size=2 maxlength=2 >
+        :
+        <input id="minute_check_in__<%=trainer.id%>" type=text name="minute_check_out_<%=trainer.id%>" value="<%=minute_check_out%>" size=2 maxlength=2 >
       </td>
 
     </tr>
-    <% end %>
-  </table>
-  <br />
-  
-  <% if @trainers.size == 0%>
-    <center>
-	 <a style=" font-weight:bold; color:red;" href="/course_implementations/add_course_trainer/<%=@course_implementation.id%>">Sila tambah penceramah terlebih dahulu.</a>
-	<br>&nbsp;</center>
-  <% end%>
-  <table width="95%" border="0" align="center" bgcolor="#FFFFFF">
-    
-    <tr>
-      <td align="right" width="40%"><b>Ditempah Oleh :</b></td>
-      <td><input type="hidden" name="reservation_trainer[staff_id]" value="<%=session[:user].profile.staff.id%>"><select name="" id="ditempah_oleh" disabled>
-          <option value="0">Sila Pilih</option>
-          <% @coordinators.each do |c| %>
+  <% end %>
+</table>
+<br />
+
+<% if @trainers.size == 0%>
+  <center>
+    <a style=" font-weight:bold; color:red;" href="/course_implementations/<%=@course_implementation.id%>/add_course_trainer">Sila tambah penceramah terlebih dahulu.</a>
+    <br>&nbsp;</center>
+<% end%>
+<table width="95%" border="0" align="center" bgcolor="#FFFFFF">
+
+  <tr>
+    <td align="right" width="40%"><b>Ditempah Oleh :</b></td>
+    <td><input type="hidden" name="reservation_trainer[staff_id]" value="<%=session[:user].profile.staff.id%>"><select name="" id="ditempah_oleh" disabled>
+        <option value="0">Sila Pilih</option>
+        <% @coordinators.each do |c| %>
           <option value="<%= c.id %>"
-         	<%= ' selected' if c.id == session[:user].profile.staff.id %>> <%= c.profile.name.upcase %> </option>
-          <% end %>
+                  <%= ' selected' if c.id == session[:user].profile.staff.id %>> <%= c.profile.name.upcase %> </option>
+                <% end %>
       </select></td>
-    </tr>
-    <tr>
-      <td align="right"><b>Tarikh Tempahan:</b></td>
-      <td>&nbsp;
-          <input id="day_tarikh_tempahan" type=text name="day_tarikh_tempahan" value="<%=@day%>" size=2 maxlength=2 >
-        -
-        <input id="month_tarikh_tempahan" type=text name="month_tarikh_tempahan" value="<%=@month%>" size=2 maxlength=2 >
-        -
-        <input id="year_tarikh_tempahan" type=text name="year_tarikh_tempahan" value="<%=@year%>" size=4 maxlength=4></td>
-    </tr>
-  </table>
-  </BR>
+  </tr>
+  <tr>
+    <td align="right"><b>Tarikh Tempahan:</b></td>
+    <td>&nbsp;
+      <input id="day_tarikh_tempahan" type=text name="day_tarikh_tempahan" value="<%=@day%>" size=2 maxlength=2 >
+      -
+      <input id="month_tarikh_tempahan" type=text name="month_tarikh_tempahan" value="<%=@month%>" size=2 maxlength=2 >
+      -
+      <input id="year_tarikh_tempahan" type=text name="year_tarikh_tempahan" value="<%=@year%>" size=4 maxlength=4></td>
+  </tr>
+</table>
+</BR>
 <!--[eoform:reservation]-->
 
 <script src="/javascripts/form_validator.js"></script>
 
 <script>
 
-function add_tr(id) {
-	MM_openBrWindow('/reversations/trainer_book_list/'+id,'','scrollbars=yes,width=700,height=600')
-}
+  function add_tr(id) {
+    MM_openBrWindow('/reversations/trainer_book_list/'+id,'','scrollbars=yes,width=700,height=600')
+  }
 
-function GoSubmit(df) {
+  function GoSubmit(df) {
 
-	if (!checkSelection(strRegExp,document.getElementById('ditempah_oleh'),'Pegawai yang membuat tempahan')) return false;
-	//if (!checkInput(anythingRegExp,$('course_name'),'Nama Kursus')) return false;
+    if (!checkSelection(strRegExp,document.getElementById('ditempah_oleh'),'Pegawai yang membuat tempahan')) return false;
+    //if (!checkInput(anythingRegExp,$('course_name'),'Nama Kursus')) return false;
 
-	//if (!checkInput(numRegExp,$('course_implementation_capacity'),'Bilangan Peserta')) return false;
+    //if (!checkInput(numRegExp,$('course_implementation_capacity'),'Bilangan Peserta')) return false;
 	
 
-	return true;
-}
+    return true;
+  }
 
 
 </script>

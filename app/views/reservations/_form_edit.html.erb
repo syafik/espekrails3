@@ -7,7 +7,16 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
 .box {border: solid; border-width:1}
 </style>
 <div align="center">
-<%= error_messages_for 'reservation' %>
+
+<% if @reservation.errors.any? %>
+    <ul>
+      <% @reservation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+
 </div>
 <!--[form:reservation]-->
   <table width="95%" border="0" align="center" bgcolor="#FFFFFF">
@@ -138,7 +147,7 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
             <%=
                   @options = @coordinators.map { |t| [t.profile.name, t.id] }
                   @options.unshift(["Sila Pilih", ""])
-                  select(:reservation, :to_staff_id, @options, "" ,:style=>"width: 300;")
+                  select(:reservation, :to_staff_id, @options, :style=>"width: 300;")
                 %>        </td>
       </tr>
       <tr>
@@ -147,7 +156,7 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
             <%=
                   @options = @coordinators.map { |t| [t.profile.name, t.id] }
                   @options.unshift(["Sila Pilih", ""])
-                  select(:reservation, :cc_staff_id, @options, "" ,:style=>"width: 300;")
+                  select(:reservation, :cc_staff_id, @options, :style=>"width: 300;")
                 %>        </td>
     </tr>
 

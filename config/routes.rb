@@ -112,8 +112,18 @@ InstunRails3::Application.routes.draw do
       post 'create_popup'
     end
   end
-  resources :course_locations
-  resources :methodologies
+  resources :course_locations do
+    collection do 
+      get 'new_popup'
+      post 'create_popup'
+    end
+  end
+  resources :methodologies do
+    collection do 
+      get 'new_popup'
+      post 'create_popup'
+    end
+  end
 
   resources :facilities
   resources :facility_reservations do
@@ -161,6 +171,11 @@ InstunRails3::Application.routes.draw do
       get 'senarai_ulasan'
       get 'kutipan_yuran'
       get 'kutipan_yuran_bhg'
+      post 'sp_create'
+      put 'sp_update'
+    end
+    member do
+      get 'status_perlaksanaan'
     end
   end
   
@@ -168,7 +183,13 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'list'
       get 'listp'
-
+    end
+    member do
+      get 'new_popup'
+      get 'show_popup'
+      get 'trainer_book'
+      post 'trainer_book_create'
+      get 'show_trainer_book'
     end
   end
 
@@ -197,6 +218,11 @@ InstunRails3::Application.routes.draw do
   resources :quizzes do
     collection do
       get 'list'
+      post 'hozon'
+    end
+    member do
+      get 'shiken_ichiran'
+      get 'shinki'
     end
   end
   resources :course_management do
@@ -205,11 +231,25 @@ InstunRails3::Application.routes.draw do
       get 'sijil_select_course'
       get 'evaluated_courses'
     end
+    member do
+      get 'evaluation_kelompok'
+    end
   end
   resources :course_applications do
     collection do
+      get 'all'
       get 'search'
       get 'edit_surat_tunda_select_peserta'
+    end
+    member do
+      get 'all'
+      get 'hadir'
+      get 'unprocessed'
+      get 'accepted'
+      get 'rejected'
+      get 'confirmed'
+      get 'confirmednot'
+      get 'takhadir'
     end
   end
   resources :course_implementations do
@@ -221,12 +261,15 @@ InstunRails3::Application.routes.draw do
       get 'edit_surat_iklan_select_kursus'
       get 'list_courses_from_today_to_future'
       get 'calendar_user'
+      post 'copy_and_create'
     end
     member do
       get 'add_course_trainer_refresh_opener'
       get 'add_course_trainer'
       get 'save_course_trainer_refresh_opener'
       get 'show_only_for_peserta'
+      get 'copy_and_new'
+      get 'save_course_trainer'
     end
   end
   resources :user do
@@ -285,7 +328,26 @@ InstunRails3::Application.routes.draw do
       get 'home'
     end
   end
+  resources :quiz_questions do
+    member do
+      get 'list_soalan'
+      get 'list_peserta'
+      get 'cetak_soalan'
+    end
+  end
 
+  resources :evaluations do
+    collection do
+      get 'user_hyouka'
+    end
+  end
+ 
+  resources :ajax do
+    collection do
+      #      post 'ajax_find_course_field '
+      #      post 'ajax_find_coordinator'
+    end
+  end
   # Sample resource route with options:
   #   resources :products do
   #     member do

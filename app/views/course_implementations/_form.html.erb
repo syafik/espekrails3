@@ -12,7 +12,7 @@
   }
 </SCRIPT><div align="center">
 <%#= flash[:notice] %>
-  <%#= error_messages_for 'course' %>
+<%#= error_messages_for 'course' %>
   <% if @course.errors.any? %>
     <ul>
       <% @course.errors.full_messages.each do |msg| %>
@@ -28,7 +28,7 @@
     </ul>
   <% end %>
 
-  <%#= error_messages_for 'course_implementation' %>
+<%#= error_messages_for 'course_implementation' %>
 </div>
 
 
@@ -757,6 +757,7 @@ end
 
     function addQualification(tn) {
       var tbl = $(tn);
+      console.log(tbl)
       var newRow = tbl.insertRow(tbl.rows.length);
       row_id = "row_" + (tbl.rows.length-1);
       if ($(row_id)) {

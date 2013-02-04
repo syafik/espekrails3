@@ -6,7 +6,7 @@
 <br>
 <div align=center>
 <%#= start_form_tag :action => 'create', '',:name=>"ci_form", :onsubmit=>"return GoSubmit(df)" %>
-<form name=ci_form method=post action="/course_implementations/create" enctype="multipart/form-data" onsubmit="return GoSubmit(ci_form)">
+<form name=ci_form method=post action="/course_implementations" enctype="multipart/form-data" onsubmit="return GoSubmit(ci_form)">
   <%= render :partial => 'form' %>
   <br><%= submit_tag "Simpan" %>
 </form>

@@ -141,7 +141,7 @@ function laksana(id) {
     <tr>
       <td align="RIGHT" width="40%"><strong>Nama Kursus:</strong></td>
       <td align="LEFT">
-      <form name="list" action="/course_implementations/search" method="post">
+      <form name="list" action="/course_implementations/search" method="get">
         <input type="text" name="search_name" onkeyup="this.value=this.value.toUpperCase()">
        <input name="Submit2" type="submit" value="Cari">
       </form>	  </td>
@@ -149,7 +149,7 @@ function laksana(id) {
     <tr>
       <td align="RIGHT"><strong>Kod Kursus:</strong> </td>
       <td align="LEFT">
-      <form name="list" action="/course_implementations/search" method="post">
+      <form name="list" action="/course_implementations/search" method="get">
         <input type="text" name="search_code" onkeyup="this.value=this.value.toUpperCase()">
        <input name="Submit2" type="submit" value="Cari">
       </form>	  </td>
