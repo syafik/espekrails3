@@ -1,23 +1,24 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
       <font color="#FFFFFF">KEMASKINI UJIAN</font></th>
-    </tr>
-    <tr>
-   <td>&nbsp;</td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
     <th>
-	<%= link_to 'Kembali', :action => 'shiken_ichiran', :id => @quiz.course_implementation_id %> ke senarai ujian
+      <%= link_to 'Kembali', :action => 'shiken_ichiran', :id => @quiz.course_implementation_id %> ke senarai ujian
     </th>
-    </tr>
-  </table>
-  <BR>
+  </tr>
+</table>
+<BR>
 
-<%= start_form_tag :action => 'update', :id => @quiz %>
-  <%= render :partial => 'shinki_form' %>
-  <BR>
-  <div align=center>
+
+<%= form_for(@quiz) do%>
+<%= render :partial => 'shinki_form' %>
+<BR>
+<div align=center>
   <%= submit_tag 'Edit' %>
-  </div>
-<%= end_form_tag %>
+</div>
+<% end  %>

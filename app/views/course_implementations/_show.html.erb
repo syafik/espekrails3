@@ -126,7 +126,7 @@
       <%
       $_ = @course.content.gsub(/&#\d+;/i, "&#8226;")
       %>
-<td><%=$_.split("\n").join("<br>")%></td>
+<td><%=$_.split("\n").join("<br>").html_safe%></td>
     </tr>
 
      <tr>
@@ -135,7 +135,7 @@
       <%
       $_ = @course.reference.gsub(/&#\d+;/i, "&#8226;")
       %>
-	<td><%= $_.split("\n").join("<br>")%></td>
+	<td><%= $_.split("\n").join("<br>").html_safe%></td>
     </tr>
 
         

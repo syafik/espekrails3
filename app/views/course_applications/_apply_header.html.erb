@@ -1,93 +1,93 @@
 <script>
-function submitForm(df) {
-	if (checkFormDulu(df)) {
-		df.submit();
-	}
-	else {
-		return false;
-	}
-}
+  function submitForm(df) {
+    if (checkFormDulu(df)) {
+      df.submit();
+    }
+    else {
+      return false;
+    }
+  }
 
-function checkFormDulu(df) {
-	var is_apply_checked = 0;var idx = 0;
+  function checkFormDulu(df) {
+    var is_apply_checked = 0;var idx = 0;
 
-	if (df.course_implementation_code.value=="") { alert('Sila Masukkan Kod Kursus');df.course_implementation_code.focus();return false;}
-	for (i=0; i<df.apply_status.length ; i++ ) {
-		if (df.apply_status[i].checked == true) {
-			is_apply_checked++;
-			idx = i;
-		}
-	}
-	if (is_apply_checked == 0) { alert('Sila Pilih Status Permohonan(Dalam Proses,Diterima atau Ditolak)');return false;}df.action  = "/course_applications/" + df.apply_status[idx].value + "/" + $('course_implementation_id').value;return true;
-}
+    if (df.course_implementation_code.value=="") { alert('Sila Masukkan Kod Kursus');df.course_implementation_code.focus();return false;}
+    for (i=0; i<df.apply_status.length ; i++ ) {
+      if (df.apply_status[i].checked == true) {
+        is_apply_checked++;
+        idx = i;
+      }
+    }
+    if (is_apply_checked == 0) { alert('Sila Pilih Status Permohonan(Dalam Proses,Diterima atau Ditolak)');return false;}df.action  = "/course_applications/" + df.apply_status[idx].value + "/" + $('course_implementation_id').value;return true;
+  }
 
-function findAndSortWith(orderby,arrow) {
-	var df = document.incremental
-	//var arrow = "<%="DESC"%>"
+  function findAndSortWith(orderby,arrow) {
+    var df = document.incremental
+    //var arrow = "<%="DESC"%>"
 	
-	if (checkFormDulu(df)) {
-		df.action += "?orderby=" + orderby
-		if (arrow!="") {
-			df.action += "&arrow=" + arrow
-		}
-		df.submit();
-	}
-	else {
-		alert('ng');
-	}
+    if (checkFormDulu(df)) {
+      df.action += "?orderby=" + orderby
+      if (arrow!="") {
+        df.action += "&arrow=" + arrow
+      }
+      df.submit();
+    }
+    else {
+      alert('ng');
+    }
 	
-}
+  }
 
-function updateCourseId(course_name) {
-	for(var i = 0; i < list.length; i++) {
-	  if (list[i].name == course_name) {
-		//alert(list[i].name);
-		$("course_id").value = list[i].id
-	  }
-	}	
-}
+  function updateCourseId(course_name) {
+    for(var i = 0; i < list.length; i++) {
+      if (list[i].name == course_name) {
+        //alert(list[i].name);
+        $("course_id").value = list[i].id
+      }
+    }
+  }
 
 </script>
-<form method="post" name="incremental" action="" onsubmit="return checkFormDulu(document.incremental)">
-<div align="center">
-  <input type="hidden" id="course_name" name="course_name" size="80" onfocus="this.select()" value="<%=@course.name if @course %>">
-  <input type="hidden" id="course_implementation_id" name="course_implementation_id" size="3" value="<%=@course_implementation.id if @course_implementation %>">
-  <input type="hidden" id="course_implementation_code" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>" onchange="this.value=this.value.toUpperCase()">
-<!--input type="submit" value="Cari" class="btn60"-->
-</div>
+
+<form method="get" name="incremental" action="" onsubmit="return checkFormDulu(document.incremental)">
+  <div align="center">
+    <input type="hidden" id="course_name" name="course_name" size="80" onfocus="this.select()" value="<%=@course.name if @course %>" />
+    <input type="hidden" id="course_implementation_id" name="course_implementation_id" size="3" value="<%=@course_implementation.id if @course_implementation %>" />
+    <input type="hidden" id="course_implementation_code" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>" onchange="this.value=this.value.toUpperCase()" />
+    <!--input type="submit" value="Cari" class="btn60"-->
+  </div>
   <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td align="center" valign="middle">
 
-			  <input type="radio" name="apply_status" id="apply_status_all" value="all" <%="checked" if ((params[:apply_status]=="all") || (!params[:apply_status]))%> onclick="submitForm(document.incremental)">
-			  <label for="apply_status_all">Semua </label>
+        <input type="radio" name="apply_status" id="apply_status_all" value="all" <%="checked" if ((params[:apply_status]=="all") || (!params[:apply_status]))%> onclick="submitForm(document.incremental);" />
+        <label for="apply_status_all">Semua </label>
+        <input type="radio" name="apply_status" id="apply_status_unprocessed" value="unprocessed" <%="checked" if params[:apply_status]=="unprocessed"%>  onclick="submitForm(document.incremental)" />
+        <label for="apply_status_unprocessed">Dalam Proses </label>
 
-			  <input type="radio" name="apply_status" id="apply_status_unprocessed" value="unprocessed" <%="checked" if params[:apply_status]=="unprocessed"%>  onclick="submitForm(document.incremental)">
-			  <label for="apply_status_unprocessed">Dalam Proses </label>
+        <input type="radio" name="apply_status" id="apply_status_accepted" value="accepted" <%="checked" if params[:apply_status]=="accepted"%>  onclick="submitForm(document.incremental)" />
+        <label for="apply_status_accepted">Dipilih</label>
 
-			  <input type="radio" name="apply_status" id="apply_status_accepted" value="accepted" <%="checked" if params[:apply_status]=="accepted"%>  onclick="submitForm(document.incremental)">
-			  <label for="apply_status_accepted">Dipilih</label>			  
+        <input type="radio" name="apply_status" id="apply_status_rejected" value="rejected" <%="checked" if params[:apply_status]=="rejected"%>  onclick="submitForm(document.incremental)" />
+        <label for="apply_status_rejected">Ditolak</label>
 
-			  <input type="radio" name="apply_status" id="apply_status_rejected" value="rejected" <%="checked" if params[:apply_status]=="rejected"%>  onclick="submitForm(document.incremental)">
-			  <label for="apply_status_rejected">Ditolak</label>
+        <input type="radio" name="apply_status" id="apply_status_confirmed" value="confirmed" <%="checked" if params[:apply_status]=="confirmed"%> onclick="submitForm(document.incremental)" />
+        <label for="apply_status_confirmed">Jawab Hadir</label>
 
-			  <input type="radio" name="apply_status" id="apply_status_confirmed" value="confirmed" <%="checked" if params[:apply_status]=="confirmed"%> onclick="submitForm(document.incremental)">
-			  <label for="apply_status_confirmed">Jawab Hadir</label>
+        <input type="radio" name="apply_status" id="apply_status_confirmednot" value="confirmednot" <%="checked" if params[:apply_status]=="confirmednot"%> onclick="submitForm(document.incremental)" />
+        <label for="apply_status_confirmednot">Jawab Tidak Hadir</label>
 
-			  <input type="radio" name="apply_status" id="apply_status_confirmednot" value="confirmednot" <%="checked" if params[:apply_status]=="confirmednot"%> onclick="submitForm(document.incremental)">
-			  <label for="apply_status_confirmednot">Jawab Tidak Hadir</label>
+        <input type="radio" name="apply_status" id="apply_status_norespon" value="norespon" <%="checked" if params[:apply_status]=="norespon"%> onclick="submitForm(document.incremental)" />
+        <label for="apply_status_norespon">Tiada Jawapan</label>
 
-			  <input type="radio" name="apply_status" id="apply_status_norespon" value="norespon" <%="checked" if params[:apply_status]=="norespon"%> onclick="submitForm(document.incremental)">
-			  <label for="apply_status_norespon">Tiada Jawapan</label>
+        <br />
+        <input type="radio" name="apply_status" id="apply_status_hadir" value="hadir" <%="checked" if params[:apply_status]=="hadir"%> onclick="submitForm(document.incremental)" />
+        <label for="apply_status_hadir">Hadir Kursus</label>
 
-			  <br>
-			  <input type="radio" name="apply_status" id="apply_status_hadir" value="hadir" <%="checked" if params[:apply_status]=="hadir"%> onclick="submitForm(document.incremental)">
-			  <label for="apply_status_hadir">Hadir Kursus</label>
+        <input type="radio" name="apply_status" id="apply_status_takhadir" value="takhadir" <%="checked" if params[:apply_status]=="takhadir"%> onclick="submitForm(document.incremental)">
+        <label for="apply_status_takhadir">Tidak Hadir</label>
 
-			  <input type="radio" name="apply_status" id="apply_status_takhadir" value="takhadir" <%="checked" if params[:apply_status]=="takhadir"%> onclick="submitForm(document.incremental)">
-			  <label for="apply_status_takhadir">Tidak Hadir</label>
-
-	  </td>
+      </td>
     </tr>
   </table>
 </form>

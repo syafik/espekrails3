@@ -21,7 +21,7 @@ class QuizQuestionsController < ApplicationController
 
   def list_soalan
     @quiz = Quiz.find(params[:id]) if params[:id]
-    @quiz_question_pages, @quiz_questions = paginate :quiz_question, :per_page => 100, :conditions => "quiz_id = '#{@quiz.id}'", :order => "id asc"
+    @quiz_questions = @quiz.quiz_questions.paginate(:per_page => 100,:page => params[:page]).order("id asc")
   end
 
   def list_peserta

@@ -2,8 +2,8 @@
 <script>
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
+    document.getElementById('popmenu').style.width = 230;
+    document.getElementById('popmenu').innerHTML = "<ul>" + 
 					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
 					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" + 
 					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
@@ -22,8 +22,8 @@ function rewritePopupContent(controller, objid, objname) {
 }
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
+    document.getElementById('popmenu').style.width = 230;
+    document.getElementById('popmenu').innerHTML = "<ul>" + 
 					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
 					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
 					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
@@ -145,13 +145,13 @@ current_year = t.strftime("%Y")
 i = 0;
 even = true;
 
-if !params[:planning_year]
+if params[:planning_year].blank?
   sch_year = current_year   #2006
 else
   sch_year = params[:planning_year]
 end
 
-if params[:course_department_id] != nil
+unless params[:course_department_id].blank?
 	@course_implementations = CourseImplementation.find_by_sql("select * from vw_detailed_courses where course_department_id = '#{params[:course_department_id]}' AND year_start=#{sch_year.to_i} ORDER BY code")
 else
 	@course_implementations = CourseImplementation.find_by_sql("select * from vw_detailed_courses where year_start=#{sch_year.to_i} ORDER BY code")

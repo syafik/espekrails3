@@ -5,7 +5,7 @@
     </tr>
   </table>
 <BR>
-<form method="post" action="/reservations/trainer_book_create/<%=@course_implementation.id%>" onsubmit="return GoSubmit(this)">
+<form method="post" action="/reservations/<%=@course_implementation.id%>/trainer_book_create" onsubmit="return GoSubmit(this)">
   <%= render :partial => 'trainer_book_form' %>
   <div align="center">
   <%= submit_tag "Simpan" %>

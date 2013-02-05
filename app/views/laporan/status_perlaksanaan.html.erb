@@ -13,14 +13,15 @@ input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
 </style>
 <BR>
 <% if !@check %>
-<%= start_form_tag :action => 'sp_create' %>
+<%#= start_form_tag :action => 'sp_create' %>
+<%= form_tag sp_create_laporan_index_path do%>
   <%= render :partial => 'status_perlaksanaan' %>
   <div align="center">
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+<%end %>
 <% else %>
-<%= start_form_tag :action => 'sp_update', :id => @status_perlaksanaan %>
+<%= form_for sp_update_laporan_index_path(@status_perlaksanaan) do %>
   <%= render :partial => 'status_perlaksanaan_edit' %>
-<%= end_form_tag %>
+<% end %>
 <% end %>

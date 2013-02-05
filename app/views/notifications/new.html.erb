@@ -1,22 +1,23 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
       <font color="#FFFFFF">MAKLUMAN PELAKSANAAN KURSUS KEPADA SEKSYEN KESELAMATAN</font></th>
-    </tr>
-  </table>
+  </tr>
+</table>
 <BR>
 <% if !@check %>
-<%= start_form_tag :action => 'create' %>
+  <%=form_for(@notification) do |f|%>
   <%= render :partial => 'form' %>
   <div align="center">
-  <%= submit_tag "Simpan" %>
+    <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+  <% end %>
 <% else %>
-<%= start_form_tag :action => 'update', :id => @check %>
+<%= form_for(@notification, :url => notification_path(:id => @check), :html => {:method => :put}) do |f| %>
+  <%#= start_form_tag :action => 'update',  %>
   <%= render :partial => 'form_edit' %>
   <div align="center">
-  <%= submit_tag 'Kemaskini' %>
+    <%= submit_tag 'Kemaskini' %>
   </div>
-<%= end_form_tag %>
+  <%end %>
 <% end %>

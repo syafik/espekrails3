@@ -1,26 +1,26 @@
 # -*- encoding : utf-8 -*-
 class LaporanController < ApplicationController
-#  	require "pdf/writer"
-#  	require "pdf/simpletable"
+  #  	require "pdf/writer"
+  #  	require "pdf/simpletable"
 	layout "standard-layout"
 
 	def initialize
-	    @states = State.find(:all, :order=>"description")
-	    @genders = Gender.all
-	    @races = Race.find(:all, :order=>"id")
-	    @profile_statuses = ProfileStatus.all
-	    @religions = Religion.find(:all, :order=>"id")
-	    @countries = Country.all
-	    @marital_statuses = MaritalStatus.all
-	    @places = Place.find(:all, :conditions => "place_type_id = '2'")
-	    @relationships = Relationship.all
-	    @cert_levels = CertLevel.all
-	    @majors = Major.all
-	    @job_profiles = JobProfile.all
-	    @titles = Title.find(:all, :order=>"description")
-	    @course_departments = CourseDepartment.all
-	    #@courses = Course.all
-	    #@course_implementations = CourseImplementation.all
+    @states = State.find(:all, :order=>"description")
+    @genders = Gender.all
+    @races = Race.find(:all, :order=>"id")
+    @profile_statuses = ProfileStatus.all
+    @religions = Religion.find(:all, :order=>"id")
+    @countries = Country.all
+    @marital_statuses = MaritalStatus.all
+    @places = Place.find(:all, :conditions => "place_type_id = '2'")
+    @relationships = Relationship.all
+    @cert_levels = CertLevel.all
+    @majors = Major.all
+    @job_profiles = JobProfile.all
+    @titles = Title.find(:all, :order=>"description")
+    @course_departments = CourseDepartment.all
+    #@courses = Course.all
+    #@course_implementations = CourseImplementation.all
 	end
 
 
@@ -37,35 +37,35 @@ class LaporanController < ApplicationController
   		p = dmy(params[:report1],"/","-")
   		q = dmy(params[:report2],"/","-")
   		@students = CourseApplication.find(:all, :conditions=>"date_apply BETWEEN '#{p}' AND '#{q}'")
-		@report_date_from = params[:report1]
-		@report_date_to = params[:report2]
-	else
-		@students = []
-	end  
+      @report_date_from = params[:report1]
+      @report_date_to = params[:report2]
+    else
+      @students = []
+    end
   end
   
   def statistik_kursus_tarikh
   	if (params[:report1] != nil) && (params[:report2] != nil)
   		@p = dmy(params[:report1],"/","-")
   		@q = dmy(params[:report2],"/","-")
-		@report_date_from = params[:report1]
-		@report_date_to = params[:report2]
-	else
-		@p = '2008-01-01'
-		@q = '2008-01-01'
-	end  
+      @report_date_from = params[:report1]
+      @report_date_to = params[:report2]
+    else
+      @p = '2008-01-01'
+      @q = '2008-01-01'
+    end
   end
 
   def pencapaian_ujian
   	if (params[:report1] != nil) && (params[:report2] != nil)
   		@p = dmy(params[:report1],"/","-")
   		@q = dmy(params[:report2],"/","-")
-		@report_date_from = params[:report1]
-		@report_date_to = params[:report2]
-	else
-		@p = '2008-01-01'
-		@q = '2008-01-01'
-	end  
+      @report_date_from = params[:report1]
+      @report_date_to = params[:report2]
+    else
+      @p = '2008-01-01'
+      @q = '2008-01-01'
+    end
   
   end
   
@@ -73,24 +73,24 @@ class LaporanController < ApplicationController
   	if (params[:report1] != nil) && (params[:report2] != nil)
   		@p = dmy(params[:report1],"/","-")
   		@q = dmy(params[:report2],"/","-")
-		@report_date_from = params[:report1]
-		@report_date_to = params[:report2]
-	else
-		@p = '2008-01-01'
-		@q = '2008-01-01'
-	end  
+      @report_date_from = params[:report1]
+      @report_date_to = params[:report2]
+    else
+      @p = '2008-01-01'
+      @q = '2008-01-01'
+    end
   end
 
   def penilaian_penceramah
   	if (params[:report1] != nil) && (params[:report2] != nil)
   		@p = dmy(params[:report1],"/","-")
   		@q = dmy(params[:report2],"/","-")
-		@report_date_from = params[:report1]
-		@report_date_to = params[:report2]
-	else
-		@p = '2008-01-01'
-		@q = '2008-01-01'
-	end    
+      @report_date_from = params[:report1]
+      @report_date_to = params[:report2]
+    else
+      @p = '2008-01-01'
+      @q = '2008-01-01'
+    end
   end
 
   
@@ -98,24 +98,24 @@ class LaporanController < ApplicationController
   	if (params[:report1] != nil) && (params[:report2] != nil)
   		@p = dmy(params[:report1],"/","-")
   		@q = dmy(params[:report2],"/","-")
-		@report_date_from = params[:report1]
-		@report_date_to = params[:report2]
-	else
-		@p = '2008-01-01'
-		@q = '2008-01-01'
-	end    
+      @report_date_from = params[:report1]
+      @report_date_to = params[:report2]
+    else
+      @p = '2008-01-01'
+      @q = '2008-01-01'
+    end
   end
   
   def penilaian_penyelarasan
   	if (params[:report1] != nil) && (params[:report2] != nil)
   		@p = dmy(params[:report1],"/","-")
   		@q = dmy(params[:report2],"/","-")
-		@report_date_from = params[:report1]
-		@report_date_to = params[:report2]
-	else
-		@p = '2008-01-01'
-		@q = '2008-01-01'
-	end    
+      @report_date_from = params[:report1]
+      @report_date_to = params[:report2]
+    else
+      @p = '2008-01-01'
+      @q = '2008-01-01'
+    end
   end
 
   def penilaian_isi_kandungan
@@ -137,15 +137,16 @@ class LaporanController < ApplicationController
   def status_perlaksanaan
   	@course_implementation = CourseImplementation.find(params[:id])
   	@status_perlaksanaan = StatusPerlaksanaan.find_by_course_implementation_id(@course_implementation.id)
-	@check = @status_perlaksanaan
+    @check = @status_perlaksanaan
+    render :layout => "standard-layout"
   end
   
   def sp_create
     20.times do |n|
-    y = n + 1
-    next if params["status_perlaksanaan"]["#{y}"].blank?
-    @sp = StatusPerlaksanaan.create(params["status_perlaksanaan"]["#{y}"]) 
-    @sp.update_attributes(:course_implementation_id => params[:status_perlaksanaan][:course_implementation_id])
+      y = n + 1
+      next if params["status_perlaksanaan"]["#{y}"].blank?
+      @sp = StatusPerlaksanaan.create(params["status_perlaksanaan"]["#{y}"])
+      @sp.update_attributes(:course_implementation_id => params[:status_perlaksanaan][:course_implementation_id])
     end
 
     if @sp.save
@@ -162,10 +163,10 @@ class LaporanController < ApplicationController
       q.destroy
     end
     20.times do |n|
-    y = n + 1
-    next if params["status_perlaksanaan"]["#{y}"].blank?
-    @sp = StatusPerlaksanaan.create(params["status_perlaksanaan"]["#{y}"]) 
-    @sp.update_attributes(:course_implementation_id => params[:status_perlaksanaan][:course_implementation_id])
+      y = n + 1
+      next if params["status_perlaksanaan"]["#{y}"].blank?
+      @sp = StatusPerlaksanaan.create(params["status_perlaksanaan"]["#{y}"])
+      @sp.update_attributes(:course_implementation_id => params[:status_perlaksanaan][:course_implementation_id])
     end
 
     if @sp.save
@@ -180,12 +181,12 @@ class LaporanController < ApplicationController
   	if (params[:report1] != nil) && (params[:report2] != nil)
   		@p = dmy(params[:report1],"/","-")
   		@q = dmy(params[:report2],"/","-")
-		@report_date_from = params[:report1]
-		@report_date_to = params[:report2]
-	else
-		@p = @q = dmy(Time.now.to_formatted_s(:my_format_4),"/","-")
-	end    
-	@audit_trails = AuditTrail.find(:all, :conditions=>"created_at BETWEEN '#{@p}' AND '#{@q}'" , :order=>"created_on DESC")
+      @report_date_from = params[:report1]
+      @report_date_to = params[:report2]
+    else
+      @p = @q = dmy(Time.now.to_formatted_s(:my_format_4),"/","-")
+    end
+    @audit_trails = AuditTrail.find(:all, :conditions=>"created_at BETWEEN '#{@p}' AND '#{@q}'" , :order=>"created_on DESC")
   end
   
 	private

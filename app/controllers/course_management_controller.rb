@@ -910,6 +910,7 @@ class CourseManagementController < ApplicationController
 
   def evaluation_kelompok
     evaluation
+
   end
 
   def evaluation
@@ -929,6 +930,7 @@ class CourseManagementController < ApplicationController
       @students = []
     end
     @courses = Course.find(:all, :order=>"name")
+    render :layout => "standard-layout"
   end
 
   def kehadiran_peserta

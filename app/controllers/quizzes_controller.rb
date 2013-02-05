@@ -7,7 +7,7 @@ class QuizzesController < ApplicationController
   end
 
   def index
-#    list
+    #    list
     redirect_to :action => 'list'
   end
 
@@ -35,6 +35,7 @@ class QuizzesController < ApplicationController
     @hour, @minute, @day, @month, @year = today.hour, today.min, today.day, today.month, today.year
     tomorrow = today + (60 * 60)
     @hour_next, @minute_next, @day_next, @month_next, @year_next = tomorrow.hour, tomorrow.min, tomorrow.day, tomorrow.month, tomorrow.year
+
   end
 
   def create
@@ -90,11 +91,13 @@ class QuizzesController < ApplicationController
   
   def shiken_ichiran
   	@ci=CourseImplementation.find(params[:id])
+    render :layout => "standard-layout"
   end
   
   def shinki
   	new
     @ci=CourseImplementation.find(params[:id])
+    render :layout => "standard-layout"
   end
 
   def hozon

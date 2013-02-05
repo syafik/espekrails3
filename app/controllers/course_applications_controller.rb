@@ -371,9 +371,11 @@ class CourseApplicationsController < ApplicationController
       render :action => "search_not_found"
     end
     @courses = Course.find(:all, :order => "name")
+    render :layout => "standard-layout"
   end
 
   def search
+    render :layout => "standard-layout"
   end
 
   def search_not_found
@@ -407,7 +409,7 @@ class CourseApplicationsController < ApplicationController
 
   def new
     init_load
-    @courses = Course.find_all
+    @courses = Course.all
     @course_implementation = CourseImplementation.find(params[:id]) if params[:id]
     @profile = Profile.new
     @relative = Relative.new
@@ -418,7 +420,7 @@ class CourseApplicationsController < ApplicationController
 
   def new_peserta
     init_load
-    @courses = Course.find_all
+    @courses = Course.all
     @course_implementation = CourseImplementation.find(params[:id]) if params[:id]
     @profile = Profile.new
     @relative = Relative.new

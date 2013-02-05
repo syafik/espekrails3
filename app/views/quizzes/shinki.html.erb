@@ -8,10 +8,11 @@
   </table>
   <BR>
 
-<%= start_form_tag :action => 'hozon' %>
+<%#= start_form_tag :action => 'hozon' %>
+<%= form_for(@quiz, :url => hozon_quizzes_path) do%>
   <%= render :partial => 'shinki_form' %>
   <BR>
   <div align=center>
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+<%end %>

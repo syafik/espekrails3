@@ -1,4 +1,3 @@
-# -*- encoding : utf-8 -*-
 class Notification < ActiveRecord::Base
   belongs_to :course_implementation
   belongs_to :course

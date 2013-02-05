@@ -7,10 +7,11 @@
   <BR>
 
 
-<%= start_form_tag :action => 'create_popup' %>
+<%#= start_form_tag :action => 'create_popup' %>
+<%= form_for(@methodology, :url => create_popup_methodologies_path) do%>
   <%= render :partial => 'form' %>
   <BR>
   <div align=center>
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+<%end%>
