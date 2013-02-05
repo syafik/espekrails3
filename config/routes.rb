@@ -209,6 +209,10 @@ InstunRails3::Application.routes.draw do
   resources :course_applications do
     collection do
       get 'search'
+      get 'search_applicant'
+      get 'search_by_name'
+      post 'search_by_ic'
+      post 'search_by_phone'
       get 'edit_surat_tunda_select_peserta'
     end
   end

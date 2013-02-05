@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class CourseApplicationsController < ApplicationController
   layout "standard-layout"
-  require "pdf/writer"
+#  require "pdf/writer"
 
   def initialize
   end
@@ -45,7 +45,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def search_applicant
-
+    render layout: 'standard-layout'
   end
 
   def new_popup
@@ -56,25 +56,15 @@ class CourseApplicationsController < ApplicationController
     if !params[:query].nil? and params[:query].size == 1
       params[:query] = nil
     end
-    if params[:query]
-      @students = CourseApplication.search(params[:query], :include => [:profile], :group => 'profiles.id')
+    unless params[:query].blank?
+      @students = CourseApplication.includes(:profile).where("lower(profiles.name) LIKE ?", "%#{params[:query]}%")
+#      @students = CourseApplication.search(params[:query], :include => [:profile], :group => 'profiles.id')
       @students = @students.sort_by { |e| e[:profile_id] }.inject([]) { |m, e| m.last.nil? ? [e] : m.last[:profile_id] == e[:profile_id] ? m : m << e }
     else
       @students = []
     end
-    #begin
-    #sql = "select distinct profiles.id from course_applications,profiles WHERE "
-    #where = "profiles.id = course_applications.profile_id AND name ILIKE '%#{params[:name]}%'" if params[:name] 
-    #@students = CourseApplication.find_by_sql("select distinct profiles.id from course_applications,profiles WHERE profiles.id = course_applications.profile_id AND name ILIKE '%#{params[:name]}%'")
-    #if where != nil
-    #	@students = CourseApplication.find_by_sql(sql + where)
-    #else
-    #	@students = []
-    #end
-    # rescue
-    #    flash['notice'] = 'Carian Tidak Sah'
-    #    redirect_to :action => 'search_applicant'
-    #  end
+
+    render layout: 'standard-layout'
   end
 
   def search_by_ic
@@ -91,7 +81,7 @@ class CourseApplicationsController < ApplicationController
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_applicant'
     end
-
+    render layout: 'standard-layout'
   end
 
   def search_by_phone
@@ -108,7 +98,7 @@ class CourseApplicationsController < ApplicationController
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_applicant'
     end
-
+    render layout: 'standard-layout'
   end
 
   def search_by_state
@@ -2965,19 +2955,19 @@ class CourseApplicationsController < ApplicationController
 #################################################################################
   def init_load
     @states = State.find(:all, :order => "description")
-    @genders = Gender.find_all
+    @genders = Gender.all
     @races = Race.find(:all, :order => "id")
     @handicaps = Handicap.find(:all, :order => "id")
-    @profile_statuses = ProfileStatus.find_all
+    @profile_statuses = ProfileStatus.all
     @religions = Religion.find(:all, :order => "id")
-    @countries = Country.find_all
-    @marital_statuses = MaritalStatus.find_all
+    @countries = Country.all
+    @marital_statuses = MaritalStatus.all
     @places = Place.find(:all, :order => "state_id")
-    @relationships = Relationship.find_all
+    @relationships = Relationship.all
     @cert_levels = CertLevel.find(:all, :order => "id")
     @majors = Major.find(:all, :order => "id")
     @job_profiles = JobProfile.find(:all, :order => "job_grade")
     @titles = Title.find(:all, :order => "description")
-    @course_departments = CourseDepartment.find_all
+    @course_departments = CourseDepartment.all
   end
 end
