@@ -1,74 +1,74 @@
 <script>
-function confirmAndDelete(url, objname) {
-	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
-		location = url
-	}
+  function confirmAndDelete(url, objname) {
+    if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
+      location = url
+    }
 	
-}
+  }
 
-function rewritePopupContent(controller, objid, objname) {
+  function rewritePopupContent(controller, objid, objname) {
     $('popmenu').style.width = 300;
     $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + controller + "/course_sankasha_ichiran/" + objid + "\">&nbsp;&nbsp;Lihat senarai daftar masuk peserta</a>" +
-							 "<li><a href=\"" + "javascript: b(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai daftar masuk peserta(Manual)</a>" +
-                            "<li><a href=\""  + controller + "/course_trainer_list/" + objid + "\">&nbsp;&nbsp;Lihat senarai daftar masuk penceramah</a>" +
-							 "<li><a href=\"" + "javascript: c(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai dafar masuk penceramah(Manual)</a>" +
-					        "</ul>"
-}
+      "<li><a href=\""  + controller + "/" + objid + "/course_sankasha_ichiran\">&nbsp;&nbsp;Lihat senarai daftar masuk peserta</a>" +
+      "<li><a href=\"" + "javascript: b(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai daftar masuk peserta(Manual)</a>" +
+      "<li><a href=\""  + controller + "/" + objid + "/course_trainer_list\">&nbsp;&nbsp;Lihat senarai daftar masuk penceramah</a>" +
+      "<li><a href=\"" + "javascript: c(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai dafar masuk penceramah(Manual)</a>" +
+      "</ul>"
+  }
 
-function rewritePopupContentNoRestraint(controller, objid, objname) {
+  function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('popmenu').style.width = 280;
     $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + controller + "/course_sankasha_ichiran/" + objid + "\">&nbsp;&nbsp;Lihat senarai daftar masuk peserta</a>" +
-							 "<li><a href=\"" + "javascript: b(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai daftar masuk peserta(Manual)</a>" +
-                            "<li><a href=\""  + controller + "/course_trainer_list/" + objid + "\">&nbsp;&nbsp;Lihat senarai daftar masuk penceramah</a>" +
-							 "<li><a href=\"" + "javascript: c(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai dafar masuk penceramah(Manual)</a>" +
-					        "</ul>"
-}
+      "<li><a href=\""  + controller + "/" + objid + "/course_sankasha_ichiran\">&nbsp;&nbsp;Lihat senarai daftar masuk peserta</a>" +
+      "<li><a href=\"" + "javascript: b(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai daftar masuk peserta(Manual)</a>" +
+      "<li><a href=\""  + controller + "/" + objid + "/course_trainer_list\">&nbsp;&nbsp;Lihat senarai daftar masuk penceramah</a>" +
+      "<li><a href=\"" + "javascript: c(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai dafar masuk penceramah(Manual)</a>" +
+      "</ul>"
+  }
 </script>
 
 <script>
 
-function acceptSelected(df) {
-  var sum_checked = 0
+  function acceptSelected(df) {
+    var sum_checked = 0
 
-  for (i=1; i<df.elements.length; i++ )
-  {
-     if (df.elements[i].type == "checkbox")
-     {
-       if (df.elements[i].checked == true) {
-         sum_checked++
-       }
-     } 
+    for (i=1; i<df.elements.length; i++ )
+    {
+      if (df.elements[i].type == "checkbox")
+      {
+        if (df.elements[i].checked == true) {
+          sum_checked++
+        }
+      }
+    }
+    if (sum_checked > 0) {
+      df.action = "/course_applications/accept_selected"
+      df.submit()
+    }
+    else {
+      alert("Sila Pilih Pemohon")
+    }
   }
-  if (sum_checked > 0) {
-    df.action = "/course_applications/accept_selected"
-    df.submit()
-  }
-  else {
-    alert("Sila Pilih Pemohon")
-  }
-}
 
 </script>
-    
- <!----------------------------------------------------------------------------------------->
- <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr>
-      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">CARIAN PESERTA/PENCERAMAH UNTUK CHECK IN </font></strong></td>
-    </tr>
- </table>
- <br>
+
+<!----------------------------------------------------------------------------------------->
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">CARIAN PESERTA/PENCERAMAH UNTUK CHECK IN </font></strong></td>
+  </tr>
+</table>
+<br>
 
 <style>
-b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-.box {border: solid; border-width:1}
+  b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  .box {border: solid; border-width:1}
 </style>
-<form name="list_form" action="/hostels/find_to_checkin" onsubmit="return GoSubmit2(this)">
+<form name="list_form" method="get" action="/hostels/find_to_checkin" onsubmit="return GoSubmit2(this)">
   <div width="95%" style="background: #FFFFFF" align="center">
     <table width="" border="0" cellspacing="2" cellpadding="0">
       <tr>
@@ -84,114 +84,114 @@ input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
 
 
 <form action="/hostels/chkin_by_course">
- <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <td width="100%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><strong><font color="#FFFFFF">CARIAN PESERTA/PENCERAMAH</font></strong> DARI SENARAI KURSUS YANG AKTIF </font></b></td>
     </tr>
   </table>
-     <div align="center">
-        <%= flash[:notice] %></div>
+  <div align="center">
+    <%= flash[:notice] %></div>
   <br>
   <table width="90%" border="0" align="center" cellpadding="0" cellspacing="4">
     <tr>
-        <td align="center">Tarikh Mula Kursus:
+      <td align="center">Tarikh Mula Kursus:
         <%= calendar_field 'report1', 'input_tarikh_mula',
-     { :class => 'date',
-        :value => @report_date_from,
-        :field_title => 'report1',
-       :button_title => 'Kalendar' },
-     { :firstDay => 1,
-       :range => [2005, 2015],
-      :step => 1,
-      :showOthers => true,
-      :cache => true }
+          { :class => 'date',
+          :value => @report_date_from,
+          :field_title => 'report1',
+          :button_title => 'Kalendar' },
+          { :firstDay => 1,
+          :range => [2005, 2015],
+          :step => 1,
+          :showOthers => true,
+          :cache => true }
       %></td>
     </tr>
-	    <tr>
-	    <td align="center"><script>
-function goSubmit() {
-	document.forms[1].submit();
-}
-</script>
+    <tr>
+      <td align="center"><script>
+        function goSubmit() {
+          document.forms[1].submit();
+        }
+        </script>
         <input type="button" value="Papar" onclick="goSubmit()">
       </td>
     </tr>
   </table>
-    </form>
-  <table align="CENTER" width="95%" border="0" cellspacing="2" cellpadding="0">
-    <tr>
-      <td><em><font color="#003300" size="1">*kursus yang tersenarai secara default ialah yang bermula seminggu sebelum dan sehingga 3 hari selepas tarikh hari ini. </font></em></td>
+</form>
+<table align="CENTER" width="95%" border="0" cellspacing="2" cellpadding="0">
+  <tr>
+    <td><em><font color="#003300" size="1">*kursus yang tersenarai secara default ialah yang bermula seminggu sebelum dan sehingga 3 hari selepas tarikh hari ini. </font></em></td>
+  </tr>
+</table>
+<br>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" >
+    <td align="center"><font color="#FFFFFF"><strong>Bil</strong></font></td>
+    <td align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
+    <td align="center"><font color="#FFFFFF"><strong>Nama Kursus</strong></font></td>
+    <td align="center"><font color="#FFFFFF"><strong>Tarikh Mula Kursus</strong></font></td>
+    <td align="center"><font color="#FFFFFF"><strong>Tarikh Tamat Kursus</strong></font></td>
+    <td align="center"><font color="#FFFFFF"><strong>Bil Sah Kehadiran</strong></font></td>
+    <td align="center"><font color="#FFFFFF"><strong>Bil Hadir</strong></font></td>
+  </tr>
+  <%
+  i = 0;
+  even = true;
+  sum_peserta    = 0
+  sum_bil_permhn = 0
+  sum_sah_hadir  = 0
+  sum_daftar     = 0
+
+  for student in @students
+    i = i + 1
+    bgclr = "#CCCCFF" if (even == true)
+    bgclr = "#FFFFFF" if (even == false)
+    even = !even
+
+    sum_peserta    = sum_peserta + nof{student.capacity}
+    sum_bil_permhn = sum_bil_permhn + nof{student.total_application}
+    sum_sah_hadir  = sum_sah_hadir + nof{student.total_confirmed}
+    sum_daftar     = sum_daftar + nof{student.total_registered}
+
+    show_menu = "show"
+    #show_menu = "show_with_no_restraint"
+    onmousedown = "menuLayers.#{show_menu}('popmenu','/hostels', '#{student.id}', '#{student.name}', event)"
+
+  %>
+    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+        onmousedown="<%=onmousedown%>" class="list" onclick="//location.href='/hostels/course_sankasha_ichiran/<%=student.id%>'">
+      <td align=left valign=top><%= i.to_s %></td>
+      <td align=left valign=top><%=h nof{student.code.upcase} %></td>
+      <td align=left><%=h nof{student.name.upcase} %>&nbsp;</td>
+      <td align=CENTER valign=top><%=h nof{student.date_plan_start.to_formatted_s(:my_format_4)} %>&nbsp;</td>
+      <td align=CENTER valign=top><%=h nof{student.date_plan_end.to_formatted_s(:my_format_4)} %>&nbsp;</td>
+      <td align=left valign=top><%=h nof{student.total_confirmed} %>&nbsp;</td>
+      <td align=left valign=top><%=h nof{student.total_registered} %>&nbsp;</td>
     </tr>
-  </table>
-  <br>
-    <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
-    <tr bgcolor="#999999" >
-      <td align="center"><font color="#FFFFFF"><strong>Bil</strong></font></td>
-      <td align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
-      <td align="center"><font color="#FFFFFF"><strong>Nama Kursus</strong></font></td>
-      <td align="center"><font color="#FFFFFF"><strong>Tarikh Mula Kursus</strong></font></td>
-      <td align="center"><font color="#FFFFFF"><strong>Tarikh Tamat Kursus</strong></font></td>
-      <td align="center"><font color="#FFFFFF"><strong>Bil Sah Kehadiran</strong></font></td>
-      <td align="center"><font color="#FFFFFF"><strong>Bil Hadir</strong></font></td>
-    </tr>
-<%
-i = 0;
-even = true;
-sum_peserta    = 0
-sum_bil_permhn = 0
-sum_sah_hadir  = 0
-sum_daftar     = 0
-
-for student in @students
-        i = i + 1
-        bgclr = "#CCCCFF" if (even == true)
-        bgclr = "#FFFFFF" if (even == false)
-        even = !even
-		
-		sum_peserta    = sum_peserta + nof{student.capacity}
-		sum_bil_permhn = sum_bil_permhn + nof{student.total_application}
-		sum_sah_hadir  = sum_sah_hadir + nof{student.total_confirmed}
-		sum_daftar     = sum_daftar + nof{student.total_registered}
-
-  		show_menu = "show"
-  		#show_menu = "show_with_no_restraint"
-  		onmousedown = "menuLayers.#{show_menu}('popmenu','/hostels', '#{student.id}', '#{student.name}', event)"
-
-%>
-	<tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-	    onmousedown="<%=onmousedown%>" class="list" onclick="//location.href='/hostels/course_sankasha_ichiran/<%=student.id%>'">
-        <td align=left valign=top><%= i.to_s %></td>
-        <td align=left valign=top><%=h nof{student.code.upcase} %></td>
-        <td align=left><%=h nof{student.name.upcase} %>&nbsp;</td>
-	    <td align=CENTER valign=top><%=h nof{student.date_plan_start.to_formatted_s(:my_format_4)} %>&nbsp;</td>
-        <td align=CENTER valign=top><%=h nof{student.date_plan_end.to_formatted_s(:my_format_4)} %>&nbsp;</td>
-        <td align=left valign=top><%=h nof{student.total_confirmed} %>&nbsp;</td>
-        <td align=left valign=top><%=h nof{student.total_registered} %>&nbsp;</td>
-      </tr>
- <% end %>
+  <% end %>
 </table>
 
 <script src="/javascripts/form_validator.js"></script>
 <script>
 
-function GoSubmit2(df) {
-	if ($('search').value == "name") {
-		if (!checkInput(/.+/,$('name'),'Nama')) return false;
-	}
-	if ($('search').value == "nokp") {
-		if (!checkInput(/.+/,$('nokp'),'No KP')) return false;
-	}
-	return true;
+  function GoSubmit2(df) {
+    if ($('search').value == "name") {
+      if (!checkInput(/.+/,$('name'),'Nama')) return false;
+    }
+    if ($('search').value == "nokp") {
+      if (!checkInput(/.+/,$('nokp'),'No KP')) return false;
+    }
+    return true;
 
-}
+  }
 
-function b(id) {
-	MM_openBrWindow('/hostels/cetak_list_checkin/'+id,'','scrollbars=yes,width=800,height=600')
-}
+  function b(id) {
+    MM_openBrWindow('/hostels/'+id+'/cetak_list_checkin','','scrollbars=yes,width=800,height=600')
+  }
 
-function c(id) {
-	MM_openBrWindow('/hostels/cetak_list_trainer_checkin/'+id,'','scrollbars=yes,width=800,height=600')
-}
+  function c(id) {
+    MM_openBrWindow('/hostels/'+id+'/cetak_list_trainer_checkin','','scrollbars=yes,width=800,height=600')
+  }
 
 
 </script>

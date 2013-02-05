@@ -190,6 +190,9 @@ InstunRails3::Application.routes.draw do
       get 'trainer_book'
       post 'trainer_book_create'
       get 'show_trainer_book'
+      get 'edit_sah'
+      post 'update_sah'
+      get 'detail'
     end
   end
 
@@ -201,6 +204,12 @@ InstunRails3::Application.routes.draw do
       get 'jadual_bilik_kuliah'
       get 'listp'
       get 'urushubung'
+      post 'create_security_contact'
+    end
+    member do
+      get 'detail'
+      delete 'delete_security_contact'
+      put 'approve'
     end
   end
 
@@ -208,11 +217,27 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'list'
       get 'new_penghuni'
+      post 'create_penghuni'
       get 'chkin_by_course'
       get 'find_checkout'
       get 'list_tutup'
       get 'find_guest'
       get 'rekod_guna_bilik'
+      get 'blank'
+      get 'lihat'
+      get 'find_to_checkin'
+    end
+    member do
+      get 'iwannarent'
+      get 'iverent'
+      get 'showrent'
+      get 'change_room_rent'
+      get 'course_sankasha_ichiran'
+      get 'cetak_list_checkin'
+      get 'course_trainer_list'
+      get 'iwannachkin'
+      post 'ivedonechkin'
+      get 'cetak_list_trainer_checkin'
     end
   end
   resources :quizzes do
@@ -244,6 +269,7 @@ InstunRails3::Application.routes.draw do
       post 'search_by_ic'
       post 'search_by_phone'
       get 'edit_surat_tunda_select_peserta'
+      get 'new_peserta'
     end
     member do
       get 'all'
@@ -350,6 +376,7 @@ InstunRails3::Application.routes.draw do
     collection do
       #      post 'ajax_find_course_field '
       #      post 'ajax_find_coordinator'
+      get 'ajax_nric'
     end
   end
   # Sample resource route with options:

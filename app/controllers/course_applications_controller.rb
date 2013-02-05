@@ -45,7 +45,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def search_applicant
-    render layout: 'standard-layout'
+    render :layout => 'standard-layout'
   end
 
   def new_popup
@@ -64,7 +64,7 @@ class CourseApplicationsController < ApplicationController
       @students = []
     end
 
-    render layout: 'standard-layout'
+    render :layout => 'standard-layout'
   end
 
   def search_by_ic
@@ -81,7 +81,7 @@ class CourseApplicationsController < ApplicationController
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_applicant'
     end
-    render layout: 'standard-layout'
+    render :layout => 'standard-layout'
   end
 
   def search_by_phone
@@ -98,7 +98,7 @@ class CourseApplicationsController < ApplicationController
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_applicant'
     end
-    render layout: 'standard-layout'
+    render :layout => 'standard-layout'
   end
 
   def search_by_state
@@ -427,6 +427,7 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.new
     @qualification =Qualification.new
     @course_application = CourseApplication.new
+    render :layout => "standard-layout"
   end
 
   def new_but_peserta_already_exist

@@ -9,14 +9,14 @@ function confirmAndDelete(url, objname) {
 function rewritePopupContent(controller, objid, objname) {
     $('popmenu').style.width = 150;
     $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + controller + "/iwannachkin/" + objid + "\">&nbsp;&nbsp;Check-in Asrama</a>" +
+                            "<li><a href=\""  + controller + "/" + objid + "/iwannachkin\">&nbsp;&nbsp;Check-in Asrama</a>" +
 					        "</ul>"
 }
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('popmenu').style.width = 150;
     $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + controller + "/iwannachkin/" + objid + "\">&nbsp;&nbsp;Check-in Asrama</a>" +
+                            "<li><a href=\""  + controller + "/" + objid + "/iwannachkin\">&nbsp;&nbsp;Check-in Asrama</a>" +
 					        "</ul>"
 }
 </script>

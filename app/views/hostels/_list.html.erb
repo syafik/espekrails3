@@ -22,7 +22,7 @@
         <td class="el" align="center" bgcolor="#dddddd"><b><%= i+1 %></b></td>
         <% #@hostel_block.total_room_at_level(i+1).times do |j|%>
         <% @hostel_block.max_room_by_level.times do |j|%>
-              <!--td>&nbsp;<%="#{@hostel_block.description}-#{i+1}-#{j+1}"%>&nbsp;</td-->
+                <!--td>&nbsp;<%="#{@hostel_block.description}-#{i+1}-#{j+1}"%>&nbsp;</td-->
           <% 	st_sql = "SELECT * from hostels WHERE block_id=#{@hostel_block.id} AND level=#{i+1} AND room=#{j+1}"
           rooms = Hostel.find(:all, :conditions=> "block_id=#{@hostel_block.id} AND level=#{i+1} AND room=#{j+1}")
           r_name =nof{room.room_no}
@@ -30,7 +30,7 @@
           room_font_style = "normal"
           room_font_style = "bold" if room !=nil and room.hostel_type_id == 2
 
-          the_room = "<a href=\"javascript: showProperties(#{i+1},#{j+1})\">#{r_name}</a>"
+          the_room = "<a href='javascript: showProperties(#{i+1},#{j+1})'>#{r_name}</a>"
           @room_bg = "#FFFFFF"
           if rooms.size != 0
             @room_bg = @color_close if rooms.first.hostel_status_id == 4 #close for maintenance,dll
@@ -59,7 +59,12 @@
           end
 
         %>
-          <td bgcolor="<%=@room_bg%>" class="el" align="center" <%=the_title%>>&nbsp;<font style="font-weight: <%=room_font_style%>"><%=the_room.safe_html%></font>&nbsp;</td>
+          <td bgcolor="<%=@room_bg%>" class="el" align="center" <%=the_title%>>&nbsp;sadsad
+            <font style="font-weight: <%=room_font_style%>">asdsadsadasdasd
+              <%= debug the_room%>
+              <%=the_room.html_safe%>
+            </font>&nbsp;
+          </td>
 
         <% end%>
       </tr>

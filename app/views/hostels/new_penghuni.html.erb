@@ -9,10 +9,11 @@
   </table>
   <BR>
 
-<%= start_form_tag :action => 'create_penghuni' %>
+<%#= start_form_tag :action => 'create_penghuni' %>
+  <%= form_for(@profile, :url=> create_penghuni_hostels_path) do |f| %>
   <%= render :partial => 'form_penghuni' %>
   <BR>
    <div id="apply_button" align="center" >
   <%= submit_tag "Pilih Bilik" %>
   </div>
-<%= end_form_tag %>
+<%end %>

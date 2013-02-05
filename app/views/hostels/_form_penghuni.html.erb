@@ -1,116 +1,122 @@
 <!--[form:profile]-->
 
 <div align="center">
-<%= error_messages_for 'profile' %>
+  <% if @profile.errors.any? %>
+    <ul>
+      <% @profile.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
 
-  <table width="85%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr bgcolor="000000">
-      <td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PERIBADI PENYEWA </font></b></td>
-    </tr>
-    <tr>
-      <td colspan="4" align="right">&nbsp;</td>
-    </tr>
-    
-    <tr>
-      <td align="right" valign="top"><b>NO K/P Baru: </b></td>
-      <td>&nbsp; <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>15, :onchange=>"checkNRIC()"  %><span id="node_identification_memo"> </span></td>
-    </tr>
+<table width="85%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr bgcolor="000000">
+    <td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PERIBADI PENYEWA </font></b></td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right">&nbsp;</td>
+  </tr>
 
-    <script>
-var node = $("profile_ic_number");
-var node_identification_memo = $("node_identification_memo");
+  <tr>
+    <td align="right" valign="top"><b>NO K/P Baru: </b></td>
+    <td>&nbsp; <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>15, :onchange=>"checkNRIC()"  %><span id="node_identification_memo"> </span></td>
+  </tr>
 
-function checkNRIC() {
-	node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange>Sistem sedang memeriksa no kp<br>&nbsp;Sila tunggu..</font>"
-	ajax_request("/ajax/ajax_nric", "ic_number="+node.value)
-}
+  <script>
+    var node = $("profile_ic_number");
+    var node_identification_memo = $("node_identification_memo");
 
-function ajax_request(url, data) {
-    var myAjax = new Ajax.Request(
-        url,
-        {method: 'get', parameters: data, onComplete: ajax_response}
+    function checkNRIC() {
+      node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange>Sistem sedang memeriksa no kp<br>&nbsp;Sila tunggu..</font>"
+      ajax_request("/ajax/ajax_nric", "ic_number="+node.value)
+    }
+
+    function ajax_request(url, data) {
+      var myAjax = new Ajax.Request(
+      url,
+      {method: 'get', parameters: data, onComplete: ajax_response}
     );
-}
+    }
 
-function ajax_response(originalRequest) {
-	//alert(originalRequest.responseText)
-	if (originalRequest.responseText == 1) {
-		node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange> Data kakitangan sudah ada.<br>&nbsp; Loading..</font>"
-		document.forms[0].action = "/hostels/new_but_penghuni_already_exist";
-		document.forms[0].submit();
-	}
-	else {
-		node_identification_memo.innerHTML = "<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>"
-		document.forms[0].action = "/hostels/create_penghuni";
-	}
-}
+    function ajax_response(originalRequest) {
+      //alert(originalRequest.responseText)
+      if (originalRequest.responseText == 1) {
+        node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange> Data kakitangan sudah ada.<br>&nbsp; Loading..</font>"
+        document.forms[0].action = "/hostels/new_but_penghuni_already_exist";
+        document.forms[0].submit();
+      }
+      else {
+        node_identification_memo.innerHTML = "<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>"
+        document.forms[0].action = "/hostels/create_penghuni";
+      }
+    }
   </script>
-    <tr>
-      <td align="right"><b>Gelaran : </b></td>
-      <td colspan=3>&nbsp; <%=
-		  @id_titles = @titles.map { |t| [t.description, t.id] }
-		  @id_titles.unshift(["Sila Pilih", ""])
-		  select(:profile, :title_id, @id_titles, "" ,:style=>"width: 100;")
-		%> </td>
-    </tr>
-    <tr>
-      <td width="20%" align="right"><b>Nama Penuh : </b></td>
-      <td colspan=3>&nbsp; <%= text_field 'profile', 'name', :maxlength=>80, :size=>50, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
-    </tr>
-    <tr>
-      <td align="right"><b>Jantina :</b></td>
-      <td>&nbsp; <%=
-		  @options = @genders.map { |t| [t.description, t.id] }
-		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :gender_id, @options, "" ,:style=>"width: 100;")
-		%> </td>
-    </tr>
-    <tr>
-      <td align="right"><b>Agama :</b></td>
-      <td>&nbsp; <%=
-		  @options = @religions.map { |t| [t.description, t.id] }
-		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :religion_id, @options, "" ,:style=>"width: 100;")
-	  %> </td>
-      <td align="right"><b>Keturunan :</b></td>
-      <td>&nbsp; <%=
-		  @options = @races.map { |t| [t.description, t.id] }
-		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :race_id, @options, "" ,:style=>"width: 100;")
-	  %> </td>
-    </tr>
-    </tr>
-       <tr>
-      <td colspan=4><hr width="80%" size="1" /></td>
-    </tr>
-    <tr>
-      <td align="right"><b>Alamat :</b></td>
-      <td colspan="3">&nbsp; <%= text_field 'profile', 'address1', :maxlength=>45, :size=>45, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
-    </tr>
-    <tr>
-      <td align="right"><b>(Surat Menyurat)</b></td>
-      <td colspan="3">&nbsp; <%= text_field 'profile', 'address2', :maxlength=>45, :size=>45, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
-    </tr>
-    <tr>
-      <td align="right">&nbsp;</td>
-      <td colspan="3">&nbsp; <%= text_field 'profile', 'address3', :maxlength=>45, :size=>45, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
-    </tr>
-    <tr>
-      <td align="right"><b>Negeri :</b></td>
-      <td colspan=3>&nbsp; <%=
-		  @options = @states.map { |t| [t.description, t.id] }
-		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :state_id, @options)
-	  %> </td>
-    </tr>
-    <tr>
-      <td align="right"><b>No Telefon Bimbit :</b></td>
-      <td colspan=3>&nbsp; <%= text_field 'profile', 'mobile', :maxlength=>12, :size=>15  %> </td>
-    </tr>
-    <tr>
-      <td colspan=4>&nbsp;</td>
-    </tr>
+  <tr>
+    <td align="right"><b>Gelaran : </b></td>
+    <td colspan=3>&nbsp; <%=
+      @id_titles = @titles.map { |t| [t.description, t.id] }
+      @id_titles.unshift(["Sila Pilih", ""])
+      select(:profile, :title_id, @id_titles, :style=>"width: 100;")
+    %> </td>
+  </tr>
+  <tr>
+    <td width="20%" align="right"><b>Nama Penuh : </b></td>
+    <td colspan=3>&nbsp; <%= text_field 'profile', 'name', :maxlength=>80, :size=>50, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+  </tr>
+  <tr>
+    <td align="right"><b>Jantina :</b></td>
+    <td>&nbsp; <%=
+      @options = @genders.map { |t| [t.description, t.id] }
+      @options.unshift(["Sila Pilih", ""])
+      select(:profile, :gender_id, @options, :style=>"width: 100;")
+    %> </td>
+  </tr>
+  <tr>
+    <td align="right"><b>Agama :</b></td>
+    <td>&nbsp; <%=
+      @options = @religions.map { |t| [t.description, t.id] }
+      @options.unshift(["Sila Pilih", ""])
+      select(:profile, :religion_id, @options, :style=>"width: 100;")
+    %> </td>
+    <td align="right"><b>Keturunan :</b></td>
+    <td>&nbsp; <%=
+      @options = @races.map { |t| [t.description, t.id] }
+      @options.unshift(["Sila Pilih", ""])
+      select(:profile, :race_id, @options, :style=>"width: 100;")
+    %> </td>
+  </tr>
+</tr>
+<tr>
+  <td colspan=4><hr width="80%" size="1" /></td>
+</tr>
+<tr>
+  <td align="right"><b>Alamat :</b></td>
+  <td colspan="3">&nbsp; <%= text_field 'profile', 'address1', :maxlength=>45, :size=>45, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+</tr>
+<tr>
+  <td align="right"><b>(Surat Menyurat)</b></td>
+  <td colspan="3">&nbsp; <%= text_field 'profile', 'address2', :maxlength=>45, :size=>45, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+</tr>
+<tr>
+  <td align="right">&nbsp;</td>
+  <td colspan="3">&nbsp; <%= text_field 'profile', 'address3', :maxlength=>45, :size=>45, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+</tr>
+<tr>
+  <td align="right"><b>Negeri :</b></td>
+  <td colspan=3>&nbsp; <%=
+    @options = @states.map { |t| [t.description, t.id] }
+    @options.unshift(["Sila Pilih", ""])
+    select(:profile, :state_id, @options)
+  %> </td>
+</tr>
+<tr>
+  <td align="right"><b>No Telefon Bimbit :</b></td>
+  <td colspan=3>&nbsp; <%= text_field 'profile', 'mobile', :maxlength=>12, :size=>15  %> </td>
+</tr>
+<tr>
+  <td colspan=4>&nbsp;</td>
+</tr>
 </table>
-  <!--[eoform:profile]-->
+<!--[eoform:profile]-->
 
