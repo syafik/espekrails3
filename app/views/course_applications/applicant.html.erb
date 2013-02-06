@@ -113,12 +113,12 @@ function confirmAndGo(url, objname) {
 <%
 i = 0;
 even = true;
-	if @student_pages.current.previous
-		m = 100 * @student_pages.current.previous.to_i
-	else
-		m = 0
-	end
-i = i + m
+	#if @student_pages.current.previous
+		#m = 100 * @student_pages.current.previous.to_i
+	#else
+		#m = 0
+	#end
+#i = i + m
 for student in @students
   i = i + 1
   bgclr = "#CCCCFF" if (even == true)
@@ -140,8 +140,11 @@ for student in @students
 <% end %>
   </table>
 <BR>
-<div align=center>  
-<%= link_to 'Kembali', { :page => @student_pages.current.previous } if @student_pages.current.previous %>
-<%= ' | ' if @student_pages.current.previous and @student_pages.current.next %>
-<%= link_to 'Laman Seterusnya', { :page => @student_pages.current.next } if @student_pages.current.next %> 
+<%#*<div align=center>%>
+<%#= link_to 'Kembali', { :page => @student_pages.current.previous } if @student_pages.current.previous %>
+<%#= ' | ' if @student_pages.current.previous and @student_pages.current.next %>
+<%#= link_to 'Laman Seterusnya', { :page => @student_pages.current.next } if @student_pages.current.next %>
+<%#*</div>%>
+<div align="center">
+  <%= will_paginate @students %>
 </div>

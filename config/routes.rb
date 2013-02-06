@@ -237,6 +237,7 @@ InstunRails3::Application.routes.draw do
   end
   resources :course_applications do
     collection do
+      get 'applicant'
       get 'all'
       get 'search'
       get 'search_applicant'
@@ -288,6 +289,9 @@ InstunRails3::Application.routes.draw do
   end
   
   resources :profiles do
+#    get 'show'
+    get 'destroy_peserta'
+    get 'history'
     collection do
       get 'view'
       get 'view_waris'

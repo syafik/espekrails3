@@ -7,11 +7,12 @@
    <td>&nbsp;</td>
     </tr>
    </table>
-
-<%= start_form_tag ({:action => 'update', :profile_id => @profile.id}, :enctype => 'multipart/form-data') %>
-  <%= render :partial => 'form' %>
+<%#= form_tag ({:action => 'update', :profile_id => @profile.id}, :enctype => 'multipart/form-data') do %>
+<%#= form_tag({:action => 'update', :profile_id => @profile.id}, :multipart => true) do |f| %>
+<%= form_for(@profile, :multipart => true) do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
   <BR>
   <div align=center>
   <%= submit_tag 'Simpan' %>
   </div>
-<%= end_form_tag %>
+<% end %>

@@ -10,8 +10,8 @@
  end
 %>
 <!--div align="center">
-<%= error_messages_for 'profile' %>
-<%= error_messages_for 'course_application' %></div-->
+<%#= error_messages_for 'profile' %>
+<%#= error_messages_for 'course_application' %></div-->
   <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
 
   <tr bgcolor="000000">
@@ -120,7 +120,7 @@ dr = "dr=1" if params[:dr]
 	    <%=
 		  @id_titles = @titles.map { |t| [t.description, t.id] }
 		  @id_titles.unshift(["Sila Pilih", ""])
-		  select(:profile, :title_id, @id_titles, "" ,:style=>"width: 100;")
+		  select(:profile, :title_id, @id_titles,:style=>"width: 100;")
 		%>      </td>
     </tr>    
     <tr>
@@ -134,7 +134,7 @@ dr = "dr=1" if params[:dr]
 	    <%=
 		  @options = @genders.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :gender_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :gender_id, @options,:style=>"width: 100;")
 		%>	  </td>
      
       </tr>
@@ -144,11 +144,11 @@ dr = "dr=1" if params[:dr]
 	  <%=
 		  @options = @religions.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :religion_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :religion_id, @options,:style=>"width: 100;")
 	  %>       </td>
 		<td align="right" width=20%><b>Upload Gambar :</b></td>
     	<td>&nbsp;
-		<%= file_column_field "profile", "image" %>
+		<%= file_field "profile", "image" %>
 			<!--input type="file" id=profile_image name="profile[image]"-->
 		</td>
     </tr>
@@ -158,7 +158,7 @@ dr = "dr=1" if params[:dr]
 	  <%=
 		  @options = @marital_statuses.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :marital_status_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :marital_status_id, @options,:style=>"width: 100;")
 	  %>	  </td>
 	 <td align="right" width=20%><b>Tarikh Lahir :</b></td>
       <td>&nbsp;
@@ -191,7 +191,7 @@ end
 	  <%=
 		  @options = @races.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :race_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :race_id, @options,:style=>"width: 100;")
 	  %>      </td>
     </tr>
     <tr>
@@ -201,7 +201,7 @@ end
       <td colspan=3>&nbsp; <%=
 		  @options = @handicaps.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :handicap_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :handicap_id, @options,:style=>"width: 100;")
 	  %> </td>
     </tr>
     <tr>
@@ -224,7 +224,7 @@ end
 	  <%=
 		  @options = @relationships.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:relative, :relationship_id, @options, "" ,:style=>"width: 100;")
+		  select(:relative, :relationship_id, @options,:style=>"width: 100;")
 	  %>	  </td>
     </tr>
      <tr>
@@ -293,7 +293,7 @@ end
 				@grandparent = Place.new
 			end
 			@grandparent = Place.new if @grandparent == nil
-			select(:grandparent, :id, @options, '', :id=> "kementerian_id", :name=> "kementerian_id", :onchange=>"checkJabatan()")
+			select(:grandparent, :id, @options, :id=> "kementerian_id", :name=> "kementerian_id", :onchange=>"checkJabatan()")
 	  %></span>	  </td>
     </tr>
    <tr>
@@ -321,7 +321,7 @@ end
 		  end
 		  @options = @departments.map { |t| [t.name.upcase, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:parent, :id, @options, '', :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
+		  select(:parent, :id, @options, :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
 	  %></span>    </tr>
    <tr>
       <td align="right"><b>Pejabat :</b></td>
@@ -356,7 +356,7 @@ end
 		  
 		  @options = @offices.map { |t| [t.name.upcase, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:office, :id, @options, '', :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
+		  select(:office, :id, @options, :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
 	  %></span>
 	  <%= hidden_field 'employment', 'place_id', :size=>3  %>	  </td>
 	
@@ -557,7 +557,7 @@ minChars: 1
 		  @options.unshift(["Sila Pilih", ""])
 
 		  #@qualification = nof{@course_application.profile.qualifications[0]}
-		  select(:qualification, :cert_level_id, @options,'',:name=>"cert_level_ids[]")
+		  select(:qualification, :cert_level_id, @options,:name=>"cert_level_ids[]")
 	 %>      </td>
     		 <td>
 	 <%=

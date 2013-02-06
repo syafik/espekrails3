@@ -35,8 +35,11 @@ class CourseApplicationsController < ApplicationController
 
   def applicant
     #@students = CourseApplication.find(:all, :select => 'distinct profile_id')
-    @student_pages = Paginator.new self, CourseApplication.count, 100, @params['page']
-    @students = CourseApplication.find(:all, :select => 'distinct profile_id', :limit => @student_pages.items_per_page, :offset => @student_pages.current.offset)
+#    @student_pages = Paginator.new self, CourseApplication.count, 100, @params['page']
+    @students = CourseApplication.select('distinct profile_id').
+                                  paginate(:page => params['page'].blank? ? 1 : params[:page], :per_page => 100)
+#    @students = CourseApplication.find(:all, :select => 'distinct profile_id', :limit => @student_pages.items_per_page, :offset => @student_pages.current.offset)
+    render layout: 'standard-layout'
   end
 
   def index
@@ -416,6 +419,8 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.new
     @qualification =Qualification.new
     @course_application = CourseApplication.new
+
+    render layout: 'standard-layout'
   end
 
   def new_peserta
