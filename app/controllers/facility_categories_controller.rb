@@ -15,7 +15,7 @@ class FacilityCategoriesController < ApplicationController
   end
 
   def new
-    @facility_type = FacilityType.new
+    @facility_category = FacilityCategory.new
   end
 
   def create

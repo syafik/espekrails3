@@ -15,13 +15,13 @@
   <BR>
 
 <%#= start_form_tag :action => 'create' %>
-<form name=ca_form method=post action="/course_applications/create" enctype="multipart/form-data" onsubmit="return GoSubmit(ca_form)">
+<form name=ca_form method=post action="/course_applications" enctype="multipart/form-data" onsubmit="return GoSubmit(ca_form)">
   <%= render :partial => 'form' %>
   <BR>
    <div id="apply_button" align="center" style="visibility: visible">
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+</form>
 
 <script src="/javascripts/form_validator.js"></script>
 <script>

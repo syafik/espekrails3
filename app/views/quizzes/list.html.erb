@@ -9,17 +9,17 @@
   function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('popmenu').style.width = 230;
     $('popmenu').innerHTML = "<ul>" + 
-      "<li><a href=\""  + "/quizzes" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini Ujian</a>" +
+      "<li><a href=\""  + "/quizzes" + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini Ujian</a>" +
       "<li><a href=\"javascript: confirmAndGo('"  + "/quizzes" + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Ujian</a>" +
       "<hr size=1>" +
       //"<li><a href=\""  + "/quiz_questions" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Soalan</a>" +
-    "<li><a href=\""  + "/quiz_questions" + "/list_soalan/" + objid + "\">&nbsp;&nbsp;Senarai Soalan</a>" +
-      "<li><a href=\""  + "/quiz_questions" + "/cetak_soalan/" + objid + "\">&nbsp;&nbsp;Cetak Soalan</a>" +
+    "<li><a href=\""  + "/quiz_questions" + "/" + objid + "/list_soalan\">&nbsp;&nbsp;Senarai Soalan</a>" +
+      "<li><a href=\""  + "/quiz_questions" + "/" + objid + "/cetak_soalan\">&nbsp;&nbsp;Cetak Soalan</a>" +
       "<hr size=1>" +
       //"<li><a href=\""  + "/user_applications" + "/exam_before_admin/" + objid + "\">&nbsp;&nbsp;Ujian 1</a>" +
     //"<li><a href=\""  + "/user_applications" + "/exam_after_admin/" + objid + "\">&nbsp;&nbsp;Ujian 2</a>" +
     //"<hr size=1>" +
-    "<li><a href=\""  + "/quiz_questions" + "/list_peserta/" + objid + "\">&nbsp;&nbsp;Senarai Peserta</a>" +
+    "<li><a href=\""  + "/quiz_questions" + "/" + objid + "/list_peserta\">&nbsp;&nbsp;Senarai Peserta</a>" +
       //"<li><a href=\""  + "/quiz_questions" + "/list_peserta2/" + objid + "\">&nbsp;&nbsp;Senarai Markah (Ujian 2)</a>" +
     "</ul>"
   }
@@ -33,7 +33,7 @@
     //"<li><a href=\""  + "/quiz_questions" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Soalan</a>" +
     //"<li><a href=\""  + "/quiz_questions" + "/list_soalan/" + objid + "\">&nbsp;&nbsp;Senarai Soalan</a>" +
     //"<hr size=1>" +
-    "<li><a href=\""  + "/quiz_questions" + "/list_peserta/" + objid + "\">&nbsp;&nbsp;Keputusan Ujian</a>" +
+    "<li><a href=\""  + "/quiz_questions" + "/" + objid + "/list_peserta\">&nbsp;&nbsp;Keputusan Ujian</a>" +
       //"<li><a href=\""  + "/quiz_questions" + "/list_peserta2/" + objid + "\">&nbsp;&nbsp;Senarai Markah (Ujian 2)</a>" +
     "</ul>"
   }

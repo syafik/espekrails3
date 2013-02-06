@@ -1,4 +1,7 @@
-<div align="center"><%= error_messages_for 'place' %></div>
+<div align="center">
+<%#= error_messages_for 'place' %>
+<%= show_error_messages(@place) %>
+</div>
 
 <!--[form:place]-->
 
@@ -16,7 +19,7 @@
      <tr>
       <td width="40%" align="right"><strong>Nama Kementerian: </strong></td>
       <td width="60%">&nbsp;
-      <%= text_field_with_auto_complete :place, :name, :maxlength=>60, :size=>60  %></td>
+      <%= text_field  :place, :name, :maxlength=>60, :size=>60  %></td>
     </tr>
     <tr>
       <td align="right" valign="top"><strong>Alamat:</strong></td>

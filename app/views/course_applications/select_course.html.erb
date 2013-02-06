@@ -1,80 +1,80 @@
 <script>
-function rewritePopupContent(controller, objid, objname) {
+  function rewritePopupContent(controller, objid, objname) {
     $('popmenu').style.width = 240;
     $('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
-					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" + 
-					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
-					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" + 
-					       "<hr size=1>" +
-					       //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
-					       //"<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tempahan Asrama</font>" + 
-					       //"<li><a href=\"" + controller + "/calendar/" + objid + "\">&nbsp;&nbsp;Kalendar Tahunan</a>" + 
-					       "<hr size=1>" +
-					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tambah Permohonan</font>" + 
-					       "<li><a href=\"" + "/course_applications" + "/unprocessed/" + objid + "\">&nbsp;&nbsp;Lihat Senarai Pemohon(Dalam Proses)</a>" + 
-					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Jana Surat Tawaran</font>" + 
-					       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
-					       "</ul>"
+      "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+      "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" +
+      "<li><a href=\"" + controller + "/" + objid + "/copy_and_new\">&nbsp;&nbsp;Salin</a>" +
+      "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" +
+      "<hr size=1>" +
+      //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" +
+    //"<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tempahan Asrama</font>" +
+    //"<li><a href=\"" + controller + "/calendar/" + objid + "\">&nbsp;&nbsp;Kalendar Tahunan</a>" +
+    "<hr size=1>" +
+      "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tambah Permohonan</font>" +
+      "<li><a href=\"" + "/course_applications" + "/" + objid + "/unprocessed\">&nbsp;&nbsp;Lihat Senarai Pemohon(Dalam Proses)</a>" +
+      "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Jana Surat Tawaran</font>" +
+      //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
+    "</ul>"
      
-}
+  }
 
-function rewritePopupContentNoRestraint(controller, objid, objname) {
+  function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('popmenu').style.width = 240;
     $('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
-					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
-					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
-					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
-					       "<hr size=1>" +
-					       //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
-						   "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Tambah Penceramah</a>" +
-					       "<li><a href=\"" + "/reservations" + "/new/" + objid + "\">&nbsp;&nbsp;Tempahan Asrama</a>" + 
-						  	"<li><a href=\"" + "/facility_reservations" + "/new/" + objid + "\">&nbsp;&nbsp;Tempahan Kemudahan Kursus</a>" +
-							"<li><a href=\"" + "/notifications" + "/new/" + objid + "\">&nbsp;&nbsp;Makluman Keselamatan</a>" +
-					       "<hr size=1>" +
-					       "<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Permohonan</a>" + 
-					       "<li><a href=\""  + "/course_applications" + "/unprocessed/" + objid + "?apply_status=unprocessed" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon(Dalam Proses)</a>" + 
-					       "<li><a href=\""  + "/course_applications" + "/accepted/" + objid + "?apply_status=accepted" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon(Dipilih)</a>" + 
-					       "<li><a href=\""  + "/course_applications" + "/edit_surat_tawaran_select_peserta/" + objid + "\">&nbsp;&nbsp;Jana Surat Tawaran</a>" + 
-					       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
-					       //"<hr size=1>" +
-					       //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Pensyarah</a>" + 
-					       //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Pilih Pensyarah</a>" + 
-					       //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tempah Fasiliti</a>" + 
-					       "</ul>"
+      "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+      "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
+      "<li><a href=\"" + controller + "/" + objid + "/copy_and_new\">&nbsp;&nbsp;Salin</a>" +
+      "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+      "<hr size=1>" +
+      //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" +
+    "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Tambah Penceramah</a>" +
+      "<li><a href=\"" + "/reservations" + "/new/" + objid + "\">&nbsp;&nbsp;Tempahan Asrama</a>" +
+      "<li><a href=\"" + "/facility_reservations" + "/new/" + objid + "\">&nbsp;&nbsp;Tempahan Kemudahan Kursus</a>" +
+      "<li><a href=\"" + "/notifications" + "/new/" + objid + "\">&nbsp;&nbsp;Makluman Keselamatan</a>" +
+      "<hr size=1>" +
+      "<li><a href=\""  + "/course_applications" + "/new?id=" + objid + "\">&nbsp;&nbsp;Tambah Permohonan</a>" +
+      "<li><a href=\""  + "/course_applications" + "/" + objid + "/unprocessed?apply_status=unprocessed" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon(Dalam Proses)</a>" +
+      "<li><a href=\""  + "/course_applications" + "/" + objid + "/accepted?apply_status=accepted" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon(Dipilih)</a>" +
+      "<li><a href=\""  + "/course_applications" + "/" + objid + "/edit_surat_tawaran_select_peserta\">&nbsp;&nbsp;Jana Surat Tawaran</a>" +
+      //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
+    //"<hr size=1>" +
+    //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Pensyarah</a>" +
+    //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Pilih Pensyarah</a>" +
+    //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tempah Fasiliti</a>" +
+    "</ul>"
      
-}
+  }
 
-function checkFormDulu(df) {
-	var is_apply_checked = 0
-	var idx = 0;
+  function checkFormDulu(df) {
+    var is_apply_checked = 0
+    var idx = 0;
 
-	if (df.course_implementation_code.value=="") {
-		alert('Sila Masukkan Kod Kursus');
-		df.course_implementation_code.focus()
-		return false;
-	}
+    if (df.course_implementation_code.value=="") {
+      alert('Sila Masukkan Kod Kursus');
+      df.course_implementation_code.focus()
+      return false;
+    }
 
-	//df.action  = "/course_applications/all"
-	//df.action +=  "/?course_implementation_code=" + df.course_implementation_code.value
-	return true;
-}
+    //df.action  = "/course_applications/all"
+    //df.action +=  "/?course_implementation_code=" + df.course_implementation_code.value
+    return true;
+  }
 
-function a(id) {
-	MM_openBrWindow('/course_implementations/add_course_trainer/'+id,'','scrollbars=yes,width=700,height=600')
-}
+  function a(id) {
+    MM_openBrWindow('/course_implementations/add_course_trainer/'+id,'','scrollbars=yes,width=700,height=600')
+  }
 
 </script>
 <form method="post" name="incremental" action="/course_applications/all" onsubmit="return checkFormDulu(document.incremental)">
   <br>
-<div align="center"><br />
-  Masukkan Kod Kursus : 
-  
-<input type="text" id="course_implementation_code" name="course_implementation_code" value="" onkeyup="this.value=this.value.toUpperCase()">
-<input type="hidden" name="apply_status" value="all">
-<input type="submit" value="Cari" class="btn60">
-</div>
+  <div align="center"><br />
+    Masukkan Kod Kursus :
+
+    <input type="text" id="course_implementation_code" name="course_implementation_code" value="" onkeyup="this.value=this.value.toUpperCase()">
+    <input type="hidden" name="apply_status" value="all">
+    <input type="submit" value="Cari" class="btn60">
+  </div>
 </form>
 <hr size="1" width="60%">
 <br>
@@ -88,85 +88,85 @@ function a(id) {
   <tr>
     <td align="CENTER">Tahun:
       <select name="year_start" style="font-size:10px" onchange="location='/course_applications/select_course?next_action=<%=params[:next_action]%>&amp;year_start=' + this.value">
-          <% @planning_years.each do |cf| %>
+        <% @planning_years.each do |cf| %>
           <option value="<%= cf.year %>" <%= 'selected' if cf.year.to_s == params[:year_start].to_s %>> <%= cf.year %> </option>
-          <% end %>
+        <% end %>
       </select></td>
   </tr>
 </table>
 <br />
 <div width="95%" style="background: #FFFFFF">
-<table class="seven" width="95%" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777">
-  <tr bgcolor="#999999" id="pisang" onclick="//servOC(20,'/course/show/3','#999999')">
-    <td class="el" width="3%" valign="top" id="name20" rowspan="2"><font color="#FFFFFF">&nbsp;</font></td>
-    <td class="el" width="" align="center" rowspan="2"><font color="#FFFFFF"><strong>Kod</strong></font></td>
-    <td class="el" width="30%" align="left" rowspan="2"><font color="#FFFFFF">&nbsp;<strong>Nama Kursus</strong></font></td>
-    <td class="el" align="center" rowspan="2"><strong><font color="#FFFFFF">Kapasiti</font></strong></td>
-    <td class="el" align="center" rowspan="2"><strong><font color="#FFFFFF">Jumlah<br />
-    Mohon </font></strong></td>
-    <td class="el" align="center" rowspan="2"><strong><font color="#FFFFFF">Dalam<br /> 
-    Proses </font></strong></td>
-    <td class="el" align="center" rowspan="2"><strong><font color="#FFFFFF">Ditolak</font></strong></td>
-    <td class="el" colspan="4" width="" align="center"><strong><font color="#FFFFFF">Dipilih</font></strong></td>
-    <td class="el" width="" align="center" rowspan="2"><strong><font color="#FFFFFF">Tamat</font></strong></td>
-    <!--td width="" align="center" rowspan="2"><strong><font color="#FFFFFF">Jumlah</font></strong></td-->
-  </tr>
-  <tr bgcolor="#999999" id="pisang" align="center">
-  <td class="el" width="" align="center"><strong><font color="#FFFFFF">Tiada Jawapan</font></strong></td>
-  <td class="el" width="" align="center"><strong><font color="#FFFFFF">Sah Tidak Hadir</font></strong></td>
-   <td class="el" width="" align="center"><strong><font color="#FFFFFF">Sah Hadir</font></strong></td>
-   <td class="el" width="" align="center"><strong><font color="#FFFFFF">Daftar</font></strong></td>
- </tr>
-  <tr style="display: none;" id="ihtr20">
-    <td colspan="7" bgcolor="#ececd9"><table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tbody>
-        <tr>
-          <td width="10"></td>
-          <td style="border: 3px solid rgb(0, 51, 102);"><iframe id="ihif20" frameborder="0" width="100%"></iframe></td>
-        </tr>
-      </tbody>
-    </table></td>
-  </tr>
-  <%
-i = 0;
-even = true;
-for course in @course_implementations
-  i = i + 1
-  bgclr = "#CCCCFF" if (even == true)
-  bgclr = "#FFFFFF" if (even == false)
-  even = !even
-  
-  show_menu = "show"
-  show_menu = "show_with_no_restraint" if course.editable?(session[:user])
-  onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{course.id}', '#{course.course.name}', event)"
- 
-%>
-  <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-        onmousedown="//menuLayers.<%=show_menu%>('popmenu', '/course_implementations', '<%=h course.id %>', '<%= course.course.name %>', event)">
-    <td class="el" id="name<%=h course.id %>" align="right" onmousedown="<%=onmousedown%>"><%= i.to_s %>.</td>
-    <td class="el" align=center onmousedown="<%=onmousedown%>"><%=h nof{course.code.upcase} %></td>
-    <td class="el" align="left" onmousedown="<%=onmousedown%>"><%=h nof{course.course.name.upcase} %></td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.capacity} %></td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_application} %></td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_inprocess} %></td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_rejected} %></td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_selected} %>&nbsp;</td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_unconfirmed} %>&nbsp;</td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_confirmed} %></td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_registered} %></td>
-    <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_finished} %></td>
-    <!--td align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.course_applications.size} %></td-->
-  </tr>
-  <tr style="display: none;" id="ihtr<%=h course.id %>">
-    <td colspan="7" bgcolor="#ececd9"><table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tbody>
-        <tr>
-          <td width="10"></td>
-          <td style="border: 0px solid rgb(0, 51, 102);"><iframe id="ihif<%=h course.id %>" frameborder="0" width="100%"></iframe></td>
-        </tr>
-      </tbody>
-    </table></td>
-  </tr>
-  <% end %>
-</table>
+  <table class="seven" width="95%" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777">
+    <tr bgcolor="#999999" id="pisang" onclick="//servOC(20,'/course/show/3','#999999')">
+      <td class="el" width="3%" valign="top" id="name20" rowspan="2"><font color="#FFFFFF">&nbsp;</font></td>
+      <td class="el" width="" align="center" rowspan="2"><font color="#FFFFFF"><strong>Kod</strong></font></td>
+      <td class="el" width="30%" align="left" rowspan="2"><font color="#FFFFFF">&nbsp;<strong>Nama Kursus</strong></font></td>
+      <td class="el" align="center" rowspan="2"><strong><font color="#FFFFFF">Kapasiti</font></strong></td>
+      <td class="el" align="center" rowspan="2"><strong><font color="#FFFFFF">Jumlah<br />
+            Mohon </font></strong></td>
+      <td class="el" align="center" rowspan="2"><strong><font color="#FFFFFF">Dalam<br />
+            Proses </font></strong></td>
+      <td class="el" align="center" rowspan="2"><strong><font color="#FFFFFF">Ditolak</font></strong></td>
+      <td class="el" colspan="4" width="" align="center"><strong><font color="#FFFFFF">Dipilih</font></strong></td>
+      <td class="el" width="" align="center" rowspan="2"><strong><font color="#FFFFFF">Tamat</font></strong></td>
+      <!--td width="" align="center" rowspan="2"><strong><font color="#FFFFFF">Jumlah</font></strong></td-->
+    </tr>
+    <tr bgcolor="#999999" id="pisang" align="center">
+      <td class="el" width="" align="center"><strong><font color="#FFFFFF">Tiada Jawapan</font></strong></td>
+      <td class="el" width="" align="center"><strong><font color="#FFFFFF">Sah Tidak Hadir</font></strong></td>
+      <td class="el" width="" align="center"><strong><font color="#FFFFFF">Sah Hadir</font></strong></td>
+      <td class="el" width="" align="center"><strong><font color="#FFFFFF">Daftar</font></strong></td>
+    </tr>
+    <tr style="display: none;" id="ihtr20">
+      <td colspan="7" bgcolor="#ececd9"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody>
+            <tr>
+              <td width="10"></td>
+              <td style="border: 3px solid rgb(0, 51, 102);"><iframe id="ihif20" frameborder="0" width="100%"></iframe></td>
+            </tr>
+          </tbody>
+        </table></td>
+    </tr>
+    <%
+    i = 0;
+    even = true;
+    for course in @course_implementations
+      i = i + 1
+      bgclr = "#CCCCFF" if (even == true)
+      bgclr = "#FFFFFF" if (even == false)
+      even = !even
+
+      show_menu = "show"
+      show_menu = "show_with_no_restraint" if course.editable?(session[:user])
+      onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{course.id}', '#{course.course.name}', event)"
+
+    %>
+      <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+          onmousedown="//menuLayers.<%=show_menu%>('popmenu', '/course_implementations', '<%=h course.id %>', '<%= course.course.name %>', event)">
+        <td class="el" id="name<%=h course.id %>" align="right" onmousedown="<%=onmousedown%>"><%= i.to_s %>.</td>
+        <td class="el" align=center onmousedown="<%=onmousedown%>"><%=h nof{course.code.upcase} %></td>
+        <td class="el" align="left" onmousedown="<%=onmousedown%>"><%=h nof{course.course.name.upcase} %></td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.capacity} %></td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_application} %></td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_inprocess} %></td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_rejected} %></td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_selected} %>&nbsp;</td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_unconfirmed} %>&nbsp;</td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_confirmed} %></td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_registered} %></td>
+        <td class="el" align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.total_finished} %></td>
+        <!--td align="center" onmousedown="<%=onmousedown%>"><%=h nof{course.course_applications.size} %></td-->
+      </tr>
+      <tr style="display: none;" id="ihtr<%=h course.id %>">
+        <td colspan="7" bgcolor="#ececd9"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+              <tr>
+                <td width="10"></td>
+                <td style="border: 0px solid rgb(0, 51, 102);"><iframe id="ihif<%=h course.id %>" frameborder="0" width="100%"></iframe></td>
+              </tr>
+            </tbody>
+          </table></td>
+      </tr>
+    <% end %>
+  </table>
 </div>

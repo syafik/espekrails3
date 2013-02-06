@@ -678,6 +678,7 @@ class CourseImplementationsController < ApplicationController
   end 
 
   def edit_surat_iklan_select_kursus
+    render layout: "standard-layout"
   end 
 
   def edit_surat_iklan_la_apa_lagi

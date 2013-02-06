@@ -35,8 +35,7 @@ function check_form(f) {
       <td><span class="blockintro">&nbsp;
       <select id="facility_type_id" name="facility[facility_type_id]" onchange="checkField()>
        <% @facility_types.each do |facility_type| %>
-        <option value="<%= facility_type.id %>"
-        <%= ' selected' if facility_type.id == @facility.facility_type_id %>> <%= facility_type.description %> </option>
+        <option value="<%= facility_type.id %>" <%= ' selected' if facility_type.id == @facility.facility_type_id %> > <%= facility_type.description %> </option>
         <% end %>  
       </select>
       </span>

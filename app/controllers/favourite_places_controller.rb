@@ -7,14 +7,14 @@ class FavouritePlacesController < ApplicationController
   end
   
   def index
-    list
-    render :action => 'list'
+    rendirect_to  :action => 'list'
   end
   
   def list
     #@place_pages, @places = paginate :places, :per_page => 1000
 #    @places = Place.find(:all)
     @places = Place.paginate(:per_page => 1000, :page => params[:page]).order("code ASC")
+    render layout: "standard-layout"
   end
   
   def create

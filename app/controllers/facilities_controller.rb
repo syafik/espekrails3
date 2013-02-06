@@ -8,8 +8,7 @@ class FacilitiesController < ApplicationController
   end
   
   def index
-    list
-    render :action => 'list'
+    redirect_to list_facilities_path
   end
 
   def list
@@ -17,6 +16,7 @@ class FacilitiesController < ApplicationController
     params[:facility_category_id] = 0 if !params[:facility_category_id]  or params[:facility_category_id] == nil
     #@facilities = Facility.find_by_sql(" SELECT f.id,f.code,f.name,f.price,f.capacity,f.remark,fc.description as fc_desc,ft.description as ft_desc from facilities as f INNER JOIN facility_types as ft ON ft.id=f.facility_type_id INNER JOIN facility_categories as fc ON ft.facility_category_id=fc.id where f.facility_category_id=#{params[:facility_category_id]} ")
     @facilities = Facility.find(:all, :conditions=>"facility_category_id = #{params[:facility_category_id]} ")
+    render layout: "standard-layout"
   end
 
   def show
@@ -62,6 +62,7 @@ class FacilitiesController < ApplicationController
 
   def new
     @facility = Facility.new
+    render layout: "standard-layout"
   end
 
   def create

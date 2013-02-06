@@ -106,6 +106,7 @@ class CourseManagementController < ApplicationController
       @students = []
     end
     @courses = Course.find(:all, :order=>"name")
+    render :layout => "standard-layout"
   end
 
   def list_signature
@@ -131,6 +132,7 @@ class CourseManagementController < ApplicationController
       @students = []
     end
     @courses = Course.find(:all, :order=>"name")
+    render :layout => "standard-layout"
   end
 
   def yuran
@@ -152,6 +154,7 @@ class CourseManagementController < ApplicationController
       @students = []
     end
     @courses = Course.find(:all, :order=>"name")
+    render :layout => "standard-layout"
   end
 
   def tempah_sijil
@@ -631,6 +634,7 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
+    render :layout => "standard-layout"
   end
 
   def cetak_p_evaluation
@@ -1009,7 +1013,7 @@ class CourseManagementController < ApplicationController
         @certificate.save
       end
     end
-    redirect_to("/course_management/register/#{@student.course_implementation.id}?apply_status=register")
+    redirect_to("/course_management/register?course_implementation_id=#{@student.course_implementation.id}&apply_status=register")
   end
 
   def make_payment
@@ -1101,6 +1105,7 @@ class CourseManagementController < ApplicationController
 
   def new_tarikh_sesi
     @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    render layout: "standard-layout"
   end
 
   def new_sesi
@@ -1121,11 +1126,11 @@ class CourseManagementController < ApplicationController
         sesi_harian.save
       rescue
         flash[:notice] = '<font color=red>Error. Sesi yang anda masukkan sudah wujud</font>'
-        redirect_to("/course_management/new_tarikh_sesi/#{@course_implementation.id}") and return
+        redirect_to("/course_management/#{@course_implementation.id}/new_tarikh_sesi") and return
       end
     end
     flash[:notice] = 'Sesi berjaya ditambah.'
-    redirect_to("/course_management/new_tarikh_sesi/#{@course_implementation.id}")
+    redirect_to("/course_management/#{@course_implementation.id}/new_tarikh_sesi")
   end
 
   def edit_sesi
@@ -1153,7 +1158,7 @@ class CourseManagementController < ApplicationController
       end
     }
     flash[:notice] = 'Sesi berjaya dikemaskini.'
-    redirect_to("/course_management/new_tarikh_sesi/#{@course_implementation.id}")
+    redirect_to("/course_management/#{@course_implementation.id}/new_tarikh_sesi")
   end
 
   def catat_kehadiran
@@ -1367,6 +1372,7 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
+    render layout: "standard-layout"
   end
 
   def create_attendance

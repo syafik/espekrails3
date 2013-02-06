@@ -19,7 +19,7 @@ function GoEditSuratTunda() {
 		alert("Sila pilih senarai pemohon");
 		return false;
 	}
-    df.action = "/course_applications/edit_surat_tunda/<%=@course_implementation.id if @course_implementation%>"
+    df.action = "/course_applications/edit_surat_tunda?id=<%=@course_implementation.id if @course_implementation%>"
     df.submit()
 }
 
@@ -75,7 +75,3 @@ function checkAll(df) {
 
 <!-- incremental search initial layer----->
 <div id="label" style="clear: both; visibility: hidden">Bonner</div>
-
-
-
-

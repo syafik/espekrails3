@@ -116,4 +116,4 @@ end
     <input name="Submit" type="button" value="Cetak" onclick="printPeserta(document.list_form)">
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @students.size==0%>

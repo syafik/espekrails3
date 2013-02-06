@@ -102,7 +102,11 @@ InstunRails3::Application.routes.draw do
 
   resources :facility_statuses
   resources :facility_types
-  resources :facility_categories
+  resources :facility_categories do
+    collection do
+      get 'list'
+    end
+  end
   
   resources :course_departments
   resources :course_statuses
@@ -125,7 +129,12 @@ InstunRails3::Application.routes.draw do
     end
   end
 
-  resources :facilities
+  resources :facilities do
+    collection do
+      get 'list'
+      post 'createf'
+    end
+  end
   resources :facility_reservations do
     collection do
       get 'list'
@@ -134,11 +143,22 @@ InstunRails3::Application.routes.draw do
 
   resources :places do
     collection do
+      get 'list'
       get 'search'
       get 'list_kementerian'
       get 'list_pejabat'
       get 'new_kementerian'
       get 'new_pejabat'
+      get 'create_kementerian'
+      get 'create_pejabat'
+    end
+    member do
+      get 'show_kementerian'
+      get 'edit_kementerian'
+      put 'update_kementerian'
+      put 'update_pejabat'
+      get 'show_pejabat'
+      get 'edit_pejabat'
     end
   end
 
@@ -255,14 +275,38 @@ InstunRails3::Application.routes.draw do
       get 'select_course'
       get 'sijil_select_course'
       get 'evaluated_courses'
+      get 'register'
+      get 'ichiran'
+      get 'yuran'
+      get 'attendance'
+      get 'certificate'
+      get 'evaluation'
+      get 'p_evaluation'
     end
     member do
+      get 'enroll_selected'
       get 'evaluation_kelompok'
+      get 'jana_kelayakan'
+      get 'tempah_sijil'
+      get 'tempah_sijil_iso'
+      get 'new_tarikh_sesi'
+      post 'new_sesi'
+      post 'edit_sesi'
+      get 'create_sesi'
+      get 'update_sesi'
+      get 'new_tarikh_sesi'
+      get 'new_cetak_kehadiran'
+      get 'new_catat_kehadiran'
+      get 'kehadiran_manual'
+      post 'masuk_data_kehadiran'
+      get 'cetak_p_evaluation_iso'
+      get 'cetak_p_evaluation'
     end
   end
   resources :course_applications do
     collection do
       get 'all'
+      get 'select_course'
       get 'search'
       get 'search_applicant'
       get 'search_by_name'
@@ -270,6 +314,8 @@ InstunRails3::Application.routes.draw do
       post 'search_by_phone'
       get 'edit_surat_tunda_select_peserta'
       get 'new_peserta'
+      get 'edit_surat_tunda'
+      get 'edit_surat_tawaran_select_peserta'
     end
     member do
       get 'all'
@@ -280,6 +326,11 @@ InstunRails3::Application.routes.draw do
       get 'confirmed'
       get 'confirmednot'
       get 'takhadir'
+      get 'edit_surat_tawaran'
+      post 'cetak_surat_tawaran'
+      post 'cetak_surat_tunda'
+      get 'copy_and_new'
+      get 'unprocessed'
     end
   end
   resources :course_implementations do
@@ -377,6 +428,7 @@ InstunRails3::Application.routes.draw do
       #      post 'ajax_find_course_field '
       #      post 'ajax_find_coordinator'
       get 'ajax_nric'
+      post 'facility_category_type'
     end
   end
   # Sample resource route with options:

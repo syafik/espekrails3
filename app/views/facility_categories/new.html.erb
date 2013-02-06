@@ -12,11 +12,10 @@
     </tr>
   </table>
   <br>
-
-<%= start_form_tag :action => 'create' %>
+<%=form_for(@facility_category) do |f|%>
   <%= render :partial => 'form' %>
  <br>
  <div align=center>
   <%= submit_tag "Simpan" %>
-<%= end_form_tag %>
+<%end %>
 </div>

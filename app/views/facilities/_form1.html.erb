@@ -1,187 +1,193 @@
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
-function MM_openBrWindow(theURL,winName,features) { //v2.0
-  window.open(theURL,winName,features);
-}
+  function MM_openBrWindow(theURL,winName,features) { //v2.0
+    window.open(theURL,winName,features);
+  }
 </script>
 
 <script language="JavaScript">
-function check_form(f) {
+  function check_form(f) {
 
     if (f.bilangan.value == "") {
-                alert("Sila masukkan bilangan sumber kemudahan.");
-                f.bilangan.focus();
-                return(false);
+      alert("Sila masukkan bilangan sumber kemudahan.");
+      f.bilangan.focus();
+      return(false);
     }
     //return (true);
-}
+  }
 </script>
 
 
 <script>
-//bidang selection
-node_type_id = $("facility_type_id");
-node_bidang_selection = $("field_selection");
-function checkField() {
-//alert(+$("facility_type_id").value)
-	str  = "<select  id=\"facility_type_id\" name=\"facility[facility_type_id]\"  style=\"width: 150; color: orange;\">\n";
-	str += "<option value=\"\">Tunggu..</option>\n"
-	str += "</select>\n";
-	$('field_selection').innerHTML = str + ""
-	ajax_field_request("/ajax/facility_category_type", "id="+$("facility_type_id").value)
-	//ajax_coordinator1_request("/ajax/ajax_find_coordinator", "id="+$("facility_type_id").value)
-	//ajax_coordinator2_request("/ajax/ajax_find_coordinator", "id="+$("facility_type_id").value)
-}
+  //bidang selection
+  node_type_id = $("facility_type_id");
+  node_bidang_selection = $("field_selection");
+  function checkField() {
+    //alert(+$("facility_type_id").value)
+    str  = "<select  id=\"facility_type_id\" name=\"facility[facility_type_id]\"  style=\"width: 150; color: orange;\">\n";
+    str += "<option value=\"\">Tunggu..</option>\n"
+    str += "</select>\n";
+    $('field_selection').innerHTML = str + ""
+    ajax_field_request("/ajax/facility_category_type", "id="+$("facility_type_id").value)
+    //ajax_coordinator1_request("/ajax/ajax_find_coordinator", "id="+$("facility_type_id").value)
+    //ajax_coordinator2_request("/ajax/ajax_find_coordinator", "id="+$("facility_type_id").value)
+  }
 
-function ajax_field_request(url, data) {
+  function ajax_field_request(url, data) {
     var myAjax = new Ajax.Request(
-        url,
-        {method: 'post', parameters: data, onComplete: ajax_field_response}
-    );
-}
+    url,
+    {method: 'post', parameters: data, onComplete: ajax_field_response}
+  );
+  }
 
-function ajax_coordinator1_request(url, data) {
+  function ajax_coordinator1_request(url, data) {
     var myAjax = new Ajax.Request(
-        url,
-        {method: 'post', parameters: data, onComplete: ajax_coordinator1_response}
-    );
-}
-function ajax_coordinator2_request(url, data) {
+    url,
+    {method: 'post', parameters: data, onComplete: ajax_coordinator1_response}
+  );
+  }
+  function ajax_coordinator2_request(url, data) {
     var myAjax = new Ajax.Request(
-        url,
-        {method: 'post', parameters: data, onComplete: ajax_coordinator2_response}
-    );
-}
+    url,
+    {method: 'post', parameters: data, onComplete: ajax_coordinator2_response}
+  );
+  }
 
-function ajax_field_response(originalRequest) {
-	var a = originalRequest.responseText.split(",")
-	//alert(a)
-	var k = new Array(a.length)
-	for (i=0; i<k.length; i++) {
-		k[i] = a[i].split("=")
-	}
-	//alert(originalRequest.responseText)
+  function ajax_field_response(originalRequest) {
+    var a = originalRequest.responseText.split(",")
+    //alert(a)
+    var k = new Array(a.length)
+    for (i=0; i<k.length; i++) {
+      k[i] = a[i].split("=")
+    }
+    //alert(originalRequest.responseText)
 	
-	str  = "<select  id=\"facility_type_id\" name=\"facility[facility_type_id]\" style=\"width: 150;\">\n";
-	str += "<option value=\"\">Sila Pilih</option>\n"
-	for (i=0; i<k.length; i++) {
+    str  = "<select  id=\"facility_type_id\" name=\"facility[facility_type_id]\" style=\"width: 150;\">\n";
+    str += "<option value=\"\">Sila Pilih</option>\n"
+    for (i=0; i<k.length; i++) {
 
-		str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
-	}
-	str += "</select>\n";
+      str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+    }
+    str += "</select>\n";
 
-	$("field_selection").innerHTML = str;
-}
+    $("field_selection").innerHTML = str;
+  }
 
-function ajax_coordinator1_response(originalRequest) {
-	var a = originalRequest.responseText.split(",")
-	//alert(a)
-	var k = new Array(a.length)
-	for (i=0; i<k.length; i++) {
-		k[i] = a[i].split("=")
-	}
-	//alert(originalRequest.responseText)
+  function ajax_coordinator1_response(originalRequest) {
+    var a = originalRequest.responseText.split(",")
+    //alert(a)
+    var k = new Array(a.length)
+    for (i=0; i<k.length; i++) {
+      k[i] = a[i].split("=")
+    }
+    //alert(originalRequest.responseText)
 	
 	
-	str  = "<select  id=\"course_implementation_coordinator1\" name=\"course_implementation[coordinator1]\" style=\"width: 250;\">\n";
-	str += "<option value=\"\">Silih Pilih</option>\n"
-	for (i=0; i<k.length; i++) {
+    str  = "<select  id=\"course_implementation_coordinator1\" name=\"course_implementation[coordinator1]\" style=\"width: 250;\">\n";
+    str += "<option value=\"\">Silih Pilih</option>\n"
+    for (i=0; i<k.length; i++) {
 
-		str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
-	}
-	str += "</select>\n";
+      str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+    }
+    str += "</select>\n";
 
-	$("coordinator1_selection").innerHTML = str;
-}
+    $("coordinator1_selection").innerHTML = str;
+  }
 
-function ajax_coordinator2_response(originalRequest) {
-	var a = originalRequest.responseText.split(",")
-	//alert(a)
-	var k = new Array(a.length)
-	for (i=0; i<k.length; i++) {
-		k[i] = a[i].split("=")
-	}
-	//alert(originalRequest.responseText)
+  function ajax_coordinator2_response(originalRequest) {
+    var a = originalRequest.responseText.split(",")
+    //alert(a)
+    var k = new Array(a.length)
+    for (i=0; i<k.length; i++) {
+      k[i] = a[i].split("=")
+    }
+    //alert(originalRequest.responseText)
 	
-	str  = "<select  id=\"course_implementation_coordinator2\" name=\"course_implementation[coordinator2]\" style=\"width: 250;\">\n";
-	str += "<option value=\"\">Sila Pilih</option>\n"
-	for (i=0; i<k.length; i++) {
+    str  = "<select  id=\"course_implementation_coordinator2\" name=\"course_implementation[coordinator2]\" style=\"width: 250;\">\n";
+    str += "<option value=\"\">Sila Pilih</option>\n"
+    for (i=0; i<k.length; i++) {
 
-		str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
-	}
-	str += "</select>\n";
+      str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+    }
+    str += "</select>\n";
 
-	$("coordinator2_selection").innerHTML = str;
-}
-//EO course field selection
+    $("coordinator2_selection").innerHTML = str;
+  }
+  //EO course field selection
 </script>
 
 
 
 
 <div align="center">
-<%= error_messages_for 'facility' %>
+  <% if @facility.errors.any? %>
+    <ul>
+      <% @facility.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
 
 <!--[form:facility]-->
-  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td align="center"> <a href="/facilities/list"><u>Kembali</u></a> ke Senarai Sumber Kemudahan  </td>
-    </tr>
-    
-  </table>
-  <br>
-  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center"> <a href="/facilities/list"><u>Kembali</u></a> ke Senarai Sumber Kemudahan  </td>
+  </tr>
 
-    <tr>
-      <td width=40% align="right"><strong>Kategori:</strong></td>
-      <td><span class="blockintro">&nbsp;
-      <select id="facility_type_id" name="facility[facility_category_id]" onchange="checkField()";>
-		<option value=''>Sila Pilih</option>
-		<% @facility_categories.each do |facility_category| %>
-        <option value="<%= facility_category.id %>"
-			<%= ' selected' if facility_category.id == @facility.facility_category_id %>> <%= facility_category.description %> </option>
-        <% end %>  
-      </select>
+</table>
+<br>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+
+  <tr>
+    <td width=40% align="right"><strong>Kategori:</strong></td>
+    <td><span class="blockintro">&nbsp;
+        <select id="facility_type_id" name="facility[facility_category_id]" onchange="checkField()";>
+                <option value=''>Sila Pilih</option>
+                  <% @facility_categories.each do |facility_category| %>
+            <option value="<%= facility_category.id %>"
+                    <%= ' selected' if facility_category.id == @facility.facility_category_id %>> <%= facility_category.description %> </option>
+                  <% end %>
+        </select>
       </span>
       <a href="javascript: MM_openBrWindow('/facility_categories/new','','scrollbars=yes,width=600,height=400')">Tambah</a>
-      </td>
-    </tr>  
-	
+    </td>
+  </tr>
+
   <tr>
-      <td width=40% align="right"><strong>Jenis:</strong></td>
-      <td>&nbsp;
+    <td width=40% align="right"><strong>Jenis:</strong></td>
+    <td>&nbsp;
       <span class="blockintro" id="field_selection"><select name="facility[facility_type_id]" id="facility_category_id">
 
-      </select>
+        </select>
       </span>
       <!--a href="javascript: MM_openBrWindow('/facility_categories/new','','scrollbars=yes,width=600,height=400')">Tambah</a-->
-      </td>
-    </tr>
-    <tr>
-      <td align="right"><strong>Bilangan:</strong></td>
-      <td><span class="blockintro">&nbsp;
-      <%#= text_field 'facility', 'code', :maxlength=>25, :size=>20  %>
-      <input type=text name=bilangan size=10 maxlength=2>
+    </td>
+  </tr>
+  <tr>
+    <td align="right"><strong>Bilangan:</strong></td>
+    <td><span class="blockintro">&nbsp;
+<%#= text_field 'facility', 'code', :maxlength=>25, :size=>20  %>
+        <input type=text name=bilangan size=10 maxlength=2>
       </span></td>
-      <%= hidden_field 'facility', 'facility_status_id', :value=>1 %>
-    </tr>
-    
-    <tr>
-      <td align="right"><strong>Nama:</strong></td>
-      <td><span class="blockintro">&nbsp; 
-      <%= text_field 'facility', 'name', :maxlength=>100, :size=>20 %></span></td>
-    </tr>
-    
-    <tr>
-      <td align="right"><strong>Kapasiti:</strong></td>
-      <td><span class="blockintro">&nbsp; 
-      <%= text_field 'facility', 'capacity', :size=>20 %></span></td>
-    </tr>
-        
-    <tr>
-      <td align="right"><strong>Harga(RM):</strong></td>
-      <td><span class="blockintro">&nbsp; <%= text_field 'facility', 'price', :maxlength=>11, :size=>10  %>      </span></td>
-    </tr>
-    
-    </table>
-  
+    <%= hidden_field 'facility', 'facility_status_id', :value=>1 %>
+  </tr>
+
+  <tr>
+    <td align="right"><strong>Nama:</strong></td>
+    <td><span class="blockintro">&nbsp;
+        <%= text_field 'facility', 'name', :maxlength=>100, :size=>20 %></span></td>
+  </tr>
+
+  <tr>
+    <td align="right"><strong>Kapasiti:</strong></td>
+    <td><span class="blockintro">&nbsp;
+        <%= text_field 'facility', 'capacity', :size=>20 %></span></td>
+  </tr>
+
+  <tr>
+    <td align="right"><strong>Harga(RM):</strong></td>
+    <td><span class="blockintro">&nbsp; <%= text_field 'facility', 'price', :maxlength=>11, :size=>10  %>      </span></td>
+  </tr>
+
+</table>
+

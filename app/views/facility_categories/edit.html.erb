@@ -1,22 +1,22 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">KEMASKINI JENIS SUMBER KEMUDAHAN</font></b></td>
-    </tr>
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">KEMASKINI JENIS SUMBER KEMUDAHAN</font></b></td>
+  </tr>
 </table>
 <br>
 
 
-  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td align="center"> <a href="/facility_categories/list"><b>Kembali</a> ke senarai Jenis Sumber Kemudahan</b></td>
-    </tr>
-  </table>
-  <br>
-
-<%= start_form_tag :action => 'update', :id => @facility_category %>
-  <%= render :partial => 'form' %>
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center"> <a href="/facility_categories/list"><b>Kembali</a> ke senarai Jenis Sumber Kemudahan</b></td>
+  </tr>
+</table>
 <br>
+
+<%=form_for(@facility_category) do |f|%>
+  <%= render :partial => 'form' %>
+  <br>
   <div align=center>
-  <%= submit_tag 'Kemaskini' %>
-<%= end_form_tag %>
+    <%= submit_tag 'Kemaskini' %>
+  <%end%>
 </div>

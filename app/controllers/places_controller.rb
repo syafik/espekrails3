@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 class PlacesController < ApplicationController
- layout "standard-layout"
   #  auto_complete_for :place, :name
   
   def initialize
@@ -8,16 +7,17 @@ class PlacesController < ApplicationController
   end
   
   def index
-    list
-    render :action => 'list'
+    redirect_to :action => "list"
   end
   
   def list_kementerian
     @places = Place.where("place_type_id = '3'").paginate(:per_page => 100, :page => params[:page]).order("code ASC")
+    render layout: "standard-layout"
   end
 
   def list
     @places = Place.where("place_type_id = '1'").paginate(:per_page => 100, :page => params[:page]).order("code ASC")
+    render layout: "standard-layout"
   end
 
   def list_pejabat
@@ -27,7 +27,7 @@ class PlacesController < ApplicationController
     #			place.update_attributes(:place_type_id => "1")
     #		end
     #	end
-
+    render layout: "standard-layout"
   end
   
   def search
@@ -52,31 +52,37 @@ class PlacesController < ApplicationController
   def show_kementerian
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
+    render layout: "standard-layout"
   end
   
   def show
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
+    render layout: "standard-layout"
   end
 
   def show_pejabat
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
+    render layout: "standard-layout"
   end
   
   def new_kementerian
     @place = Place.new
     @place_contact = PlaceContact.new
+    render layout: "standard-layout"
   end
   
   def new
     @place = Place.new
     @place_contact = PlaceContact.new
+    render layout: "standard-layout"
   end
   
   def new_pejabat
     @place = Place.new
     @place_contact = PlaceContact.new
+    render layout: "standard-layout"
   end
 
   def create_kementerian
@@ -124,16 +130,19 @@ class PlacesController < ApplicationController
   def edit_kementerian
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
+    render layout: "standard-layout"
   end
   
   def edit
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
+    render layout: "standard-layout"
   end
 
   def edit_pejabat
     @place = Place.find(params[:id])
     @place_contact = PlaceContact.find_by_place_id(@place.id)
+    render layout: "standard-layout"
   end
   
   def update_kementerian

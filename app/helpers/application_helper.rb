@@ -86,6 +86,16 @@ module ApplicationHelper
 			"0000"
 		end
 	end
-		
+  def show_error_messages(content)
+    ret = ''
+    if content.errors.any?
+      ret +='<ul>'
+      content.errors.full_messages.each do |msg|
+        ret += "<li>#{ msg }</li>"
+      end
+      ret += "</ul>"
+    end
+    ret
+  end
 end
 

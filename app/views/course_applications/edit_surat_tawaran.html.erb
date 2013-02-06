@@ -5,14 +5,15 @@
 </table>
 <br>
 
-<%= start_form_tag :action => 'cetak_surat_tawaran', :id => @course_implementation, :course_id => @course %>
+<%#= start_form_tag :action => 'cetak_surat_tawaran', :id => @course_implementation, :course_id => @course %>
+<%= form_tag :action => 'cetak_surat_tawaran', :id => @course_implementation, :course_id => @course do%>
   <%= render :partial => 'edit_surat_tawaran' %>
   <br>
   <div align="center">
   <br><input type="button" value="Papar" onclick="GoSubmit(document.forms[0])">
   </div>
 
-<%= end_form_tag %>
+<%end%>
 
 <script src="/javascripts/form_validator.js"></script>
 <script>

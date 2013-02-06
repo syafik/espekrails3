@@ -1,4 +1,4 @@
-<div align="center"><%= error_messages_for 'place' %></div>
+<div align="center"> <%= show_error_messages(@place) %></div>
 
 <!--[form:place]-->
 
@@ -14,14 +14,14 @@
 		  	@parent = @place.parent
 			if @place.parent.parent
 				@grandparent = @parent.parent
-		  		select(:grandparent, :id, @options, '', :id=>"kementerian_id", :name=>"kementerian_id", :onchange=>"checkDepartment()")
+		  		select(:grandparent, :id, @options, :id=>"kementerian_id", :name=>"kementerian_id", :onchange=>"checkDepartment()")
 			else
 				@grandparent = Place.new
-				select(:grandparent, :id, @options, '', :id=>"kementerian_id", :name=>"kementerian_id", :onchange=>"checkDepartment()")
+				select(:grandparent, :id, @options, :id=>"kementerian_id", :name=>"kementerian_id", :onchange=>"checkDepartment()")
 			end
 		  else
 		  	@grandparent = Place.new
-			select(:grandparent, :id, @options, '', :id=>"kementerian_id", :name=>"kementerian_id", :onchange=>"checkDepartment()")
+			select(:grandparent, :id, @options,  :id=>"kementerian_id", :name=>"kementerian_id", :onchange=>"checkDepartment()")
 		  end
 		  %>
     </tr>
@@ -91,7 +91,7 @@ function ajax_department_response(originalRequest) {
     <tr>
       <td align="right"><strong>Nama Pejabat: </strong></td>
       <td width="60%">&nbsp;
-      <%= text_field_with_auto_complete 'place', 'name', :maxlength=>60, :size=>60  %></td>
+      <%= text_field 'place', 'name', :maxlength=>60, :size=>60  %></td>
     </tr>
     <tr>
       <td align="right" valign="top"><strong>Alamat:</strong></td>
