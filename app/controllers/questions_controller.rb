@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 class QuestionsController < ApplicationController
   layout "standard-layout"
+  
   def initialize
     @question_types = QuestionType.find(:all, :order=>"description")
     @question_sections = QuestionSection.find(:all, :order=>"description")
@@ -10,26 +11,29 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    list
-    render :action => 'list'
+    rendirect_to :action => 'list'
   end
 
   def list
     @questions = Question.where("question_template_id = #{params[:id]}").paginate(:per_page => 100, :page => params[:page]).order("description ASC")
+    render layout: "standard-layout"
   end
 
   def list_course
-    @question_pages, @questions = paginate :questions, :per_page => 100, :order_by => "description", :conditions => "question_template_id = #{params[:id]}"
+    @questions = Question.where("question_template_id = #{params[:id]}").paginate(:per_page => 100,:page => params[:page]).order("description ASC")
+    render layout: "standard-layout"
   end
   
   def show
     @question = Question.find(params[:id])
     @question_section = QuestionSection.find(@question.question_section_id)
     @question_type = QuestionType.find(@question_section.question_type_id)
+    render layout: "standard-layout"
   end
 
   def new
     @question = Question.new
+    render layout: "standard-layout"
   end
 
   def create
@@ -45,6 +49,7 @@ class QuestionsController < ApplicationController
 
   def edit
     @question = Question.find(params[:id])
+    render layout: "standard-layout"
   end
 
   def update

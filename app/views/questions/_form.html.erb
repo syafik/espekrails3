@@ -1,43 +1,43 @@
-<%= error_messages_for 'question' %>
+<%= show_error_messages(@question) %>
 
 <!--[form:question]-->
 <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-<tr>
-      <td align="right"><b>Jenis Template :</b></td>
-      <td><select name="question[question_template_id]">
-            <% @question_templates.each do |question_template| %>
-            <option value="<%= question_template.id %>"
-         		<%= ' selected' if question_template.id == @question.question_template_id %>> <%= question_template.description %> </option>
-            <% end %>
-          </select>
-          |  <%= link_to 'Tambah', :controller => 'question_templates', :action => 'new' %> jenis template
-      </td>
-    </tr>
-<tr>
-      <td align="right"><b>Format Borang :</b></td>
-      <td><select name="question[question_section_id]">
-            <% @question_sections.each do |question_section| %>
-            <option value="<%= question_section.id %>"
-         		<%= ' selected' if question_section.id == @question.question_section_id %>> <%= question_section.description %> </option>
-            <% end %>
-          </select>
-      </td>
-    </tr>
-<tr>
-	<td align=right><b>Keterangan :</b></td>
-	<td><%= text_field 'question', 'description'  %></td>	
-</tr>
-<tr>
-      <td align="right"><b>Skala Penilaian :</b></td>
-      <td>
-		<% for scale_type in @scale_types %>
-		<input type="checkbox" name="scale_type_ids[]" 
-          	value="<%= scale_type.id %>" 
-          	<% if @question.scale_types.include?(scale_type) %> checked="checked" <% end %> />
-			<%= scale_type.description %>
-			<% end %>     
-		</td>
-    </tr>
+  <tr>
+    <td align="right"><b>Jenis Template :</b></td>
+    <td><select name="question[question_template_id]">
+        <% @question_templates.each do |question_template| %>
+          <option value="<%= question_template.id %>"
+                  <%= ' selected' if question_template.id == @question.question_template_id %>> <%= question_template.description %> </option>
+                <% end %>
+      </select>
+      |  <%= link_to 'Tambah', :controller => 'question_templates', :action => 'new' %> jenis template
+    </td>
+  </tr>
+  <tr>
+    <td align="right"><b>Format Borang :</b></td>
+    <td><select name="question[question_section_id]">
+        <% @question_sections.each do |question_section| %>
+          <option value="<%= question_section.id %>"
+                  <%= ' selected' if question_section.id == @question.question_section_id %>> <%= question_section.description %> </option>
+                <% end %>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td align=right><b>Keterangan :</b></td>
+    <td><%= text_field 'question', 'description'  %></td>
+  </tr>
+  <tr>
+    <td align="right"><b>Skala Penilaian :</b></td>
+    <td>
+      <% for scale_type in @scale_types %>
+        <input type="checkbox" name="scale_type_ids[]"
+               value="<%= scale_type.id %>"
+               <% if @question.scale_types.include?(scale_type) %> checked="checked" <% end %> />
+               <%= scale_type.description %>
+             <% end %>
+    </td>
+  </tr>
 </table>
 <!--[eoform:question]-->
 

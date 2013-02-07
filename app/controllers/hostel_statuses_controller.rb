@@ -7,7 +7,7 @@ class HostelStatusesController < ApplicationController
   end
 
   def list
-    @hostel_status_pages, @hostel_statuses = paginate :hostel_statuses, :per_page => 10
+    @hostel_statuses = HostelStatus.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

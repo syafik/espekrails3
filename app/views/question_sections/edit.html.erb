@@ -1,24 +1,24 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
       <font color="#FFFFFF">KEMASKINI FORMAT BORANG</font></th>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>&nbsp;</td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <th>
-    <%= link_to 'Lihat', :action => 'show', :id => @question_section %> |
-	<a href="javascript: history.back()">Kembali</a>
+      <%= link_to 'Lihat', :action => 'show', :id => @question_section %> |
+      <a href="javascript: history.back()">Kembali</a>
     </th>
-    </tr>
-  </table>
-  <BR>
+  </tr>
+</table>
+<BR>
 
-<%= start_form_tag :action => 'update', :id => @question_section %>
+<%= form_for(@question_section) do |f| %>
   <%= render :partial => 'form' %>
   <BR>
   <div align=center>
-  <%= submit_tag 'Edit' %>
+    <%= submit_tag 'Edit' %>
   </div>
-<%= end_form_tag %>
+<% end %>

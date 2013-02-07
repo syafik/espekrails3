@@ -13,7 +13,7 @@ class FacilityTypesController < ApplicationController
 
   def list
   #render_text FacilityCategory.id and return
-    @facility_type_pages, @facility_types = paginate :facility_types, :per_page => 100, :order_by =>'code'
+   @facility_types = FacilityType.paginate(:per_page => 100, :page => params[:page]).order('code ASC')
 	#@facility_type_sort = FacilityType.find(:all, :conditions=>"facility_category_id=#{FacilityCategory.id}")	
   end
 
@@ -22,6 +22,7 @@ class FacilityTypesController < ApplicationController
   end
 
   def new
+    @facility_type = FacilityType.new
     #@facility_category = FacilityCategory.new
     @facility_category = FacilityCategory.find(:all, :order=>"id")
   end

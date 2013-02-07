@@ -2,7 +2,7 @@
 class HostelPoliciesController < ApplicationController
   layout "standard-layout"
   def initialize
-	@policy_items = PolicyItem.find(:all, :order=>"id")
+    @policy_items = PolicyItem.find(:all, :order=>"id")
   end
   def index
     list
@@ -10,7 +10,7 @@ class HostelPoliciesController < ApplicationController
   end
 
   def list
-    @hostel_policy_pages, @hostel_policies = paginate :hostel_policies, :per_page => 10
+    @hostel_policies = HostelPolicy.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show
@@ -89,6 +89,6 @@ class HostelPoliciesController < ApplicationController
 
   def destroy
     HostelPolicy.find(params[:id]).destroy
-      redirect_to :action => 'list'
+    redirect_to :action => 'list'
   end
 end

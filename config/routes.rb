@@ -20,7 +20,10 @@ InstunRails3::Application.routes.draw do
   end
 
   resources :session_code do
-    
+    collection do
+      get "new_popup"
+      post "create_popup"
+    end
   end
   resources :permission do
     collection do
@@ -73,7 +76,18 @@ InstunRails3::Application.routes.draw do
   resources :permission
   resources :role
   
-  resources :question_templates
+  resources :question_templates do
+    collection do
+      get 'list'
+      post 'create_course'
+      get 'new_course'
+    end
+  end
+  resources :questions do
+    collection do
+      get 'list'
+    end
+  end
   resources :question_types do
     collection do
       get 'list'
@@ -95,23 +109,56 @@ InstunRails3::Application.routes.draw do
     end
   end
 
-  resources :hostel_statuses
-  resources :hostel_types
-  resources :hostel_policies
-  resources :hostel_fixtures
+  resources :hostel_statuses do
+    collection do
+      get 'list'
+    end
+  end
+  resources :hostel_types do
+    collection do
+      get 'list'
+    end
+  end
+  resources :hostel_policies do
+    collection do
+      get 'list'
+    end
+  end
+  resources :hostel_fixtures do
+    collection do
+      get 'list'
+    end
+  end
 
-  resources :facility_statuses
-  resources :facility_types
+  resources :facility_statuses do
+    collection do
+      get 'list'
+    end
+  end
+  resources :facility_types do
+    collection do
+      get 'list'
+    end
+  end
   resources :facility_categories do
     collection do
       get 'list'
     end
   end
   
-  resources :course_departments
-  resources :course_statuses
+  resources :course_departments do
+    collection do
+      get 'list'
+    end
+  end
+  resources :course_statuses do
+    collection do
+      get 'list'
+    end
+  end
   resources :course_fields do
     collection do
+      get 'list'
       get 'new_popup'
       post 'create_popup'
     end
@@ -124,6 +171,7 @@ InstunRails3::Application.routes.draw do
   end
   resources :methodologies do
     collection do 
+      get 'list'
       get 'new_popup'
       post 'create_popup'
     end
@@ -338,6 +386,8 @@ InstunRails3::Application.routes.draw do
       get 'new_peserta'
       get 'edit_surat_tunda'
       get 'edit_surat_tawaran_select_peserta'
+      get 'cetak_pemohon_semua'
+      get 'grades_for_lookup'
     end
     member do
       get 'all'
@@ -353,6 +403,7 @@ InstunRails3::Application.routes.draw do
       post 'cetak_surat_tunda'
       get 'copy_and_new'
       get 'unprocessed'
+      get 'cetak_pemohon'
     end
   end
   resources :course_implementations do
@@ -387,7 +438,7 @@ InstunRails3::Application.routes.draw do
   end
   
   resources :profiles do
-#    get 'show'
+    #    get 'show'
     get 'destroy_peserta'
     get 'history'
     collection do

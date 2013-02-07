@@ -89,7 +89,7 @@
   </tr>
 </table>
 <br />
-<form action="/favourite_places/create">
+<form action="/favourite_places" method="post">
   <table width="95%" border="<%=list_border%>" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
     <tr bgcolor="#999999">
       <td width="2%" align="CENTER" <%=list_font_size%>><b><font color="#FFFFFF">Bil</font></b></td>
@@ -143,7 +143,7 @@
         <td align="right" <%=list_font_size%> onmousedown="menuLayers.show('popmenu', '/places', '<%=h place.id %>', '<%= place.code %>', event)"><%= i.to_s %>.</td>
         <td align=left <%=list_font_size%> onmousedown="menuLayers.show('popmenu', '/places', '<%=h place.id %>', '<%= place.code %>', event)"><%=h place.code %></td>
         <td align=left <%=list_font_size%> onmousedown="menuLayers.show('popmenu', '/places', '<%=h place.id %>', '<%= place.code %>', event)"><%=h place.name.upcase %></td>
-        <td align=""><%=company_addr %></td>
+        <td align=""><%=company_addr.html_safe %></td>
         <td align=CENTER <%=list_font_size%>><input type="checkbox" name="tanah[]" value="<%=place.id%>" <%="checked" if fav_tnh == "1"%>></td>
         <td align=CENTER <%=list_font_size%>><input type="checkbox" name="ukur[]" value="<%=place.id%>" <%="checked" if fav_uku == "1"%>></td>
         <td align=CENTER <%=list_font_size%>><input type="checkbox" name="tm[]" value="<%=place.id%>" <%="checked" if fav_tma == "1"%>></td>

@@ -7,7 +7,7 @@ class FacilityStatusesController < ApplicationController
   end
 
   def list
-    @facility_status_pages, @facility_statuses = paginate :facility_statuses, :per_page => 10
+    @facility_statuses = FacilityStatus.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

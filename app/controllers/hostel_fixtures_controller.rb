@@ -8,7 +8,7 @@ class HostelFixturesController < ApplicationController
   end
 
   def list
-    @hostel_fixture_pages, @hostel_fixtures = paginate :hostel_fixture, :per_page => 100
+    @hostel_fixtures = HostelFixture.paginate(:per_page => 100, :page => params[:page])
   end
 
   def show
