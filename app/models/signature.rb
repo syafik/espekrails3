@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Signature < ActiveRecord::Base
+  attr_accessible :filename, :person_name, :person_position, :description
   #def self.save(signature)
   	# `cp #{person.picture.path} pictures/#{person.name}/picture.jpg`
   	#File.open("public/signatures/#{signature['filename']}", "w") { |f| f.write(signature['filename'].read) }

@@ -76,7 +76,7 @@ class SignaturesController < ApplicationController
   end
 
   def edit
-    @signature = Signature.find(params[:id])
+    @signature = Signature.where("id = ?", params[:signature_id]).first
   end
 
   def edit_popup

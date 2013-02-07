@@ -164,7 +164,10 @@ InstunRails3::Application.routes.draw do
 
   resources :signatures do
     get 'new_popup'
+    get 'edit_popup'
+    put 'update_popup'
     collection do
+      post 'create_popup'
       get 'list_popup'
       get 'new_popup'
     end

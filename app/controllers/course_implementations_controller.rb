@@ -529,30 +529,44 @@ class CourseImplementationsController < ApplicationController
     ##########
     
     @course_implementation = CourseImplementation.find(params[:id])
-	  @course_implementation.date_publish     = params[:month_publish]+"/"+params[:day_publish]+"/"+params[:year_publish]
-	  @course_implementation.date_apply_start = params[:month_apply_start]+"/"+params[:day_apply_start]+"/"+params[:year_apply_start]
-	  @course_implementation.date_apply_end   = params[:month_apply_end]+"/"+params[:day_apply_end]+"/"+params[:year_apply_end]
-	  @course_implementation.date_check       = params[:month_check]+"/"+params[:day_check]+"/"+params[:year_check]
-	  @course_implementation.date_evaluation_end   = params[:month_evaluation_end]+"/"+params[:day_evaluation_end]+"/"+params[:year_evaluation_end]
-	  @course_implementation.date_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
-    @course_implementation.date_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
-	  @course_implementation.date_plan_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
-	  @course_implementation.date_plan_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
+	  #@course_implementation.date_publish     = params[:month_publish]+"/"+params[:day_publish]+"/"+params[:year_publish]
+	  @course_implementation.date_publish     = "#{params[:month_publish]}/#{params[:day_publish]}/#{params[:year_publish]}"
+	  #@course_implementation.date_apply_start = params[:month_apply_start]+"/"+params[:day_apply_start]+"/"+params[:year_apply_start]
+	  @course_implementation.date_apply_start = "#{params[:month_apply_start]}/#{params[:day_apply_start]}/#{params[:year_apply_start]}"
+	  #@course_implementation.date_apply_end   = params[:month_apply_end]+"/"+params[:day_apply_end]+"/"+params[:year_apply_end]
+	  @course_implementation.date_apply_end   = "#{params[:month_apply_end]}/#{params[:day_apply_end]}/#{params[:year_apply_end]}"
+	  #@course_implementation.date_check       = params[:month_check]+"/"+params[:day_check]+"/"+params[:year_check]
+	  @course_implementation.date_check       = "#{params[:month_check]}/#{params[:day_check]}/#{params[:year_check]}"
+	  #@course_implementation.date_evaluation_end   = params[:month_evaluation_end]+"/"+params[:day_evaluation_end]+"/"+params[:year_evaluation_end]
+	  @course_implementation.date_evaluation_end   = "#{params[:month_evaluation_end]}/#{params[:day_evaluation_end]}/#{params[:year_evaluation_end]}"
+	  #@course_implementation.date_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
+	  @course_implementation.date_start = "#{params[:month_start]}/#{params[:day_start]}/#{params[:year_start]}"
+    #@course_implementation.date_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
+    @course_implementation.date_end   = "#{params[:month_end]}/#{params[:day_end]}/#{params[:year_end]}"
+	  #@course_implementation.date_plan_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
+	  @course_implementation.date_plan_start = "#{params[:month_start]}/#{params[:day_start]}/#{params[:year_start]}"
+	  #@course_implementation.date_plan_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
+	  @course_implementation.date_plan_end   = "#{params[:month_end]}/#{params[:day_end]}/#{params[:year_end]}"
     @course_implementation.time_start  = params[:time_start]
     @course_implementation.time_end    = params[:time_end]
 
-	  @course_implementation.check_in    = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
-	  @course_implementation.check_out   = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
-	  @course_implementation.briefing    = params[:month_briefing]+"/"+params[:day_briefing]+"/"+params[:year_briefing] +  " " +params[:hour_briefing]+":"+params[:minute_briefing]
+	  #@course_implementation.check_in    = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
+	  @course_implementation.check_in    = "#{params[:month_check_in]}/#{params[:day_check_in]}/#{params[:year_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}"
+	  #@course_implementation.check_out   = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
+	  @course_implementation.check_out   = "#{params[:month_check_out]}/#{params[:day_check_out]}/#{params[:year_check_out]} #{params[:hour_check_out]}:#{params[:minute_check_out]}"
+	  #@course_implementation.briefing    = params[:month_briefing]+"/"+params[:day_briefing]+"/"+params[:year_briefing] +  " " +params[:hour_briefing]+":"+params[:minute_briefing]
+	  @course_implementation.briefing    = "#{params[:month_briefing]}/#{params[:day_briefing]}/#{params[:year_briefing]} #{params[:hour_briefing]}:#{params[:minute_briefing]}"
 
     @course = @course_implementation.course
     @course.methodologies = Methodology.find(params[:methodology_ids]) if params[:methodology_ids]
 
     @course.prerequisites = []
-    params[:prerequisite_codes].size.times do |i|
-      if params[:prerequisite_codes][i] != ""
-        @pre = CourseImplementation.find_by_code(params[:prerequisite_codes][i])
-        @course.prerequisites.push(@pre.course) if @pre
+    unless params[:prerequisite_codes].blank?
+      params[:prerequisite_codes].size.times do |i|
+        if params[:prerequisite_codes][i] != ""
+          @pre = CourseImplementation.find_by_code(params[:prerequisite_codes][i])
+          @course.prerequisites.push(@pre.course) if @pre
+        end
       end
     end
     @course.update_attributes(params[:course])
