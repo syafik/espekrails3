@@ -162,10 +162,28 @@ InstunRails3::Application.routes.draw do
     end
   end
 
+  resources :signatures do
+    get 'new_popup'
+    collection do
+      get 'list_popup'
+      get 'new_popup'
+    end
+  end
+
+  match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
+  match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
   resources :trainer do
+    post 'offer'
+    get 'offer'
     collection do
       get 'list'
       get 'search'
+      post 'search_by_name'
+      post 'search_by_ic'
+      post 'search_by_phone'
+      post 'search_by_expertise'
+      post 'search_by_state'
+      post 'offer'
     end
   end
   
@@ -305,6 +323,7 @@ InstunRails3::Application.routes.draw do
   end
   resources :course_applications do
     collection do
+      get 'applicant'
       get 'all'
       get 'select_course'
       get 'search'
@@ -365,6 +384,9 @@ InstunRails3::Application.routes.draw do
   end
   
   resources :profiles do
+#    get 'show'
+    get 'destroy_peserta'
+    get 'history'
     collection do
       get 'view'
       get 'view_waris'

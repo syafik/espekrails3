@@ -25,6 +25,7 @@ class TrainerController < ApplicationController
   end
 
   def search
+    render layout: 'standard-layout'
   end
   
   def search_by_name
@@ -37,7 +38,7 @@ class TrainerController < ApplicationController
      else
 	@trainers = []
      end
-
+      render layout: 'standard-layout'
      rescue
   	flash['notice'] = 'Carian Tidak Sah'
     	redirect_to :action => 'search'
@@ -54,7 +55,7 @@ class TrainerController < ApplicationController
      else
 	@trainers = []
      end
-
+     render layout: 'standard-layout'
      rescue
   	flash['notice'] = 'Carian Tidak Sah'
     	redirect_to :action => 'search'
@@ -71,7 +72,7 @@ class TrainerController < ApplicationController
      else
         @trainers = []
      end
-
+     render layout: 'standard-layout'
      rescue
         flash['notice'] = 'Carian Tidak Sah'
         redirect_to :action => 'search'
@@ -89,7 +90,7 @@ class TrainerController < ApplicationController
      else
         @trainers = []
      end
-
+     render layout: 'standard-layout'
      rescue
         flash['notice'] = 'Carian Tidak Sah'
         redirect_to :action => 'search'
@@ -97,7 +98,9 @@ class TrainerController < ApplicationController
   end
 
   def search_by_state
-    @trainers = Trainer.find_by_sql("select * from trainers,profiles WHERE profiles.id = trainers.profile_id AND state_id ILIKE '#{params[:state_id]}'")
+    #@trainers = Trainer.find_by_sql("select * from trainers,profiles WHERE profiles.id = trainers.profile_id AND state_id ILIKE '#{params[:state_id]}'")
+    @trainers = params[:state_id].blank? ? [] : Trainer.find_by_sql("select * from trainers,profiles WHERE profiles.id = trainers.profile_id AND state_id = #{params[:state_id]}")
+    render layout: 'standard-layout'
   end
   
   def eval
@@ -108,12 +111,15 @@ class TrainerController < ApplicationController
   def offer
     list
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
-    @trainer = Trainer.find(params[:id])
+    @trainer = Trainer.find(params[:trainer_id])
+
+    render layout: 'standard-layout'
   end
   
   def edit_surat_lantik
-    @course_implementation = CourseImplementation.find(params[:id])
+    @course_implementation = CourseImplementation.find(params[:course_implementation_id])
     @trainer = Trainer.find(params[:trainer_id])
+    render layout: 'standard-layout'
   end
   
   def rujukan_kami
@@ -168,6 +174,7 @@ class TrainerController < ApplicationController
     #@trainer = Trainer.find(params[:id])
     #@trainer.profile.qualifications.qualification_category.description
     #@qualification = @trainer.profile.qualifications
+    render layout: 'standard-layout'
   end
 
   def new
@@ -333,6 +340,7 @@ class TrainerController < ApplicationController
     @employment = Employment.find_by_profile_id(@trainer.profile_id)
     @trainer.profile = Profile.find(@trainer.profile_id)
     @profile = @trainer.profile
+    render layout: 'standard-layout'
   end
 
   def update

@@ -9,12 +9,12 @@
 			return false;
 		}
 
-		df.action  = "/trainer/offer/" + df.trainer_id.value
+		df.action  = "/trainer/" + df.trainer_id.value + "/offer"
 		return true;
 	}
 	function GoEditSuratLantik(df) {
 	    //var df = document.list
-	    df.action = "/trainer/edit_surat_lantik/<%=@course_implementation.id if @course_implementation%>"
+	    df.action = "/trainer/<%=@course_implementation.id if @course_implementation%>/edit_surat_lantik"
 	    df.submit()
 	}
 	</script>
@@ -27,7 +27,7 @@
  </table>
   <br>
 <div align="center">Kod Kursus : 
-		<input type="hidden" id="trainer_id" name="trainer_id" value="<%=params[:id] %>">
+		<input type="hidden" id="trainer_id" name="trainer_id" value="<%=params[:trainer_id] %>">
 		<input type="text" id="course_implementation_code" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>" onkeyup="this.value=this.value.toUpperCase()">
 <input type="submit" value="Cari" class="btn60">
 </div>

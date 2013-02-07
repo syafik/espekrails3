@@ -180,6 +180,8 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
     @relative = Relative.find_by_profile_id(@profile.id)
     @employment = Employment.find_by_profile_id(@profile.id)
+
+    render layout: "standard-layout"
   end
 
   def show_profile
@@ -282,6 +284,7 @@ class ProfilesController < ApplicationController
       @employment = Employment.new
       @job_profile = JobProfile.new
     end
+    render layout: 'standard-layout'
   end
 
   def edit_peribadi
@@ -294,6 +297,7 @@ class ProfilesController < ApplicationController
 		  @employment = Employment.new
 		  @job_profile = JobProfile.new
 	  end
+    render layout: 'standard-layout'
   end
 
   def update_peribadi
@@ -564,7 +568,7 @@ class ProfilesController < ApplicationController
   end
 
   def destroy_peserta
-    peserta = CourseApplication.find(:all, :conditions => "profile_id = #{params[:id]}")
+    peserta = CourseApplication.find(:all, :conditions => "profile_id = #{params[:profile_id]}")
     #CourseApplication.find_by_profile_id(params[:id]).destroy
     for q in peserta
       q.destroy
@@ -584,12 +588,14 @@ class ProfilesController < ApplicationController
 	  s.push("#{f} = 9")  	
 	  t = s.join(" OR ")
 
-  	@students = CourseApplication.find(:all, :conditions=>"profile_id = #{params[:id]} AND (#{t})", 
+  	@students = CourseApplication.find(:all, :conditions=>"profile_id = #{params[:profile_id]} AND (#{t})",
       :order=>"date_apply DESC,student_status_id")
   	@courses = Course.find(:all, :order=>"name")
 
-    @profile = Profile.find(params[:id])
+    @profile = Profile.find(params[:profile_id])
     @employment = Employment.find_by_profile_id(@profile.id)
+
+    render layout: 'standard-layout'
   end
 
 

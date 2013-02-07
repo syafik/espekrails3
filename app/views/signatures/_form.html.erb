@@ -6,7 +6,16 @@
 }
 -->
 </style>
-<div align="center"><%= error_messages_for 'signature' %></div>
+<div align="center">
+  <%#= error_messages_for 'signature' %>
+  <% if @signature.errors.any? %>
+      <ul>
+        <% @signature.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+  <% end %>
+</div>
 
 <!--[form:signature]-->
 <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">

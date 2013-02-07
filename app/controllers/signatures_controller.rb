@@ -9,7 +9,8 @@ class SignaturesController < ApplicationController
   end
 
   def list
-    @signature_pages, @signatures = paginate :signatures, :per_page => 10
+    #@signature_pages, @signatures = paginate :signatures, :per_page => 10
+    @signatures = Signature.paginate(:page => params[:page], :per_page => 10)
   end
 
   def list_popup

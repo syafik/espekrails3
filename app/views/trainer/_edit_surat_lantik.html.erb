@@ -4,8 +4,8 @@ t = Time.now
 @current_month= t.strftime("%m")
 @current_year= t.strftime("%Y")
 
-if params[:id] 
-	@schedule = CourseImplementation.find(params[:id])
+if params[:course_implementation_id]
+	@schedule = CourseImplementation.find(params[:course_implementation_id])
 elsif params[:course_implementation_code]
 	@schedule = CourseImplementation.find_by_code(params[:course_implementation_code])
 else
@@ -13,6 +13,7 @@ else
 	#@schedule = CourseImplementation.find_by_code(params[:course_implementation_code]
 end
 
+   debug @schedule
 @tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " +
 		  "#{$MONTH_NAMES[@schedule.date_plan_start.to_formatted_s(:my_format_month).to_i - 1].upcase} " +
                   "#{@schedule.date_plan_start.to_formatted_s(:my_format_year)}" +  " HINGGA " +
@@ -345,7 +346,7 @@ function ajax_find_jawatan_respon2(originalRequest) {
 		  @options = @signatures.map { |t| [t.person_name, t.filename] }
 		  @options.unshift(["Sila Pilih", ""])
 		  @signature = Signature.new
-		  select(:signature, :filename, @options, "" , :name=>"signature_file", :onchange=>"displaySignature(this.value)", :style=>"width: 300;")
+		  select(:signature, :filename, @options, :name=>"signature_file", :onchange=>"displaySignature(this.value)", :style=>"width: 300;")
 		%> <span class="blockintro"> <a href="javascript: MM_openBrWindow('/signatures/list_popup','','scrollbars=yes,width=700,height=400')">Tambah/Kemaskini/Padam</a></span><br />
         <span id="gambar_sain"></span>
 		<%= hidden_field 'surat_lantik_content', 'tandatangan_nama', :value=>@signature.person_name%>		
