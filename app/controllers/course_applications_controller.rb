@@ -422,12 +422,7 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.new
     @qualification =Qualification.new
     @course_application = CourseApplication.new
-<<<<<<< HEAD
-    render layout: "standard-layout"
-=======
-
     render layout: 'standard-layout'
->>>>>>> 0003283225ed86996d267456e575bab768c84606
   end
 
   def new_peserta

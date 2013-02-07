@@ -10,8 +10,6 @@
  end
 %>
 <!--div align="center">
-<%#= error_messages_for 'profile' %>
-<<<<<<< HEAD
 <% if @profile.errors.any? %>
   <ul>
     <% @profile.errors.full_messages.each do |msg| %>
@@ -19,11 +17,7 @@
     <% end %>
   </ul>
 <% end %>
-<%#= error_messages_for 'course_application' %>
-</div-->
-=======
-<%#= error_messages_for 'course_application' %></div-->
->>>>>>> 0003283225ed86996d267456e575bab768c84606
+</div>-->
   <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
 
   <tr bgcolor="000000">
@@ -132,11 +126,7 @@ dr = "dr=1" if params[:dr]
 	    <%=
 		  @id_titles = @titles.map { |t| [t.description, t.id] }
 		  @id_titles.unshift(["Sila Pilih", ""])
-<<<<<<< HEAD
-		  select(:profile, :title_id, @id_titles, :style=>"width: 100;")
-=======
 		  select(:profile, :title_id, @id_titles,:style=>"width: 100;")
->>>>>>> 0003283225ed86996d267456e575bab768c84606
 		%>      </td>
     </tr>    
     <tr>
@@ -150,11 +140,7 @@ dr = "dr=1" if params[:dr]
 	    <%=
 		  @options = @genders.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-<<<<<<< HEAD
-		  select(:profile, :gender_id, @options, :style=>"width: 100;")
-=======
 		  select(:profile, :gender_id, @options,:style=>"width: 100;")
->>>>>>> 0003283225ed86996d267456e575bab768c84606
 		%>	  </td>
      
       </tr>
@@ -164,11 +150,7 @@ dr = "dr=1" if params[:dr]
 	  <%=
 		  @options = @religions.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-<<<<<<< HEAD
-		  select(:profile, :religion_id, @options, :style=>"width: 100;")
-=======
 		  select(:profile, :religion_id, @options,:style=>"width: 100;")
->>>>>>> 0003283225ed86996d267456e575bab768c84606
 	  %>       </td>
 		<td align="right" width=20%><b>Upload Gambar :</b></td>
     	<td>&nbsp;
@@ -182,11 +164,7 @@ dr = "dr=1" if params[:dr]
 	  <%=
 		  @options = @marital_statuses.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-<<<<<<< HEAD
-		  select(:profile, :marital_status_id, @options, :style=>"width: 100;")
-=======
 		  select(:profile, :marital_status_id, @options,:style=>"width: 100;")
->>>>>>> 0003283225ed86996d267456e575bab768c84606
 	  %>	  </td>
 	 <td align="right" width=20%><b>Tarikh Lahir :</b></td>
       <td>&nbsp;
@@ -219,11 +197,7 @@ end
 	  <%=
 		  @options = @races.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-<<<<<<< HEAD
-		  select(:profile, :race_id, @options, :style=>"width: 100;")
-=======
 		  select(:profile, :race_id, @options,:style=>"width: 100;")
->>>>>>> 0003283225ed86996d267456e575bab768c84606
 	  %>      </td>
     </tr>
     <tr>
@@ -233,11 +207,7 @@ end
       <td colspan=3>&nbsp; <%=
 		  @options = @handicaps.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-<<<<<<< HEAD
-		  select(:profile, :handicap_id, @options, :style=>"width: 100;")
-=======
 		  select(:profile, :handicap_id, @options,:style=>"width: 100;")
->>>>>>> 0003283225ed86996d267456e575bab768c84606
 	  %> </td>
     </tr>
     <tr>
@@ -260,11 +230,7 @@ end
 	  <%=
 		  @options = @relationships.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-<<<<<<< HEAD
 		  select(:relative, :relationship_id, @options, :style=>"width: 100;")
-=======
-		  select(:relative, :relationship_id, @options,:style=>"width: 100;")
->>>>>>> 0003283225ed86996d267456e575bab768c84606
 	  %>	  </td>
     </tr>
      <tr>
@@ -361,11 +327,7 @@ end
 		  end
 		  @options = @departments.map { |t| [t.name.upcase, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-<<<<<<< HEAD
 		  select(:parent, :id, @options,  :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
-=======
-		  select(:parent, :id, @options, :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
->>>>>>> 0003283225ed86996d267456e575bab768c84606
 	  %></span>    </tr>
    <tr>
       <td align="right"><b>Pejabat :</b></td>
