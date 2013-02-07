@@ -142,6 +142,14 @@ InstunRails3::Application.routes.draw do
     end
   end
 
+  resources :signatures do
+    get 'new_popup'
+    collection do
+      get 'list_popup'
+      get 'new_popup'
+    end
+  end
+
   match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
   match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
   resources :trainer do

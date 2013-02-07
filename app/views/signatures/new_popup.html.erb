@@ -17,12 +17,12 @@
 
 <%#= start_form_tag :action => 'create' , '',:enctype=>"multipart/form-data"%>
 <!--form action="create" method="post" enctype="multipart/form-data"-->
-<%=start_form_tag({:action=>'create_popup'}, :multipart=>true)%>
+<%= form_for(@signature, :action=>'create_popup', :multipart=>true) do |f| %>
 
   <%= render :partial => 'form' %>
   <BR>
   <div align=center>
   <%= submit_tag "Simpan" %>
   </div>
-</form>
+<% end %>
 
