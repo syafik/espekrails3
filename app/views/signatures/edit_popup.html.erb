@@ -15,11 +15,13 @@
   <BR>
 
 <%#= start_form_tag :action => 'update', :id => @signature %>
-<%=start_form_tag({:action=>'update_popup', :id => @signature}, :multipart=>true)%>
+<%#=start_form_tag({:action=>'update_popup', :id => @signature}, :multipart=>true)%>
+<%= form_for(@signature, :url => { :action=>'update_popup' }, :html => { :multipart => true }) do |f| %>
+
 
   <%= render :partial => 'form' %>
   <BR>
   <div align=center>
   <%= submit_tag 'Simpan' %>
   </div>
-<%= end_form_tag %>
+<% end %>
