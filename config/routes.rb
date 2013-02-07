@@ -143,9 +143,15 @@ InstunRails3::Application.routes.draw do
   end
 
   resources :trainer do
+    get 'offer'
     collection do
       get 'list'
       get 'search'
+      post 'search_by_name'
+      post 'search_by_ic'
+      post 'search_by_phone'
+      post 'search_by_expertise'
+      post 'search_by_state'
     end
   end
   
