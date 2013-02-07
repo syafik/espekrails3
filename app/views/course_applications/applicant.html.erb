@@ -24,10 +24,10 @@ var menuLayers = {
     //objid = controller + "/" + action + "/" + objid
 
     document.getElementById('popmenu').innerHTML = "<ul>" + 
-                           "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
-					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
-					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy_peserta/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
-					       "<li><a href=\""  + controller + "/history/" + objid + "\">&nbsp;&nbsp;RekodKursus</a>" +
+                           "<li><a href=\""  + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+					       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
+					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/" + objid + "/destroy_peserta' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					       "<li><a href=\""  + controller + "/" + objid + "/history\">&nbsp;&nbsp;RekodKursus</a>" +
 					       "</ul>"
     this.position(mnu,e);
   },
