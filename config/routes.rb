@@ -142,7 +142,10 @@ InstunRails3::Application.routes.draw do
     end
   end
 
+  match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
+  match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
   resources :trainer do
+    post 'offer'
     get 'offer'
     collection do
       get 'list'
@@ -152,6 +155,7 @@ InstunRails3::Application.routes.draw do
       post 'search_by_phone'
       post 'search_by_expertise'
       post 'search_by_state'
+      post 'offer'
     end
   end
   

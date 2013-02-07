@@ -5,14 +5,14 @@
 </table>
 <br>
 
-<%= start_form_tag :action => 'cetak_surat_lantik', :id => @course_implementation, :trainer_id => @trainer %>
+<%= form_for(@course_implementation, :action => 'cetak_surat_lantik', :trainer_id => @trainer) do |f| %>
   <%= render :partial => 'edit_surat_lantik' %>
   <br>
   <div align="center">
   <br><input type="button" value="Papar" onclick="GoSubmit(document.forms[0])">
   </div>
 
-<%= end_form_tag %>
+<% end %>
 
 <script src="/javascripts/form_validator.js"></script>
 <script>

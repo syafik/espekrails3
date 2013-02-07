@@ -117,8 +117,9 @@ class TrainerController < ApplicationController
   end
   
   def edit_surat_lantik
-    @course_implementation = CourseImplementation.find(params[:id])
+    @course_implementation = CourseImplementation.find(params[:course_implementation_id])
     @trainer = Trainer.find(params[:trainer_id])
+    render layout: 'standard-layout'
   end
   
   def rujukan_kami
