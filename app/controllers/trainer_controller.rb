@@ -104,8 +104,9 @@ class TrainerController < ApplicationController
   end
   
   def eval
-    @trainer = Trainer.find(params[:id])
+    @trainer = Trainer.find(params[:trainer_id])
 	@topics = @trainer.topics
+    render layout: 'standard-layout'
   end
   
   def offer
@@ -113,7 +114,7 @@ class TrainerController < ApplicationController
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
     @trainer = Trainer.find(params[:trainer_id])
 
-    render layout: 'standard-layout'
+    #render layout: 'standard-layout'
   end
   
   def edit_surat_lantik
@@ -162,6 +163,7 @@ class TrainerController < ApplicationController
   	  params[:arrow] = "ASC" if !params[:arrow]
   	  @arrow = params[:arrow]
     @trainers = Trainer.find_by_sql("select * from profiles inner join trainers on profiles.id=trainers.profile_id ORDER BY #{@orderby} #{@arrow}")
+    render layout: 'standard-layout'
   end
 
   def show
@@ -184,6 +186,7 @@ class TrainerController < ApplicationController
     @employment = Employment.new
     @qualification =Qualification.new
     @expertise =Expertise.new
+    render layout: 'standard-layout'
   end
 
   def new_but_profile_exist

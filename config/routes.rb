@@ -153,11 +153,14 @@ InstunRails3::Application.routes.draw do
     end
   end
 
+  #match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
   match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
-  match '/trainer/:course_implementation_id/edit_surat_lantik' => 'trainer#edit_surat_lantik', :via => [:post]
+  match '/trainer/:course_implementation_id/cetak_surat_lantik' => 'trainer#cetak_surat_lantik', :via => [:post]
+  match '/trainer/:course_implementation_id/cetak_surat_lantik' => 'trainer#cetak_surat_lantik', :via => [:put]
   resources :trainer do
     post 'offer'
     get 'offer'
+    get 'eval'
     collection do
       get 'list'
       get 'search'

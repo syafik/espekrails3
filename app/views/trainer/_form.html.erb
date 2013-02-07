@@ -486,7 +486,7 @@ end
     &nbsp;
     <input id="job_profile_name" name="job_profile_name" type="text" maxlength="100" size="80" value="<%=@job_grade_and_job_name%>" onfocus="this.select()" />
     <div class="auto_complete" id="job_profile_name_auto_complete"></div>
-    <%= javascript_tag("new Autocompleter.Local('job_profile_name' ,
+    <%#= javascript_tag("new Autocompleter.Local('job_profile_name' ,
   'job_profile_name_auto_complete' ,
   grades,
   {fullSearch: true,
@@ -579,7 +579,7 @@ end
   var cert_level_options = [
     {name: "Sila Pilih", id: ""},
 <% @cert_levels.each do |cl| %>
-  <%= "{name: \"#{cl.description}\", id: \"#{cl.id}\"}," %>
+  <%= "{name: \"#{cl.description}\", id: \"#{cl.id}\"},".html_safe %>
 <% end %>
     {name: " ", id: "00"}
   ];

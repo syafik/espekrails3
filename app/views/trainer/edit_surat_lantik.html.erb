@@ -5,7 +5,7 @@
 </table>
 <br>
 
-<%= form_for(@course_implementation, :action => 'cetak_surat_lantik', :trainer_id => @trainer) do |f| %>
+<%= form_for(@course_implementation, :url => { :action => 'cetak_surat_lantik' }, :html => { :trainer_id => @trainer }) do |f| %>
   <%= render :partial => 'edit_surat_lantik' %>
   <br>
   <div align="center">
