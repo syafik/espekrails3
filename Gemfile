@@ -22,7 +22,7 @@ end
 gem 'acts_as_tree_rails3'
 gem 'calendar_helper'
 gem 'will_paginate', '~> 3.0'
-gem 'pdf-writer'
+#gem 'pdf-writer'
 
 #gem 'magic_encoding'
 #gem 'pdf-writer'

@@ -1,9 +1,9 @@
 development:
   adapter: postgresql
   database: instun_d
-  username: pgsql
+  username: admin
   pool: 5
-  password: password
+  password: admin
   host: localhost
 
 test:
