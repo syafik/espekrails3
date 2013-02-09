@@ -35,6 +35,7 @@ InstunRails3::Application.routes.draw do
       get 'list'
     end
   end
+  match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
   resources :user_applications do
     collection do 
       get 'applied'
@@ -372,6 +373,21 @@ InstunRails3::Application.routes.draw do
       get 'cetak_p_evaluation'
     end
   end
+  match '/course_applications/all/:id' => 'course_applications#all', :via => [:get]
+  match '/course_applications/unprocessed/:id' => 'course_applications#unprocessed', :via => [:get]
+  match '/course_applications/hadir/:id' => 'course_applications#hadir', :via => [:get]
+  match '/course_applications/accepted/:id' => 'course_applications#accepted', :via => [:get]
+  match '/course_applications/rejected/:id' => 'course_applications#rejected', :via => [:get]
+  match '/course_applications/confirmed/:id' => 'course_applications#confirmed', :via => [:get]
+  match '/course_applications/confirmednot/:id' => 'course_applications#confirmednot', :via => [:get]
+  match '/course_applications/norespon/:id' => 'course_applications#norespon', :via => [:get]
+  match '/course_applications/takhadir/:id' => 'course_applications#takhadir', :via => [:get]
+  match '/course_applications/edit_surat_tawaran' => 'course_applications#edit_surat_tawaran', :via => [:get]
+  match '/course_applications/sah_hadir_selected' => 'course_applications#sah_hadir_selected', :via => [:get]
+  match '/course_applications/cetak_pemohon/:id' => 'course_applications#cetak_pemohon', :via => [:get]
+  match '/course_applications/cetak_pemohon_semua/:id' => 'course_applications#cetak_pemohon_semua', :via => [:get]
+  match '/course_applications/konaitokimeta' => 'course_applications#konaitokimeta', :via => [:get]
+
   resources :course_applications do
     collection do
       get 'applicant'
@@ -390,15 +406,6 @@ InstunRails3::Application.routes.draw do
       get 'grades_for_lookup'
     end
     member do
-      get 'all'
-      get 'hadir'
-      get 'unprocessed'
-      get 'accepted'
-      get 'rejected'
-      get 'confirmed'
-      get 'confirmednot'
-      get 'takhadir'
-      get 'edit_surat_tawaran'
       post 'cetak_surat_tawaran'
       post 'cetak_surat_tunda'
       get 'copy_and_new'

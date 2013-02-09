@@ -153,6 +153,7 @@ class CourseApplicationsController < ApplicationController
     @courses = Course.find(:all, :order => "name")
 
     @list_title = "SENARAI PEMOHON YANG SEDANG DIPROSES"
+    render layout: 'standard-layout'
   end
 
   def accepted
@@ -173,6 +174,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG DIPILIH"
+    render layout: 'standard-layout'
   end
 
   def accepted_n_jawabhadir
@@ -231,6 +233,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PERMOHON YANG DITOLAK"
+    render layout: 'standard-layout'
   end
 
   def confirmed
@@ -251,6 +254,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG MENGESAHKAN KEHADIRAN"
+    render layout: 'standard-layout'
   end
 
   def confirmednot
@@ -271,6 +275,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG MENGESAHKAN TIDAK HADIR"
+    render layout: 'standard-layout'
   end
 
   def hadir
@@ -291,6 +296,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PESERTA YANG MENGHADIRI KURSUS"
+    render layout: 'standard-layout'
   end
 
   def cetak_pengesahan
@@ -336,6 +342,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PESERTA YANG TIDAK MENGHADIRI KURSUS"
+    render layout: 'standard-layout'
   end
 
   def norespon
@@ -356,6 +363,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PERMOHONAN YANG MASIH TIADA JAWAPAN SETELAH DIPILIH"
+        render layout: 'standard-layout'
   end
 
   def all
