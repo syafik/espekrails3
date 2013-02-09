@@ -11,7 +11,7 @@
   </table>
   <br>
 
-<%= start_form_tag :action => 'update', :id => @post_individu %>
+<%= form_for(@post_individu, :url => { :action => 'update', :id => @post_individu }) do |f| %>
   <%= render :partial => 'form' %>
 <div align="center"><%= submit_tag "Kemaskini" %></center>
-<%= end_form_tag %>
+<% end %>

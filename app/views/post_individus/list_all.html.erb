@@ -24,8 +24,8 @@ var menuLayers = {
     //objid = controller + "/" + action + "/" + objid
 
     document.getElementById('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
-					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
+					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					       "</ul>"
     this.position(mnu,e);
   },
@@ -109,14 +109,16 @@ function confirmAndGo(url, objname) {
    </tr>
 <%
 i = 0;
+
 even = true;
         #if @post_individu_pages.current.previous
         #m = 50 * @post_individu_pages.current.previous.to_i
+   m = 50 * @page
         #else
         #m = 0
         #end
    i = 0
-#i = i + m
+i = i + m
 for post_individu in @post_individus
         i = i + 1
         bgclr = "#CCCCFF" if (even == true)
