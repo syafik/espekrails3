@@ -1,38 +1,38 @@
 <style type="text/css">
 
-/* These are the style specifications for the menu layers.  
-   Set width to get more browsers corporation  */
-div.menu  { 
-  position:absolute; visibility:hidden; 
-  width:170px; left:0; top:0; z-index:500; 
-  font: 12px/1.3 verdana, arial, helvetica, sans-serif;
-  font-size:12px; 
-  background-color: #e6e6e6; color:#000;
-  border: 2px solid;	
-  border-color: #f7faff #99a #99a #f7faff; 
-  z-index:500;
-}
-
-/* Style specifications for menu items and links  */
-div.menu ul { margin:0; padding:0 }
-/* Need to set padding of at least one pixel or ie sets very large margin */
-div.menu ul li { 
-  padding:1px; margin:0;
-  list-style-type:none
+  /* These are the style specifications for the menu layers.
+     Set width to get more browsers corporation  */
+  div.menu  {
+    position:absolute; visibility:hidden;
+    width:170px; left:0; top:0; z-index:500;
+    font: 12px/1.3 verdana, arial, helvetica, sans-serif;
+    font-size:12px;
+    background-color: #e6e6e6; color:#000;
+    border: 2px solid;
+    border-color: #f7faff #99a #99a #f7faff;
+    z-index:500;
   }
 
-/* Set display block and position relative so clicks on list items activate links  */  
-div.menu a { 
-  cursor:default;
-  padding:.1em .2em; margin:0; 
-  background-color:transparent; 
-  display:block; position:relative; 
-  text-decoration:none 
+  /* Style specifications for menu items and links  */
+  div.menu ul { margin:0; padding:0 }
+  /* Need to set padding of at least one pixel or ie sets very large margin */
+  div.menu ul li {
+    padding:1px; margin:0;
+    list-style-type:none
   }
-  
-div.menu a:link { color:#33b }
-div.menu a:visited { color:#339 }
-div.menu a:hover { color:#fff; background-color:#338; text-decoration:none  }
+
+  /* Set display block and position relative so clicks on list items activate links  */
+  div.menu a {
+    cursor:default;
+    padding:.1em .2em; margin:0;
+    background-color:transparent;
+    display:block; position:relative;
+    text-decoration:none
+  }
+
+  div.menu a:link { color:#33b }
+  div.menu a:visited { color:#339 }
+  div.menu a:hover { color:#fff; background-color:#338; text-decoration:none  }
 
 </style>
 
@@ -40,146 +40,146 @@ div.menu a:hover { color:#fff; background-color:#338; text-decoration:none  }
 
 <script src="/javascripts/popupmenu/dw_viewport.js" type="text/javascript"></script>
 <script type="text/javascript">
-/*************************************************************************
+  /*************************************************************************
   This code is from Dynamic Web Coding at http://www.dyn-web.com/
   Copyright 2003 by Sharon Paine 
   See Terms of Use at http://www.dyn-web.com/bus/terms.html
   regarding conditions under which you may use this code.
   This notice must be retained in the code as is!
-*************************************************************************/
+   *************************************************************************/
 
-var menuLayers = {
-  timer: null,
-  activeMenuID: null,
-  offX: 4,   // horizontal offset 
-  offY: 6,   // vertical offset 
+  var menuLayers = {
+    timer: null,
+    activeMenuID: null,
+    offX: 4,   // horizontal offset
+    offY: 6,   // vertical offset
 
-  show: function(id, controller, objid, objname, e) {
-    var mnu = document.getElementById? document.getElementById(id): null;
-    if (!mnu) return;
-    this.activeMenuID = id;
-    if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
-    if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
-    viewport.getAll();
+    show: function(id, controller, objid, objname, e) {
+      var mnu = document.getElementById? document.getElementById(id): null;
+      if (!mnu) return;
+      this.activeMenuID = id;
+      if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
+      if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
+      viewport.getAll();
 
-    //objid = controller + "/" + action + "/" + objid
+      //objid = controller + "/" + action + "/" + objid
 
-    document.getElementById('popmenu').innerHTML = "<ul>" + 
-                           "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Edit</a>" + 
-					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
-					       "</ul>"
-    this.position(mnu,e);
-  },
+      document.getElementById('popmenu').innerHTML = "<ul>" +
+        "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Edit</a>" +
+        "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
+        "</ul>"
+      this.position(mnu,e);
+    },
   
-  hide: function() {
-    this.clearTimer();
-    if (this.activeMenuID && document.getElementById) 
-      this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
-  },
+    hide: function() {
+      this.clearTimer();
+      if (this.activeMenuID && document.getElementById)
+        this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
+    },
   
-  position: function(mnu, e) {
-    var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
-    var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
+    position: function(mnu, e) {
+      var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
+      var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
     
-    if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
-      x = x - mnu.offsetWidth - this.offX;
-    else x = x + this.offX;
+      if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
+        x = x - mnu.offsetWidth - this.offX;
+      else x = x + this.offX;
   
-    if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
-      y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
-    else y = y + this.offY;
+      if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
+        y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
+      else y = y + this.offY;
     
-    mnu.style.left = x + "px"; mnu.style.top = y + "px";
-    this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
-  },
+      mnu.style.left = x + "px"; mnu.style.top = y + "px";
+      this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
+    },
   
-  mouseoutCheck: function(e) {
-    e = e? e: window.event;
-    // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
-    var mnu = document.getElementById(menuLayers.activeMenuID);
-    var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
-    if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
-  },
+    mouseoutCheck: function(e) {
+      e = e? e: window.event;
+      // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
+      var mnu = document.getElementById(menuLayers.activeMenuID);
+      var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
+      if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
+    },
   
-  // returns true of oNode is contained by oCont (container)
-  contained: function(oNode, oCont) {
-    if (!oNode) return; // in case alt-tab away while hovering (prevent error)
-    while ( oNode = oNode.parentNode ) 
-      if ( oNode == oCont ) return true;
-    return false;
-  },
+    // returns true of oNode is contained by oCont (container)
+    contained: function(oNode, oCont) {
+      if (!oNode) return; // in case alt-tab away while hovering (prevent error)
+      while ( oNode = oNode.parentNode )
+        if ( oNode == oCont ) return true;
+      return false;
+    },
 
-  clearTimer: function() {
-    if (menuLayers.timer) clearTimeout(menuLayers.timer);
+    clearTimer: function() {
+      if (menuLayers.timer) clearTimeout(menuLayers.timer);
+    }
+  
   }
-  
-}
 </script>
 
 <script>
-function confirmAndGo(url, objname) {
-	if (confirm("Are you sure to delete " + objname + "?")) {
-		location = url
-	}
+  function confirmAndGo(url, objname) {
+    if (confirm("Are you sure to delete " + objname + "?")) {
+      location = url
+    }
 	
-}
+  }
 </script>
-    
- <!----------------------------------------------------------------------------------------->
+
+<!----------------------------------------------------------------------------------------->
 <form name="completed_all_list" action="" method="get">
-<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI POLISI ASRAMA</font></b></td>
     </tr>
-</table>
-<br>
+  </table>
+  <br>
 
-<table width="50%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+  <table width="50%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
     <tr bgcolor="#999999">
       <td width="20" valign="top"><font color="#FFFFFF">&nbsp;</font></td>
       <td width="" align="left"><font color="#FFFFFF"><strong>Polisi </strong></font></td>
       <td width="" align="left"><font color="#FFFFFF"><strong>Keterangan </strong></font></td>
     </tr>
 
-<%
-i = 0;
-even = true;
-for state in @hostel_policies
-  i = i + 1
-  bgclr = "#CCCCFF" if (even == true)
-  bgclr = "#FFFFFF" if (even == false)
-  even = !even
+    <%
+    i = 0;
+    even = true;
+    for state in @hostel_policies
+      i = i + 1
+      bgclr = "#CCCCFF" if (even == true)
+      bgclr = "#FFFFFF" if (even == false)
+      even = !even
 
-%>
+    %>
 
-  <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-        onmousedown="menuLayers.show('popmenu', '/hostel_policies', '<%=h state.id %>', '<%= state.description %>', event)" >
-      <td><%= i.to_s %>.</td>
-      <td><%= state.policy_item.description %></td>
-      <td>
-      <% if state.policy_item_id == 1 || state.policy_item_id == 2 %>
-      Ranking <%= state.description %> - <%= state.description2 %>
-      <% else %>
-      <%= state.description %>
-      <% end %>
-      </td>
-  </tr>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+          onmousedown="menuLayers.show('popmenu', '/hostel_policies', '<%=h state.id %>', '<%= state.description %>', event)" >
+        <td><%= i.to_s %>.</td>
+        <td><%= state.policy_item.description %></td>
+        <td>
+          <% if state.policy_item_id == 1 || state.policy_item_id == 2 %>
+            Ranking <%= state.description %> - <%= state.description2 %>
+          <% else %>
+            <%= state.description %>
+          <% end %>
+        </td>
+      </tr>
 
-<% end %>
+    <% end %>
   </table>
 
 
-<br />
+  <br />
 
-<!--The popup menu initial layer----->
-<div id="popmenu" class="menu">
-  <ul>
-  	<li id="jongos"><a href="#">Menu 1 link 1</a></li>
-  	<li><a href="#">link two</a></li>
-  	<li><a href="#">link three</a></li>
-  	<li><a href="#">link four</a></li>
-    <li><a href="#">link five</a></li>
-  </ul>
-</div>
+  <!--The popup menu initial layer----->
+  <div id="popmenu" class="menu">
+    <ul>
+      <li id="jongos"><a href="#">Menu 1 link 1</a></li>
+      <li><a href="#">link two</a></li>
+      <li><a href="#">link three</a></li>
+      <li><a href="#">link four</a></li>
+      <li><a href="#">link five</a></li>
+    </ul>
+  </div>
 
 

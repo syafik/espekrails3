@@ -9,14 +9,14 @@ function confirmAndDelete(url, objname) {
 function rewritePopupContent(controller, objid, objname) {
     $('popmenu').style.width = 150;
     $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + controller + "/iwannachkout/" + objid + "\">&nbsp;&nbsp;Check-out Asrama</a>" +
+                            "<li><a href=\""  + controller + "/" + objid + "/iwannachkout\">&nbsp;&nbsp;Check-out Asrama</a>" +
 					        "</ul>"
 }
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('popmenu').style.width = 150;
     $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + controller + "/iwannachkout/" + objid + "\">&nbsp;&nbsp;Check-out Asrama</a>" +
+                            "<li><a href=\""  + controller + "/" + objid + "/iwannachkout\">&nbsp;&nbsp;Check-out Asrama</a>" +
 					        "</ul>"
 }
 </script>
@@ -160,7 +160,7 @@ for student in @ls
   </table>
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @ls.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @ls.size==0%>
 
 <style>
 .el {

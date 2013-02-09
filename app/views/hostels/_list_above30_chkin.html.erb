@@ -70,7 +70,7 @@
 			end
 			
 			%>
-	 <td bgcolor="<%=@room_bg%>" class="el" align="center" <%=the_title%>>&nbsp;<font style="font-weight: <%=room_font_style%>"><%=the_room%></font>&nbsp;</td>
+	 <td bgcolor="<%=@room_bg%>" class="el" align="center" <%=the_title%>>&nbsp;<font style="font-weight: <%=room_font_style%>"><%=the_room.html_safe%></font>&nbsp;</td>
 	 
 	 <% end%>
    </tr>

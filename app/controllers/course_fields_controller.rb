@@ -7,20 +7,22 @@ class CourseFieldsController < ApplicationController
   end
   
   def index
-    list
-    render :action => 'list'
+    redirect_to :action => "list"
   end
 
   def list
     @course_fields = CourseField.paginate(:per_page => 100, :page => params[:page]).order('course_department_id ASC')
+    render layout: "standard-layout"
   end
 
   def show
     @course_field = CourseField.find(params[:id])
+    render layout: "standard-layout"
   end
 
   def new
     @course_field = CourseField.new
+    render layout: "standard-layout"
   end
 
   def create
@@ -45,10 +47,12 @@ class CourseFieldsController < ApplicationController
     else
       #render :action => 'new'
     end
+    render layout: "standard-layout"
   end
 
   def edit
     @course_field = CourseField.find(params[:id])
+    render layout: "standard-layout"
   end
 
   def update

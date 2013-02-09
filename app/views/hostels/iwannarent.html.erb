@@ -89,7 +89,7 @@
 </div>
 <script>
 function checkThatGuyIn(lvl,room,room_gdr,profile_gdr) {
-	url = "/hostels/iverent/<%=@profile.id%>?profile_id=<%=@profile.id%>&block_id=<%=@hostel_block.id%>" + 
+	url = "/hostels/<%=@profile.id%>/iverent?profile_id=<%=@profile.id%>&block_id=<%=@hostel_block.id%>" +
 	      "&level=" + lvl +  
 	      "&room="  + room  
 	if (room_gdr != profile_gdr) {

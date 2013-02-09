@@ -44,7 +44,7 @@
 
 </style>
 
-<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+<script language="javascript" type="text/javascript">
   function launchCenter(url) {
     var NEW_WIN = null;
     var str = "height=" + 350 + ",innerHeight=" + 450;
@@ -175,9 +175,9 @@ cid = params[:id]  #ambil data dari link_to
   courses =  CourseImplementation.find_by_sql("SELECT date_plan_start, date_plan_end, time_start, time_end, code, name FROM vw_detailed_courses WHERE id = '"+ @cid +"'")
 
   #utk masa_array
-  arrtime1 = Array.new
-  arrtime2 = Array.new
-
+  arrtime1 = []
+  arrtime2 = []
+  days = []
   for course in courses
     @start = course.time_start
     @end = course.time_end
@@ -193,12 +193,13 @@ cid = params[:id]  #ambil data dari link_to
     @start = @start.to_formatted_s(:my_format_6)
     @end = @end.to_formatted_s(:my_format_6)
   %>
+    <%= debug courses %>
     <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
       <tr>
         <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"> JADUAL KURSUS <%= @code %> <%=@cname%></font></b></td>
       </tr>
     </table>
-    <br>
+    <br />
     <div align="center">
       <%@course_implementation = CourseImplementation.find(params[:id])%>
       <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
@@ -232,7 +233,7 @@ cid = params[:id]  #ambil data dari link_to
     <br />
     <%
 
-    
+
     jumlahs = CourseImplementation.find_by_sql( "SELECT (time '" + @end + "' - time '" + @start + "') AS later")
     for jumlah in jumlahs
       w = jumlah.later
@@ -249,7 +250,10 @@ cid = params[:id]  #ambil data dari link_to
       #end
 
     end  #jumlah
-
+    %>
+    <%= debug jumlahs %>
+    <%= debug @slot %>
+    <%
     bil = 0
     @slot.times do  #kena kira time slot
       if (bil == 0)
@@ -270,7 +274,11 @@ cid = params[:id]  #ambil data dari link_to
 
       bil +=1
     end  #timeslot
+    %>
+    <%= debug arrtime1 %>
+    <%= debug arrtime2 %>
 
+    <%
     if (@end_hari != @start_hari)
       haris = Course.find_by_sql( "SELECT age ('" + @end_hari.to_s + "','" + @start_hari.to_s + "')" )
       bil_hari = haris.size
@@ -280,7 +288,9 @@ cid = params[:id]  #ambil data dari link_to
         @jum_hari = jum_all[1]
       end
     end
+  %>
 
+    <%
     #Khas utk tukar format dari yyyy-dd-mm
     @start_hari2 = @start_hari.to_s
     hari_ini = @start_hari2.split('-')
@@ -292,7 +302,6 @@ cid = params[:id]  #ambil data dari link_to
     #dapatkan hari
     @pusing = @jum_hari.to_i
 
-    days = Array.new
     xbil = 0
 
     @pusing.times do
@@ -316,13 +325,11 @@ cid = params[:id]  #ambil data dari link_to
     end
 
   end   # for course planning
+  %>
+  <%  jum_jam = arrtime1.size   # berapa hari %>
+  <%  jum_jam2 = arrtime2.size   # berapa hari %>
+  <%  jum_hari = days.size %>
 
-  jum_jam = arrtime1.size   # berapa hari
-  jum_jam2 = arrtime2.size   # berapa hari
-  jum_hari = days.size
-
-
-%>
   <table class="seven" width="95%" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777">
   <!--table width="95%" <%=list_border%> align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>"-->
     <tr>
@@ -333,8 +340,8 @@ cid = params[:id]  #ambil data dari link_to
       jum_jam.times do
         if (arrtime1[k] == "13:00")
         %>
-          <td class="el" align=center bgcolor="#CCCCCC">1:00 p.m<br>
-            -<br>2:30 p.m</td>
+          <td class="el" align=center bgcolor="#CCCCCC">1:00 p.m<br />
+            -<br />2:30 p.m</td>
         <%
         else
           itime = arrtime1[k].split(':')
@@ -353,8 +360,8 @@ cid = params[:id]  #ambil data dari link_to
 
           if (( arrtime1[k] >= "14:30"))
           %>
-            <td class="el" align=center bgcolor="#CCCCCC"><%=pm%><br>
-              -<br>
+            <td class="el" align=center bgcolor="#CCCCCC"><%=pm%><br />
+              -<br />
               <%=pm2%></td>
           <%
           end
@@ -374,8 +381,8 @@ cid = params[:id]  #ambil data dari link_to
               am2 = "#{xtime}:#{xtime2} a.m"
             end
           %>
-            <td class="el" align=center bgcolor="#CCCCCC"><%= am %><br>
-              -<br>
+            <td class="el" align=center bgcolor="#CCCCCC"><%= am %><br />
+              -<br />
               <%= am2%></td>
           <%
           end #if
@@ -467,8 +474,8 @@ cid = params[:id]  #ambil data dari link_to
               %>
 
                 <%if @rehat1_already == 0%>
-                  <td class="el" bgcolor="<%=xcolor%>" align="center" rowspan="<%=jum_hari%>">R<br>
-                    E<br>H<br>A<br>T</td>
+                  <td class="el" bgcolor="<%=xcolor%>" align="center" rowspan="<%=jum_hari%>">R<br />
+                    E<br/>H<br/>A<br/>T</td>
                   <%@rehat1_already = 1 if arrtime1[k] == "13:00"%>
                 <%end%>
 

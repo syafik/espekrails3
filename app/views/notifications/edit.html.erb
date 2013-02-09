@@ -6,9 +6,10 @@
   </table>
 <BR>
 	
-<%= start_form_tag :action => 'approve', :id => @notification %>
+<%#= start_form_tag :action => 'approve', :id => @notification %>
+<%=form_for(@notification, :url => approve_notification_path(:id=>@notification)) do |f|%>
   <%= render :partial => 'form_approve' %>
   <div align="center">
   <%= submit_tag 'Kemaskini' %>
   </div>
-<%= end_form_tag %>
+<% end %>

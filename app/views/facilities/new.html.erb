@@ -6,8 +6,8 @@
 <br>
 <div align=center>
 
-<%= start_form_tag({:action=> "createf"} , { :name => 'form', :onsubmit=>"return check_form(this);" }) %>
+<%=form_for(@facility, :url => createf_facilities_path , :html => { :name => 'form', :onsubmit=>"return check_form(this);" }) do %>
   <%= render :partial => 'form1' %>
   <%= submit_tag "Simpan" %>
-<%= end_form_tag %>
+<% end%>
 </div>

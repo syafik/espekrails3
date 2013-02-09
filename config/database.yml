@@ -1,9 +1,10 @@
 development:
   adapter: postgresql
-  database: instun_d
-  username: admin
+  database: instun_new
+  encoding: sql_ascii
+  username: postgres
   pool: 5
-  password: admin
+  password: pas12345
   host: localhost
 
 test:

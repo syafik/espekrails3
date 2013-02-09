@@ -104,7 +104,7 @@
 </div>
 <script>
 function checkThatGuyIn(lvl,room,room_gdr,profile_gdr) {
-	url = "/hostels/change_room_rent/<%=@profile.id%>?profile_id=<%=@profile.id%>&block_id=<%=@hostel_block.id%>" + 
+	url = "/hostels/<%=@profile.id%>/change_room_rent?profile_id=<%=@profile.id%>&block_id=<%=@hostel_block.id%>" +
 	      "&level=" + lvl +  
 	      "&room="  + room  
 		  

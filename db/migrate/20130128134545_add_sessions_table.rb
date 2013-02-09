@@ -9,5 +9,6 @@ class AddSessionsTable < ActiveRecord::Migration
 
     add_index :sessions, :session_id
     add_index :sessions, :updated_at
+    User.find_by_sql("CREATE TABLE roles_users AS SELECT * FROM users_roles")
   end
 end

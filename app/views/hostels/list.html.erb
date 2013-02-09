@@ -81,7 +81,7 @@
       $('room_properties').style.visibility = "visible"
       $('bapa_kertas').style.visibility = "visible"
       $('room_properties').innerHTML = toggle + "BILIK: <%=nof{@hostel_block.description}%>-" + lvl + "-" + room
-      $('kertas').src = "/hostels/show?block=<%=nof{@hostel_block.id}%>&level=" + lvl + "&room=" + room
+      $('kertas').src = "/hostels/lihat?block=<%=nof{@hostel_block.id}%>&level=" + lvl + "&room=" + room
       $('kertas').height = 500
     }
 

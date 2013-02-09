@@ -132,7 +132,7 @@ for student in @students
     <input name="Submit" type="button" value="Simpan" onclick="daftarPeserta(document.list_form)">
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @students.size==0%>
 
 <script>
 function a(id) {
@@ -153,11 +153,11 @@ function printPeserta(df) {
 }
 
 function new_cetak(id) {
-	MM_openBrWindow('/course_management/cetak_p_evaluation/'+id,'','scrollbars=yes,width=800,height=600')
+	MM_openBrWindow('/course_management/'+id+'/cetak_p_evaluation','','scrollbars=yes,width=800,height=600')
 }
 
 function new_cetak_iso(id) {
-	MM_openBrWindow('/course_management/cetak_p_evaluation_iso/'+id,'','scrollbars=yes,width=800,height=600')
+	MM_openBrWindow('/course_management/'+id+'/cetak_p_evaluation_iso','','scrollbars=yes,width=800,height=600')
 }
 
 

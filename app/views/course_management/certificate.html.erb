@@ -7,7 +7,7 @@ function confirmAndDelete(url, objname) {
 }
 
 function JanaSuratTawaran(schedule_id) {
-	url = '/course_applications/cetak_surat_tawaran/' + schedule_id
+	url = '/course_applications/' + schedule_id+'/cetak_surat_tawaran'
 	MM_openBrWindow(url,'','scrollbars=yes,width=600,height=400')
 }
 
@@ -81,21 +81,21 @@ history.back();
 
 <script>
 function set_polisi(id) {
-	MM_openBrWindow('/course_management/new_polisi_sijil/'+id,'','scrollbars=yes,width=800,height=600')
+	MM_openBrWindow('/course_management/'+id+'/new_polisi_sijil','','scrollbars=yes,width=800,height=600')
 }
 
 function confirmJana() {
 	if (confirm("Proses ini akan mengemaskini kelayakan sijil secara automatik. \nAdakah anda pasti?")) {
-		location = '/course_management/jana_kelayakan/<%=@course_implementation.id%>'
+		location = '/course_management/<%=@course_implementation.id%>/jana_kelayakan'
 	}
 }
 
 function tempah_sijil(id) {
-	MM_openBrWindow('/course_management/tempah_sijil/'+id,'','scrollbars=yes,width=800,height=600')
+	MM_openBrWindow('/course_management/'+id+'/tempah_sijil','','scrollbars=yes,width=800,height=600')
 }
 
 function tempah_sijil_iso(id) {
-	MM_openBrWindow('/course_management/tempah_sijil_iso/'+id,'','scrollbars=yes,width=800,height=600')
+	MM_openBrWindow('/course_management/'+id+'/tempah_sijil_iso','','scrollbars=yes,width=800,height=600')
 }
 
 </script>

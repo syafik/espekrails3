@@ -7,7 +7,7 @@ class HostelTypesController < ApplicationController
   end
 
   def list
-    @hostel_type_pages, @hostel_types = paginate :hostel_types, :per_page => 10
+    @hostel_types = HostelType.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show

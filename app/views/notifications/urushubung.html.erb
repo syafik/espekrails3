@@ -1,9 +1,9 @@
- 
-  <%= start_form_tag :action => 'create_security_contact', :id => @security_contact.id unless @security_contact.nil? %>
-  <table width="85%" border="0" align="center" bgcolor="#FFFFFF">
+<%=form_for(@security_contact, :url => create_security_contact_notifications_path(:id => @security_contact.id)) do |f|%>
+<%#= start_form_tag :action => 'create_security_contact', :id => @security_contact.id unless @security_contact.nil? %>
+<table width="85%" border="0" align="center" bgcolor="#FFFFFF">
   <tr bgcolor="#000000">
-    	<td colspan="4" align="LEFT" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH MAKLUMAT KESELAMATAN</font></b></td>
-    </tr>
+    <td colspan="4" align="LEFT" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH MAKLUMAT KESELAMATAN</font></b></td>
+  </tr>
   <tr>
     <td align="left" width="14%"><b>Nama </b></td>
     <td colspan=3>:&nbsp;<%=text_field :security_contact, :name%></td>
@@ -17,50 +17,53 @@
     <td align="left"><b>No. Samb.</b></td>
     <td colspan=3>:&nbsp;<%=text_field :security_contact, :extension%></td>
   </tr>
-	<tr bgcolor="000000">
-	    	<td colspan="4" align="LEFT" bgcolor="#999999">&nbsp;</td>
-	    </tr>
-	<tr>
-	  <td colspan="3" align="center"> <%= submit_tag 'Kemaskini' %>
+  <tr bgcolor="000000">
+    <td colspan="4" align="LEFT" bgcolor="#999999">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center"> <%= submit_tag 'Kemaskini' %>
 
-</td>
-      <td width="66%" align="center">&nbsp;</td>
-	</tr>	
+    </td>
+    <td width="66%" align="center">&nbsp;</td>
+  </tr>
 </table>
 
- <div id="clear"></div>
- <table width="85%" border="0" align="center" bgcolor="#FFFFFF">
+<div id="clear"></div>
+<table width="85%" border="0" align="center" bgcolor="#FFFFFF">
   <tr bgcolor="#000000">
-    	<td colspan="4" align="LEFT" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI MAKLUMAT PEGAWAI KESELAMATAN</font></b></td>
-   </tr>
-	<%@security_contacts.each do |security_contact|%>
-  <tr>
-    <td align="left" width="14%"><b>Nama </b></td>
-    <td colspan=2>:&nbsp;<%=security_contact.name%></td>
-    <td><%=link_to 'Delete', {:action => 'delete_security_contact', :id => security_contact.id},:confirm => 'Are You Sure ?'%> | <%=link_to 'Edit', :action => 'urushubung', :id => security_contact.id%></td>
+    <td colspan="4" align="LEFT" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI MAKLUMAT PEGAWAI KESELAMATAN</font></b></td>
   </tr>
+  <%@security_contacts.each do |security_contact|%>
+    <tr>
+      <td align="left" width="14%"><b>Nama </b></td>
+      <td colspan=2>:&nbsp;<%=security_contact.name%></td>
+      <td><%=link_to 'Delete', 
+  delete_security_contact_notification_path(:id => security_contact.id),
+  :confirm => 'Are You Sure ?',  :method => :delete %> | <%=link_to 'Edit', :action => 'urushubung', :id => security_contact.id%></td>
+    </tr>
 
-  <tr>
-    <td align="left"><b>Email</b></td>
-    <td colspan=2>:&nbsp;<%=security_contact.email%></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left"><b>No. Samb.</b></td>
-    <td colspan=2>:&nbsp;<%=security_contact.extension%></td>
-    <td>&nbsp;</td>
-  </tr>
-  	<tr>
-	  <td colspan="4" align="center">&nbsp;</td>
-    </tr>	
+    <tr>
+      <td align="left"><b>Email</b></td>
+      <td colspan=2>:&nbsp;<%=security_contact.email%></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="left"><b>No. Samb.</b></td>
+      <td colspan=2>:&nbsp;<%=security_contact.extension%></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="4" align="center">&nbsp;</td>
+    </tr>
   <%end%>
 
-	<tr bgcolor="000000">
-	    	<td colspan="4" align="LEFT" bgcolor="#999999">&nbsp;</td>
-	    </tr>
-	<tr>
-	  <td colspan="3" align="center">&nbsp;</td>
-      <td width="50%" align="center">&nbsp;</td>
-	</tr>	
+  <tr bgcolor="000000">
+    <td colspan="4" align="LEFT" bgcolor="#999999">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center">&nbsp;</td>
+    <td width="50%" align="center">&nbsp;</td>
+  </tr>
 </table>
 
+<% end %>

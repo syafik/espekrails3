@@ -27,7 +27,7 @@ input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
 .box {border: solid; border-width:1}
 </style>
 <div align="center"><b>Pilih Tarikh Sesi &#8250; <font color="blue">Set Sesi Kehadiran </font> </b></div>
-<form name="list_form" method="get" action="/course_management/update_sesi/<%=@course_implementation.id%>" onsubmit="return ()">
+<form name="list_form" method="get" action="/course_management/<%=@course_implementation.id%>/update_sesi" onsubmit="return ()">
   <%if @course_implementation%>
   <br />
   <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
@@ -88,7 +88,7 @@ input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
     </tr>
     <tr>
       <td valign="TOP" align="center" colspan="2">
-	<input type="button" name="Submit2" value="&laquo; Kembali" onclick="location='/course_management/new_tarikh_sesi/<%=@course_implementation.id%>'">
+	<input type="button" name="Submit2" value="&laquo; Kembali" onclick="location='/course_management/<%=@course_implementation.id%>/new_tarikh_sesi'">
 	<input type="submit" name="Submit" value="Simpan"></td></tr>
   </table>
 </form>

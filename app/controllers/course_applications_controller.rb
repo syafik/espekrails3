@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class CourseApplicationsController < ApplicationController
   layout "standard-layout"
-#  require "pdf/writer"
+  #  require "pdf/writer"
 
   def initialize
   end
@@ -35,10 +35,10 @@ class CourseApplicationsController < ApplicationController
 
   def applicant
     #@students = CourseApplication.find(:all, :select => 'distinct profile_id')
-#    @student_pages = Paginator.new self, CourseApplication.count, 100, @params['page']
+    #    @student_pages = Paginator.new self, CourseApplication.count, 100, @params['page']
     @students = CourseApplication.select('distinct profile_id').
-                                  paginate(:page => params['page'].blank? ? 1 : params[:page], :per_page => 100)
-#    @students = CourseApplication.find(:all, :select => 'distinct profile_id', :limit => @student_pages.items_per_page, :offset => @student_pages.current.offset)
+      paginate(:page => params['page'].blank? ? 1 : params[:page], :per_page => 100)
+    #    @students = CourseApplication.find(:all, :select => 'distinct profile_id', :limit => @student_pages.items_per_page, :offset => @student_pages.current.offset)
     render layout: 'standard-layout'
   end
 
@@ -48,7 +48,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def search_applicant
-    render layout: 'standard-layout'
+    render :layout => 'standard-layout'
   end
 
   def new_popup
@@ -61,13 +61,13 @@ class CourseApplicationsController < ApplicationController
     end
     unless params[:query].blank?
       @students = CourseApplication.includes(:profile).where("lower(profiles.name) LIKE ?", "%#{params[:query]}%")
-#      @students = CourseApplication.search(params[:query], :include => [:profile], :group => 'profiles.id')
+      #      @students = CourseApplication.search(params[:query], :include => [:profile], :group => 'profiles.id')
       @students = @students.sort_by { |e| e[:profile_id] }.inject([]) { |m, e| m.last.nil? ? [e] : m.last[:profile_id] == e[:profile_id] ? m : m << e }
     else
       @students = []
     end
 
-    render layout: 'standard-layout'
+    render :layout => 'standard-layout'
   end
 
   def search_by_ic
@@ -84,7 +84,7 @@ class CourseApplicationsController < ApplicationController
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_applicant'
     end
-    render layout: 'standard-layout'
+    render :layout => 'standard-layout'
   end
 
   def search_by_phone
@@ -101,7 +101,7 @@ class CourseApplicationsController < ApplicationController
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_applicant'
     end
-    render layout: 'standard-layout'
+    render :layout => 'standard-layout'
   end
 
   def search_by_state
@@ -153,6 +153,7 @@ class CourseApplicationsController < ApplicationController
     @courses = Course.find(:all, :order => "name")
 
     @list_title = "SENARAI PEMOHON YANG SEDANG DIPROSES"
+    render layout: 'standard-layout'
   end
 
   def accepted
@@ -173,6 +174,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG DIPILIH"
+    render layout: 'standard-layout'
   end
 
   def accepted_n_jawabhadir
@@ -196,10 +198,12 @@ class CourseApplicationsController < ApplicationController
 
   def edit_surat_tawaran_select_peserta
     accepted
+    render layout: "standard-layout"
   end
 
   def edit_surat_tunda_select_peserta
     accepted_n_jawabhadir
+    render layout: "standard-layout"
   end
 
   def edit_surat_tunda
@@ -208,6 +212,7 @@ class CourseApplicationsController < ApplicationController
 
   def edit_surat_tawaran
     accepted
+    
   end
 
   def rejected
@@ -228,6 +233,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PERMOHON YANG DITOLAK"
+    render layout: 'standard-layout'
   end
 
   def confirmed
@@ -248,6 +254,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG MENGESAHKAN KEHADIRAN"
+    render layout: 'standard-layout'
   end
 
   def confirmednot
@@ -268,6 +275,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG MENGESAHKAN TIDAK HADIR"
+    render layout: 'standard-layout'
   end
 
   def hadir
@@ -288,6 +296,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PESERTA YANG MENGHADIRI KURSUS"
+    render layout: 'standard-layout'
   end
 
   def cetak_pengesahan
@@ -333,6 +342,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PESERTA YANG TIDAK MENGHADIRI KURSUS"
+    render layout: 'standard-layout'
   end
 
   def norespon
@@ -353,6 +363,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PERMOHONAN YANG MASIH TIADA JAWAPAN SETELAH DIPILIH"
+        render layout: 'standard-layout'
   end
 
   def all
@@ -419,7 +430,6 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.new
     @qualification =Qualification.new
     @course_application = CourseApplication.new
-
     render layout: 'standard-layout'
   end
 
@@ -432,6 +442,7 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.new
     @qualification =Qualification.new
     @course_application = CourseApplication.new
+    render :layout => "standard-layout"
   end
 
   def new_but_peserta_already_exist
@@ -443,6 +454,7 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.find_by_profile_id(@profile.id)
     @qualification =Qualification.find_by_profile_id(@profile.id)
     @course_application = CourseApplication.new
+    render layout: "standard-layout"
   end
 
   def new_for_logged_in_user
@@ -454,10 +466,12 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.find_by_profile_id(@profile.id)
     @qualification =Qualification.find_by_profile_id(@profile.id)
     @course_application = CourseApplication.new
+    render layout: "standard-layout"
   end
 
   def edit_by_user
     edit
+    render layout: "standard-layout"
   end
 
   def send_successful_email(user, cid)
@@ -517,9 +531,9 @@ class CourseApplicationsController < ApplicationController
       if params[:cert_level_ids]
         params[:cert_level_ids].size.times do |i|
           q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                                :pengkhususan => params[:majors][i],
-                                :institution => params[:institutions][i],
-                                :year_end => params[:year_ends][i])
+            :pengkhususan => params[:majors][i],
+            :institution => params[:institutions][i],
+            :year_end => params[:year_ends][i])
 
           @profile.qualifications.push(q)
         end
@@ -573,9 +587,9 @@ class CourseApplicationsController < ApplicationController
       if params[:cert_level_ids] and params[:cert_level_ids].size > 0
         params[:cert_level_ids].size.times do |i|
           q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                                :pengkhususan => params[:majors][i],
-                                :institution => params[:institutions][i],
-                                :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
+            :pengkhususan => params[:majors][i],
+            :institution => params[:institutions][i],
+            :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
 
           @profile.qualifications.push(q) if q
         end
@@ -649,9 +663,9 @@ class CourseApplicationsController < ApplicationController
     if params[:cert_level_ids] and params[:cert_level_ids].size > 0
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                              :pengkhususan => params[:majors][i],
-                              :institution => params[:institutions][i],
-                              :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
+          :pengkhususan => params[:majors][i],
+          :institution => params[:institutions][i],
+          :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
 
         @profile.qualifications.push(q) if q
       end
@@ -712,9 +726,9 @@ class CourseApplicationsController < ApplicationController
       if params[:cert_level_ids]
         params[:cert_level_ids].size.times do |i|
           q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                                :pengkhususan => params[:majors][i],
-                                :institution => params[:institutions][i],
-                                :year_end => params[:year_ends][i])
+            :pengkhususan => params[:majors][i],
+            :institution => params[:institutions][i],
+            :year_end => params[:year_ends][i])
 
           @profile.qualifications.push(q)
         end
@@ -857,9 +871,9 @@ class CourseApplicationsController < ApplicationController
     if params[:cert_level_ids]
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                              :pengkhususan => params[:majors][i],
-                              :institution => params[:institutions][i],
-                              :year_end => params[:year_ends][i])
+          :pengkhususan => params[:majors][i],
+          :institution => params[:institutions][i],
+          :year_end => params[:year_ends][i])
 
         @profile.qualifications.push(q)
       end
@@ -908,9 +922,9 @@ class CourseApplicationsController < ApplicationController
     if params[:cert_level_ids]
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                              :pengkhususan => params[:majors][i],
-                              :institution => params[:institutions][i],
-                              :year_end => params[:year_ends][i])
+          :pengkhususan => params[:majors][i],
+          :institution => params[:institutions][i],
+          :year_end => params[:year_ends][i])
 
         @profile.qualifications.push(q)
       end
@@ -950,6 +964,7 @@ class CourseApplicationsController < ApplicationController
       @employment = Employment.new
       @job_profile = JobProfile.new
     end
+    render layout: 'standard-layout'
   end
 
   def update
@@ -958,8 +973,8 @@ class CourseApplicationsController < ApplicationController
       if (@course_application.student_status_id == 8)
         flash[:notice] = 'Tidak dibenarkan kemaskini selepas kursus tamat.';
         redirect_to :controller => 'user_applications',
-                    :action => 'show',
-                    :id => @course_application.id and return;
+          :action => 'show',
+          :id => @course_application.id and return;
       end
     end
     @course_application.date_apply = params[:date_apply_month] + "/" + params[:date_apply_day] + "/" + params[:date_apply_year]
@@ -1013,9 +1028,9 @@ class CourseApplicationsController < ApplicationController
     if params[:cert_level_ids] and params[:cert_level_ids].size > 0
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                              :pengkhususan => params[:majors][i],
-                              :institution => params[:institutions][i],
-                              :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
+          :pengkhususan => params[:majors][i],
+          :institution => params[:institutions][i],
+          :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
 
         @profile.qualifications.push(q) if q
       end
@@ -1037,18 +1052,18 @@ class CourseApplicationsController < ApplicationController
 
   def select_course
     @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")
-    cur_year = Time.now.to_formatted_s(:my_format_year).to_s
-    params[:year_start] = cur_year if !params[:year_start]
+    #    cur_year = Time.now.to_formatted_s(:my_format_year).to_s
+    params[:year_start] = Time.now.strftime("%Y") if params[:year_start].blank?
 
     staff_id = nof { session[:user].profile.staff.id }
     if staff_id != nil
       @course_implementations = CourseImplementation.find(:all,
-                                                          :conditions => "extract(year from date_plan_start) = #{params[:year_start]} AND (coordinator1 = #{staff_id} OR coordinator2 = #{staff_id})",
-                                                          :order => "date_plan_start DESC")
+        :conditions => ["extract(year from date_plan_start) = ? AND (coordinator1 = #{staff_id} OR coordinator2 = #{staff_id})", params[:year_start]],
+        :order  => "date_plan_start DESC")
     else
       @course_implementations = []
     end
-
+    render layout: "standard-layout"
   end
 
   def destroy
@@ -1105,8 +1120,8 @@ class CourseApplicationsController < ApplicationController
     @fourth_paragraph = "5.\s\s\s\sYuran Pendaftaran Kursus sebanyak <b>RM30.00</b> akan dikenakan kepada peserta-peserta kursus. Yuran Pendaftaran Kursus ini boleh dituntut dari Jabatan masing-masing dengan menggunakan resit yang akan dikeluarkan oleh pihak INSTUN."
 
     @fifth_paragraph = "6.\s\s\s\sSemasa berkursus, para peserta adalah <b>diwajibkan</b> untuk menyertai sebarang aktiviti yang dianjurkan oleh pihak INSTUN. " +
-        "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
-        " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
+      "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
+      " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
 
     @sixth_paragraph = "5.\s\s\s\sKerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di"
 
@@ -1159,8 +1174,8 @@ class CourseApplicationsController < ApplicationController
     @fourth_paragraph = "5.\s\s\s\sYuran Pendaftaran Kursus sebanyak <b>RM30.00</b> akan dikenakan kepada peserta-peserta kursus. Yuran Pendaftaran Kursus ini boleh dituntut dari Jabatan masing-masing dengan menggunakan resit yang akan dikeluarkan oleh pihak INSTUN."
 
     @fifth_paragraph = "6.\s\s\s\sSemasa berkursus, para peserta adalah <b>diwajibkan</b> untuk menyertai sebarang aktiviti yang dianjurkan oleh pihak INSTUN. " +
-        "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
-        " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
+      "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
+      " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
 
     @sixth_paragraph = "5.\s\s\s\sKerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di"
 
@@ -1523,7 +1538,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def cetak_pemohon
-    require "pdf/writer"
+#    require "pdf/writer"
 
     @course_application = CourseApplication.find(params[:id])
     @student = @course_application
@@ -1638,7 +1653,7 @@ class CourseApplicationsController < ApplicationController
     y_coor = pdf.y-15
     pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
 
-## END MAKLUMAT PEMOHON B	
+    ## END MAKLUMAT PEMOHON B
     pdf.fill_color Color::RGB::Black
     pdf.move_pointer(h+10)
 
@@ -1680,7 +1695,7 @@ class CourseApplicationsController < ApplicationController
     pdf.fill_color Color::RGB::Grey
     y_coor = pdf.y-15
     pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
-###ENDMAKLUMAT WARIS
+    ###ENDMAKLUMAT WARIS
     pdf.fill_color Color::RGB::Black
     if nof { @employment.place }
       if @employment.place.place_type_id == 3
@@ -1810,7 +1825,7 @@ class CourseApplicationsController < ApplicationController
     #redirect_to("/maklumat_pemohon/"+file)
   end
 
-###Surat Tawaran format 1##################################################################
+  ###Surat Tawaran format 1##################################################################
   def gen_pdf_all_format_1 (file)
     if RUBY_PLATFORM == "i386-mswin32"
       header_image = "public/images/header800.jpg"
@@ -1934,11 +1949,11 @@ class CourseApplicationsController < ApplicationController
       office_name = "#{student.profile.opis}"
 
       @alamat_instun = "\nPengarah," +
-          "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
-          "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
-          "\nBehrang" +
-          " 35950 Tanjung Malim" +
-          "\nPerak Darul Ridzuan."
+        "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
+        "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
+        "\nBehrang" +
+        " 35950 Tanjung Malim" +
+        "\nPerak Darul Ridzuan."
 
       #salinan_kepada = "Pengarah\n"+
       #                 "Institut Tanah dan Ukur Negara(INSTUN)\n\n" 
@@ -2065,7 +2080,7 @@ class CourseApplicationsController < ApplicationController
 
   end
 
-#################################################################################
+  #################################################################################
   def gen_pdf_all_format_2 (file)
     if RUBY_PLATFORM == "i386-mswin32"
       header_image = "public/images/header800.jpg"
@@ -2189,11 +2204,11 @@ class CourseApplicationsController < ApplicationController
       office_name = "#{student.profile.opis}"
 
       @alamat_instun = "\nPengarah," +
-          "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
-          "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
-          "\nBehrang" +
-          " 35950 Tanjung Malim" +
-          "\nPerak Darul Ridzuan."
+        "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
+        "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
+        "\nBehrang" +
+        " 35950 Tanjung Malim" +
+        "\nPerak Darul Ridzuan."
 
       #salinan_kepada = "Pengarah\n"+
       #                 "Institut Tanah dan Ukur Negara(INSTUN)\n\n" 
@@ -2322,7 +2337,7 @@ class CourseApplicationsController < ApplicationController
     end
   end
 
-#################################################################################
+  #################################################################################
   def cetak_lampiran_c(pdf)
     pdf.new_page
     pdf.y = @my_margin
@@ -2829,15 +2844,15 @@ class CourseApplicationsController < ApplicationController
     alamat = "#{company_addr}."
 
     @alamat_instun = "\nPengarah," +
-        "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
-        "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
-        "\nBehrang" +
-        " 35950 Tanjung Malim" +
-        "\nPerak Darul Ridzuan."
+      "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
+      "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
+      "\nBehrang" +
+      " 35950 Tanjung Malim" +
+      "\nPerak Darul Ridzuan."
 
     salinan_kepada = "Pengarah\n"+
-        "Institut Tanah dan Ukur Negara(INSTUN)\n\n"
-                                   #"Fail Timbul"
+      "Institut Tanah dan Ukur Negara(INSTUN)\n\n"
+    #"Fail Timbul"
 
 
     pdf.y = @my_margin -50
@@ -2856,7 +2871,7 @@ class CourseApplicationsController < ApplicationController
     pdf.text "\n", :font_size => @font_size, :justification => :left
     pdf.text "<b>#{nof { student.profile.name }}</b>\n", :font_size => @font_size, :justification => :left
     @ic_number = "#{student.profile.ic_number[0, 6]}-#{student.profile.ic_number[6, 2]}-#{student.profile.ic_number[8, 4]}"
-                                   #pdf.text "<b>#{@ic_number}</b>\n", :font_size => @font_size, :justification => :left
+    #pdf.text "<b>#{@ic_number}</b>\n", :font_size => @font_size, :justification => :left
 
     if employment and employment.job_profile
       job_name = nof { employment.job_profile.job_name }
@@ -2867,7 +2882,7 @@ class CourseApplicationsController < ApplicationController
       @job_profile = " "
     end
     pdf.text "#{@job_profile}", :font_size => @font_size, :justification => :left
-                                   #pdf.text "<b>#{p_alamat}</b>", :font_size => @font_size, :justification => :left
+    #pdf.text "<b>#{p_alamat}</b>", :font_size => @font_size, :justification => :left
 
     pdf.text "\nMelalui dan Salinan:", :font_size => @font_size, :justification => :left
 
@@ -2914,7 +2929,7 @@ class CourseApplicationsController < ApplicationController
         pdf.text "\n\n\n\n", :font_size => @font_size, :justification => :left
       end
     end
-                                   #pdf.text "\n\n\n\n", :font_size => @font_size, :justification => :left if params[:is_cetakan_komputer].to_i == 0
+    #pdf.text "\n\n\n\n", :font_size => @font_size, :justification => :left if params[:is_cetakan_komputer].to_i == 0
     pdf.text "<b>(#{@tandatangan_nama})</b>", :font_size => @font_size, :justification => :left
     pdf.text "#{@tandatangan_jawatan}\n", :font_size => @font_size, :justification => :left
     pdf.text "Institut Tanah dan Ukur Negara\n", :font_size => @font_size, :justification => :left
@@ -2944,7 +2959,7 @@ class CourseApplicationsController < ApplicationController
 
   end
 
-#####################RekodKursusPeserta(copy from user_applications)##########################################
+  #####################RekodKursusPeserta(copy from user_applications)##########################################
 
   def history
     f = "student_status_id"
@@ -2955,11 +2970,11 @@ class CourseApplicationsController < ApplicationController
     s.push("#{f} = 9")
     t = s.join(" OR ")
     @students = CourseApplication.find(:all, :conditions => "profile_id = #{session[:user].profile.id} AND (#{t})",
-                                       :order => "date_apply DESC,student_status_id")
+      :order => "date_apply DESC,student_status_id")
     @courses = Course.find(:all, :order => "name")
   end
 
-#################################################################################
+  #################################################################################
   def init_load
     @states = State.find(:all, :order => "description")
     @genders = Gender.all

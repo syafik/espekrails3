@@ -6,20 +6,22 @@ class QuestionSectionsController < ApplicationController
   end
   
   def index
-    list
-    render :action => 'list'
+    redirect_to :action => 'list'
   end
 
   def list
     @question_sections = QuestionSection.paginate(:per_page => 50, :page => params[:page]).order("description ASC")
+    render layout: "standard-layout"
   end
 
   def show
     @question_section = QuestionSection.find(params[:id])
+    render layout: "standard-layout"
   end
 
   def new
     @question_section = QuestionSection.new
+    render layout: "standard-layout"
   end
 
   def create
@@ -34,6 +36,7 @@ class QuestionSectionsController < ApplicationController
 
   def edit
     @question_section = QuestionSection.find(params[:id])
+    render layout: "standard-layout"
   end
 
   def update

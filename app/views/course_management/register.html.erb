@@ -79,13 +79,14 @@ function checkAll(df) {
 <script type="text/javascript">
 //<![CDATA[
 
-var list = [
+var list = <%= @courses.to_json %>;
+<%#*var list = [%>
 
-<% @courses.each do |course| %>
-<%= "{name: \"#{course.name}\", id: \"#{course.id}\"}," %>
-<% end %>
-{name: "  ", id: "00000"}
-];
+<%# @courses.each do |course| %>
+<%#= "{name: \"#{course.name}\", id: \"#{course.id}\"}," %>
+<%# end %>
+<%#*{name: "  ", id: "00000"}%>
+<%#*];%>
 
 //
 function getNames(o, search){

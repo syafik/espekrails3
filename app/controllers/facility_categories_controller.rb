@@ -7,7 +7,7 @@ class FacilityCategoriesController < ApplicationController
   end
 
   def list
-    @facility_category_pages, @facility_categories = paginate :facility_categories, :per_page => 10
+    @facility_categories = FacilityCategory.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show
@@ -15,7 +15,7 @@ class FacilityCategoriesController < ApplicationController
   end
 
   def new
-    @facility_type = FacilityType.new
+    @facility_category = FacilityCategory.new
   end
 
   def create

@@ -94,7 +94,7 @@ Lihat Jawapan
     <input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>">
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @students.size==0%>
 
 <script>
 function a(id) {

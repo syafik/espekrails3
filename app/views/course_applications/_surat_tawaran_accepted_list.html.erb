@@ -41,13 +41,14 @@ for student in @students
       <% end %>
       <td align="center"><%= student.course_implementation.code %></td>
       <td align="center">
-	  <%= msian_date_with_slash(student.date_apply) %>
+	  <%= student.date_apply.to_date.strftime("%d-%m-%Y") rescue nil%>
+	  <%#= msian_date_with_slash(student.date_apply.strftime("%d-%m-%Y") %>
 	  <%#= student.created_at.to_formatted_s(:my_format_day) + student.created_at.to_formatted_s(:my_format_day)%></td>
     </tr>
     <% end %>
   </table>
 <input type="hidden" name="course_implementation_code" value="<%=params[:course_implementation_code] if params[:course_implementation_code]%>">
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @students.size==0%>
 
 

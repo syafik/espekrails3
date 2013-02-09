@@ -20,7 +20,10 @@ InstunRails3::Application.routes.draw do
   end
 
   resources :session_code do
-    
+    collection do
+      get "new_popup"
+      post "create_popup"
+    end
   end
   resources :permission do
     collection do
@@ -32,6 +35,7 @@ InstunRails3::Application.routes.draw do
       get 'list'
     end
   end
+  match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
   resources :user_applications do
     collection do 
       get 'applied'
@@ -73,7 +77,18 @@ InstunRails3::Application.routes.draw do
   resources :permission
   resources :role
   
-  resources :question_templates
+  resources :question_templates do
+    collection do
+      get 'list'
+      post 'create_course'
+      get 'new_course'
+    end
+  end
+  resources :questions do
+    collection do
+      get 'list'
+    end
+  end
   resources :question_types do
     collection do
       get 'list'
@@ -95,19 +110,56 @@ InstunRails3::Application.routes.draw do
     end
   end
 
-  resources :hostel_statuses
-  resources :hostel_types
-  resources :hostel_policies
-  resources :hostel_fixtures
+  resources :hostel_statuses do
+    collection do
+      get 'list'
+    end
+  end
+  resources :hostel_types do
+    collection do
+      get 'list'
+    end
+  end
+  resources :hostel_policies do
+    collection do
+      get 'list'
+    end
+  end
+  resources :hostel_fixtures do
+    collection do
+      get 'list'
+    end
+  end
 
-  resources :facility_statuses
-  resources :facility_types
-  resources :facility_categories
+  resources :facility_statuses do
+    collection do
+      get 'list'
+    end
+  end
+  resources :facility_types do
+    collection do
+      get 'list'
+    end
+  end
+  resources :facility_categories do
+    collection do
+      get 'list'
+    end
+  end
   
-  resources :course_departments
-  resources :course_statuses
+  resources :course_departments do
+    collection do
+      get 'list'
+    end
+  end
+  resources :course_statuses do
+    collection do
+      get 'list'
+    end
+  end
   resources :course_fields do
     collection do
+      get 'list'
       get 'new_popup'
       post 'create_popup'
     end
@@ -120,12 +172,18 @@ InstunRails3::Application.routes.draw do
   end
   resources :methodologies do
     collection do 
+      get 'list'
       get 'new_popup'
       post 'create_popup'
     end
   end
 
-  resources :facilities
+  resources :facilities do
+    collection do
+      get 'list'
+      post 'createf'
+    end
+  end
   resources :facility_reservations do
     collection do
       get 'list'
@@ -134,11 +192,22 @@ InstunRails3::Application.routes.draw do
 
   resources :places do
     collection do
+      get 'list'
       get 'search'
       get 'list_kementerian'
       get 'list_pejabat'
       get 'new_kementerian'
       get 'new_pejabat'
+      get 'create_kementerian'
+      get 'create_pejabat'
+    end
+    member do
+      get 'show_kementerian'
+      get 'edit_kementerian'
+      put 'update_kementerian'
+      put 'update_pejabat'
+      get 'show_pejabat'
+      get 'edit_pejabat'
     end
   end
 
@@ -214,6 +283,9 @@ InstunRails3::Application.routes.draw do
       get 'trainer_book'
       post 'trainer_book_create'
       get 'show_trainer_book'
+      get 'edit_sah'
+      post 'update_sah'
+      get 'detail'
     end
   end
 
@@ -225,6 +297,12 @@ InstunRails3::Application.routes.draw do
       get 'jadual_bilik_kuliah'
       get 'listp'
       get 'urushubung'
+      post 'create_security_contact'
+    end
+    member do
+      get 'detail'
+      delete 'delete_security_contact'
+      put 'approve'
     end
   end
 
@@ -232,11 +310,27 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'list'
       get 'new_penghuni'
+      post 'create_penghuni'
       get 'chkin_by_course'
       get 'find_checkout'
       get 'list_tutup'
       get 'find_guest'
       get 'rekod_guna_bilik'
+      get 'blank'
+      get 'lihat'
+      get 'find_to_checkin'
+    end
+    member do
+      get 'iwannarent'
+      get 'iverent'
+      get 'showrent'
+      get 'change_room_rent'
+      get 'course_sankasha_ichiran'
+      get 'cetak_list_checkin'
+      get 'course_trainer_list'
+      get 'iwannachkin'
+      post 'ivedonechkin'
+      get 'cetak_list_trainer_checkin'
     end
   end
   resources :quizzes do
@@ -254,31 +348,72 @@ InstunRails3::Application.routes.draw do
       get 'select_course'
       get 'sijil_select_course'
       get 'evaluated_courses'
+      get 'register'
+      get 'ichiran'
+      get 'yuran'
+      get 'attendance'
+      get 'certificate'
+      get 'evaluation'
+      get 'p_evaluation'
     end
     member do
+      get 'enroll_selected'
       get 'evaluation_kelompok'
+      get 'jana_kelayakan'
+      get 'tempah_sijil'
+      get 'tempah_sijil_iso'
+      get 'new_tarikh_sesi'
+      post 'new_sesi'
+      post 'edit_sesi'
+      get 'create_sesi'
+      get 'update_sesi'
+      get 'new_tarikh_sesi'
+      get 'new_cetak_kehadiran'
+      get 'new_catat_kehadiran'
+      get 'kehadiran_manual'
+      post 'masuk_data_kehadiran'
+      get 'cetak_p_evaluation_iso'
+      get 'cetak_p_evaluation'
     end
   end
+  match '/course_applications/all/:id' => 'course_applications#all', :via => [:get]
+  match '/course_applications/unprocessed/:id' => 'course_applications#unprocessed', :via => [:get]
+  match '/course_applications/hadir/:id' => 'course_applications#hadir', :via => [:get]
+  match '/course_applications/accepted/:id' => 'course_applications#accepted', :via => [:get]
+  match '/course_applications/rejected/:id' => 'course_applications#rejected', :via => [:get]
+  match '/course_applications/confirmed/:id' => 'course_applications#confirmed', :via => [:get]
+  match '/course_applications/confirmednot/:id' => 'course_applications#confirmednot', :via => [:get]
+  match '/course_applications/norespon/:id' => 'course_applications#norespon', :via => [:get]
+  match '/course_applications/takhadir/:id' => 'course_applications#takhadir', :via => [:get]
+  match '/course_applications/edit_surat_tawaran' => 'course_applications#edit_surat_tawaran', :via => [:get]
+  match '/course_applications/sah_hadir_selected' => 'course_applications#sah_hadir_selected', :via => [:get]
+  match '/course_applications/cetak_pemohon/:id' => 'course_applications#cetak_pemohon', :via => [:get]
+  match '/course_applications/cetak_pemohon_semua/:id' => 'course_applications#cetak_pemohon_semua', :via => [:get]
+  match '/course_applications/konaitokimeta' => 'course_applications#konaitokimeta', :via => [:get]
+
   resources :course_applications do
     collection do
       get 'applicant'
       get 'all'
+      get 'select_course'
       get 'search'
       get 'search_applicant'
       get 'search_by_name'
       post 'search_by_ic'
       post 'search_by_phone'
       get 'edit_surat_tunda_select_peserta'
+      get 'new_peserta'
+      get 'edit_surat_tunda'
+      get 'edit_surat_tawaran_select_peserta'
+      get 'cetak_pemohon_semua'
+      get 'grades_for_lookup'
     end
     member do
-      get 'all'
-      get 'hadir'
+      post 'cetak_surat_tawaran'
+      post 'cetak_surat_tunda'
+      get 'copy_and_new'
       get 'unprocessed'
-      get 'accepted'
-      get 'rejected'
-      get 'confirmed'
-      get 'confirmednot'
-      get 'takhadir'
+      get 'cetak_pemohon'
     end
   end
   resources :course_implementations do
@@ -313,7 +448,7 @@ InstunRails3::Application.routes.draw do
   end
   
   resources :profiles do
-#    get 'show'
+    #    get 'show'
     get 'destroy_peserta'
     get 'history'
     collection do
@@ -378,6 +513,8 @@ InstunRails3::Application.routes.draw do
     collection do
       #      post 'ajax_find_course_field '
       #      post 'ajax_find_coordinator'
+      get 'ajax_nric'
+      post 'facility_category_type'
     end
   end
   # Sample resource route with options:

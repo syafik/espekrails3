@@ -7,7 +7,7 @@ function confirmAndDelete(url, objname) {
 }
 
 function JanaSuratTawaran(schedule_id) {
-	url = '/course_applications/cetak_surat_tawaran/' + schedule_id
+	url = '/course_applications/' + schedule_id+'/cetak_surat_tawaran'
 	MM_openBrWindow(url,'','scrollbars=yes,width=600,height=400')
 }
 

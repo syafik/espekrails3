@@ -114,7 +114,7 @@
         <% if quiz_question.file%>
           </BR>
           <% nof{@quiz_question = QuizQuestion.find(quiz_question.id)}   %>
-          <a href="<%#= url_for_file_field("quiz_question", "file") %>"><font color="blue">Download Sisipan</font></a>
+          <a href="<%= file_field("quiz_question", "file") %>"><font color="blue">Download Sisipan</font></a>
         <%end%></td>
       <td align=left>
         <% for q in quiz_question.quiz_objectives %>

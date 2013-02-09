@@ -1,5 +1,10 @@
-<%#= error_messages_for 'course_field' %>
-
+<% if @course_field.errors.any? %>
+  <ul>
+    <% @course_field.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
 <!--[form:state]-->
   <table width="90%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
     <tr>

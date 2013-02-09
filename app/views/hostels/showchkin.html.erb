@@ -154,7 +154,7 @@ function rewritePopupContentNoRestraint(controller, objid, objname) {
 </div>
 <script>
 function checkThatGuyIn(lvl,room,room_gdr,profile_gdr) {
-	url = "/hostels/change_room/<%=@student.id%>?profile_id=<%=@student.profile.id%>&block_id=<%=@hostel_block.id%>" + 
+	url = "/hostels/<%=@student.id%>/change_room?profile_id=<%=@student.profile.id%>&block_id=<%=@hostel_block.id%>" +
 	      "&level=" + lvl +  
 	      "&room="  + room  
 		  

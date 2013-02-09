@@ -6,9 +6,10 @@
   </table>
 <BR>
 
-<%= start_form_tag :action => 'update_sah', :id => @reservation %>
+<%#= start_form_tag :action => 'update_sah', :id => @reservation %>
+<%=form_for(@reservation, :url => update_sah_reservation_path(:id => @reservation.id)) do |f|%>
   <%= render :partial => 'form_edit' %>
    <div align="center">
   <%= submit_tag 'Sah Tempahan' %>
   </div>
-<%= end_form_tag %>
+<% end%>

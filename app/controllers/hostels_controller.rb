@@ -21,9 +21,10 @@ class HostelsController < ApplicationController
   def blank
   	render :text=> " "
   end
+  
   def index
-    list
-    render :action => 'list'
+    redirect_to :action => 'list'
+    #    render :action => 'list'
   end
 
   def senggara
@@ -42,8 +43,21 @@ class HostelsController < ApplicationController
     end
     @color_close = '#aaaaaa'
     @color_kosong = '#aaffaa'
+    render :layout => "standard-layout"
   end
 
+  def lihat
+    room = params[:room]
+    level = params[:level]
+    block = params[:block]
+
+    @hostels = Hostel.find_by_sql("SELECT * FROM hostels WHERE block_id = #{block.to_i} AND level = #{level.to_i} AND room = #{room.to_i} ORDER BY 1")
+    @room = @hostels.first
+    @room = Hostel.find(params[:id]) if params[:id]
+    @hostel_profile = HostelProfile.find_by_hostel_id(@room.id)
+    render :layout => 'scaffold'
+  end
+  
   def show
     room = params[:room]
     level = params[:level]
@@ -261,6 +275,7 @@ class HostelsController < ApplicationController
 	  end	  
     #@students = CourseImplementation.find_by_sql("select * from vw_detailed_courses WHERE course_status_id ='1' AND date_start = '#{date_start}' order by date_start ASC")
     #@students = CourseImplementation.find_by_sql("select * from vw_detailed_courses WHERE date_start = '#{date_start}' order by date_start ASC")
+    render :layout => 'standard-layout'
 	end
 
   def find_to_checkin
@@ -285,7 +300,7 @@ class HostelsController < ApplicationController
 			   AND p.name ilike '%#{params[:name]}%'
     "
     @students = CourseApplication.find_by_sql(sql)
-  
+  render :layout => "standard-layouts"
   end
   	
 
@@ -307,6 +322,7 @@ class HostelsController < ApplicationController
   
   def course_trainer_list
     @course_implementation = CourseImplementation.find(params[:id])
+    render :layout => "standard-layout"
   end
   
   def course_sankasha_ichiran
@@ -325,6 +341,7 @@ class HostelsController < ApplicationController
     else
       @students = []
     end
+    render :layout => "standard-layout"
   end
 
   def list_penghuni
@@ -412,7 +429,9 @@ class HostelsController < ApplicationController
   	already_chkin = Hostel.find_by_sql("select * from hostel_penghuni where profile_id=#{@profile.id}") 
     if already_chkin.size > 0
       r = Hostel.find(already_chkin.first.hostel_id)
-      redirect_to("/hostels/showchkin/#{@student.id}?block_id=#{r.block_id}") and return
+      redirect_to("/hostels/#{@student.id}/showchkin?block_id=#{r.block_id}") and return
+    else
+      render :layout => "standard-layout"
     end
 
   end
@@ -638,6 +657,7 @@ class HostelsController < ApplicationController
 
   def new_penghuni
     @profile = Profile.new
+    render :layout => "standard-layout"
   end
 
   def new_but_penghuni_already_exist
@@ -650,10 +670,10 @@ class HostelsController < ApplicationController
 	
     if @profile.save
       flash[:notice] = 'Maklumat berjaya disimpan.'
-      redirect_to :action => 'iwannarent', :id=>@profile.id
+      redirect_to iwannarent_hostel_path(@profile.id)
     else
       @profile.destroy
-      render :action => 'new_penghuni'
+      render :action => 'new_penghuni', :layout => "standard-layout"
     end
   end
 
@@ -676,7 +696,7 @@ class HostelsController < ApplicationController
     end
 
     @profile = Profile.find(params[:id])
-	
+    render :layout => "standard-layout"
   end
 
   def iverent
@@ -696,23 +716,19 @@ class HostelsController < ApplicationController
       :date_in => today)
     @hstl_prfl.save
 		
-    redirect_to("/hostels/showrent/#{@profile.id}?block_id=#{params[:block_id]}")
+    redirect_to("/hostels/#{@profile.id}/showrent?block_id=#{params[:block_id]}")
  
   end
 
   
   def showrent
-
     @profile = Profile.find(params[:id])
-
     if !params['block_id']
       @hostel_block = HostelBlock.find(:first, :order=>"description")
     else
       @hostel_block = HostelBlock.find(params[:block_id])
     end
-	
-	
-	
+    render :layout => "standard-layout"
   end
 
   def change_room_rent
@@ -743,7 +759,7 @@ class HostelsController < ApplicationController
       @hstl_prfl.update_attributes(:hostel_id=>@room.id)
     end
 		
-    redirect_to("/hostels/showrent/#{@profile.id}?block_id=#{params[:block_id]}")
+    redirect_to("/hostels/#{@profile.id}/showrent?block_id=#{params[:block_id]}")
   end
 
  

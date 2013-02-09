@@ -106,7 +106,7 @@ input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
 
 function b(v) {
 	document.getElementById('sesi_harian_tarikh').value = v
-	document.form2.action = "/course_management/masuk_data_kehadiran/<%=@course_implementation.id%>"
+	document.form2.action = "/course_management/<%=@course_implementation.id%>/masuk_data_kehadiran"
 	document.form2.submit();
 }
 </script>

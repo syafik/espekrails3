@@ -11,7 +11,7 @@
   </table>
   <br>
 
-<%= start_form_tag :action => 'update_kementerian', :id => @place %>
+<%=form_for(@place, :url => update_kementerian_place_path(:id => @place.id)) do %>
   <%= render :partial => 'form_kementerian' %>
   <div align="center"><%= submit_tag "Simpan" %></center>
-<%= end_form_tag %>
+<% end %>
