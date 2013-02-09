@@ -112,6 +112,7 @@ class TrainerController < ApplicationController
   def offer
     list
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
+    #@course_implementation = CourseImplementation.where("code LIKE ?","#{params[:course_implementation_code]}") if params[:course_implementation_code]
     @trainer = Trainer.find(params[:trainer_id])
 
     #render layout: 'standard-layout'

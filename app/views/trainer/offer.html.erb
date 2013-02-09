@@ -31,7 +31,7 @@
 		<input type="text" id="course_implementation_code" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>" onkeyup="this.value=this.value.toUpperCase()">
 <input type="submit" value="Cari" class="btn60">
 </div>
-<%if @course_implementation%>
+<% if @course_implementation %>
 <%= render :partial => 'surat_lantikan'%>
 
 <div align="center"><br />
