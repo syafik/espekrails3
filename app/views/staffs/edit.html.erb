@@ -5,8 +5,8 @@
   </table>
   <br>
 
-<%= start_form_tag :action => 'update', :id => @staff %>
+<%= form_for(@staff, :url => { :action => 'update', :id => @staff }) do |f| %>
   <%= render :partial => 'form' %>
   <br>
   <div align="center"><%= submit_tag 'Save' %></center>
-<%= end_form_tag %>
+<% end %>

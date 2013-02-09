@@ -10,7 +10,7 @@
     </tr>
   </table>
   <br>
-<%= start_form_tag :action => 'create' %>
+<%= form_for(@post_individu, :url => { :action => 'create' }) do |f| %>
   <%= render :partial => 'form' %>
 <div align="center"><%= submit_tag "Simpan" %></center>
-<%= end_form_tag %>
+<% end %>

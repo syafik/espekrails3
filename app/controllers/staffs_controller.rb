@@ -3,19 +3,19 @@ class StaffsController < ApplicationController
   layout "standard-layout"
   def initialize
 	    @states = State.find(:all, :order=>"description")
-	    @genders = Gender.find_all
+	    @genders = Gender.all
 	    @races = Race.find(:all, :order=>"id")
-	    @profile_statuses = ProfileStatus.find_all
+	    @profile_statuses = ProfileStatus.all
 	    @religions = Religion.find(:all, :order=>"id")
-	    @countries = Country.find_all
-	    @marital_statuses = MaritalStatus.find_all
+	    @countries = Country.all
+	    @marital_statuses = MaritalStatus.all
 	    @places = Place.find(:all, :conditions => "place_type_id = '2'")
-	    @relationships = Relationship.find_all
-	    @cert_levels = CertLevel.find_all
-	    @majors = Major.find_all
-	    @job_profiles = JobProfile.find_all
+	    @relationships = Relationship.all
+	    @cert_levels = CertLevel.all
+	    @majors = Major.all
+	    @job_profiles = JobProfile.all
 	    @titles = Title.find(:all, :order=>"description")
-	    @course_departments = CourseDepartment.find_all
+	    @course_departments = CourseDepartment.all
 	    #@courses = Course.find_all
 	    #@course_implementations = CourseImplementation.find_all
   end
@@ -31,10 +31,12 @@ class StaffsController < ApplicationController
   end
 
   def search
+    render layout: 'standard-layout'
   end
 
   def search_by_name
     @staffs = Staff.find_by_sql("select * from staffs,profiles WHERE profiles.id = staffs.profile_id and staffs.status='1' AND name ILIKE '%#{params[:name]}%'")
+    render layout: 'standard-layout'
   end
 
   def search_by_phone
@@ -51,6 +53,8 @@ class StaffsController < ApplicationController
     @relative = Relative.find_by_profile_id(@profile.id)
     @employment = Employment.find_by_profile_id(@profile.id)
     @qualification = @staff.profile.qualifications
+
+    render layout: 'standard-layout'
   end
 
   def new
@@ -59,6 +63,8 @@ class StaffsController < ApplicationController
     @relative = Relative.new
     @employment = Employment.new
     @qualification = Qualification.new
+
+    render layout: 'standard-layout'
   end
 
   def new_but_staff_already_exist
@@ -118,7 +124,8 @@ class StaffsController < ApplicationController
 	else
 		@employment = Employment.new
 		@job_profile = JobProfile.new
-	end
+  end
+    render layout: 'standard-layout'
   end
 
   def update

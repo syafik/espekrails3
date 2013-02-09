@@ -488,20 +488,22 @@ class ProfilesController < ApplicationController
 
   
   def update
-    @profile = Profile.find(params[:profile_id])
+    @profile = Profile.find(params[:id])
     @profile.date_of_birth = params[:m_dob]+"/"+params[:d_dob]+"/"+params[:y_dob]
 
     if @profile.update_attributes(params[:profile])
 	  
       @profile.name = @profile.name.gsub(/\'/, '`').to_s.gsub(/\"/,'`')
-      @profile.save(false)
-    
+      #@profile.save(false)
+      @profile.save
+
 	  
       @user = User.find(:first,
         :conditions => ["profile_id = ?",@profile.id])
       @user.email = @profile.email
-      @user.save(false)
-	
+      #@user.save(false)
+      @user.save
+
       flash[:notice] = '<br>Data Pemohon berjaya dikemaskini.'
     else
       render :action => 'edit'

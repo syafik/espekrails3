@@ -1,4 +1,13 @@
-<div align="center"><%= error_messages_for 'post_individu' %></div>
+<div align="center">
+  <% if @post_individu.errors.any? %>
+      <ul>
+        <% @post_individu.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+  <% end %>
+  <%#= error_messages_for 'post_individu' %>
+</div>
 
 <!--[form:post_individu]-->
 <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">

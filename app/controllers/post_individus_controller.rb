@@ -7,7 +7,8 @@ class PostIndividusController < ApplicationController
   end
 
   def list_all
-    @post_individu_pages, @post_individus = paginate :post_individus, :per_page => 50
+    #@post_individu_pages, @post_individus = paginate :post_individus, :per_page => 50
+    @post_individus = PostIndividu.paginate(:page => params[:page], :per_page => 50)
   end
 
   def list

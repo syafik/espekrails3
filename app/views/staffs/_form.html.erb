@@ -10,8 +10,22 @@
  end
 %>
 <div align="center">
-<%= error_messages_for 'profile' %>
-<%= error_messages_for 'staff' %>
+    <% if @profile.errors.any? %>
+        <ul>
+          <% @profile.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @staff.errors.any? %>
+        <ul>
+          <% @staff.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+    <% end %>
+<%#= error_messages_for 'profile' %>
+<%#= error_messages_for 'staff' %>
 </div>
   <table width="85%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
     <tr bgcolor="000000">
@@ -61,7 +75,7 @@ function ajax_response(originalRequest) {
       <td colspan=3>&nbsp; <%=
 		  @id_titles = @titles.map { |t| [t.description, t.id] }
 		  @id_titles.unshift(["Sila Pilih", ""])
-		  select(:profile, :title_id, @id_titles, "" ,:style=>"width: 100;")
+		  select(:profile, :title_id, @id_titles,:style=>"width: 100;")
 		%> </td>
     </tr>
     <tr>
@@ -73,7 +87,7 @@ function ajax_response(originalRequest) {
       <td>&nbsp; <%=
 		  @options = @genders.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :gender_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :gender_id, @options,:style=>"width: 100;")
 		%> </td>
       <td align="right" width=20%><b>Tarikh Lahir :</b></td>
       <td>&nbsp;
@@ -88,13 +102,13 @@ function ajax_response(originalRequest) {
       <td>&nbsp; <%=
 		  @options = @religions.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :religion_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :religion_id, @options,:style=>"width: 100;")
 	  %> </td>
       <td align="right"><b>Keturunan :</b></td>
       <td>&nbsp; <%=
 		  @options = @races.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :race_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :race_id, @options,:style=>"width: 100;")
 	  %> </td>
     </tr>
     <tr>
@@ -102,7 +116,7 @@ function ajax_response(originalRequest) {
       <td>&nbsp; <%=
 		  @options = @marital_statuses.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:profile, :marital_status_id, @options, "" ,:style=>"width: 100;")
+		  select(:profile, :marital_status_id, @options,:style=>"width: 100;")
 	  %> </td>
       <td align="right">&nbsp;</td>
       <td>&nbsp;</td>
@@ -112,7 +126,7 @@ function ajax_response(originalRequest) {
       <td colspan="2">&nbsp; <%=
 		  @options = @course_departments.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:staff, :course_department_id, @options, "" ,:style=>"width: 250;")
+		  select(:staff, :course_department_id, @options,:style=>"width: 250;")
 	  %> 
 	  <%= hidden_field 'staff', 'is_coordinator', :size=>"10", :value=>"1"  %></td>
       <td>&nbsp;</td>
@@ -162,7 +176,7 @@ function ajax_response(originalRequest) {
       <td colspan=3>&nbsp; <%=
 		  @options = @relationships.map { |t| [t.description, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:relative, :relationship_id, @options, "" ,:style=>"width: 100;")
+		  select(:relative, :relationship_id, @options,:style=>"width: 100;")
 	  %> </td>
     </tr>
     <tr>
@@ -223,7 +237,7 @@ function ajax_response(originalRequest) {
 				@grandparent = Place.new
 			end
 			@grandparent = Place.new if @grandparent == nil
-			select(:grandparent, :id, @options, '', :id=> "kementerian_id", :name=> "kementerian_id", :onchange=>"checkJabatan()")
+			select(:grandparent, :id, @options, :id=> "kementerian_id", :name=> "kementerian_id", :onchange=>"checkJabatan()")
 	  %></span> </td>
     </tr>
     <tr>
@@ -249,7 +263,7 @@ function ajax_response(originalRequest) {
 		  end
 		  @options = @departments.map { |t| [t.name.upcase, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:parent, :id, @options, '', :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
+		  select(:parent, :id, @options, :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
 	  %></span>       </tr>
     <tr>
       <td align="right"><b>Pejabat :</b></td>
@@ -275,7 +289,7 @@ function ajax_response(originalRequest) {
 		  
 		  @options = @offices.map { |t| [t.name.upcase, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:office, :id, @options, '', :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
+		  select(:office, :id, @options, :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
 	  %></span> <%= hidden_field 'employment', 'place_id', :size=>3  %> </td>
     </tr>
     <script>
@@ -416,12 +430,12 @@ function updatePlaceId() {
 		  @options.unshift(["Sila Pilih", ""])
 		  
 		  #@qualification = nof{@course_application.profile.qualifications[0]}
-		  select(:qualification, :cert_level_id, @options,'',:name=>"cert_level_ids[]")
+		  select(:qualification, :cert_level_id, @options,:name=>"cert_level_ids[]")
 	 %> </td>
             <td><%=
 		  @options = @majors.map { |t| [t.description.capitalize, t.id] }
 		  @options.unshift(["Sila Pilih", ""])
-		  select(:qualification, :major_id, @options, '', :name=>"major_ids[]")
+		  select(:qualification, :major_id, @options, :name=>"major_ids[]")
 	 %> </td>
             <td><%= text_field 'qualification', "institution", :maxlength=>100, :size=>30, :name=>"institutions[]", :onchange=>"this.value=this.value.toUpperCase()"  %></td>
             <td><%= text_field 'qualification', 'year_end', :maxlength=>4, :size=>5, :name=>"year_ends[]"  %></td>

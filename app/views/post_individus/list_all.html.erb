@@ -110,12 +110,13 @@ function confirmAndGo(url, objname) {
 <%
 i = 0;
 even = true;
-        if @post_individu_pages.current.previous
-        m = 50 * @post_individu_pages.current.previous.to_i
-        else
-        m = 0
-        end
-i = i + m
+        #if @post_individu_pages.current.previous
+        #m = 50 * @post_individu_pages.current.previous.to_i
+        #else
+        #m = 0
+        #end
+   i = 0
+#i = i + m
 for post_individu in @post_individus
         i = i + 1
         bgclr = "#CCCCFF" if (even == true)
@@ -134,9 +135,10 @@ for post_individu in @post_individus
         <td align=left valign=top><%=h nof{post_individu.user.name.upcase} %></td>
         </tr>
  <% end %>
-</table>  
+</table>
 
-<%= link_to 'Previous page', { :page => @post_individu_pages.current.previous } if @post_individu_pages.current.previous %>
-<%= link_to 'Next page', { :page => @post_individu_pages.current.next } if @post_individu_pages.current.next %> 
+<%= will_paginate @post_individus %>
+<%#= link_to 'Previous page', { :page => @post_individu_pages.current.previous } if @post_individu_pages.current.previous %>
+<%#= link_to 'Next page', { :page => @post_individu_pages.current.next } if @post_individu_pages.current.next %>
 
 <br />
