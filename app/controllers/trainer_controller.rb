@@ -110,12 +110,12 @@ class TrainerController < ApplicationController
   end
   
   def offer
+    @outside = true
     list
-    @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
+    @course_implementation = CourseImplementation.find_by_code(params[:search_course_implementation_code]) if params[:search_course_implementation_code]
     #@course_implementation = CourseImplementation.where("code LIKE ?","#{params[:course_implementation_code]}") if params[:course_implementation_code]
     @trainer = Trainer.find(params[:trainer_id])
-
-    #render layout: 'standard-layout'
+    render layout: 'standard-layout'
   end
   
   def edit_surat_lantik
@@ -164,7 +164,7 @@ class TrainerController < ApplicationController
   	  params[:arrow] = "ASC" if !params[:arrow]
   	  @arrow = params[:arrow]
     @trainers = Trainer.find_by_sql("select * from profiles inner join trainers on profiles.id=trainers.profile_id ORDER BY #{@orderby} #{@arrow}")
-    render layout: 'standard-layout'
+    render layout: 'standard-layout' if @outside.blank?
   end
 
   def show

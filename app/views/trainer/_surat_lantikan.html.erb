@@ -31,4 +31,4 @@ even = true;
       <td class="el" align="center"><%=h query.course.course_status.description.upcase %></td>
     </tr>
   </table>
-<input type="hidden" name="course_implementation_code" value="<%=params[:course_implementation_code] if params[:course_implementation_code]%>">
+<input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>">
