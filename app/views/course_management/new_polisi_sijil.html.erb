@@ -28,7 +28,7 @@ input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
 </style>
 <%if @course_implementation%>
  <br />
- <form name="list_form" method="get" action="/course_management/update_polisi_sijil/<%=@course_implementation.id%>" onsubmit="return GoSubmit(this.list_form)">
+ <form name="list_form" method="get" action="/course_management/<%=@course_implementation.id%>/update_polisi_sijil" onsubmit="return GoSubmit(this.list_form)">
     <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
     <!--tr>
       <td align="RIGHT"><strong>Kod:</strong></td>

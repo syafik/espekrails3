@@ -38,6 +38,7 @@ function daftarPeserta(df) {
   if (sum_checked > 0) {
     df.action = "/course_management/enroll_selected"
     df.submit()
+    return false;
   }
   else {
     alert("Sila Pilih Peserta")

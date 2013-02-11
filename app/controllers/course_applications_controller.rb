@@ -198,7 +198,7 @@ class CourseApplicationsController < ApplicationController
 
   def edit_surat_tawaran_select_peserta
     accepted
-    render layout: "standard-layout"
+#    render layout: "standard-layout"
   end
 
   def edit_surat_tunda_select_peserta
