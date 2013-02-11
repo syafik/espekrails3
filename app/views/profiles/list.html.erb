@@ -9,10 +9,10 @@ function confirmAndDelete(url, objname) {
 function rewritePopupContent(controller, objid, objname) {
     $('popmenu').style.width = 150;
     $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + "/profiles" + "/setrole/" + objid + "\">&nbsp;&nbsp;Set Peranan</a>" +
-					        "<li><a href=\""  + "/profiles" + "/verify/" + objid + "\">&nbsp;&nbsp;Sahkan Permohonan</a>" +
+                            "<li><a href=\""  + "/profiles" + "/" + objid + "/setrole\">&nbsp;&nbsp;Set Peranan</a>" +
+					        "<li><a href=\""  + "/profiles" + "/" + objid + "/verify\">&nbsp;&nbsp;Sahkan Permohonan</a>" +
 					        //"<li><a href=\""  + "/profiles" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
-					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/delete_user/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Batal</a>" +
+					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/delete_user' , '" + objname + "')\">&nbsp;&nbsp;Batal</a>" +
 					        //"<hr size=1>" +
 					        //"<li><a href=\"javascript: acceptSelected(document.unprocess_form)\">&nbsp;&nbsp;Diterima</a>" +
 					        "</ul>"

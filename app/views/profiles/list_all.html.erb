@@ -65,8 +65,8 @@ function rewritePopupContent(controller, objid, objname) {
 <% 
 i = 0;
 even = true;
-       if @user_pages.current.previous
-        m = 100 * @user_pages.current.previous.to_i
+       if @page - 1 > 0
+        m = 100 * (@page - 1)
         else
         m = 0
         end
@@ -97,5 +97,5 @@ for profile in @all_users
 <%#= link_to 'Kembali', { :page => @user_pages.current.previous } if @user_pages.current.previous %>
 <%#= ' | ' if @user_pages.current.previous and @user_pages.current.next %>
 <%#= link_to 'Laman Seterusnya', { :page => @user_pages.current.next } if @user_pages.current.next %> 
-
+    <%= will_paginate(@all_users) %>
 </div>

@@ -14,10 +14,10 @@
    </table>
      <BR>
 
-<%= start_form_tag :action => 'update_role', :id => @user %>
+<%= form_for(@user, :url => { :action => 'update_role' }, :id => @user) do |f| %>
   <%= render :partial => 'form_role' %>
   <BR>
   <div align=center>
   <%= submit_tag 'Tukar Peranan' %>
   </div>
-<%= end_form_tag %>
+<% end %>

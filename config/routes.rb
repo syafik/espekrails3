@@ -486,6 +486,8 @@ InstunRails3::Application.routes.draw do
     #    get 'show'
     get 'destroy_peserta'
     get 'history'
+    get 'setrole'
+    put 'update_role'
     collection do
       get 'list'
       get 'list_all'

@@ -25,11 +25,13 @@ class ProfilesController < ApplicationController
   end
 
   def list
-    @user_pages, @all_users = paginate :user, :per_page => 100, :conditions => "verified = '0'"
+    #@user_pages, @all_users = paginate :user, :per_page => 100, :conditions => "verified = '0'"
+    @all_users = User.where("verified = ?", "0").paginate(:page => params[:page], :per_page => 100)
     #@profile_pages, @profiles = paginate :profiles, :per_page => 100
     @baru = kira(0)
     @aktif = kira(1)
     @tidak = kira(2)
+    render layout: 'standard-layout'
   end
 
   def list_all
@@ -38,18 +40,19 @@ class ProfilesController < ApplicationController
     else
       @huruf = 'A'
     end
-    @user_pages, @all_users = paginate :user, :per_page => 100, :conditions => "verified = '1' and login != 'admin' and name ilike '#{@huruf}%'", :order_by => "name ASC"
+    #@user_pages, @all_users = paginate :user, :per_page => 100, :conditions => "verified = '1' and login != 'admin' and name ilike '#{@huruf}%'", :order_by => "name ASC"
+    @all_users = User.where("verified = ? AND login != ? AND name ILIKE ?", "1", "admin", "#{@huruf}%").order("name ASC").paginate(:page => params[:page], :per_page => 100)
     sqlalpha = "SELECT distinct substr(name,1,1) AS first_char from users";
     @alips  = User.find_by_sql(sqlalpha)
+	  @page = params[:page].to_i
 	
-	
-    sql = "SELECT * FROM users WHERE verified = '1' AND login != 'admin' AND name ilike '#{@huruf}%' ORDER BY name"
-    @all_users = User.find_by_sql(sql)
+    #sql = "SELECT * FROM users WHERE verified = '1' AND login != 'admin' AND name ilike '#{@huruf}%' ORDER BY name"
+    #@all_users = User.find_by_sql(sql)
     @baru = kira(0)
     @aktif = kira(1)
     @tidak = kira(2)
 
-
+    render layout: 'standard-layout'
   end
 
 
@@ -73,12 +76,14 @@ class ProfilesController < ApplicationController
   end
 
   def list_notall
-    @user_pages, @all_users = paginate :user, :per_page => 100, :conditions => "verified = '2'"
+    #@user_pages, @all_users = paginate :user, :per_page => 100, :conditions => "verified = '2'"
+    @all_users = User.where("verified = ?", "2").paginate(:page => params[:page], :per_page => 100)
     #@profile_pages, @profiles = paginate :profiles, :per_page => 100
     @baru = kira(0)
     @aktif = kira(1)
     @tidak = kira(2)
 
+    render layout: 'standard-layout'
   end
 
   def delete_user
@@ -88,8 +93,10 @@ class ProfilesController < ApplicationController
   end
 
   def setrole
-    @user = User.find(params[:id])
+    @user = User.find(params[:profile_id])
     @all_roles = Role.all.select { |r| r.name != UserEngine.config(:guest_role_name) }
+    #p "ALL ROLES :::: :::: :::: #{@all_roles}"
+    render layout: 'standard-layout'
   end
 
   def update_role_old
@@ -117,17 +124,17 @@ class ProfilesController < ApplicationController
 
 
   def update_role
-    if (@user_to_update = User.find(params[:id]))
+    if (@user_to_update = User.find(params[:profile_id]))
       user_roles = User.find_by_sql("delete from users_roles where user_id = #{@user_to_update.id}")
-		
       if params[:user] and params[:user][:roles].size > 0
         params[:user][:roles].size.times do |i|
           r_id = params[:user][:roles][i]
-          user_roles = User.find_by_sql("insert into users_roles(user_id,role_id) values(#{@user_to_update.id},#{r_id})")
+          #user_roles = User.find_by_sql("insert into users_roles(user_id,role_id) values(#{@user_to_update.id},#{r_id})")
+          user_roles = User.find_by_sql("insert into roles_users(user_id,role_id) values(#{@user_to_update.id},#{r_id})")
         end
         flash[:notice] = "Peranan telah dikemaskinikan untuk '#{@user_to_update.login}'."
       end
-      redirect_to :action => 'setrole', :id => @user_to_update
+      redirect_to :action => 'setrole', :profile_id => @user_to_update
     end
   end
 
