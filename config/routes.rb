@@ -462,6 +462,9 @@ InstunRails3::Application.routes.draw do
     get 'destroy_peserta'
     get 'history'
     collection do
+      get 'list'
+      get 'list_all'
+      get 'list_notall'
       get 'view'
       get 'view_waris'
       get 'view_khidmat'
