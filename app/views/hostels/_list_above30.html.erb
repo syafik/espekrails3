@@ -25,7 +25,7 @@
         <% #@hostel_block.total_room_at_level(i+1).times do |j|%>
         <% @hostel_block.max_room_by_level.times do |j|%>
       <%# 32.times do |j|%>
-              <!--td>&nbsp;<%="#{@hostel_block.description}-#{i+1}-#{j+1}"%>&nbsp;</td-->
+                <!--td>&nbsp;<%="#{@hostel_block.description}-#{i+1}-#{j+1}"%>&nbsp;</td-->
           <% 	st_sql = "SELECT * from hostels WHERE block_id=#{@hostel_block.id} AND level=#{i+1} AND room=#{j+1}"
           rooms = Hostel.find(:all, :conditions=> "block_id=#{@hostel_block.id} AND level=#{i+1} AND room=#{j+1}")
           room = rooms.first

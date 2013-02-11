@@ -289,6 +289,7 @@ InstunRails3::Application.routes.draw do
     end
     member do
       get 'new_popup'
+      get 'edit_sah'
       get 'show_popup'
       get 'trainer_book'
       post 'trainer_book_create'
@@ -329,6 +330,8 @@ InstunRails3::Application.routes.draw do
       get 'blank'
       get 'lihat'
       get 'find_to_checkin'
+      get 'list_active_course'
+      get 'find_guest_result'
     end
     member do
       get 'iwannarent'
@@ -353,6 +356,15 @@ InstunRails3::Application.routes.draw do
       get 'shinki'
     end
   end
+  
+  match '/course_management/override_kelayakan/:id' => 'course_management#override_kelayakan', :via => [:post]
+  match '/course_management/cetak_tempahan_iso/:id' => 'course_management#cetak_tempahan_iso', :via => [:post]
+  match '/course_management/hantar_tempahan/:id' => 'course_management#hantar_tempahan', :via => [:post]
+  match '/course_management/maklumat_kehadiran/:id' => 'course_management#maklumat_kehadiran', :via => [:get]
+  match '/course_management/set_paparan_sijil/:id' => 'course_management#set_paparan_sijil', :via => [:post]
+  match '/course_management/edit_surat_pengesahan/:id' => 'course_management#edit_surat_pengesahan', :via => [:post]
+  match '/course_management/edit_surat_takhadir/:id' => 'course_management#edit_surat_takhadir', :via => [:post]
+  match '/course_management/rujukan_kami/:id' => 'course_management#rujukan_kami', :via => [:get]
   resources :course_management do
     collection do
       get 'select_course'
@@ -365,8 +377,17 @@ InstunRails3::Application.routes.draw do
       get 'certificate'
       get 'evaluation'
       get 'p_evaluation'
+      get 'enroll_selected'
+      get 'cetak_sijil'
+      get 'surat_pengesahan'
+      get 'surat_takhadir'
+      post 'isi_markah'
     end
     member do
+      put 'jana_surat_pengesahan_pdf'
+      put 'jana_surat_takhadir_pdf'
+      get 'update_polisi_sijil'
+      get 'new_polisi_sijil'
       get 'enroll_selected'
       get 'evaluation_kelompok'
       get 'jana_kelayakan'
@@ -384,6 +405,7 @@ InstunRails3::Application.routes.draw do
       post 'masuk_data_kehadiran'
       get 'cetak_p_evaluation_iso'
       get 'cetak_p_evaluation'
+      get 'list_signature'
     end
   end
   match '/course_applications/all/:id' => 'course_applications#all', :via => [:get]
@@ -417,11 +439,14 @@ InstunRails3::Application.routes.draw do
       get 'edit_surat_tawaran_select_peserta'
       get 'cetak_pemohon_semua'
       get 'grades_for_lookup'
+      get 'reason_rejected'
+      get 'accept_selected'
     end
     member do
       post 'cetak_surat_tawaran'
       post 'cetak_surat_tunda'
       get 'copy_and_new'
+      get 'edit_surat_tawaran'
       get 'unprocessed'
       get 'cetak_pemohon'
     end

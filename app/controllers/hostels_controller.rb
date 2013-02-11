@@ -33,6 +33,7 @@ class HostelsController < ApplicationController
   
   def list_tutup
   	@hostels = Hostel.find_all_by_hostel_status_id(2)
+    render layout: "standard-layout"
   end
   
   def list
@@ -587,6 +588,7 @@ class HostelsController < ApplicationController
 		  INNER JOIN hostel_blocks hb ON hb.id=h.block_id
     "
     @ls = CourseApplication.find_by_sql($_)
+    render layout: "standard-layout"
   end
   
   def cetak_find_checkout
