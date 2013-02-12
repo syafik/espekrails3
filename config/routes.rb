@@ -484,11 +484,18 @@ InstunRails3::Application.routes.draw do
   
   resources :profiles do
     #    get 'show'
+    get 'addrole'
+    get 'show_profile'
+    put 'update_password2'
+    get 'edit_password2'
+    get 'verify'
+    get 'modrole'
     get 'destroy_peserta'
     get 'history'
     get 'setrole'
     put 'update_role'
     collection do
+      get 'search_akaun'
       get 'list'
       get 'list_all'
       get 'list_notall'

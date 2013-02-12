@@ -9,11 +9,11 @@ function confirmAndDelete(url, objname) {
 function rewritePopupContent(controller, objid, objname) {
     $('popmenu').style.width = 150;
     $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + "/profiles" + "/setrole/" + objid + "\">&nbsp;&nbsp;Set Peranan</a>" +
-					       	"<li><a href=\""  + "/profiles" + "/modrole/" + objid + "\">&nbsp;&nbsp;Gantung Akaun</a>" +
-					       	"<li><a href=\""  + "/profiles" + "/edit_password2/" + objid + "\">&nbsp;&nbsp;Tukar Kata Laluan</a>" +
-					        "<li><a href=\""  + "/profiles" + "/show_profile/" + objid + "\">&nbsp;&nbsp;Lihat Profil</a>" +
-					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/delete_user/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+                            "<li><a href=\""  + "/profiles" + "/" + objid + "/setrole\">&nbsp;&nbsp;Set Peranan</a>" +
+					       	"<li><a href=\""  + "/profiles" + "/" + objid + "/modrole\">&nbsp;&nbsp;Gantung Akaun</a>" +
+					       	"<li><a href=\""  + "/profiles" + "/" + objid + "/edit_password2\">&nbsp;&nbsp;Tukar Kata Laluan</a>" +
+					        "<li><a href=\""  + "/profiles" + "/" + objid + "/show_profile\">&nbsp;&nbsp;Lihat Profil</a>" +
+					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/delete_user' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					        //"<hr size=1>" +
 					        //"<li><a href=\"javascript: acceptSelected(document.unprocess_form)\">&nbsp;&nbsp;Diterima</a>" +
 					        "</ul>"

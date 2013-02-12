@@ -57,22 +57,35 @@ class ProfilesController < ApplicationController
 
 
   def search_akaun
-    @user_pages, @result_users = paginate :user, :per_page => 100, :conditions => "verified = '1' and login != 'admin' and name ilike 'params[:name]'", :order_by => "name ASC"
-    
+    #@user_pages, @result_users = paginate :user, :per_page => 100, :conditions => "verified = '1' and login != 'admin' and name ilike 'params[:name]'", :order_by => "name ASC"
+
     #@result_users = User.find_by_sql("select * from users where name ilike '%#{params[:name]}%' order by created_at desc, name asc") if params[:name]
-    if !params[:name].nil? and params[:name].size == 1
-      params[:name] = nil
-    end
-    if params[:name]
-      @result_users = User.search(params[:name],:order => 'created_at desc, name asc')
+    #if !params[:name].nil? and params[:name].size == 1
+    #  params[:name] = nil
+    #end
+    #if params[:name]
+    #  @result_users = User.search(params[:name],:order => 'created_at desc, name asc')
+    #else
+    #  @result_users = []
+    #end
+
+
+    #@result_users = User.find_by_sql("select * from users where ic_number ilike '%#{params[:ic_number]}%' order by created_at desc, name asc") if params[:ic_number]
+    #@result_users = User.find_by_sql("select * from users where login ilike '%#{params[:login]}%' order by created_at desc, name asc") if params[:login]
+    if !params[:name].blank? || !params[:ic_number].blank? || !params[:login].blank?
+      where = []
+      where << "verified = '1' AND login != 'admin'"
+      where << "name ILIKE '%#{params[:name]}%'" unless params[:name].blank?
+      where << "ic_number ILIKE '%#{params[:ic_number]}%'" unless params[:ic_number].blank?
+      where << "login ILIKE '%#{params[:login]}%'" unless params[:login].blank?
+
+      @result_users = User.where(where.join(' AND ')).order("created_at DESC, name ASC").
+                           paginate(:page => params[:page], :per_page => 100)
     else
       @result_users = []
     end
 
-
-    @result_users = User.find_by_sql("select * from users where ic_number ilike '%#{params[:ic_number]}%' order by created_at desc, name asc") if params[:ic_number]
-    @result_users = User.find_by_sql("select * from users where login ilike '%#{params[:login]}%' order by created_at desc, name asc") if params[:login]
-	
+    render layout: 'standard-layout'
   end
 
   def list_notall
@@ -139,7 +152,7 @@ class ProfilesController < ApplicationController
   end
 
   def verify
-    @user = User.find(params[:id])
+    @user = User.find(params[:profile_id])
     @profile = Profile.find_by_ic_number(@user.ic_number)
     #@profile.ic_number = @user.ic_number
     #@profile.name = @user.name
@@ -162,7 +175,7 @@ class ProfilesController < ApplicationController
   end
 
   def modrole
-    @user = User.find(params[:id])
+    @user = User.find(params[:profile_id])
     @user.verified = 2
     if @user.update_attributes(params[:user])
       flash[:notice] = "Akaun '#{@user.login}' telah digantung"
@@ -173,7 +186,7 @@ class ProfilesController < ApplicationController
   end
 
   def addrole
-    @user = User.find(params[:id])
+    @user = User.find(params[:profile_id])
     @user.verified = 1
     if @user.update_attributes(params[:user])
       flash[:notice] = "Akaun '#{@user.login}' kembali aktif"
@@ -192,10 +205,12 @@ class ProfilesController < ApplicationController
   end
 
   def show_profile
-    @user = User.find(params[:id])
+    @user = User.find(params[:profile_id])
     @profile = Profile.find(@user.profile_id)
     @relative = Relative.find_by_profile_id(@profile.id)
     @employment = Employment.find_by_profile_id(@profile.id)
+
+    render layout: "standard-layout"
   end
   
   def view
@@ -449,8 +464,10 @@ class ProfilesController < ApplicationController
   end
 
   def edit_password2
-    @user = User.find(params[:id])
+    @user = User.find(params[:profile_id])
     @profile = Profile.find(@user.profile_id)
+
+    render layout: 'standard-layout'
   end
   
   def update_password
@@ -477,7 +494,7 @@ class ProfilesController < ApplicationController
   end
   
   def update_password2
-    @profile = Profile.find(params[:id])
+    @profile = Profile.find(params[:profile_id])
     @user = User.find_by_profile_id(@profile.id)
     if (params[:user][:password] != params[:user][:password_confirmation])
 			flash[:notice] = "<font color=red>Pengesahan Kata Laluan Baru Tidak Sama</font>"
