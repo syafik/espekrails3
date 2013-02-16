@@ -1,174 +1,174 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en_US">
-<head>
-<title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<link rel="StyleSheet" href="/stylesheets/global.css" type="text/css" />
-<link rel="StyleSheet" href="/stylesheets/dtree.css" type="text/css" />
-<script type="text/javascript" src="/javascripts/dtree.js"></script>
-<style>
-body {
-	background-color: #FFFFFF;
-	}
-</style>
-</head>
+  <head>
+    <title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <link rel="StyleSheet" href="/stylesheets/global.css" type="text/css" />
+    <link rel="StyleSheet" href="/stylesheets/dtree.css" type="text/css" />
+    <script type="text/javascript" src="/javascripts/dtree.js"></script>
+    <style>
+      body {
+        background-color: #FFFFFF;
+      }
+    </style>
+  </head>
+
+  <body bgcolor="#FFFFFF">
+    <br>
+    <div align="center"><img src="/images/menu3.jpg"></div>
+    <%= render :partial => 'header'%>
+
+    <script type="text/javascript">
+      <!--
+
+      d = new dTree('d');
+		
+      d.config.useCookies=false;
+      d.config.useLines=false;
+		
+      d.icon.root = "/images/menutree/home.gif";
+      //d.icon.root = "/images/menutree/kpmlogo.gif";
+      d.config.target = "main";
+		
 	
-<body bgcolor="#FFFFFF">	
-<br>
-<div align="center"><img src="/images/menu3.jpg"></div>
-<%= render :partial => 'header'%>
+      d.add(1, 0, 'Perancangan Kursus', '', 'Course Management','main','/images/menutree/folder.gif');
+      d.add(2, 1, 'Carian Kursus', '/course_implementations/search', 'Carian Kursus','main');
+      d.add(3, 1, 'Senarai Kursus Tahunan', '/course_implementations/', 'Senarai Kursus','main');
+      d.add(4, 1, 'Kalendar Tahunan', '/course_implementations/calendar', 'Kalendar Kursus','main');
+      d.add(5, 1, 'Tambah Kursus', '/course_implementations/new', 'Tambah Kursus','main');
+		
+      d.add(40, 0, 'Permohonan Kursus', '', 'Pengurusan Permohonan','main','/images/menutree/folder.gif');
+      d.add(41, 40, 'Carian Pemohon', '/course_applications/search', 'Carian Pemohon','main');
+      d.add(42, 40, 'Senarai Pemohon', '/course_applications/select_course', 'Senarai Pemohon','main');
+      d.add(43, 40, 'Surat Pelawaan', '/course_implementations/edit_surat_iklan_select_kursus', 'Surat Pelawaan','main');
+      d.add(44, 40, 'Surat Tawaran', '/course_applications/edit_surat_tawaran_select_peserta', 'Proses Surat Tawaran','main');
+      d.add(46, 40, 'Surat Penundaan', '/course_applications/edit_surat_tunda_select_peserta', 'Proses Surat Penundaan','main');
+      d.add(45, 40, 'Tambah Pemohon', '/course_applications/new', 'Tambah Permohonan','main');
 
-<script type="text/javascript">
-		<!--
+      d.add(60, 0, 'Pengendalian Kursus', '', 'Pengendalian Kursus','main','/images/menutree/folder.gif');
+      d.add(61, 60, 'Daftar Kursus', '/course_management/select_course?next_action=register', 'Daftar Peserta Kursus','main');
+      d.add(61, 60, 'Rekod Kehadiran', '/course_management/select_course?next_action=attendance', 'Rekod Kehadiran Peserta','main');
+      //d.add(62, 60, 'Jadual Kursus', '/student/list', 'Senarai Pemohon','main');
+      //d.add(63, 60, 'Jadual Kehadiran', '/student/new', 'Tambah Permohonan','main');
+      d.add(64, 60, 'Proses Sijil', '/course_management/select_course?next_action=certificate', 'Pengeluaran Sijil','main');
+      d.add(68, 60, 'Cetak Sijil', '/course_management/select_course?next_action=cetak_sijil', 'Cetakan Sijil','main');
+      d.add(65, 60, 'Surat Pengesahan', '/course_management/select_course?next_action=surat_pengesahan', 'Surat Pengesahan','main');
+      d.add(650, 60, 'Surat Ketidakhadiran', '/course_management/select_course?next_action=surat_takhadir', 'Surat Ketidakhadiran','main');
+      d.add(66, 60, 'Ujian', '/quizzes', 'Ujian Semasa Kursus','main');
+      d.add(67, 60, 'Penilaian Kursus', '/course_management/select_course?next_action=evaluation', 'Penilaian Kursus Oleh Peserta','main');
+      d.add(69, 60, 'Penilaian Peserta', '/course_management/select_course?next_action=p_evaluation', 'Penilaian Peserta Oleh Penyelaras','main');
 
-		d = new dTree('d');
+      d.add(760, 0,   'Data Lama', '', 'Kemasukan Data Lama','main','/images/menutree/folder.gif');
+      d.add(761, 760, 'Daftar Peserta', '/course_applications/new_peserta?dr=1', 'Daftar Peserta Kursus Yang Lama Lama','main');
+
+      d.add(70, 0, 'Pengurusan Domestik', '', 'Domestik','main','/images/menutree/folder.gif');
+      d.add(71, 70,'Asrama', '/hostels/', 'Asrama','main');
+      d.add(710, 70,'Sewa Asrama', '/hostels/new_penghuni', 'Sewa Check-in ','main');
+      d.add(72, 70,'Daftar Masuk Asrama', '/hostels/chkin_by_course', 'Check-in','main');
+      d.add(720, 70,'Daftar Keluar Asrama', '/hostels/find_checkout', 'Check-out','main');
+      d.add(74, 70,'Senarai Tempahan', '/reservations/list', 'Senarai Tempahan Domestik','main');
 		
-		d.config.useCookies=false;
-		d.config.useLines=false;
+      d.add(50, 0, 'Seksyen Keselamatan', '', 'Keselamatan','main','/images/menutree/folder.gif');
+      d.add(51, 50,'Senarai Status Makluman', '/notifications/list', 'Senarai Makluman','main');
+      d.add(52, 50, 'Laporan Statistik', '/notifications/report', 'Laporan Statistik Penggunaan Bilik Kuliah','main');
+      d.add(53, 50, 'Urus Pihak Dihubungi', '/notifications/urushubung', 'Urus Pihak Dihubungi','main');
+      //d.add(73, 70,'Penyelenggaraan', '/hostels/senggara', 'Senggaraan Asrama','main');
 		
-		d.icon.root = "/images/menutree/home.gif";
-		//d.icon.root = "/images/menutree/kpmlogo.gif";
-		d.config.target = "main";
+      d.add(80, 0, 'Sumber Kemudahan', '', 'Pengurusan Sumber Kemudahan','main','/images/menutree/folder.gif');
+      d.add(81, 80,'Tambah', '/facilities/new', 'Sumber Kemudahan','main');
+      d.add(82, 80,'Senarai', '/facilities/', 'Sumber Kemudahan','main');
+      d.add(83, 80,'Senarai Tempahan', '/facility_reservations/list', 'Sumber Kemudahan','main');
 		
+      d.add(90,0,'Penyelenggaraan Kod','','Penyelenggaraan Kod','main','/images/menutree/folder.gif');
+      d.add(91, 90, 'Pejabat', '', 'Senarai','main');
+      d.add(95, 91, 'Carian', '/places/search', 'Carian Pejabat','main');
+      d.add(92, 91, 'Kementerian', '/places/list_kementerian', 'Senarai Kementerian','main');
+      d.add(93, 91, 'Jabatan', '/places/', 'Senarai Jabatan','main');
+      d.add(94, 91, 'Pejabat', '/places/list_pejabat', 'Senarai Pejabat','main');
+      d.add(96, 91, 'Favourite', '/favourite_places/list', 'Senarai Bahagian Pilihan','main');
+      //d.add(95, 91, 'Daerah', '/districts/list', 'Senarai Daerah','main');
+      d.add(101, 90, 'Profil', '', 'Senarai Pejabat','main');
+      d.add(104, 101, 'Skim Perkhidmatan', '/job_profiles/', 'Tambah','main');
+      d.add(105, 101, 'Agama', '/religions/', 'Senarai','main');
+      d.add(106, 101, 'Negeri', '/states/', 'Senarai','main');
+      d.add(107, 101, 'Jantina', '/genders/', 'Senarai','main');
+      d.add(108, 101, 'Bangsa', '/races/', 'Senarai','main');
+      d.add(109, 101, 'Status Perkahwinan', '/marital_statuses/', 'Senarai','main');
+      d.add(110, 101, 'Negara', '/countries/', 'Senarai','main');
+      d.add(111, 101, 'Hubungan Waris', '/relationships/', 'Senarai','main');
+      d.add(112, 101, 'Akademik', '/cert_levels/', 'Senarai','main');
+      d.add(113, 101, 'Gelaran', '/titles/', 'Senarai','main');
+      d.add(114, 101, 'Kecacatan', '/handicaps/', 'Senarai','main');
+      d.add(121, 90, 'Sekuriti', '', 'Senarai','main');
+      //d.add(122, 121, 'Status Akaun', '/acct_statuses/', 'Senarai','main');
+      d.add(123, 121, 'Menu', '/permission/', 'Senarai Menu','main');
+      d.add(124, 121, 'Peranan', '/role/', 'Senarai Peranan','main');
+      d.add(125, 90, 'Kursus', '', 'Senarai','main');
+      d.add(126, 125, 'Bahagian Kursus', '/course_departments/', 'Senarai','main');
+      d.add(127, 125, 'Lokasi Kursus', '/course_locations/', 'Senarai','main');
+      d.add(128, 125, 'Status Kursus', '/course_statuses/', 'Senarai','main');
+      d.add(129, 125, 'Bidang Kursus', '/course_fields/', 'Senarai','main');
+      d.add(130, 125, 'Metodologi', '/methodologies/', 'Senarai','main');
+      d.add(131, 125, 'Sesi', '/session_code/', 'Senarai','main');
+      d.add(140, 90, 'Borang Penilaian', '', 'Senarai','main');
+      d.add(141, 140, 'Template', '/question_templates/', 'Senarai','main');
+      d.add(142, 140, 'Seksyen', '/question_types/', 'Senarai','main');
+      d.add(143, 140, 'Sub Seksyen', '/question_sections/', 'Senarai','main');
+      d.add(145, 140, 'Jenis Skala', '/scale_types/', 'Senarai','main');
+      d.add(144, 140, 'Skala Penilaian', '/scales/', 'Senarai','main');
+      d.add(150, 90, 'Domestik', '', 'Senarai','main');
+      d.add(151, 150, 'Status', '/hostel_statuses/', 'Senarai','main');
+      d.add(152, 150, 'Jenis', '/hostel_types/', 'Senarai','main');
+      d.add(153, 150, 'Polisi', '/hostel_policies/', 'Senarai','main');
+      d.add(154, 150, 'Kelengkapan', '/hostel_fixtures/', 'Senarai','main');
+      d.add(190, 90, 'Sumber Kemudahan', '', 'Senarai','main');
+      d.add(191, 190, 'Status', '/facility_statuses/', 'Senarai','main');
+      d.add(192, 190, 'Jenis', '/facility_types/', 'Senarai','main');
+      d.add(193, 190, 'Kategori', '/facility_categories/', 'Senarai','main');
+		
+      d.add(0,-1,' eSPEK : Administrator');
+
+      d.add(160, 0, 'Peserta', '', 'Pengurusan Rekod Peserta Kursus','main','/images/menutree/folder.gif');
+      d.add(161, 160, 'Carian', '/course_applications/search_applicant', 'Carian Peserta','main');
+      d.add(162, 160, 'Senarai', '/course_applications/applicant', 'Senarai Peserta','main');
+      d.add(163, 160, 'Tambah', '/course_applications/new', 'Tambah Peserta','main');
+
+      d.add(170, 0, 'Tenaga Pengajar', '', 'Pengurusan Rekod Tenaga Pengajar','main','/images/menutree/folder.gif');
+      d.add(171, 170, 'Carian', '/trainer/search', 'Carian Tenaga Pengajar','main');
+      d.add(172, 170, 'Senarai', '/trainer/list', 'Senarai Tenaga Pengajar','main');
+      d.add(173, 170, 'Tambah', '/trainer/new', 'Tambah Tenaga Pengajar','main');
+      //d.add(174, 170,  'Tuntutan','/trainer/claim', 'Tuntutan/Claim', 'main');
+
+      d.add(180, 0, 'Kakitangan', '', 'Pengurusan Rekod Kakitangan','main','/images/menutree/folder.gif');
+      d.add(181, 180, 'Carian', '/staffs/search', 'Carian Kakitangan','main');
+      d.add(182, 180, 'Senarai', '/staffs/list', 'Senarai Kakitangan','main');
+      d.add(183, 180, 'Tambah', '/staffs/new', 'Tambah Kakitangan','main');
+		
+      d.add(200, 0, 'Pengumuman/Berita', '', 'Pengumuman Berita','main','/images/menutree/folder.gif');
+      d.add(201, 200, 'Individu', '/post_individus/list_all', 'Pengumuman Individu','main');
+      d.add(202, 200, 'Kursus', '/post_courses/list_all', 'Pengumuman Kursus','main');
+      d.add(203, 200, 'Umum', '/posts/list_all', 'Pengumuman Umum','main');
+
+      d.add(280,0,'Senarai Permohonan Akaun','/profiles/list/','','main','/images/menutree/page.gif');
+      d.add(285,0,'Carian Akaun','/profiles/search_akaun/','','main','/images/menutree/page.gif');
+      d.add(290,0,'Lihat Profil','/profiles/view/<%=session[:user].profile.id%>','','main','/images/menutree/page.gif');
 	
-		d.add(1, 0, 'Perancangan Kursus', '', 'Course Management','main','/images/menutree/folder.gif');
-		d.add(2, 1, 'Carian Kursus', '/course_implementations/search', 'Carian Kursus','main');
-		d.add(3, 1, 'Senarai Kursus Tahunan', '/course_implementations/', 'Senarai Kursus','main');
-		d.add(4, 1, 'Kalendar Tahunan', '/course_implementations/calendar', 'Kalendar Kursus','main');
-		d.add(5, 1, 'Tambah Kursus', '/course_implementations/new', 'Tambah Kursus','main');
+      d.add(300, 0, 'Laporan', '', 'Laporan Eksekutif','main','/images/menutree/folder.gif');
+      d.add(302, 300, 'Senarai Laporan', '/laporan/', 'Senarai Laporan','main');
+      d.add(302, 300, 'Audit Trail', '/laporan/audit_trail', 'Audit Trail','main');
+      d.add(301, 300, 'Penilaian Kursus', '/course_management/evaluated_courses', 'Senarai Kursus Yang Telah dinilai oleh Peserta','main');
 		
-		d.add(40, 0, 'Permohonan Kursus', '', 'Pengurusan Permohonan','main','/images/menutree/folder.gif');
-		d.add(41, 40, 'Carian Pemohon', '/course_applications/search', 'Carian Pemohon','main');
-		d.add(42, 40, 'Senarai Pemohon', '/course_applications/select_course', 'Senarai Pemohon','main');
-		d.add(43, 40, 'Surat Pelawaan', '/course_implementations/edit_surat_iklan_select_kursus', 'Surat Pelawaan','main');
-		d.add(44, 40, 'Surat Tawaran', '/course_applications/edit_surat_tawaran_select_peserta', 'Proses Surat Tawaran','main');		
-		d.add(46, 40, 'Surat Penundaan', '/course_applications/edit_surat_tunda_select_peserta', 'Proses Surat Penundaan','main');
-		d.add(45, 40, 'Tambah Pemohon', '/course_applications/new', 'Tambah Permohonan','main');		
+      document.write(d);
 
-		d.add(60, 0, 'Pengendalian Kursus', '', 'Pengendalian Kursus','main','/images/menutree/folder.gif');
-		d.add(61, 60, 'Daftar Kursus', '/course_management/select_course?next_action=register', 'Daftar Peserta Kursus','main');
-		d.add(61, 60, 'Rekod Kehadiran', '/course_management/select_course?next_action=attendance', 'Rekod Kehadiran Peserta','main');
-		//d.add(62, 60, 'Jadual Kursus', '/student/list', 'Senarai Pemohon','main');
-		//d.add(63, 60, 'Jadual Kehadiran', '/student/new', 'Tambah Permohonan','main');		
-		d.add(64, 60, 'Proses Sijil', '/course_management/select_course?next_action=certificate', 'Pengeluaran Sijil','main');
-		d.add(68, 60, 'Cetak Sijil', '/course_management/select_course?next_action=cetak_sijil', 'Cetakan Sijil','main');
-		d.add(65, 60, 'Surat Pengesahan', '/course_management/select_course?next_action=surat_pengesahan', 'Surat Pengesahan','main');
-		d.add(650, 60, 'Surat Ketidakhadiran', '/course_management/select_course?next_action=surat_takhadir', 'Surat Ketidakhadiran','main');
-		d.add(66, 60, 'Ujian', '/quizzes', 'Ujian Semasa Kursus','main');
-		d.add(67, 60, 'Penilaian Kursus', '/course_management/select_course?next_action=evaluation', 'Penilaian Kursus Oleh Peserta','main');
-		d.add(69, 60, 'Penilaian Peserta', '/course_management/select_course?next_action=p_evaluation', 'Penilaian Peserta Oleh Penyelaras','main');
+      //-->
+    </script>
 
-		d.add(760, 0,   'Data Lama', '', 'Kemasukan Data Lama','main','/images/menutree/folder.gif');
-		d.add(761, 760, 'Daftar Peserta', '/course_applications/new_peserta?dr=1', 'Daftar Peserta Kursus Yang Lama Lama','main');
+  </div>
 
-		d.add(70, 0, 'Pengurusan Domestik', '', 'Domestik','main','/images/menutree/folder.gif');
-		d.add(71, 70,'Asrama', '/hostels/', 'Asrama','main');
-		d.add(710, 70,'Sewa Asrama', '/hostels/new_penghuni', 'Sewa Check-in ','main');
-		d.add(72, 70,'Daftar Masuk Asrama', '/hostels/chkin_by_course', 'Check-in','main');
-		d.add(720, 70,'Daftar Keluar Asrama', '/hostels/find_checkout', 'Check-out','main');
-		d.add(74, 70,'Senarai Tempahan', '/reservations/list', 'Senarai Tempahan Domestik','main');
-		
-		d.add(50, 0, 'Seksyen Keselamatan', '', 'Keselamatan','main','/images/menutree/folder.gif');
-		d.add(51, 50,'Senarai Status Makluman', '/notifications/list', 'Senarai Makluman','main');
-		d.add(52, 50, 'Laporan Statistik', '/notifications/report', 'Laporan Statistik Penggunaan Bilik Kuliah','main');
-		d.add(53, 50, 'Urus Pihak Dihubungi', '/notifications/urushubung', 'Urus Pihak Dihubungi','main');
-		//d.add(73, 70,'Penyelenggaraan', '/hostels/senggara', 'Senggaraan Asrama','main');
-		
-		d.add(80, 0, 'Sumber Kemudahan', '', 'Pengurusan Sumber Kemudahan','main','/images/menutree/folder.gif');
-		d.add(81, 80,'Tambah', '/facilities/new', 'Sumber Kemudahan','main');
-		d.add(82, 80,'Senarai', '/facilities/', 'Sumber Kemudahan','main');
-		d.add(83, 80,'Senarai Tempahan', '/facility_reservations/list', 'Sumber Kemudahan','main');
-		
-		d.add(90,0,'Penyelenggaraan Kod','','Penyelenggaraan Kod','main','/images/menutree/folder.gif');
-		d.add(91, 90, 'Pejabat', '', 'Senarai','main');		
-		d.add(95, 91, 'Carian', '/places/search', 'Carian Pejabat','main');
-		d.add(92, 91, 'Kementerian', '/places/list_kementerian', 'Senarai Kementerian','main');
-		d.add(93, 91, 'Jabatan', '/places/', 'Senarai Jabatan','main');
-		d.add(94, 91, 'Pejabat', '/places/list_pejabat', 'Senarai Pejabat','main');
-		d.add(96, 91, 'Favourite', '/favourite_places/list', 'Senarai Bahagian Pilihan','main');
-		//d.add(95, 91, 'Daerah', '/districts/list', 'Senarai Daerah','main');
-		d.add(101, 90, 'Profil', '', 'Senarai Pejabat','main');
-		d.add(104, 101, 'Skim Perkhidmatan', '/job_profiles/', 'Tambah','main');
-		d.add(105, 101, 'Agama', '/religions/', 'Senarai','main');
-		d.add(106, 101, 'Negeri', '/states/', 'Senarai','main');
-		d.add(107, 101, 'Jantina', '/genders/', 'Senarai','main');
-		d.add(108, 101, 'Bangsa', '/races/', 'Senarai','main');		
-		d.add(109, 101, 'Status Perkahwinan', '/marital_statuses/', 'Senarai','main');		
-		d.add(110, 101, 'Negara', '/countries/', 'Senarai','main');		
-		d.add(111, 101, 'Hubungan Waris', '/relationships/', 'Senarai','main');
-		d.add(112, 101, 'Akademik', '/cert_levels/', 'Senarai','main');		
-		d.add(113, 101, 'Gelaran', '/titles/', 'Senarai','main');					
-		d.add(114, 101, 'Kecacatan', '/handicaps/', 'Senarai','main');					
-		d.add(121, 90, 'Sekuriti', '', 'Senarai','main');		
-		//d.add(122, 121, 'Status Akaun', '/acct_statuses/', 'Senarai','main');
-		d.add(123, 121, 'Menu', '/permission/', 'Senarai Menu','main');
-		d.add(124, 121, 'Peranan', '/role/', 'Senarai Peranan','main');		
-		d.add(125, 90, 'Kursus', '', 'Senarai','main');	
-		d.add(126, 125, 'Bahagian Kursus', '/course_departments/', 'Senarai','main');
-		d.add(127, 125, 'Lokasi Kursus', '/course_locations/', 'Senarai','main');		
-		d.add(128, 125, 'Status Kursus', '/course_statuses/', 'Senarai','main');		
-		d.add(129, 125, 'Bidang Kursus', '/course_fields/', 'Senarai','main');
-		d.add(130, 125, 'Metodologi', '/methodologies/', 'Senarai','main');
-		d.add(131, 125, 'Sesi', '/session_code/', 'Senarai','main');
-		d.add(140, 90, 'Borang Penilaian', '', 'Senarai','main');	
-		d.add(141, 140, 'Template', '/question_templates/', 'Senarai','main');
-		d.add(142, 140, 'Seksyen', '/question_types/', 'Senarai','main');
-		d.add(143, 140, 'Sub Seksyen', '/question_sections/', 'Senarai','main');
-		d.add(145, 140, 'Jenis Skala', '/scale_types/', 'Senarai','main');		
-		d.add(144, 140, 'Skala Penilaian', '/scales/', 'Senarai','main');		
-		d.add(150, 90, 'Domestik', '', 'Senarai','main');	
-		d.add(151, 150, 'Status', '/hostel_statuses/', 'Senarai','main');
-		d.add(152, 150, 'Jenis', '/hostel_types/', 'Senarai','main');		
-		d.add(153, 150, 'Polisi', '/hostel_policies/', 'Senarai','main');
-		d.add(154, 150, 'Kelengkapan', '/hostel_fixtures/', 'Senarai','main');
-		d.add(190, 90, 'Sumber Kemudahan', '', 'Senarai','main');	
-		d.add(191, 190, 'Status', '/facility_statuses/', 'Senarai','main');
-		d.add(192, 190, 'Jenis', '/facility_types/', 'Senarai','main');		
-		d.add(193, 190, 'Kategori', '/facility_categories/', 'Senarai','main');				
-		
-		d.add(0,-1,' eSPEK : Administrator');
+  <br>
+  <div align="center">
+    | <a target="main" href="/profiles/edit_password/<%= session[:user].profile.id %>">Tukar Kata Laluan</a> |
+  </div>
 
-                d.add(160, 0, 'Peserta', '', 'Pengurusan Rekod Peserta Kursus','main','/images/menutree/folder.gif');
-		d.add(161, 160, 'Carian', '/course_applications/search_applicant', 'Carian Peserta','main');
-		d.add(162, 160, 'Senarai', '/course_applications/applicant', 'Senarai Peserta','main');
-		d.add(163, 160, 'Tambah', '/course_applications/new', 'Tambah Peserta','main');
-
-		d.add(170, 0, 'Tenaga Pengajar', '', 'Pengurusan Rekod Tenaga Pengajar','main','/images/menutree/folder.gif');
-		d.add(171, 170, 'Carian', '/trainer/search', 'Carian Tenaga Pengajar','main');
-		d.add(172, 170, 'Senarai', '/trainer/list', 'Senarai Tenaga Pengajar','main');
-		d.add(173, 170, 'Tambah', '/trainer/new', 'Tambah Tenaga Pengajar','main');
-		//d.add(174, 170,  'Tuntutan','/trainer/claim', 'Tuntutan/Claim', 'main');
-
-		d.add(180, 0, 'Kakitangan', '', 'Pengurusan Rekod Kakitangan','main','/images/menutree/folder.gif');
-		d.add(181, 180, 'Carian', '/staffs/search', 'Carian Kakitangan','main');
-		d.add(182, 180, 'Senarai', '/staffs/list', 'Senarai Kakitangan','main');
-		d.add(183, 180, 'Tambah', '/staffs/new', 'Tambah Kakitangan','main');
-		
-		d.add(200, 0, 'Pengumuman/Berita', '', 'Pengumuman Berita','main','/images/menutree/folder.gif');
-                d.add(201, 200, 'Individu', '/post_individus/list_all', 'Pengumuman Individu','main');
-                d.add(202, 200, 'Kursus', '/post_courses/list_all', 'Pengumuman Kursus','main');
-                d.add(203, 200, 'Umum', '/posts/list_all', 'Pengumuman Umum','main');
-
-		d.add(280,0,'Senarai Permohonan Akaun','/profiles/list/','','main','/images/menutree/page.gif');
-		d.add(285,0,'Carian Akaun','/profiles/search_akaun/','','main','/images/menutree/page.gif');
-		d.add(290,0,'Lihat Profil','/profiles/view/<%=session[:user].profile.id%>','','main','/images/menutree/page.gif');
-	
-		d.add(300, 0, 'Laporan', '', 'Laporan Eksekutif','main','/images/menutree/folder.gif');
-		d.add(302, 300, 'Senarai Laporan', '/laporan/', 'Senarai Laporan','main');
-		d.add(302, 300, 'Audit Trail', '/laporan/audit_trail', 'Audit Trail','main');
-		d.add(301, 300, 'Penilaian Kursus', '/course_management/evaluated_courses', 'Senarai Kursus Yang Telah dinilai oleh Peserta','main');
-		
-		document.write(d);
-
-		//-->
-	</script>
-
-</div>
-
-<br>
-<div align="center">
-| <a target="main" href="/profiles/edit_password/<%= session[:user].profile.id %>">Tukar Kata Laluan</a> |
-</div>
-
-<br>
+  <br>
 </body></html>

@@ -555,11 +555,13 @@ InstunRails3::Application.routes.draw do
       get 'user_hyouka'
     end
   end
- 
+  match '/ajax/ajax_find_course_field' => 'ajax#ajax_find_course_field', :via => [:post]
+  match '/ajax/ajax_find_coordinator' => 'ajax#ajax_find_coordinator', :via => [:post]
+  match '/ajax/check_existence_of_course_implementation_code' => 'ajax#check_existence_of_course_implementation_code', :via => [:post]
+  match '/ajax/auto_tarikh_tutup' => 'ajax#auto_tarikh_tutup', :via => [:post]
+  match '/ajax/isvalid_date' => 'ajax#isvalid_date', :via => [:post]
   resources :ajax do
     collection do
-      #      post 'ajax_find_course_field '
-      #      post 'ajax_find_coordinator'
       get 'ajax_nric'
       post 'facility_category_type'
     end

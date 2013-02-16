@@ -1,0 +1,6 @@
+<% if @course_implementation %>
+  alert('Kod sudah wujud. Sila masukkan kod yang lain.');
+  $('#course_implementation_code').focus();
+  $('#course_implementation_code').select();
+  $('#course_implementation_code').effect( "highlight", {borderColor : "#FF6666"}, 3000 );
+<% end %>

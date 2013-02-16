@@ -1,0 +1,1 @@
+<%= select :course_implementation, "pen_ketua_program", options_for_select(@coordinators.collect{|x| [x.profile.name, x.id]}) %>

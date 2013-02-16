@@ -207,10 +207,10 @@ class CourseImplementationsController < ApplicationController
       else
         @course_implementations = []
       end
-	render :layout => "standard-layout"
+      render :layout => "standard-layout"
     rescue
       flash['notice'] = 'Carian Tidak Sah'
-      redirect_to :action => 'search'
+      #      redirect_to :action => 'search'
     end
   end
 

@@ -22,6 +22,7 @@ class QuizQuestionsController < ApplicationController
   def list_soalan
     @quiz = Quiz.find_by_id(params[:id]) if params[:id]
     @quiz_questions = @quiz.quiz_questions.paginate(:per_page => 100,:page => params[:page]).order("id asc")
+    render layout: "standard-layout"
   end
 
   def list_peserta

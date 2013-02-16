@@ -1,0 +1,31 @@
+<% if @r=="0" %>
+  alert("Tarikh akhir kursus tidak sah");
+  $('#year_end').css({"border-color" :"red"});
+  $('#month_end').css({"border-color" :"red"});
+  $('#day_end').css({"border-color" :"red"});
+  $('#day_end').focus()
+  $('#intr_date_end').innerHTML = "<font color=red>Tarikh tidak sah</font>"
+  return;
+<% elsif @r=="2" %>
+  alert("Tarikh akhir mestilah selepas tarikh mula kursus");
+  $('#year_end').css({"border-color" :"red"});
+  $('#month_end').css({"border-color" :"red"});
+  $('#day_end').css({"border-color" :"red"});
+  $('#intr_date_end').innerHTML = "<font color=red>Tarikh tidak sah</font>"
+  $('#day_end').focus()
+  return;
+  }
+<% else %>
+  $('#day_evaluation_end').val($('#day_end').val())
+  $('#month_evaluation_end').val($('#month_end').val())
+  $('#year_evaluation_end').val($('#year_end').val())
+
+  $('#day_check_out').val($('#day_end').val())
+  $('#month_check_out').val($('#month_end').val())
+  $('#year_check_out').val($('#year_end').val())
+
+  $('#hour_check_out').val("16")
+  $('#minute_check_out').val("30")
+
+  $('#intr_date_end').innerHTML = "OK"
+<% end %>

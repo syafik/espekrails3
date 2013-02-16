@@ -1,0 +1,48 @@
+<% if @date_baru == "0" %>
+  alert("Tarikh mula kursus tidak sah");
+  $('#year_start').style.borderColor  = "red";
+  $('#month_start').style.borderColor  = "red";
+  $('#day_start').style.borderColor  = "red";
+  $('#day_start').focus()
+  $('intr_date_start').innerHTML = "<font color=red>Tarikh tidak sah</font>"
+<% else %>
+
+  var dlist = '<%= "#{@date_baru}" %>'.split(",");
+  var d_chkin = dlist[0]
+  var d_mula  = dlist[1]
+  var d_abih  = dlist[2]
+
+  var a = d_chkin.split("-")
+  var b = d_mula.split("-")
+  var c = d_abih.split("-")
+
+  //check in
+  $('#day_check_in').val(a[2])
+  $('#month_check_in').val(a[1])
+  $('#year_check_in').val(a[0])
+
+  $('#hour_check_in').val("14")
+  $('#minute_check_in').val("30")
+
+  //mula mohon
+  $('#day_apply_start').val(b[2])
+  $('#month_apply_start').val(b[1])
+  $('#year_apply_start').val(b[0])
+
+  //abih mohon
+  $('#day_apply_end').val(c[2])
+  $('#month_apply_end').val(c[1])
+  $('#year_apply_end').val(c[0])
+
+  //semak
+  $('#day_check').val(c[2])
+  $('#month_check').val(c[1])
+  $('#year_check').val(c[0])
+
+  //suaikenal
+  $('#day_briefing').val($('#day_start').val()) //_start
+  $('#month_briefing').val($('#month_start').val())
+  $('#year_briefing').val($('#year_start').val())
+
+  $('intr_date_start').innerHTML = "OK"
+<% end %>
