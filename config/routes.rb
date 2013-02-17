@@ -263,6 +263,8 @@ InstunRails3::Application.routes.draw do
 
   resources :laporan do
     collection do
+      get 'audit_trail'
+      get 'penilaian_penyelarasan'
       get 'list_laporan'
       get 'pencapaian_ujian_bidang'
       get 'mohon_espek'

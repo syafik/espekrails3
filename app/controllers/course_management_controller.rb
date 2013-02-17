@@ -21,6 +21,7 @@ class CourseManagementController < ApplicationController
     @course_departments = CourseDepartment.all
     #@courses = Course.all
     #@course_implementations = CourseImplementation.all
+    super
 	end
 
   def index
@@ -1105,7 +1106,7 @@ class CourseManagementController < ApplicationController
 
   def new_tarikh_sesi
     @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
-    render layout: "standard-layout"
+    #render layout: "standard-layout"
   end
 
   def new_sesi
@@ -1372,7 +1373,7 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
-    render layout: "standard-layout"
+    #render layout: "standard-layout"
   end
 
   def create_attendance
