@@ -151,7 +151,7 @@
 
       d.add(280,0,'Senarai Permohonan Akaun','/profiles/list/','','main','/images/menutree/page.gif');
       d.add(285,0,'Carian Akaun','/profiles/search_akaun/','','main','/images/menutree/page.gif');
-      d.add(290,0,'Lihat Profil','/profiles/view/<%=session[:user].profile.id%>','','main','/images/menutree/page.gif');
+      d.add(290,0,'Lihat Profil','/profiles/<%=session[:user].profile.id%>/view','','main','/images/menutree/page.gif');
 	
       d.add(300, 0, 'Laporan', '', 'Laporan Eksekutif','main','/images/menutree/folder.gif');
       d.add(302, 300, 'Senarai Laporan', '/laporan/', 'Senarai Laporan','main');

@@ -486,6 +486,7 @@ InstunRails3::Application.routes.draw do
   
   resources :profiles do
     #    get 'show'
+    get 'view'
     get 'addrole'
     get 'show_profile'
     put 'update_password2'
