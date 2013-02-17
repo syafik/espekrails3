@@ -2,14 +2,14 @@
 class CourseManagementController < ApplicationController
   #	require "pdf/writer"
   #	require "pdf/simpletable"
-	layout "standard-layout"
+  layout "standard-layout"
 
-	def initialize
-    @states = State.find(:all, :order=>"description")
+  def initialize
+    @states = State.find(:all, :order => "description")
     @genders = Gender.all
-    @races = Race.find(:all, :order=>"id")
+    @races = Race.find(:all, :order => "id")
     @profile_statuses = ProfileStatus.all
-    @religions = Religion.find(:all, :order=>"id")
+    @religions = Religion.find(:all, :order => "id")
     @countries = Country.all
     @marital_statuses = MaritalStatus.all
     @places = Place.find(:all, :conditions => "place_type_id = '2'")
@@ -17,12 +17,12 @@ class CourseManagementController < ApplicationController
     @cert_levels = CertLevel.all
     @majors = Major.all
     @job_profiles = JobProfile.all
-    @titles = Title.find(:all, :order=>"description")
+    @titles = Title.find(:all, :order => "description")
     @course_departments = CourseDepartment.all
     #@courses = Course.all
     #@course_implementations = CourseImplementation.all
     super
-	end
+  end
 
   def index
     new
@@ -40,7 +40,7 @@ class CourseManagementController < ApplicationController
 
   def search_by_nric
     @searches = CourseApplication.find_by_sql("select * from vw_detailed_applicants  WHERE (student_status_id=1 OR student_status_id=2) AND nric ILIKE '%#{params[:nric]}%'")
-    render :action=> 'search_by_name'
+    render :action => 'search_by_name'
   end
 
   def evaluated_courses
@@ -59,7 +59,7 @@ class CourseManagementController < ApplicationController
 			 evaluation_answers ea
 	       WHERE ea.course_application_id=ca.id AND ci.id=ca.course_implementation_id #{where_date}"
 
-    staff_id = nof{session[:user].profile.staff.id}
+    staff_id = nof { session[:user].profile.staff.id }
     if staff_id != nil
       #@course_implementations = CourseImplementation.find(:all, :conditions=> "extract(year from date_plan_start) = #{params[:year_start]} AND (coordinator1 = #{staff_id} OR coordinator2 = #{staff_id})", :order=>"date_plan_start DESC")
       @course_implementations = CourseImplementation.find_by_sql(sql)
@@ -78,11 +78,11 @@ class CourseManagementController < ApplicationController
     Rails.logger.info cur_year
     params[:year_start] = cur_year if !params[:year_start]
 
-    staff_id = nof{session[:user].profile.staff.id}
+    staff_id = nof { session[:user].profile.staff.id }
     if staff_id != nil
       @course_implementations = CourseImplementation.find(:all,
-        :conditions=> "extract(year from date_plan_start) = #{params[:year_start]} AND (coordinator1 = #{staff_id} OR coordinator2 = #{staff_id} OR ketua_program = #{staff_id} OR pen_ketua_program =  #{staff_id})",
-        :order=>"date_plan_start DESC")
+                                                          :conditions => "extract(year from date_plan_start) = #{params[:year_start]} AND (coordinator1 = #{staff_id} OR coordinator2 = #{staff_id} OR ketua_program = #{staff_id} OR pen_ketua_program =  #{staff_id})",
+                                                          :order => "date_plan_start DESC")
     else
       @course_implementations = []
     end
@@ -106,7 +106,7 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
-    @courses = Course.find(:all, :order=>"name")
+    @courses = Course.find(:all, :order => "name")
     render :layout => "standard-layout"
   end
 
@@ -132,7 +132,7 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
-    @courses = Course.find(:all, :order=>"name")
+    @courses = Course.find(:all, :order => "name")
     render :layout => "standard-layout"
   end
 
@@ -154,14 +154,14 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
-    @courses = Course.find(:all, :order=>"name")
+    @courses = Course.find(:all, :order => "name")
     render :layout => "standard-layout"
   end
 
   def tempah_sijil
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
-    @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5 AND layak_sijil='1'")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
+    @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5 AND layak_sijil='1'")
     @tempahan_sijil = @course_implementation.tempahan_sijil
     @tempahan_sijil = TempahanSijil.new if @tempahan_sijil == nil
     @course_departments = CourseDepartment.all
@@ -175,8 +175,8 @@ class CourseManagementController < ApplicationController
   end
 
   def hantar_tempahan
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
-    @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
+    @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
     if @course_implementation.tempahan_sijil == nil
       arr = params[:tempahan_sijil]["tarikh"].split('/')
       params[:tempahan_sijil]["tarikh"] = arr[1] + "/" + arr[0] + "/" + arr[2]
@@ -186,7 +186,7 @@ class CourseManagementController < ApplicationController
         @ts.save
       rescue
         flash[:notice] = "Error saving tempahan sijil."
-        render :action => "tempah_sijil", :id=> @course_implementation.id
+        render :action => "tempah_sijil", :id => @course_implementation.id
       end
     else
       arr = params[:tempahan_sijil]["tarikh"].split('/')
@@ -199,8 +199,8 @@ class CourseManagementController < ApplicationController
   end
 
   def sah_tempahan_sijil
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
-    @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
+    @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
 
     params[:tempahan_sijil]["disahkan_oleh"] = session[:user].profile.staff.id
     params[:tempahan_sijil]["disahkan_oleh_user"] = session[:user].id
@@ -217,10 +217,10 @@ class CourseManagementController < ApplicationController
 
   def cetak_tempahan_iso
     tempah_sijil
-    pdf = PDF::Writer.new(:paper=>"A4",:orientation => :potrait)
+    pdf = PDF::Writer.new(:paper => "A4", :orientation => :potrait)
     pdf.select_font("Helvetica")
     pdf.margins_pt(36, 35, 36, 35) # 36 54 72 90
-    #pdf.margins_mm(5)
+                                   #pdf.margins_mm(5)
 
     @font_size_normal = 9
 
@@ -302,7 +302,7 @@ class CourseManagementController < ApplicationController
     table.columns["3rd"].heading.justification = :center
     table.columns["3rd"].justification = :center
     table.columns["3rd"].width = 60
-	
+
     table.columns["4th"] = PDF::SimpleTable::Column.new("4th")
     table.columns["4th"].heading = "JABATAN"
     table.columns["4th"].heading.justification = :center
@@ -314,12 +314,12 @@ class CourseManagementController < ApplicationController
     table.columns["5th"].heading.justification = :center
     table.columns["5th"].width = 80
 
-    table.show_lines	= :inner
-    table.shade_rows    = :none
-    table.width	    = 450
+    table.show_lines = :inner
+    table.shade_rows = :none
+    table.width = 450
     table.show_headings = true
-    table.orientation	= :center
-    table.position	= :center
+    table.orientation = :center
+    table.position = :center
     table.font_size = 7
     table.heading_font_size = 7
 
@@ -327,12 +327,12 @@ class CourseManagementController < ApplicationController
     jumlah = 0
     @students.each_with_index do |stu, idx|
       if (stu.markah_ujian_akhir != nil) and (stu.markah_penilaian_peserta != nil)
-        total = nof{stu.markah_ujian_akhir} + nof{stu.markah_penilaian_peserta}
+        total = nof { stu.markah_ujian_akhir } + nof { stu.markah_penilaian_peserta }
       else
         total = 0
       end
       data = [
-        {"1st"=> idx+1 , "2nd"=> stu.profile.name , "3rd"=> stu.profile.ic_number, "4th"=> nof{stu.profile.opis}, "5th"=> " \n " }
+          {"1st" => idx+1, "2nd" => stu.profile.name, "3rd" => stu.profile.ic_number, "4th" => nof { stu.profile.opis }, "5th" => " \n "}
       ]
       #data["5th"].justification = :center
       data_all = data_all + data
@@ -354,7 +354,7 @@ class CourseManagementController < ApplicationController
     pdf.text(" \n")
     gen_jadual(pdf)
     gen_serahan(pdf)
-	
+
     if RUBY_PLATFORM == "i386-mswin32"
       pdf.save_as("public/yuran/" + "tempah_sijil.pdf") #kat windows
     else
@@ -367,7 +367,7 @@ class CourseManagementController < ApplicationController
 
   #private
   def gen_serahan(pdf)
-  	jarak = 250
+    jarak = 250
     @dotdot = "......................................"
     @rujukan_font_size = 10
     pdf.text(" \n\n\n\n\n\n\n")
@@ -439,7 +439,7 @@ class CourseManagementController < ApplicationController
     table.columns["3rd"].heading.justification = :center
     table.columns["3rd"].justification = :center
     table.columns["3rd"].width = 60
-	
+
     table.columns["4th"] = PDF::SimpleTable::Column.new("4th")
     table.columns["4th"].heading = "JABATAN"
     table.columns["4th"].heading.justification = :center
@@ -451,21 +451,21 @@ class CourseManagementController < ApplicationController
     table.columns["5th"].heading.justification = :center
     table.columns["5th"].width = 80
 
-    table.show_lines	= :inner
-    table.shade_rows    = :none
-    table.width	    = 450
+    table.show_lines = :inner
+    table.shade_rows = :none
+    table.width = 450
     table.show_headings = true
-    table.orientation	= :center
-    table.position	= :center
+    table.orientation = :center
+    table.position = :center
     table.font_size = 7
     table.heading_font_size = 7
 
     data_all=[]
     jumlah = 0
     5.times do |i|
-      p = nof{@course_implementation.trainers[i].profile}
+      p = nof { @course_implementation.trainers[i].profile }
       data = [
-        {"1st"=> i+1 , "2nd"=> "#{nof{p.name}}\n" , "3rd"=> "#{nof{p.ic_number}}\n", "4th"=> "#{nof{p.opis.upcase}}\n", "5th"=> " \n " }
+          {"1st" => i+1, "2nd" => "#{nof { p.name }}\n", "3rd" => "#{nof { p.ic_number }}\n", "4th" => "#{nof { p.opis.upcase }}\n", "5th" => " \n "}
       ]
       data_all = data_all + data
     end
@@ -476,8 +476,8 @@ class CourseManagementController < ApplicationController
   end
 
   def cetak_tempahan
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
-    @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
+    @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
     if @course_implementation.tempahan_sijil == nil
       arr = params[:tempahan_sijil]["tarikh"].split('/')
       params[:tempahan_sijil]["tarikh"] = arr[1] + "/" + arr[0] + "/" + arr[2]
@@ -487,7 +487,7 @@ class CourseManagementController < ApplicationController
         @ts.save
       rescue
         flash[:notice] = "Error saving tempahan sijil."
-        render :action => "tempah_sijil", :id=> @course_implementation.id
+        render :action => "tempah_sijil", :id => @course_implementation.id
       end
     else
       arr = params[:tempahan_sijil]["tarikh"].split('/')
@@ -498,9 +498,9 @@ class CourseManagementController < ApplicationController
 
   def override_kelayakan
     @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
-    @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+    @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
     for student in @students
-      student.update_attributes(:layak_sijil => params[:layak]["#{student.id}"], :cert_remark=> params[:cert_remarks]["#{student.id}"])
+      student.update_attributes(:layak_sijil => params[:layak]["#{student.id}"], :cert_remark => params[:cert_remarks]["#{student.id}"])
     end
     flash[:notice] = "Kelayakan sijil berjaya dikemaskini secara manual."
     redirect_to :action => "certificate", :id => @course_implementation.id
@@ -514,7 +514,7 @@ class CourseManagementController < ApplicationController
 
   def override_no_sijil
     @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
-    @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5 ")
+    @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5 ")
     for student in @students
       student.update_attributes(:no_sijil => params[:cert_nos]["#{student.id}"].to_i)
     end
@@ -552,7 +552,7 @@ class CourseManagementController < ApplicationController
         student.update_attributes(:no_sijil => latest_no)
       end
       flash[:notice] = "Nombor sijil berjaya dijana oleh sistem."
-      redirect_to :action=> "cetak_sijil", :id=> @course_implementation.id
+      redirect_to :action => "cetak_sijil", :id => @course_implementation.id
 
     else
       @students = []
@@ -610,7 +610,7 @@ class CourseManagementController < ApplicationController
 
       end
       flash[:notice] = "Kelayakan sijil berjaya dijana oleh sistem."
-      redirect_to :action=> "certificate", :id=> @course_implementation.id
+      redirect_to :action => "certificate", :id => @course_implementation.id
 
     else
       @students = []
@@ -644,37 +644,37 @@ class CourseManagementController < ApplicationController
 
   def cetak_p_evaluation_iso
     evaluation
-    pdf = PDF::Writer.new(:paper=>"A4",:orientation => :potrait)
+    pdf = PDF::Writer.new(:paper => "A4", :orientation => :potrait)
     pdf.select_font("Helvetica")
     pdf.margins_pt(36, 35, 36, 35) # 36 54 72 90
-    #pdf.margins_mm(5)
+                                   #pdf.margins_mm(5)
 
     @font_size_normal = 9
 
     @font_size_large = 11
-    #pdf.image @signature_file, :resize => 0.5
+                                   #pdf.image @signature_file, :resize => 0.5
     if RUBY_PLATFORM == "i386-mswin32"
       head_file = "public/images/header_penilaian_iso.png"
     else
       head_file = "/aplikasi/www/instun/public/images/header_penilaian_iso.png"
     end
     pdf.image "#{head_file}", :justification => :center
-    #pdf.text "_________________", :font_size => @font_size_large, :justification => :center
+                                   #pdf.text "_________________", :font_size => @font_size_large, :justification => :center
     pdf.text(" \n\n")
 
     #NAMA KURSUS
     table1 = PDF::SimpleTable.new
     table1.column_order.push(*%w(1st))
-    table1.show_lines	= :none
-    table1.shade_rows   = :none
-    table1.position	    = 360
-    table1.width	    = 400
+    table1.show_lines = :none
+    table1.shade_rows = :none
+    table1.position = 360
+    table1.width = 400
     table1.show_headings = false
-    table1.orientation	= :center
+    table1.orientation = :center
     table1.font_size = 9
     data_all_1=[]
     data = [
-      {"1st"=> "#{@course_implementation.course.name.upcase}" }
+        {"1st" => "#{@course_implementation.course.name.upcase}"}
     ]
     data_all_1 = data_all_1 + data
     table1.data.replace data_all_1
@@ -689,16 +689,16 @@ class CourseManagementController < ApplicationController
     #KOD KURSUS
     table1 = PDF::SimpleTable.new
     table1.column_order.push(*%w(1st))
-    table1.show_lines	= :all
-    table1.shade_rows    = :none
-    table1.position	    = 190
-    table1.width	    = 50
+    table1.show_lines = :all
+    table1.shade_rows = :none
+    table1.position = 190
+    table1.width = 50
     table1.show_headings = false
-    table1.orientation	= :center
+    table1.orientation = :center
     table1.font_size = 9
     data_all_1=[]
     data = [
-      {"1st"=> "#{@course_implementation.code}" }
+        {"1st" => "#{@course_implementation.code}"}
     ]
     data_all_1 = data_all_1 + data
     table1.data.replace data_all_1
@@ -712,18 +712,18 @@ class CourseManagementController < ApplicationController
     #TARIKH START
     table1 = PDF::SimpleTable.new
     table1.column_order.push(*%w(1st 2nd 3rd))
-    table1.show_lines	= :all
-    table1.shade_rows    = :none
-    table1.position	    = 200
-    table1.width	    = 70
+    table1.show_lines = :all
+    table1.shade_rows = :none
+    table1.position = 200
+    table1.width = 70
     table1.show_headings = false
-    table1.orientation	= :center
+    table1.orientation = :center
     table1.font_size = 9
     data_all_1=[]
     data = [
-      {"1st"=> @course_implementation.date_start.to_formatted_s(:my_format_day) ,
-        "2nd"=> @course_implementation.date_start.to_formatted_s(:my_format_month),
-        "3rd"=> @course_implementation.date_start.to_formatted_s(:my_format_y) }
+        {"1st" => @course_implementation.date_start.to_formatted_s(:my_format_day),
+         "2nd" => @course_implementation.date_start.to_formatted_s(:my_format_month),
+         "3rd" => @course_implementation.date_start.to_formatted_s(:my_format_y)}
     ]
     data_all_1 = data_all_1 + data
     table1.data.replace data_all_1
@@ -736,18 +736,18 @@ class CourseManagementController < ApplicationController
     pdf.y = pdf.y + 15
     table1 = PDF::SimpleTable.new
     table1.column_order.push(*%w(1st 2nd 3rd))
-    table1.show_lines	= :all
-    table1.shade_rows    = :none
-    table1.position	    = 330
-    table1.width	    = 70
+    table1.show_lines = :all
+    table1.shade_rows = :none
+    table1.position = 330
+    table1.width = 70
     table1.show_headings = false
-    table1.orientation	= :center
+    table1.orientation = :center
     table1.font_size = 9
     data_all_1=[]
     data = [
-      {"1st"=> @course_implementation.date_end.to_formatted_s(:my_format_day) ,
-        "2nd"=> @course_implementation.date_end.to_formatted_s(:my_format_month),
-        "3rd"=> @course_implementation.date_end.to_formatted_s(:my_format_y) }
+        {"1st" => @course_implementation.date_end.to_formatted_s(:my_format_day),
+         "2nd" => @course_implementation.date_end.to_formatted_s(:my_format_month),
+         "3rd" => @course_implementation.date_end.to_formatted_s(:my_format_y)}
     ]
     data_all_1 = data_all_1 + data
     table1.data.replace data_all_1
@@ -783,7 +783,7 @@ class CourseManagementController < ApplicationController
     table.columns["3rd"].heading.justification = :center
     table.columns["3rd"].justification = :center
     table.columns["3rd"].width = 80
-	
+
     table.columns["4th"] = PDF::SimpleTable::Column.new("4th")
     table.columns["4th"].heading = "JAWATAN   /GRED"
     table.columns["4th"].heading.justification = :left
@@ -806,12 +806,12 @@ class CourseManagementController < ApplicationController
     table.columns["7th"].justification = :center
     table.columns["7th"].width = 50
 
-    table.show_lines	= :inner
-    table.shade_rows    = :none
-    table.width	    = 550
+    table.show_lines = :inner
+    table.shade_rows = :none
+    table.width = 550
     table.show_headings = true
-    table.orientation	= :center
-    table.position	= :center
+    table.orientation = :center
+    table.position = :center
     table.font_size = 9
     table.heading_font_size = 9
 
@@ -819,13 +819,13 @@ class CourseManagementController < ApplicationController
     jumlah = 0
     @students.each_with_index do |stu, idx|
       if (stu.markah_ujian_akhir != nil) and (stu.markah_penilaian_peserta != nil)
-        total = nof{stu.markah_ujian_akhir} + nof{stu.markah_penilaian_peserta}
+        total = nof { stu.markah_ujian_akhir } + nof { stu.markah_penilaian_peserta }
       else
         total = 0
       end
       data = [
-        {"1st"=> idx+1 , "2nd"=> stu.profile.name , "3rd"=> stu.profile.ic_number, "4th"=> nof{stu.profile.employments.first.job_profile.job_grade},
-          "5th"=> stu.markah_ujian_akhir, "6th"=> stu.markah_penilaian_peserta, "7th"=> total }
+          {"1st" => idx+1, "2nd" => stu.profile.name, "3rd" => stu.profile.ic_number, "4th" => nof { stu.profile.employments.first.job_profile.job_grade },
+           "5th" => stu.markah_ujian_akhir, "6th" => stu.markah_penilaian_peserta, "7th" => total}
       ]
       #data["5th"].justification = :center
       data_all = data_all + data
@@ -857,12 +857,12 @@ class CourseManagementController < ApplicationController
     pdf.y = pdf.absolute_top_margin - 40
     pdf.text "  B. CADANGAN PESERTA TERBAIK (JIKA ADA) UNTUK DIBERI SIJIL PENGHARGAAN PESERTA TERBAIK", :font_size => @font_size_normal, :justification => :left
     pdf.text("\n")
-    
+
     @p_ev = ParticipantEvaluation.new if @p_ev == nil
     if @p_ev.best_student != ''
-    	pdf.text(" #{@p_ev.best_student}")
+      pdf.text(" #{@p_ev.best_student}")
     else
-    	pdf.text("___________________________________________")
+      pdf.text("___________________________________________")
       pdf.text("___________________________________________")
     end
 
@@ -873,7 +873,7 @@ class CourseManagementController < ApplicationController
     pdf.text "  C. ULASAN KESELURUHAN PRESTASI PESERTA OLEH PENYELARAS KURSUS / URUS SETIA", :font_size => @font_size_normal, :justification => :left
     pdf.text("\n")
     if @p_ev.ulasan_keseluruhan != ''
-    	pdf.text(" #{@p_ev.ulasan_keseluruhan}")
+      pdf.text(" #{@p_ev.ulasan_keseluruhan}")
     else
       pdf.text("___________________________________________")
       pdf.text("___________________________________________")
@@ -934,7 +934,7 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
-    @courses = Course.find(:all, :order=>"name")
+    @courses = Course.find(:all, :order => "name")
     render :layout => "standard-layout"
   end
 
@@ -954,14 +954,13 @@ class CourseManagementController < ApplicationController
       params[:arrow] = "ASC" if !params[:arrow]
       @arrow = params[:arrow]
       @quizzes = Quiz.find_by_sql("select * from quizzes where course_implementation_id= #{@course_implementation.id}")
-      @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9)")
+      @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9)")
       #@students = CourseApplication.find_by_sql("select * from course_applications join profiles on course_applications.profile_id=profiles.id WHERE course_implementation_id = #{@course_implementation.id} AND student_status_id=5 order by name ASC")
     else
       @students = []
     end
-    @courses = Course.find(:all, :order=>"name")
+    @courses = Course.find(:all, :order => "name")
   end
-
 
 
   def cetak_sijil
@@ -988,14 +987,14 @@ class CourseManagementController < ApplicationController
     else
       @students = []
     end
-    
+
   end
 
   def set_kelayakan_sijil
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
 
     if @course_implementation
-      @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+      @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
     end
 
     for student in @students
@@ -1010,7 +1009,7 @@ class CourseManagementController < ApplicationController
     for id in params[:course_application_ids]
       @student = CourseApplication.find(id)
       if @student.update_attributes(:student_status_id => "5")
-        @certificate = Certificate.new(:course_application_id=>"#{@student.id}")
+        @certificate = Certificate.new(:course_application_id => "#{@student.id}")
         @certificate.save
       end
     end
@@ -1023,7 +1022,7 @@ class CourseManagementController < ApplicationController
       arr=params[:dates][idx].split('/')
       payment_date = arr[1] + "/" + arr[0] + "/" + arr[2]
 
-      CourseApplication.find(id).update_attributes(:fee_amount=>params[:amounts][idx], :receipt_no=>params[:receipts][idx], :payment_date=>payment_date, :is_paid=> "1") if (params[:amounts][idx] !='-' && params[:receipts][idx] !='')
+      CourseApplication.find(id).update_attributes(:fee_amount => params[:amounts][idx], :receipt_no => params[:receipts][idx], :payment_date => payment_date, :is_paid => "1") if (params[:amounts][idx] !='-' && params[:receipts][idx] !='')
       @student = CourseApplication.find(id)
     end
     flash[:notice] = "Yuran peserta kursus telah dikemaskini."
@@ -1033,9 +1032,9 @@ class CourseManagementController < ApplicationController
   def isi_markah
     params[:ids].each_with_index do |id, idx|
       #next if params[:dates][idx] == nil
-      CourseApplication.find(id).update_attributes(:markah_penilaian_peserta=>params[:markah_penilaian_peserta][idx],
-        :markah_ujian_akhir=>params[:markah_ujian_akhir][idx],
-        :ulasan_urusetia=>params[:ulasan_urusetia][idx]
+      CourseApplication.find(id).update_attributes(:markah_penilaian_peserta => params[:markah_penilaian_peserta][idx],
+                                                   :markah_ujian_akhir => params[:markah_ujian_akhir][idx],
+                                                   :ulasan_urusetia => params[:ulasan_urusetia][idx]
       )
     end
     @student = CourseApplication.find(params[:ids][0])
@@ -1064,15 +1063,15 @@ class CourseManagementController < ApplicationController
       @arrow = params[:arrow]
 
       #@students = CourseApplication.find_by_sql("select * from vw_detailed_confirmed WHERE course_name='#{course.name}' order by #{params[:orderby]} #{params[:arrow]}")
-      @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+      @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
     else
       @students = []
     end
-    @courses = Course.find(:all, :order=>"name")
+    @courses = Course.find(:all, :order => "name")
   end
 
   def new_polisi_sijil
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     @cert_policy = @course_implementation.cert_policy
     @cert_policy = CertPolicy.new if @cert_policy == nil
 
@@ -1080,7 +1079,7 @@ class CourseManagementController < ApplicationController
   end
 
   def update_polisi_sijil
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     if @course_implementation.cert_policy == nil
       @cp = CertPolicy.new(params[:cert_policy])
       @cp.course_implementation_id = @course_implementation.id
@@ -1090,7 +1089,7 @@ class CourseManagementController < ApplicationController
         redirect_to :action => "new_polisi_sijil", :id => @course_implementation.id
       rescue
         flash[:notice] = "Error saving polisi."
-        render :action => "new_polisi_sijil", :id=> @course_implementation.id
+        render :action => "new_polisi_sijil", :id => @course_implementation.id
       end
     else
       @course_implementation.cert_policy.update_attributes(params[:cert_policy])
@@ -1100,21 +1099,21 @@ class CourseManagementController < ApplicationController
   end
 
   def set_sesi
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
   end
 
   def new_tarikh_sesi
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     #render layout: "standard-layout"
   end
 
   def new_sesi
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
   end
 
   def create_sesi
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
 
     params[:sesi].size.times do |i|
       next if params[:sesi][i] == nil
@@ -1135,7 +1134,7 @@ class CourseManagementController < ApplicationController
   end
 
   def edit_sesi
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     #@sesi_harian = SesiHarian.find_all_by_tarikh(params[:sesi_harian][:tarikh])
     sql = "select sh.*, sc.time_in_text from sesi_harian as sh
                INNER JOIN session_codes as sc ON sc.id=sh.session_code_id
@@ -1143,13 +1142,13 @@ class CourseManagementController < ApplicationController
                    and sh.tarikh='#{params[:sesi_harian][:tarikh]}'
                    ORDER BY sc.time_start"
     @sesi_harian = SesiHarian.find_by_sql(sql)
- 
+
   end
 
   def update_sesi
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
 
-    params[:session_code].each { |k,v|
+    params[:session_code].each { |k, v|
       if v == nil
         sql = "delete from sesi_harian where id = #{k}"
         a = SesiHarian.find_by_sql(sql)
@@ -1163,7 +1162,7 @@ class CourseManagementController < ApplicationController
   end
 
   def catat_kehadiran
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
 
     if @course_implementation
@@ -1181,14 +1180,14 @@ class CourseManagementController < ApplicationController
 
 
   def new_cetak_kehadiran
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
   end
 
-	def dmy(ymd_date, separator, new_separator)
-		a = ymd_date.to_s.split(separator)
-		b = "#{a[2]}#{new_separator}#{a[1]}#{new_separator}#{a[0]}"
-		return b
-	end
+  def dmy(ymd_date, separator, new_separator)
+    a = ymd_date.to_s.split(separator)
+    b = "#{a[2]}#{new_separator}#{a[1]}#{new_separator}#{a[0]}"
+    return b
+  end
 
   def kehadiran_manual
     @course_implementation = CourseImplementation.find(params[:id])
@@ -1208,7 +1207,7 @@ class CourseManagementController < ApplicationController
 		   ORDER BY sc.time_start"
     @sesi_harian = SesiHarian.find_by_sql(sql)
 
-    pdf = PDF::Writer.new(:paper=>"A4",:orientation => :landscape)
+    pdf = PDF::Writer.new(:paper => "A4", :orientation => :landscape)
     pdf.select_font("Helvetica")
     pdf.margins_mm(5)
 
@@ -1232,7 +1231,7 @@ class CourseManagementController < ApplicationController
     pdf.text(" \n")
     pdf.add_text(60, pdf.y, "Tarikh Kehadiran", @rujukan_font_size)
     pdf.add_text(140, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(160, pdf.y, dmy(@sesi_harian[0].tarikh,"-","/"), @rujukan_font_size)
+    pdf.add_text(160, pdf.y, dmy(@sesi_harian[0].tarikh, "-", "/"), @rujukan_font_size)
     pdf.text(" \n")
 
     table = PDF::SimpleTable.new
@@ -1264,7 +1263,7 @@ class CourseManagementController < ApplicationController
     table.columns["7th"] = PDF::SimpleTable::Column.new("7th")
     table.columns["7th"].heading = "#{@sesi_harian[1].session_code.time_in_text}"
     table.columns["7th"].heading.justification = :center
-  
+
     if @sesi_harian.size == 3
       table.columns["8th"] = PDF::SimpleTable::Column.new("8th")
       table.columns["8th"].heading = "#{@sesi_harian[2].session_code.time_in_text}"
@@ -1275,12 +1274,12 @@ class CourseManagementController < ApplicationController
       table.columns["8th"].heading = " "
       table.columns["8th"].heading.justification = :center
     end
-    table.show_lines	= :all
-	  table.shade_rows  = :none
-	  table.width	      = 700
+    table.show_lines = :all
+    table.shade_rows = :none
+    table.width = 700
     table.show_headings = true
-    table.orientation	= :center
-    table.position	= :center
+    table.orientation = :center
+    table.position = :center
     table.font_size = 9
     table.heading_font_size = 10
 
@@ -1288,9 +1287,9 @@ class CourseManagementController < ApplicationController
     jumlah = 0
     @students.each_with_index do |stu, idx|
       data = [
-        #{"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> , "5th"=> , "6th"=> , "7th"=> , "8th"=> }
-        {"1st"=> idx+1 , "2nd"=> stu.profile.name + "\n  ", "3rd"=> nof{stu.profile.opis.upcase}, "4th"=> nof{stu.profile.employments.first.job_profile.job_grade}, "5th"=> stu.profile.ic_number, "6th"=> "", "7th"=> "",
-          "8th"=> "" }
+          #{"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> , "5th"=> , "6th"=> , "7th"=> , "8th"=> }
+          {"1st" => idx+1, "2nd" => stu.profile.name + "\n  ", "3rd" => nof { stu.profile.opis.upcase }, "4th" => nof { stu.profile.employments.first.job_profile.job_grade }, "5th" => stu.profile.ic_number, "6th" => "", "7th" => "",
+           "8th" => ""}
       ]
       #data["5th"].justification = :center
       data_all = data_all + data
@@ -1314,7 +1313,7 @@ class CourseManagementController < ApplicationController
   end
 
   def kehadiran_manual_asal
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     sql = "select sh.*, sc.time_in_text from sesi_harian as sh
 	       INNER JOIN session_codes as sc ON sc.id=sh.session_code_id
 		   where sh.course_implementation_id=#{@course_implementation.id}
@@ -1340,11 +1339,11 @@ class CourseManagementController < ApplicationController
   end
 
   def new_catat_kehadiran
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
   end
 
   def masuk_data_kehadiran
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     #@sesi_harian = SesiHarian.find_all_by_tarikh(params[:sesi_harian][:tarikh])
     sql = "select sh.*, sc.time_in_text from sesi_harian as sh
                INNER JOIN session_codes as sc ON sc.id=sh.session_code_id
@@ -1352,12 +1351,12 @@ class CourseManagementController < ApplicationController
                    and sh.tarikh='#{params[:sesi_harian][:tarikh]}'
                    ORDER BY sc.time_start"
     @sesi_harian = SesiHarian.find_by_sql(sql)
-	
+
     @students = CourseApplication.find_by_sql("select ca.id,ca.profile_id,p.name from course_applications as ca join profiles as p on ca.profile_id=p.id where course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9) order by name ASC")
   end
 
   def attendance
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
 
     if @course_implementation
@@ -1377,8 +1376,8 @@ class CourseManagementController < ApplicationController
   end
 
   def create_attendance
-    @course_implementation = CourseImplementation.find(params[:id]) if ( params[:id] && params[:id] != "")
-    @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
+    @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
 
     i = 0
     if params[:att] == nil
@@ -1389,11 +1388,11 @@ class CourseManagementController < ApplicationController
     #delete first
     params[:att].each { |arr|
       student_id = arr[0]
-      sesi = arr[1]  #this is array
+      sesi = arr[1] #this is array
       sesi.each { |v|
         sql = "delete from attendances where course_implementation_id=#{@course_implementation.id}
 				   and date_attend='#{params[:sesi_harian][:tarikh]}'
-        "#and sesi_harian_id = #{v}"
+        " #and sesi_harian_id = #{v}"
         a = Attendance.find_by_sql(sql)
       }
       break;
@@ -1401,7 +1400,7 @@ class CourseManagementController < ApplicationController
 
     params[:att].each { |arr|
       student_id = arr[0]
-      sesi = arr[1]  #this is array
+      sesi = arr[1] #this is array
       sesi.each { |v|
         @a = Attendance.new
         @a.course_implementation_id = @course_implementation.id
@@ -1455,7 +1454,7 @@ class CourseManagementController < ApplicationController
     @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
 
     if @course_implementation
-      @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+      @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
     end
 
     rujukan = LatestApproveReference.find_by_course_department_id(@course_implementation.course.course_department_id)
@@ -1482,7 +1481,7 @@ class CourseManagementController < ApplicationController
 
     filename = "surat_sah_"+ "#{@course_implementation.id}.pdf"
 
-    pdf_surat_pengesahan(filename,@students)
+    pdf_surat_pengesahan(filename, @students)
     redirect_to("/surat_pengesahan/" + filename)
   end
 
@@ -1491,7 +1490,7 @@ class CourseManagementController < ApplicationController
     @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
 
     if @course_implementation
-      @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND (student_status_id=6 or student_status_id=4 )")
+      @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND (student_status_id=6 or student_status_id=4 )")
       #@students = CourseApplication.find_by_sql("select ca.id,ca.profile_id,ca.layak_sijil,ca.payment_date,ca.fee_amount,ca.cert_remark,ca.no_sijil, p.name from course_applications as ca join profiles as p on ca.profile_id=p.id WHERE course_implementation_id = #{@course_implementation.id} AND (student_status_id=6 or student_status_id=4) order by #{orderby} #{@arrow}")
     end
 
@@ -1520,7 +1519,7 @@ class CourseManagementController < ApplicationController
 
     filename = "surat_takhadir_"+ "#{@course_implementation.id}.pdf"
 
-    pdf_surat_pengesahan(filename,@students)
+    pdf_surat_pengesahan(filename, @students)
     redirect_to("/surat_pengesahan/" + filename)
   end
 
@@ -1529,11 +1528,11 @@ class CourseManagementController < ApplicationController
     @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
 
     if @course_implementation
-      @students = CourseApplication.find(:all, :conditions=>"course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+      @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
     end
 
     filename = "sijil.pdf"
-    gen_pdf_all(filename,@students)
+    gen_pdf_all(filename, @students)
     redirect_to("/pdf_certificate/" + filename)
   end
 
@@ -1548,7 +1547,7 @@ class CourseManagementController < ApplicationController
     #@students = CourseApplication.find_by_sql("select * from profiles join course_applications on course_applications.profile_id=profiles.id WHERE course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9) order by #{orderby} #{@arrow}")
     @students = CourseApplication.find_by_sql("select * from course_applications join profiles on course_applications.profile_id=profiles.id WHERE course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9) order by #{orderby} #{@arrow}")
 
-    pdf = PDF::Writer.new(:paper=>"A4",:orientation => :landscape)
+    pdf = PDF::Writer.new(:paper => "A4", :orientation => :landscape)
     pdf.select_font("Helvetica")
     pdf.margins_mm(5)
 
@@ -1603,10 +1602,10 @@ class CourseManagementController < ApplicationController
     table.columns["7th"].heading.justification = :center
 
 
-    table.show_lines	= :all
+    table.show_lines = :all
     table.show_headings = true
-    table.orientation	= :center
-    table.position	= :center
+    table.orientation = :center
+    table.position = :center
     table.font_size = 9
     table.heading_font_size = 10
 
@@ -1614,18 +1613,18 @@ class CourseManagementController < ApplicationController
     jumlah = 0
     @students.each_with_index do |stu, idx|
       data = [
-        #{"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> , "5th"=> , "6th"=> , "7th"=> , "8th"=> }
-        {"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> nof{stu.profile.opis.upcase}, "5th"=> "", "6th"=> nof{stu.payment_date.to_formatted_s(:my_format_4)}, "7th"=> stu.fee_amount.to_i }
+          #{"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> , "5th"=> , "6th"=> , "7th"=> , "8th"=> }
+          {"1st" => idx+1, "2nd" => stu.profile.name, "3rd" => stu.profile.ic_number, "4th" => nof { stu.profile.opis.upcase }, "5th" => "", "6th" => nof { stu.payment_date.to_formatted_s(:my_format_4) }, "7th" => stu.fee_amount.to_i}
       ]
       #data["5th"].justification = :center
       data_all = data_all + data
       stu.fee_amount = 0 if stu.fee_amount == nil
       jumlah += stu.fee_amount
     end
-    data_all= data_all + [{"2nd"=> "JUMLAH BESAR :","7th"=> jumlah.to_i}]
+    data_all= data_all + [{"2nd" => "JUMLAH BESAR :", "7th" => jumlah.to_i}]
 
     table.data.replace data_all
-	  table.columns["6th"].justification = :center
+    table.columns["6th"].justification = :center
     table.render_on(pdf)
     @font_size_normal = 9
 
@@ -1706,15 +1705,15 @@ class CourseManagementController < ApplicationController
     @students = CourseApplication.find_by_sql("select * from course_applications join profiles on course_applications.profile_id=profiles.id WHERE course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9) order by #{orderby} #{@arrow}")
 
 
-    pdf = PDF::Writer.new(:paper=>"A4")
+    pdf = PDF::Writer.new(:paper => "A4")
     pdf.select_font("Helvetica")
     pdf.margins_mm(20)
 
     @font_size_normal = 10
     pdf.text "Lampiran 7", :font_size => @font_size_normal, :justification => :right
 
-    put_text_center(10,"<b>INSTITUT TANAH DAN UKUR NEGARA (INSTUN)</b>",13,pdf)
-    put_text_center(30,"<b>BORANG YURAN PENDAFTARAN PESERTA</b>",13,pdf)
+    put_text_center(10, "<b>INSTITUT TANAH DAN UKUR NEGARA (INSTUN)</b>", 13, pdf)
+    put_text_center(30, "<b>BORANG YURAN PENDAFTARAN PESERTA</b>", 13, pdf)
 
     pdf.text(" \n")
     pdf.text(" \n")
@@ -1777,10 +1776,10 @@ class CourseManagementController < ApplicationController
     table.columns["7th"].heading = "Tandatangan"
 
 
-    table.show_lines	  = :all
+    table.show_lines = :all
     table.show_headings = true
-    table.orientation   = :center
-    table.position	  = :center
+    table.orientation = :center
+    table.position = :center
     table.font_size = 9
     table.heading_font_size = 10
 
@@ -1788,15 +1787,15 @@ class CourseManagementController < ApplicationController
     jumlah = 0
     @students.each_with_index do |stu, idx|
       data = [
-        #{"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> , "5th"=> , "6th"=> , "7th"=> , "8th"=> }
-        {"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> stu.profile.opis.upcase, "5th"=> nof{stu.payment_date.to_formatted_s(:my_format_4)}, "6th"=> stu.fee_amount.to_i}
+          #{"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> , "5th"=> , "6th"=> , "7th"=> , "8th"=> }
+          {"1st" => idx+1, "2nd" => stu.profile.name, "3rd" => stu.profile.ic_number, "4th" => stu.profile.opis.upcase, "5th" => nof { stu.payment_date.to_formatted_s(:my_format_4) }, "6th" => stu.fee_amount.to_i}
       ]
       #data["5th"].justification = :center
       data_all = data_all + data
       stu.fee_amount = 0 if stu.fee_amount == nil
       jumlah += stu.fee_amount
     end
-    data_all= data_all + [{"2nd"=> "JUMLAH :","6th"=> jumlah.to_i}]
+    data_all= data_all + [{"2nd" => "JUMLAH :", "6th" => jumlah.to_i}]
 
     table.data.replace data_all
     table.columns["6th"].justification = :center
@@ -1876,9 +1875,9 @@ class CourseManagementController < ApplicationController
 
 
   private
-  def gen_pdf_all (file,students)
+  def gen_pdf_all (file, students)
 
-    pdf = PDF::Writer.new(:paper=>"A4")
+    pdf = PDF::Writer.new(:paper => "A4")
     pdf.select_font("Times-Roman")
     #pdf.select_font("Helvetica")
 
@@ -1894,7 +1893,7 @@ class CourseManagementController < ApplicationController
       #pdf.image "public/images/header_install.png", :justification => :center
 
       pdf.select_font("Times-Italic")
-      generate_pattern_kehadiran(student,pdf)
+      generate_pattern_kehadiran(student, pdf)
 
       i = i + 1
       pdf.new_page if (i != students.size)
@@ -1912,52 +1911,52 @@ class CourseManagementController < ApplicationController
 
 
   private
-  def generate_pattern_kehadiran(student,pdf)
-	  nric = "#{student.profile.ic_number[0,6]}-#{student.profile.ic_number[6,2]}-#{student.profile.ic_number[8,4]}  "
+  def generate_pattern_kehadiran(student, pdf)
+    nric = "#{student.profile.ic_number[0, 6]}-#{student.profile.ic_number[6, 2]}-#{student.profile.ic_number[8, 4]}  "
 
-	  #pdf.add_image_from_file("public/images/hd3.jpg",160,697)
+    #pdf.add_image_from_file("public/images/hd3.jpg",160,697)
     #pdf.add_image_from_file("public/images/pbtpg-s.jpg",370,700)
 
-	  pdf.select_font("Times-Italic")
-	  put_text_center(70,"Sijil Penyertaan",40,pdf)
-	  put_text_center(140,"Dengan ini disahkan",18,pdf)
-	  pdf.select_font "Times-Roman"
-	  put_text_center(180,"#{student.profile.name.upcase}",24,pdf)
-	  put_text_center(200,"#{nric}",20,pdf)
-	  pdf.select_font("Times-Italic")
-	  put_text_center(250,"Telah menghadiri ",13,pdf)
-	  pdf.select_font "Times-Bold"
-	  put_text_center(280,"#{student.course.name.upcase}",20,pdf)
-	  pdf.select_font "Times-Italic"
-	  put_text_center(320,"yang dianjurkan oleh",13,pdf)
-	  pdf.select_font "Times-Roman"
-	  put_text_center(340,"INSTITUT TANAH DAN UKUR NEGARA",15,pdf)
-	  pdf.select_font "Times-Roman"
-	  put_text_center(360,"(INSTUN)",13,pdf)
-	  pdf.select_font "Times-Italic"
-	  put_text_center(420,"pada",13,pdf)
-	  pdf.select_font "Times-Roman"
-	  put_text_center(440,"#{student.course_implementation.tempoh_2.upcase}",13,pdf)
-	  pdf.select_font "Times-Italic"
-	  put_text_center(480,"bertempat",13,pdf)
-	  pdf.select_font "Times-Roman"
-	  put_text_center(500,"INSTITUT TANAH DAN UKUR NEGARA",13,pdf)
-	  put_text_center(515,"KEMENTERIAN SUMBER ASLI DAN ALAM SEKITAR",13,pdf)
-	  put_text_center(530,"BEHRANG, 35950 TANJONG MALIM",13,pdf)
-	  put_text_center(545,"PERAK DARUL RIDZUAN",13,pdf)
-	  put_text_center(560,"",13,pdf)
-	  put_text_center(575,"",13,pdf)
+    pdf.select_font("Times-Italic")
+    put_text_center(70, "Sijil Penyertaan", 40, pdf)
+    put_text_center(140, "Dengan ini disahkan", 18, pdf)
+    pdf.select_font "Times-Roman"
+    put_text_center(180, "#{student.profile.name.upcase}", 24, pdf)
+    put_text_center(200, "#{nric}", 20, pdf)
+    pdf.select_font("Times-Italic")
+    put_text_center(250, "Telah menghadiri ", 13, pdf)
+    pdf.select_font "Times-Bold"
+    put_text_center(280, "#{student.course.name.upcase}", 20, pdf)
+    pdf.select_font "Times-Italic"
+    put_text_center(320, "yang dianjurkan oleh", 13, pdf)
+    pdf.select_font "Times-Roman"
+    put_text_center(340, "INSTITUT TANAH DAN UKUR NEGARA", 15, pdf)
+    pdf.select_font "Times-Roman"
+    put_text_center(360, "(INSTUN)", 13, pdf)
+    pdf.select_font "Times-Italic"
+    put_text_center(420, "pada", 13, pdf)
+    pdf.select_font "Times-Roman"
+    put_text_center(440, "#{student.course_implementation.tempoh_2.upcase}", 13, pdf)
+    pdf.select_font "Times-Italic"
+    put_text_center(480, "bertempat", 13, pdf)
+    pdf.select_font "Times-Roman"
+    put_text_center(500, "INSTITUT TANAH DAN UKUR NEGARA", 13, pdf)
+    put_text_center(515, "KEMENTERIAN SUMBER ASLI DAN ALAM SEKITAR", 13, pdf)
+    put_text_center(530, "BEHRANG, 35950 TANJONG MALIM", 13, pdf)
+    put_text_center(545, "PERAK DARUL RIDZUAN", 13, pdf)
+    put_text_center(560, "", 13, pdf)
+    put_text_center(575, "", 13, pdf)
     pdf.y = pdf.absolute_top_margin - (525 + 50 + 100)
-	  pdf.select_font "Times-Roman"
-	  pdf.text "Ketua Setiausaha			     ", :font_size => 9, :justification => :right
-	  pdf.text "Kementerian Sumber Asli dan Alam Sekitar ", :font_size => 9, :justification => :right
+    pdf.select_font "Times-Roman"
+    pdf.text "Ketua Setiausaha			     ", :font_size => 9, :justification => :right
+    pdf.text "Kementerian Sumber Asli dan Alam Sekitar ", :font_size => 9, :justification => :right
 
-	  pdf.text "\n\n\n\nPengarah				 ", :font_size => 9, :justification => :right
-	  pdf.text "Institut Tanah dan Ukur Negara	      ", :font_size => 9, :justification => :right
+    pdf.text "\n\n\n\nPengarah				 ", :font_size => 9, :justification => :right
+    pdf.text "Institut Tanah dan Ukur Negara	      ", :font_size => 9, :justification => :right
 
   end
 
-  def put_text_center(y,t,s,pdf)
+  def put_text_center(y, t, s, pdf)
     #s = 28 #font size
     w = pdf.text_width(t, s) / 2.0
     x = pdf.margin_x_middle
@@ -1966,7 +1965,7 @@ class CourseManagementController < ApplicationController
   end
 
   private
-  def pdf_surat_pengesahan (file,students)
+  def pdf_surat_pengesahan (file, students)
 
     if RUBY_PLATFORM == "i386-mswin32"
       header_image = "public/images/header800.jpg"
@@ -1976,18 +1975,18 @@ class CourseManagementController < ApplicationController
       footer_image = "/aplikasi/www/instun/public/images/footer800.jpg"
     end
 
-		@font_size = 11
-		@font_size_small = 10
-		@tajuk_font_size = 11
+    @font_size = 11
+    @font_size_small = 10
+    @tajuk_font_size = 11
 
-		pdf = PDF::Writer.new(:paper=>"A4")
-		pdf.margins_pt(36, 50, 36, 50) # 36 54 72 90
-		@my_margin = pdf.absolute_top_margin - 40
-		pdf.select_font("Helvetica")
+    pdf = PDF::Writer.new(:paper => "A4")
+    pdf.margins_pt(36, 50, 36, 50) # 36 54 72 90
+    @my_margin = pdf.absolute_top_margin - 40
+    pdf.select_font("Helvetica")
 
-		i = 1
-		#@students = CourseApplication.find(params[:course_application_ids])
-		for student in @students
+    i = 1
+                                   #@students = CourseApplication.find(params[:course_application_ids])
+    for student in @students
 
       #header
       if (params[:is_cetakan_komputer].to_i == 3) or params[:is_cetakan_komputer].to_i == 2
@@ -2003,18 +2002,18 @@ class CourseManagementController < ApplicationController
 
       @rujukan_kami = params[:rujukan_kami]
       @tarikh_surat_day = params[:tarikh_surat_day]
-      @tarikh_surat_day = "	 " if params[:tarikh_surat_day] == ""
+      @tarikh_surat_day = "   " if params[:tarikh_surat_day] == ""
       @tarikh_surat_month = params[:tarikh_surat_month]
       @tarikh_surat_year = params[:tarikh_surat_year]
 
-      tarikh_surat = Date.new(@tarikh_surat_year.to_i,@tarikh_surat_month.to_i,@tarikh_surat_day.to_i)
+      tarikh_surat = Date.new(@tarikh_surat_year.to_i, @tarikh_surat_month.to_i, @tarikh_surat_day.to_i)
       #tarikh_surat = Time.new
       @tarikh = msian_date_very_formal(tarikh_surat)
       employment = Employment.find_by_profile_id(student.profile.id)
       if employment and employment.job_profile
-        job_name = nof{employment.job_profile.job_name}
-        job_name = employment.job_profile.job_name.split(" ").map! {|e| e.capitalize}.join(" ") if @job_name != nil
-        job_grade = nof{employment.job_profile.job_grade}
+        job_name = nof { employment.job_profile.job_name }
+        job_name = employment.job_profile.job_name.split(" ").map! { |e| e.capitalize }.join(" ") if @job_name != nil
+        job_grade = nof { employment.job_profile.job_grade }
         @job_profile = "#{job_name} #{job_grade}"
       else
         @job_profile = " "
@@ -2038,10 +2037,10 @@ class CourseManagementController < ApplicationController
       salinan_kepada = params[:salinan_kepada]
 
       if (student.profile.address1 != nil) && (student.profile.state != nil)
-        p_addr1 = student.profile.address1.split(" ").map! {|e| e}.join(" ")
-        p_addr2 = student.profile.address2.split(" ").map! {|e| e}.join(" ")
-        p_addr3 = student.profile.address3.split(" ").map! {|e| e}.join(" ")
-        p_state = student.profile.state.description.split(" ").map! {|e| e.capitalize}.join(" ")
+        p_addr1 = student.profile.address1.split(" ").map! { |e| e }.join(" ")
+        p_addr2 = student.profile.address2.split(" ").map! { |e| e }.join(" ")
+        p_addr3 = student.profile.address3.split(" ").map! { |e| e }.join(" ")
+        p_state = student.profile.state.description.split(" ").map! { |e| e.capitalize }.join(" ")
 
         p_addr_arr = Array.new
         p_addr_arr.push(p_addr1) if student.profile.address1 != ""
@@ -2049,7 +2048,7 @@ class CourseManagementController < ApplicationController
         p_addr_arr.push(p_addr3) if student.profile.address3 != ""
         p_addr_arr.push(p_state.upcase) if student.profile.state != ""
         p_addr = p_addr_arr.join("\n")
-        p_addr = p_addr.tr_s(',' , ',')
+        p_addr = p_addr.tr_s(',', ',')
       else
         p_addr_arr = Array.new
         p_addr_arr.push(" ")
@@ -2067,13 +2066,13 @@ class CourseManagementController < ApplicationController
       if @signature
         @tandatangan_nama = @signature.person_name.upcase
         if @signature.person_position != ""
-          @tandatangan_jawatan = @signature.person_position.split(" ").map! {|e| e.capitalize}.join(" ")
+          @tandatangan_jawatan = @signature.person_position.split(" ").map! { |e| e.capitalize }.join(" ")
         else
           @tandatangan_jawatan = ""
         end
       else
-        @tandatangan_nama    = "		     "
-        @tandatangan_jawatan = "		     "
+        @tandatangan_nama = "         "
+        @tandatangan_jawatan = "         "
       end
 
       pdf.y = @my_margin -50
