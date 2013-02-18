@@ -67,7 +67,7 @@
       document.getElementById('popmenu').innerHTML = "<ul>" +
         //                                               "<li><a href=\""  + controller + "/new/" + objid + "\">&nbsp;&nbsp;New</a>" +
       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
-        "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+        "<li><a method=\"delete\" confirm = \"Are you sure to delete " + objname + "?\" href= /"+ controller + "/" + objid+"\">&nbsp;&nbsp;Padam</a>" +
         "</ul>"
       this.position(mnu,e);
     },

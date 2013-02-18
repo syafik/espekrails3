@@ -7,7 +7,7 @@ class PlacesController < ApplicationController
   end
   
   def index
-    redirect_to :action => "list"
+    redirect_to :action => "list", :layout => "standard-layout"
   end
   
   def list_kementerian
@@ -31,6 +31,7 @@ class PlacesController < ApplicationController
   end
   
   def search
+     render layout: "standard-layout"
   end
   
   def search_by_name

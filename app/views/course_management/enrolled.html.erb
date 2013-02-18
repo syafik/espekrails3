@@ -12,13 +12,13 @@ function JanaSuratTawaran(schedule_id) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('popmenu').css({"width":150});
+    $('popmenu').html("<ul>" +
 					        "<li><a href=\"javascript: daftarPeserta(document.list_form)\">&nbsp;&nbsp;Daftar</a>" +
 					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
 					        //"<hr size=1>" +
 					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
-					        "</ul>"
+					        "</ul>")
 }
 </script>
 
@@ -100,7 +100,7 @@ function updateCourseName() {
 }
 
 updateCourseName()
-$('popmenu').style.width="130" //set width of popmenu for this page
+$('popmenu').css({"width":"130"}) //set width of popmenu for this page
 
 </script>
 

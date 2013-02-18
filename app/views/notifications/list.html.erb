@@ -20,15 +20,15 @@ function goSubmit() {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 200;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width":200});
+    $('#popmenu').html("<ul>" +
                            // "<li><a href=\""  + "/trainer" + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					       // "<li><a href=\""  + "/trainer" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
 					       // "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					       // "<hr size=1>" +
 							"<li><a href=\""  + "/notifications" + "/" + objid + "/edit\">&nbsp;&nbsp;Pengesahan Status Makluman</a>" +
 					        "<li><a href=\""  + "/notifications" + "/" + objid + "/detail\">&nbsp;&nbsp;Papar Senarai Terperinci</a>" +
-							"</ul>"
+							"</ul>")
      
 }
 </script>

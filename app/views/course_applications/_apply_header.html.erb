@@ -1,6 +1,7 @@
 <script>
   function submitForm(df) {
     if (checkFormDulu(df)) {
+       <%#*return false;%>
       df.submit();
     }
     else {
@@ -10,7 +11,6 @@
 
   function checkFormDulu(df) {
     var is_apply_checked = 0;var idx = 0;
-
     if (df.course_implementation_code.value=="") { alert('Sila Masukkan Kod Kursus');df.course_implementation_code.focus();return false;}
     for (i=0; i<df.apply_status.length ; i++ ) {
       if (df.apply_status[i].checked == true) {
@@ -18,7 +18,7 @@
         idx = i;
       }
     }
-    if (is_apply_checked == 0) { alert('Sila Pilih Status Permohonan(Dalam Proses,Diterima atau Ditolak)');return false;}df.action  = "/course_applications/" + df.apply_status[idx].value + "/" + $('course_implementation_id').value;return true;
+    if (is_apply_checked == 0) { alert('Sila Pilih Status Permohonan(Dalam Proses,Diterima atau Ditolak)');return false;}df.action  = "/course_applications/" + df.apply_status[idx].value + "/" + $('#course_implementation_id').val();return true;
   }
 
   function findAndSortWith(orderby,arrow) {
@@ -42,7 +42,7 @@
     for(var i = 0; i < list.length; i++) {
       if (list[i].name == course_name) {
         //alert(list[i].name);
-        $("course_id").value = list[i].id
+        $("#course_id").val(list[i].id)
       }
     }
   }

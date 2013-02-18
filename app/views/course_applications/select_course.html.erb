@@ -1,7 +1,7 @@
 <script>
   function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 240;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width" : 240})
+    $('#popmenu').html("<ul>" +
       "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" +
       "<li><a href=\"" + controller + "/" + objid + "/copy_and_new\">&nbsp;&nbsp;Salin</a>" +
@@ -15,13 +15,13 @@
       "<li><a href=\"" + "/course_applications" + "/" + objid + "/unprocessed\">&nbsp;&nbsp;Lihat Senarai Pemohon(Dalam Proses)</a>" +
       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Jana Surat Tawaran</font>" +
       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
-    "</ul>"
+    "</ul>")
      
   }
 
   function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 240;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width" : 240});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
       "<li><a href=\"" + controller + "/" + objid + "/copy_and_new\">&nbsp;&nbsp;Salin</a>" +
@@ -42,7 +42,7 @@
     //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Pensyarah</a>" +
     //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Pilih Pensyarah</a>" +
     //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tempah Fasiliti</a>" +
-    "</ul>"
+    "</ul>")
      
   }
 

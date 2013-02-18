@@ -1,4 +1,5 @@
-<script>
+<% content_for :js do %>
+<script type="text/javascript">
   function confirmAndDelete(url, objname) {
     if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
       location = url
@@ -12,17 +13,17 @@
   }
 
   function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width" : 150});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" +
       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" +
-      "</ul>"
+      "</ul>")
   }
 
   function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width" : 150});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\""  + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
       "<hr size=1>" +
@@ -35,11 +36,8 @@
     //"<li><a href=\""  + controller + "/edit_surat_tawaran_select_peserta/" + "<%=@course_implementation.id if @course_implementation%>" + "\">&nbsp;&nbsp;Jana Surat Tawaran</a>" +
     //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Daftar</a>" +
     //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
-    "</ul>"
+    "</ul>");
   }
-</script>
-
-<script>
 
   function acceptSelected(df) {
     var sum_checked = 0
@@ -115,7 +113,7 @@
   }
 
 </script>
-
+<% end %>
 <!----------------------------------------------------------------------------------------->
 
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
@@ -133,7 +131,7 @@
 <div id="label" style="clear: both; visibility: hidden">Bonner</div>
 
 <script type="text/javascript">
-  $('popmenu').style.width="130" //set width of popmenu for this page
+  $('#popmenu').css({"width" : 130}) //set width of popmenu for this page
 </script>
 
 

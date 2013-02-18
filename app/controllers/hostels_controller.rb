@@ -301,7 +301,7 @@ class HostelsController < ApplicationController
 			   AND p.name ilike '%#{params[:name]}%'
     "
     @students = CourseApplication.find_by_sql(sql)
-  render :layout => "standard-layouts"
+    render :layout => "standard-layouts"
   end
   	
 
@@ -592,39 +592,12 @@ class HostelsController < ApplicationController
   end
   
   def cetak_find_checkout
-    find_checkout
+    prepare_find_checkout
+    render layout: "standard-layout"
   end
-    
   def find_checkout
-  	if params[:to_checkout_room] and params[:to_checkout_room]!=nil
-      r=params[:to_checkout_room].split("-")
-      if r.size==3
-        w="where block_desc='#{r[0]}' and level='#{r[1]}' and room='#{r[2]}'"
-      end
-    end
-  	if params[:to_checkout_name] and params[:to_checkout_name]!=nil
-      w="where name ilike '%#{params[:to_checkout_name]}%'"
-    end
-  	if params[:to_checkout_nokp] and params[:to_checkout_nokp]!=nil
-      w="where ic_number ilike '%#{params[:to_checkout_nokp]}%'"
-    end
-	
-    t = Time.now
-    y = t.strftime("%Y")
-    m = t.strftime("%m")
-    d = t.strftime("%d")
-    ymd = "#{y}-#{m}-#{d}"
-
-  	$_ = "select * from vw_detail_penghuni_asrama #{w}"
-  	$_ = "select * from vw_detail_penghuni_asrama where expected_date_out='#{ymd}'" if w==nil
-	
-  	if params[:to_checkout_kodkursus] and params[:to_checkout_kodkursus]!=nil
-	
-	  	$_ = "select vhp.*,ci.code from vw_detail_penghuni_asrama vhp INNER JOIN course_implementations ci ON ci.id=vhp.course_implementation_id 
-		      where ci.code = '#{params[:to_checkout_kodkursus]}'"
-    end
-
-    @ls = CourseApplication.find_by_sql($_)
+    prepare_find_checkout
+    render layout: "standard-layout"
   end
 
   def iwannachkout
@@ -766,4 +739,35 @@ class HostelsController < ApplicationController
 
  
   #endof sewaan asrama
+  def prepare_find_checkout
+  	if params[:to_checkout_room] and params[:to_checkout_room]!=nil
+      r=params[:to_checkout_room].split("-")
+      if r.size==3
+        w="where block_desc='#{r[0]}' and level='#{r[1]}' and room='#{r[2]}'"
+      end
+    end
+  	if params[:to_checkout_name] and params[:to_checkout_name]!=nil
+      w="where name ilike '%#{params[:to_checkout_name]}%'"
+    end
+  	if params[:to_checkout_nokp] and params[:to_checkout_nokp]!=nil
+      w="where ic_number ilike '%#{params[:to_checkout_nokp]}%'"
+    end
+
+    t = Time.now
+    y = t.strftime("%Y")
+    m = t.strftime("%m")
+    d = t.strftime("%d")
+    ymd = "#{y}-#{m}-#{d}"
+
+  	$_ = "select * from vw_detail_penghuni_asrama #{w}"
+  	$_ = "select * from vw_detail_penghuni_asrama where expected_date_out='#{ymd}'" if w==nil
+
+  	if params[:to_checkout_kodkursus] and params[:to_checkout_kodkursus]!=nil
+
+	  	$_ = "select vhp.*,ci.code from vw_detail_penghuni_asrama vhp INNER JOIN course_implementations ci ON ci.id=vhp.course_implementation_id
+		      where ci.code = '#{params[:to_checkout_kodkursus]}'"
+    end
+
+    @ls = CourseApplication.find_by_sql($_)
+  end
 end

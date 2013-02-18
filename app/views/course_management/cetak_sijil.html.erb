@@ -29,14 +29,14 @@ function JanaSuratTawaran(schedule_id) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width" :150});
+    $('#popmenu').html("<ul>" +
 					        "<li><a href=\"javascript:printPeserta(document.list_form)\">&nbsp;&nbsp;Jana Sijil</a>" +
 					        //"<li><a href=\"javascript:printPeserta(document.list_form)\">&nbsp;&nbsp;Jana Sijil Utk Perserta Ini</a>" +
 					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
 					        //"<hr size=1>" +
 					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
-					        "</ul>"
+					        "</ul>")
 }
 </script>
 

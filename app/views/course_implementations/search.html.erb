@@ -8,8 +8,8 @@
   }
 
   function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('popmenu').css({"width" : 230})
+    $('popmenu').html("<ul>" + 
       "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" +
       "<li><a href=\"" + controller + "/" + objid + "/copy_and_new\">&nbsp;&nbsp;Salin</a>" +
@@ -23,13 +23,13 @@
       "<li><a href=\"" + "/course_applications" + "/all?id=" + objid + "\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" +
       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Jana Surat Tawaran</font>" +
       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
-    "</ul>"
+    "</ul>");
      
   }
 
   function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" +
+    $('#popmenu').css({"width" : 230});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
       "<li><a href=\"" + controller + "/" + objid + "/copy_and_new\">&nbsp;&nbsp;Salin</a>" +
@@ -56,7 +56,7 @@
       "<li><a href=\"" + "javascript: laksana(" + "" + objid + ")\">&nbsp;&nbsp;Status Perlaksanaan</a>" +
       //"<li><a href=\""  + "/course_applications" + "/edit_surat_tawaran_select_peserta/" + objid + "\">&nbsp;&nbsp
     //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;
-    "</ul>"
+    "</ul>");
      
   }
 
@@ -204,8 +204,7 @@ bulans = ["01","02","03","04","05","06","07","08","09","10","11","12"]
   i = 0;
   even = true;
 
-  for query in @course_implementations
-    i = i + 1
+  @course_implementations.each_with_index do |query, i|
     bgclr = "#CCCCFF" if (even == true)
     bgclr = "#FFFFFF" if (even == false)
     even = !even

@@ -7,7 +7,7 @@ class ScalesController < ApplicationController
   end
   def index
     list
-    render :action => 'list'
+    render :action => 'list',  :layout => "standard-layout"
   end
 
   def list
@@ -16,10 +16,12 @@ class ScalesController < ApplicationController
 
   def show
     @scale = Scale.find(params[:id])
+     render layout: "standard-layout"
   end
 
   def new
     @scale = Scale.new
+     render layout: "standard-layout"
   end
 
   def create
@@ -34,6 +36,7 @@ class ScalesController < ApplicationController
 
   def edit
     @scale = Scale.find(params[:id])
+     render layout: "standard-layout"
   end
 
   def update

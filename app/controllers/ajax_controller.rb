@@ -151,19 +151,20 @@ class AjaxController < ApplicationController
     params[:code] = params[:code].gsub(/_/,"/")
     @course_implementation = CourseImplementation.find_by_code(params[:code])
     if @course_implementation
-      render :text => "#{@course_implementation.course.name.upcase}"
+      @ret = "#{@course_implementation.course.name.upcase}"
     else
-      render :text => "0"
+      @ret = "0"
     end
   end
 
   def find_course_by_code_2
     params[:code] = params[:code].gsub(/_/,"/")
+@input_id = params[:input_id]
     @course_implementation = CourseImplementation.find_by_code(params[:code])
     if @course_implementation
-      render :text => "#{@course_implementation.course.name.upcase}"
+      @text = "#{@course_implementation.course.name.upcase}"
     else
-      render :text => "<font color=\"red\">&lt;&lt;Kursus Tidak Wujud</font> "
+      @text = "<font color=\"red\">&lt;&lt;Kursus Tidak Wujud</font> "
     end
   end
 

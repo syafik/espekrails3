@@ -8,23 +8,25 @@ class FacilityTypesController < ApplicationController
   
   def index
     list
-    render :action => 'list'
+    render :action => 'list', :layout => "standard-layout"
   end
 
   def list
-  #render_text FacilityCategory.id and return
-   @facility_types = FacilityType.paginate(:per_page => 100, :page => params[:page]).order('code ASC')
-	#@facility_type_sort = FacilityType.find(:all, :conditions=>"facility_category_id=#{FacilityCategory.id}")	
+    #render_text FacilityCategory.id and return
+    @facility_types = FacilityType.paginate(:per_page => 100, :page => params[:page]).order('code ASC')
+    #@facility_type_sort = FacilityType.find(:all, :conditions=>"facility_category_id=#{FacilityCategory.id}")
   end
 
   def show
     @facility_type = FacilityType.find(params[:id])
+    render layout: "standard-layout"
   end
 
   def new
     @facility_type = FacilityType.new
     #@facility_category = FacilityCategory.new
     @facility_category = FacilityCategory.find(:all, :order=>"id")
+    render layout: "standard-layout"
   end
 
   def create
@@ -40,6 +42,7 @@ class FacilityTypesController < ApplicationController
   def edit
     @facility_type = FacilityType.find(params[:id])
     @facility_category = FacilityCategory.find(:all, :order=>"id")
+    render layout: "standard-layout"
   end
 
   def update

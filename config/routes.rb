@@ -563,6 +563,8 @@ InstunRails3::Application.routes.draw do
   match '/ajax/check_existence_of_course_implementation_code' => 'ajax#check_existence_of_course_implementation_code', :via => [:post]
   match '/ajax/auto_tarikh_tutup' => 'ajax#auto_tarikh_tutup', :via => [:post]
   match '/ajax/isvalid_date' => 'ajax#isvalid_date', :via => [:post]
+  match '/ajax/find_course_by_code' => 'ajax#find_course_by_code', :via => [:post]
+  match '/ajax/find_course_by_code_2' => 'ajax#find_course_by_code_2', :via => [:get]
   resources :ajax do
     collection do
       get 'ajax_nric'

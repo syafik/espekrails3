@@ -1,0 +1,10 @@
+<% if @ret == "0"  %>
+      $('#prerequisite_course_name').html('');
+      alert('Kod kursus tidak wujud. Sila masukkan kod yang lain.');
+
+      HighLightTextField($('prerequisite_code'));
+      $('#prerequisite_code').focus();
+      $('#prerequisite_code').select();
+<% else %>
+      $('#prerequisite_course_name').html(<%= a %>)
+<% end %>

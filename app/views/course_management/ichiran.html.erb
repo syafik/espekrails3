@@ -12,13 +12,13 @@ function ListSignature(schedule_id) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 200;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width":200});
+    $('#popmenu').html("<ul>" +
 					        //"<li><a href=\"javascript: daftarPeserta(document.list_form)\">&nbsp;&nbsp;Simpan</a>" +
 					        "<li><a href=\"javascript: ListSignature(<%=@course_implementation.id if @course_implementation%>)\">&nbsp;&nbsp;Cetak Senarai Tandatangan</a>" +
 					        //"<hr size=1>" +
 					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
-					        "</ul>"
+					        "</ul>")
 }
 </script>
 
@@ -76,14 +76,7 @@ function checkAll(df) {
 
 <script type="text/javascript">
 //<![CDATA[
-
-var list = [
-
-<% @courses.each do |course| %>
-<%= "{name: \"#{course.name}\", id: \"#{course.id}\"}," %>
-<% end %>
-{name: "  ", id: "00000"}
-];
+ var list = <%= @courses.collect{|course| {:name => course.name.html_safe, :id => course.id} }.unshift({:name => "  ", :id => "00000"}).to_json.html_safe %>;
 
 //
 function getNames(o, search){
@@ -120,7 +113,7 @@ function updateCourseName() {
 }
 
 updateCourseName()
-$('popmenu').style.width="130" //set width of popmenu for this page
+$('#popmenu').css({"width":"130"}) //set width of popmenu for this page
 
 </script>
 

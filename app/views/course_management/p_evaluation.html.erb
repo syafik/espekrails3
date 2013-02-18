@@ -1,13 +1,13 @@
 <script>
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 200;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width":200});
+    $('#popmenu').html("<ul>" +
 						"<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Lihat Jawapan</a>" +
 					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
 					        //"<hr size=1>" +
 					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
-					        "</ul>"
+					        "</ul>")
 }
 </script>
 

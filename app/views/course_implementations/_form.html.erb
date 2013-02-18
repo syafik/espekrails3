@@ -295,26 +295,6 @@ end
 
 
 </script>
-<!--tr>
-  <td align="right" valign="TOP">&nbsp;</td>
-  <td align="CENTER" valign="TOP">&nbsp;</td>
-  <td>&nbsp;</td>
-</tr>
-<tr>
-  <td align="center" valign="TOP" colspan="3">
-
-	  <fieldset style="width: 600">
-	   <legend><b>Tarikh</b></legend>
-	  </fieldset>
-
-	  </td>
-</tr>
-<tr>
-  <td align="right" valign="TOP">&nbsp;</td>
-  <td align="CENTER" valign="TOP">&nbsp;</td>
-  <td>&nbsp;</td>
-</tr-->
-
 <tr>
   <td align="CENTER" valign="TOP" colspan="3"><hr size="1" width="70%"></td>
 </tr>
@@ -363,12 +343,6 @@ end
     <% end %>
     [<a href="javascript: MM_openBrWindow('/methodologies/new_popup','','scrollbars=yes,width=600,height=400')">Tambah</a>]</td>
 </tr>
-<!--tr>
-			<td align="right" valign="TOP"><strong>Upload Jadual Waktu :</strong></td>
-			<td align="CENTER" valign="TOP"><strong>:</strong></td>
-	    	<td><span class="blockintro">
-<%= file_field "course_implementation", "file" %></span></td>
-		</tr-->
 <tr>
   <td align="right" valign="TOP"><strong>Yuran</strong></td>
   <td align="CENTER" valign="TOP"><strong>:</strong></td>
@@ -478,12 +452,12 @@ end
   <td align="left">
     <table id="qua_table" border="0" width="" cellspacing="0" cellpadding="0">
       <tr id="prerequisite_row_1">
-        <td align="left" height="20"><input type="text" id="prerequisite_id_1" name="prerequisite_codes[]" size="10" value="<%=nof{@course_implementation.course.prerequisites[0].course_implementation.code}%>" onchange="this.value=this.value.toUpperCase();updateCourseName_2('prerequisite_id_1','prerequisite_span_1')">
+        <td align="left" height="20"><input type="text" id="prerequisite_id_1" name="prerequisite_codes[]" size="10" value="<%=nof{@course_implementation.course.prerequisites[0].course_implementation.code}%>" onchange="this.value=this.value.toUpperCase();updateCourseName_2('#prerequisite_id_1','#prerequisite_span_1')">
           <span id="prerequisite_span_1"><%=nof{@course_implementation.course.prerequisites[0].course_implementation.course.name.upcase}%></span>			  </td>
         <td align="left">&nbsp;</td>
       </tr>
       <tr id="prerequisite_row_2">
-        <td align="left" height="20"><input type="text" id="prerequisite_id_2" name="prerequisite_codes[]" size="10" value="<%=nof{@course_implementation.course.prerequisites[1].course_implementation.code}%>"  onchange="this.value=this.value.toUpperCase();updateCourseName_2('prerequisite_id_2','prerequisite_span_2')">
+        <td align="left" height="20"><input type="text" id="prerequisite_id_2" name="prerequisite_codes[]" size="10" value="<%=nof{@course_implementation.course.prerequisites[1].course_implementation.code}%>"  onchange="this.value=this.value.toUpperCase();updateCourseName_2('#prerequisite_id_2','#prerequisite_span_2')">
           <span id="prerequisite_span_2"><%=nof{@course_implementation.course.prerequisites[1].course_implementation.course.name.upcase}%></span>			  </td>
         <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript: deleteQualificationRow('qua_table','prerequisite_row_2')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a></td>
       </tr>
@@ -504,14 +478,15 @@ end
         end
       end%>
     </table>
-    <a href="javascript: addQualification('qua_table')"><font style="color: blue; font-size:10px;"><u>Tambah..</u></font> </a>	  </td>
+    <a href="javascript: addQualification('#qua_table')"><font style="color: blue; font-size:10px;"><u>Tambah..</u></font> </a>	  </td>
 </tr>
 <script>
 
   function addQualification(tn) {
     var tbl = $(tn);
     console.log(tbl)
-    var newRow = tbl.insertRow(tbl.rows.length);
+    console.log(tbl.rows)
+    var newRow = tbl.insertRow($(tn+" tr").length);
     row_id = "row_" + (tbl.rows.length-1);
     if ($(row_id)) {
       row_id = row_id + "_1"
@@ -545,15 +520,15 @@ end
   function updateCourseName_2(input_id,span_id) {
 
     //404 eraa wo boushisurutame
-    code = $(input_id).value.replace(/\//g,"_");
+    code = $(input_id).val().replace(/\//g,"_");
 	
-    data = "code=" + code
+    data = "code=" + code+"input_id="+input_id
     if ($(input_id).value != "") {
-      ajax =  new Ajax.Updater(
-      span_id,
-      '/ajax/find_course_by_code_2?' + data ,
-      {
-        method:'get'
+      $.ajax({
+        type: 'GET',
+        url: '/ajax/find_course_by_code_2',
+        data: data,
+        success: function(data){eval(data);}
       });
     }
   }
@@ -576,26 +551,23 @@ end
   }
 
   function find_course_name_by_code(url, data) {
-    var myAjax = new Ajax.Request(
-    url,
-    {method: 'post', parameters: data, onComplete: find_course_name_by_code_response}
-  );
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: data,
+      success: function(data){eval(data);}
+    });
+
+<%#*var myAjax = new Ajax.Request(%>
+<%#*url,%>
+<%#*{method: 'post', parameters: data, onComplete: find_course_name_by_code_response}%>
+<%#*);%>
   }
 
   function find_course_name_by_code_response(originalRequest) {
     a = originalRequest.responseText
 	
-    if (a == 0) {
-      $('prerequisite_course_name').innerHTML = ""
-      alert('Kod kursus tidak wujud. Sila masukkan kod yang lain.');
-		
-      HighLightTextField($('prerequisite_code'));
-      $('prerequisite_code').focus();
-      $('prerequisite_code').select();
-    }
-    else {
-      $('prerequisite_course_name').innerHTML = a
-    }
+    
   }
 </script>
 </table>
