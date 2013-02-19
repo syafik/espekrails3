@@ -31,7 +31,7 @@
 # controller/action pair which that Permission represents.
 class Permission < ActiveRecord::Base
   
-  set_table_name UserEngine.config(:permission_table)
+#  set_table_name UserEngine.config(:permission_table)
   has_and_belongs_to_many :roles, :join_table => UserEngine.config(:permission_role_table)
 
   validates_presence_of :controller, :action

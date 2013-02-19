@@ -76,8 +76,11 @@ InstunRails3::Application.routes.draw do
   resources :titles
   resources :handicaps
   resources :permission
-  resources :role
-  
+  resources :roles do
+    collection do
+      get 'list'
+    end
+  end
   resources :question_templates do
     collection do
       get 'list'
@@ -569,6 +572,11 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'ajax_nric'
       post 'facility_category_type'
+    end
+  end
+  resources :permissions do
+    collection do
+      get 'list'
     end
   end
   # Sample resource route with options:

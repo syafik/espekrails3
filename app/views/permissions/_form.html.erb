@@ -1,16 +1,62 @@
-<div align=center><%= error_messages_for 'permission' %></div>
+<%= show_error_messages(@permission) %>
 
 <!--[form:permission]-->
 
 <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-<tr>
-	<td align=right><b>Nama :</b></td>
-	<td><%= text_field 'permission', 'name'  %></td>	
-</tr>
-<tr>
-	<td align=right><b>Keterangan :</b></td>
-	<td><%= text_field 'permission', 'info'  %></td>	
-</tr>
+  <tr>
+    <td align=right><b>Controller :</b></td>
+    <td><%= text_field 'permission', 'controller', :maxlength=>255, :size=>50  %></td>
+  </tr>
+  <tr>
+    <td align=right><b>Action :</b></td>
+    <td><%= text_field 'permission', 'action', :maxlength=>255, :size=>50  %></td>
+  </tr>
+  <tr>
+    <td align=right><b>Keterangan :</b></td>
+    <td><%= text_field 'permission', 'description', :maxlength=>255, :size=>50  %></td>
+  </tr>
+  <tr>
+    <td align=right><b>Modul :</b></td>
+    <td><%= text_field 'permission', 'modul', :maxlength=>255, :size=>50  %></td>
+  </tr>
+  <tr>
+    <td align=right><b>Submodul :</b></td>
+    <td><%= text_field 'permission', 'submodul', :maxlength=>255, :size=>50  %></td>
+  </tr>
+  <tr>
+    <%
+    veg_0_checked = ""
+    veg_1_checked = ""
+    if @permission.auditable == nil
+      veg_1_checked = ""
+      veg_0_checked = "checked"
+    elsif @permission.auditable == 0
+      veg_1_checked = ""
+      veg_0_checked = "checked"
+    else
+      veg_1_checked = "checked"
+      veg_0_checked = ""
+    end 	
+  %>
+    <td align=right><b> Auditable? :</b></td>
+    <td><input type="radio" id="is_vegetarian_1" name="permission[auditable]" value="1" <%=veg_1_checked%>>
+      <label for="is_vegetarian_1">Ya</label>
+      &nbsp; <input type="radio" id="is_vegetarian_0" name="permission[auditable]" value="0" <%=veg_0_checked%>>
+      <label for="is_vegetarian_0">Tidak</label>	</td>
+  </tr>
+  <tr>
+    <td align=right><b> Jenis Transaksi :</b></td>
+    <td><%=
+      #@options = @marital_statuses.map { |t| [t.description, t.id] }
+      @options = []
+      @options.push(["Tambah", "C"])
+      @options.push(["Kemaskini", "U"])
+      @options.push(["Padam", "D"])
+      @options.unshift(["Sila Pilih", ""])
+      select(:permission, :action_type, @options, :style=>"width: 100;")
+    %></td>
+  </tr>
 </table>
+
 <!--[eoform:permission]-->
 

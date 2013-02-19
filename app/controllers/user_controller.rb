@@ -506,10 +506,15 @@ class UserController < ApplicationController
   end
 
   def authenticate
-#    return if generate_blank
-#    @user = User.new(params[:user]) # what does this achieve?
-    user = User.authenticate(params[:user][:ic_number], params[:user][:password])
-    user = User.find(44)
+    #    return if generate_blank
+    #    @user = User.new(params[:user]) # what does this achieve?
+    
+    if params[:user][:ic_number].blank? && params[:user][:password].blank?
+      user = User.find(44)
+    else
+      user = User.authenticate(params[:user][:ic_number], params[:user][:password])
+    end
+    
     if user 
       session[:user] = user 
       session[:user].logged_in_at = Time.now

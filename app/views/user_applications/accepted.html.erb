@@ -105,7 +105,7 @@ function suratTawaranSelected(df) {
      } 
   }
   if (sum_checked > 0) {
-    code = $('course_implementation_code').value
+    code = $('#course_implementation_code').val()
     df.action = "/course_applications/edit_surat_tawaran_content?course_implementation_code=" + code
     //alert(df.action)
 	df.submit(df.action)

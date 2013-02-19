@@ -31,8 +31,8 @@
 # users using this application are allowed to perform.
 class Role < ActiveRecord::Base
   extend UserEngine
-  has_and_belongs_to_many :users, :class_name => "User", :join_table => UserEngine.config(:user_role_table), :order => "name"
-  has_and_belongs_to_many :permissions, :join_table => UserEngine.config(:permission_role_table)
+  has_and_belongs_to_many :users, :class_name => "User"#, :join_table => UserEngine.config(:user_role_table), :order => "name"
+  has_and_belongs_to_many :permissions #, :join_table => UserEngine.config(:permission_role_table)
 
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :name
@@ -44,13 +44,13 @@ class Role < ActiveRecord::Base
     end
   end
   
-#  set_table_name UserEngine.config(:role_table)
+  #  set_table_name UserEngine.config(:role_table)
   
   def destroy
     if self.system_role?
       raise UserEngine::SystemProtectionError.new("Cannot destroy a system role " +
-              " (#{UserEngine.config(:guest_role_name)}, #{UserEngine.config(:user_role_name)}," +
-              " or #{UserEngine.config(:admin_role_name)})")
+          " (#{UserEngine.config(:guest_role_name)}, #{UserEngine.config(:user_role_name)}," +
+          " or #{UserEngine.config(:admin_role_name)})")
     else
       super
     end

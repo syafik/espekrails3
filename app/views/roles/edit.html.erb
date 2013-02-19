@@ -1,25 +1,31 @@
-<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
-      <font color="#FFFFFF">KEMASKINI PERANAN</font></th>
-    </tr>
-    <tr>
-    <td>&nbsp;</td>
-    </tr>
-    <tr>
-    <th>
-    <%= link_to 'Lihat', :action => 'show', :id => @role %> |
-	<a href="javascript: history.back()">Kembali</a>
-    </th>
-    </tr>
-  </table>
-  <BR>
+<html>
+  <head>
+    <title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
+    <%= stylesheet_link_tag 'style' %>
+    <%= javascript_include_tag :defaults %>
+    <script src="/javascripts/user_engine.js" type="text/javascript"></script>
+  </head>
 
+  <body>
+    <div id="popmenu" class="menu"></div>
+    <img src="/images/espek-header.jpg">
+    <div align="center"><p style="color: green"><%= flash[:notice] %></p></div>
 
-<%= start_form_tag :action => 'update', :id => @role %>
-  <%= render :partial => 'form' %>
-  <BR>
-  <div align=center>
-  <%= submit_tag 'Edit' %>
-  </div>
-<%= end_form_tag %>
+    <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+      <tr>
+        <th width="85%" height="20" bgcolor="#999999">
+          <font color="#FFFFFF">KEMASKINI PERANAN</font></th>
+      </tr>
+    </table>
+    <BR>
+
+    <%= form_for(@role) do |f| %>
+      <%= render :partial => "form" %>
+      <BR>
+      <div align=center>
+        <%= submit_tag 'Edit' %>
+      </div>
+    <% end %>
+
+  </body>
+</html>

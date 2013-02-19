@@ -1,26 +1,42 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
-      <font color="#FFFFFF">SENARAI CAPAIAN MENU</font></th>
-    </tr>
-    <tr>
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI SEKURITI MENU</font></th>
+  </tr>
+  <tr>
     <td>&nbsp;</td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <th>
-    <%= link_to 'Edit', :action => 'edit', :id => @permission %> |
-	<a href="javascript: history.back()">Kembali</a>
+      <%= link_if_authorized 'Edit', :controller => "permissions", :action => 'edit', :id => @permission %> |
+      <%= link_if_authorized 'Kembali', :controller => "permissions",:action => 'list' %> ke senarai
     </th>
-    </tr>
-  </table>
-  <BR>
-  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-	<tr>
-	<td width="35%" align=right><b>Nama :</b></td>
-	<td><%=h @permission.name %></td>	
-	</tr>
-	<tr>
-	<td width="35%" align=right><b>Keterangan :</b></td>
-	<td><%=h @permission.info %></td>	
-	</tr>
-	</table>
+  </tr>
+</table>
+<BR>
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td align=right width=30%><b>Controller :</b></td>
+    <td><%=h @permission.controller %></td>
+  </tr>
+  <tr>
+    <td align=right width=30%><b>Action :</b></td>
+    <td><%=h @permission.action %></td>
+  </tr>
+  <tr>
+    <td align=right><b>Keterangan :</b></td>
+    <td><%=h @permission.description %></td>
+  </tr>
+  <td align=right><b>Modul :</b></td>
+  <td><%=h @permission.modul %></td>
+</tr>
+<td align=right><b>Submodul  :</b></td>
+<td><%=h @permission.submodul %></td>	
+</tr>
+<td align=right><b>Auditable? :</b></td>
+<td><%=h @permission.auditable %></td>	
+</tr>
+<td align=right><b>Jenis Transaksi  :</b></td>
+<td><%=h @permission.action_type %></td>	
+</tr>
+</table>

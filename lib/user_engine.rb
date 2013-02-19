@@ -42,7 +42,7 @@ module UserEngine
     else
       case key
       when :role_table 
-        "role"
+        "roles"
       when :permission_table
         "permission"
       end
@@ -201,6 +201,10 @@ module UserEngine
     # we need to strip leading slashes when checking authorisation, but not when
     # actually generating the link.
     auth_options = options.dup
+    logger.debug "auth_options-------"
+    logger.debug auth_options
+    logger.debug auth_options[:controller]
+    logger.debug "auth_options+++++++"
     if auth_options[:controller]
       auth_options[:controller] = auth_options[:controller].gsub(/^\//, '')
     end
@@ -228,22 +232,22 @@ module UserEngine
   #   <% } %>
   def authorized?(options, &block) # default the action to "index"
     
-    controller = options[:controller]
+    controll = options[:controller]
     action = options[:action]
-    
+    logger.debug controller
     # use the current controller/action if none is given in options
-    controller ||= @controller.controller_name
-    action ||= @controller.action_name
+#    controll ||= controller.name
+#    action ||= controller.action_name
     
     if !user?
-      RAILS_DEFAULT_LOGGER.debug "checking guest authorisation for #{controller}/#{action}"
-      if User.guest_user_authorized?(controller, action)
+      logger.debug "checking guest authorisation for #{controll}/#{action}"
+      if User.guest_user_authorized?(controll, action)
         yield block if block != nil
         return true
       end
     else
-      RAILS_DEFAULT_LOGGER.debug "checking user:#{session[:user].id} authorisation for #{controller}/#{action}"
-      if current_user.authorized?(controller, action)
+      logger.debug "checking user:#{session[:user].id} authorisation for #{controll}/#{action}"
+      if current_user.authorized?(controll, action)
         yield block if block != nil
 		
         return true

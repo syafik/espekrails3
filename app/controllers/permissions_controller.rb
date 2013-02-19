@@ -26,10 +26,10 @@
 
 # The PermissionController provides methods for manipulating Permission
 # objects from the web interface.
-class PermissionController < ApplicationController
+class PermissionsController < ApplicationController
   layout "scaffold"
   # We shouldn't accept GET requests that modify data.
-#  verify :method => :post, :only => %w(destroy)
+  #  verify :method => :post, :only => %w(destroy)
 
   # Will redirect to the list view
   def index
@@ -55,41 +55,36 @@ class PermissionController < ApplicationController
   # way of creating Permission objects - instead you should use 
   # Permission.sync to add them automatically from your application
   def new
-    case request.method
-      when :get
-        @permission = Permission.new
-      when :post
-        @permission = Permission.new(@params[:permission])
-        if @permission.save
-          flash[:notice] = 'Permission was successfully created.'
-          redirect_to :action => 'list'
-        else
-          render_action 'new'
-        end      
+    @permission = Permission.new
+  end
+  
+  def create
+    @permission = Permission.new(@params[:permission])
+    if @permission.save
+      flash[:notice] = 'Permission was successfully created.'
+      redirect_to :action => 'list'
+    else
+      render :action => 'new'
     end
   end
 
   # Edits a Permission object
   def edit
-    case request.method
-      when :get
-        if (@permission = find_permission(params[:id])).nil?
-          redirect_back_or_default :action => 'list'
-        end
-      when :post
-        if (@permission = find_permission(params[:id]))
-          if @permission.update_attributes(@params[:permission])
-            flash[:notice] = 'Permission was successfully updated.'
-            redirect_to :action => 'show', :id => @permission
-          else
-            render_action 'edit'
-          end
-        else
-          redirect_back_or_default :action => 'list'
-        end              
-    end
+    @permission = Permission.find_by_id(params[:id])
   end
 
+  def update
+    if (@permission = find_permission(params[:id]))
+      if @permission.update_attributes(@params[:permission])
+        flash[:notice] = 'Permission was successfully updated.'
+        redirect_to :action => 'show', :id => @permission
+      else
+        render_action 'edit'
+      end
+    else
+      redirect_back_or_default :action => 'list'
+    end  
+  end
   # Destroys a Permission Object
   def destroy
     if (@permission = find_permission(params[:id]))
@@ -102,15 +97,15 @@ class PermissionController < ApplicationController
   end
   
   protected
-    # A helper method to find Permission objects by ID, and insert
-    # appropriate error messages into the flash if it couldn't be
-    # found.
-    def find_permission(id)
-      begin
-        Permission.find(id)
-      rescue
-        flash[:message] = "There is no permission with ID ##{id}"
-        nil
-      end
+  # A helper method to find Permission objects by ID, and insert
+  # appropriate error messages into the flash if it couldn't be
+  # found.
+  def find_permission(id)
+    begin
+      Permission.find(id)
+    rescue
+      flash[:message] = "There is no permission with ID ##{id}"
+      nil
     end
+  end
 end
