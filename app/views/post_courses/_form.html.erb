@@ -1,51 +1,60 @@
-<div align="center"><%= error_messages_for 'post_course' %></div>
+<div align="center">
+  <%#= error_messages_for 'post_course' %>
+  <% if @post_course.errors.any? %>
+      <ul>
+        <% @post_course.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+  <% end %>
+</div>
 
 <!--[form:post_course]-->
- <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
   <tr>
-      <td align="right"><strong>Peserta/Pemohon Kursus:</strong></td>
-      <td>
-         <%=
-                  @options = @students.map { |t| [t.course_implementation.course.name.upcase, t.course_implementation.id] }
-		  select(:post_course, :course_implementation_id, @options)
-          %>      </td>
-    </tr>
+    <td align="right"><strong>Peserta/Pemohon Kursus:</strong></td>
+    <td>
+      <%=
+          @options = @students.map { |t| [t.course_implementation.course.name.upcase, t.course_implementation.id] }
+          select(:post_course, :course_implementation_id, @options)
+      %>      </td>
+  </tr>
 
- <tr>
-        <td align="right"><strong>Tajuk:</strong></td>
-        <td><%= text_field 'post_course', 'title', :maxlength=>255, :size=>60  %></td>
- </tr>
- <tr>
-        <td align="right" valign="TOP"><strong>Mesej:</strong></td>
-        <td><%= text_area 'post_course', 'post'  %></td>
- </tr>
- <tr>
-      <td align="right" valign="TOP"><strong>Tarikh &amp; Masa Papar:</strong></td>
-      <td>
-      <input id="day_check_in" type=text name="day_check_in" value="<%=@day%>" size=2 maxlength=2 >
--
-  <input id="month_check_in" type=text name="month_check_in" value="<%=@month%>" size=2 maxlength=2 >
--
-<input id="year_check_in" type=text name="year_check_in" value="<%=@year%>" size=4 maxlength=4>
-&nbsp; <input id="hour_check_in" type=text name="hour_check_in" value="<%=@hour%>" size=2 maxlength=2>
-: 
-<input id="minute_check_in" type=text name="minute_check_in" value="<%=@minute%>" size=2 maxlength=2> 
-<font color="red">dd mm yyyy hh:mm </font></td>
-    </tr>
-     <tr>
-      <td align="right" valign="TOP"><strong>Tarikh &amp; Masa Tutup:</strong></td>
-      <td>
-      <input id="day_check_out" type=text name="day_check_out" value="<%=@day_next%>" size=2 maxlength=2>
--
-  <input id="month_check_out" type=text name="month_check_out" value="<%=@month_next%>" size=2 maxlength=2>
--
-<input id="year_check_out" type=text name="year_check_out" value="<%=@year_next%>" size=4 maxlength=4>
-&nbsp; <input id="hour_check_out" type=text name="hour_check_out" value="<%=@hour_next%>" size=2 maxlength=2> 
-: 
-<input id="minute_check_out" type=text name="minute_check_out" value="<%=@minute_next%>" size=2 maxlength=2> 
-<font color="red">dd mm yyyy hh:mm </font></td>
-    </tr>
-   </table>
-  <br>
+  <tr>
+    <td align="right"><strong>Tajuk:</strong></td>
+    <td><%= text_field 'post_course', 'title', :maxlength => 255, :size => 60 %></td>
+  </tr>
+  <tr>
+    <td align="right" valign="TOP"><strong>Mesej:</strong></td>
+    <td><%= text_area 'post_course', 'post' %></td>
+  </tr>
+  <tr>
+    <td align="right" valign="TOP"><strong>Tarikh &amp; Masa Papar:</strong></td>
+    <td>
+      <input id="day_check_in" type=text name="day_check_in" value="<%= @day %>" size=2 maxlength=2>
+      -
+      <input id="month_check_in" type=text name="month_check_in" value="<%= @month %>" size=2 maxlength=2>
+      -
+      <input id="year_check_in" type=text name="year_check_in" value="<%= @year %>" size=4 maxlength=4>
+      &nbsp; <input id="hour_check_in" type=text name="hour_check_in" value="<%= @hour %>" size=2 maxlength=2>
+      :
+      <input id="minute_check_in" type=text name="minute_check_in" value="<%= @minute %>" size=2 maxlength=2>
+      <font color="red">dd mm yyyy hh:mm </font></td>
+  </tr>
+  <tr>
+    <td align="right" valign="TOP"><strong>Tarikh &amp; Masa Tutup:</strong></td>
+    <td>
+      <input id="day_check_out" type=text name="day_check_out" value="<%= @day_next %>" size=2 maxlength=2>
+      -
+      <input id="month_check_out" type=text name="month_check_out" value="<%= @month_next %>" size=2 maxlength=2>
+      -
+      <input id="year_check_out" type=text name="year_check_out" value="<%= @year_next %>" size=4 maxlength=4>
+      &nbsp; <input id="hour_check_out" type=text name="hour_check_out" value="<%= @hour_next %>" size=2 maxlength=2>
+      :
+      <input id="minute_check_out" type=text name="minute_check_out" value="<%= @minute_next %>" size=2 maxlength=2>
+      <font color="red">dd mm yyyy hh:mm </font></td>
+  </tr>
+</table>
+<br>
 <!--[eoform:post_course]-->
 

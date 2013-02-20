@@ -24,8 +24,8 @@
             //objid = controller + "/" + action + "/" + objid
 
             document.getElementById('popmenu').innerHTML = "<ul>" +
-                    "<li><a href=\"" + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
-                    "<li><a href=\"javascript: confirmAndGo('" + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+                    "<li><a href=\"" + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
+                    "<li><a href=\"javascript: confirmAndGo('" + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
                     "</ul>"
             this.position(mnu, e);
         },

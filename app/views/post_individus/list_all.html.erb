@@ -130,7 +130,7 @@
           onmousedown="menuLayers.show('popmenu', '/post_individus', '<%=h post_individu.id %>', '<%=h post_individu.title %>', event)" class="list">
         <td align=left valign=top><%= i.to_s %></td>
         <td align=left valign=top><%= h nof { post_individu.title } %></td>
-        <td align=left valign=top><%= nl2br(post_individu.post) %></td>
+        <td align=left valign=top><%= nl2br(post_individu.post).html_safe %></td>
         <td align=left valign=top><%= h nof { post_individu.updated_at.to_formatted_s(:my_format_4) } %></td>
         <td align=left valign=top><%= h nof { post_individu.timeopen.to_formatted_s(:my_format_4) } %></td>
         <td align=left valign=top><%= h nof { post_individu.timeclose.to_formatted_s(:my_format_4) } %></td>
