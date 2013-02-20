@@ -12,7 +12,9 @@ class PostCoursesController < ApplicationController
   end
 
   def list_all
-    @post_course_pages, @post_courses = paginate :post_courses, :per_page => 50
+    @post_courses = PostCourse.paginate(:page => params[:page], :per_page => 50)
+    @page = params[:page].blank? ? 0 : params[:page]
+    #@post_course_pages, @post_courses = paginate :post_courses, :per_page => 50
   end
 
   def show

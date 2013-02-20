@@ -26,8 +26,8 @@ function confirmAndDelete(url, objname) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    document.getElementById('popmenu').style.width = 150;
+    document.getElementById('popmenu').innerHTML = "<ul>" +
                             "<li><a href=\""  + "/trainer" + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					        "<li><a href=\""  + "/trainer" + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
 					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
@@ -35,6 +35,15 @@ function rewritePopupContent(controller, objid, objname) {
 							"<li><a href=\""  + "/trainer" + "/" + objid + "/offer\">&nbsp;&nbsp;Jana Surat Lantikan</a>" +
 					        "<li><a href=\""  + "/trainer" + "/" + objid + "/eval\">&nbsp;&nbsp;Papar Rekod Penilaian</a>" +
 							"</ul>"
+//    $('popmenu').style.width = 150;
+//    $('popmenu').innerHTML = "<ul>" +
+//                            "<li><a href=\""  + "/trainer" + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+//					        "<li><a href=\""  + "/trainer" + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
+//					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+//					        "<hr size=1>" +
+//							"<li><a href=\""  + "/trainer" + "/" + objid + "/offer\">&nbsp;&nbsp;Jana Surat Lantikan</a>" +
+//					        "<li><a href=\""  + "/trainer" + "/" + objid + "/eval\">&nbsp;&nbsp;Papar Rekod Penilaian</a>" +
+//							"</ul>"
      
 }
 </script>

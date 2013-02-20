@@ -55,6 +55,7 @@ InstunRails3::Application.routes.draw do
   resources :post_courses do
     collection do
       get 'list'
+      get 'list_all'
     end
   end
 
@@ -248,6 +249,7 @@ InstunRails3::Application.routes.draw do
 
   resources :staffs do
     collection do
+      get 'list'
       get 'search'
       post 'search_by_name'
       post 'search_by_phone'
