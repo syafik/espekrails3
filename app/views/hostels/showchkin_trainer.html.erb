@@ -7,26 +7,26 @@ function confirmAndDelete(url, objname) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width": 150});
+    $('#popmenu').html("<ul>" +
                             "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
 					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					        "<hr size=1>" +
 					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Penyelenggaraan</a>" + 
-					        "</ul>"
+					        "</ul>")
      
 }
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width": 150});
+    $('#popmenu').html("<ul>" +
                             "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
 					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					        "<hr size=1>" +
 					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Penyelenggaraan</a>" + 
-					        "</ul>"
+					        "</ul>")
      
 }
 </script>

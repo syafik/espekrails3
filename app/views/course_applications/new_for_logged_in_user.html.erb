@@ -1,4 +1,4 @@
-<%=error_messages_for 'course_application'%>
+<%= show_error_messages(@course_application)%>
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <th width="85%" height="20" bgcolor="#999999">
@@ -22,7 +22,7 @@
    <div id="apply_button" align="center" style="visibility: visible">
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+</form>
 
 <script src="/javascripts/form_validator.js"></script>
 <script>

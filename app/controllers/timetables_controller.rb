@@ -12,16 +12,16 @@ class TimetablesController < ApplicationController
   end
   
   def index
-    list
-    render :action => 'list'
+    redirect_to :action => 'list'
   end
 
   def list
     #  @timetables = Timetable.find_all_by_course_implementation_id(21)
+    render  layout: "standard-layout"
   end
 
   def timetable_for_user
-    list
+    redirect_to :action => 'list'
   end
 
   def show
@@ -53,6 +53,7 @@ class TimetablesController < ApplicationController
         @timetable.trainers << Trainer.find(tr)
       end
       @timetable.save
+      prepare_update_course_implementation(@timetable)
       #      Timetable.find_by_sql("INSERT INTO timetables_trainers(timetable_id,trainer_id) values(#{@timetable.id},(#{params[:timetable][:trainer_ids].join(",") })) ")
       
       flash[:notice] = 'Jadual waktu berjaya ditambah'
@@ -75,6 +76,7 @@ class TimetablesController < ApplicationController
     @timetable.trainers = Trainer.find(params[:trainer_ids]) if params[:trainer_ids]            
     @timetable.facilities = Facility.find(params[:facility_ids]) if params[:facility_ids]        
     if @timetable.update_attributes(params[:timetable])
+      prepare_update_course_implementation(@timetable)
       #flash[:notice] = 'Timetable was successfully updated.'
       #redirect_to :action => 'list', :id => @timetable, :course_id => @timetable.course_id
     else
@@ -85,5 +87,15 @@ class TimetablesController < ApplicationController
   def destroy
     Timetable.find(params[:id]).destroy
     #redirect_to :action => 'list', :course_id => @timetable.course_id
+  end
+
+  private
+  def prepare_update_course_implementation(timetable)
+    begin
+      if timetable.time_end > timetable.course_implementation.timetables.order("time_start").last.time_end
+        timetable.course_implementation.update_attribute(:time_end, timetable.time_end)
+      end
+    rescue
+    end
   end
 end

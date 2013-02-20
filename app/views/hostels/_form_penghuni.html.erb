@@ -28,7 +28,7 @@
     var node_identification_memo = $("node_identification_memo");
 
     function checkNRIC() {
-      node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange>Sistem sedang memeriksa no kp<br>&nbsp;Sila tunggu..</font>"
+      node_identification_memo.html("<br>&nbsp;<font color=orange>Sistem sedang memeriksa no kp<br>&nbsp;Sila tunggu..</font>")
       ajax_request("/ajax/ajax_nric", "ic_number="+node.value)
     }
 
@@ -42,12 +42,12 @@
     function ajax_response(originalRequest) {
       //alert(originalRequest.responseText)
       if (originalRequest.responseText == 1) {
-        node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange> Data kakitangan sudah ada.<br>&nbsp; Loading..</font>"
+        node_identification_memo.html("<br>&nbsp;<font color=orange> Data kakitangan sudah ada.<br>&nbsp; Loading..</font>")
         document.forms[0].action = "/hostels/new_but_penghuni_already_exist";
         document.forms[0].submit();
       }
       else {
-        node_identification_memo.innerHTML = "<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>"
+        node_identification_memo.html("<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>")
         document.forms[0].action = "/hostels/create_penghuni";
       }
     }

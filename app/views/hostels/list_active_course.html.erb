@@ -7,19 +7,19 @@ function confirmAndDelete(url, objname) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 180;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width": 180});
+    $('#popmenu').html("<ul>" +
                             //"<li><a href=\""  + controller + "/list_belum_checkin/" + objid + "\">&nbsp;&nbsp;Senarai belum checkin</a>" +
                             "<li><a href=\""  + controller + "/list_sudah_checkin/" + objid + "\">&nbsp;&nbsp;Senarai sudah checkin</a>" +
-					        "</ul>"
+					        "</ul>")
 }
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 180;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width": 180});
+    $('#popmenu').html("<ul>" +
                             //"<li><a href=\""  + controller + "/list_belum_checkin/" + objid + "\">&nbsp;&nbsp;Senarai belum checkin</a>" +
                             "<li><a href=\""  + controller + "/list_sudah_checkin/" + objid + "\">&nbsp;&nbsp;Senarai sudah checkin</a>" +
-					        "</ul>"
+					        "</ul>")
 }
 </script>
 

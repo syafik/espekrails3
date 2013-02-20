@@ -324,7 +324,10 @@ InstunRails3::Application.routes.draw do
       put 'approve'
     end
   end
-
+  match '/hostels/list_sudah_checkin/:id' => 'hostels#list_sudah_checkin', :via => [:get]
+  match '/hostels/iwannachkin/:id' => 'hostels#iwannachkin', :via => [:get]
+  match '/hostels/showchkin/:id' => 'hostels#showchkin', :via => [:get]
+  match '/hostels/:id/change_room' => 'hostels#change_room', :via => [:get]
   resources :hostels do
     collection do
       get 'list'
@@ -345,6 +348,7 @@ InstunRails3::Application.routes.draw do
       get 'iwannarent'
       get 'iverent'
       get 'showrent'
+      get 'showchkin'
       get 'change_room_rent'
       get 'course_sankasha_ichiran'
       get 'cetak_list_checkin'
@@ -430,7 +434,10 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/cetak_pemohon/:id' => 'course_applications#cetak_pemohon', :via => [:get]
   match '/course_applications/cetak_pemohon_semua/:id' => 'course_applications#cetak_pemohon_semua', :via => [:get]
   match '/course_applications/konaitokimeta' => 'course_applications#konaitokimeta', :via => [:get]
-
+  match '/course_applications/new_for_logged_in_user/:id' => 'course_applications#new_for_logged_in_user', :via => [:get]
+  match '/course_applications/create_for_logged_in_user/:id' => 'course_applications#create_for_logged_in_user', :via => [:post]
+  match '/course_applications/create_but_peserta_already_exist' => 'course_applications#create_but_peserta_already_exist', :via => [:post]
+  
   resources :course_applications do
     collection do
       get 'applicant'
@@ -449,6 +456,8 @@ InstunRails3::Application.routes.draw do
       get 'grades_for_lookup'
       get 'reason_rejected'
       get 'accept_selected'
+      post 'create_peserta'
+      post 'cetak_surat_iklan'
     end
     member do
       post 'cetak_surat_tawaran'
@@ -459,6 +468,8 @@ InstunRails3::Application.routes.draw do
       get 'cetak_pemohon'
     end
   end
+  match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
+
   resources :course_implementations do
     collection do
       get 'list'

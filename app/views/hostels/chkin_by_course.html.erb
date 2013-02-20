@@ -7,23 +7,23 @@
   }
 
   function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 300;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width": 300});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\""  + controller + "/" + objid + "/course_sankasha_ichiran\">&nbsp;&nbsp;Lihat senarai daftar masuk peserta</a>" +
       "<li><a href=\"" + "javascript: b(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai daftar masuk peserta(Manual)</a>" +
       "<li><a href=\""  + controller + "/" + objid + "/course_trainer_list\">&nbsp;&nbsp;Lihat senarai daftar masuk penceramah</a>" +
       "<li><a href=\"" + "javascript: c(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai dafar masuk penceramah(Manual)</a>" +
-      "</ul>"
+      "</ul>")
   }
 
   function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 280;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width": 280});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\""  + controller + "/" + objid + "/course_sankasha_ichiran\">&nbsp;&nbsp;Lihat senarai daftar masuk peserta</a>" +
       "<li><a href=\"" + "javascript: b(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai daftar masuk peserta(Manual)</a>" +
       "<li><a href=\""  + controller + "/" + objid + "/course_trainer_list\">&nbsp;&nbsp;Lihat senarai daftar masuk penceramah</a>" +
       "<li><a href=\"" + "javascript: c(" + "" + objid + ")\">&nbsp;&nbsp;Cetak senarai dafar masuk penceramah(Manual)</a>" +
-      "</ul>"
+      "</ul>")
   }
 </script>
 

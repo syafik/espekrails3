@@ -6,11 +6,11 @@
   input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
   .box {border: solid; border-width:1}
 </style>
-<style type="text/css">	
 <% require 'date' %>
+<style type="text/css">	
   /* These are the style specifications for the menu layers.
      Set width to get more browsers corporation  */
-  div.menu  {
+  div.menu{
     position:absolute; visibility:hidden;
     width:110px; left:0; top:0; z-index:500;
     font: 12px/1.3 verdana, arial, helvetica, sans-serif;
@@ -37,7 +37,7 @@
     display:block; position:relative;
     text-decoration:none
   }
-  
+
   div.menu a:link { color:#33b }
   div.menu a:visited { color:#339 }
   div.menu a:hover { color:#fff; background-color:#338; text-decoration:none  }
@@ -167,7 +167,6 @@ cid = params[:id]  #ambil data dari link_to
 %>    
 
 <form action="/timetable/list">
-
   <%
   i = 0;
   even = true;
@@ -190,10 +189,9 @@ cid = params[:id]  #ambil data dari link_to
     #earliest = Timetable.find(:first, :conditions=>"course_implementation_id = #{params[:id]}", :order=> "time_start")
     earliest = Timetable.find_by_sql("select time_start from timetables where course_implementation_id = #{params[:id]} order by time_start limit 1")
     @start = earliest[0].time_start if earliest[0]
-    @start = @start.to_formatted_s(:my_format_6)
-    @end = @end.to_formatted_s(:my_format_6)
+    @start = @start.strftime("%H:%M")
+    @end = @end.strftime("%H:%M")
   %>
-    <%= debug courses %>
     <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
       <tr>
         <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"> JADUAL KURSUS <%= @code %> <%=@cname%></font></b></td>
@@ -237,8 +235,8 @@ cid = params[:id]  #ambil data dari link_to
     jumlahs = CourseImplementation.find_by_sql( "SELECT (time '" + @end + "' - time '" + @start + "') AS later")
     for jumlah in jumlahs
       w = jumlah.later
-      wws = w.split(' ')
-      p = wws[1]
+      wws = w.split(':')
+      p = wws[0]
       p = p.to_i
 
       @slot = (p * 2) + 1
@@ -251,8 +249,7 @@ cid = params[:id]  #ambil data dari link_to
 
     end  #jumlah
     %>
-    <%= debug jumlahs %>
-    <%= debug @slot %>
+
     <%
     bil = 0
     @slot.times do  #kena kira time slot
@@ -275,24 +272,22 @@ cid = params[:id]  #ambil data dari link_to
       bil +=1
     end  #timeslot
     %>
-    <%= debug arrtime1 %>
-    <%= debug arrtime2 %>
-
     <%
     if (@end_hari != @start_hari)
+
       haris = Course.find_by_sql( "SELECT age ('" + @end_hari.to_s + "','" + @start_hari.to_s + "')" )
       bil_hari = haris.size
       for hari in haris
         xhari = hari.age
         jum_all = xhari.split(' ')
-        @jum_hari = jum_all[1]
+        @jum_hari = jum_all[0]
       end
     end
   %>
-
     <%
     #Khas utk tukar format dari yyyy-dd-mm
     @start_hari2 = @start_hari.to_s
+
     hari_ini = @start_hari2.split('-')
     y = hari_ini[0]
     m = hari_ini[1]
@@ -303,15 +298,12 @@ cid = params[:id]  #ambil data dari link_to
     @pusing = @jum_hari.to_i
 
     xbil = 0
-
+    @initial_hari = @start_hari
+    days.push(@initial_hari)
     @pusing.times do
-      if (xbil == 0)
-        @initial_hari = @start_hari
-        days.push(@initial_hari)
-      else
+      unless (xbil == 0)
         @initial_hari = @to_hari.to_s
       end
-
       tarikhis = Course.find_by_sql( "SELECT date('"+ @initial_hari + "'::date + 1) AS later")
       for tarikhi in tarikhis
         @to_hari = tarikhi.later
@@ -320,9 +312,9 @@ cid = params[:id]  #ambil data dari link_to
       xbil += 1
     end #jum_hari
 
-    if (@pusing == 0)
-      days.push(@start_hari)
-    end
+    #if (@pusing == 0)
+    #days.push(@start_hari)
+    #end
 
   end   # for course planning
   %>
@@ -337,9 +329,8 @@ cid = params[:id]  #ambil data dari link_to
       <%
       #Time di atas sekali...
       k = 0
-      jum_jam.times do
-        if (arrtime1[k] == "13:00")
-        %>
+      jum_jam.times do %>
+        <%  if (arrtime1[k] == "13:00")%>
           <td class="el" align=center bgcolor="#CCCCCC">1:00 p.m<br />
             -<br />2:30 p.m</td>
         <%
@@ -409,7 +400,7 @@ cid = params[:id]  #ambil data dari link_to
           rod = d+"/"+m+"/"+y
           rod_ymd = y+"-"+m+"-"+d
         else
-          hari_ini = days[x].split('/')
+          hari_ini = days[x].split('-')
           m = hari_ini[0]
           d = hari_ini[1]
           y = hari_ini[2]
@@ -453,8 +444,8 @@ cid = params[:id]  #ambil data dari link_to
             for timetable in timetables
               @timetable_id = timetable.id
               @topic = timetable.topic
-              @time_start1 = timetable.time_start.to_formatted_s(:my_format_6)
-              @time_end1 = timetable.time_end.to_formatted_s(:my_format_6)
+              @time_start1 = timetable.time_start.strftime("%H:%M")
+              @time_end1 = timetable.time_end.strftime("%H:%M")
             end  #for
 
             # waktu makan
@@ -510,9 +501,9 @@ cid = params[:id]  #ambil data dari link_to
                 gettimes = Timetable.find_by_sql( "SELECT (time '"+ @time_end1 +"' - time'"+ @time_start1 +"') AS later")
                 for gettime in gettimes
                   dapat = gettime.later
-                  dpt = dapat.split(' ')
-                  tjam = dpt[1]
-                  tminit = dpt[3]
+                  dpt = dapat.split(':')
+                  tjam = dpt[0]
+                  tminit = dpt[2]
                   tjam = tjam.to_i
                   tminit = tminit.to_i
                   if (tminit != 0)
@@ -548,8 +539,21 @@ cid = params[:id]  #ambil data dari link_to
               end  #@time_start1 == @time1
 
             end # if (total == " ")
-
             k = k + 1
+          %>
+            <% if k == arrtime1.size %>
+              <td class="el">
+                <%
+                if @course_implementation.editable?(session[:user])
+                  link_tambah = "<a href=\"javascript: MM_openBrWindow('/timetables/new?course_implementation_id=#{@cid}&date=#{rod_ymd}&time_start=#{arrtime1[k-1]}&time_end=#{arrtime2[k-1]}','','scrollbars=yes,width=600,height=400')\">Tambah</a>"
+                else
+                  link_tambah = "&nbsp;"
+                end
+              %>
+                <%= link_tambah.html_safe %>
+              </td>
+            <% end %>
+          <%
           end # times jum_jam
           %>
         </tr>

@@ -7,17 +7,17 @@
   }
 
   function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width": 150});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\""  + controller + "/" + objid + "/iwannachkin\">&nbsp;&nbsp;Check-in Asrama</a>" +
-      "</ul>"
+      "</ul>")
   }
 
   function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width": 150});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\""  + controller + "/" + objid + "/iwannachkin\">&nbsp;&nbsp;Check-in Asrama</a>" +
-      "</ul>"
+      "</ul>")
   }
 </script>
 

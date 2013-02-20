@@ -183,6 +183,7 @@ class CourseImplementationsController < ApplicationController
     #@course_implementation_pages, @course_implementations = paginate :course_implementations, :per_page => 100
     #@course_implementations = CourseImplementation.find(:all, :conditions=>"date_plan_start > '2001-09-09' AND ")
     @course_implementations = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses WHERE date_plan_start > current_date AND course_status_id=1 ")
+    render layout: "standard-layout"
   end
 
   def search

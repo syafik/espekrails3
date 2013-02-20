@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Timetable < ActiveRecord::Base
-    has_one :course_implementations
+    belongs_to :course_implementation
     
     has_and_belongs_to_many :facilities
     has_and_belongs_to_many :trainers

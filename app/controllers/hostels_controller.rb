@@ -276,7 +276,7 @@ class HostelsController < ApplicationController
 	  end	  
     #@students = CourseImplementation.find_by_sql("select * from vw_detailed_courses WHERE course_status_id ='1' AND date_start = '#{date_start}' order by date_start ASC")
     #@students = CourseImplementation.find_by_sql("select * from vw_detailed_courses WHERE date_start = '#{date_start}' order by date_start ASC")
-    render :layout => 'standard-layout'
+    render layout: 'standard-layout'
 	end
 
   def find_to_checkin
@@ -301,7 +301,7 @@ class HostelsController < ApplicationController
 			   AND p.name ilike '%#{params[:name]}%'
     "
     @students = CourseApplication.find_by_sql(sql)
-    render :layout => "standard-layouts"
+    render layout: 'standard-layout'
   end
   	
 
@@ -737,7 +737,7 @@ class HostelsController < ApplicationController
     redirect_to("/hostels/#{@profile.id}/showrent?block_id=#{params[:block_id]}")
   end
 
- 
+  private
   #endof sewaan asrama
   def prepare_find_checkout
   	if params[:to_checkout_room] and params[:to_checkout_room]!=nil

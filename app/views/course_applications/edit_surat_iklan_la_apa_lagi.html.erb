@@ -1,36 +1,36 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">JANA SURAT IKLAN </font></strong></td>
-    </tr>
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">JANA SURAT IKLAN </font></strong></td>
+  </tr>
 </table>
 <br>
 
 <script>
-function ValidateForm(df) {
-	error = ""
-	//if (df.tarikh_surat_day.value=="") error   += "Sila Masukkan Tarikh Surat(hari)\n"
-	if (df.tarikh_surat_month.value=="") error += "Sila Masukkan Tarikh Surat(month)\n"
-	if (df.tarikh_surat_year.value=="") error  += "Sila Masukkan Tarikh Surat(tahun)\n"
-	if (df.tempoh.value=="") error  += "Sila Masukkan Tempoh\n"
-	if (df.tandatangan_nama.value=="") error  += "Sila Masukkan Penama\n"
+  function ValidateForm(df) {
+    error = ""
+    //if (df.tarikh_surat_day.value=="") error   += "Sila Masukkan Tarikh Surat(hari)\n"
+    if (df.tarikh_surat_month.value=="") error += "Sila Masukkan Tarikh Surat(month)\n"
+    if (df.tarikh_surat_year.value=="") error  += "Sila Masukkan Tarikh Surat(tahun)\n"
+    if (df.tempoh.value=="") error  += "Sila Masukkan Tempoh\n"
+    if (df.tandatangan_nama.value=="") error  += "Sila Masukkan Penama\n"
 	
-	if (error!="") {
-		alert(error);
-		return false;
-	}
-	else {
-		if (df.tarikh_surat_day.value=="") {
-			if (confirm('Anda tidak memasukkan tarikh(hari). Teruskan?')) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		return true;
-	}
+    if (error!="") {
+      alert(error);
+      return false;
+    }
+    else {
+      if (df.tarikh_surat_day.value=="") {
+        if (confirm('Anda tidak memasukkan tarikh(hari). Teruskan?')) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+      return true;
+    }
 	
-}
+  }
 </script>
 
 <%#= start_form_tag :action => 'cetak_surat_iklan', :id => @course_implementation, :course_id => @course %>
@@ -38,23 +38,23 @@ function ValidateForm(df) {
   <%= render :partial => 'edit_surat_iklan' %>
   <br>
   <div align="center">
-  <br><%= submit_tag 'Papar' %>
+    <br><%= submit_tag 'Papar' %>
   </div>
 
-<% 
-#for id in params[:schedule_ids]
-%>
+  <%
+  #for id in params[:schedule_ids]
+  %>
 <!--input type="hidden" name="schedule_ids[]" value="<%=id%>"-->
-<%
-#end
-%>
+  <%
+  #end
+  %>
 
-<% 
-for id in params[:place_ids]
+  <%
+  for id in params[:place_ids]
+  %>
+    <input type="hidden" name="place_ids[]" value="<%=id%>">
+  <%
+  end
 %>
-<input type="hidden" name="place_ids[]" value="<%=id%>">
-<%
-end
-%>
-<%= end_form_tag %>
+<% end %>
 
