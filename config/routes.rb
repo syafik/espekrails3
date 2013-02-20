@@ -62,6 +62,7 @@ InstunRails3::Application.routes.draw do
   resources :posts do
     collection do
       get 'list'
+      get 'list_all'
     end
   end
   
