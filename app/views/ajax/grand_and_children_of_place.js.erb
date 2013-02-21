@@ -1,0 +1,5 @@
+<% unless @pejabat.empty? %>
+$('#pejabat_selection').html("<%= escape_javascript( render(:partial => 'pejabat') ) %>");
+<% else %>
+$('#pejabat_selection').html('<font color=orange>Tiada senarai</font>');
+<% end %>

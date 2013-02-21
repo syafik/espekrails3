@@ -1,0 +1,19 @@
+<% unless @place_childrens.empty? %>
+$('#department_selection').html("<%= escape_javascript( render(:partial => 'department') ) %>");
+
+$(function() {
+
+$("#jabatan_id").change(function() {
+$('#employment_place_id').val($('#jabatan_id :selected').val())
+$('#pejabat_selection').html("<font color=orange>Carian pejabat...sila tunggu</font>")
+$.ajax({
+type: 'POST',
+url: '/ajax/grand_and_children_of_place',
+data: "id=" + $('#jabatan_id :selected').val(),
+success: function(data){eval(data);}
+});
+});
+});
+<% else %>
+$('#department_selection').html('<font color=orange>Tiada senarai</font>');
+<% end %>

@@ -37,7 +37,7 @@ class HrController < ApplicationController
 	  @arrow = params[:arrow]
 
     @profiles = Profile.find_by_sql("select pr.* from places pl, profiles pr, employments em where pl.id = #{params[:employment]['place_id']} and em.place_id = pl.id and em.profile_id = pr.id  ORDER BY #{@orderby} #{@arrow}")
-    render :action => 'rekod_mohon_hadir'
+    render :action => 'rekod_mohon_hadir', :layout => "standard-layout"
   end
 
   def course_record
@@ -189,6 +189,7 @@ class HrController < ApplicationController
     else
       @employments = []
     end
+     render layout: "standard-layout"
   end
 
   def select_course_select_peserta_batal_klm
@@ -248,6 +249,7 @@ class HrController < ApplicationController
   def select_course_mohon_kursus
     @ci = CourseImplementation.find(params[:course_implementation_id])
     @course_implementation = @ci
+    render layout: "standard-layout"
   end
   
   

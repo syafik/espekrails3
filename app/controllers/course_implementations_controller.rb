@@ -34,10 +34,12 @@ class CourseImplementationsController < ApplicationController
   
   def show_timetable
     @course_implementation = CourseImplementation.find(params[:id])
+    render layout: "standard-layout"
   end
   
   def show_timetable2
     @course_implementation = CourseImplementation.find(params[:id])
+    render layout: "standard-layout"
   end
   
   def delete_timetable

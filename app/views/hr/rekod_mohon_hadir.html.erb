@@ -1,375 +1,394 @@
 <script type="text/javascript">
-/*************************************************************************
+  /*************************************************************************
   This code is from Dynamic Web Coding at http://www.dyn-web.com/
   Copyright 2003 by Sharon Paine 
   See Terms of Use at http://www.dyn-web.com/bus/terms.html
   regarding conditions under which you may use this code.
   This notice must be retained in the code as is!
-*************************************************************************/
+   *************************************************************************/
 
-var menuLayers = {
-  timer: null,
-  activeMenuID: null,
-  offX: 4,   // horizontal offset 
-  offY: 6,   // vertical offset 
+  var menuLayers = {
+    timer: null,
+    activeMenuID: null,
+    offX: 4,   // horizontal offset
+    offY: 6,   // vertical offset
 
-  show: function(id, controller, objid, objname, e) {
-    var mnu = document.getElementById? document.getElementById(id): null;
-    if (!mnu) return;
-    this.activeMenuID = id;
-    if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
-    if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
-    viewport.getAll();
+    show: function(id, controller, objid, objname, e) {
+      var mnu = document.getElementById? document.getElementById(id): null;
+      if (!mnu) return;
+      this.activeMenuID = id;
+      if ( mnu.onmouseout == null ) mnu.onmouseout = this.mouseoutCheck;
+      if ( mnu.onmouseover == null ) mnu.onmouseover = this.clearTimer;
+      viewport.getAll();
 
-    //objid = controller + "/" + action + "/" + objid
+      //objid = controller + "/" + action + "/" + objid
 
-    document.getElementById('popmenu').innerHTML = "<ul>" + 
-                           "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
-					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
-					       "<li><a href=\""  + controller + "/history/" + objid + "\">&nbsp;&nbsp;Semakan</a>" +
-					       "</ul>"
-    this.position(mnu,e);
-  },
+      document.getElementById('popmenu').innerHTML = "<ul>" +
+        "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
+        "<li><a href=\""  + controller + "/history/" + objid + "\">&nbsp;&nbsp;Semakan</a>" +
+        "</ul>"
+      this.position(mnu,e);
+    },
   
-  hide: function() {
-    this.clearTimer();
-    if (this.activeMenuID && document.getElementById) 
-      this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
-  },
+    hide: function() {
+      this.clearTimer();
+      if (this.activeMenuID && document.getElementById)
+        this.timer = setTimeout("document.getElementById('"+menuLayers.activeMenuID+"').style.visibility = 'hidden'", 200);
+    },
   
-  position: function(mnu, e) {
-    var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
-    var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
+    position: function(mnu, e) {
+      var x = e.pageX? e.pageX: e.clientX + viewport.scrollX;
+      var y = e.pageY? e.pageY: e.clientY + viewport.scrollY;
     
-    if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
-      x = x - mnu.offsetWidth - this.offX;
-    else x = x + this.offX;
+      if ( x + mnu.offsetWidth + this.offX > viewport.width + viewport.scrollX )
+        x = x - mnu.offsetWidth - this.offX;
+      else x = x + this.offX;
   
-    if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
-      y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
-    else y = y + this.offY;
+      if ( y + mnu.offsetHeight + this.offY > viewport.height + viewport.scrollY )
+        y = ( y - mnu.offsetHeight - this.offY > viewport.scrollY )? y - mnu.offsetHeight - this.offY : viewport.height + viewport.scrollY - mnu.offsetHeight;
+      else y = y + this.offY;
     
-    mnu.style.left = x + "px"; mnu.style.top = y + "px";
-    this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
-  },
+      mnu.style.left = x + "px"; mnu.style.top = y + "px";
+      this.timer = setTimeout("document.getElementById('" + menuLayers.activeMenuID + "').style.visibility = 'visible'", 200);
+    },
   
-  mouseoutCheck: function(e) {
-    e = e? e: window.event;
-    // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
-    var mnu = document.getElementById(menuLayers.activeMenuID);
-    var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
-    if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
-  },
+    mouseoutCheck: function(e) {
+      e = e? e: window.event;
+      // is element moused into contained by menu? or is it menu (ul or li or a to menu div)?
+      var mnu = document.getElementById(menuLayers.activeMenuID);
+      var toEl = e.relatedTarget? e.relatedTarget: e.toElement;
+      if ( mnu != toEl && !menuLayers.contained(toEl, mnu) ) menuLayers.hide();
+    },
   
-  // returns true of oNode is contained by oCont (container)
-  contained: function(oNode, oCont) {
-    if (!oNode) return; // in case alt-tab away while hovering (prevent error)
-    while ( oNode = oNode.parentNode ) 
-      if ( oNode == oCont ) return true;
-    return false;
-  },
+    // returns true of oNode is contained by oCont (container)
+    contained: function(oNode, oCont) {
+      if (!oNode) return; // in case alt-tab away while hovering (prevent error)
+      while ( oNode = oNode.parentNode )
+        if ( oNode == oCont ) return true;
+      return false;
+    },
 
-  clearTimer: function() {
-    if (menuLayers.timer) clearTimeout(menuLayers.timer);
+    clearTimer: function() {
+      if (menuLayers.timer) clearTimeout(menuLayers.timer);
+    }
+  
   }
-  
-}
 </script>
- <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-	    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI REKOD PERMOHONAN DAN KEHADIRAN  KURSUS</font></b></td>
-    </tr>
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI REKOD PERMOHONAN DAN KEHADIRAN  KURSUS</font></b></td>
+  </tr>
 </table>
-     <div align="center">
-        <%= flash[:notice] %></div>
-  <br>
+<div align="center">
+  <%= flash[:notice] %></div>
+<br>
 
 <form action="/hr/search_record" method="post" name="list">
   <table width="95%" border="0" align="center" cellpadding="0" cellspacing="3">
-    
+
     <tr>
       <td align="right" width="40%"><b>Kementerian :</b></td>
       <td colspan="3">&nbsp; <span id="kementerian_selection">
-	  <%= 
-  		  	@ministries = Place.find(:all, :conditions => "place_type_id=3", :order=> "name")
-		  	@options = @ministries.map { |t| [t.name.upcase, t.id] }
-		  	@options.unshift(["Sila Pilih", ""])
+          <% @ministries = Place.where(:place_type_id => 3).order("name") %>
+          <%=
+          @ministries = Place.where(:place_type_id => 3).order("name")
+          @options = @ministries.map { |t| [t.name.upcase, t.id] }
+          @options.unshift(["Sila Pilih", ""])
 
-	  		if nof{@employment.place}
-				if @employment.place.place_type_id == 3
-					@grandparent = @employment.place
-				elsif @employment.place.place_type_id == 1
-					@grandparent = @employment.place.parent
-				elsif @employment.place.place_type_id == 2
-					@grandparent = nof{@employment.place.parent.parent}
-				else
-					@grandparent = Place.new
-				end
-			else
-				@grandparent = Place.new
-			end
-			@grandparent = Place.new if @grandparent == nil
-			select(:grandparent, :id, @options, :id=> "kementerian_id", :name=> "kementerian_id", :onchange=>"checkJabatan()")
-	  %></span>	  </td>
+          if nof{@employment.place}
+            if @employment.place.place_type_id == 3
+              @grandparent = @employment.place
+            elsif @employment.place.place_type_id == 1
+              @grandparent = @employment.place.parent
+            elsif @employment.place.place_type_id == 2
+              @grandparent = nof{@employment.place.parent.parent}
+            else
+              @grandparent = Place.new
+            end
+          else
+            @grandparent = Place.new
+          end
+          @grandparent = Place.new if @grandparent == nil
+          select(:grandparent, :id, @options, :id=> "kementerian_id", :name=> "kementerian_id")
+        %>
+        </span>	  </td>
     </tr>
-   <tr>
+    <tr>
       <td align="right"><b>Jabatan :</b></td>
       <td colspan="3">&nbsp; <span id="department_selection">
-    <%= 
-		  if nof{@employment.place}
-		  	if @employment.place.place_type_id == 3
-				@departments = @employment.place.children
-				@parent = Place.new
-			elsif @employment.place.place_type_id == 1
-				#@departments = Place.find(:all, :conditions => "place_type_id=1")
-				@departments = @employment.place.parent.children
-				@parent = @employment.place
-			elsif @employment.place.place_type_id == 2
-				@departments = nof{@employment.place.parent.parent.children} || []
-				@parent = @employment.place.parent
-			else
-				@departments = []
-				@parent = Place.new
-			end
-		  else
-		  	@parent = Place.new
-		  	@departments = []
-		  end
-		  @options = @departments.map { |t| [t.name.upcase, t.id] }
-		  @options.unshift(["Sila Pilih", ""])
-		  select(:parent, :id, @options, :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
-	  %></span>    </tr>
-   <tr>
+          <%=
+          if nof{@employment.place}
+            if @employment.place.place_type_id == 3
+              @departments = @employment.place.children
+              @parent = Place.new
+            elsif @employment.place.place_type_id == 1
+              #@departments = Place.find(:all, :conditions => "place_type_id=1")
+              @departments = @employment.place.parent.children
+              @parent = @employment.place
+            elsif @employment.place.place_type_id == 2
+              @departments = nof{@employment.place.parent.parent.children} || []
+              @parent = @employment.place.parent
+            else
+              @departments = []
+              @parent = Place.new
+            end
+          else
+            @parent = Place.new
+            @departments = []
+          end
+          @options = @departments.map { |t| [t.name.upcase, t.id] }
+          @options.unshift(["Sila Pilih", ""])
+          select(:parent, :id, @options, :id=> "jabatan_id", :name=> "jabatan_id", :onchange=>"checkPejabat()")
+        %></span>    </tr>
+    <tr>
       <td align="right"><b>Pejabat :</b></td>
       <td colspan="3">&nbsp; <span id="pejabat_selection">
-	  <%= 
-		  if nof{@employment.place}
-		  	if @employment.place.place_type_id == 2
-				@offices = nof{@employment.place.parent.children}
-				@child_ids = []
-				if @offices.size > 0
-					for o in @offices
-						if o.children.size > 0
-							@offices.push(o.children)
-						end
-					end
-				end
-				@office  = nof{@employment.place}
-		  	elsif @employment.place.place_type_id == 1
-				@offices = nof{@employment.place.children}
-				@office  = Place.new
-			else
-				@offices = []
-				@office = Place.new
-			end
-		  else
-		  	@office = Place.new
-		  	@offices = []
-		  end
-		  
-		  @offices = [] if @offices == nil
-		  @office = Place.new if @office == nil
-		  
-		  @options = @offices.map { |t| [t.name.upcase, t.id] }
-		  @options.unshift(["Sila Pilih", ""])
-		  select(:office, :id, @options, :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
-	  %></span>
-	  <%= hidden_field 'employment', 'place_id', :size=>3 ,:value=>params[:employment]['place_id']  %></td>
+          <%=
+          if nof{@employment.place}
+            if @employment.place.place_type_id == 2
+              @offices = nof{@employment.place.parent.children}
+              @child_ids = []
+              if @offices.size > 0
+                for o in @offices
+                  if o.children.size > 0
+                    @offices.push(o.children)
+                  end
+                end
+              end
+              @office  = nof{@employment.place}
+            elsif @employment.place.place_type_id == 1
+              @offices = nof{@employment.place.children}
+              @office  = Place.new
+            else
+              @offices = []
+              @office = Place.new
+            end
+          else
+            @office = Place.new
+            @offices = []
+          end
+
+          @offices = [] if @offices == nil
+          @office = Place.new if @office == nil
+
+          @options = @offices.map { |t| [t.name.upcase, t.id] }
+          @options.unshift(["Sila Pilih", ""])
+          select(:office, :id, @options, :id=> "pejabat_id", :name=> "pejabat_id", :onchange=>"updatePlaceId()")
+        %></span>
+        <%= hidden_field 'employment', 'place_id', :size=>3 ,:value=>params[:employment]['place_id']  %></td>
     </tr>
-   <tr>
-     <td align="right">&nbsp;</td>
-     <td colspan="3"><input name="Submit2" type="submit" value="Cari"></td>
-   </tr>
-   <!--tr>
-     <td align="right"><strong>Tarikh Mula Kursus:</strong></td>
-     <td colspan="3"><%= calendar_field 'search_date', '',
-     { :class => 'date',
-        :field_title => 'search_date',
-       :button_title => 'Kalendar' },
-     { :firstDay => 1,
-       :range => [2005, 2015],
+    <tr>
+      <td align="right">&nbsp;</td>
+      <td colspan="3"><input name="Submit2" type="submit" value="Cari"></td>
+    </tr>
+    <!--tr>
+      <td align="right"><strong>Tarikh Mula Kursus:</strong></td>
+      <td colspan="3"><%= calendar_field 'search_date', '',
+      { :class => 'date',
+      :field_title => 'search_date',
+      :button_title => 'Kalendar' },
+      { :firstDay => 1,
+      :range => [2005, 2015],
       :step => 1,
       :showOthers => true,
       :cache => true }
-      %></td>
-   </tr-->
-<script>
-//jabatan selection
-function checkJabatan() {
-	$('employment_place_id').value = $('kementerian_id').value
-	$('pejabat_selection').innerHTML = "<font color=orange>Sila pilih jabatan</font>"
-	$('department_selection').innerHTML = "<font color=orange>Carian jabatan...sila tunggu</font>"
-	ajax_department_request("/ajax/children_of_place", "id="+$("kementerian_id").value)
-}
-
-function ajax_department_request(url, data) {
-    var myAjax = new Ajax.Request(
-        url,
-        {method: 'post', parameters: data, onComplete: ajax_department_response}
-    );
-}
-
-function ajax_department_response(originalRequest) {
-	if (originalRequest.responseText != 0) {
-		var a = originalRequest.responseText.split("$$")
-		var k = new Array(a.length)
-		for (i=0; i<k.length; i++) {
-			k[i] = a[i].split("=")
-		}
-		//alert(originalRequest.responseText)
-		
-		str  = "<select  id=\"jabatan_id\" name=\"jabatan_id]\" class=\"px200\" onchange=\"checkPejabat()\">\n";
-		str += "<option value=\"\">Sila Pilih</option>\n"
-		for (i=0; i<k.length; i++) {
-			str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
-		}
-		str += "</select>\n";
-		$("department_selection").innerHTML = str;
-	}
-	else {
-		$('department_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
-	}
-}
-//EO department selection
-
-//pejabat selection
-function checkPejabat() {
-	$('employment_place_id').value = $('jabatan_id').value
-	$('pejabat_selection').innerHTML = "<font color=orange>Carian pejabat...sila tunggu</font>"
-	ajax_pejabat_request("/ajax/grand_and_children_of_place", "id="+$("jabatan_id").value)
-}
-
-function ajax_pejabat_request(url, data) {
-    var myAjax = new Ajax.Request(
-        url,
-        {method: 'post', parameters: data, onComplete: ajax_pejabat_response}
-    );
-}
-
-function ajax_pejabat_response(originalRequest) {
-	if (originalRequest.responseText != 0) {
-		var a = originalRequest.responseText.split("$$")
-		var k = new Array(a.length)
-		for (i=0; i<k.length; i++) {
-			k[i] = a[i].split("=")
-		}
-		//alert(originalRequest.responseText)
-	
-		str  = "<select  id=\"pejabat_id\" name=\"pejabat_id]\" class=\"px200\" onchange=\"updatePlaceId()\">\n";
-		str += "<option value=\"\">Sila Pilih</option>\n"
-		for (i=0; i<k.length; i++) {
-			str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
-		}
-		str += "</select>\n";
-		$("pejabat_selection").innerHTML = str;
-	}
-	else {
-		$('pejabat_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
-	}
-}
-//EO pejabat selection
-
-function updatePlaceId() {
-	$('employment_place_id').value = $('pejabat_id').value
-}
-
-</script>
-     
-     <tr>
-    <!--tr>
-      <td align="RIGHT" width="40%"><strong>Kod Kementerian/Jabatan/Pejabat:</strong></td>
-      <td align="LEFT"><form action="/hr/search_by_ministry_code" method="post" name="list">
-          <input type="text" name="search_min_code">
-          <input name="Submit2" type="submit" value="Cari">
-      </form></td>
+  %></td>
     </tr-->
+    <% content_for :js do %>
+
+      <script type="text/javascript">
+        
+        $(function() {
+          
+          $("#grandparent_id").change(function() {
+            $('#employment_place_id').val($('#grandparent_id :selected').val())
+            $('#pejabat_selection').html("<font color=orange>Sila pilih jabatan</font>")
+            $('#department_selection').html("<font color=orange>Carian jabatan...sila tunggu</font>")
+            $.ajax({
+              type: 'POST',
+              url: '/ajax/children_of_place',
+              data: "id=" + $('#grandparent_id :selected').val(),
+              success: function(data){eval(data);}
+            });
+          });
+        });
+        //jabatan selection
+        function checkJabatan() {
+          $('employment_place_id').value = $('kementerian_id').value
+          $('pejabat_selection').innerHTML = "<font color=orange>Sila pilih jabatan</font>"
+          $('department_selection').innerHTML = "<font color=orange>Carian jabatan...sila tunggu</font>"
+          ajax_department_request("/ajax/children_of_place", "id="+$("kementerian_id").value)
+        }
+
+        function ajax_department_request(url, data) {
+          var myAjax = new Ajax.Request(
+          url,
+          {method: 'post', parameters: data, onComplete: ajax_department_response}
+        );
+        }
+
+        function ajax_department_response(originalRequest) {
+          if (originalRequest.responseText != 0) {
+            var a = originalRequest.responseText.split("$$")
+            var k = new Array(a.length)
+            for (i=0; i<k.length; i++) {
+              k[i] = a[i].split("=")
+            }
+            //alert(originalRequest.responseText)
+		
+            str  = "<select  id=\"jabatan_id\" name=\"jabatan_id]\" class=\"px200\" onchange=\"checkPejabat()\">\n";
+            str += "<option value=\"\">Sila Pilih</option>\n"
+            for (i=0; i<k.length; i++) {
+              str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+            }
+            str += "</select>\n";
+            $("department_selection").innerHTML = str;
+          }
+          else {
+            $('department_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
+          }
+        }
+        //EO department selection
+
+        //pejabat selection
+        function checkPejabat() {
+          $('employment_place_id').value = $('jabatan_id').value
+          $('pejabat_selection').innerHTML = "<font color=orange>Carian pejabat...sila tunggu</font>"
+          ajax_pejabat_request("/ajax/grand_and_children_of_place", "id="+$("jabatan_id").value)
+        }
+
+        function ajax_pejabat_request(url, data) {
+          var myAjax = new Ajax.Request(
+          url,
+          {method: 'post', parameters: data, onComplete: ajax_pejabat_response}
+        );
+        }
+
+        function ajax_pejabat_response(originalRequest) {
+          if (originalRequest.responseText != 0) {
+            var a = originalRequest.responseText.split("$$")
+            var k = new Array(a.length)
+            for (i=0; i<k.length; i++) {
+              k[i] = a[i].split("=")
+            }
+            //alert(originalRequest.responseText)
+	
+            str  = "<select  id=\"pejabat_id\" name=\"pejabat_id]\" class=\"px200\" onchange=\"updatePlaceId()\">\n";
+            str += "<option value=\"\">Sila Pilih</option>\n"
+            for (i=0; i<k.length; i++) {
+              str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+            }
+            str += "</select>\n";
+            $("pejabat_selection").innerHTML = str;
+          }
+          else {
+            $('pejabat_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
+          }
+        }
+        //EO pejabat selection
+
+        function updatePlaceId() {
+          $('employment_place_id').value = $('pejabat_id').value
+        }
+
+      </script>
+    <% end %>
+    <tr>
+      <!--tr>
+        <td align="RIGHT" width="40%"><strong>Kod Kementerian/Jabatan/Pejabat:</strong></td>
+        <td align="LEFT"><form action="/hr/search_by_ministry_code" method="post" name="list">
+            <input type="text" name="search_min_code">
+            <input name="Submit2" type="submit" value="Cari">
+        </form></td>
+      </tr-->
   </table>
 </form>
-  <br>
+<br>
 
 
-  <div width="95%" style="background: #FFFFFF">
-<% if @profiles %>
-<table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
-  <tr bgcolor="#999999">
-    <td class="el" width="2%" height="20" valign="MIDDLE" rowspan="1" style="color: white" align="CENTER"><strong>Bil</strong></td>
-    <td class="el" width="23%" align="center" style="color: white"><strong><a style="color: white;" href="javascript: findAndSortWith('name','<%= "DESC" if (@orderby=="name" && @arrow=="ASC") %>') " title="Klik untuk sort">Nama</a></strong></td>
-    <td class="el" width="5%" align="center" style="color: white"><strong>No KP</strong></td>
-    <td class="el" width="15%" align="center" style="color: white"><strong>Jawatan</strong></td>
-    <td class="el" width="5%" align="center" style="color: white"><strong>Gred</strong></td>
-    <td class="el" width="15%" align="center" style="color: white"><strong>Pejabat</strong></td>
-    <td class="el" width="15%" align="center" style="color: white"><strong>Bilangan<br />
-    Dipilih</strong></td>
-    <td class="el" width="15%" align="center" style="color: white"><strong>Bilangan<br />
-    Hadir</strong></td>
- </tr>
-<%
-  i = 0;
-  even = true;
-  sum = 0;
-  for profile in @profiles
-  i = i + 1
-  bgclr = "#CCCCFF" if (even == true)
-  bgclr = "#FFFFFF" if (even == false)
-  even = !even
-  employment = Employment.find_by_profile_id(profile.id)
-    if nof{employment.place}
-        if employment.place.place_type_id == 3
-                shou = nof{employment.place.name}
-                kenchou = ""
-                jimusho = ""
+<div width="95%" style="background: #FFFFFF">
+  <% if @profiles %>
+    <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+      <tr bgcolor="#999999">
+        <td class="el" width="2%" height="20" valign="MIDDLE" rowspan="1" style="color: white" align="CENTER"><strong>Bil</strong></td>
+        <td class="el" width="23%" align="center" style="color: white"><strong><a style="color: white;" href="javascript: findAndSortWith('name','<%= "DESC" if (@orderby=="name" && @arrow=="ASC") %>') " title="Klik untuk sort">Nama</a></strong></td>
+        <td class="el" width="5%" align="center" style="color: white"><strong>No KP</strong></td>
+        <td class="el" width="15%" align="center" style="color: white"><strong>Jawatan</strong></td>
+        <td class="el" width="5%" align="center" style="color: white"><strong>Gred</strong></td>
+        <td class="el" width="15%" align="center" style="color: white"><strong>Pejabat</strong></td>
+        <td class="el" width="15%" align="center" style="color: white"><strong>Bilangan<br />
+            Dipilih</strong></td>
+        <td class="el" width="15%" align="center" style="color: white"><strong>Bilangan<br />
+            Hadir</strong></td>
+      </tr>
+      <%
+      i = 0;
+      even = true;
+      sum = 0;
+      for profile in @profiles
+        i = i + 1
+        bgclr = "#CCCCFF" if (even == true)
+        bgclr = "#FFFFFF" if (even == false)
+        even = !even
+        employment = Employment.find_by_profile_id(profile.id)
+        if nof{employment.place}
+          if employment.place.place_type_id == 3
+            shou = nof{employment.place.name}
+            kenchou = ""
+            jimusho = ""
+          end
+          if employment.place.place_type_id == 1
+            kenchou = nof{employment.place.name}
+            shou = nof{employment.place.parent.name}
+            jimusho = ""
+          end
+          if employment.place.place_type_id == 2
+            jimusho = nof{employment.place.name}
+            kenchou = nof{employment.place.parent.name}
+            shou = nof{employment.place.parent.parent.name}
+          end
         end
-        if employment.place.place_type_id == 1
-                kenchou = nof{employment.place.name}
-                shou = nof{employment.place.parent.name}
-                jimusho = ""
-        end
-        if employment.place.place_type_id == 2
-                jimusho = nof{employment.place.name}
-                kenchou = nof{employment.place.parent.name}
-                shou = nof{employment.place.parent.parent.name}
-        end
-    end
 
-%>
-    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-        onmousedown="//menuLayers.show('popmenu', '/profiles', '<%=h profile.id %>', '<%=h profile.ic_number %>', event)">
-      <td class="el">&nbsp;<%= i.to_s %>.</td>
-      <td class="el"><%=h profile.name.upcase %></td>
-      <td class="el" align="left"><%= profile.ic_number %></td>
-      <td class="el" align="left"><%= nof{employment.job_profile.job_name} %>&nbsp;</td>
-      <td class="el" align="center">&nbsp;<%= nof{employment.job_profile.job_grade} %></td>
-      <td class="el" align="center"><%=h profile.opis %>&nbsp;</td>
-      <td class="el" align="center"><%= profile.dipilih.size %>&nbsp;</td>
-      <td class="el" align="center"><%=h profile.hadir.size %>&nbsp;</td>
-    </tr>
-<% end %>
-</table>
-<% end %>
+      %>
+        <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+            onmousedown="//menuLayers.show('popmenu', '/profiles', '<%=h profile.id %>', '<%=h profile.ic_number %>', event)">
+          <td class="el">&nbsp;<%= i.to_s %>.</td>
+          <td class="el"><%=h profile.name.upcase %></td>
+          <td class="el" align="left"><%= profile.ic_number %></td>
+          <td class="el" align="left"><%= nof{employment.job_profile.job_name} %>&nbsp;</td>
+          <td class="el" align="center">&nbsp;<%= nof{employment.job_profile.job_grade} %></td>
+          <td class="el" align="center"><%=h profile.opis %>&nbsp;</td>
+          <td class="el" align="center"><%= profile.dipilih.size %>&nbsp;</td>
+          <td class="el" align="center"><%=h profile.hadir.size %>&nbsp;</td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 </div>
 
 <script>
-function checkFormDulu(df) {
-	if (document.getElementById('employment_place_id').value == '') { 
-		alert('Sila Pilih Kementerian/Jabatan/Pejabat');
-		return false;
-	}
-	return true;
-}
+  function checkFormDulu(df) {
+    if (document.getElementById('employment_place_id').value == '') {
+      alert('Sila Pilih Kementerian/Jabatan/Pejabat');
+      return false;
+    }
+    return true;
+  }
 
-function findAndSortWith(orderby,arrow) {
-	var df = document.forms[0]
-	//var arrow = "DESC"
+  function findAndSortWith(orderby,arrow) {
+    var df = document.forms[0]
+    //var arrow = "DESC"
 	
-	if (checkFormDulu(df)) {
-		df.action += "?orderby=" + orderby
-		if (arrow!="") {
-			df.action += "&arrow=" + arrow
-		}
-		df.submit();
+    if (checkFormDulu(df)) {
+      df.action += "?orderby=" + orderby
+      if (arrow!="") {
+        df.action += "&arrow=" + arrow
+      }
+      df.submit();
 		
-	}
+    }
 	
-}
+  }
 
 </script>

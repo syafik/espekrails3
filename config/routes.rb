@@ -377,6 +377,8 @@ InstunRails3::Application.routes.draw do
   match '/course_management/edit_surat_pengesahan/:id' => 'course_management#edit_surat_pengesahan', :via => [:post]
   match '/course_management/edit_surat_takhadir/:id' => 'course_management#edit_surat_takhadir', :via => [:post]
   match '/course_management/rujukan_kami/:id' => 'course_management#rujukan_kami', :via => [:get]
+  match '/course_management/edit_tempah_sijil' => 'course_management#edit_tempah_sijil', :via => [:post]
+  match '/course_management/cetak_sijil' => 'course_management#cetak_sijil', :via => [:post]
   resources :course_management do
     collection do
       get 'select_course'
@@ -488,6 +490,7 @@ InstunRails3::Application.routes.draw do
       get 'show_only_for_peserta'
       get 'copy_and_new'
       get 'save_course_trainer'
+      get 'show_timetable2'
     end
   end
   resources :user do
@@ -529,6 +532,14 @@ InstunRails3::Application.routes.draw do
       put 'update_peribadi'
     end
   end
+  
+  match '/hr/semak_by_ic' => 'hr#semak_by_ic', :via => [:post]
+  match '/hr/semak_by_name' => 'hr#semak_by_name', :via => [:post]
+  match '/hr/course_record' => 'hr#course_record', :via => [:post]
+  match '/hr/search_record' => 'hr#search_record', :via => [:post]
+  match '/hr/select_course_select_peserta/:id' => 'hr#select_course_select_peserta', :via => [:get]
+  match '/hr/select_course_mohon_kursus/:id' => 'hr#select_course_mohon_kursus', :via => [:get]
+  match '/hr/apply_for_course' => 'hr#apply_for_course', :via => [:post]
   resources :hr do
     collection do
       get 'search_applicant'
@@ -582,6 +593,8 @@ InstunRails3::Application.routes.draw do
   match '/ajax/isvalid_date' => 'ajax#isvalid_date', :via => [:post]
   match '/ajax/find_course_by_code' => 'ajax#find_course_by_code', :via => [:post]
   match '/ajax/find_course_by_code_2' => 'ajax#find_course_by_code_2', :via => [:get]
+  match '/ajax/children_of_place' => 'ajax#children_of_place', :via => [:post]
+  match '/ajax/grand_and_children_of_place' => 'ajax#grand_and_children_of_place', :via => [:post]
   resources :ajax do
     collection do
       get 'ajax_nric'

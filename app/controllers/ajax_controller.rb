@@ -159,7 +159,7 @@ class AjaxController < ApplicationController
 
   def find_course_by_code_2
     params[:code] = params[:code].gsub(/_/,"/")
-@input_id = params[:input_id]
+    @input_id = params[:input_id]
     @course_implementation = CourseImplementation.find_by_code(params[:code])
     if @course_implementation
       @text = "#{@course_implementation.course.name.upcase}"
@@ -230,43 +230,22 @@ class AjaxController < ApplicationController
   def children_of_place
     if params[:id] != ""
       @ministry = Place.find(params[:id])
-      arr = Array.new
-
-      if @ministry.children and @ministry.children.size > 0
-        for place in @ministry.children
-          arr.push(place.name + "=" + place.id.to_s)
-        end
-        str = arr.join("$$")
-        render :text=> str
-      else
-        render :text=> "0"
-      end
+      @place_childrens = @ministry.children
     else
       render :text=> "0"
     end
   end
 
   def grand_and_children_of_place
+    @pejabat = []
     if params[:id] != ""
       @place = Place.find(params[:id])
-      arr = Array.new
-
-      if @place.children and @place.children.size > 0
-        for place in @place.children
-          arr.push(place.name + "=" + place.id.to_s)
-          if place.children and place.children.size > 0
-            for p in place.children
-              arr.push(p.name + "=" + p.id.to_s)
-            end
-          end
+      @place.children.each do |place|
+        @pejabat << place
+        place.children.each do |p|
+          @pejabat << p
         end
-        str = arr.join("$$")
-        render :text=> str
-      else
-        render :text=> "0"
       end
-    else
-      render :text=> "0"
     end
   end
 
