@@ -46,7 +46,7 @@ class StaffsController < ApplicationController
   end
 
   def search_by_dept
-    @staffs = Staff.find_by_sql("select * from staffs,profiles WHERE profiles.id = staffs.profile_id and staffs.status='1' AND course_department_id ILIKE '%#{params[:course_department_id]}%'")
+    @staffs = Staff.find_by_sql("select * from staffs,profiles WHERE profiles.id = staffs.profile_id and staffs.status='1' AND staffs.course_department_id = #{params[:course_department_id]}")
   end
 
   def show
