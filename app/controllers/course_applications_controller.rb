@@ -4,6 +4,7 @@ class CourseApplicationsController < ApplicationController
   #  require "pdf/writer"
 
   def initialize
+    super
   end
 
   def show_user_cancel
@@ -37,9 +38,9 @@ class CourseApplicationsController < ApplicationController
     #@students = CourseApplication.find(:all, :select => 'distinct profile_id')
     #    @student_pages = Paginator.new self, CourseApplication.count, 100, @params['page']
     @students = CourseApplication.select('distinct profile_id').
-      paginate(:page => params['page'].blank? ? 1 : params[:page], :per_page => 100)
+        paginate(:page => params['page'].blank? ? 1 : params[:page], :per_page => 100)
     #    @students = CourseApplication.find(:all, :select => 'distinct profile_id', :limit => @student_pages.items_per_page, :offset => @student_pages.current.offset)
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def index
@@ -48,7 +49,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def search_applicant
-    render :layout => 'standard-layout'
+    #render :layout => 'standard-layout'
   end
 
   def new_popup
@@ -153,7 +154,7 @@ class CourseApplicationsController < ApplicationController
     @courses = Course.find(:all, :order => "name")
 
     @list_title = "SENARAI PEMOHON YANG SEDANG DIPROSES"
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def accepted
@@ -174,7 +175,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG DIPILIH"
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def accepted_n_jawabhadir
@@ -198,12 +199,12 @@ class CourseApplicationsController < ApplicationController
 
   def edit_surat_tawaran_select_peserta
     accepted
-#    render layout: "standard-layout"
+    #render layout: "standard-layout"
   end
 
   def edit_surat_tunda_select_peserta
     accepted_n_jawabhadir
-    render layout: "standard-layout"
+    #render layout : "standard-layout"
   end
 
   def edit_surat_tunda
@@ -212,7 +213,7 @@ class CourseApplicationsController < ApplicationController
 
   def edit_surat_tawaran
     accepted
-    
+
   end
 
   def rejected
@@ -233,7 +234,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PERMOHON YANG DITOLAK"
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def confirmed
@@ -254,7 +255,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG MENGESAHKAN KEHADIRAN"
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def confirmednot
@@ -275,7 +276,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PEMOHON YANG MENGESAHKAN TIDAK HADIR"
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def hadir
@@ -296,7 +297,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PESERTA YANG MENGHADIRI KURSUS"
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def cetak_pengesahan
@@ -342,7 +343,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PESERTA YANG TIDAK MENGHADIRI KURSUS"
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def norespon
@@ -363,7 +364,7 @@ class CourseApplicationsController < ApplicationController
     end
     @courses = Course.find(:all, :order => "name")
     @list_title = "SENARAI PERMOHONAN YANG MASIH TIADA JAWAPAN SETELAH DIPILIH"
-        render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def all
@@ -430,7 +431,7 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.new
     @qualification =Qualification.new
     @course_application = CourseApplication.new
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def new_peserta
@@ -442,7 +443,7 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.new
     @qualification =Qualification.new
     @course_application = CourseApplication.new
-    render :layout => "standard-layout"
+    #render :layout => "standard-layout"
   end
 
   def new_but_peserta_already_exist
@@ -454,7 +455,7 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.find_by_profile_id(@profile.id)
     @qualification =Qualification.find_by_profile_id(@profile.id)
     @course_application = CourseApplication.new
-    render layout: "standard-layout"
+    #render layout : "standard-layout"
   end
 
   def new_for_logged_in_user
@@ -466,12 +467,12 @@ class CourseApplicationsController < ApplicationController
     @employment = Employment.find_by_profile_id(@profile.id)
     @qualification =Qualification.find_by_profile_id(@profile.id)
     @course_application = CourseApplication.new
-    render layout: "standard-layout"
+    #render layout : "standard-layout"
   end
 
   def edit_by_user
     edit
-    render layout: "standard-layout"
+    #render layout : "standard-layout"
   end
 
   def send_successful_email(user, cid)
@@ -531,9 +532,9 @@ class CourseApplicationsController < ApplicationController
       if params[:cert_level_ids]
         params[:cert_level_ids].size.times do |i|
           q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-            :pengkhususan => params[:majors][i],
-            :institution => params[:institutions][i],
-            :year_end => params[:year_ends][i])
+                                :pengkhususan => params[:majors][i],
+                                :institution => params[:institutions][i],
+                                :year_end => params[:year_ends][i])
 
           @profile.qualifications.push(q)
         end
@@ -587,9 +588,9 @@ class CourseApplicationsController < ApplicationController
       if params[:cert_level_ids] and params[:cert_level_ids].size > 0
         params[:cert_level_ids].size.times do |i|
           q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-            :pengkhususan => params[:majors][i],
-            :institution => params[:institutions][i],
-            :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
+                                :pengkhususan => params[:majors][i],
+                                :institution => params[:institutions][i],
+                                :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
 
           @profile.qualifications.push(q) if q
         end
@@ -663,9 +664,9 @@ class CourseApplicationsController < ApplicationController
     if params[:cert_level_ids] and params[:cert_level_ids].size > 0
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-          :pengkhususan => params[:majors][i],
-          :institution => params[:institutions][i],
-          :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
+                              :pengkhususan => params[:majors][i],
+                              :institution => params[:institutions][i],
+                              :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
 
         @profile.qualifications.push(q) if q
       end
@@ -726,9 +727,9 @@ class CourseApplicationsController < ApplicationController
       if params[:cert_level_ids]
         params[:cert_level_ids].size.times do |i|
           q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-            :pengkhususan => params[:majors][i],
-            :institution => params[:institutions][i],
-            :year_end => params[:year_ends][i])
+                                :pengkhususan => params[:majors][i],
+                                :institution => params[:institutions][i],
+                                :year_end => params[:year_ends][i])
 
           @profile.qualifications.push(q)
         end
@@ -871,9 +872,9 @@ class CourseApplicationsController < ApplicationController
     if params[:cert_level_ids]
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-          :pengkhususan => params[:majors][i],
-          :institution => params[:institutions][i],
-          :year_end => params[:year_ends][i])
+                              :pengkhususan => params[:majors][i],
+                              :institution => params[:institutions][i],
+                              :year_end => params[:year_ends][i])
 
         @profile.qualifications.push(q)
       end
@@ -922,9 +923,9 @@ class CourseApplicationsController < ApplicationController
     if params[:cert_level_ids]
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-          :pengkhususan => params[:majors][i],
-          :institution => params[:institutions][i],
-          :year_end => params[:year_ends][i])
+                              :pengkhususan => params[:majors][i],
+                              :institution => params[:institutions][i],
+                              :year_end => params[:year_ends][i])
 
         @profile.qualifications.push(q)
       end
@@ -964,7 +965,7 @@ class CourseApplicationsController < ApplicationController
       @employment = Employment.new
       @job_profile = JobProfile.new
     end
-    render layout: 'standard-layout'
+    #render layout : 'standard-layout'
   end
 
   def update
@@ -973,8 +974,8 @@ class CourseApplicationsController < ApplicationController
       if (@course_application.student_status_id == 8)
         flash[:notice] = 'Tidak dibenarkan kemaskini selepas kursus tamat.';
         redirect_to :controller => 'user_applications',
-          :action => 'show',
-          :id => @course_application.id and return;
+                    :action => 'show',
+                    :id => @course_application.id and return;
       end
     end
     @course_application.date_apply = params[:date_apply_month] + "/" + params[:date_apply_day] + "/" + params[:date_apply_year]
@@ -1028,9 +1029,9 @@ class CourseApplicationsController < ApplicationController
     if params[:cert_level_ids] and params[:cert_level_ids].size > 0
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-          :pengkhususan => params[:majors][i],
-          :institution => params[:institutions][i],
-          :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
+                              :pengkhususan => params[:majors][i],
+                              :institution => params[:institutions][i],
+                              :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
 
         @profile.qualifications.push(q) if q
       end
@@ -1058,12 +1059,12 @@ class CourseApplicationsController < ApplicationController
     staff_id = nof { session[:user].profile.staff.id }
     if staff_id != nil
       @course_implementations = CourseImplementation.find(:all,
-        :conditions => ["extract(year from date_plan_start) = ? AND (coordinator1 = #{staff_id} OR coordinator2 = #{staff_id})", params[:year_start]],
-        :order  => "date_plan_start DESC")
+                                                          :conditions => ["extract(year from date_plan_start) = ? AND (coordinator1 = #{staff_id} OR coordinator2 = #{staff_id})", params[:year_start]],
+                                                          :order => "date_plan_start DESC")
     else
       @course_implementations = []
     end
-    render layout: "standard-layout"
+    #render layout : "standard-layout"
   end
 
   def destroy
@@ -1120,8 +1121,8 @@ class CourseApplicationsController < ApplicationController
     @fourth_paragraph = "5.\s\s\s\sYuran Pendaftaran Kursus sebanyak <b>RM30.00</b> akan dikenakan kepada peserta-peserta kursus. Yuran Pendaftaran Kursus ini boleh dituntut dari Jabatan masing-masing dengan menggunakan resit yang akan dikeluarkan oleh pihak INSTUN."
 
     @fifth_paragraph = "6.\s\s\s\sSemasa berkursus, para peserta adalah <b>diwajibkan</b> untuk menyertai sebarang aktiviti yang dianjurkan oleh pihak INSTUN. " +
-      "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
-      " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
+        "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
+        " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
 
     @sixth_paragraph = "5.\s\s\s\sKerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di"
 
@@ -1174,8 +1175,8 @@ class CourseApplicationsController < ApplicationController
     @fourth_paragraph = "5.\s\s\s\sYuran Pendaftaran Kursus sebanyak <b>RM30.00</b> akan dikenakan kepada peserta-peserta kursus. Yuran Pendaftaran Kursus ini boleh dituntut dari Jabatan masing-masing dengan menggunakan resit yang akan dikeluarkan oleh pihak INSTUN."
 
     @fifth_paragraph = "6.\s\s\s\sSemasa berkursus, para peserta adalah <b>diwajibkan</b> untuk menyertai sebarang aktiviti yang dianjurkan oleh pihak INSTUN. " +
-      "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
-      " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
+        "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
+        " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
 
     @sixth_paragraph = "5.\s\s\s\sKerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di"
 
@@ -1255,21 +1256,16 @@ class CourseApplicationsController < ApplicationController
       @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]} AND (student_status_id=4 or student_status_id=6)", :order => "date_apply")
     end
 
-    pdf = PDF::Writer.new(:paper => "A4")
-    pdf.select_font("Helvetica")
-    pdf.font_size=8
-    pdf.margins_mm(20)
-    bi = "i" # font detail style bold or italic bold= b , italic = i 	
-    @my_margin = pdf.absolute_top_margin
+    require "prawn"
+    require "prawn/measurement_extensions"
+
+    pdf = Prawn::Document.new(:page_size => "A4", :margin => [5.mm])
+    pdf.font "Helvetica"
+    pdf.font_size 8
+    @my_margin = pdf.bounds.absolute_top
 
     total = @students.size
     i = 1
-
-    #if RUBY_PLATFORM == "i386-mswin32"
-    #	espek_header_image = "public/images/espek-header.jpg"
-    #else
-    #  	espek_header_image = "/aplikasi/www/instun/public/images/espek-header.jpg"
-    #end	
 
     for @course_application in @students
       @relative = Relative.find_by_profile_id(@course_application.profile_id)
@@ -1277,263 +1273,547 @@ class CourseApplicationsController < ApplicationController
       @qualification =Qualification.find_by_profile_id(@course_application.profile_id)
       @student = Profile.find_by_id(@course_application.profile_id)
 
-      pdf.fill_color Color::RGB::Black
-      h = pdf.mm2pts(5)
-      pdf.margins_mm(20)
+      pdf.fill_color "000000"
 
-      #pdf.image(espek_header_image)
-      pdf.move_pointer(pdf.mm2pts(10))
-      pdf.text("<b>Institut Tanah dan Ukur Negara (INSTUN)</b>", :justification => :center, :font_size => 10)
-      pdf.text("<b>Sistem Pengurusan Kursus (eSPEK)</b>", :justification => :center, :font_size => 10)
-      pdf.text(" \n")
-      pdf.text("<b>Maklumat Peserta Kursus</b>", :justification => :center, :font_size => 8)
-      pdf.move_pointer(h)
+      h = 5.mm
+      pdf.margins 20.mm
+      pdf.move_cursor_to 10.mm
 
-      pdf.text("<b>Kursus \t:\t</b>"+@course_application.course_implementation.code + "\t(" +@course_application.course.name + ")", :justification => :center, :spacing => 1)
-      pdf.move_pointer(h)
+      pdf.text "<b>Institut Tanah dan Ukur Negara (INSTUN)</b>", :align => :center, :size => 10, :inline_format => true
+      pdf.text "<b>Sistem Pengurusan Kursus (eSPEK)</b>", :align => :center, :size => 10, :inline_format => true
+      pdf.text " \n"
+      pdf.text "<b>Maklumat Peserta Kursus</b>", :align => :center, :size => 8, :inline_format => true
+      pdf.move_cursor_to h
+
+      pdf.text "<b>Kursus \t:\t</b>"+@course_application.course_implementation.code + "\t(" +@course_application.course.name + ")", :align => :center, :character_spacing => 1, :inline_format => true
+
+      pdf.move_cursor_to h
       y_coor = pdf.y
-      x_coor_init = pdf.absolute_left_margin
+      x_coor_init = pdf.bounds.absolute_left
 
-      pdf.fill_color Color::RGB::Grey
-      y_coor = pdf.y-15
-      pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+      pdf.fill_color "808080"
+      y_coor = pdf.y - 15
+      pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor)
 
-      pdf.fill_color Color::RGB::Black
-      pdf.move_pointer(h+10)
+      pdf.fill_color "000000"
+      pdf.move_cursor_to h+10
 
-      pdf.text("<b>Maklumat Peribadi</b>", :justification => :center)
+      pdf.text "<b>Maklumat Peribadi</b>", :align => :center, :inline_format => true
 
-      pdf.text("<b>NO KP</b>")
-      pdf.add_text(150, pdf.y, "<b>:</b>")
+      pdf.text "<b>NO KP</b>", :inline_format => true
+      pdf.draw_text "<b>:</b>", :at => [150, pdf.y]
       y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @course_application.profile.ic_number })
+      pdf.draw_text(nof { @course_application.profile.ic_number }, :at => [160, pdf.y])
 
-      pdf.add_text(350, y_coor, "<b>Gelaran</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @student.title.description })
+      pdf.draw_text("<b>Gelaran</b>", :at => [350, y_coor])
+      pdf.draw_text("<b>:</b>", :at => [420, y_coor])
+      pdf.draw_text(nof { @student.title.description }, :at => [430, y_coor])
 
-      pdf.text("<b>Nama</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
+      pdf.text("<b>Nama</b>", :align => :left)
+      pdf.draw_text("<b>:</b>", :at => [150, pdf.y])
       y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @student.name })
+      pdf.draw_text(nof { @student.name }, :at => [160, pdf.y])
 
-      pdf.add_text(350, y_coor, "<b>Jantina</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @student.gender.description })
+      pdf.draw_text("<b>Jantina</b>", :at => [350, y_coor])
+      pdf.draw_text("<b>:</b>", :at => [420, y_coor])
+      pdf.draw_text(nof { @student.gender.description }, :at => [430, y_coor])
 
-      pdf.text("<b>Tarikh Lahir</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
+      pdf.text("<b>Tarikh Lahir</b>", :align => :left)
+      pdf.draw_text("<b>:</b>", :at => [150, pdf.y])
       y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @student.date_of_birth.to_formatted_s(:my_format_4) })
+      pdf.draw_text(nof { @student.date_of_birth.to_formatted_s(:my_format_4) }, :at => [160, pdf.y])
 
-      pdf.add_text(350, y_coor, "<b>Agama</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @student.religion.description })
+      pdf.draw_text("<b>Agama</b>", :at => [350, y_coor])
+      pdf.draw_text("<b>:</b>", :at => [420, y_coor])
+      pdf.draw_text(nof { @student.religion.description }, :at => [430, y_coor])
 
-      pdf.text("<b>Keturunan</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
+      pdf.text("<b>Keturunan</b>", :align => :left)
+      pdf.draw_text("<b>:</b>", :at => [150, pdf.y])
       y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @student.race.description })
+      pdf.draw_text(nof { @student.race.description }, :at => [160, pdf.y])
 
-      pdf.add_text(350, y_coor, "<b>Taraf Perkahwinan</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @student.marital_status.description })
+      pdf.draw_text("<b>Taraf Perkahwinan</b>", :at => [350, y_coor])
+      pdf.draw_text("<b>:</b>", :at => [420, y_coor])
+      pdf.draw_text(nof { @student.marital_status.description }, :at => [430, y_coor])
 
-      pdf.text("<b>Kecacatan</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
+      pdf.text("<b>Kecacatan</b>", :align => :left)
+      pdf.draw_text("<b>:</b>", :at => [150, pdf.y])
       y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @student.handicap.description })
+      pdf.draw_text(nof { @student.handicap.description }, :at => [160, pdf.y])
 
       a = ["TIDAK", "YA"]
 
-      pdf.add_text(350, y_coor, "<b>Vegetarian</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, a[nof { @student.is_vegetarian }])
+      pdf.draw_text("<b>Vegetarian</b>", :at => [350, y_coor])
+      pdf.draw_text("<b>:</b>", :at => [420, y_coor])
+      pdf.draw_text(a[nof { @student.is_vegetarian }], :at => [430, y_coor])
 
-      pdf.text("<b>No. Tel. Bimbit</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
+      pdf.text("<b>No. Tel. Bimbit</b>", :align => :left)
+      pdf.draw_text("<b>:</b>", :at => [150, pdf.y])
       y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @student.mobile })
+      pdf.draw_text(nof { @student.mobile }, :at => [160, pdf.y])
 
-      pdf.add_text(350, y_coor, "<b>Email Rasmi</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @student.email })
+      pdf.draw_text("<b>Email Rasmi</b>", :at => [350, y_coor])
+      pdf.draw_text("<b>:</b>", :at => [420, y_coor])
+      pdf.draw_text(nof { @student.email }, :at => [430, y_coor])
 
-      pdf.fill_color Color::RGB::Grey
+      pdf.fill_color "808080"
       y_coor = pdf.y-15
-      pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+      pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor)
 
-      ## END MAKLUMAT PEMOHON B	
-      pdf.fill_color Color::RGB::Black
-      pdf.move_pointer(h+10)
+      ## END MAKLUMAT PEMOHON B
+      #pdf.fill_color Color::RGB::Black
+      #pdf.move_pointer(h+10)
+      #
+      #pdf.text("<b>Maklumat Waris</b>", :justification => :center)
+      #pdf.move_pointer(h)
+      #y_coor = pdf.y
+      #
+      #pdf.text("<b>Nama</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #y_coor = pdf.y
+      #pdf.add_text(160, pdf.y, nof { @relative.name })
+      #
+      #pdf.add_text(350, y_coor, "<b>Hubungan</b>")
+      #pdf.add_text(420, y_coor, "<b>:</b>")
+      #pdf.add_text(430, y_coor, nof { @relative.relationship.description })
+      #
+      #pdf.text("<b>Alamat</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #pdf.add_text(160, pdf.y, nof { @relative.address1 })
+      #pdf.text(" \n")
+      #y_coor = pdf.y
+      #pdf.add_text(160, y_coor, nof { @relative.address2 })
+      #pdf.text(" \n")
+      #y_coor = pdf.y
+      #pdf.add_text(160, y_coor, nof { @relative.address3 })
+      #pdf.text(" \n")
+      #y_coor = pdf.y
+      #pdf.add_text(160, y_coor, nof { @relative.state.description })
+      #
+      #pdf.text("<b>No Tel. Rumah</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #y_coor = pdf.y
+      #pdf.add_text(160, pdf.y, nof { @relative.phone })
+      #
+      #pdf.add_text(350, y_coor, "<b>No Tel. Bimbit</b>")
+      #pdf.add_text(420, y_coor, "<b>:</b>")
+      #pdf.add_text(430, y_coor, nof { @relative.mobile })
+      #
+      #pdf.fill_color Color::RGB::Grey
+      #y_coor = pdf.y-15
+      #pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+      ####ENDMAKLUMAT WARIS
+      #pdf.fill_color Color::RGB::Black
+      #if nof { @employment.place }
+      #  if @employment.place.place_type_id == 3
+      #    @shou = nof { @employment.place.name }
+      #    @kenchou = ""
+      #    @jimusho = ""
+      #  end
+      #  if @employment.place.place_type_id == 1
+      #    @kenchou = nof { @employment.place.name }
+      #    @shou = nof { @employment.place.parent.name }
+      #    @jimusho = ""
+      #  end
+      #  if @employment.place.place_type_id == 2
+      #    @jimusho = nof { @employment.place.name }
+      #    @kenchou = nof { @employment.place.parent.name }
+      #    @shou = nof { @employment.place.parent.parent.name }
+      #  end
+      #end
+      #
+      #pdf.move_pointer(h+10)
+      #pdf.text("<b>Maklumat Perkhidmatan</b>", :justification => :center)
+      #pdf.move_pointer(h)
+      #
+      #pdf.text("<b>Kementerian</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #y_coor = pdf.y
+      #pdf.add_text(160, pdf.y, nof { @shou })
+      #
+      #pdf.add_text(350, y_coor, "<b>Jabatan</b>")
+      #pdf.add_text(420, y_coor, "<b>:</b>")
+      #pdf.add_text(430, y_coor, nof { @kenchou })
+      #
+      #pdf.text("<b>Pejabat</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #y_coor = pdf.y
+      #pdf.add_text(160, pdf.y, nof { @jimusho })
+      #
+      #pdf.add_text(350, y_coor, "<b>Jawatan/Gred</b>")
+      #pdf.add_text(420, y_coor, "<b>:</b>")
+      #pdf.add_text(430, y_coor, "#{nof { @employment.job_profile.job_name }} / #{nof { @employment.job_profile.job_grade }}")
+      #
+      #pdf.text("<b>Gelaran Jawatan</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #pdf.add_text(160, pdf.y, nof { @student.designation })
+      #
+      #pdf.fill_color Color::RGB::Grey
+      #y_coor = pdf.y-15
+      #pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+      #
+      #pdf.fill_color Color::RGB::Black
+      #
+      #pdf.move_pointer(h+10)
+      #pdf.text("<b>Maklumat Tempat Bertugas</b>", :justification => :center)
+      #pdf.move_pointer(h)
+      #
+      #pdf.text("<b>Gelaran Ketua Pejabat</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #pdf.add_text(160, pdf.y, nof { @student.hod })
+      #
+      #pdf.text("<b>Nama Pejabat</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #pdf.add_text(160, pdf.y, nof { @student.opis })
+      #
+      #pdf.text("<b>Alamat</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #pdf.add_text(160, pdf.y, nof { @student.address1 })
+      #pdf.text(" \n")
+      #y_coor = pdf.y
+      #pdf.add_text(160, y_coor, nof { @student.address2 })
+      #pdf.text(" \n")
+      #y_coor = pdf.y
+      #pdf.add_text(160, y_coor, nof { @student.address3 })
+      #
+      #pdf.text("<b>No. Tel</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #y_coor = pdf.y
+      #pdf.add_text(160, pdf.y, nof { @student.phone })
+      #
+      #pdf.add_text(350, y_coor, "<b>No. Fax</b>")
+      #pdf.add_text(420, y_coor, "<b>:</b>")
+      #pdf.add_text(430, y_coor, nof { @student.fax })
+      #
+      #pdf.text(" \n")
+      #pdf.text("<b>Pegawai yang Meluluskan Permohonan</b>", :justification => :left)
+      #pdf.text("<b>Nama</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #pdf.add_text(160, pdf.y, nof { @course_application.supervisor_name })
+      #
+      #pdf.text("<b>Jawatan</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #y_coor = pdf.y
+      #pdf.add_text(160, pdf.y, nof { @course_application.supervisor_jawatan })
+      #
+      #pdf.add_text(350, y_coor, "<b>Email</b>")
+      #pdf.add_text(420, y_coor, "<b>:</b>")
+      #pdf.add_text(430, y_coor, nof { @course_application.supervisor_email })
+      #
+      #pdf.text(" \n")
+      #pdf.text("<b>Perakuan:\nSetelah disemak, saya mengaku maklumat diatas adalah betul</b>", :justification => :left)
+      #
+      #pdf.text("<b>Tandatangan</b>", :justification => :left)
+      #pdf.add_text(150, pdf.y, "<b>:</b>")
+      #y_coor = pdf.y
+      #pdf.add_text(160, pdf.y, "")
+      #
+      #pdf.add_text(350, y_coor, "<b>Tarikh</b>")
+      #pdf.add_text(420, y_coor, "<b>:</b>")
+      #pdf.add_text(430, y_coor, "")
+      #
+      #pdf.fill_color Color::RGB::Grey
+      #y_coor = pdf.y-15
+      #pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+      #
+      #pdf.fill_color Color::RGB::Black
 
-      pdf.text("<b>Maklumat Waris</b>", :justification => :center)
-      pdf.move_pointer(h)
-      y_coor = pdf.y
-
-      pdf.text("<b>Nama</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @relative.name })
-
-      pdf.add_text(350, y_coor, "<b>Hubungan</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @relative.relationship.description })
-
-      pdf.text("<b>Alamat</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      pdf.add_text(160, pdf.y, nof { @relative.address1 })
-      pdf.text(" \n")
-      y_coor = pdf.y
-      pdf.add_text(160, y_coor, nof { @relative.address2 })
-      pdf.text(" \n")
-      y_coor = pdf.y
-      pdf.add_text(160, y_coor, nof { @relative.address3 })
-      pdf.text(" \n")
-      y_coor = pdf.y
-      pdf.add_text(160, y_coor, nof { @relative.state.description })
-
-      pdf.text("<b>No Tel. Rumah</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @relative.phone })
-
-      pdf.add_text(350, y_coor, "<b>No Tel. Bimbit</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @relative.mobile })
-
-      pdf.fill_color Color::RGB::Grey
-      y_coor = pdf.y-15
-      pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
-      ###ENDMAKLUMAT WARIS
-      pdf.fill_color Color::RGB::Black
-      if nof { @employment.place }
-        if @employment.place.place_type_id == 3
-          @shou = nof { @employment.place.name }
-          @kenchou = ""
-          @jimusho = ""
-        end
-        if @employment.place.place_type_id == 1
-          @kenchou = nof { @employment.place.name }
-          @shou = nof { @employment.place.parent.name }
-          @jimusho = ""
-        end
-        if @employment.place.place_type_id == 2
-          @jimusho = nof { @employment.place.name }
-          @kenchou = nof { @employment.place.parent.name }
-          @shou = nof { @employment.place.parent.parent.name }
-        end
-      end
-
-      pdf.move_pointer(h+10)
-      pdf.text("<b>Maklumat Perkhidmatan</b>", :justification => :center)
-      pdf.move_pointer(h)
-
-      pdf.text("<b>Kementerian</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @shou })
-
-      pdf.add_text(350, y_coor, "<b>Jabatan</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @kenchou })
-
-      pdf.text("<b>Pejabat</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @jimusho })
-
-      pdf.add_text(350, y_coor, "<b>Jawatan/Gred</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, "#{nof { @employment.job_profile.job_name }} / #{nof { @employment.job_profile.job_grade }}")
-
-      pdf.text("<b>Gelaran Jawatan</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      pdf.add_text(160, pdf.y, nof { @student.designation })
-
-      pdf.fill_color Color::RGB::Grey
-      y_coor = pdf.y-15
-      pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
-
-      pdf.fill_color Color::RGB::Black
-
-      pdf.move_pointer(h+10)
-      pdf.text("<b>Maklumat Tempat Bertugas</b>", :justification => :center)
-      pdf.move_pointer(h)
-
-      pdf.text("<b>Gelaran Ketua Pejabat</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      pdf.add_text(160, pdf.y, nof { @student.hod })
-
-      pdf.text("<b>Nama Pejabat</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      pdf.add_text(160, pdf.y, nof { @student.opis })
-
-      pdf.text("<b>Alamat</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      pdf.add_text(160, pdf.y, nof { @student.address1 })
-      pdf.text(" \n")
-      y_coor = pdf.y
-      pdf.add_text(160, y_coor, nof { @student.address2 })
-      pdf.text(" \n")
-      y_coor = pdf.y
-      pdf.add_text(160, y_coor, nof { @student.address3 })
-
-      pdf.text("<b>No. Tel</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @student.phone })
-
-      pdf.add_text(350, y_coor, "<b>No. Fax</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @student.fax })
-
-      pdf.text(" \n")
-      pdf.text("<b>Pegawai yang Meluluskan Permohonan</b>", :justification => :left)
-      pdf.text("<b>Nama</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      pdf.add_text(160, pdf.y, nof { @course_application.supervisor_name })
-
-      pdf.text("<b>Jawatan</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      y_coor = pdf.y
-      pdf.add_text(160, pdf.y, nof { @course_application.supervisor_jawatan })
-
-      pdf.add_text(350, y_coor, "<b>Email</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, nof { @course_application.supervisor_email })
-
-      pdf.text(" \n")
-      pdf.text("<b>Perakuan:\nSetelah disemak, saya mengaku maklumat diatas adalah betul</b>", :justification => :left)
-
-      pdf.text("<b>Tandatangan</b>", :justification => :left)
-      pdf.add_text(150, pdf.y, "<b>:</b>")
-      y_coor = pdf.y
-      pdf.add_text(160, pdf.y, "")
-
-      pdf.add_text(350, y_coor, "<b>Tarikh</b>")
-      pdf.add_text(420, y_coor, "<b>:</b>")
-      pdf.add_text(430, y_coor, "")
-
-      pdf.fill_color Color::RGB::Grey
-      y_coor = pdf.y-15
-      pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
-
-      pdf.fill_color Color::RGB::Black
-
-      pdf.new_page if i < total
+      pdf.start_new_page if i < total
       i = i+1
 
       pdf.y = @my_margin
 
     end # for student all
 
-    file = @course_application.course_implementation.code.sub(/\//, "_") + "_" + params[:type] +".pdf"
-    if RUBY_PLATFORM == "i386-mswin32"
-      pdf.save_as("public/maklumat_pemohon/" + file) #kat windows
-    else
-      pdf.save_as("/aplikasi/www/instun/public/maklumat_pemohon/" + file) #kalu kat bsd
-    end
+
+
+
+
+
+
+
+    #pdf = PDF::Writer.new(:paper => "A4")
+    #pdf.select_font("Helvetica")
+    #pdf.font_size=8
+    #pdf.margins_mm(20)
+    #bi = "i" # font detail style bold or italic bold= b , italic = i
+    #@my_margin = pdf.absolute_top_margin
+    #
+    #total = @students.size
+    #i = 1
+    #
+    ##if RUBY_PLATFORM == "i386-mswin32"
+    ##	espek_header_image = "public/images/espek-header.jpg"
+    ##else
+    ##  	espek_header_image = "/aplikasi/www/instun/public/images/espek-header.jpg"
+    ##end
+    #
+    #for @course_application in @students
+    #  @relative = Relative.find_by_profile_id(@course_application.profile_id)
+    #  @employment = Employment.find_by_profile_id(@course_application.profile_id)
+    #  @qualification =Qualification.find_by_profile_id(@course_application.profile_id)
+    #  @student = Profile.find_by_id(@course_application.profile_id)
+    #
+    #  pdf.fill_color Color::RGB::Black
+    #  h = pdf.mm2pts(5)
+    #  pdf.margins_mm(20)
+    #
+    #  #pdf.image(espek_header_image)
+    #  pdf.move_pointer(pdf.mm2pts(10))
+    #  pdf.text("<b>Institut Tanah dan Ukur Negara (INSTUN)</b>", :justification => :center, :font_size => 10)
+    #  pdf.text("<b>Sistem Pengurusan Kursus (eSPEK)</b>", :justification => :center, :font_size => 10)
+    #  pdf.text(" \n")
+    #  pdf.text("<b>Maklumat Peserta Kursus</b>", :justification => :center, :font_size => 8)
+    #  pdf.move_pointer(h)
+    #
+    #  pdf.text("<b>Kursus \t:\t</b>"+@course_application.course_implementation.code + "\t(" +@course_application.course.name + ")", :justification => :center, :spacing => 1)
+    #  pdf.move_pointer(h)
+    #  y_coor = pdf.y
+    #  x_coor_init = pdf.absolute_left_margin
+    #
+    #  pdf.fill_color Color::RGB::Grey
+    #  y_coor = pdf.y-15
+    #  pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+    #
+    #  pdf.fill_color Color::RGB::Black
+    #  pdf.move_pointer(h+10)
+    #
+    #  pdf.text("<b>Maklumat Peribadi</b>", :justification => :center)
+    #
+    #  pdf.text("<b>NO KP</b>")
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @course_application.profile.ic_number })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Gelaran</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @student.title.description })
+    #
+    #  pdf.text("<b>Nama</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @student.name })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Jantina</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @student.gender.description })
+    #
+    #  pdf.text("<b>Tarikh Lahir</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @student.date_of_birth.to_formatted_s(:my_format_4) })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Agama</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @student.religion.description })
+    #
+    #  pdf.text("<b>Keturunan</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @student.race.description })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Taraf Perkahwinan</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @student.marital_status.description })
+    #
+    #  pdf.text("<b>Kecacatan</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @student.handicap.description })
+    #
+    #  a = ["TIDAK", "YA"]
+    #
+    #  pdf.add_text(350, y_coor, "<b>Vegetarian</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, a[nof { @student.is_vegetarian }])
+    #
+    #  pdf.text("<b>No. Tel. Bimbit</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @student.mobile })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Email Rasmi</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @student.email })
+    #
+    #  pdf.fill_color Color::RGB::Grey
+    #  y_coor = pdf.y-15
+    #  pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+    #
+    #  ## END MAKLUMAT PEMOHON B
+    #  pdf.fill_color Color::RGB::Black
+    #  pdf.move_pointer(h+10)
+    #
+    #  pdf.text("<b>Maklumat Waris</b>", :justification => :center)
+    #  pdf.move_pointer(h)
+    #  y_coor = pdf.y
+    #
+    #  pdf.text("<b>Nama</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @relative.name })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Hubungan</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @relative.relationship.description })
+    #
+    #  pdf.text("<b>Alamat</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  pdf.add_text(160, pdf.y, nof { @relative.address1 })
+    #  pdf.text(" \n")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, y_coor, nof { @relative.address2 })
+    #  pdf.text(" \n")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, y_coor, nof { @relative.address3 })
+    #  pdf.text(" \n")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, y_coor, nof { @relative.state.description })
+    #
+    #  pdf.text("<b>No Tel. Rumah</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @relative.phone })
+    #
+    #  pdf.add_text(350, y_coor, "<b>No Tel. Bimbit</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @relative.mobile })
+    #
+    #  pdf.fill_color Color::RGB::Grey
+    #  y_coor = pdf.y-15
+    #  pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+    #  ###ENDMAKLUMAT WARIS
+    #  pdf.fill_color Color::RGB::Black
+    #  if nof { @employment.place }
+    #    if @employment.place.place_type_id == 3
+    #      @shou = nof { @employment.place.name }
+    #      @kenchou = ""
+    #      @jimusho = ""
+    #    end
+    #    if @employment.place.place_type_id == 1
+    #      @kenchou = nof { @employment.place.name }
+    #      @shou = nof { @employment.place.parent.name }
+    #      @jimusho = ""
+    #    end
+    #    if @employment.place.place_type_id == 2
+    #      @jimusho = nof { @employment.place.name }
+    #      @kenchou = nof { @employment.place.parent.name }
+    #      @shou = nof { @employment.place.parent.parent.name }
+    #    end
+    #  end
+    #
+    #  pdf.move_pointer(h+10)
+    #  pdf.text("<b>Maklumat Perkhidmatan</b>", :justification => :center)
+    #  pdf.move_pointer(h)
+    #
+    #  pdf.text("<b>Kementerian</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @shou })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Jabatan</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @kenchou })
+    #
+    #  pdf.text("<b>Pejabat</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @jimusho })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Jawatan/Gred</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, "#{nof { @employment.job_profile.job_name }} / #{nof { @employment.job_profile.job_grade }}")
+    #
+    #  pdf.text("<b>Gelaran Jawatan</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  pdf.add_text(160, pdf.y, nof { @student.designation })
+    #
+    #  pdf.fill_color Color::RGB::Grey
+    #  y_coor = pdf.y-15
+    #  pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+    #
+    #  pdf.fill_color Color::RGB::Black
+    #
+    #  pdf.move_pointer(h+10)
+    #  pdf.text("<b>Maklumat Tempat Bertugas</b>", :justification => :center)
+    #  pdf.move_pointer(h)
+    #
+    #  pdf.text("<b>Gelaran Ketua Pejabat</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  pdf.add_text(160, pdf.y, nof { @student.hod })
+    #
+    #  pdf.text("<b>Nama Pejabat</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  pdf.add_text(160, pdf.y, nof { @student.opis })
+    #
+    #  pdf.text("<b>Alamat</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  pdf.add_text(160, pdf.y, nof { @student.address1 })
+    #  pdf.text(" \n")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, y_coor, nof { @student.address2 })
+    #  pdf.text(" \n")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, y_coor, nof { @student.address3 })
+    #
+    #  pdf.text("<b>No. Tel</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @student.phone })
+    #
+    #  pdf.add_text(350, y_coor, "<b>No. Fax</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @student.fax })
+    #
+    #  pdf.text(" \n")
+    #  pdf.text("<b>Pegawai yang Meluluskan Permohonan</b>", :justification => :left)
+    #  pdf.text("<b>Nama</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  pdf.add_text(160, pdf.y, nof { @course_application.supervisor_name })
+    #
+    #  pdf.text("<b>Jawatan</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, nof { @course_application.supervisor_jawatan })
+    #
+    #  pdf.add_text(350, y_coor, "<b>Email</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, nof { @course_application.supervisor_email })
+    #
+    #  pdf.text(" \n")
+    #  pdf.text("<b>Perakuan:\nSetelah disemak, saya mengaku maklumat diatas adalah betul</b>", :justification => :left)
+    #
+    #  pdf.text("<b>Tandatangan</b>", :justification => :left)
+    #  pdf.add_text(150, pdf.y, "<b>:</b>")
+    #  y_coor = pdf.y
+    #  pdf.add_text(160, pdf.y, "")
+    #
+    #  pdf.add_text(350, y_coor, "<b>Tarikh</b>")
+    #  pdf.add_text(420, y_coor, "<b>:</b>")
+    #  pdf.add_text(430, y_coor, "")
+    #
+    #  pdf.fill_color Color::RGB::Grey
+    #  y_coor = pdf.y-15
+    #  pdf.line(x_coor_init, y_coor, pdf.absolute_right_margin, y_coor).fill
+    #
+    #  pdf.fill_color Color::RGB::Black
+    #
+    #  pdf.new_page if i < total
+    #  i = i+1
+    #
+    #  pdf.y = @my_margin
+    #
+    #end # for student all
+
+    #file = @course_application.course_implementation.code.sub(/\//, "_") + "_" + params[:type] +".pdf"
+    #if RUBY_PLATFORM == "i386-mswin32"
+    #  pdf.save_as("public/maklumat_pemohon/" + file) #kat windows
+    #else
+    #  pdf.save_as("/aplikasi/www/instun/public/maklumat_pemohon/" + file) #kalu kat bsd
+    #end
+
+    pdf.render_file(file)
+
     redirect_to("/maklumat_pemohon/"+file)
   end
 
@@ -1949,11 +2229,11 @@ class CourseApplicationsController < ApplicationController
       office_name = "#{student.profile.opis}"
 
       @alamat_instun = "\nPengarah," +
-        "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
-        "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
-        "\nBehrang" +
-        " 35950 Tanjung Malim" +
-        "\nPerak Darul Ridzuan."
+          "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
+          "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
+          "\nBehrang" +
+          " 35950 Tanjung Malim" +
+          "\nPerak Darul Ridzuan."
 
       #salinan_kepada = "Pengarah\n"+
       #                 "Institut Tanah dan Ukur Negara(INSTUN)\n\n" 
@@ -2204,11 +2484,11 @@ class CourseApplicationsController < ApplicationController
       office_name = "#{student.profile.opis}"
 
       @alamat_instun = "\nPengarah," +
-        "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
-        "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
-        "\nBehrang" +
-        " 35950 Tanjung Malim" +
-        "\nPerak Darul Ridzuan."
+          "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
+          "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
+          "\nBehrang" +
+          " 35950 Tanjung Malim" +
+          "\nPerak Darul Ridzuan."
 
       #salinan_kepada = "Pengarah\n"+
       #                 "Institut Tanah dan Ukur Negara(INSTUN)\n\n" 
@@ -2844,15 +3124,15 @@ class CourseApplicationsController < ApplicationController
     alamat = "#{company_addr}."
 
     @alamat_instun = "\nPengarah," +
-      "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
-      "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
-      "\nBehrang" +
-      " 35950 Tanjung Malim" +
-      "\nPerak Darul Ridzuan."
+        "\nInstitut Tanah dan Ukur Negara(INSTUN)" +
+        "\nKementerian Sumber Asli dan Alam Sekitar(NRE)" +
+        "\nBehrang" +
+        " 35950 Tanjung Malim" +
+        "\nPerak Darul Ridzuan."
 
     salinan_kepada = "Pengarah\n"+
-      "Institut Tanah dan Ukur Negara(INSTUN)\n\n"
-    #"Fail Timbul"
+        "Institut Tanah dan Ukur Negara(INSTUN)\n\n"
+                                   #"Fail Timbul"
 
 
     pdf.y = @my_margin -50
@@ -2871,7 +3151,7 @@ class CourseApplicationsController < ApplicationController
     pdf.text "\n", :font_size => @font_size, :justification => :left
     pdf.text "<b>#{nof { student.profile.name }}</b>\n", :font_size => @font_size, :justification => :left
     @ic_number = "#{student.profile.ic_number[0, 6]}-#{student.profile.ic_number[6, 2]}-#{student.profile.ic_number[8, 4]}"
-    #pdf.text "<b>#{@ic_number}</b>\n", :font_size => @font_size, :justification => :left
+                                   #pdf.text "<b>#{@ic_number}</b>\n", :font_size => @font_size, :justification => :left
 
     if employment and employment.job_profile
       job_name = nof { employment.job_profile.job_name }
@@ -2882,7 +3162,7 @@ class CourseApplicationsController < ApplicationController
       @job_profile = " "
     end
     pdf.text "#{@job_profile}", :font_size => @font_size, :justification => :left
-    #pdf.text "<b>#{p_alamat}</b>", :font_size => @font_size, :justification => :left
+                                   #pdf.text "<b>#{p_alamat}</b>", :font_size => @font_size, :justification => :left
 
     pdf.text "\nMelalui dan Salinan:", :font_size => @font_size, :justification => :left
 
@@ -2929,7 +3209,7 @@ class CourseApplicationsController < ApplicationController
         pdf.text "\n\n\n\n", :font_size => @font_size, :justification => :left
       end
     end
-    #pdf.text "\n\n\n\n", :font_size => @font_size, :justification => :left if params[:is_cetakan_komputer].to_i == 0
+                                   #pdf.text "\n\n\n\n", :font_size => @font_size, :justification => :left if params[:is_cetakan_komputer].to_i == 0
     pdf.text "<b>(#{@tandatangan_nama})</b>", :font_size => @font_size, :justification => :left
     pdf.text "#{@tandatangan_jawatan}\n", :font_size => @font_size, :justification => :left
     pdf.text "Institut Tanah dan Ukur Negara\n", :font_size => @font_size, :justification => :left
@@ -2970,7 +3250,7 @@ class CourseApplicationsController < ApplicationController
     s.push("#{f} = 9")
     t = s.join(" OR ")
     @students = CourseApplication.find(:all, :conditions => "profile_id = #{session[:user].profile.id} AND (#{t})",
-      :order => "date_apply DESC,student_status_id")
+                                       :order => "date_apply DESC,student_status_id")
     @courses = Course.find(:all, :order => "name")
   end
 

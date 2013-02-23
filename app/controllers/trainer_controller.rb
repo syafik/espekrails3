@@ -486,7 +486,7 @@ class TrainerController < ApplicationController
   end
 
   def destroy
-    @trainer = Trainer.find(params[:id])
+    @trainer = Trainer.find(params[:trainer_id])
     @trainer.destroy
     redirect_to :action => 'list'
   end

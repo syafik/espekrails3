@@ -236,6 +236,7 @@ InstunRails3::Application.routes.draw do
     post 'offer'
     get 'offer'
     get 'eval'
+    get 'destroy'
     collection do
       get 'list'
       get 'search'
@@ -509,7 +510,9 @@ InstunRails3::Application.routes.draw do
     get 'view'
     get 'addrole'
     get 'show_profile'
+    put 'update_password'
     put 'update_password2'
+    get 'edit_password'
     get 'edit_password2'
     get 'verify'
     get 'modrole'
@@ -527,7 +530,6 @@ InstunRails3::Application.routes.draw do
       get 'view_khidmat'
       get 'view_akademik'
       get 'view_kursus'
-      get 'edit_password'
       get 'edit_peribadi'
       put 'update_peribadi'
     end
