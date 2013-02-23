@@ -22,7 +22,8 @@ class EvaluationsController < ApplicationController
   end
 
   def trainer_report
-	@course_implementation = CourseImplementation.find(params[:id])
+	@course_implementation = CourseImplementation.find(params[:evaluation_id])
+	#@course_implementation = CourseImplementation.find(params[:id])
 	@ev = @course_implementation.evaluations
 	if @ev.size == 0
 		render :text=> "Soalan penilaian belum diset." and return
@@ -38,7 +39,8 @@ class EvaluationsController < ApplicationController
   end
 
   def management_report
-	@course_implementation = CourseImplementation.find(params[:id])
+	@course_implementation = CourseImplementation.find(params[:evaluation_id])
+	#@course_implementation = CourseImplementation.find(params[:id])
 	@ev = @course_implementation.evaluations
 	if @ev.size == 0
 		render :text=> "Soalan penilaian belum diset." and return
@@ -55,7 +57,8 @@ class EvaluationsController < ApplicationController
   end
 
   def facility_report
-	@course_implementation = CourseImplementation.find(params[:id])
+	@course_implementation = CourseImplementation.find(params[:evaluation_id])
+	#@course_implementation = CourseImplementation.find(params[:id])
 	@ev = @course_implementation.evaluations
 	if @ev.size == 0
 		render :text=> "Soalan penilaian belum diset." and return
@@ -72,7 +75,8 @@ class EvaluationsController < ApplicationController
   end
 
   def content_report
-	@course_implementation = CourseImplementation.find(params[:id])
+	@course_implementation = CourseImplementation.find(params[:evaluation_id])
+	#@course_implementation = CourseImplementation.find(params[:id])
 	@ev = @course_implementation.evaluations
 	if @ev.size == 0
 		render :text=> "Soalan penilaian belum diset." and return
@@ -89,7 +93,8 @@ class EvaluationsController < ApplicationController
   end
 
   def comment_report
-	@course_implementation = CourseImplementation.find(params[:id])
+	@course_implementation = CourseImplementation.find(params[:evaluation_id])
+	#@course_implementation = CourseImplementation.find(params[:id])
 	@comments = @course_implementation.evaluation_comments
 	#render :text=> @comments.size and return
   end

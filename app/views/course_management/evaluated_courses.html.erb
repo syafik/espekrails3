@@ -15,7 +15,7 @@
   function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('#popmenu').css({"width":240});
     $('#popmenu').html("<ul>" +
-      "<li><a href=\""  + "/course_management" + "/evaluation_done/" + objid + "\">&nbsp;&nbsp;Lihat Senarai Penilaian oleh Peserta</a>" +
+      "<li><a href=\""  + "/course_management" + "/" + objid + "/evaluation_done\">&nbsp;&nbsp;Lihat Senarai Penilaian oleh Peserta</a>" +
       "<li><a href=\"" + "javascript: u(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Penceramah</a>" +
       "<li><a href=\"" + "javascript: mudah(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Kemudahan</a>" +
       "<li><a href=\"" + "javascript: m(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Penyelarasan</a>" +
@@ -119,21 +119,21 @@
 
 <script>
   function u(id) {
-    MM_openBrWindow('/evaluations/trainer_report/'+id,'','scrollbars=yes,width=800,height=600')
+    MM_openBrWindow('/evaluations/'+id+'/trainer_report','','scrollbars=yes,width=800,height=600')
   }
 
   function mudah(id) {
-    MM_openBrWindow('/evaluations/facility_report/'+id,'','scrollbars=yes,width=800,height=600')
+    MM_openBrWindow('/evaluations/'+id+'/facility_report','','scrollbars=yes,width=800,height=600')
   }
 
   function m(id) {
-    MM_openBrWindow('/evaluations/management_report/'+id,'','scrollbars=yes,width=800,height=600')
+    MM_openBrWindow('/evaluations/'+id+'/management_report','','scrollbars=yes,width=800,height=600')
   }
   function i(id) {
-    MM_openBrWindow('/evaluations/content_report/'+id,'','scrollbars=yes,width=800,height=600')
+    MM_openBrWindow('/evaluations/'+id+'/content_report','','scrollbars=yes,width=800,height=600')
   }
   function k(id) {
-    MM_openBrWindow('/evaluations/comment_report/'+id,'','scrollbars=yes,width=800,height=600')
+    MM_openBrWindow('/evaluations/'+id+'/comment_report','','scrollbars=yes,width=800,height=600')
   }
 
 </script>

@@ -381,6 +381,7 @@ InstunRails3::Application.routes.draw do
   match '/course_management/edit_tempah_sijil' => 'course_management#edit_tempah_sijil', :via => [:post]
   match '/course_management/cetak_sijil' => 'course_management#cetak_sijil', :via => [:post]
   resources :course_management do
+    get 'evaluation_done'
     collection do
       get 'select_course'
       get 'sijil_select_course'
@@ -584,6 +585,11 @@ InstunRails3::Application.routes.draw do
   end
 
   resources :evaluations do
+    get 'trainer_report'
+    get 'facility_report'
+    get 'management_report'
+    get 'content_report'
+    get 'comment_report'
     collection do
       get 'user_hyouka'
     end
