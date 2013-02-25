@@ -167,6 +167,7 @@ cid = params[:id]  #ambil data dari link_to
 %>    
 
 <form action="/timetable/list">
+  <%= "SELECT date_plan_start, date_plan_end, time_start, time_end, code, name FROM vw_detailed_courses WHERE id = '"+ @cid +"'" %>
   <%
   i = 0;
   even = true;
@@ -225,6 +226,15 @@ cid = params[:id]  #ambil data dari link_to
           <td><font><%=@course_implementation.penyelaras2.profile.name%></font></td>
           <td align="RIGHT"><font><b>No Tel:</b></font></td>
           <td><font><b></b><%=@course_implementation.penyelaras2.profile.mobile%></font></td>
+        </tr>
+        <tr>
+          <td valign="TOP" align="center" colspan="4"><strong>
+              <%
+              link_tambah = "<a href=\"javascript: MM_openBrWindow('/course_implementations/#{@cid}/tambah_jadual?date=#{@end_hari}','','scrollbars=yes,width=600,height=400')\">Tambah</a>"
+            %>
+              <%= link_tambah.html_safe %>
+            </strong>
+          </td>
         </tr>
       </table>
     </div>
@@ -544,8 +554,9 @@ cid = params[:id]  #ambil data dari link_to
             <% if k == arrtime1.size %>
               <td class="el">
                 <%
+                end_waktu = Time.utc(2000,"jan",1,"#{arrtime2[k-1]}".split(":")[0],"#{arrtime2[k-1]}".split(":")[1],0) + 30.minutes
                 if @course_implementation.editable?(session[:user])
-                  link_tambah = "<a href=\"javascript: MM_openBrWindow('/timetables/new?course_implementation_id=#{@cid}&date=#{rod_ymd}&time_start=#{arrtime1[k-1]}&time_end=#{arrtime2[k-1]}','','scrollbars=yes,width=600,height=400')\">Tambah</a>"
+                  link_tambah = "<a href=\"javascript: MM_openBrWindow('/timetables/new?course_implementation_id=#{@cid}&date=#{rod_ymd}&time_start=#{arrtime2[k-1]}&time_end=#{end_waktu.strftime("%H:%M")}','','scrollbars=yes,width=600,height=400')\">Tambah</a>"
                 else
                   link_tambah = "&nbsp;"
                 end

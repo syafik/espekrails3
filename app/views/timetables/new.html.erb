@@ -3,9 +3,21 @@
     <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH JADUAL WAKTU  KURSUS</font></b></td>
   </tr>
 </table>
+<%
+sql = "SELECT t.id,t.profile_id,p.name from course_implementations_trainers as ci_t JOIN trainers as t ON t.id=ci_t.trainer_id JOIN profiles as p on p.id=t.profile_id where course_implementation_id = #{@course_implementation.id} ORDER BY name"
+@trainers = Trainer.find_by_sql(sql)
+%>
+<span  id="timetable-id" style="display:none;">
+  <select name="timetable[trainer_ids][]">
+    <% @trainers.each do |t| %>
+      <option value="<%= t.id %>"><%= t.profile.name.upcase %></option>
+    <% end %>
+  </select>
+</span>
+
 <%= form_for(@timetable) do |f|  %>
 <%= render :partial => 'form' %>
-<br>
+<br />
 <input name="submit" type="button" class="button" value="Keluar" onClick="if  (window.opener) {  window.opener.location.reload();window.close() } else { location='?'}">
 <%= submit_tag "Simpan" %><% end %>
 

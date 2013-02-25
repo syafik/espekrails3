@@ -7,8 +7,8 @@
   }
 
   function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width" :230});
+    $('#popmenu').html("<ul>" +
       "<li><a href=\""  + "/quizzes" + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini Ujian</a>" +
       "<li><a href=\"javascript: confirmAndGo('"  + "/quizzes" + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Ujian</a>" +
       "<hr size=1>" +
@@ -21,12 +21,12 @@
     //"<hr size=1>" +
     "<li><a href=\""  + "/quiz_questions" + "/" + objid + "/list_peserta\">&nbsp;&nbsp;Senarai Peserta</a>" +
       //"<li><a href=\""  + "/quiz_questions" + "/list_peserta2/" + objid + "\">&nbsp;&nbsp;Senarai Markah (Ujian 2)</a>" +
-    "</ul>"
+    "</ul>")
   }
 
   function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" +
+    $('#popmenu').css({"width":230});
+    $('#popmenu').html("<ul>" +
       //"<li><a href=\""  + "/quizzes" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini Ujian</a>" +
     //"<li><a href=\"javascript: confirmAndGo('"  + "/quizzes" + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Ujian</a>" +
     //"<hr size=1>" +
@@ -35,7 +35,7 @@
     //"<hr size=1>" +
     "<li><a href=\""  + "/quiz_questions" + "/" + objid + "/list_peserta\">&nbsp;&nbsp;Keputusan Ujian</a>" +
       //"<li><a href=\""  + "/quiz_questions" + "/list_peserta2/" + objid + "\">&nbsp;&nbsp;Senarai Markah (Ujian 2)</a>" +
-    "</ul>"
+    "</ul>")
   }
 
   function findAndSortWith(orderby,arrow) {

@@ -472,6 +472,7 @@ InstunRails3::Application.routes.draw do
       get 'cetak_pemohon'
     end
   end
+  
   match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
 
   resources :course_implementations do
@@ -493,6 +494,8 @@ InstunRails3::Application.routes.draw do
       get 'copy_and_new'
       get 'save_course_trainer'
       get 'show_timetable2'
+      get 'tambah_jadual'
+      put 'simpan_tambah_jadual'
     end
   end
   resources :user do

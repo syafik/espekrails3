@@ -2,9 +2,28 @@
   function duplicate() {
     var original = document.getElementById('timetable-id');
     var duplicater_target = document.getElementById('duplicater_target');
-    <%#*var clone = original%>
-    <%#*clone.id = "duplicetor" + ++i; // there can only be one element with an ID%>
-    duplicater_target.innerHTML += original.innerHTML;
+   
+    count = parseInt($('#count-pengajar').val());
+    $('#count-pengajar').val(count+1);
+    count = parseInt($('#count-pengajar').val());
+    el1 = document.createElement('div')
+    el1.id = "timetable-id-"+count;
+    el1.innerHTML =  original.innerHTML;
+
+    a = document.createElement('a')
+    a.href = "#"
+    a.onclick = function() {
+      delete_pengajar(this);
+    };
+    a.innerHTML= "Padam";
+    console.log(a);
+    el1.appendChild(a);
+
+    duplicater_target.appendChild(el1);
+  }
+
+  function delete_pengajar(id){
+    $(id).parent().empty();
   }
 </script>
 <div align="center">
@@ -26,6 +45,7 @@
     </tr>
   </table!-->
   <br>
+  <%= hidden_field_tag "count-pengajar", @timetable.trainers.size %>
   <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
     <tr>
       <%= hidden_field 'timetable', 'date' %>
@@ -94,25 +114,38 @@
     </tr>
 
     <tr>
-      <td align="right"><strong>Pengajar:</strong></td>
-      <td>&nbsp;
-        <%
-        sql = "SELECT t.id,t.profile_id,p.name from course_implementations_trainers as ci_t JOIN trainers as t ON t.id=ci_t.trainer_id JOIN profiles as p on p.id=t.profile_id where course_implementation_id = #{@course_implementation.id} ORDER BY name"
-        @trainers = Trainer.find_by_sql(sql)
-      %>
-        <span  id="timetable-id">
-        <select name="timetable[trainer_ids][]">
-          <% @trainers.each do |t| %>
-            <option value="<%= t.id %>" <%= 'selected' if @timetable.trainers.include?(t) %>>
-              <%= t.profile.name.upcase %></option>
-            select(:profile, :religion_id, @options, "" ,:style=>"width: 100;")
+      <td align="right" valign="top"><strong>Pengajar:</strong></td>
+      <td>
+        <div style="float:left;">
+          <% unless @timetable.trainers.size == 0 %>
+            <% @timetable.trainers.each_with_index do |peg, index| %>
+              <div id="timetable-id-<%= index %>">
+                <select name="timetable[trainer_ids][]">
+                  <% @trainers.each do |t| %>
+                    <option value="<%= t.id %>" <%= 'selected' if t.id == peg.id %>>
+                      <%= t.profile.name.upcase %></option>
+                  <% end %>
+                </select>
+                <a href="#" onclick="delete_pengajar(this)">Padam</a>
+              </div>
+            <% end %>
+          <% else %>
+            <div id="timetable-id-0">
+              <select name="timetable[trainer_ids][]">
+                <% @trainers.each do |t| %>
+                  <option value="<%= t.id %>">
+                    <%= t.profile.name.upcase %></option>
+                <% end %>
+              </select>
+            </div>
           <% end %>
-        </select>
-          </span>
-        <a href="javascript: a(<%=@course_implementation.id%>);"><font style="color: blue">tambah/padam</font></a> &nbsp;|&nbsp;
-        <a href="#" onclick="duplicate();">Tambah Pengajar</a> <br />
-        <div id="duplicater_target">
+          <div id="duplicater_target"></div>
         </div>
+        <div style="float:left;">
+          <a href="javascript: a(<%=@course_implementation.id%>);"><font style="color: blue">tambah/padam</font></a> &nbsp;|&nbsp;
+          <a href="#" onclick="duplicate();">Tambah Pengajar</a> <br />
+        </div>
+        <div style="clear: both;"></div>
       </td>
     </tr>
     <script>

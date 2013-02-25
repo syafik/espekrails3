@@ -308,6 +308,20 @@ class CourseImplementationsController < ApplicationController
     render :layout => "standard-layout"
   end
 
+  def tambah_jadual
+    @course_implementation = CourseImplementation.find(params[:id])
+    @course_implementation.date_plan_end = params[:date].to_date + 1.days
+    render layout: "standard-layout"
+  end
+
+  def simpan_tambah_jadual
+    @course_implementation = CourseImplementation.find(params[:id])
+    @course_implementation.update_attributes(
+      :date_plan_end => params[:search_date][0],
+      :date_end => params[:search_date][0]
+    )
+    flash[:notice] = 'Jadual waktu berjaya ditambah'
+  end
 
   def create
 
@@ -343,19 +357,19 @@ class CourseImplementationsController < ApplicationController
     @month_apply_start = params[:month_apply_start]
     @year_apply_start  = params[:year_apply_start]
 
-	  @day_apply_end   = params[:day_apply_end]
+    @day_apply_end   = params[:day_apply_end]
     @month_apply_end = params[:month_apply_end]
     @year_apply_end  = params[:year_apply_end]
       
-	  @day_check       = params[:day_check]
+    @day_check       = params[:day_check]
     @month_check     = params[:month_check]
     @year_check      = params[:year_check]
 
-	  @day_evaluation_end   = params[:day_evaluation_end]
+    @day_evaluation_end   = params[:day_evaluation_end]
     @month_evaluation_end = params[:month_evaluation_end]
     @year_evaluation_end  = params[:year_evaluation_end]
 	
-	  @day_publish       = params[:day_publish]
+    @day_publish       = params[:day_publish]
     @month_publish     = params[:month_publish]
     @year_publish      = params[:year_publish]
 
@@ -364,7 +378,7 @@ class CourseImplementationsController < ApplicationController
     @course_implementation = CourseImplementation.new(params[:course_implementation]) if params[:course_implementation]
 	
     @course = Course.new(params[:course])
-    @course.methodologies = Methodology.find(params[:methodology_ids]) if params[:methodology_ids]            
+    @course.methodologies = Methodology.find(params[:methodology_ids]) if params[:methodology_ids]
     @course.methodologies.names = params[:names] if params[:names]
 
     if @course.save
@@ -419,50 +433,50 @@ class CourseImplementationsController < ApplicationController
 
   def edit
     @course_implementation = CourseImplementation.find(params[:id])
-    @course = @course_implementation.course   
+    @course = @course_implementation.course
     
     schedule = CourseImplementation.find(params[:id])
-	  if !schedule.date_start
+    if !schedule.date_start
       @day_start   = schedule.date_plan_start.to_formatted_s(:my_format_day)
       @month_start = schedule.date_plan_start.to_formatted_s(:my_format_month)
       @year_start  = schedule.date_plan_start.to_formatted_s(:my_format_year)
-	  else
+    else
       @day_start   = schedule.date_start.to_formatted_s(:my_format_day)
       @month_start = schedule.date_start.to_formatted_s(:my_format_month)
       @year_start  = schedule.date_start.to_formatted_s(:my_format_year)
-	  end
+    end
 
-	  if !schedule.date_end
+    if !schedule.date_end
       @day_end     = schedule.date_plan_end.to_formatted_s(:my_format_day)
       @month_end   = schedule.date_plan_end.to_formatted_s(:my_format_month)
       @year_end    = schedule.date_plan_end.to_formatted_s(:my_format_year)
-	  else
+    else
       @day_end     = schedule.date_end.to_formatted_s(:my_format_day)
       @month_end   = schedule.date_end.to_formatted_s(:my_format_month)
       @year_end    = schedule.date_end.to_formatted_s(:my_format_year)
-	  end
+    end
 
-	  @day_check   = schedule.date_check.to_formatted_s(:my_format_day)   if schedule.date_check
+    @day_check   = schedule.date_check.to_formatted_s(:my_format_day)   if schedule.date_check
     @month_check = schedule.date_check.to_formatted_s(:my_format_month) if schedule.date_check
     @year_check  = schedule.date_check.to_formatted_s(:my_format_year)  if schedule.date_check
 
-	  @day_publish   = schedule.date_publish.to_formatted_s(:my_format_day)   if schedule.date_publish
-	  @month_publish = schedule.date_publish.to_formatted_s(:my_format_month) if schedule.date_publish
-	  @year_publish  = schedule.date_publish.to_formatted_s(:my_format_year)  if schedule.date_publish
+    @day_publish   = schedule.date_publish.to_formatted_s(:my_format_day)   if schedule.date_publish
+    @month_publish = schedule.date_publish.to_formatted_s(:my_format_month) if schedule.date_publish
+    @year_publish  = schedule.date_publish.to_formatted_s(:my_format_year)  if schedule.date_publish
 
-	  @day_apply_start   = schedule.date_apply_start.to_formatted_s(:my_format_day)   if schedule.date_apply_start
-	  @month_apply_start = schedule.date_apply_start.to_formatted_s(:my_format_month)   if schedule.date_apply_start
-	  @year_apply_start  = schedule.date_apply_start.to_formatted_s(:my_format_year)   if schedule.date_apply_start
+    @day_apply_start   = schedule.date_apply_start.to_formatted_s(:my_format_day)   if schedule.date_apply_start
+    @month_apply_start = schedule.date_apply_start.to_formatted_s(:my_format_month)   if schedule.date_apply_start
+    @year_apply_start  = schedule.date_apply_start.to_formatted_s(:my_format_year)   if schedule.date_apply_start
 
-	  @day_apply_end   = schedule.date_apply_end.to_formatted_s(:my_format_day)   if schedule.date_apply_end
-	  @month_apply_end = schedule.date_apply_end.to_formatted_s(:my_format_month)   if schedule.date_apply_end
-	  @year_apply_end  = schedule.date_apply_end.to_formatted_s(:my_format_year)   if schedule.date_apply_end
+    @day_apply_end   = schedule.date_apply_end.to_formatted_s(:my_format_day)   if schedule.date_apply_end
+    @month_apply_end = schedule.date_apply_end.to_formatted_s(:my_format_month)   if schedule.date_apply_end
+    @year_apply_end  = schedule.date_apply_end.to_formatted_s(:my_format_year)   if schedule.date_apply_end
 
-	  @day_evaluation_end   = schedule.date_evaluation_end.to_formatted_s(:my_format_day)   if schedule.date_evaluation_end
-	  @month_evaluation_end = schedule.date_evaluation_end.to_formatted_s(:my_format_month) if schedule.date_evaluation_end
-	  @year_evaluation_end  = schedule.date_evaluation_end.to_formatted_s(:my_format_year)  if schedule.date_evaluation_end
+    @day_evaluation_end   = schedule.date_evaluation_end.to_formatted_s(:my_format_day)   if schedule.date_evaluation_end
+    @month_evaluation_end = schedule.date_evaluation_end.to_formatted_s(:my_format_month) if schedule.date_evaluation_end
+    @year_evaluation_end  = schedule.date_evaluation_end.to_formatted_s(:my_format_year)  if schedule.date_evaluation_end
 
-	  @day_check_in   = schedule.check_in.to_formatted_s(:my_format_day)   if schedule.check_in
+    @day_check_in   = schedule.check_in.to_formatted_s(:my_format_day)   if schedule.check_in
     @month_check_in = schedule.check_in.to_formatted_s(:my_format_month) if schedule.check_in
     @year_check_in  = schedule.check_in.to_formatted_s(:my_format_year)  if schedule.check_in
     @hour_check_in  = schedule.check_in.to_formatted_s(:my_format_hour)  if schedule.check_in
@@ -480,7 +494,7 @@ class CourseImplementationsController < ApplicationController
     @year_briefing  = schedule.briefing.to_formatted_s(:my_format_year)  if schedule.briefing
     @hour_briefing  = schedule.briefing.to_formatted_s(:my_format_hour)  if schedule.briefing
     @minute_briefing  = schedule.briefing.to_formatted_s(:my_format_minute)  if schedule.briefing
-    render :layout => "standard-layout" 
+    render :layout => "standard-layout"
   end
 
   def update
@@ -497,19 +511,19 @@ class CourseImplementationsController < ApplicationController
     @month_apply_start = params[:month_apply_start]
     @year_apply_start  = params[:year_apply_start]
 
-	  @day_apply_end   = params[:day_apply_end]
+    @day_apply_end   = params[:day_apply_end]
     @month_apply_end = params[:month_apply_end]
     @year_apply_end  = params[:year_apply_end]
       
-	  @day_check       = params[:day_check]
+    @day_check       = params[:day_check]
     @month_check     = params[:month_check]
     @year_check      = params[:year_check]
 
-	  @day_evaluation_end   = params[:day_evaluation_end]
+    @day_evaluation_end   = params[:day_evaluation_end]
     @month_evaluation_end = params[:month_evaluation_end]
     @year_evaluation_end  = params[:year_evaluation_end]
 	
-	  @day_publish       = params[:day_publish]
+    @day_publish       = params[:day_publish]
     @month_publish     = params[:month_publish]
     @year_publish      = params[:year_publish]
 
@@ -533,33 +547,33 @@ class CourseImplementationsController < ApplicationController
     ##########
     
     @course_implementation = CourseImplementation.find(params[:id])
-	  #@course_implementation.date_publish     = params[:month_publish]+"/"+params[:day_publish]+"/"+params[:year_publish]
-	  @course_implementation.date_publish     = "#{params[:month_publish]}/#{params[:day_publish]}/#{params[:year_publish]}"
-	  #@course_implementation.date_apply_start = params[:month_apply_start]+"/"+params[:day_apply_start]+"/"+params[:year_apply_start]
-	  @course_implementation.date_apply_start = "#{params[:month_apply_start]}/#{params[:day_apply_start]}/#{params[:year_apply_start]}"
-	  #@course_implementation.date_apply_end   = params[:month_apply_end]+"/"+params[:day_apply_end]+"/"+params[:year_apply_end]
-	  @course_implementation.date_apply_end   = "#{params[:month_apply_end]}/#{params[:day_apply_end]}/#{params[:year_apply_end]}"
-	  #@course_implementation.date_check       = params[:month_check]+"/"+params[:day_check]+"/"+params[:year_check]
-	  @course_implementation.date_check       = "#{params[:month_check]}/#{params[:day_check]}/#{params[:year_check]}"
-	  #@course_implementation.date_evaluation_end   = params[:month_evaluation_end]+"/"+params[:day_evaluation_end]+"/"+params[:year_evaluation_end]
-	  @course_implementation.date_evaluation_end   = "#{params[:month_evaluation_end]}/#{params[:day_evaluation_end]}/#{params[:year_evaluation_end]}"
-	  #@course_implementation.date_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
-	  @course_implementation.date_start = "#{params[:month_start]}/#{params[:day_start]}/#{params[:year_start]}"
+    #@course_implementation.date_publish     = params[:month_publish]+"/"+params[:day_publish]+"/"+params[:year_publish]
+    @course_implementation.date_publish     = "#{params[:month_publish]}/#{params[:day_publish]}/#{params[:year_publish]}"
+    #@course_implementation.date_apply_start = params[:month_apply_start]+"/"+params[:day_apply_start]+"/"+params[:year_apply_start]
+    @course_implementation.date_apply_start = "#{params[:month_apply_start]}/#{params[:day_apply_start]}/#{params[:year_apply_start]}"
+    #@course_implementation.date_apply_end   = params[:month_apply_end]+"/"+params[:day_apply_end]+"/"+params[:year_apply_end]
+    @course_implementation.date_apply_end   = "#{params[:month_apply_end]}/#{params[:day_apply_end]}/#{params[:year_apply_end]}"
+    #@course_implementation.date_check       = params[:month_check]+"/"+params[:day_check]+"/"+params[:year_check]
+    @course_implementation.date_check       = "#{params[:month_check]}/#{params[:day_check]}/#{params[:year_check]}"
+    #@course_implementation.date_evaluation_end   = params[:month_evaluation_end]+"/"+params[:day_evaluation_end]+"/"+params[:year_evaluation_end]
+    @course_implementation.date_evaluation_end   = "#{params[:month_evaluation_end]}/#{params[:day_evaluation_end]}/#{params[:year_evaluation_end]}"
+    #@course_implementation.date_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
+    @course_implementation.date_start = "#{params[:month_start]}/#{params[:day_start]}/#{params[:year_start]}"
     #@course_implementation.date_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
     @course_implementation.date_end   = "#{params[:month_end]}/#{params[:day_end]}/#{params[:year_end]}"
-	  #@course_implementation.date_plan_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
-	  @course_implementation.date_plan_start = "#{params[:month_start]}/#{params[:day_start]}/#{params[:year_start]}"
-	  #@course_implementation.date_plan_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
-	  @course_implementation.date_plan_end   = "#{params[:month_end]}/#{params[:day_end]}/#{params[:year_end]}"
+    #@course_implementation.date_plan_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
+    @course_implementation.date_plan_start = "#{params[:month_start]}/#{params[:day_start]}/#{params[:year_start]}"
+    #@course_implementation.date_plan_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
+    @course_implementation.date_plan_end   = "#{params[:month_end]}/#{params[:day_end]}/#{params[:year_end]}"
     @course_implementation.time_start  = params[:time_start]
     @course_implementation.time_end    = params[:time_end]
 
-	  #@course_implementation.check_in    = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
-	  @course_implementation.check_in    = "#{params[:month_check_in]}/#{params[:day_check_in]}/#{params[:year_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}"
-	  #@course_implementation.check_out   = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
-	  @course_implementation.check_out   = "#{params[:month_check_out]}/#{params[:day_check_out]}/#{params[:year_check_out]} #{params[:hour_check_out]}:#{params[:minute_check_out]}"
-	  #@course_implementation.briefing    = params[:month_briefing]+"/"+params[:day_briefing]+"/"+params[:year_briefing] +  " " +params[:hour_briefing]+":"+params[:minute_briefing]
-	  @course_implementation.briefing    = "#{params[:month_briefing]}/#{params[:day_briefing]}/#{params[:year_briefing]} #{params[:hour_briefing]}:#{params[:minute_briefing]}"
+    #@course_implementation.check_in    = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
+    @course_implementation.check_in    = "#{params[:month_check_in]}/#{params[:day_check_in]}/#{params[:year_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}"
+    #@course_implementation.check_out   = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
+    @course_implementation.check_out   = "#{params[:month_check_out]}/#{params[:day_check_out]}/#{params[:year_check_out]} #{params[:hour_check_out]}:#{params[:minute_check_out]}"
+    #@course_implementation.briefing    = params[:month_briefing]+"/"+params[:day_briefing]+"/"+params[:year_briefing] +  " " +params[:hour_briefing]+":"+params[:minute_briefing]
+    @course_implementation.briefing    = "#{params[:month_briefing]}/#{params[:day_briefing]}/#{params[:year_briefing]} #{params[:hour_briefing]}:#{params[:minute_briefing]}"
 
     @course = @course_implementation.course
     @course.methodologies = Methodology.find(params[:methodology_ids]) if params[:methodology_ids]
@@ -586,11 +600,11 @@ class CourseImplementationsController < ApplicationController
   end
 
   def copy_and_new
-		edit
+    edit
   end
 
   def copy_and_create
-		create
+    create
   end
 
   def open
@@ -625,38 +639,38 @@ class CourseImplementationsController < ApplicationController
     @month_end       = params[:month_end]
     @year_end        = params[:year_end]
       
-	  @day_apply_start   = params[:day_apply_start]
+    @day_apply_start   = params[:day_apply_start]
     @month_apply_start = params[:month_apply_start]
     @year_apply_start  = params[:year_apply_start]
 
-	  @day_apply_end   = params[:day_apply_end]
+    @day_apply_end   = params[:day_apply_end]
     @month_apply_end = params[:month_apply_end]
     @year_apply_end  = params[:year_apply_end]
       
-	  @day_check       = params[:day_check]
+    @day_check       = params[:day_check]
     @month_check     = params[:month_check]
     @year_check      = params[:year_check]
 
-	  @day_evaluation_end   = params[:day_evaluation_end]
+    @day_evaluation_end   = params[:day_evaluation_end]
     @month_evaluation_end = params[:month_evaluation_end]
     @year_evaluation_end  = params[:year_evaluation_end]
 	
-	  @day_publish       = params[:day_publish]
+    @day_publish       = params[:day_publish]
     @month_publish     = params[:month_publish]
     @year_publish      = params[:year_publish]
     ##########
-	  @course_implementation = CourseImplementation.find(params[:id])
+    @course_implementation = CourseImplementation.find(params[:id])
     @course = Course.find(@course_implementation.course_id)
 
-	  @course_implementation.date_publish     = params[:month_publish]+"/"+params[:day_publish]+"/"+params[:day_publish]
-	  @course_implementation.date_apply_start = params[:month_apply_start]+"/"+params[:day_apply_start]+"/"+params[:year_apply_start]
-	  @course_implementation.date_apply_end   = params[:month_apply_end]+"/"+params[:day_apply_end]+"/"+params[:year_apply_end]
-	  @course_implementation.date_check       = params[:month_check]+"/"+params[:day_check]+"/"+params[:year_check]
-	  @course_implementation.date_evaluation_end   = params[:month_evaluation_end]+"/"+params[:day_evaluation_end]+"/"+params[:year_evaluation_end]
-	  @course_implementation.date_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
+    @course_implementation.date_publish     = params[:month_publish]+"/"+params[:day_publish]+"/"+params[:day_publish]
+    @course_implementation.date_apply_start = params[:month_apply_start]+"/"+params[:day_apply_start]+"/"+params[:year_apply_start]
+    @course_implementation.date_apply_end   = params[:month_apply_end]+"/"+params[:day_apply_end]+"/"+params[:year_apply_end]
+    @course_implementation.date_check       = params[:month_check]+"/"+params[:day_check]+"/"+params[:year_check]
+    @course_implementation.date_evaluation_end   = params[:month_evaluation_end]+"/"+params[:day_evaluation_end]+"/"+params[:year_evaluation_end]
+    @course_implementation.date_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
     @course_implementation.date_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
-	  #@course_implementation.date_plan_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
-	  #@course_implementation.date_plan_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
+    #@course_implementation.date_plan_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
+    #@course_implementation.date_plan_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
     #@course_implementation.time_start  = params[:time_start]
     #@course_implementation.time_end    = params[:time_end]
 
@@ -693,20 +707,20 @@ class CourseImplementationsController < ApplicationController
     end
 	
     @place_pages, @places = paginate(:places, :per_page => 10000, :order_by => "code asc")
-  end 
+  end
 
   def edit_surat_iklan_select_kursus
     render layout: "standard-layout"
-  end 
+  end
 
   def edit_surat_iklan_la_apa_lagi
     @course_implementation = CourseImplementation.find(params[:surat_iklan_content][:course_implementation_id])
     @course = Course.find(@course_implementation.course_id)
     @surat_iklan_content = SuratIklanContent.find_by_course_implementation_id(@course_implementation.id)
-	  if !@surat_iklan_content
-		  @surat_iklan_content = SuratIklanContent.new
-	  end
-  end 
+    if !@surat_iklan_content
+      @surat_iklan_content = SuratIklanContent.new
+    end
+  end
   
   def rujukan_kami
     @surats = SuratIklanContent.find(:all, :conditions => "course_department_id = #{params[:id]}")
@@ -763,7 +777,7 @@ class CourseImplementationsController < ApplicationController
   def show_pdf
     filename = "show.pdf"
     @course_implementation = CourseImplementation.find(params[:id])
-    @course = @course_implementation.course   
+    @course = @course_implementation.course
     
     gen_show_pdf (filename)
     redirect_to("/surat/" + filename)
@@ -1004,9 +1018,9 @@ class CourseImplementationsController < ApplicationController
     pdf = PDF::Writer.new(:paper=>"A4")
     if params[:surat_iklan_content][:format_surat].to_i == 4
       pdf.margins_pt(0, 50, 36, 50)
-  	else
+    else
       pdf.margins_pt(36, 50, 36, 50)
-  	end
+    end
     #pdf.select_font("Arial")
     pdf.select_font("Helvetica")
     @my_margin = pdf.absolute_top_margin - 30
@@ -1045,7 +1059,7 @@ class CourseImplementationsController < ApplicationController
     @rujukan_font_size = 10
     @rujukan_font_size2 = 13
     #pdf.y = @my_margin -50
-	  pdf.add_text(345, pdf.y, "Ruj. Tuan", @rujukan_font_size)
+    pdf.add_text(345, pdf.y, "Ruj. Tuan", @rujukan_font_size)
     pdf.add_text(395, pdf.y, ": ", @rujukan_font_size)
     pdf.text "\n", :font_size => @rujukan_font_size
     pdf.add_text(345, pdf.y, "Ruj. Kami", @rujukan_font_size)
@@ -1068,9 +1082,9 @@ class CourseImplementationsController < ApplicationController
     pdf.text "\n#{@perenggan3}", :font_size => @font_size, :justification => :full, :right => 10
     pdf.text "\n", :font_size => @font_size, :justification => :center
     @per_lines2 = @perenggan4.split("\n")
-  	for per_line2 in @per_lines2
+    for per_line2 in @per_lines2
       pdf.text "#{per_line2} ", :font_size => @font_size, :justification => :full
-  	end
+    end
     pdf.text "\n", :font_size => @font_size, :justification => :center
 
     pdf.new_page
@@ -1118,7 +1132,7 @@ class CourseImplementationsController < ApplicationController
     i = 1
     @places = Place.find(params[:place_ids])
     for place in @places
-	    pdf.text "", :font_size => @font_size, :justification => :left
+      pdf.text "", :font_size => @font_size, :justification => :left
  
       addr1 = place.address1.split(" ").map! {|e| e}.join(" ") if ( (place.address1 != "") && place.address1 )
       addr2 = place.address2.split(" ").map! {|e| e}.join(" ") if ( (place.address2 != "") && place.address2 )
@@ -1139,7 +1153,7 @@ class CourseImplementationsController < ApplicationController
       #addr_arr.push(state.upcase) if place.state != ""
       company_addr = addr_arr.join("\n")
       company_addr = company_addr.tr_s(',' , ',')
-	    alamat = "#{company_addr}"
+      alamat = "#{company_addr}"
 
       pdf.text "\n\n#{nof{place.head_title}}", :font_size => @font_size, :justification => :left
       pdf.text "#{alamat}", :font_size => @font_size, :justification => :left
@@ -1300,9 +1314,9 @@ Fail FLoat"
     #pdf.text "\n#{fourth_paragraph}", :font_size => @font_size, :justification => :full
     pdf.text "\n", :font_size => @font_size, :justification => :center
     @per_lines2 = @perenggan4.split("\n")
-  	for per_line2 in @per_lines2
+    for per_line2 in @per_lines2
       pdf.text "#{per_line2} ", :font_size => @font_size, :justification => :left
-  	end
+    end
     pdf.text "\n", :font_size => @font_size, :justification => :center
     #pdf.text "<b>#{alamat_instun}</b>\n\n", :font_size => @font_size, :justification => :left
 
@@ -1340,7 +1354,8 @@ Fail FLoat"
     end
 
   end
-
+  
+ 
 
 
 
@@ -1357,7 +1372,7 @@ Fail FLoat"
   
     #pdf.text @pattern.logo.name, :font_size => 10, :justification => :left
     pdf.text "\n\n", :font_size => 10, :justification => :left
-    pdf.text "Adalah diperakukan bahawa #{a}", :font_size => 10, :justification => :center    
+    pdf.text "Adalah diperakukan bahawa #{a}", :font_size => 10, :justification => :center
     pdf.save_as("public/surat/" + file)
 
   end

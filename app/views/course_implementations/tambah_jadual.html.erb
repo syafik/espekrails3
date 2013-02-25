@@ -1,0 +1,26 @@
+<%= form_for(@course_implementation, :url => simpan_tambah_jadual_course_implementation_path(:id => @course_implementation.id)) do |f| %>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td align="right" valign="TOP"><strong>Tanggal Ujian</strong></td>
+      <td width="1%" align="CENTER" valign="TOP"><strong>:</strong></td>
+      <td>
+        <%= calendar_field 'search_date', '',
+          { :class => 'date',
+          :value  => @course_implementation.date_plan_end.strftime("%d/%m/%Y"),
+          :field_title => 'search_date',
+          :button_title => 'Kalendar' },
+          { :firstDay => 1,
+          :range => [2005, 2015],
+          :step => 1,
+          :showOthers => true,
+          :cache => true }
+      %>
+      <%= @course_implementation.date_plan_end %>
+      </td>
+    </tr>
+    <tr>
+      <td align="right" valign="TOP" colspan="center"><strong><%= f.submit "Tambah" %></strong></td>
+    </tr>
+  </table>
+
+<% end %>
