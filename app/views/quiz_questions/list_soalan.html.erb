@@ -95,7 +95,8 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <th><%#= link_to 'Kembali', :controller => 'quizzes', :action => 'shiken_ichiran', :id => @quiz.course_implementation_id %> senarai ujian || <%#= link_to 'Tambah', :action => 'new_obj', :id => @quiz.id %> soalan</th>
+    <th><%= link_to 'Kembali', shiken_ichiran_quiz_path(@quiz.course_implementation_id) %> senarai ujian ||
+      <%= link_to 'Tambah', new_obj_quiz_question_path(@quiz.id) %> soalan</th>
   </tr>
 </table>
 <BR>
@@ -118,7 +119,7 @@
         <%end%></td>
       <td align=left>
         <% for q in quiz_question.quiz_objectives %>
-          <%= nl2br(q.answer) if q.answer_type_id==0 %><font color=green><b><%= nl2br(q.answer) if q.answer_type_id==1%></b></font><BR>
+          <%= nl2br(q.answer).html_safe if q.answer_type_id==0 %><font color=green><b><%= nl2br(q.answer).html_safe if q.answer_type_id==1%></b></font><BR>
         <% end %></td>
     </tr>
   <% end %>

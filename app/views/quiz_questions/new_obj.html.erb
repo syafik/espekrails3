@@ -13,10 +13,12 @@
     </tr>
   </table>
   <BR>
-<%= start_form_tag ({:action => 'create_obj'}, :enctype => 'multipart/form-data') %>
+<%#= start_form_tag ({:action => 'create_obj'}, :enctype => 'multipart/form-data') %>
+  <%= form_for(@quiz_question, :url => create_obj_quiz_questions_path, :multipart => true) do |f| %>
+
   <%= render :partial => 'form_obj' %>
   <BR>
   <div align=center>
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+<% end  %>

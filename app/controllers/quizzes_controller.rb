@@ -40,8 +40,10 @@ class QuizzesController < ApplicationController
 
   def create
     @quiz = Quiz.new(params[:quiz])
-    @quiz.timeopen = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
-    @quiz.timeclose = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
+#    @quiz.timeopen = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
+    @quiz.timeopen = DateTime.parse("#{params[:year_check_in]}-#{params[:month_check_in]}-#{params[:day_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}")
+#    @quiz.timeclose = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
+    @quiz.timeclose = DateTime.parse("#{params[:year_check_out]}-#{params[:month_check_out]}-#{params[:day_check_out]} #{params[:hour_check_out]}:#{params[:minute_check_out]}:00")
     
     if @quiz.save
       flash[:notice] = 'Ujian Telah Berjaya Disimpan'
@@ -90,7 +92,7 @@ class QuizzesController < ApplicationController
   end
   
   def shiken_ichiran
-  	@ci=CourseImplementation.find(params[:id])
+  	@ci = CourseImplementation.find(params[:id])
     render :layout => "standard-layout"
   end
   
@@ -102,9 +104,9 @@ class QuizzesController < ApplicationController
 
   def hozon
     @quiz = Quiz.new(params[:quiz])
-    @quiz.timeopen = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
-    @quiz.timeclose = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
-    @quiz.created_on = params[:month_create]+"/"+params[:day_create]+"/"+params[:year_create]
+     @quiz.timeopen = DateTime.parse("#{params[:year_check_in]}-#{params[:month_check_in]}-#{params[:day_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}")
+    @quiz.timeclose = DateTime.parse("#{params[:year_check_out]}-#{params[:month_check_out]}-#{params[:day_check_out]} #{params[:hour_check_out]}:#{params[:minute_check_out]}:00")
+    @quiz.created_on = "#{params[:year_create]}-#{params[:month_create]}-#{params[:day_create]}"
     
     if @quiz.save
       flash[:notice] = 'Ujian Telah Berjaya Disimpan'
