@@ -376,4 +376,11 @@ start here  */
   list-style: square;
 }
 
+.thumbnail{
+    float:left;
+    border: 1px solid;
+    padding: 5px;
+    margin: 5px;
+}
+
 

@@ -1,0 +1,8 @@
+<% @formatted_trainers_data.each do |ftd| %>
+    <% temp_content = String.new(@content) %>
+    <% temp_content ["_{trainers_name}_"] = ftd[0] %>
+    <% temp_content ["_{trainers_address}_"] = "#{ftd[1]}#{ftd[2]}" %>
+    <%# temp_content.gsub("_{trainers_name}_", ftd[0]) %>
+    <%# temp_content.gsub("_{trainers_address}_", ftd[1]) %>
+    <%= temp_content.html_safe %>
+<% end %>

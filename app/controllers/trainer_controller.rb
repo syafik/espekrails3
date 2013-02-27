@@ -123,7 +123,180 @@ class TrainerController < ApplicationController
   def edit_surat_lantik
     @course_implementation = CourseImplementation.find(params[:course_implementation_id])
     @trainer = Trainer.find(params[:trainer_id])
-    #render layout : 'standard-layout'
+  end
+
+  def edit_surat_lantik_all
+    unless session[:collect_trainers].blank?
+      @course_implementation = CourseImplementation.where("course_implementations.id = ?",params[:course_implementation_id].to_i).
+                                                    joins("LEFT JOIN courses ON course_implementations.course_id = courses.id
+                                                           LEFT JOIN course_departments ON courses.course_department_id = course_departments.id
+                                                           LEFT JOIN latest_appoint_references ON course_departments.id = latest_appoint_references.course_department_id").
+                                                    select("latest_appoint_references.latest_ref_no, courses.name").first
+      trainers = Trainer.where("trainers.id IN (#{session[:collect_trainers].join(",")})").
+                          joins("LEFT JOIN profiles ON trainers.profile_id = profiles.id
+                                 LEFT JOIN states ON profiles.state_id = states.id").
+                          select("profiles.name, profiles.id as profile_id, trainers.id, address1, address2, address3,
+                                  states.description as state_description, profiles.opis, profiles.hod")
+
+      @formatted_trainers_data = []
+      trainers.each do |t|
+        temp_content = []
+        temp_content << t.name
+
+        temp_address = []
+        temp_address << t.address1.split(" ").map! { |e| e }.join(" ") unless t.address1.blank?
+        temp_address << t.address2.split(" ").map! { |e| e }.join(" ") unless t.address2.blank?
+        temp_address << t.address3.split(" ").map! { |e| e }.join(" ") unless t.address3.blank?
+        temp_address << t.state_description.split(" ").map! { |e| e.capitalize }.join(" ").upcase unless t.state_description.blank?
+        temp_address = temp_address.join("<br />")
+        temp_address = temp_address.tr_s(',',',')
+
+        temp_content << temp_address
+        temp_content << t.opis
+        temp_content << t.hod
+        @formatted_trainers_data << temp_content
+      end
+
+      @template = "<table style='width: 100%;' border='0'>
+                    <tbody>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td align='right'>
+                            <table border='0'>
+                                <tbody>
+                                <tr>
+                                    <td>Ruj. Tuan</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>Ruj. Kami</td>
+                                    <td>: #{@rujukan_kami}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tarikh</td>
+                                    <td>: #{msian_date_very_formal(Date.today)}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p><strong><span style='text-decoration: underline;'>SEGERA DENGAN FAX 03-61361073</span></strong></p>
+                            <p>
+
+                            </p>
+                            <p>_{trainers_name}_</p>
+
+                            <p>Melalui dan Salinan:</p>
+
+                            <p>_{trainers_address}_</p>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>
+                            <p>&nbsp;</p>
+
+                            <p>Tuan/Puan,</p>
+
+                            <p>TAWARAN LANTIKAN PENCERAMAH DI INSTITUT TANAH DAN UKUR NEGARA<br/>TM16/11 - ADOBE ILLUSTRATOR
+                                (PEMBANGUNAN JENAMA DAN IDENTITI)<br/>PADA 19 JULAI 2011 HINGGA 22 JULAI 2011</p>
+
+                            <p>Dengan hormatnya saya diarah merujuk kepada perkara di atas.<br/>2. Sukacita dimaklumkan bahawa pegawai
+                                seperti nama di atas telah dipilih untuk menghadiri kursus ADOBE ILLUSTRATOR (PEMBANGUNAN JENAMA DAN
+                                IDENTITI) (TM16/11) di Institut Tanah dan Ukur Negara (INSTUN), Kementerian Sumber Asli dan Alam
+                                Sekitar.</p>
+
+                            <p>3. Bersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu:<br/>3.1 Borang Pengesahan
+                                Kehadiran seperti di Lampiran A<br/>3.2 Maklumat kursus seperti di Lampiran B</p>
+
+                            <p>4. Peserta dikehendaki membaca / meneliti dokumen-dokumen di para 3 di atas.Peserta juga akan dikenakan
+                                bayaran pendaftaran kursus sebanyak RM30.00 (tunai). Resit rasmi akan dikeluarkan bagi membolehkan para
+                                peserta membuat tuntutan semula daripada Jabatan/Agensi masing-masing.</p>
+
+                            <p>5. Kerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di Lampiran A yang
+                                disertakan atau secara on-line di laman web INSTUN http://www.instun.gov.my pada atau sebelum 11 Julai,
+                                2011.<br/><br/><br/></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Sekian, terima kasih.</p>
+
+                            <p>'BERKHIDMAT UNTUK NEGARA'<br/>'MENDAHULUI CABARAN'<br/>'MS ISO 9001:2008 - PENGURUSAN LATIHAN'</p>
+
+                            <p>Saya yang menurut perintah,</p>
+
+                            <p>&nbsp;</p>
+
+                            <p>&nbsp;</p>
+
+                            <p>&nbsp;</p>
+
+                            <p>(DATO' HAJI MOHD SHAFIE BIN ARIFIN)<br/>Pengarah Instun<br/>Institut Tanah dan Ukur Negara<br/>Kementerian
+                                Sumber Asli dan Alam Sekitar</p>
+
+                            <p>s.k Fail Timbul</p>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>"
+    else
+      redirect_to list_trainer_index_url, notice: "Pilih Tenaga Pengajar Dahulu"
+    end
+  end
+
+  def cetak_surat_lantik_all
+    respond_to do |format|
+      unless session[:collect_trainers].blank?
+        filename = "surat_lantik_#{params[:course_implementation_id]}"
+        @content = params[:editor]
+
+        #@course_implementation = CourseImplementation.where("course_implementations.id = ?",params[:course_implementation_id].to_i).
+        #    joins("LEFT JOIN courses ON course_implementations.course_id = courses.id
+        #                                                     LEFT JOIN course_departments ON courses.course_department_id = course_departments.id
+        #                                                     LEFT JOIN latest_appoint_references ON course_departments.id = latest_appoint_references.course_department_id").
+        #    select("latest_appoint_references.latest_ref_no, courses.name").first
+        trainers = Trainer.where("trainers.id IN (#{session[:collect_trainers].join(",")})").
+            joins("LEFT JOIN profiles ON trainers.profile_id = profiles.id
+                                   LEFT JOIN states ON profiles.state_id = states.id").
+            select("profiles.name, profiles.id as profile_id, trainers.id, address1, address2, address3,
+                                    states.description as state_description, profiles.opis, profiles.hod")
+
+        @formatted_trainers_data = []
+        trainers.each do |t|
+          temp_content = []
+          temp_content << t.name
+
+          temp_address = []
+          temp_address << t.address1.split(" ").map! { |e| e }.join(" ") unless t.address1.blank?
+          temp_address << t.address2.split(" ").map! { |e| e }.join(" ") unless t.address2.blank?
+          temp_address << t.address3.split(" ").map! { |e| e }.join(" ") unless t.address3.blank?
+          temp_address << t.state_description.split(" ").map! { |e| e.capitalize }.join(" ").upcase unless t.state_description.blank?
+          temp_address = temp_address.join("<br />")
+          temp_address = temp_address.tr_s(',',',')
+
+          temp_content << temp_address
+          temp_content << t.opis
+          temp_content << t.hod
+          @formatted_trainers_data << temp_content
+        end
+        format.html
+        format.pdf do
+          render :pdf => filename,
+                 :page_size => 'A4'
+        end
+      else
+        redirect_to list_trainer_index_url, notice: "Pilih Tenaga Pengajar Dahulu"
+      end
+    end
   end
 
   def rujukan_kami
@@ -160,13 +333,41 @@ class TrainerController < ApplicationController
     redirect_to("/surat/" + filename)
   end
 
+  def collect
+    @trainer_id = params[:trainer_id].to_i
+    session[:collect_trainers] ||= []
+    session[:collect_trainers] << @trainer_id
+    session[:collect_trainers] = session[:collect_trainers].uniq
+    #p session[:collect_trainers]
+  end
+
+  def release
+    @trainer_id = params[:trainer_id].to_i
+    session[:collect_trainers].delete(@trainer_id)
+    session[:collect_trainers] = session[:collect_trainers].uniq
+    #p session[:collect_trainers]
+  end
+
   def list
     params[:orderby] = "name" if !params[:orderby]
     @orderby = params[:orderby]
     params[:arrow] = "ASC" if !params[:arrow]
     @arrow = params[:arrow]
     @trainers = Trainer.find_by_sql("select * from profiles inner join trainers on profiles.id=trainers.profile_id ORDER BY #{@orderby} #{@arrow}")
+    @collect_trainers = session[:collect_trainers] ? session[:collect_trainers] : []
     #render layout : 'standard-layout' if @outside.blank?
+  end
+
+  def offer_all
+    unless session[:collect_trainers].blank?
+    @outside = true
+    list
+    @course_implementation = CourseImplementation.find_by_code(params[:search_course_implementation_code]) if params[:search_course_implementation_code]
+    #@course_implementation = CourseImplementation.where("code LIKE ?","#{params[:course_implementation_code]}") if params[:course_implementation_code]
+    #@trainer = Trainer.find(params[:trainer_id])
+    else
+      redirect_to list_trainer_index_url
+    end
   end
 
   def show

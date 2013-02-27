@@ -1,0 +1,5 @@
+$('#collect_trainer_<%= @trainer_id %>').html('<%= escape_javascript(
+                                                        link_to('Lepas',
+                                                                trainer_release_path(@trainer_id),
+                                                                :id => "collect_trainer_#{@trainer_id}",
+                                                                :remote => true)) %>');

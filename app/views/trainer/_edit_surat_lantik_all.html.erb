@@ -1,0 +1,28 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+      tinyMCE.activeEditor.setContent("<%= @template %>");
+  });
+</script>
+
+<div align="center">
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td width="100%">
+        <strong><u>Tenaga Pengajar</u></strong> :<br/>
+        <% @formatted_trainers_data.each do |ftd| %>
+            <span class="thumbnail">
+                <strong><%= ftd[0] %></strong><br/>
+                <%= ftd[1].html_safe %><br/>
+                <%= ftd[2] %><br/>
+            </span>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign=top>
+        <%= text_area_tag :editor, @template, :class => "tinymce", :rows => 40, :cols => 120 %>
+        <%= tinymce %>
+      </td>
+    </tr>
+</div>
+
