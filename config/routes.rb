@@ -586,10 +586,14 @@ InstunRails3::Application.routes.draw do
     end
   end
   resources :quiz_questions do
+    collection do
+      post 'create_obj'
+    end
     member do
       get 'list_soalan'
       get 'list_peserta'
       get 'cetak_soalan'
+      get 'new_obj'
     end
   end
 

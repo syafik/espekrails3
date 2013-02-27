@@ -66,11 +66,13 @@
   </tr>
 </table>
 <BR>
-<% if @ci.quizzes.size == 0 %>
+<%# if @ci.quizzes.size == 0 %>
   <div align=center style="font-weight:bold">
     <a href="/quizzes/<%=@ci.id%>/shinki">Tambah Ujian</a>
-  </div><% end %>
+  </div>
+<%# end %>
 <br />
+
 <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
   <tr bgcolor="#999999">
     <td width="5%"><b><font color="#FFFFFF">Bil</font></b></td>
@@ -105,8 +107,8 @@
       <td align=center onmousedown="<%=onmousedown%>"><%=h nof{i.to_s} %></td>
       <td align=left onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.code} %></td>
       <td align=left onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.course.name} %></td>
-      <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %></td>
       <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.timeopen.to_formatted_s(:my_format_4)} %></td>
+      <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.timeclose.to_formatted_s(:my_format_4)} %></td>
       <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.intro} %></td>
 
     </tr>
