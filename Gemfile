@@ -30,7 +30,7 @@ gem 'wicked_pdf'
 #gem 'pdf-writer'
 gem 'jquery-rails'
 gem 'tinymce-rails'
-
+gem "paperclip", "~> 3.0"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

@@ -5,4 +5,5 @@ class Quiz < ActiveRecord::Base
   has_many :quiz_answers
   belongs_to :course
   belongs_to :course_department
+  belongs_to :quiz_type
 end

@@ -111,7 +111,10 @@
     <tr bgcolor="<%=cycle("#CCCCFF","#FFFFFF")%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=cycle("#CCCCFF","#FFFFFF")%>'"
         onmousedown="menuLayers.show('popmenu', '/quiz_questions', '<%=h quiz_question.id %>', '<%=h i.to_s %>', event)" >
       <td><%= i+1 %></td>
-      <td align=left><%= nl2br(quiz_question.questiontext) %>
+      <td align=left><%= nl2br(quiz_question.questiontext) %> <br />
+        <% unless "#{quiz_question.picture}" == "/pictures/original/missing.png"%>
+          <%= image_tag quiz_question.picture.url(:small) %>
+        <% end %>
         <% if quiz_question.file%>
           </BR>
           <% nof{@quiz_question = QuizQuestion.find(quiz_question.id)}   %>

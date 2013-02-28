@@ -112,7 +112,11 @@ class QuizQuestionsController < ApplicationController
   def new_obj
     @quiz = Quiz.find(params[:id]) if params[:id]
     @quiz_question = QuizQuestion.new
-    @quiz_objective = QuizObjective.new
+    if @quiz.quiz_type_id == 3
+      @quiz_subjective = QuizSubjective.new
+    else
+      @quiz_objective = QuizObjective.new
+    end
   end
 
   def create_obj
@@ -120,12 +124,16 @@ class QuizQuestionsController < ApplicationController
     @quiz_question = QuizQuestion.new(params[:quiz_question])
 
     if @quiz_question.save
-      5.times do |n|
-        next if params[:quiz_objective][n.to_s][:answer].blank?
-        @quiz_objective = QuizObjective.create(params[:quiz_objective][n.to_s])
-        @quiz_objective.quiz_question = @quiz_question
-        @quiz_objective.save
-        #@quiz_objective.quiz_question_id = @quiz_question.id
+      if @quiz.quiz_type_id == 3
+
+      else
+        5.times do |n|
+          next if params[:quiz_objective][n.to_s][:answer].blank?
+          @quiz_objective = QuizObjective.create(params[:quiz_objective][n.to_s])
+          @quiz_objective.quiz_question = @quiz_question
+          @quiz_objective.save
+          #@quiz_objective.quiz_question_id = @quiz_question.id
+        end
       end
       flash[:notice] = 'Soalan Objektif Telah Berjaya Ditambah.'
       redirect_to :controller => 'quiz_questions', :action => 'list_soalan', :id => @quiz.id

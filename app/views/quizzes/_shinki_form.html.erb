@@ -67,6 +67,10 @@
       -
       <input id="year_create" type=text name="year_create" value="<%=@year%>" size=4 maxlength=4></td>
   </tr>
+  <tr>
+    <td align=right><strong>Type Ujian:</strong></td>
+    <td><%= select 'quiz', 'quiz_type_id', options_for_select(@quiz_types.collect{|s| [s.description, s.id]}) %></td>
+  </tr>
 </table>
 <!--[eoform:quiz]-->
 

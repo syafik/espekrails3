@@ -54,6 +54,7 @@ class QuizzesController < ApplicationController
   end
 
   def edit
+     @quiz_types = QuizType.all
     @quiz = Quiz.find(params[:id])
     @ci=CourseImplementation.find(@quiz.course_implementation_id)
     if @quiz.timeopen != nil
@@ -72,6 +73,7 @@ class QuizzesController < ApplicationController
   end
 
   def update
+     @quiz_types = QuizType.all
     @quiz = Quiz.find(params[:id])
     @ci=CourseImplementation.find(@quiz.course_implementation_id)
     @quiz.timeopen = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
@@ -98,11 +100,13 @@ class QuizzesController < ApplicationController
   
   def shinki
   	new
+    @quiz_types = QuizType.all
     @ci=CourseImplementation.find(params[:id])
     render :layout => "standard-layout"
   end
 
   def hozon
+     @quiz_types = QuizType.all
     @quiz = Quiz.new(params[:quiz])
      @quiz.timeopen = DateTime.parse("#{params[:year_check_in]}-#{params[:month_check_in]}-#{params[:day_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}")
     @quiz.timeclose = DateTime.parse("#{params[:year_check_out]}-#{params[:month_check_out]}-#{params[:day_check_out]} #{params[:hour_check_out]}:#{params[:minute_check_out]}:00")
