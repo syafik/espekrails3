@@ -1,31 +1,30 @@
 <%= error_messages_for 'quiz_question' %>
 
-<!--[form:quiz_question]-->
-<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-<tr>
-	<td valign=top align=right><b>Soalan :</b></td>
-	<td><%= text_area 'quiz_question', 'questiontext', :rows => 5 %>
-	<%= hidden_field 'quiz_question', 'quiz_id', :value=> @quiz.id %>
-	</td>	
-</tr>
-<tr>
-	<td align="right"><b>Format Jawapan :</b></td>
-      	<td><%= @quiz_question.quiz_type.description %></td>
-</tr>
-<tr>
-	<td align=right><b>Jawapan :</b></td>
-	<td><select id="quiz_truefalse_answer" name="quiz_truefalse[answer]">
-	<option value="Salah">Salah</option>
-	<option value="Betul" selected>Betul</option></select>
-	<%= hidden_field 'quiz_truefalse', 'quiz_question_id', :value=> @quiz_question.id %>
-	</td>	
-</tr>
+  <!--[form:quiz_question]-->
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td valign=top align=right><b>Soalan :</b></td>
+      <td><%= text_area 'quiz_question', 'questiontext', :rows => 5 %>
+        <%= hidden_field 'quiz_question', 'quiz_id', :value=> @quiz.id %>
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><b>Format Jawapan :</b></td>
+      <td><%= @quiz_question.quiz_type.description %></td>
+    </tr>
+    <tr>
+      <td align=right><b>Jawapan :</b></td>
+      <td><select id="quiz_truefalse_answer" name="quiz_truefalse[answer]">
+          <option value="Salah">Salah</option>
+          <option value="Betul" selected>Betul</option></select>
+        <%= hidden_field 'quiz_truefalse', 'quiz_question_id', :value=> @quiz_question.id %>
+      </td>
+    </tr>
 
-<tr>
-	<td align=right><b>Keterangan Jawapan :</b></td>
-	<td><%= text_field 'quiz_truefalse', 'trueanswer'  %></td>	
-</tr>
+    <tr>
+      <td align=right><b>Keterangan Jawapan :</b></td>
+      <td><%= text_field 'quiz_truefalse', 'trueanswer'  %></td>
+    </tr>
 
-</table>
-<!--[eoform:quiz_question]-->
-
+  </table>
+  <!--[eoform:quiz_question]-->

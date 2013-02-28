@@ -2,42 +2,42 @@
 
 <!--[form:quiz_question]-->
 <table width="" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-<tr>
-	<td valign=top align=right><b>Soalan :</b></td>
-	<td><%= text_area 'quiz_question', 'questiontext', :rows => 5, :cols => 50 %>
-	<%= hidden_field 'quiz_question', 'quiz_id', :value=> @quiz.id %>
-	<%= hidden_field 'quiz_question', 'quiz_type_id', :value=> 2 %>
-	</td>	
-</tr>
-<!--tr>
+  <tr>
+    <td valign=top align=right><b>Soalan :</b></td>
+    <td><%= text_area 'quiz_question', 'questiontext', :rows => 5, :cols => 50 %>
+      <%= hidden_field 'quiz_question', 'quiz_id', :value=> @quiz.id %>
+      <%= hidden_field 'quiz_question', 'quiz_type_id', :value=> 2 %>
+    </td>
+  </tr>
+  <!--tr>
 	<td align="right"><b>Format Jawapan :</b></td>
       	<td><%= @quiz_question.quiz_type.description %></td>
-</tr-->
-<tr>
-	<td valign=top align=right><b>Upload Attachment :</b></td>
-        <td><%= file_field "quiz_question", "file" %></td>
-	</tr>
-	<tr>
-	<td valign=top align=right><b>&nbsp;</b></td>
-	  <td>
-	  <% if @quiz_question.file%>
-	  <% nof{@quiz_question = QuizQuestion.find(@quiz_question.id)}   %>
-	  <a href="<%= url_for_file_column("quiz_question", "file") %>"><font color="blue">Download Fail Attachment</font></a>
-	  <%end%></td>
-    </tr>
-<tr>
+  </tr-->
+  <tr>
+    <td valign=top align=right><b>Upload Attachment :</b></td>
+    <td><%= file_field "quiz_question", "picture" %></td>
+  </tr>
+  <tr>
+    <td valign=top align=right><b>&nbsp;</b></td>
+    <td>
+      <% if @quiz_question.file%>
+        <% nof{@quiz_question = QuizQuestion.find(@quiz_question.id)}   %>
+        <a href="<%= url_for_file_column("quiz_question", "file") %>"><font color="blue">Download Fail Attachment</font></a>
+      <%end%></td>
+  </tr>
+  <tr>
     <th align="right">Pilihan Jawapan</th>
     <th></th>
     <th >Jawapan Betul</th>
-</tr>
-<% @quiz_question.quiz_objectives.size.times do |n| %>
-<tr>
-	<td></td>
-	<td><textarea rows="4" cols="50" id="quiz_objective[<%=@quiz_question.quiz_objectives[n].id%>][answer]" name="quiz_objective[<%=@quiz_question.quiz_objectives[n].id%>][answer]"><%=@quiz_question.quiz_objectives[n].answer%></textarea></td>
-	<td><input type="checkbox" id="quiz_objective[<%=@quiz_question.quiz_objectives[n].id%>][answer_type_id]" name="quiz_objective[<%=@quiz_question.quiz_objectives[n].id%>][answer_type_id]" value="1" 
-       <% if @quiz_question.quiz_objectives[n].answer_type_id? %> checked="checked" <% end %> /></td>
-</tr>
-<%end %>
+  </tr>
+  <% @quiz_question.quiz_objectives.size.times do |n| %>
+    <tr>
+      <td></td>
+      <td><textarea rows="4" cols="50" id="quiz_objective[<%=@quiz_question.quiz_objectives[n].id%>][answer]" name="quiz_objective[<%=@quiz_question.quiz_objectives[n].id%>][answer]"><%=@quiz_question.quiz_objectives[n].answer%></textarea></td>
+      <td><input type="checkbox" id="quiz_objective[<%=@quiz_question.quiz_objectives[n].id%>][answer_type_id]" name="quiz_objective[<%=@quiz_question.quiz_objectives[n].id%>][answer_type_id]" value="1"
+                 <% if @quiz_question.quiz_objectives[n].answer_type_id? %> checked="checked" <% end %> /></td>
+    </tr>
+  <%end %>
 
 </table>
 <!--[eoform:quiz_question]-->
