@@ -23,11 +23,13 @@ gem 'acts_as_tree_rails3'
 gem 'calendar_helper'
 gem 'will_paginate', '~> 3.0'
 gem 'prawn'
+gem 'wicked_pdf'
 #gem 'pdf-writer'
 
 #gem 'magic_encoding'
 #gem 'pdf-writer'
 gem 'jquery-rails'
+gem 'tinymce-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -49,3 +51,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
 end
+
+gem 'execjs'
+gem 'therubyracer'
