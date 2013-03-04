@@ -118,18 +118,21 @@ class CourseApplicationsController < ApplicationController
 
   def courses_for_lookup
     @course_implementations = CourseImplementation.find(:all)
+    @headers ||= {}
     @headers[' content-type'] = ' text/javascript'
     render :layout => false
   end
 
   def places_for_lookup
     #@places = Place.find(:all)
+    @headers ||= {}
     @headers[' content-type'] = ' text/javascript'
     render :layout => false
   end
 
   def grades_for_lookup
     @job_profiles = JobProfile.find(:all, :order => "job_grade")
+    @headers ||= {}
     @headers[' content-type'] = ' text/javascript'
     render :layout => false
   end
@@ -398,7 +401,7 @@ class CourseApplicationsController < ApplicationController
 
   def show
     init_load
-    @course_application = CourseApplication.find(params[:id])
+    @course_application = CourseApplication.find(params[:course_application_id])
     @student = @course_application
     @relative = Relative.find_by_profile_id(@course_application.profile_id)
     @employment = Employment.find_by_profile_id(@course_application.profile_id)

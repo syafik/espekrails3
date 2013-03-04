@@ -468,6 +468,7 @@ InstunRails3::Application.routes.draw do
       get 'accept_selected'
       post 'create_peserta'
       post 'cetak_surat_iklan'
+      get 'new_popup'
     end
     member do
       post 'cetak_surat_tawaran'

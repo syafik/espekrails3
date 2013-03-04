@@ -586,49 +586,92 @@ end
 
 
 
+//  function addQualification(tn) {
+//    var tbl = $(tn);
+//    var newRow = tbl.insertRow(tbl.rows.length);
+//    row_id = "row_" + (tbl.rows.length-1);
+//    if ($(row_id)) {
+//      row_id = row_id + "_1"
+//    }
+//    newRow.id = row_id;
+//
+//    option_strings = ""
+//    for (i=0;i<cert_level_options.length;i++) {
+//      option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
+//    }
+//    var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
+//    var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<input type="text" name="pengkhususan[]" value="" maxlength="100" size="40" onblur="//if (!checkInput(anythingRegExp,this,\'Pengkhususan\')) return false;">';
+//    var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="40" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
+//    var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
+//    var cell_4 = newRow.insertCell(4);cell_4.align="center";
+//    cell_4.innerHTML = '<a href="#" onclick="deleteQualificationRow(\'qua_table\',this.parentNode.parentNode.rowIndex);return false;"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+//  }
   function addQualification(tn) {
-    var tbl = $(tn);
-    var newRow = tbl.insertRow(tbl.rows.length);
-    row_id = "row_" + (tbl.rows.length-1);
-    if ($(row_id)) {
-      row_id = row_id + "_1"
-    }
-    newRow.id = row_id;
-	
-    option_strings = ""
-    for (i=0;i<cert_level_options.length;i++) {
-      option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
-    }
-    var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
-    var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<input type="text" name="pengkhususan[]" value="" maxlength="100" size="40" onblur="//if (!checkInput(anythingRegExp,this,\'Pengkhususan\')) return false;">';
-    var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="40" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
-    var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
-    var cell_4 = newRow.insertCell(4);cell_4.align="center";
-    cell_4.innerHTML = '<a href="#" onclick="deleteQualificationRow(\'qua_table\',this.parentNode.parentNode.rowIndex);return false;"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+      var tbl = $('#' + tn);
+      var tbl_len = $('#' + tn + ' tr').length;
+      row_id = "row_" + (tbl_len - 1);
+      if ($(row_id)) {
+          row_id = row_id + "_1"
+      }
+
+      $row = ""
+      option_strings = ""
+      for (i=0;i<cert_level_options.length;i++) {
+        option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
+      }
+      $row += '<tr id="' + row_id + '">';
+      $row += '<td align="center"><select name="cert_level_ids[]">'+option_strings+'</select></td>';
+      $row += '<td align="center"><input type="text" name="pengkhususan[]" value="" maxlength="100" size="40" onblur="//if (!checkInput(anythingRegExp,this,\'Pengkhususan\')) return false;"></td>';
+      $row += '<td align="center"><input type="text" name="institutions[]" value="" maxlength="100" size="40" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;"></td>';
+      $row += '<td align="center"><input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;"></td>';
+      $row += '<td align="center"><a href="#" onclick="deleteQualificationRow(\'qua_table\',this.parentNode.parentNode.rowIndex);return false;"><font style="color: blue; font-size:10px;"><u>padam</u></font></a></td>';
+      $row += '</tr>';
+      tbl.append($row);
   }
+
+//  function addQualification2(tn) {
+//    var tbl = $(tn);
+//    var newRow = tbl.insertRow(tbl.rows.length);
+//    row_id = "row_" + (tbl.rows.length-1);
+//    if ($(row_id)) {
+//      row_id = row_id + "_1"
+//    }
+//    newRow.id = row_id;
+//
+//    option_strings = ""
+//    for (i=0;i<cert_level_options.length;i++) {
+//      option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
+//    }
+//    var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<input type="text" name="kepakaran[]" value="" maxlength="100" size="40">';
+//    var cell_1 = newRow.insertCell(1);cell_1.align="center";
+//    cell_1.innerHTML = '<a href="#" onclick="deleteQualificationRow(\'exp_table\',this.parentNode.parentNode.rowIndex);return false;"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+//  }
   function addQualification2(tn) {
-    var tbl = $(tn);
-    var newRow = tbl.insertRow(tbl.rows.length);
-    row_id = "row_" + (tbl.rows.length-1);
-    if ($(row_id)) {
-      row_id = row_id + "_1"
-    }
-    newRow.id = row_id;
-	
-    option_strings = ""
-    for (i=0;i<cert_level_options.length;i++) {
-      option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
-    }
-    var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<input type="text" name="kepakaran[]" value="" maxlength="100" size="40">';
-    var cell_1 = newRow.insertCell(1);cell_1.align="center";
-    cell_1.innerHTML = '<a href="#" onclick="deleteQualificationRow(\'exp_table\',this.parentNode.parentNode.rowIndex);return false;"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+      var tbl = $('#' + tn);
+      var tbl_len = $('#' + tn + ' tr').length;
+      row_id = "row_" + (tbl_len - 1);
+      if ($(row_id)) {
+          row_id = row_id + "_1"
+      }
+
+      $row = ""
+      option_strings = ""
+      for (i=0;i<cert_level_options.length;i++) {
+          option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
+      }
+      $row += '<tr id="' + row_id + '">';
+      $row += '<td align="center"><input type="text" name="kepakaran[]" value="" maxlength="100" size="40"></td>';
+      $row += '<td align="center"><a href="#" onclick="deleteQualificationRow(\'exp_table\',this.parentNode.parentNode.rowIndex);return false;"><font style="color: blue; font-size:10px;"><u>padam</u></font></a></td>';
+      $row += '</tr>';
+      tbl.append($row);
   }
 
   function deleteQualificationRow(tn,id) {
     //row = $(id)
     //tbl = row.parentNode.parentNode
-    tbl = $(tn)
-    tbl.deleteRow(id)
+//    tbl = $(tn)
+//    tbl.deleteRow(id)
+      $('#' + tn + ' tr:eq(' + id + ')').remove();
     //for (i=1;i<tbl.rows.length;i++) {
     //alert(tbl.rows[i].id)
 		
