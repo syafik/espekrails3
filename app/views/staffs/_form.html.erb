@@ -387,7 +387,7 @@ function updatePlaceId() {
         &nbsp;
         <input id="job_profile_name" name="job_profile_name" type="text" maxlength="100" size="60" value="<%=@job_grade_and_job_name%>" onfocus="this.select()">
         <div class="auto_complete" id="job_profile_name_auto_complete"></div>
-        <%= javascript_tag("new Autocompleter.Local('job_profile_name' ,'job_profile_name_auto_complete' ,grades,{fullSearch: true,frequency: 0,minChars: 1});") %>
+        <%#= javascript_tag("new Autocompleter.Local('job_profile_name' ,'job_profile_name_auto_complete' ,grades,{fullSearch: true,frequency: 0,minChars: 1});") %>
         <%= hidden_field 'employment', 'job_profile_id', :size=>3  %></td>
     </tr>
     <tr>
@@ -454,7 +454,7 @@ function updatePlaceId() {
 var cert_level_options = [
   {name: "Sila Pilih", id: ""},
 <% @cert_levels.each do |cl| %>
-<%= "{name: \"#{cl.description}\", id: \"#{cl.id}\"}," %>
+<%= "{name: \"#{cl.description}\", id: \"#{cl.id}\"},".html_safe %>
 <% end %>
   {name: " ", id: "00"}
 ];
@@ -462,21 +462,21 @@ var cert_level_options = [
 var major_options = [
   {name: "Sila Pilih", id: ""},
 <% @majors.each do |m| %>
-<%= "{name: \"#{m.description}\", id: \"#{m.id}\"}," %>
+<%= "{name: \"#{m.description}\", id: \"#{m.id}\"},".html_safe %>
 <% end %>
   {name: " ", id: "00"}
 ];
 
 function addQualification(tn) {
-	var tbl = $(tn);
-	var newRow = tbl.insertRow(tbl.rows.length);
-	row_id = "row_" + (tbl.rows.length-1);
-	if ($(row_id)) {
-		row_id = row_id + "_1"
-	}
-	newRow.id = row_id;
-	
-	option_strings = ""
+    var tbl = $('#' + tn);
+    var tbl_len = $('#' + tn + ' tr').length;
+    row_id = "row_" + (tbl_len - 1);
+    if ($(row_id)) {
+        row_id = row_id + "_1"
+    }
+
+    $row = ""
+    option_strings = ""
 	for (i=0;i<cert_level_options.length;i++) {
 		option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
 	}
@@ -484,25 +484,62 @@ function addQualification(tn) {
 	for (i=0;i<major_options.length;i++) {
 		major_option_strings += '<option value="'+major_options[i].id +'">'+major_options[i].name+'</option>'
 	}
-	var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
-	var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<select name="major_ids[]">'+major_option_strings+'</select>';
-	var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
-	var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
-	var cell_4 = newRow.insertCell(4);cell_4.align="center";
-	cell_4.innerHTML = '<a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+//	var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
+//	var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<select name="major_ids[]">'+major_option_strings+'</select>';
+//	var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
+//	var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
+//	var cell_4 = newRow.insertCell(4);cell_4.align="center";
+//	cell_4.innerHTML = '<a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+
+    $row += '<tr id="' + row_id + '">';
+    $row += '<td align="center"><select name="cert_level_ids[]">'+option_strings+'</select></td>';
+    $row += '<td align="center"><select name="major_ids[]">'+major_option_strings+'</select></td>';
+    $row += '<td align="center"><input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;"></td>';
+    $row += '<td align="center"><input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;"></td>';
+    $row += '<td align="center"><a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a></td>';
+    $row += '</tr>';
+    tbl.append($row);
 }
 
+//function addQualification(tn) {
+//	var tbl = $(tn);
+//	var newRow = tbl.insertRow(tbl.rows.length);
+//	row_id = "row_" + (tbl.rows.length-1);
+//	if ($(row_id)) {
+//		row_id = row_id + "_1"
+//	}
+//	newRow.id = row_id;
+//
+//	option_strings = ""
+//	for (i=0;i<cert_level_options.length;i++) {
+//		option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
+//	}
+//	major_option_strings = ""
+//	for (i=0;i<major_options.length;i++) {
+//		major_option_strings += '<option value="'+major_options[i].id +'">'+major_options[i].name+'</option>'
+//	}
+//	var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
+//	var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<select name="major_ids[]">'+major_option_strings+'</select>';
+//	var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
+//	var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
+//	var cell_4 = newRow.insertCell(4);cell_4.align="center";
+//	cell_4.innerHTML = '<a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+//}
+//
 function deleteQualificationRow(tn,id) {
-	row = $(id)
-	tbl = row.parentNode.parentNode
-	for (i=1;i<tbl.rows.length;i++) {
-		//alert(tbl.rows[i].id)
-		
-		if (tbl.rows[i].id == row.id) {
-			tbl.deleteRow(i)
-		}
-	}
+    $('#' + id).remove();
 }
+//function deleteQualificationRow(tn,id) {
+//	row = $(id)
+//	tbl = row.parentNode.parentNode
+//	for (i=1;i<tbl.rows.length;i++) {
+//		//alert(tbl.rows[i].id)
+//
+//		if (tbl.rows[i].id == row.id) {
+//			tbl.deleteRow(i)
+//		}
+//	}
+//}
   </script>
     </tr>
     <tr>
