@@ -8,8 +8,8 @@ function confirmAndDelete(url, objname) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
+    document.getElementById('popmenu').style.width = 230;
+    document.getElementById('popmenu').innerHTML = "<ul>" +
                              "<li><a href=\"javascript: GoEditSuratTawaran()\">&nbsp;&nbsp;Seterusnya, kemaskini surat pelawaan</a>" + 
 //			     "<li><a href=\""  + controller + "/edit_surat_iklan_la_apa_lagi/" + objid + "\">&nbsp;&nbsp;Pilih Pejabat</a>" + 
 			     "</ul>"
@@ -40,8 +40,8 @@ function GoEditSuratTawaran() {
 		alert("Sila pilih senarai pejabat");
 		return false;
 	}
-	var id = $('surat_iklan_content_course_implementation_id').value
-    df.action = "/course_implementations/edit_surat_iklan_la_apa_lagi/" + id
+	var id = document.getElementById('surat_iklan_content_course_implementation_id').value
+    df.action = "/course_implementations/" + id + "/edit_surat_iklan_la_apa_lagi"
     df.submit()
 }
 
@@ -156,7 +156,8 @@ for place in @places
   </table>
   <br />
   <!--hr>
-  <%=pagination_links(@place_pages)%></hr-->
+  <%#=pagination_links(@place_pages)%></hr-->
+  <%= will_paginate(@places) %>
   
   <div align="center"><br />
     <input type="button" name="Submit" value="Seterusnya, kemaskini surat pelawaan>>" onclick="GoEditSuratTawaran()">
@@ -165,10 +166,10 @@ for place in @places
 <% 
 #for id in params[:schedule_ids]
 %>
-<!--input type="hidden" name="schedule_ids[]" value="<%=id%>"-->
+<!--input type="hidden" name="schedule_ids[]" value="<%#=id%>"-->
 <%
 #end
 %>
-<input type="hidden" id="surat_iklan_content_course_implementation_id" name="surat_iklan_content[course_implementation_id]" value="<%=params[:id]%>">
+<input type="hidden" id="surat_iklan_content_course_implementation_id" name="surat_iklan_content[course_implementation_id]" value="<%=@course_implementation_id%>">
 </form>
 

@@ -14,7 +14,8 @@ class CourseImplementationsController < ApplicationController
     @methodologies = Methodology.all
     @course_departments = CourseDepartment.find(:all, :order=>"id")
     @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")    
-    #@list_dates = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses")    
+    #@list_dates = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses")
+    super
   end
 
   def add_course_trainer
@@ -50,7 +51,7 @@ class CourseImplementationsController < ApplicationController
   
   def add_course_trainer_refresh_opener
     add_course_trainer
-    render :layout => "standard-layout"
+    #render :layout => "standard-layout"
   end
 
   def save_course_trainer
@@ -135,7 +136,7 @@ class CourseImplementationsController < ApplicationController
     params[:arrow] = "ASC" if !params[:arrow]
 
     @cimps = CourseImplementation.find_by_sql("select * from vw_detailed_courses WHERE #{@where_sql} ORDER BY #{@orderby} #{params[:arrow]}")
-    render :layout => "standard-layout" 
+    #render :layout => "standard-layout"
   end
 
   def list_public
@@ -210,7 +211,7 @@ class CourseImplementationsController < ApplicationController
       else
         @course_implementations = []
       end
-      render :layout => "standard-layout"
+      #render :layout => "standard-layout"
     rescue
       @course_implementations = []
       flash['notice'] = 'Carian Tidak Sah'
@@ -273,7 +274,7 @@ class CourseImplementationsController < ApplicationController
   end
 
   def show
-    @course_implementation = CourseImplementation.find(params[:id])
+    @course_implementation = CourseImplementation.find(params[:course_implementation_id])
     @course_application = CourseApplication.find(:first,:conditions => ["profile_id = ? and course_implementation_id = ?",session[:user].profile_id, @course_implementation.id])
     @course = @course_implementation.course
     list_bulans = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses WHERE id = #{@course_implementation.id}")    
@@ -305,7 +306,7 @@ class CourseImplementationsController < ApplicationController
     @course = Course.new
     @course_implementation = CourseImplementation.new
     @course_implementation.course = @course
-    render :layout => "standard-layout"
+    #render :layout => "standard-layout"
   end
 
   def tambah_jadual
@@ -494,7 +495,7 @@ class CourseImplementationsController < ApplicationController
     @year_briefing  = schedule.briefing.to_formatted_s(:my_format_year)  if schedule.briefing
     @hour_briefing  = schedule.briefing.to_formatted_s(:my_format_hour)  if schedule.briefing
     @minute_briefing  = schedule.briefing.to_formatted_s(:my_format_minute)  if schedule.briefing
-    render :layout => "standard-layout"
+    #render :layout => "standard-layout"
   end
 
   def update
@@ -696,7 +697,7 @@ class CourseImplementationsController < ApplicationController
   end
 
   def edit_surat_iklan_select_pejabat
-    @schedules = CourseImplementation.find_by_sql("select * from vw_detailed_courses where id =#{params[:id]} ")
+    @schedules = CourseImplementation.find_by_sql("select * from vw_detailed_courses where id =#{params[:course_implementation_id]} ")
     #if params[:course_department_id]
     if @schedules[0].course_department_id
       #@cdept = CourseDepartment.find(params[:course_department_id])
@@ -705,8 +706,9 @@ class CourseImplementationsController < ApplicationController
     else
       @fav_places = []
     end
-	
-    @place_pages, @places = paginate(:places, :per_page => 10000, :order_by => "code asc")
+    @course_implementation_id = params[:course_implementation_id]
+    #@place_pages, @places = paginate(:places, :per_page => 10000, :order_by => "code asc")
+    @places = Place.order("code ASC").paginate( :per_page => 10000, :page => params[:page])
   end
 
   def edit_surat_iklan_select_kursus
@@ -714,7 +716,7 @@ class CourseImplementationsController < ApplicationController
   end
 
   def edit_surat_iklan_la_apa_lagi
-    @course_implementation = CourseImplementation.find(params[:surat_iklan_content][:course_implementation_id])
+    @course_implementation = CourseImplementation.find(params["surat_iklan_content"]["course_implementation_id"])
     @course = Course.find(@course_implementation.course_id)
     @surat_iklan_content = SuratIklanContent.find_by_course_implementation_id(@course_implementation.id)
     if !@surat_iklan_content
@@ -723,7 +725,7 @@ class CourseImplementationsController < ApplicationController
   end
   
   def rujukan_kami
-    @surats = SuratIklanContent.find(:all, :conditions => "course_department_id = #{params[:id]}")
+    @surats = SuratIklanContent.find(:all, :conditions => "course_department_id = #{params[:course_implementation_id]}")
   end
   
   def cetak_surat_iklan

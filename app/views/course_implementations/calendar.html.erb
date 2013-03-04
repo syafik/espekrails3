@@ -4,9 +4,9 @@
 function rewritePopupContent(controller, objid, objname) {
     document.getElementById('popmenu').style.width = 230;
     document.getElementById('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
+					       "<li><a href=\"" + controller + "/" + objid + "/show\">&nbsp;&nbsp;Lihat</a>" +
 					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Kemaskini</font>" + 
-					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
+					       "<li><a href=\"" + controller + "/" + objid + "/copy_and_new\">&nbsp;&nbsp;Salin</a>" +
 					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" + 
 					    //   "<hr size=1>" +
 					     //  "<li><a href=\"" + "/course_implementations" + "/show_timetable/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
@@ -14,7 +14,7 @@ function rewritePopupContent(controller, objid, objname) {
 					       //"<li><a href=\"" + controller + "/calendar/" + objid + "\">&nbsp;&nbsp;Kalendar Tahunan</a>" + 
 					       "<hr size=1>" +
 					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Tambah Permohonan</font>" + 
-					       "<li><a href=\"" + "/course_applications" + "/all/" + objid + "\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" + 
+					       "<li><a href=\"" + "/course_applications" + "/" + objid + "/all\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" +
 					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Jana Surat Tawaran</font>" + 
 					       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
 					       "</ul>"
@@ -24,18 +24,18 @@ function rewritePopupContent(controller, objid, objname) {
 function rewritePopupContentNoRestraint(controller, objid, objname) {
     document.getElementById('popmenu').style.width = 230;
     document.getElementById('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
-					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
-					       "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" + 
-					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					       "<li><a href=\"" + controller + "/" + objid + "/show\">&nbsp;&nbsp;Lihat</a>" +
+					       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
+					       "<li><a href=\"" + controller + "/" + objid + "/copy_and_new\">&nbsp;&nbsp;Salin</a>" +
+					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					     //  "<hr size=1>" +
 					       //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
 						//	"<li><a href=\"" + "/course_implementations" + "/show_timetable/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" + 
 					       //"<li><a href=\"" + controller + "/booking_hostel/" + objid + "\">&nbsp;&nbsp;Tempahan Asrama</a>" + 
 					       "<hr size=1>" +
-					       "<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Permohonan</a>" + 
-					       "<li><a href=\""  + "/course_applications" + "/all/" + objid + "?apply_status=all" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" + 
-					       "<li><a href=\""  + "/course_applications" + "/edit_surat_tawaran_select_peserta/" + objid + "\">&nbsp;&nbsp;Jana Surat Tawaran</a>" + 
+					       "<li><a href=\""  + "/course_applications" + "/" + objid + "/new\">&nbsp;&nbsp;Tambah Permohonan</a>" +
+					       "<li><a href=\""  + "/course_applications" + "/" + objid + "/all?apply_status=all" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon</a>" +
+					       "<li><a href=\""  + "/course_applications" + "/" + objid + "/edit_surat_tawaran_select_peserta\">&nbsp;&nbsp;Jana Surat Tawaran</a>" +
 					       //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
 					       //"<hr size=1>" +
 					       //"<li><a href=\""  + "/course_applications" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Pensyarah</a>" + 

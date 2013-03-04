@@ -24,7 +24,8 @@
     <td rowspan=6>&nbsp;
       <% if @course_application.profile.image%>
         <% nof{@profile = Profile.find(@course_application.profile.id)}   %>
-        <%= image_tag url_for_file_column("profile", "image") %>
+        <%#= image_tag url_for_file_column("profile", "image") %>
+          <img></img>
       <%end%></td>
   </tr>
   <tr>
@@ -312,7 +313,7 @@
 <br />
 <div align="center">
   <%if @course_application.course_implementation.editable?(session[:user])%>
-    <input type="button" value="Kemaskini" onclick="location='/course_applications/edit/<%=@course_application.id%>'">
+    <input type="button" value="Kemaskini" onclick="location='/course_applications/<%=@course_application.id%>/edit'">
   <%end%>
 </div>
 <br />

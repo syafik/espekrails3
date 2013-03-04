@@ -449,6 +449,8 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/create_but_peserta_already_exist' => 'course_applications#create_but_peserta_already_exist', :via => [:post]
   
   resources :course_applications do
+    get 'new'
+    get 'all'
     collection do
       get 'applicant'
       get 'all'
@@ -483,6 +485,11 @@ InstunRails3::Application.routes.draw do
   match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
 
   resources :course_implementations do
+    get 'show'
+    get 'calendar'
+    get 'edit_surat_iklan_select_pejabat'
+    get 'edit_surat_iklan_la_apa_lagi'
+    get 'rujukan_kami'
     collection do
       get 'list'
       get 'search'

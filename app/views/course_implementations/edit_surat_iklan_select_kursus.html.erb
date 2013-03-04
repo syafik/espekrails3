@@ -7,15 +7,15 @@
   }
 
   function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
-      //					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
-    //					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
-    //					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
-    //					       "<hr size=1>" +
-    //					       "<li><a href=\"" + controller + "/calendar/" + objid + "\">&nbsp;&nbsp;Kalendar Tahunan Kursus</a>" +
-    //					       "<hr size=1>" +
-    "<li><a href=\""  + controller + "/edit_surat_iklan_select_pejabat/" + objid + "\">&nbsp;&nbsp;Seterusnya, Pilih Senarai Pejabat</a>" +
+    document.getElementById('popmenu').style.width = 230;
+    document.getElementById('popmenu').innerHTML = "<ul>" +
+      					       "<li><a href=\"" + controller + "/" + objid + "/show\">&nbsp;&nbsp;Lihat</a>" +
+    					       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
+    					       "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+    					       "<hr size=1>" +
+    					       "<li><a href=\"" + controller + "/" + objid + "/calendar\">&nbsp;&nbsp;Kalendar Tahunan Kursus</a>" +
+    					       "<hr size=1>" +
+    "<li><a href=\""  + controller + "/" + objid + "/edit_surat_iklan_select_pejabat\">&nbsp;&nbsp;Seterusnya, Pilih Senarai Pejabat</a>" +
       "</ul>"
      
   }

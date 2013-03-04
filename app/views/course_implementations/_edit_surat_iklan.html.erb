@@ -98,7 +98,7 @@ window.location.href = URL;
       <td><span class="blockintro">&nbsp;
         <input type="text" id="rujukan_kami" name="rujukan_kami" size="30" maxlength="50" value="<%=@rujukan_kami%>" onchange="this.value=this.value.toUpperCase()">
       </span>&nbsp;<!--font style="color: blue;size: 9px"><i>No rujukan terkini:&nbsp;</i><%="#{@rujukan_kami}"%></font-->
-		<a href="javascript: MM_openBrWindow('/course_implementations/rujukan_kami/<%=@course.course_department.id %>','','scrollbars=yes,width=500,height=300')"><font style="color: blue;size: 9px"><i>No. Rujukan Terkini</i></font></a><br />
+		<a href="javascript: MM_openBrWindow('/course_implementations/<%=@course.course_department.id %>/rujukan_kami','','scrollbars=yes,width=500,height=300')"><font style="color: blue;size: 9px"><i>No. Rujukan Terkini</i></font></a><br />
       <%= hidden_field 'surat_iklan_content', 'course_department_id', :value=>@course.course_department.id %>
       <%= hidden_field 'surat_iklan_content', 'user_id', :value=>session[:user].id %>	  
 	  <input type="hidden" name="course_department_id" value="<%=@course.course_department_id%>"></td>
@@ -161,7 +161,7 @@ window.location.href = URL;
 		  @options = @signatures.map { |t| [t.person_name, t.filename] }
 		  @options.unshift(["Sila Pilih", ""])
 		  @signature = Signature.new
-		  select(:signature, :filename, @options, "" , :name=>"signature_file", :onchange=>"displaySignature(this.value)", :style=>"width: 300;")
+		  select(:signature, :filename, @options, :name=>"signature_file", :onchange=>"displaySignature(this.value)", :style=>"width: 300;")
 		%> <span class="blockintro"> <a href="javascript: MM_openBrWindow('/signatures/list_popup','','scrollbars=yes,width=800,height=500')">Tambah/Kemaskini/Padam</a></span><br />
         <span id="gambar_sain"></span>
 <%= hidden_field 'surat_iklan_content', 'tandatangan_nama'%>		

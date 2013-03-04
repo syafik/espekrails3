@@ -68,7 +68,7 @@ class CourseApplicationsController < ApplicationController
       @students = []
     end
 
-    render :layout => 'standard-layout'
+    #render :layout => 'standard-layout'
   end
 
   def search_by_ic
@@ -85,7 +85,7 @@ class CourseApplicationsController < ApplicationController
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_applicant'
     end
-    render :layout => 'standard-layout'
+    #render :layout => 'standard-layout'
   end
 
   def search_by_phone
@@ -102,7 +102,7 @@ class CourseApplicationsController < ApplicationController
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_applicant'
     end
-    render :layout => 'standard-layout'
+    #render :layout => 'standard-layout'
   end
 
   def search_by_state
@@ -371,7 +371,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def all
-    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:course_application_id]) if (params[:course_application_id] && params[:course_application_id] != "")
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
 
     if @course_implementation
@@ -389,11 +389,11 @@ class CourseApplicationsController < ApplicationController
       render :action => "search_not_found"
     end
     @courses = Course.find(:all, :order => "name")
-    render :layout => "standard-layout"
+    #render :layout => "standard-layout"
   end
 
   def search
-    render :layout => "standard-layout"
+    #render :layout => "standard-layout"
   end
 
   def search_not_found
@@ -401,7 +401,8 @@ class CourseApplicationsController < ApplicationController
 
   def show
     init_load
-    @course_application = CourseApplication.find(params[:course_application_id])
+    @course_application = CourseApplication.find(params[:course_application_id]) unless params[:course_application_id].blank?
+    @course_application = CourseApplication.find(params[:id]) unless params[:id].blank?
     @student = @course_application
     @relative = Relative.find_by_profile_id(@course_application.profile_id)
     @employment = Employment.find_by_profile_id(@course_application.profile_id)
@@ -428,7 +429,7 @@ class CourseApplicationsController < ApplicationController
   def new
     init_load
     @courses = Course.all
-    @course_implementation = CourseImplementation.find(params[:id]) if params[:id]
+    @course_implementation = CourseImplementation.find(params[:course_application_id]) if params[:course_application_id]
     @profile = Profile.new
     @relative = Relative.new
     @employment = Employment.new
