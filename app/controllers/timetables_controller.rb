@@ -55,7 +55,7 @@ class TimetablesController < ApplicationController
       @timetable.save
       prepare_update_course_implementation(@timetable)
       #      Timetable.find_by_sql("INSERT INTO timetables_trainers(timetable_id,trainer_id) values(#{@timetable.id},(#{params[:timetable][:trainer_ids].join(",") })) ")
-      
+      return false
       flash[:notice] = 'Jadual waktu berjaya ditambah'
       #redirect_to :action => 'list', :id => @timetable.course_implementation_id
     else
@@ -91,11 +91,8 @@ class TimetablesController < ApplicationController
 
   private
   def prepare_update_course_implementation(timetable)
-    begin
-      if timetable.time_end > timetable.course_implementation.timetables.order("time_start").last.time_end
-        timetable.course_implementation.update_attribute(:time_end, timetable.time_end)
-      end
-    rescue
+    if timetable.course_implementation.time_end < timetable.course_implementation.timetables.order("time_start").last.time_end
+      timetable.course_implementation.update_attribute(:time_end, timetable.time_end)
     end
   end
 end
