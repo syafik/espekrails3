@@ -24,6 +24,7 @@ gem 'calendar_helper'
 gem 'will_paginate', '~> 3.0'
 gem 'prawn'
 gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 #gem 'pdf-writer'
 
 #gem 'magic_encoding'
