@@ -36,6 +36,7 @@ InstunRails3::Application.routes.draw do
     end
   end
   match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
+  match '/user_applications/exam_before/:id' => 'user_applications#exam_before', :via => [:get]
   resources :user_applications do
     collection do 
       get 'applied'

@@ -14,7 +14,8 @@
 </table>
 <BR />
 <%= form_for(@quiz_question, :html => {:multipart => true}) do |f|%>
-<%= render :partial => 'form_edit' + @quiz_question.quiz_type_id.to_s %>
+<%= @quiz_question.quiz.quiz_type_id.to_s %>
+<%= render :partial => 'form_edit' + @quiz_question.quiz.quiz_type_id.to_s %>
 <BR>
 <div align=center>
   <%= submit_tag 'Edit' %>

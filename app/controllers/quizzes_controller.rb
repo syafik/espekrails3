@@ -40,9 +40,9 @@ class QuizzesController < ApplicationController
 
   def create
     @quiz = Quiz.new(params[:quiz])
-#    @quiz.timeopen = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
+    #    @quiz.timeopen = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
     @quiz.timeopen = DateTime.parse("#{params[:year_check_in]}-#{params[:month_check_in]}-#{params[:day_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}")
-#    @quiz.timeclose = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
+    #    @quiz.timeclose = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
     @quiz.timeclose = DateTime.parse("#{params[:year_check_out]}-#{params[:month_check_out]}-#{params[:day_check_out]} #{params[:hour_check_out]}:#{params[:minute_check_out]}:00")
     
     if @quiz.save
@@ -54,7 +54,7 @@ class QuizzesController < ApplicationController
   end
 
   def edit
-     @quiz_types = QuizType.all
+    @quiz_types = QuizType.all
     @quiz = Quiz.find(params[:id])
     @ci=CourseImplementation.find(@quiz.course_implementation_id)
     if @quiz.timeopen != nil
@@ -73,11 +73,11 @@ class QuizzesController < ApplicationController
   end
 
   def update
-     @quiz_types = QuizType.all
+    @quiz_types = QuizType.all
     @quiz = Quiz.find(params[:id])
     @ci=CourseImplementation.find(@quiz.course_implementation_id)
-    @quiz.timeopen = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
-    @quiz.timeclose = params[:month_check_out]+"/"+params[:day_check_out]+"/"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
+    @quiz.timeopen = params[:day_check_in]+"-"+params[:month_check_in]+"-"+params[:year_check_in] + " " +params[:hour_check_in]+":"+params[:minute_check_in]
+    @quiz.timeclose = params[:day_check_out]+"-"+params[:month_check_out]+"-"+params[:year_check_out] + " " +params[:hour_check_out]+":"+params[:minute_check_out]
     
     if @quiz.update_attributes(params[:quiz])
       flash[:notice] = 'Ujian Telah Dikemaskinikan'
@@ -106,9 +106,9 @@ class QuizzesController < ApplicationController
   end
 
   def hozon
-     @quiz_types = QuizType.all
+    @quiz_types = QuizType.all
     @quiz = Quiz.new(params[:quiz])
-     @quiz.timeopen = DateTime.parse("#{params[:year_check_in]}-#{params[:month_check_in]}-#{params[:day_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}")
+    @quiz.timeopen = DateTime.parse("#{params[:year_check_in]}-#{params[:month_check_in]}-#{params[:day_check_in]} #{params[:hour_check_in]}:#{params[:minute_check_in]}")
     @quiz.timeclose = DateTime.parse("#{params[:year_check_out]}-#{params[:month_check_out]}-#{params[:day_check_out]} #{params[:hour_check_out]}:#{params[:minute_check_out]}:00")
     @quiz.created_on = "#{params[:year_create]}-#{params[:month_create]}-#{params[:day_create]}"
     
