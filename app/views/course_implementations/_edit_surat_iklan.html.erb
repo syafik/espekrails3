@@ -53,19 +53,21 @@ cetak_komputer = "1"
 cetak_komputer = surat_iklan_content.is_cetakan_komputer if surat_iklan_content
 format_surat = "1"
 format_surat = surat_iklan_content.format_surat if surat_iklan_content
+perenggan = []
 perkara = @perkara
 perkara = surat_iklan_content.perkara if surat_iklan_content
-perenggan1 = @perenggan1
-perenggan1 = surat_iklan_content.perenggan1 if surat_iklan_content
-perenggan2 = @perenggan2
-perenggan2 = surat_iklan_content.perenggan2 if surat_iklan_content
-perenggan3 = @perenggan3
-perenggan3 = surat_iklan_content.perenggan3 if surat_iklan_content
-perenggan4 = @perenggan4
-perenggan4 = surat_iklan_content.perenggan4 if surat_iklan_content
-perenggan5 = @perenggan5
-perenggan5 = surat_iklan_content.perenggan5 if surat_iklan_content
+perenggan[0] = perenggan1 = @perenggan1
+perenggan[0] = perenggan1 = surat_iklan_content.perenggan1 if surat_iklan_content
+perenggan[1] = perenggan2 = @perenggan2
+perenggan[1] = perenggan2 = surat_iklan_content.perenggan2 if surat_iklan_content
+perenggan[2] = perenggan3 = @perenggan3
+perenggan[2] = perenggan3 = surat_iklan_content.perenggan3 if surat_iklan_content
+perenggan[3] = perenggan4 = @perenggan4
+perenggan[3] = perenggan4 = surat_iklan_content.perenggan4 if surat_iklan_content
+perenggan[4] = perenggan5 = @perenggan5
+perenggan[4] = perenggan5 = surat_iklan_content.perenggan5 if surat_iklan_content
 
+str_perenggan = "<p>#{perenggan.join('</p><p>')}</p>"
 %>
 
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
@@ -126,30 +128,37 @@ window.location.href = URL;
 		<%= hidden_field 'surat_iklan_content', 'course_implementation_id', :value=>params[:surat_iklan_content][:course_implementation_id] %></td>
     </tr>
     <tr>
-      <td align="right"><strong>Perenggan 1:</strong></td>
-      <td><span class="blockintro">&nbsp; </span>
-		<textarea id="surat_iklan_content_perenggan1" name="surat_iklan_content[perenggan1]" cols="80" rows="3" style="width: 550"><%=perenggan1%></textarea></td>
+      <td align="right"><strong>Perenggan :</strong></td>
+      <td>
+        <span class="blockintro">&nbsp; </span>
+        <%= text_area_tag "surat_iklan_content[perenggan]", str_perenggan, :class => "tinymce", :rows => 40, :cols => 120, :id => "surat_iklan_content_perenggan" %>
+      </td>
     </tr>
- <tr>
-      <td align="right"><strong>Perenggan 2:</strong></td>
-      <td><span class="blockintro">&nbsp; </span>
-		<textarea id="surat_iklan_content_perenggan2" name="surat_iklan_content[perenggan2]" cols="80" rows="5" style="width: 550"><%=perenggan2%></textarea></td>
-    </tr>
-	<tr>
-	      <td align="right"><strong>Perenggan 3:</strong></td>
-	      <td><span class="blockintro">&nbsp; </span>
-			<textarea id="surat_iklan_content_perenggan3" name="surat_iklan_content[perenggan3]" cols="80" rows="5" style="width: 550"><%=perenggan3%></textarea></td>
-	    </tr>
-    <tr>
-      <td align="right"><strong>Perenggan 4:</strong></td>
-      <td><span class="blockintro">&nbsp; </span>
-		<textarea id="surat_iklan_content_perenggan4" name="surat_iklan_content[perenggan4]" cols="80" rows="6" style="width: 550"><%=perenggan4%></textarea></td>
-    </tr>
-    <tr>
-      <td align="right"><strong>Perenggan 5:</strong></td>
-      <td><span class="blockintro">&nbsp; </span>
-		<textarea id="surat_iklan_content_perenggan5" name="surat_iklan_content[perenggan5]" cols="80" rows="6" style="width: 550"><%=perenggan5%></textarea></td>
-    </tr>
+    <!--<tr>-->
+      <!--<td align="right"><strong>Perenggan 1:</strong></td>-->
+      <!--<td><span class="blockintro">&nbsp; </span>-->
+		<!--<textarea id="surat_iklan_content_perenggan1" name="surat_iklan_content[perenggan1]" cols="80" rows="3" style="width: 550"><%=perenggan1%></textarea></td>-->
+    <!--</tr>-->
+ <!--<tr>-->
+      <!--<td align="right"><strong>Perenggan 2:</strong></td>-->
+      <!--<td><span class="blockintro">&nbsp; </span>-->
+		<!--<textarea id="surat_iklan_content_perenggan2" name="surat_iklan_content[perenggan2]" cols="80" rows="5" style="width: 550"><%=perenggan2%></textarea></td>-->
+    <!--</tr>-->
+	<!--<tr>-->
+	      <!--<td align="right"><strong>Perenggan 3:</strong></td>-->
+	      <!--<td><span class="blockintro">&nbsp; </span>-->
+			<!--<textarea id="surat_iklan_content_perenggan3" name="surat_iklan_content[perenggan3]" cols="80" rows="5" style="width: 550"><%=perenggan3%></textarea></td>-->
+	    <!--</tr>-->
+    <!--<tr>-->
+      <!--<td align="right"><strong>Perenggan 4:</strong></td>-->
+      <!--<td><span class="blockintro">&nbsp; </span>-->
+		<!--<textarea id="surat_iklan_content_perenggan4" name="surat_iklan_content[perenggan4]" cols="80" rows="6" style="width: 550"><%=perenggan4%></textarea></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+      <!--<td align="right"><strong>Perenggan 5:</strong></td>-->
+      <!--<td><span class="blockintro">&nbsp; </span>-->
+		<!--<textarea id="surat_iklan_content_perenggan5" name="surat_iklan_content[perenggan5]" cols="80" rows="6" style="width: 550"><%=perenggan5%></textarea></td>-->
+    <!--</tr>-->
     <tr>
       <td align="right" valign="TOP">&nbsp;</td>
       <td>&nbsp;</td>
@@ -231,4 +240,5 @@ Fail Timbul</textarea></td>
         <span><label for="surat_iklan_content_format_surat_4"  title="Senarai agihan alamat dicetak kesemuanya pada satu halaman sahaja dengan header">Format 4: Senarai agihan alamat dicetak kesemuanya pada satu halaman sahaja dengan header</label></span></td>
     </tr>
   </table>
+
   

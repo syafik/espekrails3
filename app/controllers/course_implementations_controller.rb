@@ -729,9 +729,54 @@ class CourseImplementationsController < ApplicationController
   end
   
   def cetak_surat_iklan
+    #filename = "surat_iklan_"+ "#{params[:surat_iklan_content][:course_implementation_id]}.pdf"
+    #
+    #@signature = Signature.find_by_filename(params[:signature_file])
+    #if @signature
+    #  @tandatangan_nama = @signature.person_name
+    #  if @signature.person_position != ""
+    #    @tandatangan_jawatan = @signature.person_position.split(" ").map! {|e| e}.join(" ")
+    #  else
+    #    @tandatangan_jawatan = ""
+    #  end
+    #else
+    #  @tandatangan_nama    = "                     "
+    #  @tandatangan_jawatan = "                     "
+    #end
+    #
+    #gen_pdf_all_format_1 (filename) if params[:surat_iklan_content][:format_surat].to_i == 1 or params[:surat_iklan_content][:format_surat].to_i == 3
+    #gen_pdf_all_format_2 (filename) if params[:surat_iklan_content][:format_surat].to_i == 2 or params[:surat_iklan_content][:format_surat].to_i == 4
+    #
+    #course_implementation = CourseImplementation.find(params[:surat_iklan_content][:course_implementation_id])
+    #course = Course.find(course_implementation.course_id)
+    #
+    #rujukan = LatestLetterReference.find_by_course_department_id(course.course_department_id)
+    #
+    #if rujukan
+    #  rujukan.update_attributes(:latest_ref_no => params[:rujukan_kami])
+    #else
+    #  rujukan = LatestLetterReference.new(:latest_ref_no => params[:rujukan_kami], :course_department_id => params[:course_department_id])
+    #  rujukan.save
+    #end
+    #
+    #params[:surat_iklan_content][:ref_no] = params[:rujukan_kami]
+    #params[:surat_iklan_content][:letter_date] = params[:tarikh_surat_month]+"/"+params[:tarikh_surat_day]+"/"+params[:tarikh_surat_year]
+    #
+    #ads_letter = SuratIklanContent.find_by_course_implementation_id(course_implementation.id)
+    #if ads_letter
+    #  ads_letter.update_attributes(params[:surat_iklan_content])
+    #else
+    #  new_ads_letter = SuratIklanContent.new(params[:surat_iklan_content])
+    #  new_ads_letter.save!
+    #end
+    #
+    #
+    ##redirect_to("#{@request.relative_url_root}/public/pdf_certificate/" + filename)
+    #redirect_to("/surat/" + filename)
+
     filename = "surat_iklan_"+ "#{params[:surat_iklan_content][:course_implementation_id]}.pdf"
 
-    @signature = Signature.find_by_filename(params[:signature_file])
+    @signature = Signature.find_by_filename(params[:signature][:filename])
     if @signature
       @tandatangan_nama = @signature.person_name
       if @signature.person_position != ""
@@ -744,35 +789,55 @@ class CourseImplementationsController < ApplicationController
       @tandatangan_jawatan = "                     "
     end
 
-    gen_pdf_all_format_1 (filename) if params[:surat_iklan_content][:format_surat].to_i == 1 or params[:surat_iklan_content][:format_surat].to_i == 3
-    gen_pdf_all_format_2 (filename) if params[:surat_iklan_content][:format_surat].to_i == 2 or params[:surat_iklan_content][:format_surat].to_i == 4
-	
-    course_implementation = CourseImplementation.find(params[:surat_iklan_content][:course_implementation_id])
-    course = Course.find(course_implementation.course_id)
-  
-    rujukan = LatestLetterReference.find_by_course_department_id(course.course_department_id)
-	
-    if rujukan
-      rujukan.update_attributes(:latest_ref_no => params[:rujukan_kami])
-    else
-      rujukan = LatestLetterReference.new(:latest_ref_no => params[:rujukan_kami], :course_department_id => params[:course_department_id])
-      rujukan.save
-    end
-	
-    params[:surat_iklan_content][:ref_no] = params[:rujukan_kami]
-    params[:surat_iklan_content][:letter_date] = params[:tarikh_surat_month]+"/"+params[:tarikh_surat_day]+"/"+params[:tarikh_surat_year]
+    @places = Place.find(params[:place_ids])
+    @format_surat = params[:surat_iklan_content][:format_surat].to_i
+    @rujukan_kami = params[:rujukan_kami]
+    @tarikh_surat_day = params[:tarikh_surat_day]
+    @tarikh_surat_day = "    " if params[:tarikh_surat_day] == ""
+    @tarikh_surat_month = $MONTH_NAMES[params[:tarikh_surat_month].to_i - 1]
+    @tarikh_surat_year = params[:tarikh_surat_year]
+    @tarikh = "#{@tarikh_surat_day} #{@tarikh_surat_month} #{@tarikh_surat_year}"
+    @perkara = params[:surat_iklan_content][:perkara]
+    @perenggan = params[:surat_iklan_content][:perenggan]
+    @tempoh = params[:surat_iklan_content][:tempoh]
 
-    ads_letter = SuratIklanContent.find_by_course_implementation_id(course_implementation.id)
-    if ads_letter
-      ads_letter.update_attributes(params[:surat_iklan_content])
-    else
-      new_ads_letter = SuratIklanContent.new(params[:surat_iklan_content])
-      new_ads_letter.save!
+
+
+    @salinan_kepada = params[:salinan_kepada]
+
+    @per_lines = @perkara.split("\n")
+    @is_cetakan_komputer = params[:surat_iklan_content][:is_cetakan_komputer]
+
+    if params[:surat_iklan_content][:is_cetakan_komputer].to_i == 0
+      if RUBY_PLATFORM == "i386-mswin32"
+        @signature_file = "public/signatures/#{params[:signature][:filename]}"
+      else
+        @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature][:filename]}"
+      end
+
+      if !params[:signature][:filename] or params[:signature][:filename] == ""
+        @signature_file = ""
+      end
     end
-	
-	
-    #redirect_to("#{@request.relative_url_root}/public/pdf_certificate/" + filename)
-    redirect_to("/surat/" + filename)
+
+    @schedule = CourseImplementation.find(params[:surat_iklan_content][:course_implementation_id])
+
+    if params[:surat_iklan_content][:format_surat].to_i == 3
+      margin = { :top => 10, :left => 10, :bottom => 10, :right => 0 }
+      #pdf.margins_pt(0, 50, 36, 50)
+    else
+      margin = { :top => 10, :left => 10, :bottom => 10, :right => 0 }
+      #pdf.margins_pt(36, 50, 36, 50)
+    end
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => filename,
+               :page_size => 'A4',
+               :margin => margin
+      end
+    end
   end
 
 
@@ -800,7 +865,7 @@ class CourseImplementationsController < ApplicationController
     #pdf.select_font("Times-Roman")
     pdf.select_font("Helvetica")
     #pdf.select_font("Arial")
-  
+
     i = 1
     @places = Place.find(params[:place_ids])
     for place in @places

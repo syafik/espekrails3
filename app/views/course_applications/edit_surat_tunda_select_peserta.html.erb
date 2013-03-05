@@ -24,7 +24,7 @@ function GoEditSuratTunda() {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('#popmenu').css({"width" : 150})
+    $('#popmenu').css({"width" : 150});
     $('#popmenu').html("<ul>" +
                             "<li><a href=\""  + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					        "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
@@ -35,7 +35,7 @@ function rewritePopupContent(controller, objid, objname) {
                             "<li><a href=\""  + controller + "/edit_surat_tunda_select_peserta/" + "<%=@course_implementation.id if @course_implementation%>" + "\">&nbsp;&nbsp;Jana Surat tunda</a>" +
 					        "<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Daftar</a>" +
 					        "<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
-					        "</ul>"
+					        "</ul>");
      
 }
 </script>

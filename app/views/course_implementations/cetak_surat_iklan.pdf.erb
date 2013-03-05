@@ -1,0 +1,244 @@
+<%
+   if @format_surat == 3
+%>
+    <%#= image_tag(header_image) %>
+<%
+   end
+%>
+<table width="750">
+  <tr>
+    <td align="right">
+      <table style="font-size: 10px;">
+        <tr>
+          <td>Ruj.Tuan</td>
+          <td>: </td>
+        </tr>
+        <tr>
+          <td>Ruj.Kami</td>
+          <td>: <%= @rujukan_kami %></td>
+        </tr>
+        <tr>
+          <td>Tarikh</td>
+          <td>: <%= @tarikh %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      <%
+         i = 1
+         for place in @places
+           addr1 = place.address1.split(" ").map! {|e| e}.join(" ") if ( (place.address1 != "") && place.address1 )
+           addr2 = place.address2.split(" ").map! {|e| e}.join(" ") if ( (place.address2 != "") && place.address2 )
+           addr3 = place.address3.split(" ").map! {|e| e}.join(" ") if ( (place.address3 != "") && place.address3 )
+           addr4 = place.address4.split(" ").map! {|e| e}.join(" ") if ( (place.address4 != "") && place.address4 )
+
+           addr1 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+           addr2 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+           addr3 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+           addr4 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+           state = nof{place.state.description}
+           if state != nil
+             state = place.state.description.split(" ").map! {|e| e.capitalize}.join(" ")
+           end
+
+           addr_arr = Array.new
+           addr_arr.push(place.name) if place.name != ""
+           addr_arr.push(addr1) if place.address1 != ""
+           addr_arr.push(addr2) if place.address2 != ""
+           addr_arr.push(addr3) if place.address3 != ""
+           addr_arr.push(addr4) if place.address4 != ""
+           #addr_arr.push(nof{state.upcase}) if place.state != ""
+           company_addr = addr_arr.join("<br/>")
+           company_addr = company_addr.tr_s(',' , ',')
+
+           alamat = "#{company_addr}"
+      %>
+          <%= "#{nof { place.head_title }}".html_safe %><br/>
+          <%= "#{alamat}".html_safe %><br/><br/>
+      <%
+         end
+      %>
+      <br/><br/>
+      Tuan,<br/><br/>
+      <%
+         for per_line in @per_lines
+      %>
+          <%= "<strong>#{per_line}</strong>".html_safe %><br/>
+      <%
+         end
+      %>
+      <%= @perenggan.html_safe %>
+      <!--<div style="display:block; clear:both; page-break-after:always;"></div>-->
+      Sekian, terima kasih<br/><br/>
+      <b>`BERKHIDMAT UNTUK NEGARA`</b><br/>
+      <b>`MENDAHULUI CABARAN`</b><br/>
+      <b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>
+      Saya yang menurut perintah,<br/><br/>
+
+
+      <%
+         if @is_cetakan_komputer
+           if !@signature_file.blank? && @signature_file != ""
+      %>
+              <%= image_tag(@signature_file) %>
+      <%
+           else
+      %>
+               <br/><br/><br/><br/>
+      <%
+           end
+         end
+
+         if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
+      %>
+           <%= "<br/><b>(#{@tandatangan_nama})</b>".html_safe %><br/>
+      <%
+         end
+      %>
+      <%= "#{@tandatangan_jawatan}<br/>".html_safe %><br/>
+      Institut Tanah & Ukur Negara(INSTUN)<br/>
+      Kementerian Sumber Asli dan Alam Sekitar<br/>
+      <br/>s.k<br/>
+      <%
+         sk_lines = @salinan_kepada.split("\n")
+         for sk_line in sk_lines
+      %>
+          <%= sk_line %><br/>
+      <%
+         end
+      %>
+    </td>
+  </tr>
+</table>
+<%
+
+   if @schedule
+     tarikh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_4)} hingga #{@schedule.date_plan_end.to_formatted_s(:my_format_4)}"
+     tempoh = (@schedule.date_plan_end-@schedule.date_plan_start) + 1
+
+     arr = Array.new
+     for methodology in @schedule.course.methodologies
+       arr.push(methodology.description)
+     end
+     methodologies = arr.join(', ')
+
+     tarikh_tutup = ""
+     tarikh_tutup = @schedule.last_date.to_formatted_s(:my_format_3) if @schedule.last_date
+
+     if i == 1
+%>
+        <div style="display:block; clear:both; page-break-after:always;"></div>
+        Lampiran A<br/>
+    <%
+       end
+    %>
+    <table width="300" border="1">
+      <tr>
+        <td>Kod Kursus</td>
+        <td>Modul</td>
+        <td>Kelayakan Peserta</td>
+        <td>Tarikh</td>
+        <td>Tempoh</td>
+        <td>Objektif</td>
+        <td>Kandungan</td>
+        <td>Metodologi</td>
+        <td>Bilangan Peserta</td>
+        <td>Tarikh Tutup</td>
+      </tr>
+      <tr>
+        <td><%= @schedule.code %></td>
+        <td><%= @schedule.course.course_field.description %> : <%= @schedule.course.name %></td>
+        <td><%= @schedule.course.target_group %></td>
+        <td><%= @tarikh %></td>
+        <td><%= @tempoh %> hari</td>
+        <td><%= @schedule.course.objective %></td>
+        <td><%= @schedule.course.content %></td>
+        <td><%= methodologies %></td>
+        <td><%= @schedule.capacity %> orang</td>
+        <td><%= tarikh_tutup %></td>
+      </tr>
+    </table>
+<%
+   end
+
+
+
+
+
+   #@nota_font_size = 9
+   #current_y = pdf.y
+   #pdf.y = pdf.absolute_bottom_margin - 20
+   #pdf.add_text(70, pdf.y, "Nota: Surat ini adalah cetakan komputer. Tiada tandatangan diperlukan.", @nota_font_size) if params[:surat_iklan_content][:is_cetakan_komputer].to_i==1
+   #
+   #pdf.new_page if i < @places.size
+   #i = i+1
+   #pdf.y = @my_margin
+
+
+   #end # @places loop
+
+   #require 'pdf/simpletable'
+   #pdf.y = current_y
+   ##schedules = CourseImplementation.find(params[:schedule_ids])
+   #schedule = CourseImplementation.find(params[:surat_iklan_content][:course_implementation_id])
+   #i = 1
+   #if schedule
+   #  #for schedule in schedules
+   #  pdf.new_page
+   #  pdf.y = pdf.absolute_top_margin - 20
+   #  #pdf.text "#{schedule.course.name.upcase}", :font_size => @font_size, :justification => :left
+   #
+   #  tarikh = "#{schedule.date_plan_start.to_formatted_s(:my_format_4)} hingga #{schedule.date_plan_end.to_formatted_s(:my_format_4)}"
+   #  tempoh = (schedule.date_plan_end-schedule.date_plan_start) + 1
+   #
+   #  arr = Array.new
+   #  for methodology in schedule.course.methodologies
+   #    arr.push(methodology.description)
+   #  end
+   #  methodologies = arr.join(', ')
+   #
+   #  tarikh_tutup = ""
+   #  tarikh_tutup = schedule.last_date.to_formatted_s(:my_format_3) if schedule.last_date
+   #
+   #  if i == 1
+   #    pdf.add_text(490, pdf.y, "Lampiran A", @rujukan_font_size)
+   #    pdf.text "\n", :font_size => @font_size
+   #  end
+   #
+   #  table = PDF::SimpleTable.new
+   #
+   #  table.data = [
+   #          {"key" => "Kod Kursus", "value" => "#{schedule.code}"},
+   #          {"key" => "Modul", "value" => "#{schedule.course.course_field.description} : #{schedule.course.name}"},
+   #          {"key" => "Kelayakan Peserta", "value" => "#{schedule.course.target_group}"},
+   #          {"key" => "Tarikh", "value" => "#{tarikh}"},
+   #          {"key" => "Tempoh", "value" => "#{tempoh} hari"},
+   #          {"key" => "Objektif", "value" => "#{schedule.course.objective}"},
+   #          {"key" => "Kandungan", "value" => "#{schedule.course.content}"},
+   #          {"key" => "Metodologi", "value" => "#{methodologies}"},
+   #          {"key" => "Bilangan Peserta", "value" => "#{schedule.capacity} orang"},
+   #          {"key" => "Tarikh Tutup", "value" => "#{tarikh_tutup}"}
+   #  ]
+   #
+   #
+   #  table.column_order = ["key", "value"]
+   #  table.position = :center
+   #  #table.orientation = :center
+   #  #table.title = "Lampiran A" if i == 0
+   #  table.shade_rows = :true
+   #  table.show_headings = false
+   #  table.show_lines = :inner
+   #  table.width = 500
+   #
+   #  table.render_on(pdf)
+   #  #i = i + 1
+   #end
+   #
+   #if RUBY_PLATFORM == "i386-mswin32"
+   #  pdf.save_as("public/surat/" + file) #kat windows
+   #else
+   #  pdf.save_as("/aplikasi/www/instun/public/surat/" + file) #kalu kat bsd
+   #end
+%>

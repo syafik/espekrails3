@@ -500,6 +500,7 @@ InstunRails3::Application.routes.draw do
       get 'list_courses_from_today_to_future'
       get 'calendar_user'
       post 'copy_and_create'
+      post 'cetak_surat_iklan'
     end
     member do
       get 'add_course_trainer_refresh_opener'
