@@ -451,6 +451,7 @@ InstunRails3::Application.routes.draw do
   resources :course_applications do
     get 'new'
     get 'all'
+    get 'edit_surat_tawaran_select_peserta'
     collection do
       get 'applicant'
       get 'all'

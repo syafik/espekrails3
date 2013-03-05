@@ -162,6 +162,7 @@ class CourseApplicationsController < ApplicationController
 
   def accepted
     @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:course_application_id]) if (params[:course_application_id] && params[:course_application_id] != "")
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
 
     if @course_implementation
