@@ -274,7 +274,7 @@ class CourseImplementationsController < ApplicationController
   end
 
   def show
-    @course_implementation = CourseImplementation.find(params[:course_implementation_id])
+    @course_implementation = CourseImplementation.find_by_id(params[:course_implementation_id] || params[:id])
     @course_application = CourseApplication.find(:first,:conditions => ["profile_id = ? and course_implementation_id = ?",session[:user].profile_id, @course_implementation.id])
     @course = @course_implementation.course
     list_bulans = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses WHERE id = #{@course_implementation.id}")    

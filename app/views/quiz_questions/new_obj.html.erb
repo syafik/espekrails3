@@ -1,4 +1,4 @@
-<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <th width="85%" height="20" bgcolor="#999999">
 	      <font color="#FFFFFF">TAMBAH SOALAN <%= @quiz.course.name if @quiz %>(<%= @quiz.name.upcase if @quiz %>)</font></th>
@@ -14,7 +14,7 @@
   </table>
   <BR>
 <%#= start_form_tag ({:action => 'create_obj'}, :enctype => 'multipart/form-data') %>
-  <%= form_for(@quiz_question, :url => create_obj_quiz_questions_path, :multipart => true) do |f| %>
+  <%= form_for(@quiz_question, :url => create_obj_quiz_questions_path, :html => {:multipart => true}) do |f| %>
 
   <%= render :partial => 'form_obj' %>
   <BR>

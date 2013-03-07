@@ -13,6 +13,14 @@
       <td valign=top align=right><b>Upload Attachment :</b></td>
       <td><%= file_field "quiz_question", "picture" %></td>
     </tr>
+    <tr>
+      <td valign=top align=right><b>Jawaban:</b></td>
+      <td><%= text_area 'quiz_subjective', 'answer', :rows => 5  %></td>
+    </tr>
+    <tr>
+      <td valign=top align=right><b>Markah :</b></td>
+      <td><%= text_field "quiz_question", "markah" %></td>
+    </tr>
   </table>
 <% else %>
   <!--[form:quiz_question]-->
