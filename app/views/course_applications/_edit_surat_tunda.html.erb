@@ -298,77 +298,88 @@
     }
 
     function updateJawatan() {
-        var staff_id = $('contact_officer_id').value
-        data = "staff_id=" + staff_id
+        var staff_id = $('#contact_officer_id').val();
 
-        if ($('contact_officer_id').value != "") {
+        if ($('#contact_officer_id').val() != "") {
             //$('intr_date_start').innerHTML = "checking date.."
-            ajax_find_jawatan('/ajax/staff_find_jawatan', data)
+            ajax_find_jawatan('/ajax/staff_find_jawatan', staff_id);
         }
     }
 
     function ajax_find_jawatan(url, data) {
-        var myAjax = new Ajax.Request(
-                url,
-                {method:'post', parameters:data, onComplete:ajax_find_jawatan_respon}
-        );
+        $.ajax({
+            url: url,
+            type:'post',
+            data: {
+              'staff_id' : data
+            },
+            success: function(text) {
+                ajax_find_jawatan_respon(text);
+            }
+        });
     }
 
-    function ajax_find_jawatan_respon(originalRequest) {
-//alert(originalRequest.responseText );return;
-        if (originalRequest.responseText == "0") {
+    function ajax_find_jawatan_respon(text) {
+        if (text == "0") {
             alert("Staff not found");
             return;
         }
 
-        var dlist = originalRequest.responseText.split(",");
-        var jawatan = dlist[0]
-        var email = dlist[1]
-        var fax = dlist[2]
-        var office = dlist[3]
+        var dlist = text.split(",");
+        var jawatan = dlist[0];
+        var email = dlist[1];
+        var fax = dlist[2];
+        var office = dlist[3];
 
-        $('penyelaras_jawatan').value = jawatan
-        $('penyelaras_email').value = email
-        $('penyelaras_fax').value = fax
-        $('penyelaras_telefon').value = office
+        $('#penyelaras_jawatan').val(jawatan);
+        $('#penyelaras_email').val(email);
+        $('#penyelaras_fax').val(fax);
+        $('#penyelaras_telefon').val(office);
 
     }
 
     function updateJawatan2() {
-        var staff_id = $('contact_officer_id2').value
-        data = "staff_id=" + staff_id
+        var staff_id = $('#contact_officer_id2').val();
 
-        if ($('contact_officer_id2').value != "") {
-            //$('intr_date_start').innerHTML = "checking date.."
-            ajax_find_jawatan2('/ajax/staff_find_jawatan', data)
+        if ($('#contact_officer_id2').val() != "") {
+            ajax_find_jawatan2('/ajax/staff_find_jawatan', staff_id)
         }
     }
 
     function ajax_find_jawatan2(url, data) {
-        var myAjax = new Ajax.Request(
-                url,
-                {method:'post', parameters:data, onComplete:ajax_find_jawatan_respon2}
-        );
+        $.ajax({
+            url: url,
+            type:'post',
+            data: {
+                'staff_id' : data
+            },
+            success: function(text) {
+                ajax_find_jawatan_respon2(text);
+            }
+        });
+//        var myAjax = new Ajax.Request(
+//                url,
+//                {method:'post', parameters:data, onComplete:ajax_find_jawatan_respon2}
+//        );
     }
 
-    function ajax_find_jawatan_respon2(originalRequest) {
+    function ajax_find_jawatan_respon2(text) {
 //alert(originalRequest.responseText );return;
-        if (originalRequest.responseText == "0") {
+        if (text == "0") {
             alert("Staff not found");
             return;
         }
 
-        var dlist = originalRequest.responseText.split(",");
+        var dlist = text.split(",");
         var jawatan = dlist[0]
         var email = dlist[1]
         var fax = dlist[2]
         var office = dlist[3]
 
-        $('penyelaras_jawatan2').value = jawatan
-        $('penyelaras_email2').value = email
-        $('penyelaras_fax2').value = fax
-        $('penyelaras_telefon2').value = office
-
+        $('#penyelaras_jawatan2').val(jawatan);
+        $('#penyelaras_email2').val(email);
+        $('#penyelaras_fax2').val(fax);
+        $('#penyelaras_telefon2').val(office);
     }
 
 </script>

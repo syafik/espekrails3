@@ -1163,12 +1163,12 @@ class CourseApplicationsController < ApplicationController
     params[:surat_tawaran_content][:ref_no] = params[:rujukan_kami]
     params[:surat_tawaran_content][:letter_date] = params[:tarikh_surat_month]+"/"+params[:tarikh_surat_day]+"/"+params[:tarikh_surat_year]
     ads_letter = SuratTawaranContent.find_by_course_implementation_id(params[:course_implementation_id])
-    if ads_letter
-      ads_letter.update_attributes(params[:surat_tawaran_content])
-    else
-      new_ads_letter = SuratTawaranContent.new(params[:surat_tawaran_content])
-      new_ads_letter.save!
-    end
+    #if ads_letter
+    #  ads_letter.update_attributes(params[:surat_tawaran_content])
+    #else
+    #  new_ads_letter = SuratTawaranContent.new(params[:surat_tawaran_content])
+    #  new_ads_letter.save!
+    #end
 
     @zero_paragraph = "Dengan hormatnya saya diarah merujuk kepada perkara di atas."
 
@@ -1187,15 +1187,108 @@ class CourseApplicationsController < ApplicationController
 
     @seventh_paragraph ="Sekiranya para peserta kursus mempunyai sebarang pertanyaan atau kemusykilan sila hubungi :"
 
-    @students = CourseApplication.find(params[:course_application_ids])
-    for student in @students
-      gen_pdf_all_format_3(student, "#{student.id.to_s}.pdf")
+    @rujukan_kami = params[:rujukan_kami]
+    @tarikh_surat_day = params[:tarikh_surat_day]
+    @tarikh_surat_day = "    " if params[:tarikh_surat_day] == ""
+    @tarikh_surat_month = params[:tarikh_surat_month]
+    @tarikh_surat_year = params[:tarikh_surat_year]
+
+    @tarikh = params[:dateline]
+    @perkara = params[:surat_tawaran_content][:perkara]
+    @perenggan = params[:surat_tawaran_content][:perenggan]
+
+    @signature = Signature.find_by_filename(params[:signature_file])
+
+    if @signature
+      @tandatangan_nama = @signature.person_name.upcase
+      if @signature.person_position != ""
+        @tandatangan_jawatan = @signature.person_position.split(" ").map! { |e| e.capitalize }.join(" ")
+      else
+        @tandatangan_jawatan = ""
+      end
+    else
+      @tandatangan_nama = "                     "
+      @tandatangan_jawatan = "                     "
     end
 
-    gen_pdf_all_format_1(filename) if params[:format_surat].to_i == 1 or params[:format_surat].to_i == 3
-    gen_pdf_all_format_2(filename) if params[:format_surat].to_i == 2 or params[:format_surat].to_i == 4
+    #@is_cetakan_komputer = params[:is_cetakan_komputer].to_i
 
-    redirect_to("/surat/" + filename)
+    if params[:is_cetakan_komputer].to_i == 0
+      if RUBY_PLATFORM == "i386-mswin32"
+        @signature_file = "public/signatures/#{params[:signature][:filename]}"
+      else
+        @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature][:filename]}"
+      end
+
+      if !params[:signature][:filename] or params[:signature][:filename] == ""
+        @signature_file = ""
+      end
+    end
+
+    @perkara2 = "<b>PENGESAHAN KEHADIRAN KURSUS #{params[:nama_kursus]} #{params[:tempoh]} DI INSTITUT TANAH DAN UKUR NEGARA (INSTUN)</b>"
+    @course_department = params[:course_department]
+    @penyelaras_telefon = params[:penyelaras_telefon]
+    @penyelaras_ext = params[:penyelaras_ext]
+    @penyelaras_fax = params[:penyelaras_fax]
+    @penyelaras_email = params[:penyelaras_email]
+    @penyelaras_email2 = params[:penyelaras_email2]
+
+    @course_implementation_name = params[:course_implementation_name]
+    @course_implementation_code = params[:course_implementation_code]
+
+    @courses = Course.find_by_sql("SELECT c.* FROM courses c, course_implementations ci where ci.course_id=c.id and ci.code ilike '#{params[:course_implementation_code]}' limit 1")
+    @location_name = CourseLocation.find(@courses[0].course_location_id)
+    @department_name = CourseDepartment.find(@courses[0].course_department_id)
+    @reference_name = @courses[0].reference
+    @reference_name = "-" if (@reference_name==nil or @reference_name.strip=="")
+    @duration = params[:duration].titleize
+    @check_in = params[:check_in]
+    @check_in_hour = params[:check_in_hour]
+    @check_in_minute = params[:check_in_minute]
+
+    params[:briefing] = " " if params[:briefing].strip == ""
+    @briefing = params[:briefing]
+    params[:briefing_hour] = " " if params[:briefing_hour].strip == ""
+    @briefing_hour = params[:briefing_hour]
+    params[:briefing_minute] = " " if params[:briefing_minute].strip == ""
+    @briefing_minute = params[:briefing_minute]
+    params[:check_in] = " " if params[:check_in].strip == ""
+    @check_in = params[:check_in]
+    params[:check_out] = " " if params[:check_out].strip == ""
+    @check_out = params[:check_out]
+    params[:hour_closed1] = " " if params[:hour_closed1].strip == ""
+    @hour_closed1 = params[:hour_closed1]
+    params[:hour_closed2] = " " if params[:hour_closed2].strip == ""
+    @hour_closed2 = params[:hour_closed2]
+    params[:minute_closed1] = " " if params[:minute_closed1].strip == ""
+    @minute_closed1 = params[:minute_closed1]
+    params[:minute_closed2] = " " if params[:minute_closed2].strip == ""
+    @minute_closed2 = params[:minute_closed2]
+    @contact1 = Staff.find(params[:contact_officer_id].to_i)
+    if params[:contact_officer_id2].strip == ""
+      @contact2=" "
+    else
+      @contact2 = Staff.find(params[:contact_officer_id2].to_i)
+    end
+
+    @tempat_suaikenal = params[:tempat_suaikenal]
+
+    @students = CourseApplication.find(params[:course_application_ids])
+    #for student in @students
+    #  gen_pdf_all_format_3(student, "#{student.id.to_s}.pdf")
+    #end
+
+    #gen_pdf_all_format_1(filename) if params[:format_surat].to_i == 1 or params[:format_surat].to_i == 3
+    #gen_pdf_all_format_2(filename) if params[:format_surat].to_i == 2 or params[:format_surat].to_i == 4
+
+    #redirect_to("/surat/" + filename)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => filename,
+               :page_size => 'A4'
+      end
+    end
   end
 
 

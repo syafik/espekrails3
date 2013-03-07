@@ -5,7 +5,8 @@
 </table>
 <br>
 
-<%= form_tag :action => 'cetak_surat_tunda', :id => @course_implementation, :course_id => @course do %>
+<%#= form_tag :action => 'cetak_surat_tunda', :id => @course_implementation, :course_id => @course do %>
+<%= form_tag :action => 'cetak_surat_tunda', :format => :pdf, :id => @course_implementation, :course_id => @course do %>
   <%= render :partial => 'edit_surat_tunda' %>
   <br>
   <div align="center">

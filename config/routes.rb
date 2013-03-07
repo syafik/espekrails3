@@ -626,6 +626,7 @@ InstunRails3::Application.routes.draw do
   match '/ajax/find_course_by_code_2' => 'ajax#find_course_by_code_2', :via => [:get]
   match '/ajax/children_of_place' => 'ajax#children_of_place', :via => [:post]
   match '/ajax/grand_and_children_of_place' => 'ajax#grand_and_children_of_place', :via => [:post]
+  match '/ajax/staff_find_jawatan' => 'ajax#staff_find_jawatan', :via => [:post]
   resources :ajax do
     collection do
       get 'ajax_nric'
