@@ -374,6 +374,8 @@ InstunRails3::Application.routes.draw do
     member do
       get 'shiken_ichiran'
       get 'shinki'
+      get 'copy_shiken_ichiran'
+      put 'simpan_copy_shiken_ichiran'
     end
   end
   
