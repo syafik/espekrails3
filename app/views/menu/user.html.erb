@@ -1,69 +1,69 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en_US">
-<head>
-<title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<link rel="StyleSheet" href="/stylesheets/global.css" type="text/css" />
-<link rel="StyleSheet" href="/stylesheets/dtree.css" type="text/css" />
-<script type="text/javascript" src="/javascripts/dtree.js"></script>
-<style>
-body {
-	background-color: #FFFFFF;
-	}
-</style>
-</head>
-	
-<body bgcolor="#FFFFFF">	
-<br>
-<div align="center"><img src="/images/menu3.jpg"></div>
-<%= render :partial => 'header'%>
+  <head>
+    <title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <link rel="StyleSheet" href="/stylesheets/global.css" type="text/css" />
+    <link rel="StyleSheet" href="/stylesheets/dtree.css" type="text/css" />
+    <script type="text/javascript" src="/javascripts/dtree.js"></script>
+    <style>
+      body {
+        background-color: #FFFFFF;
+      }
+    </style>
+  </head>
 
-<script type="text/javascript">
-		<!--
+  <body bgcolor="#FFFFFF">
+    <br>
+    <div align="center"><img src="/images/menu3.jpg"></div>
+    <%= render :partial => 'header'%>
 
-		d = new dTree('d');
+    <script type="text/javascript">
+      <!--
+
+      d = new dTree('d');
 		
-		d.config.useCookies=false;
-		d.config.useLines=false;
+      d.config.useCookies=false;
+      d.config.useLines=false;
 		
-		d.icon.root = "/images/menutree/home.gif";
-		//d.icon.root = "/images/menutree/kpmlogo.gif";
-		d.config.target = "main";
+      d.icon.root = "/images/menutree/home.gif";
+      //d.icon.root = "/images/menutree/kpmlogo.gif";
+      d.config.target = "main";
 		
 
-		d.add(40, 0,  'Kursus', '', 'Pengurusan Permohonan','main','/images/menutree/folder.gif');
-		d.add(41, 40, 'Carian Kursus', '/course_implementations/search_for_user', 'Caria Kursus Yang Akan dijalankan','main');
-		d.add(42, 40, 'Senarai Kursus', '/course_implementations/list_courses_from_today_to_future', 'Senarai Kursus Yang Akan dijalankan','main');
-		d.add(43, 40, 'Kalendar Kursus', '/course_implementations/calendar_user', 'Kalendar Kursus Tahunan','main');
-		d.add(44, 40, 'Status Permohonan', '/user_applications/applied', 'Senarai Status Permohonan Kursus','main');
-		d.add(45, 40, 'Pengesahan Kehadiran', '/user_applications/offered', 'Senarai Kursus Untuk Pengesahan Kehadiran','main');
-		d.add(49, 40, 'Surat Tawaran', '/user_applications/surat_tawaran', 'Senarai Kursus Untuk Pengesahan Kehadiran','main');
-		d.add(46, 40, 'Kursus Semasa', '/user_applications/attend', 'Senarai Kursus Semasa','main');
-		//d.add(47, 40, 'Kursus Pernah Dihadiri', '/user_applications/completed', 'Senarai Kursus Yang Pernah Dihadiri','main');
-		d.add(48, 40, 'Rekod Kursus', '/user_applications/history', 'Senarai Kursus Yang Pernah Terlibat','main');
+      d.add(40, 0,  'Kursus', '', 'Pengurusan Permohonan','main','/images/menutree/folder.gif');
+      d.add(41, 40, 'Carian Kursus', '/course_implementations/search_for_user', 'Caria Kursus Yang Akan dijalankan','main');
+      d.add(42, 40, 'Senarai Kursus', '/course_implementations/list_courses_from_today_to_future', 'Senarai Kursus Yang Akan dijalankan','main');
+      d.add(43, 40, 'Kalendar Kursus', '/course_implementations/calendar_user', 'Kalendar Kursus Tahunan','main');
+      d.add(44, 40, 'Status Permohonan', '/user_applications/applied', 'Senarai Status Permohonan Kursus','main');
+      d.add(45, 40, 'Pengesahan Kehadiran', '/user_applications/offered', 'Senarai Kursus Untuk Pengesahan Kehadiran','main');
+      d.add(49, 40, 'Surat Tawaran', '/user_applications/surat_tawaran', 'Senarai Kursus Untuk Pengesahan Kehadiran','main');
+      d.add(46, 40, 'Kursus Semasa', '/user_applications/attend', 'Senarai Kursus Semasa','main');
+      //d.add(47, 40, 'Kursus Pernah Dihadiri', '/user_applications/completed', 'Senarai Kursus Yang Pernah Dihadiri','main');
+      d.add(48, 40, 'Rekod Kursus', '/user_applications/history', 'Senarai Kursus Yang Pernah Terlibat','main');
 
-		d.add(80, 0, 'Pengumuman/Berita', '', 'Pengumuman Berita','main','/images/menutree/folder.gif');
-		d.add(81, 80, 'Individu', '/post_individus/list', 'Pengumuman Individu','main');
-		d.add(82, 80, 'Kursus', '/post_courses/list', 'Pengumuman Kursus','main');
-		d.add(83, 80, 'Umum', '/posts/list', 'Pengumuman Umum','main');		
+      d.add(80, 0, 'Pengumuman/Berita', '', 'Pengumuman Berita','main','/images/menutree/folder.gif');
+      d.add(81, 80, 'Individu', '/post_individus/list', 'Pengumuman Individu','main');
+      d.add(82, 80, 'Kursus', '/post_courses/list', 'Pengumuman Kursus','main');
+      d.add(83, 80, 'Umum', '/posts/list', 'Pengumuman Umum','main');
 			
 		
-		d.add(0,-1,' eSPEK : Pengguna Luar');
+      d.add(0,-1,' eSPEK : Pengguna Luar');
 
-		d.add(150,0,'Lihat Profil','/profiles/view','','main','/images/menutree/folder.gif');
+      d.add(150,0,'Lihat Profil','/profiles/view','','main','/images/menutree/folder.gif');
 
-		document.write(d);
+      document.write(d);
 
-		d.o(0)
+      d.o(0)
 
-		//-->
-	</script> 
+      //-->
+    </script>
 
-</div>
-<br>
-<div align="center">
-| <a target="main" href="/profiles/edit_password">Tukar Kata Laluan</a> |
-</div>
+  </div>
+  <br>
+  <div align="center">
+    | <a target="main" href="/profiles/edit_password">Tukar Kata Laluan</a> |
+  </div>
 
-<br>
+  <br>
 </body></html>

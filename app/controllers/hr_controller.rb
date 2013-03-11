@@ -231,7 +231,8 @@ class HrController < ApplicationController
       @orderby = params[:orderby]
       params[:arrow] = "ASC" if !params[:arrow]
       @arrow = params[:arrow]
-	  
+	  logger.debug session[:user].profile.id
+	  logger.debug session[:user].profile.employments.size
       sql = "select v.* from vw_detailed_applicants_all v
 	         INNER JOIN employments e ON v.profile_id=e.profile_id
 			 WHERE course_implementation_id='#{@course_implementation.id}' 

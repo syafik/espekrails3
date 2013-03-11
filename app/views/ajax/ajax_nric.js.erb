@@ -1,0 +1,13 @@
+node_identification_memo = $("#node_identification_memo");
+<% if @ret == "1" %>
+  node_identification_memo.html('<%= "<br>&nbsp;<font color=orange> Data pemohon sudah ada.<br>&nbsp; Loading..</font>".html_safe %>')
+  document.forms[0].action = "/course_applications/new_but_peserta_already_exist?<%=@dr%>";
+  document.forms[0].method = 'get';
+  document.forms[0].submit();
+<% elsif @ret == "2" %>
+  node_identification_memo.html("<%= "<br>&nbsp;<font color=orange> Data pemohon telah memohon.<br>&nbsp; Loading..</font>".html_safe %>")
+  document.forms[0].action = "/course_applications/new";
+  document.forms[0].submit();
+<% else %>
+  node_identification_memo.html(<%= "<font color=orange><br>&nbsp; Data pemohon belum ada.</font>".html_safe %>')
+<% end %>

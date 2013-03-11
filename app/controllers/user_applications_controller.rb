@@ -64,6 +64,7 @@ class UserApplicationsController < ApplicationController
     @students = CourseApplication.find(:all, :conditions=>"profile_id = #{session[:user].profile.id} AND (#{t})",
       :order=>"date_apply DESC,student_status_id")
     @courses = Course.find(:all, :order=>"name")
+    render layout: "standard-layout"
   end
 
   def course_evaluation
@@ -86,7 +87,9 @@ class UserApplicationsController < ApplicationController
     @quiz = Quiz.find_by_course_implementation_id(@course_application.course_implementation_id) if @course_application
     @quiz_question = QuizQuestion.find_by_sql("SELECT * from quiz_questions where quiz_id = '#{@quiz.id}' order by id") if @quiz
     #@quiz_question = QuizQuestion.find_by_quiz_id(@quiz.id) if @quiz
-    if @quiz != nil
+    logger.info @quiz
+    logger.info @course_application.course_implementation_id
+    if !@quiz.nil?
       @quiz_answers = QuizAnswer.find_by_sql("SELECT * FROM quiz_answers WHERE quiz_question_id = '#{@quiz_question.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before' ORDER BY 1")
       @check = QuizAnswer.find(:first, :conditions=> "quiz_id='#{@quiz.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before'", :order => "quiz_question_id")
       #@check = QuizAnswer.find(:first, :conditions=> "quiz_question_id='#{@quiz_question.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before'")
@@ -240,6 +243,7 @@ class UserApplicationsController < ApplicationController
     @students = CourseApplication.find(:all, :conditions=>["profile_id = ? AND student_status_id = 2",session[:user].profile.id],
       :order=>"date_apply desc,student_status_id")
     @courses = Course.find(:all, :order=>"name")
+    render layout: "standard-layout"
   end
 
   def attend
@@ -271,10 +275,11 @@ class UserApplicationsController < ApplicationController
     today = Time.now
     @students = CourseApplication.where(
       :profile_id => session[:user].profile.id,
-      :student_status_id => s).joins(:course_implementation).where(["date_start <= ? AND date_end >= ? ",today, today ]).order("student_status_id,date_apply")
-#    @students = CourseApplication.where(
-#      :profile_id => 9861,
-#      :student_status_id => s).joins(:course_implementation=> :quizzes).where(["quizzes.timeopen >= ? AND quizzes.timeclose >= ? ",today, today ]).order("student_status_id,date_apply")
+      :student_status_id => s).joins(:course_implementation).where(["date_start >= ? AND date_end >= ? ",today, today ]).order("student_status_id,date_apply")
+    @students = CourseApplication.limit(4)
+    #    @students = CourseApplication.where(
+    #      :profile_id => 9861,
+    #      :student_status_id => s).joins(:course_implementation=> :quizzes).where(["quizzes.timeopen >= ? AND quizzes.timeclose >= ? ",today, today ]).order("student_status_id,date_apply")
 
     #    @students = []
     #    @students = @a
