@@ -8,26 +8,26 @@ function confirmAndDelete(url, objname) {
 
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 190;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width":190});
+    $('#popmenu').html("<ul>" +
                              //"<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
                              //"<li><a target=\"blank\" href=\""  + controller + "/cetak_surat_tawaran_user/" + objid + "\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
 			                 //"<hr size=1>" +
 			                 //"<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Pengesahan Kehadiran</font>" +
 			                 "<li><a href=\"javascript: cetakSuratTawaran(" + objid + ")\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
-					        "</ul>"
+					        "</ul>")
      
 }
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width":230});
+    $('#popmenu').html("<ul>" +
                              //"<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
                              //"<li><a target=\"blank\" href=\""  + controller + "/cetak_surat_tawaran_user/" + objid + "\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
 			                 //"<hr size=1>" +
 			                 //"<li><a href=\"javascript: sahHadirSelected(" + objid + ")\">&nbsp;&nbsp;Pengesahan Kehadiran</a>" +
 			                 "<li><a href=\"javascript: cetakSuratTawaran(" + objid + ")\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
-					       "</ul>"
+					       "</ul>")
      
 }
 

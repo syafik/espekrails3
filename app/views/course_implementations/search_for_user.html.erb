@@ -9,22 +9,22 @@ function confirmAndDelete(url, objname) {
 
 
 function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width" :150});
+    $('#popmenu').html("<ul>" +
 					       "<li><a href=\"" + controller + "/show_only_for_peserta/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
 					       "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Jadual Waktu</a>" + 
 					       "<li><a href=\""  + "/course_applications" + "/new_for_logged_in_user/" + objid + "\">&nbsp;&nbsp;Mohon</a>" + 
-					       "</ul>"
+					       "</ul>")
      
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
+    $('#popmenu').css({"width":150});
+    $('#popmenu').html("<ul>" +
 					       "<li><a href=\"" + controller + "/show_only_for_peserta/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
 					       "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Jadual Waktu</a>" + 
 					       "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Mohon</font>" + 
-					       "</ul>"
+					       "</ul>")
      
 }
 

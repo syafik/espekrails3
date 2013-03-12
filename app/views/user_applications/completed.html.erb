@@ -12,9 +12,9 @@ function JanaSuratTawaran(schedule_id) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 250;
-    $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+    $('#popmenu').css({"width":250});
+    $('#popmenu').html("<ul>" +
+                            "<li><a href=\""  + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					        //"<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
 					        //"<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
 					        "<hr size=1>" +
@@ -26,7 +26,7 @@ function rewritePopupContent(controller, objid, objname) {
                             //"<li><a href=\""  + controller + "/edit_surat_tawaran_select_peserta/" + "<%=@course_implementation.id if @course_implementation%>" + "\">&nbsp;&nbsp;Jana Surat Tawaran</a>" +
 					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Daftar</a>" +
 					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
-					        "</ul>"
+					        "</ul>")
 }
 </script>
 
