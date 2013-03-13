@@ -1,0 +1,4431 @@
+-
+  contact_id: 1
+  kod_lama: 2012210000
+  kod_baru: 201221
+  jabatan: Pejabat Daerah Johor Bahru
+-
+  contact_id: 2
+  kod_lama: 2012220000
+  kod_baru: 201222
+  jabatan: Pejabat Daerah Muar
+-
+  contact_id: 3
+  kod_lama: 2012230000
+  kod_baru: 201223
+  jabatan: Pejabat Daerah Batu Pahat
+-
+  contact_id: 4
+  kod_lama: 2012240000
+  kod_baru: 201224
+  jabatan: Pejabat Daerah Pontian
+-
+  contact_id: 5
+  kod_lama: 2012250000
+  kod_baru: 201225
+  jabatan: Pejabat Daerah Segamat
+-
+  contact_id: 6
+  kod_lama: 2012260000
+  kod_baru: 201226
+  jabatan: Pejabat Daerah Kluang
+-
+  contact_id: 7
+  kod_lama: 2012270000
+  kod_baru: 201227
+  jabatan: Pejabat Daerah Kota Tinggi
+-
+  contact_id: 8
+  kod_lama: 2012280000
+  kod_baru: 201228
+  jabatan: Pejabat Daerah Mersing
+-
+  contact_id: 9
+  kod_lama: 2012100000
+  kod_baru: 201210
+  jabatan: Pejabat Tanah Dan Galian Johor
+-
+  contact_id: 10
+  kod_lama: 2030000000
+  kod_baru: 203
+  jabatan: Pentadbiran Kerajaan Negeri Kelantan
+-
+  contact_id: 11
+  kod_lama: 2022080000
+  kod_baru: 202208
+  jabatan: Pejabat Pengarah Tanah dan Galian Negeri Kedah
+-
+  contact_id: 12
+  kod_lama: 1270000100
+  kod_baru: 148301
+  jabatan: Dewan Bandaraya Kuala Lumpur
+-
+  contact_id: 13
+  kod_lama: 1270000200
+  kod_baru: 148402
+  jabatan: Perbadanan Putrajaya
+-
+  contact_id: 14
+  kod_lama: 2042060000
+  kod_baru: 204206
+  jabatan: Pejabat Tanah dan Galian Negeri Melaka
+-
+  contact_id: 15
+  kod_lama: 2062050000
+  kod_baru: 206205
+  jabatan: Pejabat Tanah dan Galian Negeri Pahang
+-
+  contact_id: 16
+  kod_lama: 2102040000
+  kod_baru: 210204
+  jabatan: Pejabat Tanah dan Galian Negeri Selangor
+-
+  contact_id: 17
+  kod_lama: 2072060000
+  kod_baru: 207206
+  jabatan: Pejabat Tanah dan Galian Negeri Pulau Pinang
+-
+  contact_id: 18
+  kod_lama: 2022140000
+  kod_baru: 202214
+  jabatan: Pejabat Tanah Kubang Pasu
+-
+  contact_id: 19
+  kod_lama: 2022120000
+  kod_baru: 202212
+  jabatan: Pejabat Tanah Kulim
+-
+  contact_id: 20
+  kod_lama: 2022210000
+  kod_baru: 202221
+  jabatan: Pejabat Tanah Sik
+-
+  contact_id: 21
+  kod_lama: 2022260000
+  kod_baru: 202226
+  jabatan: Pejabat Tanah Bandar Baharu
+-
+  contact_id: 22
+  kod_lama: 2022250000
+  kod_baru: 202225
+  jabatan: Pejabat Tanah Langkawi
+-
+  contact_id: 23
+  kod_lama: 2022130000
+  kod_baru: 202213
+  jabatan: Pejabat Tanah Baling
+-
+  contact_id: 24
+  kod_lama: 2022110000
+  kod_baru: 202211
+  jabatan: Pejabat Tanah Kuala Muda
+-
+  contact_id: 25
+  kod_lama: 2022240000
+  kod_baru: 202224
+  jabatan: Pejabat Tanah Padang Terap
+-
+  contact_id: 26
+  kod_lama: 2022230000
+  kod_baru: 202223
+  jabatan: Pejabat Tanah Pendang
+-
+  contact_id: 27
+  kod_lama: 2022220000
+  kod_baru: 202222
+  jabatan: Pejabat Tanah Pokok Sena
+-
+  contact_id: 28
+  kod_lama: 2110010000
+  kod_baru: 211001
+  jabatan: Pejabat Menteri Besar
+-
+  contact_id: 29
+  kod_lama: 2110020000
+  kod_baru: 211002
+  jabatan: Pejabat Setiausaha Kerajaan Terengganu
+-
+  contact_id: 30
+  kod_lama: 2110030000
+  kod_baru: 211003
+  jabatan: Pejabat Setiausaha Sulit DYMM Sultan Terengganu
+-
+  contact_id: 31
+  kod_lama: 2112010000
+  kod_baru: 211201
+  jabatan: Pejabat Penasihat Undang-Undang Negeri
+-
+  contact_id: 32
+  kod_lama: 2112020000
+  kod_baru: 211202
+  jabatan: Pejabat Kewangan Negeri
+-
+  contact_id: 33
+  kod_lama: 2112040000
+  kod_baru: 211204
+  jabatan: Pejabat Perancang Bandar dan Desa
+-
+  contact_id: 34
+  kod_lama: 2112050000
+  kod_baru: 211205
+  jabatan: Pejabat Akauntan Negeri
+-
+  contact_id: 35
+  kod_lama: 2112060000
+  kod_baru: 211206
+  jabatan: Jabatan Hal Ehwal Agama
+-
+  contact_id: 36
+  kod_lama: 2112070000
+  kod_baru: 211207
+  jabatan: Jabatan Kehakiman Syariah Negeri Terengganu
+-
+  contact_id: 37
+  kod_lama: 2112080000
+  kod_baru: 211208
+  jabatan: Jabatan Kerja Raya Negeri Terengganu
+-
+  contact_id: 38
+  kod_lama: 2112030000
+  kod_baru: 211203
+  jabatan: Pejabat Pengarah Tanah dan Galian Negeri Terengganu
+-
+  contact_id: 39
+  kod_lama: 2112100000
+  kod_baru: 211210
+  jabatan: Jabatan Pertanian Negeri Terengganu
+-
+  contact_id: 40
+  kod_lama: 2112110000
+  kod_baru: 211211
+  jabatan: Jabatan Perhutanan Negeri Terengganu
+-
+  contact_id: 41
+  kod_lama: 2112120000
+  kod_baru: 211212
+  jabatan: Jabatan Perkhidmatan Haiwan
+-
+  contact_id: 42
+  kod_lama: 2112130000
+  kod_baru: 211213
+  jabatan: Jabatan Kebajikan Masyarakat Negeri Terengganu
+-
+  contact_id: 43
+  kod_lama: 2112140000
+  kod_baru: 211214
+  jabatan: Jabatan Mufti
+-
+  contact_id: 44
+  kod_lama: 2112150000
+  kod_baru: 211215
+  jabatan: Jabatan Bekalan Air Negeri Terengganu
+-
+  contact_id: 45
+  kod_lama: 2112170000
+  kod_baru: 211217
+  jabatan: Jabatan Galian Negeri
+-
+  contact_id: 46
+  kod_lama: 2100010000
+  kod_baru: 210001
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Selangor
+-
+  contact_id: 47
+  kod_lama: 2115010000
+  kod_baru: 211501
+  jabatan: Kolej Agama Sultan Zainal Abidin
+-
+  contact_id: 48
+  kod_lama: 2115020000
+  kod_baru: 211502
+  jabatan: Lembaga Muzium Negeri
+-
+  contact_id: 49
+  kod_lama: 2115030000
+  kod_baru: 211503
+  jabatan: Majlis Agama Islam Dan Adat Istiadat Melayu Terengganu
+-
+  contact_id: 50
+  kod_lama: 2115040000
+  kod_baru: 211504
+  jabatan: Perbadanan Memajukan Iktisad Negeri Terengganu
+-
+  contact_id: 51
+  kod_lama: 2115050000
+  kod_baru: 211505
+  jabatan: Perbadanan Perpustakaan Awam Terengganu
+-
+  contact_id: 52
+  kod_lama: 2115060000
+  kod_baru: 211506
+  jabatan: Yayasan Islam Terengganu
+-
+  contact_id: 53
+  kod_lama: 2115070000
+  kod_baru: 211507
+  jabatan: Yayasan Terengganu
+-
+  contact_id: 54
+  kod_lama: 2115080000
+  kod_baru: 211508
+  jabatan: Yayasan Pembangunan Usahawan
+-
+  contact_id: 55
+  kod_lama: 2115090000
+  kod_baru: 211509
+  jabatan: Yayasan Pembangunan Keluarga
+-
+  contact_id: 56
+  kod_lama: 2115100000
+  kod_baru: 211510
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri (PKEN)
+-
+  contact_id: 57
+  kod_lama: 2117010000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Kuala Terengganu
+-
+  contact_id: 58
+  kod_lama: 2117020000
+  kod_baru: 
+  jabatan: Majlis Daerah Besut
+-
+  contact_id: 59
+  kod_lama: 2117030000
+  kod_baru: 
+  jabatan: Majlis Daerah Setiu
+-
+  contact_id: 60
+  kod_lama: 2117040000
+  kod_baru: 
+  jabatan: Majlis Daerah Dungun
+-
+  contact_id: 61
+  kod_lama: 2117050000
+  kod_baru: 
+  jabatan: Majlis Daerah Hulu Terengganu
+-
+  contact_id: 62
+  kod_lama: 2117060000
+  kod_baru: 
+  jabatan: Majlis Daerah Kemaman
+-
+  contact_id: 63
+  kod_lama: 2117070000
+  kod_baru: 
+  jabatan: Majlis Daerah Marang
+-
+  contact_id: 64
+  kod_lama: 2102020000
+  kod_baru: 210202
+  jabatan: Pejabat Kewangan Negeri
+-
+  contact_id: 65
+  kod_lama: 2102030000
+  kod_baru: 210203
+  jabatan: Pejabat Penasihat Undang-Undang Negeri
+-
+  contact_id: 66
+  kod_lama: 2102230000
+  kod_baru: 210223
+  jabatan: Pejabat Daerah dan Tanah Hulu Selangor
+-
+  contact_id: 67
+  kod_lama: 2102050000
+  kod_baru: 210205
+  jabatan: Jabatan Perancangan Bandar dan Desa Negeri Selangor
+-
+  contact_id: 68
+  kod_lama: 2102060000
+  kod_baru: 210206
+  jabatan: Jabatan Agama Islam Selangor
+-
+  contact_id: 69
+  kod_lama: 2102070000
+  kod_baru: 210207
+  jabatan: Pejabat Mufti Negeri Selangor
+-
+  contact_id: 70
+  kod_lama: 2102080000
+  kod_baru: 210208
+  jabatan: Pejabat Suruhanjaya Perkhidmatan Awam Negeri Selangor
+-
+  contact_id: 71
+  kod_lama: 2102090000
+  kod_baru: 210209
+  jabatan: Mahkamah Tinggi Syariah Negeri Selangor
+-
+  contact_id: 72
+  kod_lama: 2102100000
+  kod_baru: 210210
+  jabatan: Jabatan Kerja Raya Negeri Selangor
+-
+  contact_id: 73
+  kod_lama: 2102130000
+  kod_baru: 210213
+  jabatan: Jabatan Pertanian Negeri Selangor
+-
+  contact_id: 74
+  kod_lama: 2102140000
+  kod_baru: 210214
+  jabatan: Jabatan Kebajikan Masyarakat Negeri Selangor
+-
+  contact_id: 75
+  kod_lama: 2102150000
+  kod_baru: 210215
+  jabatan: Jabatan Perkhidmatan Haiwan Negeri Selangor
+-
+  contact_id: 76
+  kod_lama: 2102160000
+  kod_baru: 210216
+  jabatan: Jabatan Bekalan Air Selangor
+-
+  contact_id: 77
+  kod_lama: 2102170000
+  kod_baru: 210217
+  jabatan: Jabatan Perikanan Negeri Selangor
+-
+  contact_id: 78
+  kod_lama: 2102190000
+  kod_baru: 210219
+  jabatan: Pejabat Daerah dan Tanah Petaling
+-
+  contact_id: 79
+  kod_lama: 2102240000
+  kod_baru: 210224
+  jabatan: Pejabat Daerah dan Tanah Sepang
+-
+  contact_id: 80
+  kod_lama: 2102250000
+  kod_baru: 210225
+  jabatan: Pejabat Daerah dan Tanah Sabak Bernam
+-
+  contact_id: 81
+  kod_lama: 2105010000
+  kod_baru: 210501
+  jabatan: Perbadanan Kemajuan Negeri Selangor (PKNS)
+-
+  contact_id: 82
+  kod_lama: 2105020000
+  kod_baru: 210502
+  jabatan: Perbadanan Kemajuan Pertanian Negeri Selangor (PKPS)
+-
+  contact_id: 83
+  kod_lama: 2105030000
+  kod_baru: 210503
+  jabatan: Perbadanan Muzium Negeri Selangor
+-
+  contact_id: 84
+  kod_lama: 2105040000
+  kod_baru: 210504
+  jabatan: Perbadanan Perpustakaan Negeri Selangor
+-
+  contact_id: 85
+  kod_lama: 2105050000
+  kod_baru: 210505
+  jabatan: Majlis Sukan Negeri (MSN)
+-
+  contact_id: 86
+  kod_lama: 2105060000
+  kod_baru: 210506
+  jabatan: Lembaga Urus Air Selangor (LUAS)
+-
+  contact_id: 87
+  kod_lama: 2105070000
+  kod_baru: 210507
+  jabatan: Majlis Agama Islam Negeri Selangor (MAIS)
+-
+  contact_id: 88
+  kod_lama: 2105080000
+  kod_baru: 210508
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri (PKEN)
+-
+  contact_id: 89
+  kod_lama: 2107010000
+  kod_baru: 
+  jabatan: Majlis Bandaraya Shah Alam
+-
+  contact_id: 90
+  kod_lama: 2107020000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Petaling Jaya
+-
+  contact_id: 91
+  kod_lama: 2107030000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Klang
+-
+  contact_id: 92
+  kod_lama: 2107040000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Ampang Jaya
+-
+  contact_id: 93
+  kod_lama: 2107050000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Subang Jaya
+-
+  contact_id: 94
+  kod_lama: 2107060000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Selayang
+-
+  contact_id: 95
+  kod_lama: 2107070000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Kajang
+-
+  contact_id: 96
+  kod_lama: 2107080000
+  kod_baru: 
+  jabatan: Majlis Daerah Kuala Selangor
+-
+  contact_id: 97
+  kod_lama: 2107090000
+  kod_baru: 
+  jabatan: Majlis Daerah Kuala Langat
+-
+  contact_id: 98
+  kod_lama: 2107100000
+  kod_baru: 
+  jabatan: Majlis Daerah Hulu Selangor
+-
+  contact_id: 99
+  kod_lama: 2107110000
+  kod_baru: 
+  jabatan: Majlis Daerah Sabak Bernam
+-
+  contact_id: 100
+  kod_lama: 2092030000
+  kod_baru: 209203
+  jabatan: Jabatan Pengairan dan Saliran Negeri Perlis
+-
+  contact_id: 101
+  kod_lama: 2092010000
+  kod_baru: 209201
+  jabatan: Pejabat Penasihat Undang-Undang Negeri
+-
+  contact_id: 102
+  kod_lama: 2092020000
+  kod_baru: 
+  jabatan: Pejabat Perbendaharaan Negeri Perlis
+-
+  contact_id: 103
+  kod_lama: 2092070000
+  kod_baru: 
+  jabatan: Jabatan Tanah dan Galian Negeri Perlis
+-
+  contact_id: 104
+  kod_lama: 2092040000
+  kod_baru: 
+  jabatan: Jabatan Kebajikan Masyarakat Negeri Perlis
+-
+  contact_id: 105
+  kod_lama: 2092050000
+  kod_baru: 
+  jabatan: Jabatan Perancangan Bandar dan Desa Negeri Perlis
+-
+  contact_id: 106
+  kod_lama: 2092060000
+  kod_baru: 
+  jabatan: Pejabat Pembangunan Negeri Perlis
+-
+  contact_id: 107
+  kod_lama: 2080030000
+  kod_baru: 
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Perak
+-
+  contact_id: 108
+  kod_lama: 2092080000
+  kod_baru: 
+  jabatan: Jabatan Kerja Raya Negeri Perlis
+-
+  contact_id: 109
+  kod_lama: 2092090000
+  kod_baru: 
+  jabatan: Jabatan Perkhidmatan Haiwan Negeri Perlis
+-
+  contact_id: 110
+  kod_lama: 2092100000
+  kod_baru: 
+  jabatan: Jabatan Hal Ehwal Agama Islam Negeri Perlis
+-
+  contact_id: 111
+  kod_lama: 2092110000
+  kod_baru: 
+  jabatan: Jabatan Mufti Negeri Perlis
+-
+  contact_id: 112
+  kod_lama: 2092120000
+  kod_baru: 
+  jabatan: Mahkamah Syariah Negeri Perlis
+-
+  contact_id: 113
+  kod_lama: 2092130000
+  kod_baru: 
+  jabatan: Jabatan Pertanian Negeri Perlis
+-
+  contact_id: 114
+  kod_lama: 2092140000
+  kod_baru: 
+  jabatan: Jabatan Perhutanan Negeri Perlis
+-
+  contact_id: 115
+  kod_lama: 2092150000
+  kod_baru: 
+  jabatan: Pejabat DYMM Tuanku Raja Perlis
+-
+  contact_id: 116
+  kod_lama: 2092160000
+  kod_baru: 
+  jabatan: Pejabat Keselamatan Kerajaan Perlis
+-
+  contact_id: 117
+  kod_lama: 2095010000
+  kod_baru: 
+  jabatan: Yayasan Islam Negeri Perlis
+-
+  contact_id: 118
+  kod_lama: 2095020000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri Perlis (PKEN)
+-
+  contact_id: 119
+  kod_lama: 2095030000
+  kod_baru: 
+  jabatan: Baitulmal Negeri Perlis
+-
+  contact_id: 120
+  kod_lama: 2095040000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam Negeri Perlis
+-
+  contact_id: 121
+  kod_lama: 2095050000
+  kod_baru: 
+  jabatan: Pejabat Biro Bernama Negeri Perlis
+-
+  contact_id: 122
+  kod_lama: 2097010000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Kangar
+-
+  contact_id: 123
+  kod_lama: 2080010000
+  kod_baru: 
+  jabatan: Pejabat DYMM Sultan Perak
+-
+  contact_id: 124
+  kod_lama: 2080020000
+  kod_baru: 
+  jabatan: Pejabat YAB Menteri Besar
+-
+  contact_id: 125
+  kod_lama: 2082010000
+  kod_baru: 
+  jabatan: Pejabat Penasihat Undang-Undang Negeri
+-
+  contact_id: 126
+  kod_lama: 2082020000
+  kod_baru: 
+  jabatan: Pejabat Kewangan Negeri Perak
+-
+  contact_id: 127
+  kod_lama: 2082030000
+  kod_baru: 
+  jabatan: Perbendaharaan Negeri Perak
+-
+  contact_id: 128
+  kod_lama: 2082040000
+  kod_baru: 
+  jabatan: Pejabat Pembangunan Negeri Perak
+-
+  contact_id: 129
+  kod_lama: 2082050000
+  kod_baru: 
+  jabatan: Pejabat Pengarah Keselamatan Negara
+-
+  contact_id: 130
+  kod_lama: 2082070000
+  kod_baru: 
+  jabatan: Jabatan Agama Islam Perak
+-
+  contact_id: 131
+  kod_lama: 2082080000
+  kod_baru: 
+  jabatan: Pejabat Mufti Negeri Perak
+-
+  contact_id: 132
+  kod_lama: 2082090000
+  kod_baru: 
+  jabatan: Jabatan Kehakiman Syariah Negeri Perak
+-
+  contact_id: 133
+  kod_lama: 2082100000
+  kod_baru: 
+  jabatan: Jabatan Kerja Raya
+-
+  contact_id: 134
+  kod_lama: 2082110000
+  kod_baru: 
+  jabatan: Suruhanjaya Perkhidmatan Awam
+-
+  contact_id: 135
+  kod_lama: 2082060000
+  kod_baru: 
+  jabatan: Pejabat Pengarah Tanah dan Galian Perak
+-
+  contact_id: 136
+  kod_lama: 2082140000
+  kod_baru: 
+  jabatan: Jabatan Pertanian Negeri Perak
+-
+  contact_id: 137
+  kod_lama: 2082150000
+  kod_baru: 
+  jabatan: Jabatan Perancangan Bandar dan Desa Perak
+-
+  contact_id: 138
+  kod_lama: 2082160000
+  kod_baru: 
+  jabatan: Jabatan Kebajikan Masyarakat Negeri Perak
+-
+  contact_id: 139
+  kod_lama: 2082170000
+  kod_baru: 
+  jabatan: Jabatan Perkhidmatan Haiwan Negeri Perak
+-
+  contact_id: 140
+  kod_lama: 2085010000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri Perak (PKEN)
+-
+  contact_id: 141
+  kod_lama: 2085020000
+  kod_baru: 
+  jabatan: Perbadanan Pembangunan Pertanian Negeri Perak
+-
+  contact_id: 142
+  kod_lama: 2085030000
+  kod_baru: 
+  jabatan: Yayasan Perak
+-
+  contact_id: 143
+  kod_lama: 2085040000
+  kod_baru: 
+  jabatan: Lembaga Air Perak
+-
+  contact_id: 144
+  kod_lama: 2085050000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Islam Negeri Perak
+-
+  contact_id: 145
+  kod_lama: 2085060000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam Negeri Perak
+-
+  contact_id: 146
+  kod_lama: 2085070000
+  kod_baru: 
+  jabatan: Yayasan Basmi Kemiskinan Negeri Perak
+-
+  contact_id: 147
+  kod_lama: 2085080000
+  kod_baru: 
+  jabatan: Majlis Agama Islam & Adat Melayu Perak
+-
+  contact_id: 148
+  kod_lama: 2087010000
+  kod_baru: 
+  jabatan: Dewan Bandaraya Ipoh
+-
+  contact_id: 149
+  kod_lama: 2087020000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Taiping
+-
+  contact_id: 150
+  kod_lama: 2087030000
+  kod_baru: 
+  jabatan: Majlis Daerah Manjung
+-
+  contact_id: 151
+  kod_lama: 2087040000
+  kod_baru: 
+  jabatan: Majlis Daerah Perak Tengah
+-
+  contact_id: 152
+  kod_lama: 2087050000
+  kod_baru: 
+  jabatan: Majlis Daerah Kuala Kangsar
+-
+  contact_id: 153
+  kod_lama: 2087060000
+  kod_baru: 
+  jabatan: Majlis Daerah Selama
+-
+  contact_id: 154
+  kod_lama: 2087090000
+  kod_baru: 
+  jabatan: Majlis Daerah Gerik
+-
+  contact_id: 155
+  kod_lama: 2087100000
+  kod_baru: 
+  jabatan: Majlis Daerah Lenggong
+-
+  contact_id: 156
+  kod_lama: 2087110000
+  kod_baru: 
+  jabatan: Majlis Daerah Tapah
+-
+  contact_id: 157
+  kod_lama: 2087120000
+  kod_baru: 
+  jabatan: Majlis Daerah Pengkalan Hulu
+-
+  contact_id: 158
+  kod_lama: 2087130000
+  kod_baru: 
+  jabatan: Majlis Daerah Tanjung Malim
+-
+  contact_id: 159
+  kod_lama: 2087140000
+  kod_baru: 
+  jabatan: Majlis Daerah Hilir Perak
+-
+  contact_id: 160
+  kod_lama: 2087150000
+  kod_baru: 
+  jabatan: Majlis Daerah Kerian
+-
+  contact_id: 161
+  kod_lama: 2072010000
+  kod_baru: 207201
+  jabatan: Jabatan Kewangan Negeri Pulau Pinang
+-
+  contact_id: 162
+  kod_lama: 2072020000
+  kod_baru: 207202
+  jabatan: Jabatan Kerja Raya Negeri Pulau Pinang
+-
+  contact_id: 163
+  kod_lama: 2072030000
+  kod_baru: 270203
+  jabatan: Jabatan Pengairan dan Saliran Negeri Pulau Pinang
+-
+  contact_id: 164
+  kod_lama: 2072040000
+  kod_baru: 207204
+  jabatan: Jabatan Bekalan Air Negeri Pulau Pinang
+-
+  contact_id: 165
+  kod_lama: 2072050000
+  kod_baru: 207205
+  jabatan: Jabatan Kehakiman Syariah Negeri Pulau Pinang
+-
+  contact_id: 166
+  kod_lama: 1411010013
+  kod_baru: 
+  jabatan: Seksyen Perundangan Kadaster
+-
+  contact_id: 167
+  kod_lama: 2072070000
+  kod_baru: 207207
+  jabatan: Pejabat Mufti Negeri Pulau Pinang
+-
+  contact_id: 168
+  kod_lama: 2087070000
+  kod_baru: 
+  jabatan: Majlis Daerah Batu Gajah
+-
+  contact_id: 169
+  kod_lama: 2060020000
+  kod_baru: 
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Pahang
+-
+  contact_id: 170
+  kod_lama: 2070010000
+  kod_baru: 207222
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Pulau Pinang
+-
+  contact_id: 171
+  kod_lama: 2072140000
+  kod_baru: 207214
+  jabatan: Jabatan Perancangan Bandar dan Desa Negeri Pulau Pinang
+-
+  contact_id: 172
+  kod_lama: 2072150000
+  kod_baru: 207215
+  jabatan: Jabatan Kebajikan Masyarakat Negeri Pulau Pinang
+-
+  contact_id: 173
+  kod_lama: 2072160000
+  kod_baru: 207216
+  jabatan: Jabatan Pertanian Negeri Pulau Pinang
+-
+  contact_id: 174
+  kod_lama: 2072170000
+  kod_baru: 207217
+  jabatan: Jabatan Perkhidmatan Veterinar Negeri Pulau Pinang
+-
+  contact_id: 175
+  kod_lama: 2072180000
+  kod_baru: 207218
+  jabatan: Pejabat Taman Dan Kebun Bunga Negeri Pulau Pinang
+-
+  contact_id: 176
+  kod_lama: 2072190000
+  kod_baru: 207219
+  jabatan: Jabatan Kedai-Kedai Tuak Negeri Pulau Pinang
+-
+  contact_id: 177
+  kod_lama: 2072200000
+  kod_baru: 207220
+  jabatan: Jabatan Perhutanan Negeri Pulau Pinang
+-
+  contact_id: 178
+  kod_lama: 2072210000
+  kod_baru: 207221
+  jabatan: Pejabat Tuan Yang Terutama Yang DiPertua Negeri Pulau Pinang
+-
+  contact_id: 179
+  kod_lama: 2075010000
+  kod_baru: 207501
+  jabatan: Perbadanan Pembangunan Pulau Pinang
+-
+  contact_id: 180
+  kod_lama: 2075020000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam
+-
+  contact_id: 181
+  kod_lama: 2075030000
+  kod_baru: 207503
+  jabatan: Lembaga Muzium Negeri
+-
+  contact_id: 182
+  kod_lama: 2075040000
+  kod_baru: 207504
+  jabatan: Majlis Agama Islam Pulau Pinang
+-
+  contact_id: 183
+  kod_lama: 2075050000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri (PKEN)
+-
+  contact_id: 184
+  kod_lama: 2077010000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Pulau Pinang
+-
+  contact_id: 185
+  kod_lama: 2077020000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Seberang Perai
+-
+  contact_id: 186
+  kod_lama: 2060010000
+  kod_baru: 
+  jabatan: Pejabat Menteri Besar
+-
+  contact_id: 187
+  kod_lama: 2062010000
+  kod_baru: 
+  jabatan: Pejabat Mufti Negeri Pahang
+-
+  contact_id: 188
+  kod_lama: 2062020000
+  kod_baru: 
+  jabatan: Jabatan Kehakiman Syariah Negeri Pahang
+-
+  contact_id: 189
+  kod_lama: 2062030000
+  kod_baru: 
+  jabatan: Pejabat Kewangan dan Perbendaharaan Negeri Pahang
+-
+  contact_id: 190
+  kod_lama: 2062040000
+  kod_baru: 
+  jabatan: Jabatan Kerja Raya Negeri Pahang
+-
+  contact_id: 191
+  kod_lama: 2062060000
+  kod_baru: 
+  jabatan: Pejabat Perhutanan Negeri Pahang
+-
+  contact_id: 192
+  kod_lama: 2062070000
+  kod_baru: 
+  jabatan: Pejabat Pertanian Negeri Pahang
+-
+  contact_id: 193
+  kod_lama: 2062080000
+  kod_baru: 
+  jabatan: Jabatan Pengairan Dan Saliran Negeri Pahang
+-
+  contact_id: 194
+  kod_lama: 2062090000
+  kod_baru: 
+  jabatan: Pejabat Galian Negeri Pahang
+-
+  contact_id: 195
+  kod_lama: 2062100000
+  kod_baru: 
+  jabatan: Pejabat Perancang Bandar dan Desa Negeri Pahang
+-
+  contact_id: 196
+  kod_lama: 2062110000
+  kod_baru: 
+  jabatan: Jabatan Perkhidmatan Haiwan Negeri Pahang
+-
+  contact_id: 197
+  kod_lama: 2062120000
+  kod_baru: 
+  jabatan: Jabatan Hal Ehwal Agama Islam Negeri Pahang
+-
+  contact_id: 198
+  kod_lama: 2062130000
+  kod_baru: 
+  jabatan: Jabatan Bekalan Air Negeri Pahang
+-
+  contact_id: 199
+  kod_lama: 2062140000
+  kod_baru: 
+  jabatan: Jabatan Kebajikan Masyarakat Negeri Pahang
+-
+  contact_id: 200
+  kod_lama: 2062150000
+  kod_baru: 
+  jabatan: Pejabat KDYMM Sultan Pahang
+-
+  contact_id: 201
+  kod_lama: 2062160000
+  kod_baru: 
+  jabatan: Suruhanjaya Perkhidmatan Awam Negeri Pahang
+-
+  contact_id: 202
+  kod_lama: 2062250000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Rompin
+-
+  contact_id: 203
+  kod_lama: 2065010000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Negeri Pahang
+-
+  contact_id: 204
+  kod_lama: 2065020000
+  kod_baru: 
+  jabatan: Lembaga Kemajuan Perusahaan Pertanian Negeri Pahang
+-
+  contact_id: 205
+  kod_lama: 2065030000
+  kod_baru: 
+  jabatan: Yayasan Pahang
+-
+  contact_id: 206
+  kod_lama: 2065040000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Bukit Fraser
+-
+  contact_id: 207
+  kod_lama: 2065050000
+  kod_baru: 
+  jabatan: Majlis Agama Islam dan Adat Resam Melayu Negeri Pahang
+-
+  contact_id: 208
+  kod_lama: 2065060000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam Negeri Pahang
+-
+  contact_id: 209
+  kod_lama: 2065070000
+  kod_baru: 
+  jabatan: Lembaga Muzium Negeri Pahang
+-
+  contact_id: 210
+  kod_lama: 2065080000
+  kod_baru: 
+  jabatan: Perbadanan Stadium Darul Makmur
+-
+  contact_id: 211
+  kod_lama: 2065090000
+  kod_baru: 
+  jabatan: Kolej Islam Pahang
+-
+  contact_id: 212
+  kod_lama: 2065100000
+  kod_baru: 
+  jabatan: Lembaga Kemajuan Wilayah Jengka
+-
+  contact_id: 213
+  kod_lama: 2065110000
+  kod_baru: 
+  jabatan: Amanah Saham Pahang
+-
+  contact_id: 214
+  kod_lama: 2065120000
+  kod_baru: 
+  jabatan: Yayasan Basmi Kemiskinan Pahang
+-
+  contact_id: 215
+  kod_lama: 2065130000
+  kod_baru: 
+  jabatan: Pusat Pembangunan dan Kemahiran Pahang
+-
+  contact_id: 216
+  kod_lama: 2065140000
+  kod_baru: 
+  jabatan: Lembaga Pembangunan Tioman
+-
+  contact_id: 217
+  kod_lama: 2065150000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri (PKEN)
+-
+  contact_id: 218
+  kod_lama: 2067010000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Kuantan
+-
+  contact_id: 219
+  kod_lama: 2067020000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Temerloh
+-
+  contact_id: 220
+  kod_lama: 2067030000
+  kod_baru: 
+  jabatan: Majlis Daerah Bentong
+-
+  contact_id: 221
+  kod_lama: 2067040000
+  kod_baru: 
+  jabatan: Majlis Daerah Pekan
+-
+  contact_id: 222
+  kod_lama: 2067050000
+  kod_baru: 
+  jabatan: Majlis Daerah Lipis
+-
+  contact_id: 223
+  kod_lama: 2067060000
+  kod_baru: 
+  jabatan: Majlis Daerah Cameron Highlands
+-
+  contact_id: 224
+  kod_lama: 2067070000
+  kod_baru: 
+  jabatan: Majlis Daerah Raub
+-
+  contact_id: 225
+  kod_lama: 2067080000
+  kod_baru: 
+  jabatan: Majlis Daerah Bera
+-
+  contact_id: 226
+  kod_lama: 2067100000
+  kod_baru: 
+  jabatan: Majlis Daerah Rompin
+-
+  contact_id: 227
+  kod_lama: 2067110000
+  kod_baru: 
+  jabatan: Majlis Daerah Jerantut
+-
+  contact_id: 228
+  kod_lama: 2055010000
+  kod_baru: 
+  jabatan: Yayasan Negeri Sembilan
+-
+  contact_id: 229
+  kod_lama: 2055020000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Negeri Sembilan
+-
+  contact_id: 230
+  kod_lama: 2055030000
+  kod_baru: 
+  jabatan: Majlis Agama Islam Negeri Sembilan
+-
+  contact_id: 231
+  kod_lama: 2055040000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam Negeri Sembilan
+-
+  contact_id: 232
+  kod_lama: 2055050000
+  kod_baru: 
+  jabatan: Lembaga Muzium Negeri Sembilan
+-
+  contact_id: 233
+  kod_lama: 2055060000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri (PKEN)
+-
+  contact_id: 234
+  kod_lama: 2057010000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Seremban
+-
+  contact_id: 235
+  kod_lama: 2057020000
+  kod_baru: 
+  jabatan: Majlis Daerah Seremban
+-
+  contact_id: 236
+  kod_lama: 2057030000
+  kod_baru: 
+  jabatan: Majlis Daerah Kuala Pilah
+-
+  contact_id: 237
+  kod_lama: 2057040000
+  kod_baru: 
+  jabatan: Majlis Daerah Tampin
+-
+  contact_id: 238
+  kod_lama: 2057050000
+  kod_baru: 
+  jabatan: Majlis Daerah Port Dickson
+-
+  contact_id: 239
+  kod_lama: 2057060000
+  kod_baru: 
+  jabatan: Majlis Daerah Jelebu
+-
+  contact_id: 240
+  kod_lama: 2057070000
+  kod_baru: 
+  jabatan: Majlis Daerah Rembau
+-
+  contact_id: 241
+  kod_lama: 2057080000
+  kod_baru: 
+  jabatan: Majlis Daerah Jempol
+-
+  contact_id: 242
+  kod_lama: 2032120000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Bachok
+-
+  contact_id: 243
+  kod_lama: 2030020000
+  kod_baru: 
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Kelantan
+-
+  contact_id: 244
+  kod_lama: 2090010000
+  kod_baru: 
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Perlis
+-
+  contact_id: 245
+  kod_lama: 1011060000
+  kod_baru: 481201/101106
+  jabatan: Suruhanjaya Perkhidmatan Awam (SPA)
+-
+  contact_id: 246
+  kod_lama: 1
+  kod_baru: 
+  jabatan: JABATAN BIOKESELAMATAN
+-
+  contact_id: 247
+  kod_lama: 1011040000
+  kod_baru: 101104
+  jabatan: Jabatan Audit Negara
+-
+  contact_id: 248
+  kod_lama: 1011320000
+  kod_baru: 101132
+  jabatan: Mahkamah Syariah Wilayah Persekutuan (MSWP)
+-
+  contact_id: 249
+  kod_lama: 1010110000
+  kod_baru: 148104
+  jabatan: Pejabat Tanah Dan Galian Wilayah Persekutuan (PTG WP)
+-
+  contact_id: 250
+  kod_lama: 2022360000
+  kod_baru: 
+  jabatan: Pejabat Daerah Baling
+-
+  contact_id: 251
+  kod_lama: 2022330000
+  kod_baru: 
+  jabatan: Pejabat Daerah Kota Setar
+-
+  contact_id: 252
+  kod_lama: 2042190000
+  kod_baru: 
+  jabatan: Pajabat Daerah dan Tanah Jasin
+-
+  contact_id: 253
+  kod_lama: 2022370000
+  kod_baru: 
+  jabatan: Pejabat Daerah Kubang Pasu
+-
+  contact_id: 254
+  kod_lama: 2022350000
+  kod_baru: 
+  jabatan: Pejabat Daerah Kulim
+-
+  contact_id: 255
+  kod_lama: 2022400000
+  kod_baru: 
+  jabatan: Pejabat Daerah Pendang
+-
+  contact_id: 256
+  kod_lama: 1011050000
+  kod_baru: 101105
+  jabatan: Suruhanjaya Pilihanraya (SPR)
+-
+  contact_id: 257
+  kod_lama: 2082330000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Daerah Kecil Sungai Siput
+-
+  contact_id: 258
+  kod_lama: 123456
+  kod_baru: 
+  jabatan: Jabatan Bomba dan Penyelamat Malaysia Negeri Kedah
+-
+  contact_id: 259
+  kod_lama: 1011070000
+  kod_baru: 101107
+  jabatan: Suruhanjaya Perkhidmatan Pendidikan (SPP)
+-
+  contact_id: 260
+  kod_lama: 1011090000
+  kod_baru: 101109
+  jabatan: Jabatan Perangkaan Malaysia
+-
+  contact_id: 261
+  kod_lama: 1001
+  kod_baru: 
+  jabatan: Pejabat Pentadbir Tanah dan Galian Wilayah Persekutuan
+-
+  contact_id: 262
+  kod_lama: 1011130000
+  kod_baru: 101111
+  jabatan: Badan Pencegah Rasuah (BPR)
+-
+  contact_id: 263
+  kod_lama: 1011240000
+  kod_baru: 
+  jabatan: Bahagian Istiadat Dan Urusetia Persidangan Antarabangsa
+-
+  contact_id: 264
+  kod_lama: 1010170000
+  kod_baru: 
+  jabatan: Bahagian Kabinet
+-
+  contact_id: 265
+  kod_lama: 1011190000
+  kod_baru: 101119
+  jabatan: Bahagian Keselamatan Negara (BKN)
+-
+  contact_id: 266
+  kod_lama: 1011250000
+  kod_baru: 
+  jabatan: Bahagian Pengurusan Hartanah (BPH)
+-
+  contact_id: 267
+  kod_lama: 1011180000
+  kod_baru: 101118
+  jabatan: Bahagian Penyelidikan
+-
+  contact_id: 268
+  kod_lama: 1011030000
+  kod_baru: 101103
+  jabatan: Istana Negara
+-
+  contact_id: 269
+  kod_lama: 1011300000
+  kod_baru: 101130
+  jabatan: Jabatan Kehakiman Syariah Malaysia (JKSM)
+-
+  contact_id: 270
+  kod_lama: 1011350000
+  kod_baru: 101135
+  jabatan: Jabatan Agama Islam Wilayah Persekutuan (JAWI)
+-
+  contact_id: 271
+  kod_lama: 1011380000
+  kod_baru: 101138
+  jabatan: Jabatan Perpaduan Negara Dan Integrasi Nasional
+-
+  contact_id: 272
+  kod_lama: 1011010000
+  kod_baru: 101101
+  jabatan: Parlimen
+-
+  contact_id: 273
+  kod_lama: 1011120000
+  kod_baru: 101112
+  jabatan: Pejabat Ketua Pendaftar Mahkamah Persekutuan
+-
+  contact_id: 274
+  kod_lama: 1011290000
+  kod_baru: 
+  jabatan: Pejabat Mufti Wilayah Persekutuan
+-
+  contact_id: 275
+  kod_lama: 1011020000
+  kod_baru: 101102
+  jabatan: Pejabat Penyimpan Mohor Besar Raja-Raja
+-
+  contact_id: 276
+  kod_lama: 1011220000
+  kod_baru: 101122
+  jabatan: Pejabat Setiausaha Persekutuan Sabah
+-
+  contact_id: 277
+  kod_lama: 1011230000
+  kod_baru: 101123
+  jabatan: Pejabat Setiausaha Persekutuan Sarawak
+-
+  contact_id: 278
+  kod_lama: 1011310000
+  kod_baru: 101131
+  jabatan: Pejabat Ketua Pegawai Keselamatan Kerajaan
+-
+  contact_id: 279
+  kod_lama: 1011400000
+  kod_baru: 101140/101407
+  jabatan: Suruhanjaya Hak Asasi Manusia (SUHAKAM)
+-
+  contact_id: 280
+  kod_lama: 1011160000
+  kod_baru: 101116
+  jabatan: Unit Penyelarasan Pelaksanaan (UPP)
+-
+  contact_id: 281
+  kod_lama: 1011210000
+  kod_baru: 101121
+  jabatan: Lembaga Penasihat
+-
+  contact_id: 282
+  kod_lama: 1411019900
+  kod_baru: 
+  jabatan: Lain-lain Pejabat
+-
+  contact_id: 283
+  kod_lama: 1411040100
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Johor
+-
+  contact_id: 284
+  kod_lama: 1411040200
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Kedah/Perlis/Pulau Pinang
+-
+  contact_id: 285
+  kod_lama: 1411040300
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Kelantan
+-
+  contact_id: 286
+  kod_lama: 1411040400
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Negeri Sembilan / Melaka
+-
+  contact_id: 287
+  kod_lama: 2082290000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Perak Tengah
+-
+  contact_id: 288
+  kod_lama: 1411040800
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Perak
+-
+  contact_id: 289
+  kod_lama: 1411041000
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Selangor / WP Kuala Lumpur
+-
+  contact_id: 290
+  kod_lama: 1411041100
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Terengganu
+-
+  contact_id: 291
+  kod_lama: 1411041200
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Sabah
+-
+  contact_id: 292
+  kod_lama: 1411041300
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Sarawak
+-
+  contact_id: 293
+  kod_lama: 1411061000
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Selangor
+-
+  contact_id: 294
+  kod_lama: 1411040600
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Pahang
+-
+  contact_id: 295
+  kod_lama: 2022340000
+  kod_baru: 
+  jabatan: Pejabat Daerah Kuala Muda
+-
+  contact_id: 296
+  kod_lama: 1411061300
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Sarawak
+-
+  contact_id: 297
+  kod_lama: 1230000000
+  kod_baru: 123
+  jabatan: Kementerian Kesihatan Malaysia
+-
+  contact_id: 298
+  kod_lama: 2012090000
+  kod_baru: 
+  jabatan: Jabatan Perancangan Bandar Dan Desa
+-
+  contact_id: 299
+  kod_lama: 2022430000
+  kod_baru: 
+  jabatan: Pejabat Daerah Bandar Baharu
+-
+  contact_id: 300
+  kod_lama: 2022420000
+  kod_baru: 
+  jabatan: Pejabat Daerah Langkawi
+-
+  contact_id: 301
+  kod_lama: 2022410000
+  kod_baru: 
+  jabatan: Pejabat Daerah Padang Terap
+-
+  contact_id: 302
+  kod_lama: 2022390000
+  kod_baru: 
+  jabatan: Pejabat Daerah Sik
+-
+  contact_id: 303
+  kod_lama: 2022380000
+  kod_baru: 
+  jabatan: Pejabat Daerah Yan
+-
+  contact_id: 304
+  kod_lama: 2082220000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Batang Padang
+-
+  contact_id: 305
+  kod_lama: 2082260000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Hulu Perak
+-
+  contact_id: 306
+  kod_lama: 1411061100
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Terengganu
+-
+  contact_id: 307
+  kod_lama: 2082350000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kerian
+-
+  contact_id: 308
+  kod_lama: 2082200000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kinta Barat
+-
+  contact_id: 309
+  kod_lama: 3660000000
+  kod_baru: 366
+  jabatan: Kementerian Kerajaan Tempatan dan Perumahan Sabah
+-
+  contact_id: 310
+  kod_lama: 2082120000
+  kod_baru: 
+  jabatan: Jabatan Perhutanan Negeri Perak
+-
+  contact_id: 311
+  kod_lama: 2082130000
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Negeri Perak
+-
+  contact_id: 312
+  kod_lama: 2102110000
+  kod_baru: 
+  jabatan: Jabatan Perhutanan
+-
+  contact_id: 313
+  kod_lama: 1411060100
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Johor
+-
+  contact_id: 314
+  kod_lama: 2102120000
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Negeri Selangor
+-
+  contact_id: 315
+  kod_lama: 1411060200
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Kedah
+-
+  contact_id: 316
+  kod_lama: 1411060300
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Kelantan
+-
+  contact_id: 317
+  kod_lama: 1411060400
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Melaka
+-
+  contact_id: 318
+  kod_lama: 1411060500
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Negeri Sembilan
+-
+  contact_id: 319
+  kod_lama: 1411060600
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Pahang
+-
+  contact_id: 320
+  kod_lama: 1411060800
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Perak
+-
+  contact_id: 321
+  kod_lama: 1411060900
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Perlis
+-
+  contact_id: 322
+  kod_lama: 1411060700
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Pulau Pinang
+-
+  contact_id: 323
+  kod_lama: 1411061200
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar Sabah
+-
+  contact_id: 324
+  kod_lama: 1411010302
+  kod_baru: 
+  jabatan: Pejabat Ukur Jajahan Kelantan Barat
+-
+  contact_id: 325
+  kod_lama: 2082250000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Hilir Perak
+-
+  contact_id: 326
+  kod_lama: 1411010202
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Kedah Tengah
+-
+  contact_id: 327
+  kod_lama: 1411010801
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Perak Tengah & Kinta
+-
+  contact_id: 328
+  kod_lama: 1411010101
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Johor Utara
+-
+  contact_id: 329
+  kod_lama: 1411010102
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Johor Timur
+-
+  contact_id: 330
+  kod_lama: 1411010103
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Johor Tengah
+-
+  contact_id: 331
+  kod_lama: 1411010201
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Kedah Utara
+-
+  contact_id: 332
+  kod_lama: 1411010301
+  kod_baru: 
+  jabatan: Pejabat Ukur Jajahan Kelantan Timur
+-
+  contact_id: 333
+  kod_lama: 1411010303
+  kod_baru: 
+  jabatan: Pejabat Ukur Jajahan Kelantan Selatan
+-
+  contact_id: 334
+  kod_lama: 1411010501
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Negeri Sembilan Barat
+-
+  contact_id: 335
+  kod_lama: 1411010502
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Negeri Sembilan Timur
+-
+  contact_id: 336
+  kod_lama: 1411010601
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Pahang Barat
+-
+  contact_id: 337
+  kod_lama: 1411010602
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Pahang Tengah
+-
+  contact_id: 338
+  kod_lama: 1411010603
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Pahang Selatan
+-
+  contact_id: 339
+  kod_lama: 1411010701
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah
+-
+  contact_id: 340
+  kod_lama: 1411010802
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Perak Utara
+-
+  contact_id: 341
+  kod_lama: 1411010803
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Kuala Kangsar dan Manjung
+-
+  contact_id: 342
+  kod_lama: 1411010804
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Perak Selatan
+-
+  contact_id: 343
+  kod_lama: 1411011001
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Selangor Timur
+-
+  contact_id: 344
+  kod_lama: 1411011002
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Selangor Barat
+-
+  contact_id: 345
+  kod_lama: 1411011101
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Terengganu Tengah
+-
+  contact_id: 346
+  kod_lama: 1411011102
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Terengganu Utara
+-
+  contact_id: 347
+  kod_lama: 1411011103
+  kod_baru: 
+  jabatan: Pejabat Ukur Daerah Terengganu Selatan
+-
+  contact_id: 348
+  kod_lama: 2082310000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Selama
+-
+  contact_id: 349
+  kod_lama: 2082230000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Slim River
+-
+  contact_id: 350
+  kod_lama: 2072090000
+  kod_baru: 207209
+  jabatan: Pejabat Daerah Seberang Perai Tengah
+-
+  contact_id: 351
+  kod_lama: 2072120000
+  kod_baru: 207212
+  jabatan: Pejabat Daerah Timur Laut
+-
+  contact_id: 352
+  kod_lama: 2062260000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Cameron Highlands
+-
+  contact_id: 353
+  kod_lama: 2072110000
+  kod_baru: 207211
+  jabatan: Pejabat Daerah Seberang Perai Selatan
+-
+  contact_id: 354
+  kod_lama: 2072100000
+  kod_baru: 207210
+  jabatan: Pejabat Daerah Seberang Perai Utara
+-
+  contact_id: 355
+  kod_lama: 1
+  kod_baru: 
+  jabatan: test
+-
+  contact_id: 356
+  kod_lama: 1011130100
+  kod_baru: 
+  jabatan: Biro Bantuan Guaman (BBG)
+-
+  contact_id: 357
+  kod_lama: 2062190000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Bentong
+-
+  contact_id: 358
+  kod_lama: 2012110000
+  kod_baru: 
+  jabatan: Jabatan Perhutanan Negeri Johor
+-
+  contact_id: 359
+  kod_lama: 2012120000
+  kod_baru: 
+  jabatan: Jabatan Galian Johor
+-
+  contact_id: 360
+  kod_lama: 1011130300
+  kod_baru: 101145
+  jabatan: Jabatan Insolvensi Malaysia
+-
+  contact_id: 361
+  kod_lama: 2082280000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Lenggong (Daerah Kecil)
+-
+  contact_id: 362
+  kod_lama: 2062270000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Bera
+-
+  contact_id: 363
+  kod_lama: 1411010100
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Johor
+-
+  contact_id: 364
+  kod_lama: 1411010500
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Negeri Sembilan
+-
+  contact_id: 365
+  kod_lama: 1411010600
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Pahang
+-
+  contact_id: 366
+  kod_lama: 1411010700
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Pulau Pinang
+-
+  contact_id: 367
+  kod_lama: 1411010800
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Perak
+-
+  contact_id: 368
+  kod_lama: 1411010200
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Kedah
+-
+  contact_id: 369
+  kod_lama: 1411010300
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Kelantan
+-
+  contact_id: 370
+  kod_lama: 1411010400
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Melaka
+-
+  contact_id: 371
+  kod_lama: 1411010900
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Perlis
+-
+  contact_id: 372
+  kod_lama: 1411011000
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Selangor
+-
+  contact_id: 373
+  kod_lama: 1411011100
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Terengganu
+-
+  contact_id: 374
+  kod_lama: 1411011200
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Sabah
+-
+  contact_id: 375
+  kod_lama: 1411011300
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Sarawak
+-
+  contact_id: 376
+  kod_lama: 2057010001
+  kod_baru: 
+  jabatan: MAJLIS PERBANDARAN PORT DICKSON
+-
+  contact_id: 377
+  kod_lama: 1411011500
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan WP Labuan
+-
+  contact_id: 378
+  kod_lama: 2082190000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kinta
+-
+  contact_id: 379
+  kod_lama: 2082210000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Gopeng dan Kampar
+-
+  contact_id: 380
+  kod_lama: 2082320000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kuala Kangsar
+-
+  contact_id: 381
+  kod_lama: 2102220000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Gombak
+-
+  contact_id: 382
+  kod_lama: 2102180000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Klang
+-
+  contact_id: 383
+  kod_lama: 2062170000
+  kod_baru: 
+  jabatan: Pejabat daerah dan Tanah Kuantan
+-
+  contact_id: 384
+  kod_lama: 2112220000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Dungun
+-
+  contact_id: 385
+  kod_lama: 2062200000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Lipis
+-
+  contact_id: 386
+  kod_lama: 2112230000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kemaman
+-
+  contact_id: 387
+  kod_lama: 2062240000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Maran
+-
+  contact_id: 388
+  kod_lama: 2062210000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Raub
+-
+  contact_id: 389
+  kod_lama: 2062180000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Temerloh
+-
+  contact_id: 390
+  kod_lama: 1411061400
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar WP Kuala Lumpur / Putrajaya
+-
+  contact_id: 391
+  kod_lama: 2012300100
+  kod_baru: 
+  jabatan: Pejabat Tanah Tangkak Muar
+-
+  contact_id: 392
+  kod_lama: 2062220000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Jerantut
+-
+  contact_id: 393
+  kod_lama: 2082340000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kampung Gajah
+-
+  contact_id: 394
+  kod_lama: 2082300000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Larut Matang
+-
+  contact_id: 395
+  kod_lama: 2102210000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Hulu Langat
+-
+  contact_id: 396
+  kod_lama: 2102200000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kuala Langat
+-
+  contact_id: 397
+  kod_lama: 2062230000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Pekan
+-
+  contact_id: 398
+  kod_lama: 2112190000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Besut
+-
+  contact_id: 399
+  kod_lama: 2112210000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Hulu Terengganu
+-
+  contact_id: 400
+  kod_lama: 2082240000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Manjung
+-
+  contact_id: 401
+  kod_lama: 2112180000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kuala Terengganu
+-
+  contact_id: 402
+  kod_lama: 2082270000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Pengkalan Hulu
+-
+  contact_id: 403
+  kod_lama: 1411070400
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Melaka
+-
+  contact_id: 404
+  kod_lama: 2012290100
+  kod_baru: 
+  jabatan: Pejabat Tanah Kulai
+-
+  contact_id: 405
+  kod_lama: 2112200000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Setiu
+-
+  contact_id: 406
+  kod_lama: 2012310100
+  kod_baru: 
+  jabatan: Pejabat Rengit
+-
+  contact_id: 407
+  kod_lama: 2012330100
+  kod_baru: 
+  jabatan: Pejabat Tanah Labis
+-
+  contact_id: 408
+  kod_lama: 2112240000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Marang
+-
+  contact_id: 409
+  kod_lama: 1350000000
+  kod_baru: 135
+  jabatan: Kementerian Pelajaran
+-
+  contact_id: 410
+  kod_lama: 1411070100
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Johor
+-
+  contact_id: 411
+  kod_lama: 1411070200
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Kedah
+-
+  contact_id: 412
+  kod_lama: 1411070300
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Kelantan
+-
+  contact_id: 413
+  kod_lama: 2012130000
+  kod_baru: 
+  jabatan: Jabatan Agama Islam Johor
+-
+  contact_id: 414
+  kod_lama: 1411070500
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Negeri Sembilan
+-
+  contact_id: 415
+  kod_lama: 1411070600
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Pahang
+-
+  contact_id: 416
+  kod_lama: 1411070800
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Perak
+-
+  contact_id: 417
+  kod_lama: 1411070900
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Perlis
+-
+  contact_id: 418
+  kod_lama: 1411070700
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Pulau Pinang
+-
+  contact_id: 419
+  kod_lama: 1411071000
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Selangor
+-
+  contact_id: 420
+  kod_lama: 1411071100
+  kod_baru: 
+  jabatan: PERHILITAN Negeri Terengganu
+-
+  contact_id: 421
+  kod_lama: 2067090000
+  kod_baru: 
+  jabatan: Majlis Daerah Maran
+-
+  contact_id: 422
+  kod_lama: 2082120100
+  kod_baru: 
+  jabatan: Pejabat Hutan Daerah Hulu Perak
+-
+  contact_id: 423
+  kod_lama: 2082120200
+  kod_baru: 
+  jabatan: Pejabat Hutan Daerah Larut & Matang
+-
+  contact_id: 424
+  kod_lama: 2082120300
+  kod_baru: 
+  jabatan: Pejabat Hutan Daerah Kuala Kangsar
+-
+  contact_id: 425
+  kod_lama: 2082120400
+  kod_baru: 
+  jabatan: Pejabat Hutan Daerah Perak Selatan
+-
+  contact_id: 426
+  kod_lama: 2082120500
+  kod_baru: 
+  jabatan: Pejabat Hutan Daerah Kinta/Manjung
+-
+  contact_id: 427
+  kod_lama: 2082130100
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Kinta dan Batang Padang
+-
+  contact_id: 428
+  kod_lama: 2082130200
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Kerian
+-
+  contact_id: 429
+  kod_lama: 2082130300
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Kuala Kangsar/Hulu Perak
+-
+  contact_id: 430
+  kod_lama: 2082130400
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Hilir Perak
+-
+  contact_id: 431
+  kod_lama: 2082130500
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Larut
+-
+  contact_id: 432
+  kod_lama: 2082130600
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Manjung
+-
+  contact_id: 433
+  kod_lama: 2082130700
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Perak Tengah
+-
+  contact_id: 434
+  kod_lama: 2102011300
+  kod_baru: 
+  jabatan: Pejabat DYMM Sultan Selangor
+-
+  contact_id: 435
+  kod_lama: 2102110100
+  kod_baru: 
+  jabatan: Pejabat Hutan Daerah Selangor Tengah
+-
+  contact_id: 436
+  kod_lama: 1100000000
+  kod_baru: tiada
+  jabatan: Kementerian Hal Ehwal Dalam Negeri (KHEDN)
+-
+  contact_id: 437
+  kod_lama: 2102110300
+  kod_baru: 
+  jabatan: Pejabat Hutan Daerah Pantai Klang
+-
+  contact_id: 438
+  kod_lama: 2102120100
+  kod_baru: 
+  jabatan: Bahagian Perkhidmatan Mekanikal
+-
+  contact_id: 439
+  kod_lama: 2102120200
+  kod_baru: 
+  jabatan: Projek Barat Laut Selangor
+-
+  contact_id: 440
+  kod_lama: 2102120300
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Tanjung Karang
+-
+  contact_id: 441
+  kod_lama: 2102120400
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Gombak
+-
+  contact_id: 442
+  kod_lama: 2102120500
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Klang
+-
+  contact_id: 443
+  kod_lama: 2102120600
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Petaling
+-
+  contact_id: 444
+  kod_lama: 2102120700
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Kuala Langat
+-
+  contact_id: 445
+  kod_lama: 2102120800
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Hulu Langat
+-
+  contact_id: 446
+  kod_lama: 2102120900
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Kuala Selangor
+-
+  contact_id: 447
+  kod_lama: 2102121000
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Hulu Selangor
+-
+  contact_id: 448
+  kod_lama: 2102121100
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Sepang
+-
+  contact_id: 449
+  kod_lama: 2102121200
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Sabak Bernam
+-
+  contact_id: 450
+  kod_lama: 1050000000
+  kod_baru: 105
+  jabatan: Kementerian Kerja Raya
+-
+  contact_id: 451
+  kod_lama: 1030000000
+  kod_baru: 103
+  jabatan: Kementerian Kewangan
+-
+  contact_id: 452
+  kod_lama: 1310000000
+  kod_baru: 
+  jabatan: Kementerian Keselamatan Dalam Negeri
+-
+  contact_id: 453
+  kod_lama: 2102110200
+  kod_baru: 
+  jabatan: Pejabat Hutan Daerah Hulu Selangor
+-
+  contact_id: 454
+  kod_lama: 1411071110
+  kod_baru: 
+  jabatan: PERHILITAN WILAYAH PERSEKUTUAN
+-
+  contact_id: 455
+  kod_lama: 1270000000
+  kod_baru: 148
+  jabatan: Kementerian Wilayah Persekutuan dan Kesejahteraan Bandar
+-
+  contact_id: 456
+  kod_lama: 1400000000
+  kod_baru: 140
+  jabatan: Kementerian Kemajuan Luar Bandar Dan Wilayah
+-
+  contact_id: 457
+  kod_lama: 2060000000
+  kod_baru: 206
+  jabatan: Pentadbiran Kerajaan Negeri Pahang
+-
+  contact_id: 458
+  kod_lama: 1040000000
+  kod_baru: 104
+  jabatan: Kementerian Pengangkutan
+-
+  contact_id: 459
+  kod_lama: 1140000000
+  kod_baru: 114
+  jabatan: Kementerian Sumber Manusia
+-
+  contact_id: 460
+  kod_lama: 1130000000
+  kod_baru: 
+  jabatan: Kementerian Tenaga
+-
+  contact_id: 461
+  kod_lama: 2050000000
+  kod_baru: 205
+  jabatan: Pentadbiran Kerajaan Negeri Sembilan
+-
+  contact_id: 462
+  kod_lama: 1170000000
+  kod_baru: 117
+  jabatan: Kementerian Pertahanan
+-
+  contact_id: 463
+  kod_lama: 1080000000
+  kod_baru: 108
+  jabatan: Kementerian Perdagangan Antarabangsa dan Industri
+-
+  contact_id: 464
+  kod_lama: 1100000000
+  kod_baru: 
+  jabatan: Kementerian Perdagangan Dalam Negeri Dan Hal Ehwal Pengguna
+-
+  contact_id: 465
+  kod_lama: 1160000000
+  kod_baru: 116
+  jabatan: Kementerian Perumahan Dan Kerajaan Tempatan
+-
+  contact_id: 466
+  kod_lama: 2100000000
+  kod_baru: 210
+  jabatan: Pentadbiran Kerajaan Negeri Selangor
+-
+  contact_id: 467
+  kod_lama: 2090000000
+  kod_baru: 209
+  jabatan: Pentadbiran Kerajaan Negeri Perlis
+-
+  contact_id: 468
+  kod_lama: 1120000000
+  kod_baru: 
+  jabatan: Kementerian Penerangan
+-
+  contact_id: 469
+  kod_lama: 2110000000
+  kod_baru: 211
+  jabatan: Pentadbiran Kerajaan Negeri Terengganu
+-
+  contact_id: 470
+  kod_lama: 3610000000
+  kod_baru: 361
+  jabatan: Jabatan Ketua Menteri Sabah
+-
+  contact_id: 471
+  kod_lama: 2080000000
+  kod_baru: 208
+  jabatan: Pentadbiran Kerajaan Negeri Perak
+-
+  contact_id: 472
+  kod_lama: klinik01
+  kod_baru: 
+  jabatan: Klinik Kesihatan Tanjung Malim
+-
+  contact_id: 473
+  kod_lama: 2070000000
+  kod_baru: 207
+  jabatan: Pentadbiran Kerajaan Pulau Pinang
+-
+  contact_id: 474
+  kod_lama: 1190000000
+  kod_baru: 119
+  jabatan: Kementerian Luar Negeri
+-
+  contact_id: 475
+  kod_lama: 1360000000
+  kod_baru: 136
+  jabatan: Kementerian Pengajian Tinggi
+-
+  contact_id: 476
+  kod_lama: 1210000000
+  kod_baru: 121
+  jabatan: Kementerian Belia dan Sukan
+-
+  contact_id: 477
+  kod_lama: 1420000000
+  kod_baru: 
+  jabatan: Kementerian Pembangunan Usahawan Dan Koperasi
+-
+  contact_id: 478
+  kod_lama: 1430000000
+  kod_baru: 143
+  jabatan: Kementerian Pembangunan Wanita
+-
+  contact_id: 479
+  kod_lama: 1390000000
+  kod_baru: 139
+  jabatan: Kementerian Sains
+-
+  contact_id: 480
+  kod_lama: 1340000000
+  kod_baru: 134
+  jabatan: Kementerian Pertanian Dan Industri Asas Tani
+-
+  contact_id: 481
+  kod_lama: 3700000000
+  kod_baru: 370
+  jabatan: KEMENTERIAN BELIA DAN SUKAN SABAH
+-
+  contact_id: 482
+  kod_lama: 1380000000
+  kod_baru: 138
+  jabatan: Kementerian Pelancongan
+-
+  contact_id: 483
+  kod_lama: 2022100000
+  kod_baru: 
+  jabatan: Pejabat Tanah Kota Setar
+-
+  contact_id: 484
+  kod_lama: 2050010000
+  kod_baru: 
+  jabatan: Pejabat Menteri Besar
+-
+  contact_id: 485
+  kod_lama: 2052010000
+  kod_baru: 
+  jabatan: Pejabat Kewangan Negeri
+-
+  contact_id: 486
+  kod_lama: 2052020000
+  kod_baru: 
+  jabatan: Jabatan Mufti
+-
+  contact_id: 487
+  kod_lama: 2052030000
+  kod_baru: 
+  jabatan: Jabatan Kehakiman Syariah
+-
+  contact_id: 488
+  kod_lama: 2052190000
+  kod_baru: 
+  jabatan: Pejabat Daerah Kecil Gemas
+-
+  contact_id: 489
+  kod_lama: 2052050000
+  kod_baru: 
+  jabatan: Jabatan Pengairan & Saliran
+-
+  contact_id: 490
+  kod_lama: 2052060000
+  kod_baru: 
+  jabatan: Jabatan Kerja Raya Negeri Sembilan
+-
+  contact_id: 491
+  kod_lama: 2052070000
+  kod_baru: 
+  jabatan: Pejabat Pembangunan Negeri
+-
+  contact_id: 492
+  kod_lama: 2052080000
+  kod_baru: 
+  jabatan: Jabatan Bekalan Air
+-
+  contact_id: 493
+  kod_lama: 2052090000
+  kod_baru: 
+  jabatan: Jabatan Perhutanan
+-
+  contact_id: 494
+  kod_lama: 2052100000
+  kod_baru: 
+  jabatan: Jabatan Pertanian
+-
+  contact_id: 495
+  kod_lama: 2052110000
+  kod_baru: 
+  jabatan: Jabatan Perkhidmatan Haiwan
+-
+  contact_id: 496
+  kod_lama: 2052120000
+  kod_baru: 
+  jabatan: Jabatan Perancangan Bandar dan Desa
+-
+  contact_id: 497
+  kod_lama: 2052130000
+  kod_baru: 
+  jabatan: Jabatan Hal Ehwal Agama Islam
+-
+  contact_id: 498
+  kod_lama: 2052140000
+  kod_baru: 
+  jabatan: Jabatan Kebajikan Masyarakat
+-
+  contact_id: 499
+  kod_lama: 2052150000
+  kod_baru: 
+  jabatan: Pejabat Yang DiPertuan Besar Negeri Sembilan
+-
+  contact_id: 500
+  kod_lama: 2050020000
+  kod_baru: 
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Sembilan
+-
+  contact_id: 501
+  kod_lama: 2052210000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Port Dickson
+-
+  contact_id: 502
+  kod_lama: 2052230000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Rembau
+-
+  contact_id: 503
+  kod_lama: 2052040000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Galian Negeri Sembilan
+-
+  contact_id: 504
+  kod_lama: 2052200000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Jempol
+-
+  contact_id: 505
+  kod_lama: 2052220000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Jelebu
+-
+  contact_id: 506
+  kod_lama: 2052170000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Kuala Pilah
+-
+  contact_id: 507
+  kod_lama: 2052180000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Tampin
+-
+  contact_id: 508
+  kod_lama: 1410060000
+  kod_baru: 140016/116011
+  jabatan: Bahagian Teknologi Maklumat
+-
+  contact_id: 509
+  kod_lama: 1410070000
+  kod_baru: 
+  jabatan: Bahagian Ukur Tanah
+-
+  contact_id: 510
+  kod_lama: 1410130000
+  kod_baru: 
+  jabatan: Projek E-Tanah
+-
+  contact_id: 511
+  kod_lama: 1410000011
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Malaysia (JUPEM)
+-
+  contact_id: 512
+  kod_lama: 2012060000
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Negeri Johor
+-
+  contact_id: 513
+  kod_lama: 1011100000
+  kod_baru: 101110
+  jabatan: Jabatan Peguam Negara Malaysia
+-
+  contact_id: 514
+  kod_lama: 1011390000
+  kod_baru: 101139/101141
+  jabatan: Agensi Penguatkuasaan Maritim Malaysia (APMM)
+-
+  contact_id: 515
+  kod_lama: 1410000997
+  kod_baru: 
+  jabatan: Kompleks Jabatan Laut Sarawak
+-
+  contact_id: 516
+  kod_lama: 1410110000
+  kod_baru: 
+  jabatan: Konservasi Alam Sekitar (KAS)
+-
+  contact_id: 517
+  kod_lama: 1010000000
+  kod_baru: 101
+  jabatan: Jabatan Perdana Menteri
+-
+  contact_id: 518
+  kod_lama: 2010020000
+  kod_baru: 
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Johor
+-
+  contact_id: 519
+  kod_lama: 2112160000
+  kod_baru: 
+  jabatan: Suruhanjaya Perkhidmatan Negeri
+-
+  contact_id: 520
+  kod_lama: 1410010000
+  kod_baru: 140001/119001/101004
+  jabatan: Pejabat Y.B Menteri/Timbalan Menteri/Setiausaha Parlimen
+-
+  contact_id: 521
+  kod_lama: 1410020000
+  kod_baru: 140002/119003
+  jabatan: Pejabat Ketua Setiausaha Kementerian/Timbalan KSU Kementerian
+-
+  contact_id: 522
+  kod_lama: 1410030000
+  kod_baru: 
+  jabatan: Bahagian Perancangan Korporat
+-
+  contact_id: 523
+  kod_lama: 1410040000
+  kod_baru: 103006
+  jabatan: Bahagian Pentadbiran & Kewangan
+-
+  contact_id: 524
+  kod_lama: 1410050000
+  kod_baru: 481005/140013
+  jabatan: Bahagian Pengurusan Sumber Manusia
+-
+  contact_id: 525
+  kod_lama: 1410080000
+  kod_baru: 
+  jabatan: Bahagian Mineral dan Geosains
+-
+  contact_id: 526
+  kod_lama: 1410090000
+  kod_baru: 
+  jabatan: Bahagian Pembangunan Perhutanan
+-
+  contact_id: 527
+  kod_lama: 1410100000
+  kod_baru: 
+  jabatan: Bahagian Pengairan dan Saliran
+-
+  contact_id: 528
+  kod_lama: 2012030000
+  kod_baru: 481202
+  jabatan: Dewan Negeri
+-
+  contact_id: 529
+  kod_lama: 2010010000
+  kod_baru: 
+  jabatan: Pejabat Menteri Besar
+-
+  contact_id: 530
+  kod_lama: 2012010000
+  kod_baru: 
+  jabatan: Jabatan DiRaja Johor
+-
+  contact_id: 531
+  kod_lama: 2012020000
+  kod_baru: 
+  jabatan: Suruhanjaya Perkhidmatan Awam Negeri Johor
+-
+  contact_id: 532
+  kod_lama: 2012040000
+  kod_baru: 
+  jabatan: Perbendaharaan Negeri
+-
+  contact_id: 533
+  kod_lama: 2012050000
+  kod_baru: 
+  jabatan: Jabatan Pertanian Johor
+-
+  contact_id: 534
+  kod_lama: 2012070000
+  kod_baru: 
+  jabatan: Jabatan Perkhidmatan Haiwan
+-
+  contact_id: 535
+  kod_lama: 2012080000
+  kod_baru: 
+  jabatan: Pejabat Kebun Bunga Kerajaan
+-
+  contact_id: 536
+  kod_lama: 2012140000
+  kod_baru: 
+  jabatan: Jabatan Kebajikan Masyarakat Johor
+-
+  contact_id: 537
+  kod_lama: 2012150000
+  kod_baru: 
+  jabatan: Jabatan Kerja Raya Johor
+-
+  contact_id: 538
+  kod_lama: 2012160000
+  kod_baru: 
+  jabatan: Pejabat Muzium DiRaja Johor
+-
+  contact_id: 539
+  kod_lama: 2012170000
+  kod_baru: 
+  jabatan: Mahkamah Syariah Johor
+-
+  contact_id: 540
+  kod_lama: 2012180000
+  kod_baru: 
+  jabatan: Mufti Negeri Johor
+-
+  contact_id: 541
+  kod_lama: 2012190000
+  kod_baru: 
+  jabatan: Jabatan Landskap Negeri Johor
+-
+  contact_id: 542
+  kod_lama: 2012200000
+  kod_baru: 
+  jabatan: Jabatan Penyelidikan & Penerangan Johor
+-
+  contact_id: 543
+  kod_lama: 2010000000
+  kod_baru: 201
+  jabatan: Pentadbiran Kerajaan Negeri Johor
+-
+  contact_id: 544
+  kod_lama: 2020020000
+  kod_baru: 
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Kedah
+-
+  contact_id: 545
+  kod_lama: 2012290000
+  kod_baru: 
+  jabatan: Pejabat Tanah Johor Bahru
+-
+  contact_id: 546
+  kod_lama: 2012300000
+  kod_baru: 
+  jabatan: Pejabat Tanah Muar
+-
+  contact_id: 547
+  kod_lama: 2012310000
+  kod_baru: 
+  jabatan: Pejabat Tanah Batu Pahat
+-
+  contact_id: 548
+  kod_lama: 2012320000
+  kod_baru: 
+  jabatan: Pejabat Tanah Pontian
+-
+  contact_id: 549
+  kod_lama: 2012330000
+  kod_baru: 
+  jabatan: Pejabat Tanah Segamat
+-
+  contact_id: 550
+  kod_lama: 2012340000
+  kod_baru: 
+  jabatan: Pejabat Tanah Kluang
+-
+  contact_id: 551
+  kod_lama: 2012350000
+  kod_baru: 
+  jabatan: Pejabat Tanah Kota Tinggi
+-
+  contact_id: 552
+  kod_lama: 2012360000
+  kod_baru: 
+  jabatan: Pejabat Tanah Mersing
+-
+  contact_id: 553
+  kod_lama: 2015010000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam Johor
+-
+  contact_id: 554
+  kod_lama: 2015020000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Islam Johor
+-
+  contact_id: 555
+  kod_lama: 2015030000
+  kod_baru: 
+  jabatan: Yayasan Pelajaran Johor
+-
+  contact_id: 556
+  kod_lama: 2015040000
+  kod_baru: 
+  jabatan: Majlis Agama Islam Johor
+-
+  contact_id: 557
+  kod_lama: 2015050000
+  kod_baru: 
+  jabatan: Jabatan Pelancongan Johor
+-
+  contact_id: 558
+  kod_lama: 2015060000
+  kod_baru: 207505
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri (PKEN)
+-
+  contact_id: 559
+  kod_lama: 2017010000
+  kod_baru: 
+  jabatan: Majlis Bandaraya Johor Bahru
+-
+  contact_id: 560
+  kod_lama: 2017020000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Johor Bahru Tengah
+-
+  contact_id: 561
+  kod_lama: 2017030000
+  kod_baru: 
+  jabatan: Majlis Daerah Kulai
+-
+  contact_id: 562
+  kod_lama: 2017040000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Muar
+-
+  contact_id: 563
+  kod_lama: 2017050000
+  kod_baru: 
+  jabatan: Majlis Daerah Tangkak
+-
+  contact_id: 564
+  kod_lama: 2017060000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Batu Pahat
+-
+  contact_id: 565
+  kod_lama: 2017070000
+  kod_baru: 
+  jabatan: Majlis Daerah Yong Peng
+-
+  contact_id: 566
+  kod_lama: 2017080000
+  kod_baru: 
+  jabatan: Majlis Daerah Segamat
+-
+  contact_id: 567
+  kod_lama: 2017090000
+  kod_baru: 
+  jabatan: Majlis Daerah Labis
+-
+  contact_id: 568
+  kod_lama: 2017100000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Kluang
+-
+  contact_id: 569
+  kod_lama: 2017110000
+  kod_baru: 
+  jabatan: Majlis Daerah Simpang Renggam
+-
+  contact_id: 570
+  kod_lama: 2017120000
+  kod_baru: 
+  jabatan: Majlis Daerah Pontian
+-
+  contact_id: 571
+  kod_lama: 2017130000
+  kod_baru: 
+  jabatan: Majlis Daerah Kota Tinggi
+-
+  contact_id: 572
+  kod_lama: 2017140000
+  kod_baru: 
+  jabatan: Majlis Daerah Mersing
+-
+  contact_id: 573
+  kod_lama: 2017150000
+  kod_baru: 
+  jabatan: Pihak Berkuasa Tempatan Pasir Gudang
+-
+  contact_id: 574
+  kod_lama: 2020010000
+  kod_baru: 
+  jabatan: Pejabat Menteri Besar
+-
+  contact_id: 575
+  kod_lama: 2022010000
+  kod_baru: 
+  jabatan: Jabatan Galian Negeri Kedah
+-
+  contact_id: 576
+  kod_lama: 2022020000
+  kod_baru: 
+  jabatan: Jabatan Perkhidmatan Haiwan Negeri Kedah
+-
+  contact_id: 577
+  kod_lama: 2022030000
+  kod_baru: 
+  jabatan: Jabatan Hal Ehwal Agama Islam Negeri Kedah
+-
+  contact_id: 578
+  kod_lama: 2022040000
+  kod_baru: 
+  jabatan: Jabatan Perhutanan Negeri Kedah
+-
+  contact_id: 579
+  kod_lama: 2022050000
+  kod_baru: 
+  jabatan: Jabatan Kebajikan Masyarakat Negeri Kedah
+-
+  contact_id: 580
+  kod_lama: 2022060000
+  kod_baru: 
+  jabatan: Jabatan Kerjaraya Negeri Kedah
+-
+  contact_id: 581
+  kod_lama: 2022070000
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Negeri Kedah
+-
+  contact_id: 582
+  kod_lama: 2022090000
+  kod_baru: 
+  jabatan: Pejabat Tanah Negeri Kedah
+-
+  contact_id: 583
+  kod_lama: 2022270000
+  kod_baru: 
+  jabatan: Jabatan Perancangan Bandar dan Desa Kedah
+-
+  contact_id: 584
+  kod_lama: 2022280000
+  kod_baru: 
+  jabatan: Perbendaharaan Negeri Kedah
+-
+  contact_id: 585
+  kod_lama: 2022290000
+  kod_baru: 
+  jabatan: Jabatan Pertanian Negeri Kedah
+-
+  contact_id: 586
+  kod_lama: 2022300000
+  kod_baru: 
+  jabatan: Suruhanjaya Perkhidmatan Awam Negeri Kedah
+-
+  contact_id: 587
+  kod_lama: 2022310000
+  kod_baru: 
+  jabatan: Yayasan Islam Kedah
+-
+  contact_id: 588
+  kod_lama: 2022320000
+  kod_baru: 
+  jabatan: Pejabat Zakat Negeri Kedah
+-
+  contact_id: 589
+  kod_lama: 2025010000
+  kod_baru: 
+  jabatan: Lembaga Kemajuan Penanam Padi Kedah
+-
+  contact_id: 590
+  kod_lama: 2025020000
+  kod_baru: 
+  jabatan: Lembaga Kesihatan Negeri Kedah
+-
+  contact_id: 591
+  kod_lama: 2025030000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Negeri Kedah
+-
+  contact_id: 592
+  kod_lama: 2025040000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam Negeri Kedah
+-
+  contact_id: 593
+  kod_lama: 2025050000
+  kod_baru: 
+  jabatan: Suruhanjaya Perkhidmatan Awam Negeri Kedah
+-
+  contact_id: 594
+  kod_lama: 2025060000
+  kod_baru: 
+  jabatan: Perbadana Stadium Negeri Kedah
+-
+  contact_id: 595
+  kod_lama: 2025070000
+  kod_baru: 
+  jabatan: Lembaga Muzium Negeri Kedah
+-
+  contact_id: 596
+  kod_lama: 2025080000
+  kod_baru: 
+  jabatan: Lembaga Maktab Mahmud
+-
+  contact_id: 597
+  kod_lama: 2025090000
+  kod_baru: 
+  jabatan: Lembaga Kemajuan Tanah Negeri Kedah
+-
+  contact_id: 598
+  kod_lama: 2025100000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri Kedah (PKEN)
+-
+  contact_id: 599
+  kod_lama: 2027010000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Kota Setar (MPKS)
+-
+  contact_id: 600
+  kod_lama: 2027020000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Sungai Petani
+-
+  contact_id: 601
+  kod_lama: 2027030000
+  kod_baru: 
+  jabatan: Majlis Daerah Kulim
+-
+  contact_id: 602
+  kod_lama: 2027040000
+  kod_baru: 
+  jabatan: Majlis Daerah Baling
+-
+  contact_id: 603
+  kod_lama: 2027050000
+  kod_baru: 
+  jabatan: Majlis Daerah Kubang Pasu
+-
+  contact_id: 604
+  kod_lama: 2027060000
+  kod_baru: 
+  jabatan: Majlis Daerah Yan
+-
+  contact_id: 605
+  kod_lama: 2027070000
+  kod_baru: 
+  jabatan: Majlis Daerah Sik
+-
+  contact_id: 606
+  kod_lama: 2027080000
+  kod_baru: 
+  jabatan: Majlis Daerah Pendang
+-
+  contact_id: 607
+  kod_lama: 2027090000
+  kod_baru: 
+  jabatan: Majlis Daerah Padang Terap
+-
+  contact_id: 608
+  kod_lama: 2027100000
+  kod_baru: 
+  jabatan: Majlis Daerah Langkawi
+-
+  contact_id: 609
+  kod_lama: 2027110000
+  kod_baru: 
+  jabatan: Majlis Daerah Bandar Baharu
+-
+  contact_id: 610
+  kod_lama: 2020000000
+  kod_baru: 202
+  jabatan: Pentadbiran Kerajaan Negeri Kedah
+-
+  contact_id: 611
+  kod_lama: 2032020000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Galian Kelantan
+-
+  contact_id: 612
+  kod_lama: 2030010000
+  kod_baru: 
+  jabatan: Pejabat Menteri Besar
+-
+  contact_id: 613
+  kod_lama: 2040010000
+  kod_baru: 
+  jabatan: Pejabat Setiausaha Kerajaan Negeri Melaka
+-
+  contact_id: 614
+  kod_lama: 2032010000
+  kod_baru: 
+  jabatan: Pejabat Sultan Kelantan
+-
+  contact_id: 615
+  kod_lama: 2032030000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Kota Bharu
+-
+  contact_id: 616
+  kod_lama: 2032040000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Tanah Merah
+-
+  contact_id: 617
+  kod_lama: 2032050000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Pasir Mas
+-
+  contact_id: 618
+  kod_lama: 2032060000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Gua Musang
+-
+  contact_id: 619
+  kod_lama: 2032070000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Kuala Krai
+-
+  contact_id: 620
+  kod_lama: 2032080000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Machang
+-
+  contact_id: 621
+  kod_lama: 2032090000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Jeli
+-
+  contact_id: 622
+  kod_lama: 2032100000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Tumpat
+-
+  contact_id: 623
+  kod_lama: 2032110000
+  kod_baru: 
+  jabatan: Pejabat Tanah dan Jajahan Pasir Puteh
+-
+  contact_id: 624
+  kod_lama: 2032130000
+  kod_baru: 
+  jabatan: Pejabat Perbendaharaan Negeri Kelantan
+-
+  contact_id: 625
+  kod_lama: 2032140000
+  kod_baru: 
+  jabatan: Pejabat Mufti Negeri Kelantan
+-
+  contact_id: 626
+  kod_lama: 2032150000
+  kod_baru: 
+  jabatan: Pejabat Pembangunan Negeri Kelantan
+-
+  contact_id: 627
+  kod_lama: 2032160000
+  kod_baru: 
+  jabatan: Pejabat Kebajikan Masyarakat Negeri Kelantan
+-
+  contact_id: 628
+  kod_lama: 2032170000
+  kod_baru: 
+  jabatan: Pejabat Suruhanjaya Perkhidmatan Negeri Kelantan
+-
+  contact_id: 629
+  kod_lama: 2032180000
+  kod_baru: 
+  jabatan: Jabatan Perhutanan Negeri Kelantan
+-
+  contact_id: 630
+  kod_lama: 2032190000
+  kod_baru: 
+  jabatan: Jabatan Pertanian Negeri Kelantan
+-
+  contact_id: 631
+  kod_lama: 2032200000
+  kod_baru: 
+  jabatan: Jabatan Perkhidmatan Haiwan Negeri Kelantan
+-
+  contact_id: 632
+  kod_lama: 2032210000
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Negeri Kelantan
+-
+  contact_id: 633
+  kod_lama: 2032220000
+  kod_baru: 
+  jabatan: Jabatan Perancangan Bandar dan Desa Negeri Kelantan
+-
+  contact_id: 634
+  kod_lama: 2032230000
+  kod_baru: 
+  jabatan: Jabatan Hal Ehwal Agama Islam Negeri Kelantan
+-
+  contact_id: 635
+  kod_lama: 2032240000
+  kod_baru: 
+  jabatan: Jabatan Kerja Raya Negeri Kelantan
+-
+  contact_id: 636
+  kod_lama: 2032250000
+  kod_baru: 
+  jabatan: Jabatan Mineral & Geosains Negeri Kelantan
+-
+  contact_id: 637
+  kod_lama: 2032260000
+  kod_baru: 
+  jabatan: Jabatan Air Negeri Kelantan
+-
+  contact_id: 638
+  kod_lama: 2032270000
+  kod_baru: 
+  jabatan: Mahkamah Syariah Negeri Kelantan
+-
+  contact_id: 639
+  kod_lama: 2035010000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Negeri Kelantan
+-
+  contact_id: 640
+  kod_lama: 2035020000
+  kod_baru: 
+  jabatan: Majlis Agama Islam & Istiadat Melayu Kelantan
+-
+  contact_id: 641
+  kod_lama: 2035030000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Iktisad Negeri Kelantan
+-
+  contact_id: 642
+  kod_lama: 2035040000
+  kod_baru: 
+  jabatan: Perbadanan Muzium Negeri Kelantan
+-
+  contact_id: 643
+  kod_lama: 2035050000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam Negeri Kelantan
+-
+  contact_id: 644
+  kod_lama: 2035060000
+  kod_baru: 
+  jabatan: Perbadanan Stadium Kelantan
+-
+  contact_id: 645
+  kod_lama: 2035070000
+  kod_baru: 
+  jabatan: Yayasan Kelantan Darul Naim
+-
+  contact_id: 646
+  kod_lama: 2035080000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekonomi Negeri (PKEN)
+-
+  contact_id: 647
+  kod_lama: 2037010000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Kota Bharu
+-
+  contact_id: 648
+  kod_lama: 2037020000
+  kod_baru: 
+  jabatan: Majlis Daerah Bachok
+-
+  contact_id: 649
+  kod_lama: 2037030000
+  kod_baru: 
+  jabatan: Majlis Daerah Gua Musang
+-
+  contact_id: 650
+  kod_lama: 2037040000
+  kod_baru: 
+  jabatan: Majlis Daerah Jeli
+-
+  contact_id: 651
+  kod_lama: 2037050000
+  kod_baru: 
+  jabatan: Majlis Daerah Kota Bharu
+-
+  contact_id: 652
+  kod_lama: 2037060000
+  kod_baru: 
+  jabatan: Majlis Daerah Kuala Krai Selatan
+-
+  contact_id: 653
+  kod_lama: 2037070000
+  kod_baru: 
+  jabatan: Majlis Daerah Kuala Krai Utara
+-
+  contact_id: 654
+  kod_lama: 2037080000
+  kod_baru: 
+  jabatan: Majlis Daerah Machang
+-
+  contact_id: 655
+  kod_lama: 2037090000
+  kod_baru: 
+  jabatan: Majlis Daerah Pasir Mas
+-
+  contact_id: 656
+  kod_lama: 2037100000
+  kod_baru: 
+  jabatan: Majlis Daerah Pasir Puteh
+-
+  contact_id: 657
+  kod_lama: 2037110000
+  kod_baru: 
+  jabatan: Majlis Daerah Tanah Merah
+-
+  contact_id: 658
+  kod_lama: 2037120000
+  kod_baru: 
+  jabatan: Majlis Daerah Tumpat
+-
+  contact_id: 659
+  kod_lama: 2042160000
+  kod_baru: 
+  jabatan: Pejabat Hutan Negeri
+-
+  contact_id: 660
+  kod_lama: 2040020000
+  kod_baru: 
+  jabatan: Majlis Sukan Negeri
+-
+  contact_id: 661
+  kod_lama: 2040030000
+  kod_baru: 
+  jabatan: Unit Promosi Pelancongan
+-
+  contact_id: 662
+  kod_lama: 2040040000
+  kod_baru: 
+  jabatan: Tabung Amanah Pendidikan Negeri Melaka
+-
+  contact_id: 663
+  kod_lama: 2042010000
+  kod_baru: 
+  jabatan: Jabatan Ketua Menteri Melaka
+-
+  contact_id: 664
+  kod_lama: 2042020000
+  kod_baru: 
+  jabatan: Pejabat Penasihat Undang-Undang Negeri Melaka
+-
+  contact_id: 665
+  kod_lama: 2042030000
+  kod_baru: 
+  jabatan: Jabatan Kewangan dan Perbendaharaan Negeri Melaka
+-
+  contact_id: 666
+  kod_lama: 2042040000
+  kod_baru: 
+  jabatan: Pejabat Mufti Negeri Melaka
+-
+  contact_id: 667
+  kod_lama: 2042050000
+  kod_baru: 
+  jabatan: Mahkamah Tinggi Syariah Melaka
+-
+  contact_id: 668
+  kod_lama: 2042070000
+  kod_baru: 
+  jabatan: Jabatan Kerja Raya Melaka
+-
+  contact_id: 669
+  kod_lama: 2042080000
+  kod_baru: 
+  jabatan: Pejabat Pembangunan Negeri Melaka
+-
+  contact_id: 670
+  kod_lama: 2042090000
+  kod_baru: 
+  jabatan: Pejabat Pertanian Negeri Melaka
+-
+  contact_id: 671
+  kod_lama: 2042100000
+  kod_baru: 
+  jabatan: Jabatan Agama Islam Negeri Melaka
+-
+  contact_id: 672
+  kod_lama: 2042110000
+  kod_baru: 
+  jabatan: Jabatan Kebajikan Masyarakat Negeri Melaka
+-
+  contact_id: 673
+  kod_lama: 2042120000
+  kod_baru: 
+  jabatan: Jabatan Perkhidmatan Haiwan Negeri Melaka
+-
+  contact_id: 674
+  kod_lama: 2042130000
+  kod_baru: 
+  jabatan: Jabatan Perancangan Bandar dan Desa Melaka
+-
+  contact_id: 675
+  kod_lama: 2042140000
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Negeri Melaka
+-
+  contact_id: 676
+  kod_lama: 2042150000
+  kod_baru: 
+  jabatan: Pejabat Tuan Terutama Yang Dipertua Negeri Melaka
+-
+  contact_id: 677
+  kod_lama: 1011170000
+  kod_baru: 101117
+  jabatan: Unit Perancang Ekonomi (EPU)
+-
+  contact_id: 678
+  kod_lama: 2042180000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Alor Gajah
+-
+  contact_id: 679
+  kod_lama: 2045010000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Negeri Melaka (PKNM)
+-
+  contact_id: 680
+  kod_lama: 2045020000
+  kod_baru: 
+  jabatan: Perbadanan Air Melaka (PAM)
+-
+  contact_id: 681
+  kod_lama: 2045030000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Tanah Adat Melaka (PERTAM)
+-
+  contact_id: 682
+  kod_lama: 2045040000
+  kod_baru: 
+  jabatan: Yayasan Melaka
+-
+  contact_id: 683
+  kod_lama: 2045050000
+  kod_baru: 
+  jabatan: Perbadanan Muzium Melaka (PERZIM)
+-
+  contact_id: 684
+  kod_lama: 2045060000
+  kod_baru: 
+  jabatan: Kolej Islam Melaka (KIM)
+-
+  contact_id: 685
+  kod_lama: 2045070000
+  kod_baru: 
+  jabatan: Perbadanan Perpustakaan Awam Negeri Melaka (PERPUSTAM)
+-
+  contact_id: 686
+  kod_lama: 2045080000
+  kod_baru: 
+  jabatan: Majlis Agama Islam Melaka (MAIM)
+-
+  contact_id: 687
+  kod_lama: 2045090000
+  kod_baru: 
+  jabatan: Lembaga Wakaf
+-
+  contact_id: 688
+  kod_lama: 2045100000
+  kod_baru: 
+  jabatan: Institut Teknologi Seni Malaysia (ITSM)
+-
+  contact_id: 689
+  kod_lama: 2045110000
+  kod_baru: 
+  jabatan: Institut Pengurusan Melaka (IMM)
+-
+  contact_id: 690
+  kod_lama: 2045120000
+  kod_baru: 
+  jabatan: Institut Kajian Sejarah dan Patriotisme Malaysia (IKSEP)
+-
+  contact_id: 691
+  kod_lama: 2045130000
+  kod_baru: 
+  jabatan: Perbadanan Kemajuan Ekomoni Negeri (PKEN)
+-
+  contact_id: 692
+  kod_lama: 2047010000
+  kod_baru: 
+  jabatan: Majlis Perbandaran Melaka Bandaraya Bersejarah (MPMBB)
+-
+  contact_id: 693
+  kod_lama: 2047020000
+  kod_baru: 
+  jabatan: Majlis Daerah Alor Gajah (MDAG)
+-
+  contact_id: 694
+  kod_lama: 2047030000
+  kod_baru: 
+  jabatan: Majlis Daerah Jasin (MDJ)
+-
+  contact_id: 695
+  kod_lama: 1011270000
+  kod_baru: 101127
+  jabatan: Biro Tatanegara (BTN)
+-
+  contact_id: 696
+  kod_lama: 2112090000
+  kod_baru: 
+  jabatan: Jabatan Pengairan dan Saliran Negeri Terengganu
+-
+  contact_id: 697
+  kod_lama: 2040000000
+  kod_baru: 204
+  jabatan: Pentadbiran Kerajaan Negeri Melaka
+-
+  contact_id: 698
+  kod_lama: 1411010003
+  kod_baru: 
+  jabatan: SEKSYEN TOPOGRAFI SABAH
+-
+  contact_id: 699
+  kod_lama: 1031030000
+  kod_baru: 
+  jabatan: Jabatan Kastam Diraja Malaysia
+-
+  contact_id: 700
+  kod_lama: 2042170000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Melaka Tengah
+-
+  contact_id: 701
+  kod_lama: 1140000000
+  kod_baru: 114
+  jabatan: Kementerian Sumber Manusia
+-
+  contact_id: 702
+  kod_lama: 1260000000
+  kod_baru: 
+  jabatan: Kementerian Perusahaan Awam
+-
+  contact_id: 703
+  kod_lama: 1411010005
+  kod_baru: 
+  jabatan: Seksyen Geodesi
+-
+  contact_id: 704
+  kod_lama: 1030090000
+  kod_baru: 103009/116015
+  jabatan: Bahagian Pinjaman Perumahan
+-
+  contact_id: 705
+  kod_lama: 1011260000
+  kod_baru: 101126
+  jabatan: Biro Pengaduan Awam (BPA)
+-
+  contact_id: 706
+  kod_lama: 1011360000
+  kod_baru: 
+  jabatan: Jabatan Zakat
+-
+  contact_id: 707
+  kod_lama: 1011280000
+  kod_baru: 101128
+  jabatan: Institut Latihan Kehakiman Dan Perundangan (ILKAP)
+-
+  contact_id: 708
+  kod_lama: 1411010006
+  kod_baru: 
+  jabatan: Seksyen Penawanan Data
+-
+  contact_id: 709
+  kod_lama: 1411010001
+  kod_baru: 
+  jabatan: Seksyen Perkhidmatan Pemetaan
+-
+  contact_id: 710
+  kod_lama: 1364010000
+  kod_baru: 
+  jabatan: Universiti Malaya
+-
+  contact_id: 711
+  kod_lama: 1364020000
+  kod_baru: 
+  jabatan: Universiti Kebangsaan Malaysia
+-
+  contact_id: 712
+  kod_lama: 1411010002
+  kod_baru: 
+  jabatan: Seksyen Topografi Semenanjung
+-
+  contact_id: 713
+  kod_lama: 1411020002
+  kod_baru: 
+  jabatan: Seksyen Harta Dan Tanah Persekutuan
+-
+  contact_id: 714
+  kod_lama: 1411020003
+  kod_baru: 
+  jabatan: Seksyen Pengambilan Tanah
+-
+  contact_id: 715
+  kod_lama: 1411020602
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 716
+  kod_lama: 1411020601
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 717
+  kod_lama: 1411020300
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 718
+  kod_lama: 1411020603
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 719
+  kod_lama: 1411020700
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 720
+  kod_lama: 1411020800
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 721
+  kod_lama: 1364030000
+  kod_baru: 
+  jabatan: Universiti Sains Malaysia
+-
+  contact_id: 722
+  kod_lama: 1364070000
+  kod_baru: 
+  jabatan: Universiti Utara Malaysia
+-
+  contact_id: 723
+  kod_lama: 1364120000
+  kod_baru: 
+  jabatan: Universiti Darul Iman
+-
+  contact_id: 724
+  kod_lama: 1365050000
+  kod_baru: 
+  jabatan: Politeknik Kota
+-
+  contact_id: 725
+  kod_lama: 1411021101
+  kod_baru: 
+  jabatan: KPTG Persekutuan
+-
+  contact_id: 726
+  kod_lama: 1411010007
+  kod_baru: 
+  jabatan: Seksyen Ehwal Persempadanan
+-
+  contact_id: 727
+  kod_lama: 1411010009
+  kod_baru: 
+  jabatan: Seksyen Pangkalan Data
+-
+  contact_id: 728
+  kod_lama: 1411010012
+  kod_baru: 
+  jabatan: Seksyen Penyelarasan dan Dasar Kadaster
+-
+  contact_id: 729
+  kod_lama: 1411010014
+  kod_baru: 
+  jabatan: Seksyen Naziran / Jurukur Berlesen
+-
+  contact_id: 730
+  kod_lama: 1411010016
+  kod_baru: 
+  jabatan: Seksyen Pentadbiran dan Perkhidmatan
+-
+  contact_id: 731
+  kod_lama: 1411010017
+  kod_baru: 
+  jabatan: Seksyen Pembangunan Sistem
+-
+  contact_id: 732
+  kod_lama: 1411010018
+  kod_baru: 
+  jabatan: Seksyen Perancangan Gunatenaga
+-
+  contact_id: 733
+  kod_lama: 1411020001
+  kod_baru: 101012
+  jabatan: Seksyen Pentadbiran Dan Kewangan
+-
+  contact_id: 734
+  kod_lama: 1411020004
+  kod_baru: 
+  jabatan: Seksyen Penguatkuasa Dan Hasil Persekutuan
+-
+  contact_id: 735
+  kod_lama: 1411020005
+  kod_baru: 
+  jabatan: Seksyen Pembahagian Pusaka Kecil
+-
+  contact_id: 736
+  kod_lama: 1411020006
+  kod_baru: 
+  jabatan: Seksyen Hakmilik Strata
+-
+  contact_id: 737
+  kod_lama: 1411020007
+  kod_baru: 
+  jabatan: Seksyen Audit Pengurusan Dan Pemantauan
+-
+  contact_id: 738
+  kod_lama: 1411020008
+  kod_baru: 
+  jabatan: Seksyen Pengurusan Dan Perundangan Tanah
+-
+  contact_id: 739
+  kod_lama: 1411020009
+  kod_baru: 114007
+  jabatan: Seksyen Penyelidikan Dan Perancangan
+-
+  contact_id: 740
+  kod_lama: 1411020010
+  kod_baru: 
+  jabatan: Seksyen Komputer Pentadbiran Tanah
+-
+  contact_id: 741
+  kod_lama: 1411020011
+  kod_baru: 
+  jabatan: Seksyen Pasukan Petugas Khas
+-
+  contact_id: 742
+  kod_lama: 1411010008
+  kod_baru: 
+  jabatan: Seksyen Kartografi
+-
+  contact_id: 743
+  kod_lama: 1411010010
+  kod_baru: 
+  jabatan: Seksyen Pemetaan Utiliti
+-
+  contact_id: 744
+  kod_lama: 1411010011
+  kod_baru: 
+  jabatan: Seksyen Percetakan Peta
+-
+  contact_id: 745
+  kod_lama: 1411010015
+  kod_baru: 
+  jabatan: Seksyen Perancangan
+-
+  contact_id: 746
+  kod_lama: 1411020500
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 747
+  kod_lama: 1411020100
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 748
+  kod_lama: 1411020200
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 749
+  kod_lama: 1411020400
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 750
+  kod_lama: 1411020602
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 751
+  kod_lama: 1411020900
+  kod_baru: 
+  jabatan: JKPTG Persekutuan
+-
+  contact_id: 752
+  kod_lama: 1411021001
+  kod_baru: 
+  jabatan: KPTG Persekutuan
+-
+  contact_id: 753
+  kod_lama: 1411021002
+  kod_baru: 
+  jabatan: KPTG Persekutuan
+-
+  contact_id: 754
+  kod_lama: 1411021102
+  kod_baru: 
+  jabatan: KPTG Persekutuan
+-
+  contact_id: 755
+  kod_lama: 1411021200
+  kod_baru: 
+  jabatan: KPTG Persekutuan
+-
+  contact_id: 756
+  kod_lama: 1411021300
+  kod_baru: 
+  jabatan: KPTG Persekutuan
+-
+  contact_id: 757
+  kod_lama: 1411021400
+  kod_baru: 
+  jabatan: KPTG Persekutuan
+-
+  contact_id: 758
+  kod_lama: 1411010004
+  kod_baru: 
+  jabatan: SEKSYEN TOPOGRAFI SARAWAK
+-
+  contact_id: 759
+  kod_lama: 1360010000
+  kod_baru: 
+  jabatan: Pejabat/Bahagian di Kementerian Pengajian Tinggi
+-
+  contact_id: 760
+  kod_lama: 1364040000
+  kod_baru: 
+  jabatan: Universiti Teknologi Malaysia
+-
+  contact_id: 761
+  kod_lama: 1364050000
+  kod_baru: 
+  jabatan: Universiti Putra Malaysia
+-
+  contact_id: 762
+  kod_lama: 1364060000
+  kod_baru: 
+  jabatan: Universiti Islam Antarabangsa Malaysia
+-
+  contact_id: 763
+  kod_lama: 1364080000
+  kod_baru: 
+  jabatan: Universiti Malaysia Sabah
+-
+  contact_id: 764
+  kod_lama: 1364090000
+  kod_baru: 
+  jabatan: Universiti Malaysia Sarawak
+-
+  contact_id: 765
+  kod_lama: 1364110000
+  kod_baru: 
+  jabatan: Universiti Teknologi MARA
+-
+  contact_id: 766
+  kod_lama: 1364130000
+  kod_baru: 
+  jabatan: Kolej Universiti Sains dan Teknologi Malaysia
+-
+  contact_id: 767
+  kod_lama: 1364150000
+  kod_baru: 
+  jabatan: Kolej Universiti Teknikal Kebangsaan
+-
+  contact_id: 768
+  kod_lama: 1365060000
+  kod_baru: 
+  jabatan: Politeknik Kota
+-
+  contact_id: 769
+  kod_lama: 1365070000
+  kod_baru: 
+  jabatan: Politeknik Kuching
+-
+  contact_id: 770
+  kod_lama: 3730000000
+  kod_baru: 373
+  jabatan: Kementerian Pelancongan
+-
+  contact_id: 771
+  kod_lama: 1411010026
+  kod_baru: 
+  jabatan: Seksyen Topografi Wilayah Utara
+-
+  contact_id: 772
+  kod_lama: 1365110000
+  kod_baru: 
+  jabatan: Politeknik Mukah
+-
+  contact_id: 773
+  kod_lama: 1365130000
+  kod_baru: 
+  jabatan: Politeknik Port Dickson
+-
+  contact_id: 774
+  kod_lama: 1365140000
+  kod_baru: 
+  jabatan: Politeknik Seberang Perai
+-
+  contact_id: 775
+  kod_lama: 1365180000
+  kod_baru: 
+  jabatan: Politeknik Sultan Idris Shah
+-
+  contact_id: 776
+  kod_lama: 1369990000
+  kod_baru: 
+  jabatan: Lain-lain Jabatan/Agensi di bawah Kementerian
+-
+  contact_id: 777
+  kod_lama: 1364140000
+  kod_baru: 
+  jabatan: Kolej Universiti Tun Hussein Onn
+-
+  contact_id: 778
+  kod_lama: 1364160000
+  kod_baru: 
+  jabatan: Kolej Universiti Islam Malaysia
+-
+  contact_id: 779
+  kod_lama: 1364170000
+  kod_baru: 
+  jabatan: Kolej Universiti Kejuruteraan dan Teknologi Malaysia
+-
+  contact_id: 780
+  kod_lama: 1364180000
+  kod_baru: 
+  jabatan: Kolej Universiti Kejuruteraan Utara Malaysia
+-
+  contact_id: 781
+  kod_lama: 1365010000
+  kod_baru: 
+  jabatan: Politeknik Dungun
+-
+  contact_id: 782
+  kod_lama: 1365160000
+  kod_baru: 
+  jabatan: Politeknik Sultan Azlan Shah
+-
+  contact_id: 783
+  kod_lama: 1280000000
+  kod_baru: 
+  jabatan: Kementerian Undang-undang/Kehakiman
+-
+  contact_id: 784
+  kod_lama: 1365020000
+  kod_baru: 
+  jabatan: Politeknik Johor Bharu
+-
+  contact_id: 785
+  kod_lama: 1370010000
+  kod_baru: 
+  jabatan: Bhgn/Pejabat di Kementerian Kebudayaan
+-
+  contact_id: 786
+  kod_lama: 1365030000
+  kod_baru: 
+  jabatan: Politeknik Kota Bharu
+-
+  contact_id: 787
+  kod_lama: 1365040000
+  kod_baru: 
+  jabatan: Politeknik Kota Kinabalu
+-
+  contact_id: 788
+  kod_lama: 1365100000
+  kod_baru: 
+  jabatan: Politeknik Muadzam Shah
+-
+  contact_id: 789
+  kod_lama: 1365190000
+  kod_baru: 
+  jabatan: Politeknik Sultan Salahuddin Abdul Aziz Shah
+-
+  contact_id: 790
+  kod_lama: 1365120000
+  kod_baru: 
+  jabatan: Politeknik Perlis
+-
+  contact_id: 791
+  kod_lama: 1365150000
+  kod_baru: 
+  jabatan: Politeknik Sultan Abdul Halim Muadzam Shah
+-
+  contact_id: 792
+  kod_lama: 1379990000
+  kod_baru: 
+  jabatan: Lain-lain Jab. di bawah Kem. Kebudayaan
+-
+  contact_id: 793
+  kod_lama: 1365200000
+  kod_baru: 
+  jabatan: Politeknik Ungku Omar 
+-
+  contact_id: 794
+  kod_lama: 1365080000
+  kod_baru: 
+  jabatan: Politeknik Tuanku Sultanah Bahiyah
+-
+  contact_id: 795
+  kod_lama: 1360000000
+  kod_baru: 
+  jabatan: Kementerian Pengajian Tinggi
+-
+  contact_id: 796
+  kod_lama: 1365170000
+  kod_baru: 
+  jabatan: Politeknik Sultan Haji Ahmad Shah
+-
+  contact_id: 797
+  kod_lama: 1365090000
+  kod_baru: 
+  jabatan: Politeknik Merlimau
+-
+  contact_id: 798
+  kod_lama: 1290000000
+  kod_baru: 
+  jabatan: Jabatan Yang Tiada Kementerian
+-
+  contact_id: 799
+  kod_lama: 1411021500
+  kod_baru: 
+  jabatan: Tanah dan Ukur Sabah
+-
+  contact_id: 800
+  kod_lama: 1364100000
+  kod_baru: 
+  jabatan: Universiti Pendidikan Sultan IDRIS (UPSI)
+-
+  contact_id: 801
+  kod_lama: 2052160000
+  kod_baru: 
+  jabatan: Pejabat Daerah dan Tanah Seremban
+-
+  contact_id: 802
+  kod_lama: 1320000000
+  kod_baru: 132
+  jabatan: Kementerian Perusahaan Perladangan Dan Komuditi
+-
+  contact_id: 803
+  kod_lama: 1011080000
+  kod_baru: 101108
+  jabatan: Jabatan Perkhidmatan Awam (JPA) Malaysia
+-
+  contact_id: 804
+  kod_lama: 1370000000
+  kod_baru: 
+  jabatan: Kementerian Kesenian
+-
+  contact_id: 805
+  kod_lama: 1410000000
+  kod_baru: 141
+  jabatan: Kementerian Sumber Asli Dan Alam Sekitar 
+-
+  contact_id: 806
+  kod_lama: 1411011400
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan WP Kuala Lumpur / Putrajaya
+-
+  contact_id: 807
+  kod_lama: 1411010025
+  kod_baru: 
+  jabatan: Seksyen Topografi Wilayah Timur
+-
+  contact_id: 808
+  kod_lama: 1411010027
+  kod_baru: 
+  jabatan: SEKSYEN TOPOGRAFI WILAYAH BARAT
+-
+  contact_id: 809
+  kod_lama: 1460000000
+  kod_baru: 146
+  jabatan: kEMENTERIAN DALAM NEGERI
+-
+  contact_id: 810
+  kod_lama: 1411010028
+  kod_baru: 
+  jabatan: Seksyen Topografi Wilayah Selatan
+-
+  contact_id: 811
+  kod_lama: 1440000000
+  kod_baru: 144
+  jabatan: KEMENTERIAN PERDAGANGAN DALAM NEGERI
+-
+  contact_id: 812
+  kod_lama: 3630000000
+  kod_baru: 363
+  jabatan: Kementerian Kewangan Negeri Sabah
+-
+  contact_id: 813
+  kod_lama: 1410000999
+  kod_baru: 
+  jabatan: Tanah dan Survei Sarawak
+-
+  contact_id: 814
+  kod_lama: 1450000000
+  kod_baru: 
+  jabatan: KEMENTERIAN PENERANGAN KOMUNIKASI & KEBUDAYAAN
+-
+  contact_id: 815
+  kod_lama: 3620000000
+  kod_baru: 362/364001
+  jabatan: Kementerian Pembangunan Luar Bandar Sabah
+-
+  contact_id: 816
+  kod_lama: 1410000998
+  kod_baru: 
+  jabatan: Jabatan Laut Semenanjung Malaysia 
+-
+  contact_id: 817
+  kod_lama: 2072080000
+  kod_baru: 207208
+  jabatan: Jabatan Hal Ehwal Agama IslamPulau Pinang
+-
+  contact_id: 818
+  kod_lama: 1410000996
+  kod_baru: 
+  jabatan: Marine Department Of Sabah
+-
+  contact_id: 819
+  kod_lama: 1410000010
+  kod_baru: 
+  jabatan: Jabatan Ukur dan Pemetaan Malaysia (JUPEM)
+-
+  contact_id: 820
+  kod_lama: 1450000000
+  kod_baru: 145
+  jabatan: Kementerian Penerangan Komunikasi & Kebudayaan
+-
+  contact_id: 821
+  kod_lama: 1470000000
+  kod_baru: 147
+  jabatan: KEMENTERIAN TENAGA
+-
+  contact_id: 822
+  kod_lama: 3650000000
+  kod_baru: 365/365001
+  jabatan: Kementerian Pembangunan Infrastruktur Sabah
+-
+  contact_id: 823
+  kod_lama: 3670000000
+  kod_baru: 367
+  jabatan: Kementerian Pembangunan Masyarakat & Hal Ehwal Pengguna
+-
+  contact_id: 824
+  kod_lama: 3640000000
+  kod_baru: 364
+  jabatan: Kementerian Pembangunan Pertanian Dan Industri Sabah
+-
+  contact_id: 825
+  kod_lama: 3740000000
+  kod_baru: 374
+  jabatan: Kementerian Pembangunan Sumber dan Kemajuan Teknologi
+-
+  contact_id: 826
+  kod_lama: 4820000000
+  kod_baru: 
+  jabatan: Kementerian  Kewangan dan Kemudahan Awam Sarawak
+-
+  contact_id: 827
+  kod_lama: 1010000001
+  kod_baru: 
+  jabatan: Agensi Penguatkuasaan Maritim Malaysia (APMM)
+-
+  contact_id: 828
+  kod_lama: 1010000002
+  kod_baru: 
+  jabatan: Badan Pencegah Rasuah (BPR)
+-
+  contact_id: 829
+  kod_lama: 4830000000
+  kod_baru: 483
+  jabatan: Kementerian Pembangunan Infrastruktur dan Perhubungan Sarawa
+-
+  contact_id: 830
+  kod_lama: 1010000003
+  kod_baru: 119010/101113/103003
+  jabatan: Bahagian Hal Ehwal Undang-Undang
+-
+  contact_id: 831
+  kod_lama: 4840000000
+  kod_baru: 484
+  jabatan: Kementerian Perancangan dan Pengurusan Sumber sarawak
+-
+  contact_id: 832
+  kod_lama: 1010000004
+  kod_baru: 101124
+  jabatan: Bahagian Istiadat Dan Urusetia Persidangan Antarabangsa
+-
+  contact_id: 833
+  kod_lama: 1010000005
+  kod_baru: 
+  jabatan: Bahagian Kabinet
+-
+  contact_id: 834
+  kod_lama: 1010000005
+  kod_baru: 
+  jabatan: Bahagian Kabinet
+-
+  contact_id: 835
+  kod_lama: 1010000006
+  kod_baru: 101125
+  jabatan: Bahagian Pengurusan Hartanah (BPH)
+-
+  contact_id: 836
+  kod_lama: 1010000007
+  kod_baru: 
+  jabatan: Bahagian Pengurusan Perkhidmatan Dan Sumber Manusia
+-
+  contact_id: 837
+  kod_lama: 4880000000
+  kod_baru: 
+  jabatan: Kementerian Perumahan Sarawak
+-
+  contact_id: 838
+  kod_lama: 1010000008
+  kod_baru: 
+  jabatan: Biro Bantuan Guaman (BBG)
+-
+  contact_id: 839
+  kod_lama: 1410000006
+  kod_baru: 
+  jabatan: Jabatan Mineral dan Geosains Malaysia (JMG)
+-
+  contact_id: 840
+  kod_lama: 1410000013
+  kod_baru: 
+  jabatan: Pusat Insfrastruktur Data Geospatial Negara (MaCGDI)
+-
+  contact_id: 841
+  kod_lama: 1410000011
+  kod_baru: 
+  jabatan: Jabatan Taman Laut Malaysia
+-
+  contact_id: 842
+  kod_lama: 4900000000
+  kod_baru: 490
+  jabatan: kementerian pembangunan perindustrian sarawak
+-
+  contact_id: 843
+  kod_lama: 1030000001
+  kod_baru: 
+  jabatan: Akademi Kastam Diraja Malaysia
+-
+  contact_id: 844
+  kod_lama: 4890000000
+  kod_baru: 
+  jabatan: Kementerian Pembangunan Luar Bandar dan Kemajuan
+-
+  contact_id: 845
+  kod_lama: 1030000003
+  kod_baru: 103404
+  jabatan: Bank Simpanan Nasional 
+-
+  contact_id: 846
+  kod_lama: 1030000002
+  kod_baru: 103401
+  jabatan: Bank Negara Malaysia
+-
+  contact_id: 847
+  kod_lama: 1030000004
+  kod_baru: 
+  jabatan: Institut Akauntan Malaysia
+-
+  contact_id: 848
+  kod_lama: 1030000005
+  kod_baru: 
+  jabatan: Institut Penilaian Negara
+-
+  contact_id: 849
+  kod_lama: 1030000006
+  kod_baru: 103102
+  jabatan: Jabatan Akauntan Negara
+-
+  contact_id: 850
+  kod_lama: 1030000007
+  kod_baru: 
+  jabatan: Jabatan Kastam Dan Eksais Diraja
+-
+  contact_id: 851
+  kod_lama: 1030000008
+  kod_baru: 103103
+  jabatan: Jabatan Kastam Diraja Malaysia
+-
+  contact_id: 852
+  kod_lama: 1030000009
+  kod_baru: 103104
+  jabatan: Jabatan Penilaian Dan Perkhidmatan Harta
+-
+  contact_id: 853
+  kod_lama: 1030000010
+  kod_baru: 103405
+  jabatan: Kumpulan Wang Simpanan Pekerja
+-
+  contact_id: 854
+  kod_lama: 1030000011
+  kod_baru: 103410
+  jabatan: Lembaga Hasil Dalam Negeri Malaysia
+-
+  contact_id: 855
+  kod_lama: 1030000012
+  kod_baru: 103406
+  jabatan: Lembaga Pembangunan Langkawi
+-
+  contact_id: 856
+  kod_lama: 1030000013
+  kod_baru: 
+  jabatan: Lembaga Perkhidmatan Kewangan Luar Pesisir Labuan
+-
+  contact_id: 857
+  kod_lama: 1030000014
+  kod_baru: 103010
+  jabatan: Perbendaharaan Malaysia Sabah
+-
+  contact_id: 858
+  kod_lama: 1030000015
+  kod_baru: 103011
+  jabatan: Perbendaharaan Malaysia Sarawak
+-
+  contact_id: 859
+  kod_lama: 1030000016
+  kod_baru: 103403
+  jabatan: Suruhanjaya Sekuriti
+-
+  contact_id: 860
+  kod_lama: 1410000001
+  kod_baru: 
+  jabatan: Institut Penyelidikan Hidraulik Kebangsaan Malaysia (NAHRIM)
+-
+  contact_id: 861
+  kod_lama: 1410000003
+  kod_baru: 
+  jabatan: Institut Tanah & Ukur Negara (INSTUN)
+-
+  contact_id: 862
+  kod_lama: 4930000000
+  kod_baru: 493
+  jabatan: kementerian pembangunan sosial dan urbanisasi sarawak
+-
+  contact_id: 863
+  kod_lama: 1410000002
+  kod_baru: 
+  jabatan: Institut Penyelidikan Perhutanan Malaysia (FRIM)
+-
+  contact_id: 864
+  kod_lama: 4990000000
+  kod_baru: 499/140408
+  jabatan: Kementerian Kemajuan Tanah Sarawak
+-
+  contact_id: 865
+  kod_lama: 1410000004
+  kod_baru: 
+  jabatan: Jabatan Ketua Pengarah Tanah Dan Galian (JKPTG)
+-
+  contact_id: 866
+  kod_lama: 1410000005
+  kod_baru: 
+  jabatan: Jabatan Alam Sekitar (JAS)
+-
+  contact_id: 867
+  kod_lama: 1410000007
+  kod_baru: 
+  jabatan: Jabatan Pengairan Dan Saliran (JPS)
+-
+  contact_id: 868
+  kod_lama: 1410000008
+  kod_baru: 
+  jabatan: Jabatan Perhutanan Semenanjung Malaysia (JPSM)
+-
+  contact_id: 869
+  kod_lama: 1410000009
+  kod_baru: 
+  jabatan: Jabatan Perlindungan Hidupan Liar Dan Taman Negara (PERHILITAN)
+-
+  contact_id: 870
+  kod_lama: 1410000012
+  kod_baru: 
+  jabatan: Jabatan Bio Keselamatan
+-
+  contact_id: 871
+  kod_lama: 4980000000
+  kod_baru: 498
+  jabatan: Kementerian Kemudahan Awam Sarawak
+-
+  contact_id: 872
+  kod_lama: 4950000000
+  kod_baru: 495
+  jabatan: Kementerian Permodenan Pertanian
+-
+  contact_id: 873
+  kod_lama: 2072130000
+  kod_baru: 207213
+  jabatan: Pejabat Daerah Dan Tanah Daerah Barat Daya
+-
+  contact_id: 874
+  kod_lama: 3690000000
+  kod_baru: 369
+  jabatan: kementerian pembangunan perindustrian sabah
+-
+  contact_id: 875
+  kod_lama: 4870000000
+  kod_baru: 487
+  jabatan: Kementerian Alam Sekitar dan Kesihatan Sarawak
+-
+  contact_id: 876
+  kod_lama: 1000
+  kod_baru: 101011
+  jabatan: Pejabat Pentadbir Tanah dan Galian Wilayah Persekutuan Putrajaya
+-
+  contact_id: 877
+  kod_lama: 6
+  kod_baru: 
+  jabatan: PEJABAT TANAH DAERAH LEDANG
+-
+  contact_id: 878
+  kod_lama: 4810000000
+  kod_baru: 481
+  jabatan: JABATAN KETUA MENTERI SARAWAK
+-
+  contact_id: 879
+  kod_lama: 1111111
+  kod_baru: 
+  jabatan: UNIVERSITI PERTAHANAN
+-
+  contact_id: 880
+  kod_lama: 1111122222
+  kod_baru: 
+  jabatan: UNIVERSITI SAINS ISLAM MALAYSIA (USIM)
+-
+  contact_id: 881
+  kod_lama: 4910000000
+  kod_baru: 
+  jabatan: KEMENTERIAN PELANCONGAN SARAWAK
+-
+  contact_id: 882
+  kod_lama: 4444444444
+  kod_baru: 116109
+  jabatan: PERBADANAN PENGURUSAN SISA PEPEJAL DAN PEMBERSIHAN AWAM
+-
+  contact_id: 883
+  kod_lama: 2087080000
+  kod_baru: 
+  jabatan: Majlis Daerah Kampar
+-
+  contact_id: 884
+  kod_lama: 1010101
+  kod_baru: 
+  jabatan: Majlis Daerah 
+-
+  contact_id: 885
+  kod_lama: 4960000000
+  kod_baru: 496
+  jabatan: KEMENTERIAN PEMBANGUNAN LUAR BANDAR SARAWAK
+-
+  contact_id: 886
+  kod_lama: 4970000000
+  kod_baru: 
+  jabatan: KEMENTERIAN PEMBANGUNAN BANDAR DAN PELANCONGAN
+...
