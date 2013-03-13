@@ -1454,7 +1454,16 @@ class CourseManagementController < ApplicationController
     @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
 
     if @course_implementation
-      @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+      #@students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{@course_implementation.id} AND student_status_id=5")
+      @students = CourseApplication.where("course_implementation_id = ? AND student_status_id = ?", @course_implementation.id, 5).
+                                    joins("LEFT JOIN profiles ON course_applications.profile_id = profiles.id
+                                           LEFT JOIN states ON profiles.state_id = states.id").
+                                    order("profiles.opis ASC").
+                                    select("course_applications.*, profiles.opis as profile_opis, profiles.name as profile_name,
+                                            profiles.hod as profile_hod, profiles.address1 as profile_address1,
+                                            profiles.address2 as profile_address2, profiles.address3 as profile_address3,
+                                            states.description as profile_state")
+      @opis_collections = @students.map(&:profile_opis).uniq
     end
 
     rujukan = LatestApproveReference.find_by_course_department_id(@course_implementation.course.course_department_id)
@@ -1471,18 +1480,55 @@ class CourseManagementController < ApplicationController
     params[:surat_sah_content][:ref_no] = params[:rujukan_kami]
     params[:surat_sah_content][:letter_date] = params[:tarikh_surat_month]+"/"+params[:tarikh_surat_day]+"/"+params[:tarikh_surat_year]
     salinan_kepada = params[:salinan_kepada]
-    ads_letter = SuratSahContent.find_by_course_implementation_id(@course_implementation.id)
-    if ads_letter
-      ads_letter.update_attributes(params[:surat_sah_content])
+
+    @rujukan_kami = params[:rujukan_kami]
+    @tarikh_surat_day = params[:tarikh_surat_day]
+    @tarikh_surat_day = "   " if params[:tarikh_surat_day] == ""
+    @tarikh_surat_month = params[:tarikh_surat_month]
+    @tarikh_surat_year = params[:tarikh_surat_year]
+
+    tarikh_surat = Date.new(@tarikh_surat_year.to_i, @tarikh_surat_month.to_i, @tarikh_surat_day.to_i)
+    #tarikh_surat = Time.new
+    @tarikh = msian_date_very_formal(tarikh_surat)
+
+    @perkara = params[:surat_sah_content][:perkara]
+    @perenggan = params[:surat_sah_content][:perenggan]
+
+    @signature = Signature.find_by_filename(params[:signature_file])
+    if @signature
+      @tandatangan_nama = @signature.person_name.upcase
+      if @signature.person_position != ""
+        @tandatangan_jawatan = @signature.person_position.split(" ").map! { |e| e.capitalize }.join(" ")
+      else
+        @tandatangan_jawatan = ""
+      end
     else
-      new_ads_letter = SuratSahContent.new(params[:surat_sah_content])
-      new_ads_letter.save!
+      @tandatangan_nama = "         "
+      @tandatangan_jawatan = "         "
     end
+
+    @salinan_kepada = params[:salinan_kepada]
+
+    #ads_letter = SuratSahContent.find_by_course_implementation_id(@course_implementation.id)
+    #if ads_letter
+    #  ads_letter.update_attributes(params[:surat_sah_content])
+    #else
+    #  new_ads_letter = SuratSahContent.new(params[:surat_sah_content])
+    #  new_ads_letter.save!
+    #end
 
     filename = "surat_sah_"+ "#{@course_implementation.id}.pdf"
 
-    pdf_surat_pengesahan(filename, @students)
-    redirect_to("/surat_pengesahan/" + filename)
+    #pdf_surat_pengesahan(filename, @students)
+    #redirect_to("/surat_pengesahan/" + filename)
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => filename,
+               :page_size => 'A4'
+      end
+    end
   end
 
   def jana_surat_takhadir_pdf
