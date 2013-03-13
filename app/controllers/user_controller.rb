@@ -511,6 +511,7 @@ class UserController < ApplicationController
     
     if params[:user][:ic_number].blank? && params[:user][:password].blank?
       user = User.find(44)
+  #    user = User.find(12975)
     else
       user = User.authenticate(params[:user][:ic_number], params[:user][:password])
     end

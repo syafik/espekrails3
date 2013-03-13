@@ -12,10 +12,10 @@ function JanaSuratTawaran(schedule_id) {
 }
 
 function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 150;
-    $('popmenu').innerHTML = "<ul>" + 
-                            "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
-					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+    $('#popmenu').css({"width":150});
+    $('#popmenu').html("<ul>" +
+                            "<li><a href=\""  + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+					        "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
 					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
 					        //"<hr size=1>" +
 					        //"<li><a href=\"javascript: sahHadirSelected(document.accepted_form)\">&nbsp;&nbsp;Batal Kehadiran</a>" +

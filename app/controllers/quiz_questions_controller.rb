@@ -124,7 +124,9 @@ class QuizQuestionsController < ApplicationController
     @quiz_question = QuizQuestion.new(params[:quiz_question])
 
     if @quiz_question.save
-      if @quiz.quiz_type_id == 3
+      if @quiz.quiz_type_id == 1
+        QuizTruefalse.create(:quiz_question_id => @quiz_question.id, :answer => params[:quiz_truefalse][:answer])
+      elsif @quiz.quiz_type_id == 3
 
       else
         5.times do |n|

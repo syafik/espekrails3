@@ -1,0 +1,10 @@
+<% if @ret == "0" %>
+  $('#course_name').html("Kod kursus tidak wujud. Sila masukkan kod yang lain.")
+//  alert('Kod kursus tidak wujud. Sila masukkan kod yang lain.');
+  $('#course_implementation_code').focus();
+<%#*/  $('#course_implementation_code').select();%>
+
+<% else %>
+  $('#course_name').html("<%= @ret %>")
+  $('#course_application_course_implementation_id').val("<%= @course_implementation.id %>")
+<% end %>

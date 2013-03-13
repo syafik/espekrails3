@@ -872,7 +872,7 @@ class CourseApplicationsController < ApplicationController
   def create
     init_load
     @profile = Profile.new(params[:profile])
-    @profile.date_of_birth = params[:m_dob]+"/"+params[:d_dob]+"/"+params[:y_dob]
+    @profile.date_of_birth = Date.new(params[:y_dob],params[:m_dob],params[:d_dob])
     @relative = Relative.new(params[:relative])
     @relative.profile = @profile
     @relative.save

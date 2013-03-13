@@ -49,6 +49,10 @@ module UserEngine
     end
     # Join tables for users <-> roles, and roles <-> permissions
     case key
+    when :role_table
+      "roles"
+    when :permission_table
+      "permissions"
     when :user_role_table
       "#{LoginEngine.config(:user_table)}_#{self.config(:role_table)}"
     when :permission_role_table
@@ -236,8 +240,8 @@ module UserEngine
     action = options[:action]
     logger.debug controller
     # use the current controller/action if none is given in options
-#    controll ||= controller.name
-#    action ||= controller.action_name
+    #    controll ||= controller.name
+    #    action ||= controller.action_name
     
     if !user?
       logger.debug "checking guest authorisation for #{controll}/#{action}"
