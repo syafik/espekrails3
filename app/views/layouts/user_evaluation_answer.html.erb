@@ -2,7 +2,7 @@
 <head>
   <title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
   <%= stylesheet_link_tag 'style' %>
-  <%= javascript_include_tag :defaults %>
+  <%#= javascript_include_tag :defaults %>
 <style>
 b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
 th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
@@ -214,7 +214,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 </table>
 <div align="center"><p style="color: green; font-weight:bold;"><%= flash[:notice] %></p></div>
 
-<%= @content_for_layout %>
+<%= yield %>
 </body>
 </html>
 

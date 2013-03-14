@@ -623,7 +623,9 @@ InstunRails3::Application.routes.draw do
       get 'new_obj'
     end
   end
-
+  match '/evaluations/user_hyouka' => 'evaluations#user_hyouka', :via => [:get]
+  match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:get]
+  match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:post]
   resources :evaluations do
     get 'trainer_report'
     get 'facility_report'

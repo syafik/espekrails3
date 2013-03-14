@@ -16,61 +16,61 @@ class CourseApplication < ActiveRecord::Base
 
 
   validates_presence_of :course_implementation, 
-                       :message => ": masukkan kod kursus"
+    :message => ": masukkan kod kursus"
 
   validates_uniqueness_of :profile_id, 
-                          :scope => "course_implementation_id",
-	 		 			  :message => "Data peserta sudah ada untuk kursus ini"
+    :scope => "course_implementation_id",
+    :message => "Data peserta sudah ada untuk kursus ini"
 
   def attendance_percentage
 		self.attendances.size * 100/(self.course_implementation.jumlah_hari.to_i*3)
   end
 
   def all_answered?
-	ans = EvaluationAnswer.find_by_sql("SELECT id FROM evaluation_answers WHERE course_application_id=#{self.id} AND course_implementation_id=#{self.course_implementation.id} AND answer ISNULL")
-	if ans.size > 0
-		return false
-	else
-		return true
-	end
+    ans = EvaluationAnswer.find_by_sql("SELECT id FROM evaluation_answers WHERE course_application_id=#{self.id} AND course_implementation_id=#{self.course_implementation.id} AND answer ISNULL")
+    if ans.size > 0
+      return false
+    else
+      return true
+    end
   
   end
   
   def done_evaluation?
-	ans = EvaluationAnswer.find_by_sql("SELECT * FROM evaluation_answers where course_application_id=#{self.id} AND course_implementation_id=#{self.course_implementation.id}")
-	if ans.size > 0
-		return true
-	else
-		return false
-	end
+    ans = EvaluationAnswer.find_by_sql("SELECT * FROM evaluation_answers where course_application_id=#{self.id} AND course_implementation_id=#{self.course_implementation.id}")
+    if ans.size > 0
+      return true
+    else
+      return false
+    end
   end
   
   def done_quiz(quiz_id)
-	ans = QuizAnswer.find_by_sql("SELECT * FROM quiz_answers where course_application_id=#{self.id} AND course_implementation_id=#{self.course_implementation.id} AND quiz_id =#{quiz_id.to_i}")
-	if ans.size > 0
-		return true
-	else
-		return false
-	end
+    ans = QuizAnswer.find_by_sql("SELECT * FROM quiz_answers where course_application_id=#{self.id} AND course_implementation_id=#{self.course_implementation.id} AND quiz_id =#{quiz_id.to_i}")
+    if ans.size > 0
+      return true
+    else
+      return false
+    end
   end
   
   def layak?
-	if self.layak_sijil == 1 
-		a = "Layak"
-	elsif self.layak_sijil == nil
-		a = "n/a"
-	else
-		a = "Tidak"
-	end
+    if self.layak_sijil == 1
+      a = "Layak"
+    elsif self.layak_sijil == nil
+      a = "n/a"
+    else
+      a = "Tidak"
+    end
   	return a
   end
   
   def fee_paid?
   	if self.payment_date != nil
-		return "Y"
-	else
-		return "T"
-	end
+      return "Y"
+    else
+      return "T"
+    end
   end
   
 	def getAttPercent(student_id)
@@ -98,17 +98,17 @@ class CourseApplication < ActiveRecord::Base
 	  i = 0
 	  for st in students
 	  	if st.id == self.id
-			if (i != students.size-1)
-				nxt  = students[i+1].id
-			else
-				nxt  = students[0].id
-			end
-			prev = students[i-1].id
-			arr = [i,st.id,nxt,prev]
+        if (i != students.size-1)
+          nxt  = students[i+1].id
+        else
+          nxt  = students[0].id
+        end
+        prev = students[i-1].id
+        arr = [i,st.id,nxt,prev]
 
-			break
-		end
-		i = i + 1
+        break
+      end
+      i = i + 1
 	  end
 	  
 	  return arr

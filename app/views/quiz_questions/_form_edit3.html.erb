@@ -17,10 +17,6 @@
     <td><%= text_field "quiz_question", "markah" %></td>
   </tr>
   <tr>
-    <td align="right"><b>Format Jawapan :</b></td>
-    <td><%= @quiz_question.quiz_type.description %></td>
-  </tr>
-  <tr>
     <td valign=top align=right><b>Jawapan :</b></td>
     <td><%= text_area 'quiz_subjective', 'answer', :rows => 5  %>
       <%= hidden_field 'quiz_subjective', 'quiz_question_id', :value=> @quiz_question.id %></td>

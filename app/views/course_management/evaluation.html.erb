@@ -1,36 +1,36 @@
 <script>
 
-function rewritePopupContent(controller, objid, objname) {
+  function rewritePopupContent(controller, objid, objname) {
     $('#popmenu').css({"width":200});
     $('#popmenu').html("<ul>" +
-						"<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Lihat Jawapan</a>" +
-					        //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
-					        //"<hr size=1>" +
-					        //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
-					        "</ul>")
-}
+      "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Lihat Jawapan</a>" +
+      //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
+    //"<hr size=1>" +
+    //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
+    "</ul>")
+  }
 </script>
 
 <script>
 
-function checkAll(df) {
-  for (i=1; i<df.elements.length; i++ )
-  {
-     if (df.elements[i].type == "checkbox")
-     {
-       df.elements[i].checked = df.check_all.checked
-     } 
+  function checkAll(df) {
+    for (i=1; i<df.elements.length; i++ )
+    {
+      if (df.elements[i].type == "checkbox")
+      {
+        df.elements[i].checked = df.check_all.checked
+      }
+    }
   }
-}
 </script>
-    
- <!----------------------------------------------------------------------------------------->
- <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=@course_implementation.code if @course_implementation%>&nbsp; <%=@course_implementation.course.name.upcase if @course_implementation%>&nbsp;&nbsp;(<%=@course_implementation.tempoh if @course_implementation%>)</font></b></td>
-    </tr>
- </table>
-  <br>
+
+<!----------------------------------------------------------------------------------------->
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=@course_implementation.code if @course_implementation%>&nbsp; <%=@course_implementation.course.name.upcase if @course_implementation%>&nbsp;&nbsp;(<%=@course_implementation.tempoh if @course_implementation%>)</font></b></td>
+  </tr>
+</table>
+<br />
 <%= render :partial => 'apply_header'%>
 
 <%= render :partial => 'evaluation'%>
