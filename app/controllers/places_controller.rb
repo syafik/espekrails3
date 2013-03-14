@@ -43,7 +43,7 @@ class PlacesController < ApplicationController
   end
 
   def search_by_state
-    @places = Place.find(:all, :conditions => "state_id ILIKE '#{params[:state_id]}'", :order => "state_id")
+    @places = Place.find(:all, :conditions => "state_id = '#{params[:state_id]}'", :order => "state_id")
   end
   
   def search_by_code
