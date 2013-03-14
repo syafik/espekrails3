@@ -52,6 +52,7 @@ class AjaxController < ApplicationController
   end
   
   def ajax_nric
+    @dr = params[:dr]
     @profile = Profile.find_by_ic_number(params[:ic_number])
     #@course_application = CourseApplication.find_by_profile_id(@profile.id)
     #@course_application = CourseApplication.find(:all, :conditions=>"profile_id = #{@profile.id} AND course_implementation_id = #{params[:course_implementation_id]}")
@@ -59,10 +60,10 @@ class AjaxController < ApplicationController
       #if @course_application
       #  render :text => "2"
       #else
-	    render :text => "1"
+	    @ret = "1"
       #end
     else
-      render :text => "0"
+      @ret =  "0"
     end
   end
 
@@ -148,6 +149,15 @@ class AjaxController < ApplicationController
   end
   
   def find_course_by_code
+    params[:code] = params[:code].gsub(/_/,"/")
+    @course_implementation = CourseImplementation.find_by_code(params[:code])
+    if @course_implementation
+      @ret = "#{@course_implementation.course.name.upcase}"
+    else
+      @ret = "0"
+    end
+  end
+  def find_course_by_code_ca
     params[:code] = params[:code].gsub(/_/,"/")
     @course_implementation = CourseImplementation.find_by_code(params[:code])
     if @course_implementation

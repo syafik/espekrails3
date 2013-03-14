@@ -3,10 +3,6 @@
   <% @userole.each do |userole| %>
     <%= userole.name %>
   <% end %>
-<%= debug @user.roles.last.name.downcase%>
-<%# for userole in @userole %>
-<%#= userole.name %>
-<%#end %>
 <frame src="/menu/<%=@user.roles.last.name.downcase.gsub(' ', '_')%>" name="leftFrame" scrolling="AUTO" noresize  frameborder="NO">
 <frame src="/main/home" name="main" frameborder="NO" scrolling="AUTO">
       </frameset>

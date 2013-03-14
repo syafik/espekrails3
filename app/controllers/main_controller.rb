@@ -4,7 +4,7 @@ class MainController < ApplicationController
   respond_to :html
   def index
     @roles = Role.all
-    @user = User.find(44)
+    @user = session[:user]
 #    session[:user] = @user
     @userole = @user.roles
   end

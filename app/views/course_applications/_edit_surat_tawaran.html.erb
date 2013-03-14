@@ -1,31 +1,6 @@
 <% 
 ###set default value
-t = Time.now
-@current_day= t.strftime("%d")
-@current_month= t.strftime("%m")
-@current_year= t.strftime("%Y")
 
-#@schedule = CourseImplementation.find_by_code(params[:course_implementation_code])
-if params[:id] 
-  @schedule = CourseImplementation.find(params[:id])
-elsif params[:course_implementation_code]
-  @schedule = CourseImplementation.find_by_code(params[:course_implementation_code])
-else
-  #"Sila cari jalan how to exit from this point"
-  #@schedule = CourseImplementation.find_by_code(params[:course_implementation_code]
-end
-
-@tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " +
-  "#{$MONTH_NAMES[@schedule.date_plan_start.to_formatted_s(:my_format_month).to_i - 1]} " +
-  "#{@schedule.date_plan_start.to_formatted_s(:my_format_year)}" +  " HINGGA " +
-  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " +
-  "#{$MONTH_NAMES[@schedule.date_plan_end.to_formatted_s(:my_format_month).to_i - 1]} " +
-  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
-
-@tarikh_tutup_kursus = "" +
-  "#{@schedule.date_plan_end.to_formatted_s(:my_format_day)} " +
-  "#{$MONTH_NAMES[@schedule.date_plan_end.to_formatted_s(:my_format_month).to_i - 1]} " +
-  "#{@schedule.date_plan_end.to_formatted_s(:my_format_year)}"
 
 baris1 = "JEMPUTAN RASMI UNTUK MENGHADIRI KURSUS DI INSTITUT TANAH DAN UKUR NEGARA"
 baris2 = "#{@schedule.code} - #{@schedule.course.name.upcase}"
@@ -88,18 +63,21 @@ cetak_komputer = "1"
 cetak_komputer = surat_tawaran_content.is_cetakan_komputer if surat_tawaran_content
 format_surat = "1"
 format_surat = surat_tawaran_content.format_surat if surat_tawaran_content
+perenggan = []
 perkara = @perkara
 perkara = surat_tawaran_content.perkara if surat_tawaran_content
-perenggan1 = @perenggan1
-perenggan1 = surat_tawaran_content.perenggan1 if surat_tawaran_content
-perenggan2 = @perenggan2
-perenggan2 = surat_tawaran_content.perenggan2 if surat_tawaran_content
-perenggan3 = @perenggan3
-perenggan3 = surat_tawaran_content.perenggan3 if surat_tawaran_content
-perenggan4 = @perenggan4
-perenggan4 = surat_tawaran_content.perenggan4 if surat_tawaran_content
-perenggan5 = @perenggan5
-perenggan5 = surat_tawaran_content.perenggan5 if surat_tawaran_content
+perenggan[0] = perenggan1 = @perenggan1
+perenggan[0] = perenggan1 = surat_tawaran_content.perenggan1 if surat_tawaran_content
+perenggan[1] = perenggan2 = @perenggan2
+perenggan[1] = perenggan2 = surat_tawaran_content.perenggan2 if surat_tawaran_content
+perenggan[2] = perenggan3 = @perenggan3
+perenggan[2] = perenggan3 = surat_tawaran_content.perenggan3 if surat_tawaran_content
+perenggan[3] = perenggan4 = @perenggan4
+perenggan[3] = perenggan4 = surat_tawaran_content.perenggan4 if surat_tawaran_content
+perenggan[4] = perenggan5 = @perenggan5
+perenggan[4] = perenggan5 = surat_tawaran_content.perenggan5 if surat_tawaran_content
+
+str_perenggan = "<p>#{perenggan.join('</p><p>')}</p>"
 %>
 
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
@@ -274,76 +252,84 @@ perenggan5 = surat_tawaran_content.perenggan5 if surat_tawaran_content
         }
 
         function updateJawatan() {
-          var staff_id  = $('contact_officer_id').value
-          data = "staff_id=" + staff_id
-	
-          if ($('contact_officer_id').value!="") {
-            //$('intr_date_start').innerHTML = "checking date.."
-            ajax_find_jawatan('/ajax/staff_find_jawatan', data)
-          }
+
+            var staff_id = $('#contact_officer_id').val();
+
+            if ($('#contact_officer_id').val() != "") {
+                ajax_find_jawatan('/ajax/staff_find_jawatan', staff_id);
+            }
         }
 
         function ajax_find_jawatan(url, data) {
-          var myAjax = new Ajax.Request(
-          url,
-          {method: 'post', parameters: data, onComplete: ajax_find_jawatan_respon}
-        );
+            $.ajax({
+                url: url,
+                type:'post',
+                data: {
+                    'staff_id' : data
+                },
+                success: function(text) {
+                    ajax_find_jawatan_respon(text);
+                }
+            });
         }
 
-        function ajax_find_jawatan_respon(originalRequest) {
-          //alert(originalRequest.responseText );return;
-          if (originalRequest.responseText == "0") {
-            alert("Staff not found");
-            return;
-          }
+        function ajax_find_jawatan_respon(text) {
+            if (text == "0") {
+                alert("Staff not found");
+                return;
+            }
 
-          var dlist = originalRequest.responseText.split(",");
-          var jawatan = dlist[0]
-          var email   = dlist[1]
-          var fax		= dlist[2]
-          var office 	= dlist[3]
+            var dlist = text.split(",");
+            var jawatan = dlist[0];
+            var email = dlist[1];
+            var fax = dlist[2];
+            var office = dlist[3];
 
-          $('penyelaras_jawatan').value   = jawatan
-          $('penyelaras_email').value = email
-          $('penyelaras_fax').value = fax
-          $('penyelaras_telefon').value = office
+            $('#penyelaras_jawatan').val(jawatan);
+            $('#penyelaras_email').val(email);
+            $('#penyelaras_fax').val(fax);
+            $('#penyelaras_telefon').val(office);
 
         }
 
         function updateJawatan2() {
-          var staff_id  = $('contact_officer_id2').value
-          data = "staff_id=" + staff_id
+            var staff_id = $('#contact_officer_id2').val();
 
-          if ($('contact_officer_id2').value!="") {
-            //$('intr_date_start').innerHTML = "checking date.."
-            ajax_find_jawatan2('/ajax/staff_find_jawatan', data)
-          }
+            if ($('#contact_officer_id2').val() != "") {
+                ajax_find_jawatan2('/ajax/staff_find_jawatan', staff_id)
+            }
         }
 
         function ajax_find_jawatan2(url, data) {
-          var myAjax = new Ajax.Request(
-          url,
-          {method: 'post', parameters: data, onComplete: ajax_find_jawatan_respon2}
-        );
+            $.ajax({
+                url: url,
+                type:'post',
+                data: {
+                    'staff_id' : data
+                },
+                success: function(text) {
+                    ajax_find_jawatan_respon2(text);
+                }
+            });
         }
 
-        function ajax_find_jawatan_respon2(originalRequest) {
+        function ajax_find_jawatan_respon2(text) {
           //alert(originalRequest.responseText );return;
-          if (originalRequest.responseText == "0") {
-            alert("Staff not found");
-            return;
-          }
+            if (text == "0") {
+                alert("Staff not found");
+                return;
+            }
 
-          var dlist = originalRequest.responseText.split(",");
-          var jawatan = dlist[0]
-          var email   = dlist[1]
-          var fax		= dlist[2]
-          var office 	= dlist[3]
+            var dlist = text.split(",");
+            var jawatan = dlist[0]
+            var email = dlist[1]
+            var fax = dlist[2]
+            var office = dlist[3]
 
-          $('penyelaras_jawatan2').value   = jawatan
-          $('penyelaras_email2').value = email
-          $('penyelaras_fax2').value = fax
-          $('penyelaras_telefon2').value = office
+            $('#penyelaras_jawatan2').val(jawatan);
+            $('#penyelaras_email2').val(email);
+            $('#penyelaras_fax2').val(fax);
+            $('#penyelaras_telefon2').val(office);
 
         }
 
@@ -431,30 +417,36 @@ perenggan5 = surat_tawaran_content.perenggan5 if surat_tawaran_content
           </span></td>
       </tr>
       <tr>
-        <td align="right"><strong>Perenggan 1:</strong></td>
+        <td align="right"><strong>Perenggan :</strong></td>
         <td><span class="blockintro">&nbsp; </span>
-          <textarea id="surat_tawaran_content_perenggan1" name="surat_tawaran_content[perenggan1]" cols="80" rows="6" style="width: 550"><%=perenggan1%></textarea></td>
+          <%= text_area_tag "surat_tawaran_content[perenggan]", str_perenggan, :class => "tinymce", :rows => 40, :cols => 120, :id => "surat_tawaran_content_perenggan" %>
+        </td>
       </tr>
-      <tr>
-        <td align="right"><strong>Perenggan 2:</strong></td>
-        <td><span class="blockintro">&nbsp; </span>
-          <textarea id="surat_tawaran_content_perenggan2" name="surat_tawaran_content[perenggan2]" cols="80" rows="6" style="width: 550"><%=perenggan2%></textarea></td>
-      </tr>
-      <tr>
-        <td align="right"><strong>Perenggan 3:</strong></td>
-        <td><span class="blockintro">&nbsp; </span>
-          <textarea id="surat_tawaran_content_perenggan3" name="surat_tawaran_content[perenggan3]" cols="80" rows="6" style="width: 550"><%=perenggan3%></textarea></td>
-      </tr>
-      <tr>
-        <td align="right"><strong>Perenggan 4:</strong></td>
-        <td><span class="blockintro">&nbsp; </span>
-          <textarea id="surat_tawaran_content_perenggan4" name="surat_tawaran_content[perenggan4]" cols="80" rows="6" style="width: 550"><%=perenggan4%></textarea></td>
-      </tr>
-      <tr>
-        <td align="right"><strong>Perenggan 5:</strong></td>
-        <td><span class="blockintro">&nbsp; </span>
-          <textarea id="surat_tawaran_content_perenggan5" name="surat_tawaran_content[perenggan5]" cols="80" rows="6" style="width: 550"><%=perenggan5%></textarea></td>
-      </tr>
+      <!--<tr>-->
+        <!--<td align="right"><strong>Perenggan 1:</strong></td>-->
+        <!--<td><span class="blockintro">&nbsp; </span>-->
+          <!--<textarea id="surat_tawaran_content_perenggan1" name="surat_tawaran_content[perenggan1]" cols="80" rows="6" style="width: 550"><%=perenggan1%></textarea></td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td align="right"><strong>Perenggan 2:</strong></td>-->
+        <!--<td><span class="blockintro">&nbsp; </span>-->
+          <!--<textarea id="surat_tawaran_content_perenggan2" name="surat_tawaran_content[perenggan2]" cols="80" rows="6" style="width: 550"><%=perenggan2%></textarea></td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td align="right"><strong>Perenggan 3:</strong></td>-->
+        <!--<td><span class="blockintro">&nbsp; </span>-->
+          <!--<textarea id="surat_tawaran_content_perenggan3" name="surat_tawaran_content[perenggan3]" cols="80" rows="6" style="width: 550"><%=perenggan3%></textarea></td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td align="right"><strong>Perenggan 4:</strong></td>-->
+        <!--<td><span class="blockintro">&nbsp; </span>-->
+          <!--<textarea id="surat_tawaran_content_perenggan4" name="surat_tawaran_content[perenggan4]" cols="80" rows="6" style="width: 550"><%=perenggan4%></textarea></td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td align="right"><strong>Perenggan 5:</strong></td>-->
+        <!--<td><span class="blockintro">&nbsp; </span>-->
+          <!--<textarea id="surat_tawaran_content_perenggan5" name="surat_tawaran_content[perenggan5]" cols="80" rows="6" style="width: 550"><%=perenggan5%></textarea></td>-->
+      <!--</tr>-->
       <tr>
         <td align="right" valign="TOP">&nbsp;</td>
         <td>&nbsp;</td>
@@ -469,7 +461,7 @@ perenggan5 = surat_tawaran_content.perenggan5 if surat_tawaran_content
           select(:signature, :filename, @options, :name=>"signature_file", :onchange=>"displaySignature(this.value)", :style=>"width: 300;")
         %> <span class="blockintro"> <a href="javascript: MM_openBrWindow('/signatures/list_popup','','scrollbars=yes,width=700,height=400')">Tambah/Kemaskini/Padam</a></span><br />
           <span id="gambar_sain"></span>
-          <%= hidden_field 'surat_tawaran_content', 'tandatangan_nama', :value => t.person_name%>
+          <%= hidden_field 'surat_tawaran_content', 'tandatangan_nama', :value => @signatures.last.person_name%>
           <%= hidden_field 'surat_tawaran_content', 'tandatangan_jawatan'%></td>
       <script>
         function displaySignature(file) {

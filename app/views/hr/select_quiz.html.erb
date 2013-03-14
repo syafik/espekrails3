@@ -154,8 +154,7 @@ the_year = params[:planning_year]
     sql = "select vd.* FROM course_implementations cimp INNER JOIN vw_detailed_courses vd ON vd.id=cimp.id
 WHERE cimp.id IN(select course_implementation_id FROM course_applications ca INNER JOIN employments e ON e.profile_id=ca.profile_id INNER JOIN
 course_implementations ci ON ci.id=ca.course_implementation_id WHERE e.place_id=#{session[:user].profile.employments[0].place_id})
-#{sch_dept} #{sch_month} #{sch_year} ORDER BY date_start				
-    "
+#{sch_dept} #{sch_month} #{sch_year} ORDER BY date_start"
     @schedules = CourseImplementation.find_by_sql(sql)
     @schedules = [] if params[:course_department_id].blank?
     @schedules.each do |query|

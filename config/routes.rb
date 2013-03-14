@@ -36,6 +36,7 @@ InstunRails3::Application.routes.draw do
     end
   end
   match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
+  match '/user_applications/exam_before/:id' => 'user_applications#exam_before', :via => [:get]
   resources :user_applications do
     collection do 
       get 'applied'
@@ -374,6 +375,8 @@ InstunRails3::Application.routes.draw do
     member do
       get 'shiken_ichiran'
       get 'shinki'
+      get 'copy_shiken_ichiran'
+      put 'simpan_copy_shiken_ichiran'
     end
   end
   
@@ -448,6 +451,7 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/new_for_logged_in_user/:id' => 'course_applications#new_for_logged_in_user', :via => [:get]
   match '/course_applications/create_for_logged_in_user/:id' => 'course_applications#create_for_logged_in_user', :via => [:post]
   match '/course_applications/create_but_peserta_already_exist' => 'course_applications#create_but_peserta_already_exist', :via => [:post]
+  match '/course_applications/new_but_peserta_already_exist' => 'course_applications#new_but_peserta_already_exist', :via => [:get]
   
   resources :course_applications do
     get 'new'
@@ -563,6 +567,7 @@ InstunRails3::Application.routes.draw do
   match '/hr/select_course_select_peserta/:id' => 'hr#select_course_select_peserta', :via => [:get]
   match '/hr/select_course_mohon_kursus/:id' => 'hr#select_course_mohon_kursus', :via => [:get]
   match '/hr/apply_for_course' => 'hr#apply_for_course', :via => [:post]
+  match '/hr/semak_status_mohon/:id' => 'hr#semak_status_mohon', :via => [:get]
   resources :hr do
     collection do
       get 'search_applicant'
@@ -587,6 +592,7 @@ InstunRails3::Application.routes.draw do
       get 'domestik'
       get 'keselamatan'
       get 'pegawai_sijil'
+      get 'pengajar'
       get 'rnd'
       get 'laporan'
     end
@@ -624,9 +630,11 @@ InstunRails3::Application.routes.draw do
   match '/ajax/auto_tarikh_tutup' => 'ajax#auto_tarikh_tutup', :via => [:post]
   match '/ajax/isvalid_date' => 'ajax#isvalid_date', :via => [:post]
   match '/ajax/find_course_by_code' => 'ajax#find_course_by_code', :via => [:post]
+  match '/ajax/find_course_by_code_ca' => 'ajax#find_course_by_code_ca', :via => [:get]
   match '/ajax/find_course_by_code_2' => 'ajax#find_course_by_code_2', :via => [:get]
   match '/ajax/children_of_place' => 'ajax#children_of_place', :via => [:post]
   match '/ajax/grand_and_children_of_place' => 'ajax#grand_and_children_of_place', :via => [:post]
+  match '/ajax/staff_find_jawatan' => 'ajax#staff_find_jawatan', :via => [:post]
   resources :ajax do
     collection do
       get 'ajax_nric'

@@ -21,6 +21,7 @@
     //"<hr size=1>" +
     //"<li><a href=\""  + "/quiz_questions" + "/list_peserta/" + objid + "\">&nbsp;&nbsp;Keputusan Ujian</a>" +
     "<li><a href=\""  + "/quiz_questions" + "/" + objid + "/list_peserta\">&nbsp;&nbsp;Senarai Keputusan Ujian</a>" +
+ "<li><a href=\""  + "/quizzes" + "/" + objid + "/copy_shiken_ichiran\">&nbsp;&nbsp;Copy Ujian</a>" +
       //"<li><a href=\""  + "/quiz_questions" + "/list_peserta2/" + objid + "\">&nbsp;&nbsp;Senarai Markah (Ujian 2)</a>" +
     "</ul>")
   }
@@ -78,6 +79,7 @@
     <td width="5%"><b><font color="#FFFFFF">Bil</font></b></td>
     <td width="10%"><b><font color="#FFFFFF">&nbsp;Kod Kursus</font></b></td>
     <td width="30%"><b><font color="#FFFFFF">&nbsp;Nama Kursus</font></b></td>
+   <td width="30%"><b><font color="#FFFFFF">&nbsp;Nama Ujian</font></b></td>
     <td align="center" width="10%"><b><font color="#FFFFFF">&nbsp;Tarikh Mula Kursus</font></b></td>
     <td width="10%"><b><font color="#FFFFFF">&nbsp;Tarikh Ujian</font></b></td>
     <td align="center" width="30%"><b><font color="#FFFFFF">&nbsp;Catatan</font></b></td>
@@ -107,6 +109,7 @@
       <td align=center onmousedown="<%=onmousedown%>"><%=h nof{i.to_s} %></td>
       <td align=left onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.code} %></td>
       <td align=left onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.course.name} %></td>
+   <td align=left onmousedown="<%=onmousedown%>"><%=h nof{quiz.name} %></td>
       <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.timeopen.to_formatted_s(:my_format_4)} %></td>
       <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.timeclose.to_formatted_s(:my_format_4)} %></td>
       <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.intro} %></td>

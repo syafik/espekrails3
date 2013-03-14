@@ -1,70 +1,67 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH KURSUS</font></b></td>
-    </tr>
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">TAMBAH KURSUS</font></b></td>
+  </tr>
 </table>
 <br>
 <div align=center>
 <%#= start_form_tag :action => 'create', '',:name=>"ci_form", :onsubmit=>"return GoSubmit(df)" %>
-<form name=ci_form method=post action="/course_implementations" enctype="multipart/form-data" onsubmit="return GoSubmit(ci_form)">
-  <%= render :partial => 'form' %>
-  <br><%= submit_tag "Simpan" %>
-</form>
-  
-<script>
-<% if session[:user].profile.staff && session[:user].profile.staff.course_department_id%>
-$('course_department_id').value = <%=session[:user].profile.staff.course_department_id%>
-checkField();
-<% end %>
+  <form name=ci_form method=post action="/course_implementations" enctype="multipart/form-data" onsubmit="return GoSubmit(ci_form)">
+    <%= render :partial => 'form' %>
+    <br><%= submit_tag "Simpan" %>
+  </form>
+  <script src="/javascripts/form_validator.js"></script>
+  <script>
+  <% if session[:user].profile.staff && session[:user].profile.staff.course_department_id%>
+      $('#course_department_id').val(<%=session[:user].profile.staff.course_department_id%>)
+      <%#*checkField();%>
+  <% end %>
 
-//date
-today = new Date();
-todayDay   = today.getDate()
-todayMonth = today.getMonth() + 1
-todayYear  = today.getFullYear()
+    //date
+    today = new Date();
+    todayDay   = today.getDate()
+    todayMonth = today.getMonth() + 1
+    todayYear  = today.getFullYear()
 
+    $('#day_publish').val(todayDay)
+    $('#month_publish').val(todayMonth)
+    $('#year_publish').val(todayYear)
 
-$('day_publish').value   = todayDay
-$('month_publish').value = todayMonth
-$('year_publish').value  = todayYear
+    $('#day_apply_start').val(todayDay)
+    $('#month_apply_start').val(todayMonth)
+    $('#year_apply_start').val(todayYear)
+  </script>
+  <script>
+    function GoSubmit(df) {
 
-$('day_apply_start').value   = todayDay
-$('month_apply_start').value = todayMonth
-$('year_apply_start').value  = todayYear
-</script>
+      if (!checkSelection(strRegExp,document.getElementById('course_department_id'),'Bahagian')) return false;
+      if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
+      if (!checkInput(slashRegExp,document.getElementById('course_implementation_code'),'Kod Kursus')) return false;
+      if (!checkInput(anythingRegExp,document.getElementById('course_name'),'Nama Kursus')) return false;
 
-<script src="/javascripts/form_validator.js"></script>
-<script>
-function GoSubmit(df) {
+      if (!checkInput(dateDayformat,document.getElementById('day_start'),'Tarikh Mula Kursus(hari)')) return false;
+      if (!checkInput(dateMonthformat,document.getElementById('month_start'),'Tarikh Mula Kursus(bulan)')) return false;
+      if (!checkInput(dateYearformat,document.getElementById('year_start'),'Tarikh Mula Kursus(tahun)')) return false;
 
-	if (!checkSelection(strRegExp,document.getElementById('course_department_id'),'Bahagian')) return false;
-	if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
-	if (!checkInput(slashRegExp,document.getElementById('course_implementation_code'),'Kod Kursus')) return false;
-	if (!checkInput(anythingRegExp,$('course_name'),'Nama Kursus')) return false;
+      if (!checkInput(dateDayformat,document.getElementById('day_end'),'Tarikh Akhir Kursus(hari)')) return false;
+      if (!checkInput(dateMonthformat,document.getElementById('month_end'),'Tarikh Akhir Kursus(bulan)')) return false;
+      if (!checkInput(dateYearformat,document.getElementById('year_end'),'Tarikh Akhir Kursus(tahun)')) return false;
 
-	if (!checkInput(dateDayformat,$('day_start'),'Tarikh Mula Kursus(hari)')) return false;
-	if (!checkInput(dateMonthformat,$('month_start'),'Tarikh Mula Kursus(bulan)')) return false;
-	if (!checkInput(dateYearformat,$('year_start'),'Tarikh Mula Kursus(tahun)')) return false;
+      if (!checkInput(dateDayformat,document.getElementById('day_apply_end'),'Tarikh Tutup Permohonan Kursus(hari)')) return false;
+      if (!checkInput(dateMonthformat,document.getElementById('month_apply_end'),'Tarikh Tutup Permohonan Kursus(bulan)')) return false;
+      if (!checkInput(dateYearformat,document.getElementById('year_apply_end'),'Tarikh Tutup Permohonan Kursus(tahun)')) return false;
 
-	if (!checkInput(dateDayformat,$('day_end'),'Tarikh Akhir Kursus(hari)')) return false;
-	if (!checkInput(dateMonthformat,$('month_end'),'Tarikh Akhir Kursus(bulan)')) return false;
-	if (!checkInput(dateYearformat,$('year_end'),'Tarikh Akhir Kursus(tahun)')) return false;
-
-	if (!checkInput(dateDayformat,$('day_apply_end'),'Tarikh Tutup Permohonan Kursus(hari)')) return false;
-	if (!checkInput(dateMonthformat,$('month_apply_end'),'Tarikh Tutup Permohonan Kursus(bulan)')) return false;
-	if (!checkInput(dateYearformat,$('year_apply_end'),'Tarikh Tutup Permohonan Kursus(tahun)')) return false;
-
-	if (!checkInput(numRegExp,$('course_implementation_capacity'),'Bilangan Peserta')) return false;
+      if (!checkInput(numRegExp,document.getElementById('course_implementation_capacity'),'Bilangan Peserta')) return false;
 	
-	if (!checkSelection(strRegExp,$('course_course_location_id'),'Tempat')) return false;
-	//if (!checkFormat(fileRegExp,$('course_implementation_file'),'Hanya Format PDF dibenarkan')) return false;
-	if (!checkInput(moneyRegExp,$('course_fee'),'Yuran Kursus')) return false;
+      if (!checkSelection(strRegExp,document.getElementById('course_course_location_id'),'Tempat')) return false;
+      //if (!checkFormat(fileRegExp,$('course_implementation_file'),'Hanya Format PDF dibenarkan')) return false;
+      if (!checkInput(moneyRegExp,document.getElementById('course_fee'),'Yuran Kursus')) return false;
 
-	if (!checkSelection(strRegExp,$('course_implementation_coordinator1'),'Penyelaras')) return false;
-	if (!checkSelection(strRegExp,$('course_implementation_coordinator2'),'Penolong Penyelaras')) return false;
+      if (!checkSelection(strRegExp,document.getElementById('course_implementation_coordinator1'),'Penyelaras')) return false;
+      if (!checkSelection(strRegExp,document.getElementById('course_implementation_coordinator2'),'Penolong Penyelaras')) return false;
 
 
-	return true;
-}
+      return true;
+    }
 
-</script>
+  </script>

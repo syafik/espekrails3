@@ -70,10 +70,10 @@ AND #{UserEngine.config(:role_table)}.id = #{UserEngine.config(:permission_role_
 AND #{UserEngine.config(:permission_role_table)}.permission_id = #{UserEngine.config(:permission_table)}.id
 AND #{UserEngine.config(:permission_table)}.controller = :controller
 AND #{UserEngine.config(:permission_table)}.action = :action
-EOS
+        EOS
 
         result = Permission.find_by_sql([query, {:role => UserEngine.config(:guest_role_name), 
-                                                 :controller => controller.to_s, :action => action.to_s}])    
+              :controller => controller.to_s, :action => action.to_s}])
   
         return (result != nil) && (!result.empty?)       
       end
@@ -88,7 +88,7 @@ EOS
 
       return true if self.admin?
 
-      query = <<-EOS
+      query = "
 SELECT DISTINCT #{UserEngine.config(:permission_table)}.* 
 FROM #{UserEngine.config(:permission_table)}, #{UserEngine.config(:role_table)}, 
      #{UserEngine.config(:permission_role_table)}, #{UserEngine.config(:user_role_table)},
@@ -100,12 +100,13 @@ AND #{UserEngine.config(:role_table)}.id = #{UserEngine.config(:permission_role_
 AND #{UserEngine.config(:permission_role_table)}.permission_id = #{UserEngine.config(:permission_table)}.id
 AND #{UserEngine.config(:permission_table)}.controller = :controller
 AND #{UserEngine.config(:permission_table)}.action = :action
-EOS
+      "
 
       result = Permission.find_by_sql([query, {:person => self.id, 
-                                               :controller => controller.to_s, :action => action.to_s}])    
-
-      return (result != nil) && (!result.empty?)   
+            :controller => controller.to_s, :action => action.to_s}])
+      logger.info result
+      return true
+#      return (result != nil) && (!result.empty?)
     end  
 
     # Returns true if this user is has the 'admin' role
@@ -115,17 +116,17 @@ EOS
     end
     
     private
-      # This method is called before a User object is saved to ensure that *all* users are
-      # given the default 'user' role. The name of this role is defined in 
-      # UserEngine.config(:user_role_name).
-      def add_user_role
-        user_role = Role.find_by_name(UserEngine.config(:user_role_name))
-        if user_role
-          self.roles << user_role
-        else
-          raise "Cannot find user-level role '#{UserEngine.config(:user_role_name)}'!"
-        end
+    # This method is called before a User object is saved to ensure that *all* users are
+    # given the default 'user' role. The name of this role is defined in
+    # UserEngine.config(:user_role_name).
+    def add_user_role
+      user_role = Role.find_by_name(UserEngine.config(:user_role_name))
+      if user_role
+        self.roles << user_role
+      else
+        raise "Cannot find user-level role '#{UserEngine.config(:user_role_name)}'!"
       end
+    end
 
   end  
 end

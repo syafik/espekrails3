@@ -1,5 +1,5 @@
 <%
-if @quiz
+if !@quiz.nil?
   masa = Time.now
   mula = @quiz.timeopen
   abih = @quiz.timeopen + (@quiz.timelimit*60)
@@ -9,83 +9,83 @@ if @quiz
   take_exam = 2 if masa > abih                 #sila letakkan pencil!
 end
 %>
-				<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-				<tr> 
-				<th width="85%" height="20" bgcolor="#999999">
-				<font color="#FFFFFF">SENARAI SOALAN KURSUS <%= nof{@course_application.course.name} %>(<%= nof{@course_application.course_implementation.code} %>)</font></th>
-				</tr>
-				<tr>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
-    			<td align="center"><b><%= nof{@quiz.name} %></b><BR></BR>
-			<%	masa = Time.now
-				had = ""
-				had = @quiz.timeopen + (@quiz.timelimit*60) if @quiz
-			%>
-	<%# if (masa.to_formatted_s(:my_format_6) > had.to_formatted_s(:my_format_6))%>
-	<% if take_exam != 1%>
-    			Soalan <%= @quiz.name %> telah anda selesaikan atau belum/telah tamat tempoh ujian pada <%= abih.to_formatted_s(:my_format_7) %>.<BR> Markah hanya dikira setelah jawapan anda disemak.</td>
-       			</tr>
-       			<tr>
-    			<td>&nbsp;</td>
-    			</tr>
-        		<tr>
-    			<th>
-				<%= link_to 'Kembali', :controller => 'user_applications', :action => 'attend' %> ke senarai kursus dihadiri
-    			</th>
-    			</tr>
-				</table>			
-				<BR>
-				<table width="70%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
-  				<tr bgcolor="#999999">
-  				<td width="10%"><b><font color="#FFFFFF">&nbsp;Kod</font></b></td>
-  				<td width="25%"><b><font color="#FFFFFF">&nbsp;Kursus</font></b></td>
-  				<td width="10%"><b><font color="#FFFFFF">&nbsp;Markah</font></b></td>
-   				</tr> 
-				<% 
-				betul = QuizAnswer.find_by_sql("SELECT count(*) FROM vw_markah WHERE q_id = '#{@quiz.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before' AND feedback='1'")
-				total = QuizAnswer.find_by_sql("SELECT count(*) FROM vw_markah WHERE q_id = '#{@quiz.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before'")
-				%>
-				<tr bgcolor="#FFFFFF">
-    			<td align=left>&nbsp;<%=h nof{@quiz.course_implementation.code} %></td>
-    			<td align=left>&nbsp;<%=h nof{@quiz.course_implementation.course.name} %></td>
-    			<td align=left>&nbsp;<%=h betul[0].count + "/" + total[0].count %></td>
-  				</tr>
-				</table>
-	<% else %>
-    			Tarikh dan Masa Ujian : <%= nof{@quiz.timeopen.to_formatted_s(:my_format_7)} %></td>
-    			</tr>
-    			<tr>
-    			<td align=center>Jawab Semua Soalan Sebelum : <%= nof{had.to_formatted_s(:my_format_7)} %></td>
-    			</tr>
-			<tr>
-    			<td align=center>Tarikh dan Masa Sekarang : <%= nof{masa.to_formatted_s(:my_format_7)} %><br></br></td>
-    			</tr>
-        		<tr>
-    			<th>
-				<%= link_to 'Kembali', :controller => 'user_applications', :action => 'attend' %> ke senarai kursus dihadiri
-    			</th>
-    			</tr>
-				</table>
-				<BR>
-				<% if @quiz %>
-				<% if @check %>
-				<%= start_form_tag :action => 'tambah_update', :id => @quiz.id %>
-				<%= render :partial => 'exam_before' %>
-				<BR>
-				<div align=center>
-				<%= submit_tag "Kemaskini" %>
-				</div>
-				<%= end_form_tag %>
-				<% else %>
-				<%= start_form_tag :action => 'tambah', :id => @quiz.id %>
-				<%= render :partial => 'exam_before' %>
-				<BR>
-				<div align=center>
-				<%= submit_tag "Simpan" %>
-				</div>
-				<%= end_form_tag %>
-				<% end %>
-				<% end %>
-	<% end %>
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
+      <font color="#FFFFFF">SENARAI SOALAN KURSUS <%= nof{@course_application.course.name} %>(<%= nof{@course_application.course_implementation.code} %>)</font></th>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><b><%= nof{@quiz.name} %></b><BR></BR>
+      <%	masa = Time.now
+      had = ""
+      had = @quiz.timeopen + (@quiz.timelimit*60) if @quiz
+    %>
+<%# if (masa.to_formatted_s(:my_format_6) > had.to_formatted_s(:my_format_6))%>
+      <% if take_exam != 1%>
+                          Soalan <%= @quiz.name %> telah anda selesaikan atau belum/telah tamat tempoh ujian pada <%= abih.to_formatted_s(:my_format_7) %>.<BR> Markah hanya dikira setelah jawapan anda disemak.</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>
+        <%= link_to 'Kembali', :controller => 'user_applications', :action => 'attend' %> ke senarai kursus dihadiri
+      </th>
+    </tr>
+  </table>
+  <BR>
+  <table width="70%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999">
+      <td width="10%"><b><font color="#FFFFFF">&nbsp;Kod</font></b></td>
+      <td width="25%"><b><font color="#FFFFFF">&nbsp;Kursus</font></b></td>
+      <td width="10%"><b><font color="#FFFFFF">&nbsp;Markah</font></b></td>
+    </tr>
+    <%
+    betul = QuizAnswer.find_by_sql("SELECT count(*) FROM vw_markah WHERE q_id = '#{@quiz.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before' AND feedback='1'")
+    total = QuizAnswer.find_by_sql("SELECT count(*) FROM vw_markah WHERE q_id = '#{@quiz.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before'")
+  %>
+    <tr bgcolor="#FFFFFF">
+      <td align=left>&nbsp;<%=h nof{@quiz.course_implementation.code} %></td>
+      <td align=left>&nbsp;<%=h nof{@quiz.course_implementation.course.name} %></td>
+      <td align=left>&nbsp;<%=h betul[0].count + "/" + total[0].count %></td>
+    </tr>
+  </table>
+<% else %>
+                          Tarikh dan Masa Ujian : <%= nof{@quiz.timeopen.to_formatted_s(:my_format_7)} %></td>
+  </tr>
+  <tr>
+    <td align=center>Jawab Semua Soalan Sebelum : <%= nof{had.to_formatted_s(:my_format_7)} %></td>
+  </tr>
+  <tr>
+    <td align=center>Tarikh dan Masa Sekarang : <%= nof{masa.to_formatted_s(:my_format_7)} %><br></br></td>
+  </tr>
+  <tr>
+    <th>
+      <%= link_to 'Kembali', :controller => 'user_applications', :action => 'attend' %> ke senarai kursus dihadiri
+    </th>
+  </tr>
+  </table>
+  <BR>
+  <% if @quiz %>
+    <% if @check %>
+      <%= start_form_tag :action => 'tambah_update', :id => @quiz.id %>
+      <%= render :partial => 'exam_before' %>
+      <BR>
+      <div align=center>
+        <%= submit_tag "Kemaskini" %>
+      </div>
+      <%= end_form_tag %>
+    <% else %>
+      <%= start_form_tag :action => 'tambah', :id => @quiz.id %>
+      <%= render :partial => 'exam_before' %>
+      <BR>
+      <div align=center>
+        <%= submit_tag "Simpan" %>
+      </div>
+      <%= end_form_tag %>
+    <% end %>
+  <% end %>
+<% end %>
