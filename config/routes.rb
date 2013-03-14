@@ -14,7 +14,7 @@ InstunRails3::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-    match '/timetables/timetable_for_user/:id' => 'timetables#timetable_for_user', :via => [:get]
+  match '/timetables/timetable_for_user/:id' => 'timetables#timetable_for_user', :via => [:get]
   resources :timetables do 
     member do
       get 'list'
@@ -213,6 +213,10 @@ InstunRails3::Application.routes.draw do
       get 'new_pejabat'
       get 'create_kementerian'
       get 'create_pejabat'
+      post 'search_by_name'
+      post 'search_by_code'
+      post 'search_by_phone'
+      post 'search_by_state'
     end
     member do
       get 'show_kementerian'
