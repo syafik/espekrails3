@@ -180,10 +180,10 @@ class QuizQuestionsController < ApplicationController
   def update
     @quiz_question = QuizQuestion.find(params[:id])
     @quiz = Quiz.find(@quiz_question.quiz_id)
-    if @quiz_question.quiz_type_id == 1
+    if @quiz.quiz_type_id == 1
       @quiz_truefalse = QuizTruefalse.find_by_quiz_question_id(@quiz_question.id)
       @quiz_truefalse.update_attributes(params[:quiz_truefalse])
-    elsif @quiz_question.quiz_type_id == 3
+    elsif @quiz.quiz_type_id == 3
       @quiz_subjective = QuizSubjective.find_by_quiz_question_id(@quiz_question.id)
       @quiz_subjective.update_attributes(params[:quiz_subjective])
     else
