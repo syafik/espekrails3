@@ -5,7 +5,7 @@
 <%
    end
 %>
-<table width="750">
+<table width="100%">
   <tr>
     <td align="right">
       <table style="font-size: 10px;">
@@ -24,6 +24,7 @@
       </table>
     </td>
   </tr>
+
   <tr>
     <td align="left">
       <%
@@ -77,23 +78,22 @@
       <b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>
       Saya yang menurut perintah,<br/><br/>
 
-
       <%
          if @is_cetakan_komputer
            if !@signature_file.blank? && @signature_file != ""
       %>
               <%= image_tag(@signature_file) %>
-      <%
-           else
-      %>
-               <br/><br/><br/><br/>
-      <%
-           end
-         end
+          <%
+             else
+          %>
+              <br/><br/><br/><br/>
+          <%
+             end
+             end
 
-         if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
-      %>
-           <%= "<br/><b>(#{@tandatangan_nama})</b>".html_safe %><br/>
+             if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
+          %>
+          <%= "<br/><b>(#{@tandatangan_nama})</b>".html_safe %><br/>
       <%
          end
       %>
@@ -101,6 +101,7 @@
       Institut Tanah & Ukur Negara(INSTUN)<br/>
       Kementerian Sumber Asli dan Alam Sekitar<br/>
       <br/>s.k<br/>
+
       <%
          sk_lines = @salinan_kepada.split("\n")
          for sk_line in sk_lines
@@ -112,8 +113,8 @@
     </td>
   </tr>
 </table>
-<%
 
+<%
    if @schedule
      tarikh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_4)} hingga #{@schedule.date_plan_end.to_formatted_s(:my_format_4)}"
      tempoh = (@schedule.date_plan_end-@schedule.date_plan_start) + 1
@@ -134,30 +135,46 @@
     <%
        end
     %>
-    <table width="300" border="1">
+    <table width="400" style="border:1px solid black;" cellspacing="0" cellpadding="2">
       <tr>
-        <td>Kod Kursus</td>
-        <td>Modul</td>
-        <td>Kelayakan Peserta</td>
-        <td>Tarikh</td>
-        <td>Tempoh</td>
-        <td>Objektif</td>
-        <td>Kandungan</td>
-        <td>Metodologi</td>
-        <td>Bilangan Peserta</td>
-        <td>Tarikh Tutup</td>
+        <td style="border:1px solid black;">Kod Kursus</td>
+        <td style="border:1px solid black;"><%= @schedule.code %></td>
       </tr>
       <tr>
-        <td><%= @schedule.code %></td>
-        <td><%= @schedule.course.course_field.description %> : <%= @schedule.course.name %></td>
-        <td><%= @schedule.course.target_group %></td>
-        <td><%= @tarikh %></td>
-        <td><%= @tempoh %> hari</td>
-        <td><%= @schedule.course.objective %></td>
-        <td><%= @schedule.course.content %></td>
-        <td><%= methodologies %></td>
-        <td><%= @schedule.capacity %> orang</td>
-        <td><%= tarikh_tutup %></td>
+        <td style="border:1px solid black;">Modul</td>
+        <td style="border:1px solid black;"><%= @schedule.course.course_field.description %> : <%= @schedule.course.name %></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black;">Kelayakan Peserta</td>
+        <td style="border:1px solid black;"><%= @schedule.course.target_group %></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black;">Tarikh</td>
+        <td style="border:1px solid black;"><%= @tarikh %></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black;">Tempoh</td>
+        <td style="border:1px solid black;"><%= @tempoh %> hari</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black;">Objektif</td>
+        <td style="border:1px solid black;"><%= @schedule.course.objective %></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black;">Kandungan</td>
+        <td style="border:1px solid black;"><%= @schedule.course.content.html_safe %></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black;">Metodologi</td>
+        <td style="border:1px solid black;"><%= methodologies %></td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black;">Bilangan Peserta</td>
+        <td style="border:1px solid black;"><%= @schedule.capacity %> orang</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid black;">Tarikh Tutup</td>
+        <td style="border:1px solid black;"><%= tarikh_tutup %></td>
       </tr>
     </table>
 <%
