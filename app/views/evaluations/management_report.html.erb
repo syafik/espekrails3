@@ -124,7 +124,7 @@ for quest in @f_questions
     <input name="Submit" type="button" value="Keluar" onclick="window.close()//history.back()">
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @f_questions.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @f_questions.size==0%>
 
 <!-- popup menu initial layer----->
 <div id="popmenu" class="menu"></div>

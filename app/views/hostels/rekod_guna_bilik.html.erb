@@ -128,7 +128,7 @@ for student in @ls
   </table>
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @ls.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @ls.size==0%>
 
 <style>
 .el {

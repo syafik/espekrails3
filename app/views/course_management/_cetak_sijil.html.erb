@@ -81,7 +81,7 @@ for student in @students
   <input name="Submit" type="button" value="Set Paparan Sijil &raquo;" onclick="setPaparanSijil(document.forms[0])">
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @students.size==0%>
 
 <script>
 function setPaparanSijil(df) {
