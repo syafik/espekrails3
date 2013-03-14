@@ -7,7 +7,7 @@
    aktiviti3 = "mana aktiviti-aktiviti ini dimasukkkan ke dalam modul"
    aktiviti4 = "untuk diambil kira bagi penilaian kursus."
 %>
-<table width="100%" style="font-size: 14px;">
+<table width="100%" style="font-size: 14px;" xmlns="http://www.w3.org/1999/html">
   <tr>
     <td align="right">
       <table style="font-size: 12px;">
@@ -30,6 +30,7 @@
   <tr>
     <td>
       <br/>
+      <strong><u>SEGERA DENGAN FAKS 06-7659826</u></strong><br/><br/>
       <%
          for student in @students
            font_size = 12
@@ -115,7 +116,7 @@
       %>
           <%= "<b>#{nof { student.profile.name }}</b><br/>".html_safe %>
           <%= "#{job_profile}".html_safe %>
-          <%= "<br/>Melalui dan Salinan:".html_safe %>
+          <%= "<br/><strong>Melalui dan Salinan:</strong>".html_safe %>
           <br/>
           <%= "#{ketua}" %>
           <%= "#{office_name}".html_safe %>
@@ -126,7 +127,7 @@
          end
       %>
       <br/><br/>
-      <%= "Tuan,<br/><br/>".html_safe %>
+      <%= "Tuan/Puan,<br/><br/>".html_safe %>
       <%
 
          per_lines = @perkara.split("\n")
