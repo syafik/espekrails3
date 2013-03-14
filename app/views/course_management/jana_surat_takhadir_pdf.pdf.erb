@@ -1,0 +1,138 @@
+<%
+   if @format_surat == 3
+%>
+    <%#= image_tag(header_image) %>
+<%
+   end
+%>
+
+
+<%
+    for opis in @opis_collections
+      peserta = []
+      ketua = office_name = p_alamat = ""
+      @students.find_all { |s| s[:profile_opis] == opis }.each do |ss|
+        if (ss.profile_address1 != nil) && (ss.profile_state != nil)
+          p_addr1 = ss.profile_address1.split(" ").map! { |e| e }.join(" ")
+          p_addr2 = ss.profile_address2.split(" ").map! { |e| e }.join(" ")
+          p_addr3 = ss.profile_address3.split(" ").map! { |e| e }.join(" ")
+          p_state = ss.profile_state.split(" ").map! { |e| e.capitalize }.join(" ")
+
+          p_addr_arr = Array.new
+          p_addr_arr.push(p_addr1) if ss.profile_address1 != ""
+          p_addr_arr.push(p_addr2) if ss.profile_address2 != ""
+          p_addr_arr.push(p_addr3) if ss.profile_address3 != ""
+          p_addr_arr.push(p_state.upcase) if ss.profile_state != ""
+          p_addr = p_addr_arr.join("\n")
+          p_addr = p_addr.tr_s(',', ',')
+        else
+          p_addr_arr = Array.new
+          p_addr_arr.push(" ")
+          p_addr_arr.push(" ")
+          p_addr_arr.push(" ")
+          p_addr_arr.push(" ")
+          p_addr = p_addr_arr.join(" \n")
+        end
+
+        ketua = "#{ss.profile_hod}"
+        office_name = "#{ss.profile_opis}"
+        p_alamat = "#{p_addr}"
+
+
+        employment = Employment.find_by_profile_id(ss.profile.id)
+        if employment and employment.job_profile
+          job_name = nof { employment.job_profile.job_name }
+          job_name = employment.job_profile.job_name.split(" ").map! { |e| e.capitalize }.join(" ") if @job_name != nil
+          job_grade = nof { employment.job_profile.job_grade }
+          job_profile = "#{job_name} #{job_grade}"
+        else
+          job_profile = " "
+        end
+        peserta << "Nama : #{ss.profile_name}<br/>Jawatan : #{job_profile}"
+      end
+      temp_perenggan = String.new(@perenggan)
+      temp_perenggan ["_{PESERTA}_"] = peserta.join("<br/><br/>")
+%>
+    <table width="750">
+      <tr>
+        <td align="right">
+          <table style="font-size: 10px;">
+            <tr>
+              <td>Ruj.Tuan</td>
+              <td>: </td>
+            </tr>
+            <tr>
+              <td>Ruj.Kami</td>
+              <td>: <%= @rujukan_kami %></td>
+            </tr>
+            <tr>
+              <td>Tarikh</td>
+              <td>: <%= @tarikh %></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td align="left">
+          <br/>
+          <br/>
+          <br/>
+          <strong><%= "#{ketua}<br/>#{office_name}<br/>#{p_alamat}".html_safe %></strong>
+          <br/><br/>
+          Tuan/Puan,<br/><br/>
+<%
+             per_lines = @perkara.split("\n")
+             for per_line in per_lines
+%>
+              <%= "<strong>#{per_line}</strong>".html_safe %><br/>
+<%
+             end
+%>
+          <%= temp_perenggan.html_safe %>
+          <!--<div style="display:block; clear:both; page-break-after:always;"></div>-->
+          Sekian, terima kasih<br/><br/>
+          <b>`BERKHIDMAT UNTUK NEGARA`</b><br/>
+          <b>`MENDAHULUI CABARAN`</b><br/>
+          <b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>
+          Saya yang menurut perintah,<br/><br/>
+
+
+<%
+             if @is_cetakan_komputer
+               if !@signature_file.blank? && @signature_file != ""
+%>
+                  <%= image_tag(@signature_file) %>
+<%
+                 else
+%>
+                  <br/><br/><br/><br/>
+<%
+                 end
+                 end
+
+                 if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
+%>
+              <%= "<br/><b>(#{@tandatangan_nama})</b>".html_safe %><br/>
+<%
+             end
+%>
+          <%= "#{@tandatangan_jawatan}<br/>".html_safe %><br/>
+          Institut Tanah & Ukur Negara(INSTUN)<br/>
+          Kementerian Sumber Asli dan Alam Sekitar<br/>
+          <br/>s.k<br/>
+<%
+             sk_lines = @salinan_kepada.split("\n")
+             for sk_line in sk_lines
+%>
+              <%= sk_line %><br/>
+<%
+             end
+%>
+        </td>
+      </tr>
+    </table>
+
+    <div style="display:block; clear:both; page-break-after:always;"></div>
+<%
+    end
+%>
