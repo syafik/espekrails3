@@ -93,7 +93,7 @@ for c in @comments
     <input name="Submit" type="button" value="Keluar" onclick="window.close()//history.back()">
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @comments.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @comments.size==0%>
 
 <!-- popup menu initial layer----->
 <div id="popmenu" class="menu"></div>

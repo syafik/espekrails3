@@ -53,4 +53,4 @@ for student in @students
   <input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>">
   <input name="Submit" type="submit" value="Kemaskini Surat Pengesahan Kehadiran" onclick="EditSuratPengesahan(document.list_form)">
   </div></form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @students.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @students.size==0%>
