@@ -693,7 +693,7 @@ class TrainerController < ApplicationController
   end
 
   def claim_payment_index
-    @profile = Profile.find(683) #should be changed by current user if roles done
+    @profile = current_user.profile #.find(683) should be changed by current user if roles done
     #@months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
     #@planning_years = profile.trainer.course_implementations.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations").collect(&:year)
     @planning_years = Timetable.find_by_sql("

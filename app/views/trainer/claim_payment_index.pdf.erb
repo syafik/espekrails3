@@ -1,0 +1,453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+    <style type="text/css">
+      body{
+        font-family: "Arial";
+      }
+      #title{
+        width:100%;
+        text-align:center;
+        margin-bottom: 60px;
+        padding:0 20px 0 20px;
+      }
+
+      #container {
+        height: 10.5in;
+        width: 8in;
+        display: block;
+        clear: both;
+        /*  border: 2px solid #FF0000;*/
+        page-break-after: auto;
+      }
+
+      .table_header{
+        background-color: #999;
+        font-weight: bold;
+      }
+
+      .table_content{
+        background-color: #ebebeb;
+        padding: 5px;
+        border: 1px solid #ebebeb;
+      }
+
+      .center{
+        text-align: center;
+      }
+
+      .left{
+        text-align: left;
+      }
+
+      .font_12{
+        font-size: 12pt;
+      }
+
+      .font_14{
+        font-size: 14pt;
+      }
+
+      .font_11{
+        font-size: 11pt;
+      }
+
+      .font_9{
+        font-size: 9pt;
+      }
+      .inner_title{
+        margin:20px 0 15px 0;
+      }
+      .with_boder{
+        border:2px solid black;
+        width:100%;
+      }
+
+      table.with_boder td{
+        border:1px solid #666;
+        font-size: 11pt;
+        font-weight: bold;
+      }
+
+      .thin_boder{
+        border:1px solid black;
+        width:100%;
+      }
+
+      table.thin_boder td{
+        border-bottom: 1px solid black;
+        font-size: 12pt;
+        padding:5px;
+      }
+
+      table.thin_boder td.left_col{
+        border-right: 1px solid black;
+      }
+
+      table.thin_boder td.header_col{
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+      }
+
+      .bold{
+        font-weight: bold;
+      }
+
+      .row_last{
+        border-bottom: none!important;
+      }
+
+      .col_last{
+        border-right: none!important;
+      }
+      .no_border_col{
+        padding:5px 15px 5px 2px;
+      }
+
+      .inner_section{
+        margin-left:47px;
+      }
+
+      .tarikh{
+        padding-bottom: 24px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="title font_12"><b>
+          BORANG PERMOHONAN UNTUK MENJALANKAN TUGAS SEBAGAI PENSYARAH / PENCERAMAH SAMBILAN ATAU PENSYARAH / PENCERAMAH SAMBILAN PAKAR
+
+        </b></div>
+      <div id ="sub_title">
+        <p class="center"><b>Bagi Bulan : <%=Date.parse("01/#{@month}/2000").strftime('%B').upcase%> Tahun <%=@year%></b></p>
+        <span class="center">Kepada, Kementerian/Jabatan/Agensi Penganjur: Institut Tanah dan Ukur Negara (INSTUN) Kementerian Sumber Asli dan Alam Sekitar 35950nTanjong Malim Perak Darul RIdzuan</span>
+      </div>
+
+      <div class="inner_title font_12">
+        <u><b>BAHAGIAN I &nbsp;</b></u> (Diisi Oleh Pemohon)
+      </div>
+      <table class="with_boder" CELLPADDING="0" CELLSPACING="0">
+        <tr>
+          <td width="3%" class ="center">Jab:</td>
+          <td width="11%" class ="center">&nbsp;</td>
+          <td width="4%" class ="center">PJT:</td>
+          <td width="10%" class ="center">&nbsp;</td>
+          <td width="21%" class ="center">No. Rujukan Dok. asal:</td>
+          <td width="9%" class ="center">&nbsp;</td>
+          <td width="13%" class ="center">Jenis Dok. asal:</td>
+          <td width="6%" class ="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2">Pej. Perakaunan : </td>
+          <td colspan="3">&nbsp;</td>
+          <td>No. Gaji :</td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2">Pusat Pembayaran : </td>
+          <td colspan="3">&nbsp;</td>
+          <td>Bulan :</td>
+          <td colspan="2">&nbsp;</td
+        </tr>
+        <tr>
+          <td colspan="2">Cawangan : </td>
+          <td colspan="3">&nbsp;</td>
+          <td>Tahun :</td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2">Nama Bank : </td>
+          <td colspan="3"><%=@profile.bank_account_name%></td>
+          <td>No. A/C :</td>
+          <td colspan="2"><%=@profile.bank_account_number%></td>
+        </tr>
+      </table>
+      <div class="inner_title font_12">
+        <b>A.&nbsp;&nbsp;&nbsp;BUTIR-BUTIR PERIBADI</b>
+      </div>
+
+      <table class="thin_boder" CELLPADDING="0" CELLSPACING="0">
+        <tr class="table_header">
+          <td width="2%" class ="center header_col">BIL</td>
+          <td width="32%" class ="center  header_col">PERKARA</td>
+          <td width="66%" class ="center">DATA</td>
+        </tr>
+        <tr>
+          <td class="left_col" align="center">1</td>
+          <td class="left_col">Nama</td>
+          <td><%=@profile.name%></td>
+        </tr>
+        <tr>
+          <td class="left_col" align="center">2</td>
+          <td class="left_col">No: Kad Pengenalan</td>
+          <td><%=@profile.name%></td>
+        </tr>
+        <tr>
+          <td class="left_col" align="center">3</td>
+          <td class="left_col">Nama Jawatan Yang Disandang</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="left_col" align="center">4</td>
+          <td class="left_col">Gred Jawatan</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="left_col" align="center">5</td>
+          <td class="left_col">Taraf Jawatan</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="left_col" align="center">6</td>
+          <td class="left_col">(a) Gaji Bulanan<br/>(b) Elaun Memangku</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="left_col" align="center">7</td>
+          <td class="left_col">Nama Kementerian / Jabatan / Agensi</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="left_col" align="center">8</td>
+          <td class="left_col">Alamat Kementerian / Jabatan / Agensi</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <div class="inner_title font_12">
+        <b>B.&nbsp;&nbsp;&nbsp;BUTIR-BUTIR PERMOHONAN</b>
+      </div>
+
+      <table class="thin_boder" CELLPADDING="0" CELLSPACING="0">
+        <tr class="bold">
+          <td width="2%" class ="center header_col">BIL.</td>
+          <td width="35%" class ="center  header_col">JABATAN YANG MENGANJURKAN KURSUS/ CERAMAH</td>
+          <td width="63%" class ="center  header_col">TARIKH KURSUS / CERAMAH</td>
+          <td width="63%" class ="center  header_col">TEMPOH (Jam)</td>
+          <td width="63%" class ="center">JUMLAH TUNTUTAN (RM)</td>
+        </tr>
+        <tr>
+          <td class="left_col bold" align="center">1.</td>
+          <td class="left_col bold">INSTITUT TANAH DAN
+            UKUR NEGARA
+            (INSTUN)
+          </td>
+          <td class="left_col "><p>&nbsp;</p><p>&nbsp;</p><br/><span class="font_11 bold">Kelayakkan @ 1 Jam =</span></td>
+          <td class="left_col ">&nbsp;</td>
+          <td class="left_col col_last">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="left_col bold" colspan="3" align="center">Jumlah</td>
+          <td class="left_col">&nbsp;</td>
+          <td class="left_col col_last">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="left_col row_last bold" colspan="4" align="right">Kelayakan Tuntutan = 1/2daripada gaji bulanan</td>
+          <td class="left_col row_last col_last">&nbsp;</td>
+        </tr>
+      </table>
+      <br/>
+      <br/>
+      <table>
+        <tr>
+          <td class="no_border_col" width="2%">2.</td>
+          <td class="no_border_col" width="10%" align="center">(a)</td>
+          <td class="no_border_col" width="88%">Jumlah besar tuntutan bulanan di para 1 di atas adalah selaras dengan
+            kelayakan saya seperti ditetapkan di perenggan 4. 1. 2 (iv) atau (v) dalam
+            Pekeliling Perbendaharaan Bil. 2/ 2005;
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col" width="100%" align="center" colspan ="3">atau</td>
+        </tr>
+        <tr>
+          <td class="no_border_col" width="2%">&nbsp;</td>
+          <td class="no_border_col" width="10%" align="center">(b)</td>
+          <td class="no_border_col" width="88%">Jumlah besar tuntutan bulanan di para 1 di atas adalah melebehi kelayakan
+            saya seperti ditetapkan di perenggan 4. 1. 2 (iv) atau (v) dalam Pekeliling
+            Perbendaharaan Bil. 2 / 2005 dan saya telah memulangkan balik lebihan
+            bayaran saguhati yang diterima tersebut iaitu sebanyak
+            kepada
+            Kementerian/Jabatan/Agensi...................................................................................
+            ........................................seperti surat akuan yang disertakan daripada
+            Kementerian/
+            Jabatan/
+            Agensi..............................................................................................
+            Bil...................... bertarikh..........................................
+
+          </td>
+        </tr>
+      </table>
+
+      <div class="inner_title font_12">
+        <b>C.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>PERAKUAN</u></b>
+      </div>
+
+      <table width="90%" class="inner_section">
+        <tr>
+          <td class="no_border_col" align="left" colspan="2">
+            Saya mengaku butir-butir yang dinyatakan di atas adalah benar.
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col tarikh" width="65%" align="center">
+            <br/><br/>
+            Tarikh: ................................
+          </td>
+          <td class="no_border_col" width="40%" align="left">
+            <br/><br/>
+            .........................................
+            Tandatangan Pemohon
+
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col" align="right">Nama :</td>
+          <td class="no_border_col">&nbsp;</td>
+        </tr>
+      </table>
+
+      <div class="inner_title font_12">
+        <b><u>BAHAGIAN II</u></b>
+      </div>
+      <div class="inner_title font_12">
+        <b>A.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ulasan Ketua Jabatan.</b>
+      </div>
+      <table width="100%" class="inner_section">
+        <tr>
+          <td class="no_border_col" align="left" colspan="2" >
+            <div style="width:100%;border-bottom: 2px dotted black">&nbsp;&nbsp;&nbsp;</div>
+            <br/>
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col tarikh" width="58%" align="left">
+            <br/><br/>
+            Tarikh: ..................................
+          </td>
+          <td class="no_border_col" style="padding-left:15px;" width="40%" align="center">
+            <br/><br/>
+            ..................................................
+            Tandatangan Ketua Jabatan
+
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Nama: ......................................................
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Jawatan: ..................................................
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Cop Jabatan: ...........................................
+          </td>
+        </tr>
+      </table>
+
+      <div class="inner_title font_12">
+        <b>B.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pengesahan Ketua Jabatan.</b>
+      </div>
+      <table width="100%" class="inner_section">
+        <tr>
+          <td class="no_border_col" align="left" colspan="2">
+            Disahkan bahawa pegawai ini adalah seorang pensyarah/penceramah sambilan
+            pakar/bukan pakar*.
+            <br/>
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col tarikh" width="58%" align="left">
+            <br/><br/>
+            Tarikh: ..................................
+          </td>
+          <td class="no_border_col" style="padding-left:15px;" width="40%" align="center">
+            <br/><br/>
+            ..................................................
+            Tandatangan Ketua Jabatan
+
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Nama: ......................................................
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Jawatan: ..................................................
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Cop Jabatan: ...........................................
+          </td>
+        </tr>
+      </table>
+      * Potong yang tidak berkenaan.
+      <br/>
+      <br/>
+      <br/>
+      <div class="inner_title font_12">
+        <b><u>BAHAGIAN III</u></b>&nbsp;(Diisi oleh Kementerian/Jabatan/Agensi Penganjur)
+      </div>
+      <div class="inner_title font_12">
+        <b>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Keputusan Permohonan</b>
+      </div>
+      <table width="100%" class="inner_section">
+        <tr>
+          <td class="no_border_col" align="left" colspan="2">
+            Diluluskan/tidak Diluluskan*
+            <br/>
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col tarikh" width="58%" align="left">
+            <br/><br/>
+            Tarikh: ..................................
+          </td>
+          <td class="no_border_col" style="padding-left:15px;" width="40%" align="center">
+            <br/><br/>
+            ..................................................
+            Tandatangan Ketua Jabatan
+
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Nama: ......................................................
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Jawatan: ..................................................
+          </td>
+        </tr>
+        <tr>
+          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="left" style="padding-top:10px;">
+            Cop Jabatan: ...........................................
+          </td>
+        </tr>
+      </table>
+      * Potong yang tidak berkenaan.
+
+    </div>
+  </body>
+</html>
