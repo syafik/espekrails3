@@ -591,6 +591,7 @@ InstunRails3::Application.routes.draw do
       get 'domestik'
       get 'keselamatan'
       get 'pegawai_sijil'
+      get 'pengajar'
       get 'rnd'
       get 'laporan'
     end
