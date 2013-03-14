@@ -246,6 +246,7 @@ InstunRails3::Application.routes.draw do
       get 'offer_all'
       get 'list'
       get 'search'
+      get 'claim_payment_index'
       post 'search_by_name'
       post 'search_by_ic'
       post 'search_by_phone'

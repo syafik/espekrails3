@@ -40,7 +40,7 @@ class TrainerController < ApplicationController
       else
         @trainers = []
       end
-        #render layout : 'standard-layout'
+      #render layout : 'standard-layout'
     rescue
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search'
@@ -57,7 +57,7 @@ class TrainerController < ApplicationController
       else
         @trainers = []
       end
-        #render layout : 'standard-layout'
+      #render layout : 'standard-layout'
     rescue
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search'
@@ -74,7 +74,7 @@ class TrainerController < ApplicationController
       else
         @trainers = []
       end
-        #render layout : 'standard-layout'
+      #render layout : 'standard-layout'
     rescue
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search'
@@ -92,7 +92,7 @@ class TrainerController < ApplicationController
       else
         @trainers = []
       end
-        #render layout : 'standard-layout'
+      #render layout : 'standard-layout'
     rescue
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search'
@@ -128,14 +128,14 @@ class TrainerController < ApplicationController
   def edit_surat_lantik_all
     unless session[:collect_trainers].blank?
       @course_implementation = CourseImplementation.where("course_implementations.id = ?",params[:course_implementation_id].to_i).
-                                                    joins("LEFT JOIN courses ON course_implementations.course_id = courses.id
+        joins("LEFT JOIN courses ON course_implementations.course_id = courses.id
                                                            LEFT JOIN course_departments ON courses.course_department_id = course_departments.id
                                                            LEFT JOIN latest_appoint_references ON course_departments.id = latest_appoint_references.course_department_id").
-                                                    select("latest_appoint_references.latest_ref_no, courses.name").first
+        select("latest_appoint_references.latest_ref_no, courses.name").first
       trainers = Trainer.where("trainers.id IN (#{session[:collect_trainers].join(",")})").
-                          joins("LEFT JOIN profiles ON trainers.profile_id = profiles.id
+        joins("LEFT JOIN profiles ON trainers.profile_id = profiles.id
                                  LEFT JOIN states ON profiles.state_id = states.id").
-                          select("profiles.name, profiles.id as profile_id, trainers.id, address1, address2, address3,
+        select("profiles.name, profiles.id as profile_id, trainers.id, address1, address2, address3,
                                   states.description as state_description, profiles.opis, profiles.hod")
 
       @formatted_trainers_data = []
@@ -265,9 +265,9 @@ class TrainerController < ApplicationController
         #                                                     LEFT JOIN latest_appoint_references ON course_departments.id = latest_appoint_references.course_department_id").
         #    select("latest_appoint_references.latest_ref_no, courses.name").first
         trainers = Trainer.where("trainers.id IN (#{session[:collect_trainers].join(",")})").
-            joins("LEFT JOIN profiles ON trainers.profile_id = profiles.id
+          joins("LEFT JOIN profiles ON trainers.profile_id = profiles.id
                                    LEFT JOIN states ON profiles.state_id = states.id").
-            select("profiles.name, profiles.id as profile_id, trainers.id, address1, address2, address3,
+          select("profiles.name, profiles.id as profile_id, trainers.id, address1, address2, address3,
                                     states.description as state_description, profiles.opis, profiles.hod")
 
         @formatted_trainers_data = []
@@ -291,7 +291,7 @@ class TrainerController < ApplicationController
         format.html
         format.pdf do
           render :pdf => filename,
-                 :page_size => 'A4'
+            :page_size => 'A4'
         end
       else
         redirect_to list_trainer_index_url, notice: "Pilih Tenaga Pengajar Dahulu"
@@ -360,11 +360,11 @@ class TrainerController < ApplicationController
 
   def offer_all
     unless session[:collect_trainers].blank?
-    @outside = true
-    list
-    @course_implementation = CourseImplementation.find_by_code(params[:search_course_implementation_code]) if params[:search_course_implementation_code]
-    #@course_implementation = CourseImplementation.where("code LIKE ?","#{params[:course_implementation_code]}") if params[:course_implementation_code]
-    #@trainer = Trainer.find(params[:trainer_id])
+      @outside = true
+      list
+      @course_implementation = CourseImplementation.find_by_code(params[:search_course_implementation_code]) if params[:search_course_implementation_code]
+      #@course_implementation = CourseImplementation.where("code LIKE ?","#{params[:course_implementation_code]}") if params[:course_implementation_code]
+      #@trainer = Trainer.find(params[:trainer_id])
     else
       redirect_to list_trainer_index_url
     end
@@ -426,9 +426,9 @@ class TrainerController < ApplicationController
     if params[:cert_level_ids]
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                              #:major_id => params[:major_ids][i],
-                              :institution => params[:institutions][i],
-                              :year_end => params[:year_ends][i])
+          #:major_id => params[:major_ids][i],
+          :institution => params[:institutions][i],
+          :year_end => params[:year_ends][i])
 
         @profile.qualifications.push(q)
       end
@@ -480,9 +480,9 @@ class TrainerController < ApplicationController
       if params[:cert_level_ids]
         params[:cert_level_ids].size.times do |i|
           q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                                :pengkhususan => params[:pengkhususan][i],
-                                :institution => params[:institutions][i],
-                                :year_end => params[:year_ends][i])
+            :pengkhususan => params[:pengkhususan][i],
+            :institution => params[:institutions][i],
+            :year_end => params[:year_ends][i])
 
           @profile.qualifications.push(q)
         end
@@ -627,9 +627,9 @@ class TrainerController < ApplicationController
     if params[:cert_level_ids] and params[:cert_level_ids].size > 0
       params[:cert_level_ids].size.times do |i|
         q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
-                              :pengkhususan => params[:pengkhususan][i],
-                              :institution => params[:institutions][i],
-                              :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
+          :pengkhususan => params[:pengkhususan][i],
+          :institution => params[:institutions][i],
+          :year_end => params[:year_ends][i]) if params[:cert_level_ids][i] != ""
 
         @profile.qualifications.push(q) if q
       end
@@ -692,6 +692,51 @@ class TrainerController < ApplicationController
     redirect_to :action => 'list'
   end
 
+  def claim_payment_index
+    @profile = Profile.find(683) #should be changed by current user if roles done
+    #@months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
+    #@planning_years = profile.trainer.course_implementations.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations").collect(&:year)
+    @planning_years = Timetable.find_by_sql("
+      SELECT Distinct to_char(tt.date, 'MM/YYYY')as year FROM timetables tt,course_implementations ci,course_implementations_trainers cit,trainers t, courses c
+      WHERE  ci.id = tt.course_implementation_id
+      AND cit.course_implementation_id =ci.id
+      AND cit.trainer_id = t.id
+      AND c.id = ci.course_id
+      AND t.id = #{@profile.trainer.id}
+      ").collect(&:year)
+    #@course_implementations = profile.trainer.course_implementations
+    if params[:tarikh].present?
+      @month = params[:tarikh].split("/")[0]
+      @year = params[:tarikh].split("/")[1]
+      @course_slots = Timetable.find_by_sql("
+      SELECT c.name as name, tt.date as date, tt.topic as topic, EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600 as hour
+      , (EXTRACT(EPOCH FROM ((tt.time_end - tt.time_start))/3600)* t.rate) as rate_hour
+      FROM timetables tt,course_implementations ci,course_implementations_trainers cit,trainers t, courses c
+      WHERE EXTRACT(month FROM date) = #{@month}
+      AND EXTRACT(year FROM date) = #{@year}
+      AND ci.id = tt.course_implementation_id
+      AND cit.course_implementation_id =ci.id
+      AND cit.trainer_id = t.id
+      AND c.id = ci.course_id
+      AND t.id = #{@profile.trainer.id}
+        ")
+    else
+      @course_slots =[]
+    end
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "BORANG_TUNTUTAN_PENCERAMAH_#{params[:tarikh]}",
+          :show_as_html => params[:debug].present?,
+          :margin => {:top                => 31.8,
+          :bottom        => 25.4,
+          :left          => 24.8,
+          :right         => 26.2}
+      end
+    end
+  end
+
   #def new_expertise
   #  @trainer = Trainer.find(params[:id])
   #	@profile = @trainer.profile
@@ -717,7 +762,7 @@ class TrainerController < ApplicationController
     require "prawn"
 
     pdf = Prawn::Document.new(:page_size => "A4",
-                              :margin => [36, 50, 36, 50]
+      :margin => [36, 50, 36, 50]
     )
 
     @my_margin = pdf.bounds.absolute_top - 40
