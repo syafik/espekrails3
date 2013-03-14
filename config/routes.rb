@@ -638,6 +638,12 @@ InstunRails3::Application.routes.draw do
     get 'comment_report'
     collection do
       get 'user_hyouka'
+      get 'shinki'
+      get 'ev_quest_section_c_truefalse_sub_edit/:id', action: :ev_quest_section_c_truefalse_sub_edit
+      get 'ev_quest_sub_edit/:id', action: :ev_quest_sub_edit
+      get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
+      post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
+      post 'ev_quest_section_c_sub_update/:id', action: :ev_quest_section_c_sub_update
     end
   end
   match '/ajax/ajax_find_course_field' => 'ajax#ajax_find_course_field', :via => [:post]
