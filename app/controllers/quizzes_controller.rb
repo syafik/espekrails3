@@ -27,6 +27,7 @@ class QuizzesController < ApplicationController
 
   def show
     @quiz = Quiz.find(params[:id])
+    render layout: "standard-layout"
   end
 
   def new
@@ -69,7 +70,7 @@ class QuizzesController < ApplicationController
       tomorrow = today + (60 * 60)
     end
     @hour_next, @minute_next, @day_next, @month_next, @year_next = tomorrow.hour, tomorrow.min, tomorrow.day, tomorrow.month, tomorrow.year
-    
+    render layout: "standard-layout"  
   end
 
   def update
