@@ -65,18 +65,31 @@ cetak_komputer = "1"
 cetak_komputer = surat_sah_content.is_cetakan_komputer if surat_sah_content
 format_surat = "1"
 format_surat = surat_sah_content.format_surat if surat_sah_content
+perenggan = []
 perkara = @perkara
 perkara = surat_sah_content.perkara if surat_sah_content
-perenggan1 = @perenggan1
-perenggan1 = surat_sah_content.perenggan1 if surat_sah_content
-perenggan2 = @perenggan2
-perenggan2 = surat_sah_content.perenggan2 if surat_sah_content
-perenggan3 = @perenggan3
-perenggan3 = surat_sah_content.perenggan3 if surat_sah_content
-perenggan4 = @perenggan4
-perenggan4 = surat_sah_content.perenggan4 if surat_sah_content
-perenggan5 = @perenggan5
-perenggan5 = surat_sah_content.perenggan5 if surat_sah_content
+perenggan[0] = perenggan1 = @perenggan1
+perenggan[0] = perenggan1 = surat_sah_content.perenggan1 if surat_sah_content
+perenggan[1] = perenggan2 = @perenggan2
+perenggan[1] = perenggan2 = surat_sah_content.perenggan2 if surat_sah_content
+perenggan[1] << "<br/>_{PESERTA}_"
+perenggan[2] = perenggan3 = @perenggan3
+perenggan[2] = perenggan3 = surat_sah_content.perenggan3 if surat_sah_content
+perenggan[3] = perenggan4 = @perenggan4
+perenggan[3] = perenggan4 = surat_sah_content.perenggan4 if surat_sah_content
+perenggan[4] = perenggan5 = @perenggan5
+perenggan[4] = perenggan5 = surat_sah_content.perenggan5 if surat_sah_content
+
+str_perenggan = "<p>#{perenggan.join('</p><p>')}</p>"
+str_perenggan = '<p style="text-align: justify; margin-top: 0pt; margin-bottom: 0pt;" dir="ltr"><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">Dengan segala hormatnya saya diarah merujuk kepada perkara di atas.</span></p>
+<p style="text-align: justify; margin-top: 0pt; margin-bottom: 0pt;" dir="ltr">&nbsp;</p>
+<p style="text-align: justify; margin-top: 0pt; margin-bottom: 0pt;" dir="ltr"><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sukacita dimaklumkan bahawa pegawai berikut telah menghadiri kursus di atas yang dianjurkan oleh Institut Tanah dan Ukur Negara (INSTUN).</span></p>
+<p><strong style="color: #000000; font-family: \'Times New Roman\'; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; font-weight: normal;"><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">_{PESERTA}_</span></strong></p>
+<p style="text-align: justify; margin-top: 0pt; margin-bottom: 0pt;" dir="ltr">&nbsp;</p>
+<p style="text-align: justify; margin-top: 0pt; margin-bottom: 0pt;" dir="ltr"><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Untuk makluman tuan, pihak penganjur menyediakan kemudahan makanan dan penginapan sepanjang kursus tersebut. Yuran pendaftaran sebanyak RM30.00 dikenakan kepada setiap peserta kursus.</span></p>
+<p style="text-align: justify; margin-top: 0pt; margin-bottom: 0pt;" dir="ltr">&nbsp;</p>
+<p style="text-align: justify; margin-top: 0pt; margin-bottom: 0pt;" dir="ltr"><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pihak tuan dipohon supaya dapat merekodkan kehadiran pegawai/kakitangan tuan di dalam Buku Perkhidmatannya. Institut Tanah dan Ukur Negara (INSTUN) ingin merakamkan ucapan terima kasih di atas komitmen dan kehadiran pegawai tuan.</span></p>
+<p>&nbsp;</p>'
 %>
 
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
@@ -130,25 +143,32 @@ perenggan5 = surat_sah_content.perenggan5 if surat_sah_content
       </span></td>
   </tr>
   <tr>
-    <td align="right"><strong>Perenggan 1:</strong></td>
-    <td><span class="blockintro">&nbsp; </span>
-      <textarea id="surat_sah_content_perenggan1" name="surat_sah_content[perenggan1]" cols="80" rows="4" style="width: 550"><%=perenggan1%></textarea></td>
+    <td align="right"><strong>Perenggan :</strong></td>
+    <td>
+      <span class="blockintro">&nbsp; </span>
+      <%= text_area_tag "surat_sah_content[perenggan]", str_perenggan, :class => "tinymce", :rows => 40, :cols => 120, :id => "surat_sah_content_perenggan" %>
+    </td>
   </tr>
-  <tr>
-    <td align="right"><strong>Perenggan 2:</strong></td>
-    <td><span class="blockintro">&nbsp; </span>
-      <textarea id="surat_sah_content_perenggan2" name="surat_sah_content[perenggan2]" cols="80" rows="4" style="width: 550"><%=perenggan2%></textarea></td>
-  </tr>
-  <tr>
-    <td align="right"><strong>Perenggan 3:</strong></td>
-    <td><span class="blockintro">&nbsp; </span>
-      <textarea id="surat_sah_content_perenggan3" name="surat_sah_content[perenggan3]" cols="80" rows="4" style="width: 550"><%=perenggan3%></textarea></td>
-  </tr>
-  <tr>
-    <td align="right"><strong>Perenggan 4:</strong></td>
-    <td><span class="blockintro">&nbsp; </span>
-      <textarea id="surat_sah_content_perenggan4" name="surat_sah_content[perenggan4]" cols="80" rows="4" style="width: 550"><%=perenggan4%></textarea></td>
-  </tr>
+  <!--<tr>-->
+    <!--<td align="right"><strong>Perenggan 1:</strong></td>-->
+    <!--<td><span class="blockintro">&nbsp; </span>-->
+      <!--<textarea id="surat_sah_content_perenggan1" name="surat_sah_content[perenggan1]" cols="80" rows="4" style="width: 550"><%=perenggan1%></textarea></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td align="right"><strong>Perenggan 2:</strong></td>-->
+    <!--<td><span class="blockintro">&nbsp; </span>-->
+      <!--<textarea id="surat_sah_content_perenggan2" name="surat_sah_content[perenggan2]" cols="80" rows="4" style="width: 550"><%=perenggan2%></textarea></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td align="right"><strong>Perenggan 3:</strong></td>-->
+    <!--<td><span class="blockintro">&nbsp; </span>-->
+      <!--<textarea id="surat_sah_content_perenggan3" name="surat_sah_content[perenggan3]" cols="80" rows="4" style="width: 550"><%=perenggan3%></textarea></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td align="right"><strong>Perenggan 4:</strong></td>-->
+    <!--<td><span class="blockintro">&nbsp; </span>-->
+      <!--<textarea id="surat_sah_content_perenggan4" name="surat_sah_content[perenggan4]" cols="80" rows="4" style="width: 550"><%=perenggan4%></textarea></td>-->
+  <!--</tr>-->
   <!--tr>
 <td align="right"><strong>Perenggan 5:</strong></td>
 <td><span class="blockintro">&nbsp; </span>

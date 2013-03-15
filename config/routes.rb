@@ -13,6 +13,8 @@ InstunRails3::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+
+  match '/timetables/timetable_for_user/:id' => 'timetables#timetable_for_user', :via => [:get]
   resources :timetables do 
     member do
       get 'list'
@@ -37,6 +39,10 @@ InstunRails3::Application.routes.draw do
   end
   match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
   match '/user_applications/exam_before/:id' => 'user_applications#exam_before', :via => [:get]
+  match '/user_applications/exam_after/:id' => 'user_applications#exam_after', :via => [:get]
+  match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:post]
+  match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:post]
+  match '/user_applications/show_attendance/:id' => 'user_applications#show_attendance', :via => [:get]
   resources :user_applications do
     collection do 
       get 'applied'
@@ -207,6 +213,10 @@ InstunRails3::Application.routes.draw do
       get 'new_pejabat'
       get 'create_kementerian'
       get 'create_pejabat'
+      post 'search_by_name'
+      post 'search_by_code'
+      post 'search_by_phone'
+      post 'search_by_state'
     end
     member do
       get 'show_kementerian'
@@ -452,6 +462,7 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/create_for_logged_in_user/:id' => 'course_applications#create_for_logged_in_user', :via => [:post]
   match '/course_applications/create_but_peserta_already_exist' => 'course_applications#create_but_peserta_already_exist', :via => [:post]
   match '/course_applications/new_but_peserta_already_exist' => 'course_applications#new_but_peserta_already_exist', :via => [:get]
+  match '/course_applications/user_daftar/:id' => 'course_applications#user_daftar', :via => [:get]
   
   resources :course_applications do
     get 'new'
@@ -506,6 +517,7 @@ InstunRails3::Application.routes.draw do
       get 'calendar_user'
       post 'copy_and_create'
       post 'cetak_surat_iklan'
+      post 'search_for_user'
     end
     member do
       get 'add_course_trainer_refresh_opener'
@@ -561,6 +573,7 @@ InstunRails3::Application.routes.draw do
   end
   
   match '/hr/semak_by_ic' => 'hr#semak_by_ic', :via => [:post]
+  match '/hr/search_by_ic' => 'hr#search_by_ic', :via => [:post]
   match '/hr/semak_by_name' => 'hr#semak_by_name', :via => [:post]
   match '/hr/course_record' => 'hr#course_record', :via => [:post]
   match '/hr/search_record' => 'hr#search_record', :via => [:post]
@@ -602,6 +615,9 @@ InstunRails3::Application.routes.draw do
       get 'home'
     end
   end
+  
+  match '/quiz_answers/show_answer3/:id' => 'hr#show_answer3', :via => [:get]
+  resources :quiz_answers
   resources :quiz_questions do
     collection do
       post 'create_obj'
@@ -613,7 +629,9 @@ InstunRails3::Application.routes.draw do
       get 'new_obj'
     end
   end
-
+  match '/evaluations/user_hyouka' => 'evaluations#user_hyouka', :via => [:get]
+  match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:get]
+  match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:post]
   resources :evaluations do
     get 'trainer_report'
     get 'facility_report'
@@ -622,6 +640,12 @@ InstunRails3::Application.routes.draw do
     get 'comment_report'
     collection do
       get 'user_hyouka'
+      get 'shinki'
+      get 'ev_quest_section_c_truefalse_sub_edit/:id', action: :ev_quest_section_c_truefalse_sub_edit
+      get 'ev_quest_sub_edit/:id', action: :ev_quest_sub_edit
+      get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
+      post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
+      post 'ev_quest_section_c_sub_update/:id', action: :ev_quest_section_c_sub_update
     end
   end
   match '/ajax/ajax_find_course_field' => 'ajax#ajax_find_course_field', :via => [:post]
@@ -641,6 +665,8 @@ InstunRails3::Application.routes.draw do
       post 'facility_category_type'
     end
   end
+  match '/register/to_enroll/:id' => 'register#to_enroll', :via => [:get]
+  resources :register
   resources :permissions do
     collection do
       get 'list'

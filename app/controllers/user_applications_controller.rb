@@ -263,26 +263,21 @@ class UserApplicationsController < ApplicationController
       :order=>"student_status_id,date_apply")
     @courses = Course.find(:all, :order=>"name")
     today = Date.today
-    #    for student in @students
-    #      if student.course_implementation.date_plan_end < today
-    #        @coz = CourseApplication.find_by_course_implementation_id_and_profile_id("#{student.course_implementation.id}","#{session[:user].profile.id}")
-    #        #@coz.update_attributes(:student_status_id => "8")
-    #      end
-    #    end
+    for student in @students
+      if student.course_implementation.date_plan_end < today
+        @coz = CourseApplication.find_by_course_implementation_id_and_profile_id("#{student.course_implementation.id}","#{session[:user].profile.id}")
+        #@coz.update_attributes(:student_status_id => "8")
+      end
+    end
 
     @a = Array.new
-    s = [5,4,7]
-    today = Time.now
-    @students = CourseApplication.where(
-      :profile_id => session[:user].profile.id,
-      :student_status_id => s).joins(:course_implementation).where(["date_start >= ? AND date_end >= ? ",today, today ]).order("student_status_id,date_apply")
-    @students = CourseApplication.limit(4)
-    #    @students = CourseApplication.where(
-    #      :profile_id => 9861,
-    #      :student_status_id => s).joins(:course_implementation=> :quizzes).where(["quizzes.timeopen >= ? AND quizzes.timeclose >= ? ",today, today ]).order("student_status_id,date_apply")
+    for student in @students
+      if (student.course_implementation.date_start <= today) and (student.course_implementation.date_end >= today)
+        @a.push(student)
+      end
+    end
 
-    #    @students = []
-    #    @students = @a
+    
     render layout: "standard-layout"
   end
 
@@ -331,6 +326,7 @@ class UserApplicationsController < ApplicationController
   and pp.id = ca.profile_id and ca.student_status_id = 8 and ci.id = ca.course_implementation_id order by ci.date_plan_start, ca.date_apply desc, ca.student_status_id")
 
     @courses = Course.find(:all, :order=>"name")
+    render layout: "standard-layout"
   end
 
   def rejected

@@ -1,94 +1,94 @@
 <style>
-b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-.box {border: solid; border-width:1}
+  b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  .box {border: solid; border-width:1}
 </style>
 <form name="list_form">
-<%if @course_implementation%>
- <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">SENARAI PESERTA </font></strong></td>
-    </tr>
- </table>
- <br />
- <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
-   <tr>
-     <td align="RIGHT"><strong>Kod:</strong></td>
-     <td colspan="3"><font><%=@course_implementation.code%></font></td>
-    </tr>
-   <tr>
-     <td align="RIGHT"><strong>Tempat:</strong></td>
-     <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
-    </tr>
-   <tr>
-     <td align="RIGHT"><strong>Tarikh:</strong></td>
-     <td colspan="3"><font><%=@course_implementation.tempoh%></font></td>
-    </tr>
-   <tr>
-     <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
-     <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
-     </font></td>
-     <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
-     <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile%></font></td>
-   </tr>
-   <tr>
-     <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
-     <td><font><%= nof{@course_implementation.penyelaras2.profile.name} %></font></td>
-     <td align="RIGHT"><font><b>No Tel:</b></font></td>
-     <td><font><b></b><%= nof{@course_implementation.penyelaras2.profile.mobile} %></font></td>
-   </tr>
- </table>
- <br>
-<%end%>
+  <%if @course_implementation%>
+    <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+      <tr>
+        <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">SENARAI PESERTA </font></strong></td>
+      </tr>
+    </table>
+    <br />
+    <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+      <tr>
+        <td align="RIGHT"><strong>Kod:</strong></td>
+        <td colspan="3"><font><%=@course_implementation.code%></font></td>
+      </tr>
+      <tr>
+        <td align="RIGHT"><strong>Tempat:</strong></td>
+        <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+      </tr>
+      <tr>
+        <td align="RIGHT"><strong>Tarikh:</strong></td>
+        <td colspan="3"><font><%=@course_implementation.tempoh%></font></td>
+      </tr>
+      <tr>
+        <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+        <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
+          </font></td>
+        <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
+        <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile%></font></td>
+      </tr>
+      <tr>
+        <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+        <td><font><%= nof{@course_implementation.penyelaras2.profile.name} %></font></td>
+        <td align="RIGHT"><font><b>No Tel:</b></font></td>
+        <td><font><b></b><%= nof{@course_implementation.penyelaras2.profile.mobile} %></font></td>
+      </tr>
+    </table>
+    <br>
+  <%end%>
 
   <div width="95%" style="background: #FFFFFF">
-  <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
-  <table class="seven" width="60%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
-    <tr bgcolor="#999999">
-      <td class="el" width="2%" valign="top">&nbsp;</td>
-      <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama</a></strong></td>
-      <td class="el" align="center"><font color="#FFFFFF"><strong>Peserta Sudah Menjawab Soalan Penilaian?</strong></font></td>
-    </tr>
+    <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+    <table class="seven" width="60%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+      <tr bgcolor="#999999">
+        <td class="el" width="2%" valign="top">&nbsp;</td>
+        <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama</a></strong></td>
+        <td class="el" align="center"><font color="#FFFFFF"><strong>Peserta Sudah Menjawab Soalan Penilaian?</strong></font></td>
+      </tr>
 
-<%
-i = 0;
-even = true;
-for student in @students
-  i = i + 1
-  bgclr = "#CCCCFF" if (even == true)
-  bgclr = "#FFFFFE" if (even == false)
-  even = !even
-  
-  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
-  jawatan = nof{student.profile.employments[0].job_profile.job_grade}
-  pejabat = nof{student.profile.employments[0].place.name}
-  
-  arr = Array.new
-  for ca in student.profile.course_applications
-  	arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
-  end
-  related = arr.join(",")
+      <%
+      i = 0;
+      even = true;
+      for student in @students
+        i = i + 1
+        bgclr = "#CCCCFF" if (even == true)
+        bgclr = "#FFFFFE" if (even == false)
+        even = !even
 
-%>
+        student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+        jawatan = nof{student.profile.employments[0].job_profile.job_grade}
+        pejabat = nof{student.profile.employments[0].place.name}
 
-    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-        onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
-      <td class="el" height="20">&nbsp;<%= i.to_s %>.</td>
-      <td nowrap class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)">
-	    <%=h student.profile.name.upcase %>
-	  </td>
+        arr = Array.new
+        for ca in student.profile.course_applications
+          arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
+        end
+        related = arr.join(",")
+
+      %>
+
+        <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+            onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+          <td class="el" height="20">&nbsp;<%= i.to_s %>.</td>
+          <td nowrap class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)">
+            <%=h student.profile.name.upcase %>
+          </td>
       <td class="el" onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center">&nbsp; <!--a style="color:blue; text-decoration:underline;" href="javascript: a(<%=h student.id %>)">Jawab Soalan</a> | -->
-        <% if student.done_evaluation? %>
-        <a style="color:blue; text-decoration:underline;" href="javascript: b(<%=h student.id %>)">Lihat Jawapan</a>
-        <% else%>
-Lihat Jawapan
-<% end%></td>
-    </tr>
-<% end %>
-  </table>
+            <% if student.done_evaluation? %>
+              <a style="color:blue; text-decoration:underline;" href="javascript: b(<%=h student.id %>)">Lihat Jawapan</a>
+            <% else%>
+              Lihat Jawapan
+            <% end%></td>
+        </tr>
+      <% end %>
+    </table>
   </div>
   <div align="center"><br />
     <input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>">
@@ -97,12 +97,12 @@ Lihat Jawapan
 <%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @students.size==0%>
 
 <script>
-function a(id) {
-	MM_openBrWindow('/evaluations/user_hyouka?ca_id='+id,'','scrollbars=yes,width=800,height=700')
-}
-function b(id) {
-	MM_openBrWindow('/evaluations/user_hyouka_answer?ca_id='+id,'','scrollbars=yes,width=800,height=700')
-}
+  function a(id) {
+    MM_openBrWindow('/evaluations/user_hyouka?ca_id='+id,'','scrollbars=yes,width=800,height=700')
+  }
+  function b(id) {
+    MM_openBrWindow('/evaluations/user_hyouka_answer?ca_id='+id,'','scrollbars=yes,width=800,height=700')
+  }
 
 </script>
 

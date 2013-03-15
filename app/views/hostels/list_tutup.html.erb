@@ -103,7 +103,7 @@ for hostel in @hostels
   </table>
   </div>
 </form>
-<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>' if @hostels.size==0%>
+<%= '<br><div align="center" style="font-weight: bold; color: orange;">Tiada senarai</div>'.html_safe if @hostels.size==0%>
 
 <style>
 .el {

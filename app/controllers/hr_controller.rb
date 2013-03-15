@@ -83,12 +83,12 @@ class HrController < ApplicationController
 		   AND ic_number ILIKE '%#{params[:search_code]}%'
 		   ORDER BY p.name"
     @profiles = Employment.find_by_sql(sql)
-    render :action=>'search_applicant'    
+    render :action=>'search_applicant', :layout => "standard-layout"
   end
   
   def search_by_ministry
     @profiles = Profile.find_by_sql("select pr.* from places pl, profiles pr, employments em where pl.name ilike '%#{params[:search_min_name]}%' and em.place_id = pl.id and em.profile_id = pr.id order by pr.name")
-    render :action=>'search_applicant'    
+    render :action=>'search_applicant', :layout => "standard-layout"
   end
 
   def search_applicant_status

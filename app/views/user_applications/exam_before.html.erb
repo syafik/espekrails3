@@ -25,7 +25,7 @@ end
     %>
 <%# if (masa.to_formatted_s(:my_format_6) > had.to_formatted_s(:my_format_6))%>
       <% if take_exam != 1%>
-                          Soalan <%= @quiz.name %> telah anda selesaikan atau belum/telah tamat tempoh ujian pada <%= abih.to_formatted_s(:my_format_7) %>.<BR> Markah hanya dikira setelah jawapan anda disemak.</td>
+        Soalan <%= @quiz.name %> telah anda selesaikan atau belum/telah tamat tempoh ujian pada <%= abih.to_formatted_s(:my_format_7) %>.<BR> Markah hanya dikira setelah jawapan anda disemak.</td>
     </tr>
     <tr>
       <td>&nbsp;</td>
@@ -54,7 +54,7 @@ end
     </tr>
   </table>
 <% else %>
-                          Tarikh dan Masa Ujian : <%= nof{@quiz.timeopen.to_formatted_s(:my_format_7)} %></td>
+  Tarikh dan Masa Ujian : <%= nof{@quiz.timeopen.to_formatted_s(:my_format_7)} %></td>
   </tr>
   <tr>
     <td align=center>Jawab Semua Soalan Sebelum : <%= nof{had.to_formatted_s(:my_format_7)} %></td>
@@ -71,21 +71,23 @@ end
   <BR>
   <% if @quiz %>
     <% if @check %>
-      <%= start_form_tag :action => 'tambah_update', :id => @quiz.id %>
-      <%= render :partial => 'exam_before' %>
-      <BR>
-      <div align=center>
-        <%= submit_tag "Kemaskini" %>
-      </div>
-      <%= end_form_tag %>
+      <%#= start_form_tag :action => 'tambah_update', :id => @quiz.id %>
+      <%=form_for(@quiz, :url => "/user_a[[locations/tambah_update/#{@quiz.id}") do |f|%>
+        <%= render :partial => 'exam_before' %>
+        <BR>
+        <div align=center>
+          <%= submit_tag "Kemaskini" %>
+        </div>
+      <% end %>
     <% else %>
-      <%= start_form_tag :action => 'tambah', :id => @quiz.id %>
-      <%= render :partial => 'exam_before' %>
-      <BR>
-      <div align=center>
-        <%= submit_tag "Simpan" %>
-      </div>
-      <%= end_form_tag %>
+      <%=form_for(@quiz, :url => "/user_a[[locations/tambah/#{@quiz.id}") do |f|%>
+        <%#= start_form_tag :action => 'tambah', :id => @quiz.id %>
+        <%= render :partial => 'exam_before' %>
+        <BR>
+        <div align=center>
+          <%= submit_tag "Simpan" %>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>

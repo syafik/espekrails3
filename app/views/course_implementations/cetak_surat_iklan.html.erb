@@ -1,11 +1,11 @@
 <%
-     if @format_surat == 3
+    if @format_surat == 3
 %>
         <%#= image_tag(header_image) %>
-    <%
-       end
-    %>
-    <table width="400">
+<%
+    end
+%>
+    <table width="100%">
       <tr>
         <td align="right">
           <table style="font-size: 10px;">
@@ -26,92 +26,95 @@
       </tr>
 
       <tr>
-        <td align="left">
+        <td width="100%" align="left">
 <%
-         i = 1
-         for place in @places
-           addr1 = place.address1.split(" ").map! {|e| e}.join(" ") if ( (place.address1 != "") && place.address1 )
-           addr2 = place.address2.split(" ").map! {|e| e}.join(" ") if ( (place.address2 != "") && place.address2 )
-           addr3 = place.address3.split(" ").map! {|e| e}.join(" ") if ( (place.address3 != "") && place.address3 )
-           addr4 = place.address4.split(" ").map! {|e| e}.join(" ") if ( (place.address4 != "") && place.address4 )
+    i = 1
+    for place in @places
+        addr1 = place.address1.split(" ").map! {|e| e}.join(" ") if ( (place.address1 != "") && place.address1 )
+        addr2 = place.address2.split(" ").map! {|e| e}.join(" ") if ( (place.address2 != "") && place.address2 )
+        addr3 = place.address3.split(" ").map! {|e| e}.join(" ") if ( (place.address3 != "") && place.address3 )
+        addr4 = place.address4.split(" ").map! {|e| e}.join(" ") if ( (place.address4 != "") && place.address4 )
 
-           addr1 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
-           addr2 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
-           addr3 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
-           addr4 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
-           state = nof{place.state.description}
-           if state != nil
-             state = place.state.description.split(" ").map! {|e| e.capitalize}.join(" ")
-           end
-
-           addr_arr = Array.new
-           addr_arr.push(place.name) if place.name != ""
-           addr_arr.push(addr1) if place.address1 != ""
-           addr_arr.push(addr2) if place.address2 != ""
-           addr_arr.push(addr3) if place.address3 != ""
-           addr_arr.push(addr4) if place.address4 != ""
-           #addr_arr.push(nof{state.upcase}) if place.state != ""
-           company_addr = addr_arr.join("<br/>")
-           company_addr = company_addr.tr_s(',' , ',')
-
-           alamat = "#{company_addr}"
-%>
-              <%= "#{nof { place.head_title }}".html_safe %><br/>
-              <%= "#{alamat}".html_safe %><br/><br/>
-<%
-          end
-%>
-          <br/><br/>
-          Tuan,<br/><br/>
-          <%
-             for per_line in @per_lines
-          %>
-              <%= "<strong>#{per_line}</strong>".html_safe %><br/>
-          <%
-             end
-          %>
-          <%= @perenggan.html_safe %>
-          <!--<div style="display:block; clear:both; page-break-after:always;"></div>-->
-          Sekian, terima kasih<br/><br/>
-          <b>`BERKHIDMAT UNTUK NEGARA`</b><br/>
-          <b>`MENDAHULUI CABARAN`</b><br/>
-          <b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>
-          Saya yang menurut perintah,<br/><br/>
-
-        </td>
-      </tr>
-    </table>
-    <%
-       if @is_cetakan_komputer
-        if !@signature_file.blank? && @signature_file != ""
-    %>
-        <%= image_tag(@signature_file) %>
-    <%
-        else
-    %>
-        <br/><br/><br/><br/>
-    <%
+        addr1 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+        addr2 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+        addr3 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+        addr4 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+        state = nof{place.state.description}
+        if state != nil
+         state = place.state.description.split(" ").map! {|e| e.capitalize}.join(" ")
         end
-       end
 
-       if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
-    %>
+        addr_arr = Array.new
+        addr_arr.push(place.name) if place.name != ""
+        addr_arr.push(addr1) if place.address1 != ""
+        addr_arr.push(addr2) if place.address2 != ""
+        addr_arr.push(addr3) if place.address3 != ""
+        addr_arr.push(addr4) if place.address4 != ""
+        #addr_arr.push(nof{state.upcase}) if place.state != ""
+        company_addr = addr_arr.join("<br/>")
+        company_addr = company_addr.tr_s(',' , ',')
+
+        alamat = "#{company_addr}"
+%>
+        <%= "#{nof { place.head_title }}".html_safe %><br/>
+        <%= "#{alamat}".html_safe %><br/><br/>
+<%
+    end
+%>
+    <br/><br/>
+    Tuan,<br/><br/>
+<%
+    for per_line in @per_lines
+%>
+        <%= "<strong>#{per_line}</strong>".html_safe %><br/>
+<%
+    end
+%>
+    <%= @perenggan.html_safe %>
+    <!--<div style="display:block; clear:both; page-break-after:always;"></div>-->
+    Sekian, terima kasih<br/><br/>
+    <b>`BERKHIDMAT UNTUK NEGARA`</b><br/>
+    <b>`MENDAHULUI CABARAN`</b><br/>
+    <b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>
+    Saya yang menurut perintah,<br/><br/>
+
+<%
+    if @is_cetakan_komputer
+        if !@signature_file.blank? && @signature_file != ""
+%>
+            <%= image_tag(@signature_file) %>
+<%
+        else
+%>
+            <br/><br/><br/><br/>
+<%
+        end
+    end
+
+    if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
+%>
         <%= "<br/><b>(#{@tandatangan_nama})</b>".html_safe %><br/>
-    <%
-       end
-    %>
+<%
+    end
+%>
     <%= "#{@tandatangan_jawatan}<br/>".html_safe %><br/>
     Institut Tanah & Ukur Negara(INSTUN)<br/>
     Kementerian Sumber Asli dan Alam Sekitar<br/>
     <br/>s.k<br/>
-    <%
-       sk_lines = @salinan_kepada.split("\n")
-       for sk_line in sk_lines
-    %>
-        <%= sk_line %><br/>
-    <%
-       end
 
+<%
+    sk_lines = @salinan_kepada.split("\n")
+    for sk_line in sk_lines
+%>
+        <%= sk_line %><br/>
+<%
+    end
+%>
+        </td>
+      </tr>
+    </table>
+
+<%
        if @schedule
          tarikh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_4)} hingga #{@schedule.date_plan_end.to_formatted_s(:my_format_4)}"
          tempoh = (@schedule.date_plan_end-@schedule.date_plan_start) + 1
@@ -125,37 +128,50 @@
          tarikh_tutup = ""
          tarikh_tutup = @schedule.last_date.to_formatted_s(:my_format_3) if @schedule.last_date
 
-         if i == 1
-    %>
-            <div style="display:block; clear:both; page-break-after:always;"></div>
-            Lampiran A<br/>
-        <%
-           end
-        %>
-        <table width="400" border="1">
-          <tr>
-            <td>Kod Kursus</td>
-            <td>Modul</td>
-            <td>Kelayakan Peserta</td>
-            <td>Tarikh</td>
-            <td>Tempoh</td>
-            <td>Objektif</td>
-            <td>Kandungan</td>
-            <td>Metodologi</td>
-            <td>Bilangan Peserta</td>
-            <td>Tarikh Tutup</td>
+%>
+        <div style="display:block; clear:both; page-break-after:always;"></div>
+        Lampiran A<br/>
+
+        <table width="400" style="border:1px solid black;" cellspacing="0" cellpadding="2">
+          <tr style=" background-color: #CCCCCC;">
+            <td style="border:1px solid black;">Kod Kursus</td>
+            <td style="border:1px solid black;"><%= @schedule.code %></td>
           </tr>
           <tr>
-            <td><%= @schedule.code %></td>
-            <td><%= @schedule.course.course_field.description %> : <%= @schedule.course.name %></td>
-            <td><%= @schedule.course.target_group %></td>
-            <td><%= @tarikh %></td>
-            <td><%= @tempoh %> hari</td>
-            <td><%= @schedule.course.objective %></td>
-            <td><%= @schedule.course.content %></td>
-            <td><%= methodologies %></td>
-            <td><%= @schedule.capacity %> orang</td>
-            <td><%= tarikh_tutup %></td>
+            <td style="border:1px solid black;">Modul</td>
+            <td style="border:1px solid black;"><%= @schedule.course.course_field.description %> : <%= @schedule.course.name %></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid black;">Kelayakan Peserta</td>
+            <td style="border:1px solid black;"><%= @schedule.course.target_group %></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid black;">Tarikh</td>
+            <td style="border:1px solid black;"><%= @tarikh %></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid black;">Tempoh</td>
+            <td style="border:1px solid black;"><%= @tempoh %> hari</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid black;">Objektif</td>
+            <td style="border:1px solid black;"><%= @schedule.course.objective %></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid black;">Kandungan</td>
+            <td style="border:1px solid black;"><%= @schedule.course.content.html_safe %></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid black;">Metodologi</td>
+            <td style="border:1px solid black;"><%= methodologies %></td>
+          </tr>
+          <tr>
+            <td style="border:1px solid black;">Bilangan Peserta</td>
+            <td style="border:1px solid black;"><%= @schedule.capacity %> orang</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid black;">Tarikh Tutup</td>
+            <td style="border:1px solid black;"><%= tarikh_tutup %></td>
           </tr>
         </table>
     <%

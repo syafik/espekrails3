@@ -1,34 +1,36 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
   <tr>
-    <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">KEMASKINI KANDUNGAN SURAT KETIDAKHADIRAN </font></strong></td>
+    <td width="86%" height="21" align="center" bgcolor="#999999">
+      <strong><font color="#FFFFFF">KEMASKINI KANDUNGAN SURAT KETIDAKHADIRAN </font></strong></td>
   </tr>
 </table>
 <br>
 <div align="center"><b><font color="">
-      Pilih </font>Peserta &#8250; <font color="blue">Kemaskini Isi Surat</font> &#8250; Jana Surat</b>
+  Pilih </font>Peserta &#8250; <font color="blue">Kemaskini Isi Surat</font> &#8250; Jana Surat</b>
   <br>
-  <%=form_for(@course_implementation, :url => jana_surat_takhadir_pdf_course_management_path(:id => @course_implementation.id, :course_id => @course)) do |f|%>
-    <%= render :partial => 'edit_surat_takhadir' %>
-    <br>
-  </div>
-  <div align="center">
-    <br><input type="button" value="Papar" onclick="GoSubmit(document.forms[0])">
-  </div>
+  <%= form_for(@course_implementation, :url => jana_surat_takhadir_pdf_course_management_path(:id => @course_implementation.id, :course_id => @course, :format => :pdf)) do |f| %>
+      <%= render :partial => 'edit_surat_takhadir' %>
+      <br>
+      </div>
+      <div align="center">
+        <br><input type="button" value="Papar" onclick="GoSubmit(document.forms[0])">
+      </div>
 
-<% end %>
+  <% end %>
 
-<script src="/javascripts/form_validator.js"></script>
-<script>
+  <script src="/javascripts/form_validator.js"></script>
+  <script>
 
-  function GoSubmit(df) {
+      function GoSubmit(df) {
 
-    //if (!checkSelection(strRegExp,$('contact_officer_id'),'Pegawai Untuk Dihubungi')) return false;
-    //if (!checkInput(anythingRegExp,$('penyelaras_jawatan'),'Jawatan Pegawai Untuk Dihubungi')) return false;
-	
-    df.submit()
+          //if (!checkSelection(strRegExp,$('contact_officer_id'),'Pegawai Untuk Dihubungi')) return false;
+          //if (!checkInput(anythingRegExp,$('penyelaras_jawatan'),'Jawatan Pegawai Untuk Dihubungi')) return false;
 
-  }
+          df.submit()
 
-</script>
+      }
+
+  </script>
+  <%= tinymce %>
 
 
