@@ -697,7 +697,8 @@ class CourseImplementationsController < ApplicationController
   end
 
   def edit_surat_iklan_select_pejabat
-    @schedules = CourseImplementation.find_by_sql("select * from vw_detailed_courses where id =#{params[:course_implementation_id]} ")
+    @schedules = CourseImplementation.find_by_sql("select * from vw_detailed_courses where id =#{params[:course_implementation_id]} ") unless params[:course_implementation_id].blank?
+    @schedules = CourseImplementation.find_by_sql("select * from vw_detailed_courses where id IN (#{params[:schedule_ids].join(",")})") unless params[:schedule_ids].blank?
     #if params[:course_department_id]
     if @schedules[0].course_department_id
       #@cdept = CourseDepartment.find(params[:course_department_id])
@@ -707,12 +708,47 @@ class CourseImplementationsController < ApplicationController
       @fav_places = []
     end
     @course_implementation_id = params[:course_implementation_id]
+    @schedule_ids = params[:schedule_ids]
     #@place_pages, @places = paginate(:places, :per_page => 10000, :order_by => "code asc")
     @places = Place.order("code ASC").paginate( :per_page => 10000, :page => params[:page])
   end
 
   def edit_surat_iklan_select_kursus
-    render layout: "standard-layout"
+    if params[:planning_year].blank?
+      sch_year = Time.now.year
+    else
+      sch_year = params[:planning_year]
+    end
+
+    if params[:planning_month].blank?
+      sch_month = nil
+    else
+      if params[:planning_month] == 0
+        sch_month = nil
+      else
+        sch_month = "AND month_start >= "+params[:planning_month]
+      end
+    end
+
+    if params[:planning_month2].blank?
+      sch_month2 = nil
+    else
+      if params[:planning_month2] == 0
+        sch_month2 = nil
+      else
+        sch_month2 = "AND month_start <= "+params[:planning_month2]
+      end
+    end
+
+    if params[:course_department_id].blank?
+      sch_dept = nil
+    else
+      sch_dept = "AND course_department_id = "+params[:course_department_id]
+    end
+
+    @schedules = CourseImplementation.find_by_sql("select * from vw_detailed_courses  where year_start=#{sch_year.to_i} #{sch_month} #{sch_month2} #{sch_dept} ORDER BY date_plan_start")
+    @schedules = [] if  !params[:course_department_id]
+    #render layout: "standard-layout"
   end
 
   def edit_surat_iklan_la_apa_lagi
