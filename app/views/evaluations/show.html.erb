@@ -81,8 +81,9 @@ function goDel(url) {
 		  <td width="50%">
 			<table><tr><td>&nbsp;</td><td><%=ranking.evaluation_question.questiontext%></td></tr></table>		  </td>
 		  <td width="20%" nowrap>
-		  <% ranking.max_ranking.times do |i|%>
-		  <input name="radiobutton" type="radio" value="#{i+1}" style="height: 11px"><%=i+1%>
+            <%- total_max_ranking = (ranking.max_ranking < 6 ? (6 - ranking.max_ranking + ranking.max_ranking) : ranking.max_ranking) %>
+		  <% total_max_ranking.times do |i|%>
+		  <input name="radiobutton" type="radio" value="<%= i+1 %>" style="height: 11px"><%=i+1%>
 		  <% end %>
 		  </td>
 		  <td>
@@ -140,9 +141,12 @@ function goDel(url) {
 	<%		if eq.evaluation_type_id == 5%>
 	<%			deletion_url = "ev_quest_section_c_sub_destroy"%>
 	<%			editing_url = "ev_quest_section_c_sub_edit"%>
-	<% 			eq.evaluation_ranking.max_ranking.times do |i|%>
-          <input name="radiobutton" type="radio" value="#{i+1}" style="height: 11px"><%=i+1%>
+    <%-     if eq.evaluation_ranking %>
+    <%-         total_max_ranking = (eq.evaluation_ranking.max_ranking < 6 ? (6 - eq.evaluation_ranking.max_ranking + eq.evaluation_ranking.max_ranking) : eq.evaluation_ranking.max_ranking) %>
+	<% 			total_max_ranking.times do |i|%>
+          <input name="radiobutton" type="radio" value="<%= i+1 %>" style="height: 11px"><%=i+1%>
     <% 			end
+              end
 			end
 	%>
 
@@ -202,8 +206,9 @@ function goDel(url) {
 			</tr>
 		</table>	  </td>
       <td nowrap><%		if eq.evaluation_type_id == 5%>
-          <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
-          <input name="radiobutton" type="radio" value="#{i+1}" style="height: 11px"><%=i+1%>
+    <%-         total_max_ranking = (eq.evaluation_ranking.max_ranking < 6 ? (6 - eq.evaluation_ranking.max_ranking + eq.evaluation_ranking.max_ranking) : eq.evaluation_ranking.max_ranking) %>
+          <% 			total_max_ranking.times do |i|%>
+          <input name="radiobutton" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
           <%
 		   				end
 					end

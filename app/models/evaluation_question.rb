@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class EvaluationQuestion < ActiveRecord::Base
+  set_primary_key :id
   belongs_to :evaluation
   belongs_to :evaluation_section
   belongs_to :evaluation_subsection
