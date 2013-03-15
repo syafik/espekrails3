@@ -59,7 +59,7 @@
         font-size: 9pt;
       }
       .inner_title{
-        margin:20px 0 15px 0;
+        margin:30px 0 15px 0;
       }
       .with_boder{
         border:2px solid black;
@@ -70,6 +70,7 @@
         border:1px solid #666;
         font-size: 11pt;
         font-weight: bold;
+        padding:5px;
       }
 
       .thin_boder{
@@ -80,7 +81,7 @@
       table.thin_boder td{
         border-bottom: 1px solid black;
         font-size: 12pt;
-        padding:5px;
+        padding:10px 5px;
       }
 
       table.thin_boder td.left_col{
@@ -119,7 +120,7 @@
   </head>
   <body>
     <div id="container">
-      <div id="title font_12"><b>
+      <div id="title" class="font_12"><b>
           BORANG PERMOHONAN UNTUK MENJALANKAN TUGAS SEBAGAI PENSYARAH / PENCERAMAH SAMBILAN ATAU PENSYARAH / PENCERAMAH SAMBILAN PAKAR
 
         </b></div>
@@ -127,7 +128,8 @@
         <p class="center"><b>Bagi Bulan : <%=Date.parse("01/#{@month}/2000").strftime('%B').upcase%> Tahun <%=@year%></b></p>
         <span class="center">Kepada, Kementerian/Jabatan/Agensi Penganjur: Institut Tanah dan Ukur Negara (INSTUN) Kementerian Sumber Asli dan Alam Sekitar 35950nTanjong Malim Perak Darul RIdzuan</span>
       </div>
-
+      <br/>
+      <br/>
       <div class="inner_title font_12">
         <u><b>BAHAGIAN I &nbsp;</b></u> (Diisi Oleh Pemohon)
       </div>
@@ -155,21 +157,50 @@
           <td colspan="2">&nbsp;</td
         </tr>
         <tr>
-          <td colspan="2">Cawangan : </td>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="2">Cawangan* : </td>
+          <td colspan="3">
+            <%  if @profile.bank_account_name.present? %>
+              <%=@profile.bank_account_name.include?("/") ? @profile.bank_account_name.split("/")[1] : ""%>
+            <% end %>
+          </td>
           <td>Tahun :</td>
           <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-          <td colspan="2">Nama Bank : </td>
-          <td colspan="3"><%=@profile.bank_account_name%></td>
-          <td>No. A/C :</td>
+          <td colspan="2">Nama Bank* : </td>
+          <td colspan="3">
+            <%  if @profile.bank_account_name.present? %>
+              <%=@profile.bank_account_name.include?("/") ? @profile.bank_account_name.split("/")[0] : @profile.bank_account_name%>
+            <% end %>
+          </td>
+          <td>No. A/C* :</td>
           <td colspan="2"><%=@profile.bank_account_number%></td>
         </tr>
       </table>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <div class="inner_title font_12">
         <b>A.&nbsp;&nbsp;&nbsp;BUTIR-BUTIR PERIBADI</b>
       </div>
+
+      <% if nof { @employment.place }
+        if @employment.place.place_type_id == 3
+          grandparent = @employment.place
+          parent = nil
+          child = nil
+        elsif @employment.place.place_type_id == 1
+          grandparent = @employment.place.parent
+          parent = @employment.place
+          child = nil
+        else
+          grandparent = @employment.place.parent.parent
+          parent = @employment.place.parent
+          child = @employment.place
+        end
+      end
+    %>
 
       <table class="thin_boder" CELLPADDING="0" CELLSPACING="0">
         <tr class="table_header">
@@ -185,39 +216,53 @@
         <tr>
           <td class="left_col" align="center">2</td>
           <td class="left_col">No: Kad Pengenalan</td>
-          <td><%=@profile.name%></td>
+          <td><%=@profile.ic_number%></td>
         </tr>
         <tr>
           <td class="left_col" align="center">3</td>
           <td class="left_col">Nama Jawatan Yang Disandang</td>
-          <td>&nbsp;</td>
+          <td><%= nof { @profile.designation.upcase } %></td>
         </tr>
         <tr>
           <td class="left_col" align="center">4</td>
           <td class="left_col">Gred Jawatan</td>
-          <td>&nbsp;</td>
+          <td><%= nof { @employment.job_profile.job_grade } %></td>
         </tr>
         <tr>
           <td class="left_col" align="center">5</td>
           <td class="left_col">Taraf Jawatan</td>
-          <td>&nbsp;</td>
+          <td><%=h "Dalaman" if @profile.trainer.is_internal==1%><%=h "Luaran" if @profile.trainer.is_internal==0%></td>
         </tr>
         <tr>
           <td class="left_col" align="center">6</td>
           <td class="left_col">(a) Gaji Bulanan<br/>(b) Elaun Memangku</td>
-          <td>&nbsp;</td>
+          <td>RM</td>
         </tr>
         <tr>
           <td class="left_col" align="center">7</td>
           <td class="left_col">Nama Kementerian / Jabatan / Agensi</td>
-          <td>&nbsp;</td>
+          <td><%= nof{grandparent.name.upcase}%></td>
         </tr>
         <tr>
           <td class="left_col" align="center">8</td>
           <td class="left_col">Alamat Kementerian / Jabatan / Agensi</td>
-          <td>&nbsp;</td>
+          <td><%= nof{grandparent.address1.upcase}%></td>
         </tr>
       </table>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <div class="inner_title font_12">
         <b>B.&nbsp;&nbsp;&nbsp;BUTIR-BUTIR PERMOHONAN</b>
       </div>
@@ -231,19 +276,54 @@
           <td width="63%" class ="center">JUMLAH TUNTUTAN (RM)</td>
         </tr>
         <tr>
-          <td class="left_col bold" align="center">1.</td>
-          <td class="left_col bold">INSTITUT TANAH DAN
+          <td class="left_col bold" valign="top" align="center">1.</td>
+          <td class="left_col bold" valign="top">INSTITUT TANAH DAN
             UKUR NEGARA
             (INSTUN)
           </td>
-          <td class="left_col "><p>&nbsp;</p><p>&nbsp;</p><br/><span class="font_11 bold">Kelayakkan @ 1 Jam =</span></td>
-          <td class="left_col ">&nbsp;</td>
-          <td class="left_col col_last">&nbsp;</td>
+          <td class="left_col ">
+            <%kursus = ""%>
+            <%count =1%>
+            <%hour=0%>
+            <%rate_hour=0%>
+            <%  @course_slots.each_with_index do |course_slot,index| %>
+              <%if index == 0%>
+                Tarikh: <%= course_slot.date %><br/>
+              <%else%>
+                <%if course_slot.date != @course_slots[index-1].date%>
+                  <br/>
+                  <br/>
+                  Tarikh: <%= course_slot.date %><br/>
+                <% end %>
+              <% end %>
+              <% if kursus.blank? || kursus != "#{course_slot.kategory_pengajar.capitalize}/#{course_slot.name}" || course_slot.date != @course_slots[index-1].date%>
+                <%
+                if kursus.blank?
+                  kursus="#{course_slot.kategory_pengajar.capitalize}/#{course_slot.name}"
+                end
+              %>
+                <%slot = true%>
+                <%count =1%>
+                &nbsp;&nbsp;<%=course_slot.kategory_pengajar.capitalize %> Kursus: <%= course_slot.name %>.<br/>
+              <%  end %>
+              <% if slot %>
+                &nbsp;&nbsp;Slot: <%=count%>.<%= course_slot.topic %>
+                <%slot = false%>
+              <%else%>
+                ,&nbsp;<%=count%>.<%= course_slot.topic %>
+              <%end%>
+              <%count+=1%>
+              <%hour+=course_slot.hour.to_f%>
+              <%rate_hour+=course_slot.rate_hour.to_f%>
+            <%  end %>
+            <br/><span class="font_11 bold">Kelayakkan @ 1 Jam =</span>
+          </td>
+          <td class="left_col " valign="top"><%=hour%> Jam</td>
+          <td class="left_col col_last" valign="top">RM <%=rate_hour%></td>
         </tr>
         <tr>
-          <td class="left_col bold" colspan="3" align="center">Jumlah</td>
-          <td class="left_col">&nbsp;</td>
-          <td class="left_col col_last">&nbsp;</td>
+          <td class="left_col bold" colspan="4" align="right">Jumlah:</td>
+          <td class="left_col col_last">RM <%=rate_hour%></td>
         </tr>
         <tr>
           <td class="left_col row_last bold" colspan="4" align="right">Kelayakan Tuntutan = 1/2daripada gaji bulanan</td>
@@ -306,8 +386,7 @@
           </td>
         </tr>
         <tr>
-          <td class="no_border_col" align="right">Nama :</td>
-          <td class="no_border_col">&nbsp;</td>
+          <td class="no_border_col" align="right" colspan="2">Nama : <%=@profile.name.upcase%></td>
         </tr>
       </table>
 
