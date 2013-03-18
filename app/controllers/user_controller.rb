@@ -564,6 +564,7 @@ class UserController < ApplicationController
   def register
     @user = User.new
     @profile = Profile.new
+    render layout: "standard-layout"
   end
 
   def semakan

@@ -539,6 +539,7 @@ InstunRails3::Application.routes.draw do
       get 'register'
       get 'forgot_password'
       post 'authenticate'
+      post 'signup'
     end
   end
   
