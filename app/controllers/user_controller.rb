@@ -511,7 +511,7 @@ class UserController < ApplicationController
     
     if params[:user][:ic_number].blank? && params[:user][:password].blank?
       user = User.find(44)
-  #    user = User.find(12975)
+      #    user = User.find(12975)
     else
       user = User.authenticate(params[:user][:ic_number], params[:user][:password])
     end
@@ -804,31 +804,33 @@ class UserController < ApplicationController
 
     # Render on :get and render
     return if generate_blank
-
-    # Handle the :post
-    if params[:user][:ic_number].empty?
-      flash.now[:notice] = 'Sila masukkan format No. KP yang betul'
-    elsif (user = User.find_by_ic_number(params[:user][:ic_number])).nil?
-      flash.now[:notice] = "No. KP tiada di dalam database"
-    elsif (user = User.find(:first, :conditions=> ["ic_number = ?", "#{params[:user][:ic_number]}"])).nil?
-      flash.now[:notice] = "Tiada pengguna didalam eSPEK. Sila hubungi espek@instun.gov.my"
-    else
-      begin
-        User.transaction(user) do
-          key = user.generate_security_token
-          url = url_for(:action => 'change_password', :user_id => user.id, :key => key)
-          UserNotify.deliver_forgot_password(user, url)
-          flash[:notice] = "Penerangan untuk penukaran kata laluan telah diemelkan ke #{user.email}"
+    if request.post?
+      # Handle the :post
+      if params[:user][:ic_number].empty?
+        flash.now[:notice] = 'Sila masukkan format No. KP yang betul'
+      elsif (user = User.find_by_ic_number(params[:user][:ic_number])).nil?
+        flash.now[:notice] = "No. KP tiada di dalam database"
+      elsif (user = User.find(:first, :conditions=> ["ic_number = ?", "#{params[:user][:ic_number]}"])).nil?
+        flash.now[:notice] = "Tiada pengguna didalam eSPEK. Sila hubungi espek@instun.gov.my"
+      else
+        begin
+          User.transaction(user) do
+            key = user.generate_security_token
+            url = url_for(:action => 'change_password', :user_id => user.id, :key => key)
+            UserNotify.deliver_forgot_password(user, url)
+            flash[:notice] = "Penerangan untuk penukaran kata laluan telah diemelkan ke #{user.email}"
+          end
+          unless user?
+            redirect_to :action => 'success'
+            return
+          end
+          redirect_to :action => 'logout'
+        rescue
+          flash.now[:notice] = "Masalah penghantaran email ke #{params[:user][:email]}"
         end
-        unless user?
-          redirect_to :action => 'success'
-          return
-        end
-        redirect_to :action => 'logout'
-      rescue
-        flash.now[:notice] = "Masalah penghantaran email ke #{params[:user][:email]}"
       end
     end
+    render layout: "standard-layout"
   end
 
   def edit

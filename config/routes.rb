@@ -531,6 +531,8 @@ InstunRails3::Application.routes.draw do
       put 'simpan_tambah_jadual'
     end
   end
+  match '/user/change_password' => 'user#change_password', :via => [:get]
+  match '/user/forgot_password' => 'user#forgot_password', :via => [:post]
   resources :user do
     collection do
       get 'home'
@@ -548,9 +550,9 @@ InstunRails3::Application.routes.draw do
     get 'view'
     get 'addrole'
     get 'show_profile'
-    put 'update_password'
+#    put 'update_password'
     put 'update_password2'
-    get 'edit_password'
+   
     get 'edit_password2'
     get 'verify'
     get 'modrole'
@@ -559,6 +561,8 @@ InstunRails3::Application.routes.draw do
     get 'setrole'
     put 'update_role'
     collection do
+       get 'edit_password'
+       put 'update_password'
       get 'search_akaun'
       get 'list'
       get 'list_all'
