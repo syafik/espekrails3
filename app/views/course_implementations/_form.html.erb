@@ -110,8 +110,8 @@
 <% end %>
 <div align="center">
   <%= flash[:notice] %>
-  <%= show_error_messages @course %>
-  <%= show_error_messages @course_implementation %>
+  <%=raw show_error_messages @course %>
+  <%=raw show_error_messages @course_implementation %>
 </div>
 
 
@@ -408,8 +408,8 @@
   <td><span id="ketua_program_selection">
     <%=
         #@coordinators = Staff.find(:all, :conditions=>"is_coordinator = 1")
-        @coordinators = Staff.where("staffs.status= ? AND is_coordinator = ?", true, 1).joins(:profile)
-        #@coordinators= Staff.find_by_sql("SELECT staffs.* from staffs INNER join profiles ON staffs.profile_id=profiles.id AND staffs.status=1 AND is_coordinator=1 order by name asc")
+        @coordinators = Staff.where("staffs.status= ? AND is_coordinator = ?", '1', '1').joins(:profile).order("profiles.name asc")
+        #@coordinators= Staff.find_by_sql("SELECT staffs.* from staffs INNER join profiles ON staffs.profile_id=profiles.id AND staffs.status='1' AND is_coordinator='1' order by name asc")
         @id_coordinators = @coordinators.map { |t| [t.profile.name, t.id] }
         @id_coordinators.unshift(["Sila Pilih", ""])
         select(:course_implementation, :ketua_program, @id_coordinators)
@@ -421,8 +421,8 @@
   <td><span id="pen_ketua_program_selection"><%=
       #@coordinators = Staff.find(:all, :conditions=>"is_coordinator = 1")
       #@coordinators= Staff.find_by_sql("SELECT staffs.* from staffs INNER join profiles ON staffs.profile_id=profiles.id AND staffs.status=1 AND is_coordinator=1 order by name asc")
-      @id_coordinators = @coordinators.map { |t| [t.profile.name, t.id] }
-      @id_coordinators.unshift(["Sila Pilih", ""])
+      #@id_coordinators = @coordinators.map { |t| [t.profile.name, t.id] }
+      #@id_coordinators.unshift(["Sila Pilih", ""])
       select(:course_implementation, :pen_ketua_program, @id_coordinators)
   %></td>
 </tr>
@@ -437,9 +437,9 @@
   <td><span id="coordinator1_selection">
       <%=
           #@coordinators = Staff.find(:all, :conditions=>"is_coordinator = 1")
-          #@coordinators= Staff.find_by_sql("SELECT staffs.* from staffs INNER join profiles ON staffs.profile_id=profiles.id AND staffs.status=1 AND is_coordinator=1 order by name asc")
-          @id_coordinators = @coordinators.map { |t| [t.profile.name, t.id] }
-          @id_coordinators.unshift(["Sila Pilih", ""])
+          #@coordinators= Staff.find_by_sql("SELECT s.* from staffs s INNER join profiles p ON s.profile_id=p.id AND s.status='1' AND s.is_coordinator='1' order by p.name asc")
+          #@id_coordinators = @coordinators.map { |t| [t.profile.name, t.id] }
+          #@id_coordinators.unshift(["Sila Pilih", ""])
           select(:course_implementation, :coordinator1, @id_coordinators)
       %></span></td>
 </tr>

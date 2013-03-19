@@ -34,7 +34,7 @@
       <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
         <td align="right" id="name<%=h ci.id %>"><%= (index+1).to_s %>.</td>
         <td align="left">Tarikh:<%=h ci.date.to_formatted_s(:my_format_4) %><br/>Kursus: <%=h ci.name %><br/>Slot: <%=h ci.topic %></td>
-        <td align="center"><%=select_tag :trainer_category, options_for_select(["Penceramah", "Fasilitator"]) %></td>
+        <td align="center"><%=h ci.kategory_pengajar.capitalize %><%#=select_tag :trainer_category, options_for_select(["Penceramah", "Fasilitator"]) %></td>
         <td align="center"><%=h ci.hour %> jam</td>
         <td align="center">RM <%=h ci.rate_hour %></td>
         <!--<td align="center"><%#=check_box_tag 'pilih_tuntutan', 'TRUE'%></td>-->

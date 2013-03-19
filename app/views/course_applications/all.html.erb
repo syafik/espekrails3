@@ -118,7 +118,7 @@
 
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
   <tr>
-    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=@course_implementation.code.upcase%> &nbsp; <%=@course_implementation.course.name.upcase%> &nbsp;&nbsp;<%="<br>" if @course_implementation.course.name.length > 60%>(<%=@course_implementation.tempoh%>)</font></b></td>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=@course_implementation.code.upcase if @course_implementation.present?%> &nbsp; <%=@course_implementation.course.name.upcase if @course_implementation.present?%> &nbsp;&nbsp;<%=("<br>" if @course_implementation.course.name.length > 60) if @course_implementation.present?%>(<%=@course_implementation.tempoh if @course_implementation.present?%>)</font></b></td>
   </tr>
 </table>
 <br>

@@ -698,27 +698,33 @@ class TrainerController < ApplicationController
     #@months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
     #@planning_years = profile.trainer.course_implementations.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations").collect(&:year)
     @planning_years = Timetable.find_by_sql("
-      SELECT Distinct to_char(tt.date, 'MM/YYYY')as year FROM timetables tt,course_implementations ci,course_implementations_trainers cit,trainers t, courses c
+      SELECT Distinct to_char(tt.date, 'MM/YYYY')as year, date FROM timetables tt,course_implementations ci,course_implementations_trainers cit,trainers t, courses c
       WHERE  ci.id = tt.course_implementation_id
       AND cit.course_implementation_id =ci.id
       AND cit.trainer_id = t.id
       AND c.id = ci.course_id
       AND t.id = #{@profile.trainer.id}
+      ORDER by tt.date DESC
       ").collect(&:year)
     #@course_implementations = profile.trainer.course_implementations
     if params[:tarikh].present?
       @month = params[:tarikh].split("/")[0]
       @year = params[:tarikh].split("/")[1]
       @course_slots = Timetable.find_by_sql("
-      SELECT c.name as name, tt.date as date, tt.topic as topic, EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600 as hour
-      , (EXTRACT(EPOCH FROM ((tt.time_end - tt.time_start))/3600)* t.rate) as rate_hour
-      FROM timetables tt,course_implementations ci,course_implementations_trainers cit,trainers t, courses c
+      SELECT c.name as name, tt.date as date, tt.topic as topic, ct.name as kategory_pengajar, EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600 as hour
+      , (EXTRACT(EPOCH FROM ((tt.time_end - tt.time_start))/3600)*
+      CASE WHEN ct.id=1 THEN (SELECT rate from trainers where id =#{@profile.trainer.id})
+      WHEN ct.id=2 THEN (SELECT fasilitator_rate from trainers where id =#{@profile.trainer.id})
+      END
+      ) as rate_hour
+      FROM timetables tt,course_implementations ci,course_implementations_trainers cit,trainers t, courses c, category_trainers ct
       WHERE EXTRACT(month FROM date) = #{@month}
       AND EXTRACT(year FROM date) = #{@year}
       AND ci.id = tt.course_implementation_id
       AND cit.course_implementation_id =ci.id
       AND cit.trainer_id = t.id
       AND c.id = ci.course_id
+      AND ct.id = cit.category_trainer_id
       AND t.id = #{@profile.trainer.id}
         ")
     else
@@ -728,12 +734,13 @@ class TrainerController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
+        @employment = Employment.find_by_profile_id(@profile.id)
         render :pdf => "BORANG_TUNTUTAN_PENCERAMAH_#{params[:tarikh]}",
           :show_as_html => params[:debug].present?,
-          :margin => {:top                => 31.8,
+          :margin => {:top                => 24.8,
           :bottom        => 25.4,
-          :left          => 24.8,
-          :right         => 26.2}
+          :left          => 26.2,
+          :right         => 24.8}
       end
     end
   end
