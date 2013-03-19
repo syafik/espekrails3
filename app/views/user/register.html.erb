@@ -130,19 +130,19 @@ function ajax_response(originalRequest) {
 <script>
 
 function GoSubmit(df) {
-	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
-	if (!checkInput(anythingRegExp,$('user_name'),'Nama')) return false;
-	if (!checkInput(anythingRegExp,$('user_email'),'Emel')) return false;
-	if (!checkInput(anythingRegExp,$('user_department'),'Jabatan')) return false;
-	if (!checkInput(phoneRegExp,$('user_phone'),'No Tel Jabatan')) return false;
-	if (!checkInput(anythingRegExp,$('user_password'),'Kata Laluan')) return false;
-	if (!checkInput(anythingRegExp,$('user_password_confirmation'),'Pengesahan Kata Laluan')) return false;
-	if ($('user_password').value != $('user_password_confirmation').value) {
-		alert("Kata Laluan dan Pengesahan tidak sama.");
-		HighLightTextField($('user_password_confirmation'));
-		$('user_password_confirmation').focus();
-		return false;
-	}
+	<%#*if (!checkInput(icnumRegExp,$('#profile_ic_number'),'No KP')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_name'),'Nama')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_email'),'Emel')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_department'),'Jabatan')) return false;%>
+	<%#*if (!checkInput(phoneRegExp,$('#user_phone'),'No Tel Jabatan')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_password'),'Kata Laluan')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_password_confirmation'),'Pengesahan Kata Laluan')) return false;%>
+	<%#*if ($('#user_password').val() != $('#user_password_confirmation').val) {%>
+		<%#*alert("Kata Laluan dan Pengesahan tidak sama.");%>
+		<%#*HighLightTextField($('#user_password_confirmation'));%>
+		<%#*$('#user_password_confirmation').focus();%>
+		<%#*return false;%>
+	<%#*}%>
 
 	return true;
 }

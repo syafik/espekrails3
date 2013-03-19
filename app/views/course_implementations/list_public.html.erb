@@ -1,117 +1,117 @@
 <style>
-b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-.box {border: solid; border-width:1}
+  b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  .box {border: solid; border-width:1}
 </style>
 <script>
-function confirmAndDelete(url, objname) {
-	if (confirm("Are you sure to delete " + objname + "?")) {
-		location = url
-	}
+  function confirmAndDelete(url, objname) {
+    if (confirm("Are you sure to delete " + objname + "?")) {
+      location = url
+    }
 	
-}
-
-function rewritePopupContent(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show_public/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
-					       "</ul>"
-     
-}
-
-function rewritePopupContentNoRestraint(controller, objid, objname) {
-    $('popmenu').style.width = 230;
-    $('popmenu').innerHTML = "<ul>" + 
-					       "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" + 
-					       "</ul>"
-}
-
-function findAndSortWith(orderby,arrow) {
-	var df = document.list
-	
-	df.orderby.value = orderby
-	df.arrow.value = arrow
-	df.submit();
-}
-
-function checkAll(df) {
-  for (i=1; i<df.elements.length; i++ )
-  {
-     if (df.elements[i].type == "checkbox")
-     {
-       df.elements[i].checked = df.check_all.checked
-     } 
   }
-}
+
+  function rewritePopupContent(controller, objid, objname) {
+    $('#popmenu').css({"width":230});
+    $('#popmenu').html("<ul>" +
+      "<li><a href=\"" + controller + "/show_public/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+      "</ul>")
+     
+  }
+
+  function rewritePopupContentNoRestraint(controller, objid, objname) {
+    $('#popmenu').css({"width":230});
+    $('#popmenu').html("<ul>" +
+      "<li><a href=\"" + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+      "</ul>")
+  }
+
+  function findAndSortWith(orderby,arrow) {
+    var df = document.list
+	
+    df.orderby.value = orderby
+    df.arrow.value = arrow
+    df.submit();
+  }
+
+  function checkAll(df) {
+    for (i=1; i<df.elements.length; i++ )
+    {
+      if (df.elements[i].type == "checkbox")
+      {
+        df.elements[i].checked = df.check_all.checked
+      }
+    }
+  }
 
 </script>
 
 <%
- months = ["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"]
- bulans = ["01","02","03","04","05","06","07","08","09","10","11","12"]
- 
- t = Time.now
- current_year= t.strftime("%Y")
+months = ["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"]
+bulans = ["01","02","03","04","05","06","07","08","09","10","11","12"]
 
- the_year = params[:planning_year]
-  
+t = Time.now
+current_year= t.strftime("%Y")
+
+the_year = params[:planning_year]
+
 %>
 <!----------------------------------------------------------------------------------------->
 <form name="list" action="/course_implementations/list_public" method="get">
- <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">SENARAI KURSUS INSTUN</font></b></td>
     </tr>
-  <tr>
-    <td>&nbsp;</td>
+    <tr>
+      <td>&nbsp;</td>
     </tr>
- <tr>
-    <th><%= link_to 'KALENDAR KURSUS INSTUN', :action => 'calendar_public' %></th>
+    <tr>
+      <th><%= link_to 'KALENDAR KURSUS INSTUN', calendar_public_course_implementations_path %></th>
     </tr>
   </table>
   <br />
   <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <%
-		  @coordinators = Staff.find(:all, :conditions=>"is_coordinator = 1 and status=1")
-		  if !params[:coordinator]
-		  		if session[:user].roles[0].name == "Admin"
-		  			@coordinator = ""
-				else
-					if session[:user].profile.staff
-						@coordinator = session[:user].profile.staff.id
-					end
-				end 
-		  else
-				@coordinator = params[:coordinator]
- 		  end
-%>
+      @coordinators = Staff.where(:is_coordinator => 1, :status => 1)
+      if !params[:coordinator]
+        if session[:user].roles[0].name == "Admin"
+          @coordinator = ""
+        else
+          if session[:user].profile.staff
+            @coordinator = session[:user].profile.staff.id
+          end
+        end
+      else
+        @coordinator = params[:coordinator]
+      end
+    %>
       <td align="center"><select name="course_department_id" style="font-size:10px">
-            <option value="">Pilih Bahagian</option>
-            <% @course_departments.each do |cf| %>
+          <option value="">Pilih Bahagian</option>
+          <% @course_departments.each do |cf| %>
             <option value="<%= cf.id %>"
-         	<%= ' selected' if cf.id == params[:course_department_id].to_i %>> <%= cf.description.upcase %> </option>
-            <% end %>
-          </select>
-          <select name="month_start" style="font-size:10px">
-            <option value="">&nbsp;Bulan</option>
-            <% 
-	      12.times do |i|
-		  	@bulan = i + 1
-		  %>
+                    <%= ' selected' if cf.id == params[:course_department_id].to_i %>> <%= cf.description.upcase %> </option>
+                  <% end %>
+        </select>
+        <select name="month_start" style="font-size:10px">
+          <option value="">&nbsp;Bulan</option>
+          <%
+          12.times do |i|
+            @bulan = i + 1
+          %>
             <option value="<%=@bulan%>" <% if (@bulan == params[:month_start].to_i) %>selected<% end%> ><%=months[i]%></option>
-            <% 
+          <%
           end  %>
-          </select>
-          <select name="year_start" style="font-size:10px">
-            <% @planning_years.each do |cf| %>
+        </select>
+        <select name="year_start" style="font-size:10px">
+          <% @planning_years.each do |cf| %>
             <option value="<%= cf.year %>" <%= 'selected' if cf.year.to_s == params[:year_start].to_s %>> <%= cf.year %> </option>
-            <% end %>
-          </select>
-          <input name="button" type="button" value="Cari" onclick="document.forms[0].submit()"></td>
+          <% end %>
+        </select>
+        <input name="button" type="button" value="Cari" onclick="document.forms[0].submit()"></td>
     </tr>
   </table>
   <br />
@@ -123,10 +123,10 @@ function checkAll(df) {
     </tr>
   </table>
   <!--table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777"-->
-  
-<br>
 
-<table width="95%" border="<%=list_border%>" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">  
+  <br>
+
+  <table width="95%" border="<%=list_border%>" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
     <tr bgcolor="#999999" id="pisang" onclick="//servOC(20,'/course/show/3','#999999')">
       <td width="2%" valign="top" id="name20"><font color="#FFFFFF">&nbsp;</font></td>
       <td width="" align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
@@ -137,38 +137,38 @@ function checkAll(df) {
       <td width="" align="center"><font color="#FFFFFF"><strong>Tarikh Akhir</strong></font></td>
       <td width="" align="center"><font color="#FFFFFF"><strong>Status</strong></font></td>      
     </tr>
-<%
-i = 0;
-even = true;
+    <%
+    i = 0;
+    even = true;
 
-for query in @querys
-  i = i + 1
-  bgclr = "#CCCCFF" if (even == true)
-  bgclr = "#FFFFFE" if (even == false)
-  even = !even
-  
-  @jum_hari = (query.day_end.to_i-query.day_start.to_i) + 1
+    for query in @querys
+      i = i + 1
+      bgclr = "#CCCCFF" if (even == true)
+      bgclr = "#FFFFFE" if (even == false)
+      even = !even
 
-
-  show_menu = "show"
-
- onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{query.id}', '#{query.name}', event)"
+      @jum_hari = (query.day_end.to_i-query.day_start.to_i) + 1
 
 
-  
-%>
-    <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-        onmousedown="//menuLayers.<%=show_menu%>('popmenu', '/course_implementations', '<%=h query.id %>', '<%= query.name %>', event)">
-      <td id="name<%=h query.id %>" align="right" onmousedown="<%=onmousedown%>"><%= i.to_s %>.</td>
-      <td align=center onmousedown="<%=onmousedown%>"><%=h query.code.upcase %></td>
-      <td align="left" onmousedown="<%=onmousedown%>"><%=h query.name.upcase %></td>
-      <td align="left" onmousedown="<%=onmousedown%>"><%=h query.target_group %></td>
-      <td align="center" onmousedown="<%=onmousedown%>"><%=h query.jumlah_hari %></td>
-      <td align="center" onmousedown="<%=onmousedown%>">&nbsp;<%=h query.date_plan_start.to_formatted_s(:my_format_4) %></td>
-      <td align="center" onmousedown="<%=onmousedown%>">&nbsp;<%=h query.date_plan_end.to_formatted_s(:my_format_4) %></td>
-      <td align="center" onmousedown="<%=onmousedown%>"><%=h query.course.course_status.description.upcase %></td>
-    </tr>
+      show_menu = "show"
 
-<% end %>
+      onmousedown = "menuLayers.#{show_menu}('popmenu','/course_implementations', '#{query.id}', '#{query.name}', event)"
+
+
+
+    %>
+      <tr class="list" bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+          onmousedown="//menuLayers.<%=show_menu%>('popmenu', '/course_implementations', '<%=h query.id %>', '<%= query.name %>', event)">
+        <td id="name<%=h query.id %>" align="right" onmousedown="<%=onmousedown%>"><%= i.to_s %>.</td>
+        <td align=center onmousedown="<%=onmousedown%>"><%=h query.code.upcase %></td>
+        <td align="left" onmousedown="<%=onmousedown%>"><%=h query.name.upcase %></td>
+        <td align="left" onmousedown="<%=onmousedown%>"><%=h query.target_group %></td>
+        <td align="center" onmousedown="<%=onmousedown%>"><%=h query.jumlah_hari %></td>
+        <td align="center" onmousedown="<%=onmousedown%>">&nbsp;<%=h query.date_plan_start.to_formatted_s(:my_format_4) %></td>
+        <td align="center" onmousedown="<%=onmousedown%>">&nbsp;<%=h query.date_plan_end.to_formatted_s(:my_format_4) %></td>
+        <td align="center" onmousedown="<%=onmousedown%>"><%=h query.course.course_status.description.upcase %></td>
+      </tr>
+
+    <% end %>
   </table>
 </form>

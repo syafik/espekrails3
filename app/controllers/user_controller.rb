@@ -581,8 +581,9 @@ class UserController < ApplicationController
   end
 
   def signup
+    
     #render :text=> params[:user][:login] and return;
-    cur_users = User.find_all
+    cur_users = User.all
     isalreadyuser = 0;
     for u in cur_users
       if u.ic_number == params[:profile][:ic_number]
@@ -601,47 +602,47 @@ class UserController < ApplicationController
     @profile.save!
 
     begin
-    	User.transaction(@user8) do
-        @user8.ic_number =  params[:profile][:ic_number]
-        @user8.new_password = true
-        @user8.verified = 0
-        created = Time.now
+      #    	User.transaction(@user8) do
+      @user8.ic_number =  params[:profile][:ic_number]
+      @user8.new_password = true
+      @user8.verified = 0
+      created = Time.now
 
-        name = params[:user][:name]
-        email = params[:user][:email]
-        kp = params[:profile][:ic_number]
-        dp = params[:user][:department]
-        phone = params[:user][:phone]
-        name2 = name.gsub(/\'/, '`').to_s.gsub(/\"/,'`')
-        dp2 = dp.gsub(/\'/, '`').to_s.gsub(/\"/,'`')
+      name = params[:user][:name]
+      email = params[:user][:email]
+      kp = params[:profile][:ic_number]
+      dp = params[:user][:department]
+      phone = params[:user][:phone]
+      name2 = name.gsub(/\'/, '`').to_s.gsub(/\"/,'`')
+      dp2 = dp.gsub(/\'/, '`').to_s.gsub(/\"/,'`')
 
+      if @user8.valid?
+        key = @user8.generate_security_token
+        url = url_for(:action => 'home', :user_id => @user8.id, :key => key)
+        a = User.find_by_sql("insert into users(ic_number,verified,name,email,department,phone,security_token,salt,salted_password,created_at,profile_id)values('#{kp}','0','#{name2}','#{email}','#{dp2}','#{phone}','#{@user8.security_token}','#{@user8.salt}','#{@user8.salted_password}','#{created}',#{@profile.id})")
+        b = User.find_by_ic_number(kp)
+        c = Role.find_by_sql("insert into users_roles(user_id,role_id) values('#{b.id}','3')")
 
-        if @user8.valid?
-          key = @user8.generate_security_token
-          url = url_for(:action => 'home', :user_id => @user8.id, :key => key)
-          a = User.find_by_sql("insert into users(ic_number,verified,name,email,department,phone,security_token,salt,salted_password,created_at,profile_id) values('#{kp}','0','#{name2}','#{email}','#{dp2}','#{phone}','#{@user8.security_token}','#{@user8.salt}','#{@user8.salted_password}','#{created}',#{@profile.id})")
-          b = User.find_by_ic_number(kp)
-          c = Role.find_by_sql("insert into users_roles(user_id,role_id) values('#{b.id}','3')")
-
-          flash[:notice] = 'Pendaftaran berjaya.<BR>'
-          if LoginEngine.config(:use_email_notification) and LoginEngine.config(:confirm_account)
-            UserNotify.deliver_signup(@user8, params[:user][:password], url)
-            #  flash[:notice] << "<script>alert('Tahniah, pendaftaran telah berjaya. Anda hanya dibenarkan mengakses sistem setelah Administrator mengesahkan pendaftaran anda.')</script><BR>"
-          end
-          flash[:notice] = "Tahniah, pendaftaran telah berjaya. Anda hanya dibenarkan mengakses sistem setelah Administrator mengesahkan pendaftaran anda"
-          redirect_to :action => 'success'
-
-          #redirect_to :action => 'logout', :id => b.id
-        else
-          flash[:notice] = 'Maklumat pendaftaran tidak lengkap. Semua medan wajib diisi.<BR>'
-          render :action => 'register'
+        flash[:notice] = 'Pendaftaran berjaya.<BR>'
+        if LoginEngine.config(:use_email_notification) and LoginEngine.config(:confirm_account)
+          #            UserNotify.deliver_signup(@user8, params[:user][:password], url)
+          #  flash[:notice] << "<script>alert('Tahniah, pendaftaran telah berjaya. Anda hanya dibenarkan mengakses sistem setelah Administrator mengesahkan pendaftaran anda.')</script><BR>"
         end
+        flash[:notice] = "Tahniah, pendaftaran telah berjaya. Anda hanya dibenarkan mengakses sistem setelah Administrator mengesahkan pendaftaran anda"
+        redirect_to :action => 'success'
 
+        #redirect_to :action => 'logout', :id => b.id
+      else
+        flash[:notice] = 'Maklumat pendaftaran tidak lengkap. Semua medan wajib diisi.<BR>'
+        render :action => 'register', :layout => "standard-layouts"
       end
 
+      #      end
+
     rescue Exception => e
+      logger.debug e
       flash.now[:notice] = 'Pendaftaran tidak berjaya. Sila hubungi Pihak eSPEK.<BR>'
-      render :action => 'register'
+      render :action => 'register', :layout => "standard-layouts"
       flash.now[:warning] = nil
       logger.error "Unable to send confirmation E-Mail:"
       logger.error e
