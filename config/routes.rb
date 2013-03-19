@@ -606,6 +606,7 @@ InstunRails3::Application.routes.draw do
       get 'keselamatan'
       get 'pegawai_sijil'
       get 'pengajar'
+      get 'kewangan'
       get 'rnd'
       get 'laporan'
     end

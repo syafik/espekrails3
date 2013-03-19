@@ -1,19 +1,57 @@
-# Create new role for pengajar
-task :create_role_pengajar => :environment do
-  ActiveRecord::Base.transaction do
-    new_role_name = 'Pengajar'
-    new_role_description = 'Pengajar Kursus'
+task :create_admin_roles => :environment do
+  desc "Create new roles : Pengajar, Kewangan and add the roles to user Admin"
+
+  new_role_name_pengajar = "Pengajar"
+  new_role_pengajar_description = "Pengajar Kursus"
+  new_role_name_kewangan = "Kewangan"
+  new_role_kewangan_description = "Pegawai Kewangan"
+
+ ActiveRecord::Base.transaction do
+   create_role(new_role_name_pengajar, new_role_pengajar_description)
+   create_role(new_role_name_kewangan, new_role_kewangan_description)
+ end # transaction
+  
+end #task create_roles
+
+def my_test
+  puts "Something"
+end
+
+def create_role(name, description)
+  if is_role_exist?(name)
+    puts "Role #{name} is already exist. Skipping creation"
+  else
+    new_role = insert_new_role(name, description)
     
-    new_role = Role.new({:name => new_role_name, :description => new_role_description, :omnipotent => false, :system_role => true})
-    if new_role.save!
-      puts "New Role Name = #{new_role.name}, ID = #{new_role.id}"
-      admin = User.find_by_login('admin')
-      user_roles = User.find_by_sql("insert into roles_users(user_id,role_id) values(#{admin.id}, #{new_role.id})")
-      puts "Admin is now #{new_role.name}"
+    if new_role.blank?
+      raise "Error inserting Role #{name} to DB"
     else
-      puts "Create new Role - #{new_role_name} - Failed !!"
+      add_admin_role(new_role)
     end
-  end # transaction
+  end #is_role_exists?     
+end
+
+def is_role_exist?(role_name)
+  Role.find_by_name(role_name).blank? ? false : true
+end
+
+def insert_new_role(name, description)
+  new_role = Role.new({:name => name, :description => description, :omnipotent => false, :system_role => true})
+  if new_role.save!
+    return new_role
+  else
+    return nil
+  end
+end
+
+def add_admin_role(role)
+  admin = User.find_by_login('admin')
+  if admin.blank?
+    puts "Can't find user Admin"
+    return
+  end
+  user_roles = User.find_by_sql("insert into roles_users(user_id,role_id) values(#{admin.id}, #{role.id})")
+  puts "Admin is now #{role.name}"
 end
 
 task :create_trainer_account_example => :environment do
