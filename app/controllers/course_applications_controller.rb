@@ -411,7 +411,8 @@ class CourseApplicationsController < ApplicationController
 
     else
       @students = []
-      render :action => "search_not_found"
+      render :action => "search"
+      #redirect_to :back
     end
     @courses = Course.find(:all, :order => "name")
     #render :layout => "standard-layout"
