@@ -621,7 +621,7 @@ class UserController < ApplicationController
         url = url_for(:action => 'home', :user_id => @user8.id, :key => key)
         a = User.find_by_sql("insert into users(ic_number,verified,name,email,department,phone,security_token,salt,salted_password,created_at,profile_id)values('#{kp}','0','#{name2}','#{email}','#{dp2}','#{phone}','#{@user8.security_token}','#{@user8.salt}','#{@user8.salted_password}','#{created}',#{@profile.id})")
         b = User.find_by_ic_number(kp)
-        c = Role.find_by_sql("insert into users_roles(user_id,role_id) values('#{b.id}','3')")
+        c = Role.find_by_sql("insert into roles_users(user_id,role_id) values('#{b.id}','3')")
 
         flash[:notice] = 'Pendaftaran berjaya.<BR>'
         if LoginEngine.config(:use_email_notification) and LoginEngine.config(:confirm_account)
@@ -653,7 +653,7 @@ class UserController < ApplicationController
     @profile = Profile.find_by_ic_number(params[:profile][:ic_number])
     @user = User.new(params[:user])
     begin
-      User.transaction(@user) do
+      #User.transaction(@user) do
         @user.new_password = true
         @user.verified = 1
         created = Time.now
@@ -672,14 +672,14 @@ class UserController < ApplicationController
           url = url_for(:action => 'home', :user_id => @user.id, :key => key)
           a = User.find_by_sql("insert into users(ic_number,verified,profile_id,name,email,department,phone,security_token,salt,salted_password,created_at) values('#{kp}','1','#{@profile.id}','#{name2}','#{email}','#{dp2}','#{phone}','#{@user.security_token}','#{@user.salt}','#{@user.salted_password}','#{created}')")
           b = User.find_by_ic_number(kp)
-          c = Role.find_by_sql("insert into users_roles(user_id,role_id) values('#{b.id}','3')")
+          c = Role.find_by_sql("insert into roles_users(user_id,role_id) values('#{b.id}','3')")
 
           flash[:notice] = 'Pendaftaran berjaya. Sila Login.'
           redirect_to :action => 'login'
         else
           render :action => 'staff_already_exist'
         end
-      end
+      #end
 
     rescue Exception => e
       flash.now[:notice] = 'Pendaftaran tidak berjaya. Sila hubungi Pihak eSPEK.'

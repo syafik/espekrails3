@@ -551,6 +551,7 @@ InstunRails3::Application.routes.draw do
       post 'authenticate'
       post 'signup'
       post 'staff_already_exist'
+      post 'register_exist'
     end
   end
   
