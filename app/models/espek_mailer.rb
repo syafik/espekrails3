@@ -225,21 +225,27 @@ class EspekMailer < ActionMailer::Base
 
   def user_password(user, password)
     @user = User.find(user)
-    @recipients = "#{@user.email}"
-    @from       = LoginEngine.config(:email_from).to_s
+    #@recipients = "#{@user.email}"
+    #@from       = LoginEngine.config(:email_from).to_s
     @subject    = "[#{LoginEngine.config(:app_name)}] "
     @sent_on    = Time.now
     #@headers["cc"] 	= "#{@user.profile.email}"
-    @headers["cc"]      = "espek@instun.gov.my"
+    #@headers["cc"]      = "espek@instun.gov.my"
     #@headers["bcc"]      = "espek@instun.gov.my"
     # Email header info
     @subject += "Tukar Kata Laluan"
 
     # Email body substitutions
     #@body["name"] = "#{user.firstname} #{user.lastname}"
-    @body["login"] = @user.ic_number
-    @body["password"] = password
-    @body["sent_on"] = @sent_on.to_formatted_s(:my_format_7) 
+    @login = @user.ic_number
+    @password = password
+    @sent_on = @sent_on.to_formatted_s(:my_format_7)
+    mail(
+      :from => LoginEngine.config(:email_from).to_s,
+      :to => @user.email,
+      :cc => "espek@instun.gov.my",
+      :subject => @subject)
+
   end
 
   def user_recorded(user, cid)

@@ -487,7 +487,7 @@ class ProfilesController < ApplicationController
         sql = "UPDATE users SET salt='#{s}' , salted_password='#{sp}' WHERE id=#{@user.id}"
         a = Profile.find_by_sql(sql);
         flash[:notice] = "Tahniah Kerana Penukaran Kata Laluan Berjaya<BR>"
-        EspekMailer.deliver_user_password(@user.id, params[:user][:password])
+        EspekMailer.user_password(@user.id, params[:user][:password]).deliver
         redirect_to :action => 'view'
       end
     else
