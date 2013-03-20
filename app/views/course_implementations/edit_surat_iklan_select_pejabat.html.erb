@@ -9,10 +9,13 @@ function confirmAndDelete(url, objname) {
 
 function rewritePopupContent(controller, objid, objname) {
     document.getElementById('popmenu').style.width = 230;
+
     document.getElementById('popmenu').innerHTML = "<ul>" +
                              "<li><a href=\"javascript: GoEditSuratTawaran()\">&nbsp;&nbsp;Seterusnya, kemaskini surat pelawaan</a>" + 
 //			     "<li><a href=\""  + controller + "/edit_surat_iklan_la_apa_lagi/" + objid + "\">&nbsp;&nbsp;Pilih Pejabat</a>" + 
 			     "</ul>"
+
+
      
 }
 </script>
@@ -40,8 +43,12 @@ function GoEditSuratTawaran() {
 		alert("Sila pilih senarai pejabat");
 		return false;
 	}
-	var id = document.getElementById('surat_iklan_content_course_implementation_id').value
-    df.action = "/course_implementations/" + id + "/edit_surat_iklan_la_apa_lagi"
+    <% if !@course_implementation_id.blank? %>
+        var id = document.getElementById('surat_iklan_content_course_implementation_id').value
+        df.action = "/course_implementations/" + id + "/edit_surat_iklan_la_apa_lagi"
+    <% elsif !@schedule_ids.blank? %>
+        df.action = "/course_implementations/edit_surat_iklan_la_apa_lagi"
+    <% end %>
     df.submit()
 }
 

@@ -1,3 +1,5 @@
+<% #encoding: utf-8 %>
+<% unless @schedule.blank? %>
 <%
     if @format_surat == 3
 %>
@@ -177,10 +179,6 @@
     <%
        end
 
-
-
-
-
        #@nota_font_size = 9
        #current_y = pdf.y
        #pdf.y = pdf.absolute_bottom_margin - 20
@@ -256,3 +254,207 @@
        #  pdf.save_as("/aplikasi/www/instun/public/surat/" + file) #kalu kat bsd
        #end
     %>
+
+<% else %>
+    <%
+       if @format_surat == 3
+    %>
+        <%#= image_tag(header_image) %>
+    <%
+       end
+    %>
+
+    <% @schedules.each do |s| %>
+        <%
+           dept = CourseDepartment.find(s.course.course_department.id)
+           ref = LatestLetterReference.find_by_course_department_id(dept.id)
+           rujukan_kami = ""
+           rujukan_kami = ref.latest_ref_no if ref
+           t = Time.now
+           current_day= t.strftime("%d")
+           current_month= $MONTH_NAMES[t.strftime("%m").to_i - 1]
+           current_year= t.strftime("%Y")
+
+           tarikh = "#{current_day} #{current_month} #{current_year}"
+
+           per_lines = []
+           per_lines << "PELAWAAN MENGHADIRI KURSUS DI INSTITUT TANAH DAN UKUR NEGARA"
+           per_lines << "#{s.code} - #{s.course.name}"
+           per_lines << "PADA #{s.date_start.to_formatted_s(:my_format_4)} HINGGA #{s.date_end.to_formatted_s(:my_format_4)}"
+           str_perenggan = String.new(@perenggan)
+           str_perenggan ["_{PENYELARAS1_NAMA}_"] = s.penyelaras1.profile.name
+           str_perenggan ["_{PENYELARAS1_EMAIL}_"] = s.penyelaras1.profile.email
+           str_perenggan ["_{PENYELARAS2_NAMA}_"] = s.penyelaras2.profile.name
+           str_perenggan ["_{PENYELARAS2_EMAIL}_"] = s.penyelaras2.profile.email
+        %>
+        <table width="100%">
+          <tr>
+            <td align="right">
+              <table style="font-size: 10px;">
+                <tr>
+                  <td>Ruj.Tuan</td>
+                  <td>: </td>
+                </tr>
+                <tr>
+                  <td>Ruj.Kami</td>
+                  <td>: <%= rujukan_kami %></td>
+                </tr>
+                <tr>
+                  <td>Tarikh</td>
+                  <td>: <%= tarikh %></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td width="100%" align="left">
+              <%
+                 i = 1
+                 for place in @places
+                   addr1 = place.address1.split(" ").map! {|e| e}.join(" ") if ( (place.address1 != "") && place.address1 )
+                   addr2 = place.address2.split(" ").map! {|e| e}.join(" ") if ( (place.address2 != "") && place.address2 )
+                   addr3 = place.address3.split(" ").map! {|e| e}.join(" ") if ( (place.address3 != "") && place.address3 )
+                   addr4 = place.address4.split(" ").map! {|e| e}.join(" ") if ( (place.address4 != "") && place.address4 )
+
+                   addr1 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+                   addr2 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+                   addr3 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+                   addr4 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
+                   state = nof{place.state.description}
+                   if state != nil
+                     state = place.state.description.split(" ").map! {|e| e.capitalize}.join(" ")
+                   end
+
+                   addr_arr = Array.new
+                   addr_arr.push(place.name) if place.name != ""
+                   addr_arr.push(addr1) if place.address1 != ""
+                   addr_arr.push(addr2) if place.address2 != ""
+                   addr_arr.push(addr3) if place.address3 != ""
+                   addr_arr.push(addr4) if place.address4 != ""
+                   #addr_arr.push(nof{state.upcase}) if place.state != ""
+                   company_addr = addr_arr.join("<br/>")
+                   company_addr = company_addr.tr_s(',' , ',')
+
+                   alamat = "#{company_addr}"
+              %>
+                  <%= "#{nof { place.head_title }}".html_safe %><br/>
+                  <%= "#{alamat}".html_safe %><br/><br/>
+              <%
+                 end
+              %>
+              <br/><br/>
+              Tuan,<br/><br/>
+              <%
+                 for per_line in per_lines
+              %>
+                  <%= "<strong>#{per_line}</strong>".html_safe %><br/>
+              <%
+                 end
+              %>
+              <%= str_perenggan.html_safe %>
+              <!--<div style="display:block; clear:both; page-break-after:always;"></div>-->
+              Sekian, terima kasih<br/><br/>
+              <b>`BERKHIDMAT UNTUK NEGARA`</b><br/>
+              <b>`MENDAHULUI CABARAN`</b><br/>
+              <b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>
+              Saya yang menurut perintah,<br/><br/>
+
+              <%
+                 if @is_cetakan_komputer
+                   if !@signature_file.blank? && @signature_file != ""
+              %>
+                      <%= image_tag(@signature_file) %>
+                  <%
+                     else
+                  %>
+                      <br/><br/><br/><br/>
+                  <%
+                     end
+                     end
+
+                     if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
+                  %>
+                  <%= "<br/><b>(#{@tandatangan_nama})</b>".html_safe %><br/>
+              <%
+                 end
+              %>
+              <%= "#{@tandatangan_jawatan}<br/>".html_safe %><br/>
+              Institut Tanah & Ukur Negara(INSTUN)<br/>
+              Kementerian Sumber Asli dan Alam Sekitar<br/>
+              <br/>s.k<br/>
+
+              <%
+                 sk_lines = @salinan_kepada.split("\n")
+                 for sk_line in sk_lines
+              %>
+                  <%= sk_line %><br/>
+              <%
+                 end
+              %>
+            </td>
+          </tr>
+        </table>
+
+        <%
+             tarikh = "#{s.date_plan_start.to_formatted_s(:my_format_4)} hingga #{s.date_plan_end.to_formatted_s(:my_format_4)}"
+             tempoh = (s.date_plan_end-s.date_plan_start) + 1
+
+             arr = Array.new
+             for methodology in s.course.methodologies
+               arr.push(methodology.description)
+             end
+             methodologies = arr.join(', ')
+
+             tarikh_tutup = ""
+             tarikh_tutup = s.last_date.to_formatted_s(:my_format_3) if s.last_date
+
+        %>
+            <div style="display:block; clear:both; page-break-after:always;"></div>
+            Lampiran A<br/>
+
+            <table width="400" style="border:1px solid black;" cellspacing="0" cellpadding="2">
+              <tr style=" background-color: #CCCCCC;">
+                <td style="border:1px solid black;">Kod Kursus</td>
+                <td style="border:1px solid black;"><%= s.code %></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Modul</td>
+                <td style="border:1px solid black;"><%= s.course.course_field.description %> : <%= s.course.name %></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Kelayakan Peserta</td>
+                <td style="border:1px solid black;"><%= s.course.target_group %></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Tarikh</td>
+                <td style="border:1px solid black;"><%= tarikh %></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Tempoh</td>
+                <td style="border:1px solid black;"><%= tempoh %> hari</td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Objektif</td>
+                <td style="border:1px solid black;"><%= s.course.objective %></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Kandungan</td>
+                <td style="border:1px solid black;"><%= s.course.content.html_safe %></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Metodologi</td>
+                <td style="border:1px solid black;"><%= methodologies %></td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Bilangan Peserta</td>
+                <td style="border:1px solid black;"><%= s.capacity %> orang</td>
+              </tr>
+              <tr>
+                <td style="border:1px solid black;">Tarikh Tutup</td>
+                <td style="border:1px solid black;"><%= tarikh_tutup %></td>
+              </tr>
+            </table>
+    <% end %>
+
+<% end %>
