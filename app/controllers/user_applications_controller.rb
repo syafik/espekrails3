@@ -84,13 +84,13 @@ class UserApplicationsController < ApplicationController
 
   def exam_before
     @course_application = CourseApplication.find(params[:id]) if params[:id]
-    @quiz = Quiz.find_by_course_implementation_id(@course_application.course_implementation_id) if @course_application
+    @quiz = Quiz.find_all_by_course_implementation_id(@course_application.course_implementation_id).last if @course_application
     @quiz_question = QuizQuestion.find_by_sql("SELECT * from quiz_questions where quiz_id = '#{@quiz.id}' order by id") if @quiz
     #@quiz_question = QuizQuestion.find_by_quiz_id(@quiz.id) if @quiz
     logger.info @quiz
     logger.info @course_application.course_implementation_id
     if !@quiz.nil?
-      @quiz_answers = QuizAnswer.find_by_sql("SELECT * FROM quiz_answers WHERE quiz_question_id = '#{@quiz_question.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before' ORDER BY 1")
+#      @quiz_answers = QuizAnswer.find_by_sql("SELECT * FROM quiz_answers WHERE quiz_question_id = '#{@quiz_question.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before' ORDER BY 1")
       @check = QuizAnswer.find(:first, :conditions=> "quiz_id='#{@quiz.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before'", :order => "quiz_question_id")
       #@check = QuizAnswer.find(:first, :conditions=> "quiz_question_id='#{@quiz_question.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before'")
     end

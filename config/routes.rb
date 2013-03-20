@@ -40,8 +40,8 @@ InstunRails3::Application.routes.draw do
   match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
   match '/user_applications/exam_before/:id' => 'user_applications#exam_before', :via => [:get]
   match '/user_applications/exam_after/:id' => 'user_applications#exam_after', :via => [:get]
-  match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:post]
-  match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:post]
+  match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:put]
+  match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:put]
   match '/user_applications/show_attendance/:id' => 'user_applications#show_attendance', :via => [:get]
   resources :user_applications do
     collection do 
