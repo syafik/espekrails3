@@ -97,6 +97,17 @@ the_year = params[:planning_year]
                   end  %>
         </select>
 
+        <select name="planning_month2">
+          <option value="">&nbsp;Bulan</option>
+          <%
+          x=0
+          for bulan in bulans %>
+            <option value= "<%= bulans[x] %>"
+                    <% if (bulans[x] == params[:planning_month2]) %> selected <% end%> ><%= months[x] %></option>
+                    <%	 x = x + 1
+                  end  %>
+        </select>
+
         <select name="planning_year">
           <% @planning_years.each do |cf| %>
             <%
@@ -120,7 +131,7 @@ the_year = params[:planning_year]
   <br>
   <table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
     <tr bgcolor="#999999" id="pisang" onclick="">
-      <!--td id="name20" width="2%" valign="MIDDLE" align="CENTER"><input name="check_all" type="checkbox" class="" onclick="checkAll(document.list)" value="0"></td-->
+      <td id="name20" width="2%" valign="MIDDLE" align="CENTER"><input name="check_all" type="checkbox" class="" onclick="checkAll(document.list)" value="0"></td>
       <td width="2%" valign="top" id="name20"><font color="#FFFFFF">&nbsp;</font></td>
       <td width="" align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
       <td width="20%" align="left"><font color="#FFFFFF">&nbsp;<strong>Nama Kursus</strong></font></td>
@@ -134,30 +145,7 @@ the_year = params[:planning_year]
     i = 0;
     even = true;
 
-    if params[:planning_year].blank?
-      sch_year = current_year   #2006
-    else
-      sch_year = params[:planning_year]
-    end
 
-    if params[:planning_month].blank?
-      sch_month = nil
-    else
-      if params[:planning_month] == 0
-        sch_month = nil
-      else
-        sch_month = "AND month_start = "+params[:planning_month]
-      end
-    end
-
-    if params[:course_department_id].blank?
-      sch_dept = nil
-    else
-      sch_dept = "AND course_department_id = "+params[:course_department_id]
-    end
-
-    @schedules = CourseImplementation.find_by_sql("select * from vw_detailed_courses  where year_start=#{sch_year.to_i} #{sch_month} #{sch_dept} ORDER BY date_plan_start")
-    @schedules = [] if  !params[:course_department_id]
     for query in @schedules
       i = i + 1
       bgclr = "#CCCCFF" if (even == true)
@@ -169,7 +157,7 @@ the_year = params[:planning_year]
     %>
       <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
           onmousedown="menuLayers.show('popmenu', '/course_implementations', '<%=h query.id %>', '<%= query.name %>', event)"  onclick="//servOC(<%=query.id%>,'/courses/show/<%=query.id%>','#999999')">
-        <!--td id="name<%=h query.id %>"><input type="checkbox" name="schedule_ids[]" value="<%=query.id%>" class=""></td-->
+        <td id="name<%=h query.id %>"><input type="checkbox" name="schedule_ids[]" value="<%=query.id%>" class=""></td>
         <td align="right" id="name<%=h query.id %>"><%= i.to_s %>.</td>
         <td align=center><%=h query.code.upcase %></td>
         <td align="left"><%=h query.name.upcase %></td>
@@ -182,8 +170,8 @@ the_year = params[:planning_year]
 
     <% end %>
   </table>
-  <!--div align="center"><br />
+  <div align="center"><br />
     <input type="button" name="Submit" value="Seterusnya, pilih senarai pejabat>>" onclick="GoNextSelectPejabat()">
-  </div-->
+  </div>
 </form>
 

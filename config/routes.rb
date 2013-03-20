@@ -50,6 +50,7 @@ InstunRails3::Application.routes.draw do
       get 'surat_tawaran'
       get 'attend'
       get 'history'
+      post 'sah_hadir_selected'
     end
   end
   resources :post_individus do
@@ -444,7 +445,7 @@ InstunRails3::Application.routes.draw do
       get 'list_signature'
     end
   end
-  match '/course_applications/all/:id' => 'course_applications#all', :via => [:get]
+  match '/course_applications/all/:course_application_id' => 'course_applications#all', :via => [:get]
   match '/course_applications/unprocessed/:id' => 'course_applications#unprocessed', :via => [:get]
   match '/course_applications/hadir/:id' => 'course_applications#hadir', :via => [:get]
   match '/course_applications/accepted/:id' => 'course_applications#accepted', :via => [:get]
@@ -463,6 +464,7 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/create_but_peserta_already_exist' => 'course_applications#create_but_peserta_already_exist', :via => [:post]
   match '/course_applications/new_but_peserta_already_exist' => 'course_applications#new_but_peserta_already_exist', :via => [:get]
   match '/course_applications/user_daftar/:id' => 'course_applications#user_daftar', :via => [:get]
+  match '/course_applications/new/:id' => 'course_applications#new', :via => [:get]
   
   resources :course_applications do
     get 'new'
@@ -500,7 +502,8 @@ InstunRails3::Application.routes.draw do
   end
   
   match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
-
+  match '/course_implementations/show_public/:id' => 'course_implementations#show_public', :via => [:get]
+  match '/course_implementations/update/:id' => 'course_implementations#update', :via => [:post]
   resources :course_implementations do
     get 'show'
     get 'calendar'
@@ -508,6 +511,7 @@ InstunRails3::Application.routes.draw do
     get 'edit_surat_iklan_la_apa_lagi'
     get 'rujukan_kami'
     collection do
+      get 'edit_surat_iklan_select_pejabat'
       get 'list'
       get 'search'
       get 'search_for_user'
@@ -518,6 +522,8 @@ InstunRails3::Application.routes.draw do
       post 'copy_and_create'
       post 'cetak_surat_iklan'
       post 'search_for_user'
+      get 'list_public'
+      get 'calendar_public'
     end
     member do
       get 'add_course_trainer_refresh_opener'
@@ -531,14 +537,19 @@ InstunRails3::Application.routes.draw do
       put 'simpan_tambah_jadual'
     end
   end
+  match '/user/change_password' => 'user#change_password', :via => [:get]
+  match '/user/forgot_password' => 'user#forgot_password', :via => [:post]
   resources :user do
     collection do
       get 'home'
+      get 'success'
       get 'login'
       get 'logout'
       get 'register'
       get 'forgot_password'
       post 'authenticate'
+      post 'signup'
+      post 'staff_already_exist'
     end
   end
   
@@ -547,9 +558,9 @@ InstunRails3::Application.routes.draw do
     get 'view'
     get 'addrole'
     get 'show_profile'
-    put 'update_password'
+#    put 'update_password'
     put 'update_password2'
-    get 'edit_password'
+   
     get 'edit_password2'
     get 'verify'
     get 'modrole'
@@ -558,6 +569,8 @@ InstunRails3::Application.routes.draw do
     get 'setrole'
     put 'update_role'
     collection do
+       get 'edit_password'
+       put 'update_password'
       get 'search_akaun'
       get 'list'
       get 'list_all'
@@ -609,6 +622,7 @@ InstunRails3::Application.routes.draw do
       get 'kewangan'
       get 'rnd'
       get 'laporan'
+      get 'pengajar'
     end
   end
   resources :main do

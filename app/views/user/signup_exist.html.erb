@@ -1,73 +1,73 @@
 <div title="<%= title_helper %>" class="form">
-<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <th width="85%" height="20" bgcolor="#999999">
-      <font color="#FFFFFF">DAFTAR AKAUN</font></th>
+        <font color="#FFFFFF">DAFTAR AKAUN</font></th>
     </tr>
     <tr>
-    <td>&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
   </table>
   <BR>
 
   <div class="form-padding">
-  	 <div align="center">
-	<p style="color: red"><%= flash[:notice] %></p></div>
-    <%= start_form_tag :action => 'signup_exist' %>
+    <div align="center">
+      <p style="color: red"><%= flash[:notice] %></p></div>
 
- <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-	<tr>
-	<td align=right width=30%>No KP :</td>
-	<td width=40%>
-       <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>12, :class=>"px200", :onchange=>"checkNRIC()"  %> 
-       <span id="node_identification_memo"> </span>    </td>
-	</tr>
-	
-<script>
-node = $("profile_ic_number");
-//node_identification_memo = $("node_identification_memo");
+    <form name="rgs_form" action="signup_exist" method="post"><br />
+      <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+        <tr>
+          <td align=right width=30%>No KP :</td>
+          <td width=40%>
+            <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>12, :class=>"px200", :onchange=>"checkNRIC()"  %>
+            <span id="node_identification_memo"> </span>    </td>
+        </tr>
 
-function checkNRIC() {
-        node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>Carian no kp didalam sistem. Sila Tunggu</font>"
-        ajax_request("ajax_nric", "ic_number="+node.value)
-}
+        <script>
+          node = $("profile_ic_number");
+          //node_identification_memo = $("node_identification_memo");
 
-function ajax_request(url, data) {
-    var myAjax = new Ajax.Request(
-        url,
-	{method: 'post', parameters: data, onComplete: ajax_response}
-    );
-}
+          function checkNRIC() {
+            node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>Carian no kp didalam sistem. Sila Tunggu</font>"
+            ajax_request("ajax_nric", "ic_number="+node.value)
+          }
 
-function ajax_response(originalRequest) {
-        if (originalRequest.responseText == 1) {
-                node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Data ada didalam sistem.<br>&nbsp;Data dipaparkan. Sila Tunggu</font>"
-                document.forms[0].action = "new_but_student_already_exist";
-                document.forms[0].submit();
-        }
-        else {
-                node_identification_memo.innerHTML = "<br><font color=red>Pengguna tiada lagi data didalam sistem</font>"
-        }
-}
-</script>
+          function ajax_request(url, data) {
+            var myAjax = new Ajax.Request(
+            url,
+            {method: 'post', parameters: data, onComplete: ajax_response}
+          );
+          }
 
-   <tr>
-      <td align="right" valign="top">Nama:</td>
-      <td>
-       <%= text_field 'profile', 'name', :maxlength=>40  %></td>
-       </tr>
+          function ajax_response(originalRequest) {
+            if (originalRequest.responseText == 1) {
+              node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Data ada didalam sistem.<br>&nbsp;Data dipaparkan. Sila Tunggu</font>"
+              document.forms[0].action = "new_but_student_already_exist";
+              document.forms[0].submit();
+            }
+            else {
+              node_identification_memo.innerHTML = "<br><font color=red>Pengguna tiada lagi data didalam sistem</font>"
+            }
+          }
+        </script>
 
-      <%= render_partial 'edit', :user => @user, :submit => false %><br/>
-      <%= render_partial 'password', :submit => false %>
+        <tr>
+          <td align="right" valign="top">Nama:</td>
+          <td>
+            <%= text_field 'profile', 'name', :maxlength=>40  %></td>
+        </tr>
 
-	<tr>
-	<td>&nbsp;</td>
-	<td>&nbsp;
-        <%= submit_tag 'Daftar' %>
-        <%= link_to 'Kembali ke laman utama', :action => 'login' %>
-      </td>
-      </tr>
+        <%= render :partial => 'edit', :user => @user, :submit => false %><br/>
+        <%= render :partial => 'password', :submit => false %>
+
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;
+            <%= submit_tag 'Daftar' %>
+            <%= link_to 'Kembali ke laman utama', :action => 'login' %>
+          </td>
+        </tr>
       </table>
-    <%= end_form_tag %>
+    <% end %>
   </div>
 </div>

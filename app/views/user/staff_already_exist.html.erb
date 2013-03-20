@@ -1,147 +1,147 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
       <font color="#FFFFFF">DAFTAR AKAUN SISTEM eSPEK</font></th>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>&nbsp;</td>
-    </tr>
-	<tr>
-		<td align="CENTER">Selamat datang ke Sistem Pengurusan Kursus (eSPEK), INSTUN. <br />
-Sila lengkapkan maklumat berikut. </td>
-	</tr>
-  </table>
-  <BR>
+  </tr>
+  <tr>
+    <td align="CENTER">Selamat datang ke Sistem Pengurusan Kursus (eSPEK), INSTUN. <br />
+      Sila lengkapkan maklumat berikut. </td>
+  </tr>
+</table>
+<BR>
 
 
-   <div align="center">
-<%= error_messages_for 'user'%>
-	<p style="color: red"><%= flash[:notice] %></p></div>
+<div align="center">
+  <%= show_error_messages(@user)%>
+  <p style="color: red"><%= flash[:notice] %></p></div>
 <%#= start_form_tag :action => 'signup' %>
 <form name="rgs_form" action="register_exist" method="post" onsubmit="return GoSubmit(rgs_form)">
-     <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-	<tr>
-	<td align=right width=30%>No KP <font color=red><b>*</b></font>:</td>
-	<td width=40%>&nbsp;
-       <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>12, :class=>"px200", :onchange=>"checkNRIC()"  %> 
-       <font style="color: red; font-size: 10px">*Tanpa sengkang(-)</font>
-       <span id="node_identification_memo"> </span>    </td>
-	</tr>
-	
-<script>
-node = $("profile_ic_number");
-//node_identification_memo = $("node_identification_memo");
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td align=right width=30%>No KP <font color=red><b>*</b></font>:</td>
+      <td width=40%>&nbsp;
+        <%= text_field 'profile', 'ic_number', :maxlength=>12, :size=>12, :class=>"px200", :onchange=>"checkNRIC()"  %>
+        <font style="color: red; font-size: 10px">*Tanpa sengkang(-)</font>
+        <span id="node_identification_memo"> </span>    </td>
+    </tr>
 
-function checkNRIC() {
+    <script>
+      node = $("profile_ic_number");
+      //node_identification_memo = $("node_identification_memo");
+
+      function checkNRIC() {
         node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>Carian No KP didalam sistem. Sila Tunggu.</font>"
         ajax_request("ajax_nric", "ic_number="+node.value)
-}
+      }
 
-function ajax_request(url, data) {
-    var myAjax = new Ajax.Request(
+      function ajax_request(url, data) {
+        var myAjax = new Ajax.Request(
         url,
-	{method: 'get', parameters: data, onComplete: ajax_response}
-    );
-}
+        {method: 'get', parameters: data, onComplete: ajax_response}
+      );
+      }
 
-function ajax_response(originalRequest) {
+      function ajax_response(originalRequest) {
         if (originalRequest.responseText == 1) {
-                node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Data pengguna ada didalam sistem.<br>&nbsp;Jana login ID dan kata laluan. Sila Tunggu.</font>"
-                document.forms[0].action = "staff_already_exist";
-                document.forms[0].submit();
+          node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Data pengguna ada didalam sistem.<br>&nbsp;Jana login ID dan kata laluan. Sila Tunggu.</font>"
+          document.forms[0].action = "staff_already_exist";
+          document.forms[0].submit();
         }
         else if (originalRequest.responseText == 2) {
-                node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Pengguna sudah ada login ID didalam sistem.<br>&nbsp;Sila Login.</font>"
-                document.forms[0].action = "logout";
-                document.forms[0].submit();
+          node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Pengguna sudah ada login ID didalam sistem.<br>&nbsp;Sila Login.</font>"
+          document.forms[0].action = "logout";
+          document.forms[0].submit();
         }
         else if (originalRequest.responseText == 3) {
-               // node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Pengguna sudah ada login ID didalam sistem.<br>&nbsp;Sila Login.</font>"
-                alert("Pengguna sudah ada login ID di dalam sistem.\nSila tunggu pengesahan akaun daripada pentadbir eSPEK.");
-                document.forms[0].action = "logout";
-                document.forms[0].submit();
+          // node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Pengguna sudah ada login ID didalam sistem.<br>&nbsp;Sila Login.</font>"
+          alert("Pengguna sudah ada login ID di dalam sistem.\nSila tunggu pengesahan akaun daripada pentadbir eSPEK.");
+          document.forms[0].action = "logout";
+          document.forms[0].submit();
         }
         else {
-                node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>No KP tiada lagi didalam sistem.<br>&nbsp;Sila Daftar.</font>"
+          node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>No KP tiada lagi didalam sistem.<br>&nbsp;Sila Daftar.</font>"
         }
-}
-</script>
+      }
+    </script>
 
-   <tr>
+    <tr>
       <td align="right" valign="top">Nama <font color=red><b>*</b></font>:</td>
       <td>&nbsp;
-	<%= text_field 'profile', 'name', :maxlength=>80, :size=>60, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
-       </tr>
-     <tr>
+        <%= text_field 'profile', 'name', :maxlength=>80, :size=>60, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    </tr>
+    <tr>
       <td align="right" valign="top">E-Mel <font color=red><b>*</b></font>:</td>
       <td>&nbsp;
-	<%= text_field 'profile', 'email', :maxlength=>60, :size=>40 %></td>
-       </tr>
-       <tr>
-       <td align="right" valign="top">Jabatan <font color=red><b>*</b></font>:</td>
+        <%= text_field 'profile', 'email', :maxlength=>60, :size=>40 %></td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">Jabatan <font color=red><b>*</b></font>:</td>
       <td>&nbsp;
-	<%= text_field 'user', 'department', :maxlength=>60, :size=>60, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
-       </tr>
- 	<tr>
-	<td align="right" valign="top">No Tel Jabatan <font color=red><b>*</b></font>:</td>
+        <%= text_field 'user', 'department', :maxlength=>60, :size=>60, :onchange=>"this.value=this.value.toUpperCase()"  %></td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">No Tel Jabatan <font color=red><b>*</b></font>:</td>
       <td>&nbsp;
-	      <%= text_field 'user', 'phone', :maxlength=>12, :size=>12  %></td>
-       </tr>
-      <tr><td colspan=2 align=center ><hr width=70%></td></tr>
-	<tr>
-	<td align=right width=30%>Kata Laluan <font color=red><b>*</b></font>:</td>
-	<td width=40%>&nbsp;
-       <%= password_field 'user', 'password', :maxlength=>40, :size=>30 %> 
-	<font style="color: red; font-size: 10px">*Minimum 5 aksara</font>
-	</td>
-	</tr>
-	<tr>
-	<td align=right width=30%>Pengesahan Kata Laluan <font color=red><b>*</b></font>:</td>
-	<td width=40%>&nbsp;
-       <%= password_field 'user', 'password_confirmation', :maxlength=>40, :size=>30 %> 
-	</td>
-	</tr>
-	<tr>
-	<td>&nbsp;</td>
-	<td>&nbsp;
+        <%= text_field 'user', 'phone', :maxlength=>12, :size=>12  %></td>
+    </tr>
+    <tr><td colspan=2 align=center ><hr width=70%></td></tr>
+    <tr>
+      <td align=right width=30%>Kata Laluan <font color=red><b>*</b></font>:</td>
+      <td width=40%>&nbsp;
+        <%= password_field 'user', 'password', :maxlength=>40, :size=>30 %>
+        <font style="color: red; font-size: 10px">*Minimum 5 aksara</font>
+      </td>
+    </tr>
+    <tr>
+      <td align=right width=30%>Pengesahan Kata Laluan <font color=red><b>*</b></font>:</td>
+      <td width=40%>&nbsp;
+        <%= password_field 'user', 'password_confirmation', :maxlength=>40, :size=>30 %>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;
         <%= submit_tag 'Daftar' %>
         <%= link_to 'Kembali ke laman utama', :action => 'login' %>
       </td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
       <td>&nbsp;</td>
       <td><font color=red><b>*</b></font>Semua medan wajib diisi.</td>
-      </tr>
-      </table>
-    <%= end_form_tag %>
+    </tr>
+  </table>
+</form>
 
-<script src="/javascripts/form_validator.js"></script>
-<script>
+  <script src="/javascripts/form_validator.js"></script>
+  <script>
 
-function GoSubmit(df) {
-	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
-	if (!checkInput(anythingRegExp,$('profile_name'),'Nama')) return false;
-	if (!checkInput(anythingRegExp,$('profile_email'),'Emel')) return false;
-	if (!checkInput(anythingRegExp,$('user_department'),'Jabatan')) return false;
-	if (!checkInput(phoneRegExp,$('user_phone'),'No Tel Jabatan')) return false;
-	if (!checkInput(loginIdRegExp,$('user_login'),'ID Pengguna')) return false;
-	if ($('user_login').value.length < 5) {
-		alert("Sila masukkan ID Pengguna sekurang-kurangnya 5 huruf");
-		HighLightTextField($('user_login'));
-		$('user_login').focus();
-		return false;
-	}
+    function GoSubmit(df) {
+      if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
+      if (!checkInput(anythingRegExp,$('profile_name'),'Nama')) return false;
+      if (!checkInput(anythingRegExp,$('profile_email'),'Emel')) return false;
+      if (!checkInput(anythingRegExp,$('user_department'),'Jabatan')) return false;
+      if (!checkInput(phoneRegExp,$('user_phone'),'No Tel Jabatan')) return false;
+      if (!checkInput(loginIdRegExp,$('user_login'),'ID Pengguna')) return false;
+      if ($('user_login').value.length < 5) {
+        alert("Sila masukkan ID Pengguna sekurang-kurangnya 5 huruf");
+        HighLightTextField($('user_login'));
+        $('user_login').focus();
+        return false;
+      }
 
-	if (!checkInput(anythingRegExp,$('user_password'),'Kata Laluan')) return false;
-	if (!checkInput(anythingRegExp,$('user_password_confirmation'),'Pengesahan Kata Laluan')) return false;
-	if ($('user_password').value != $('user_password_confirmation').value) {
-		alert("Kata Laluan dan Pengesahan tidak sama.");
-		HighLightTextField($('user_password_confirmation'));
-		$('user_password_confirmation').focus();
-		return false;
-	}
+      if (!checkInput(anythingRegExp,$('user_password'),'Kata Laluan')) return false;
+      if (!checkInput(anythingRegExp,$('user_password_confirmation'),'Pengesahan Kata Laluan')) return false;
+      if ($('user_password').value != $('user_password_confirmation').value) {
+        alert("Kata Laluan dan Pengesahan tidak sama.");
+        HighLightTextField($('user_password_confirmation'));
+        $('user_password_confirmation').focus();
+        return false;
+      }
 
-	return true;
-}
+      return true;
+    }
 
-</script>
+  </script>

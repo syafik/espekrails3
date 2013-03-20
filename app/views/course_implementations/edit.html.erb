@@ -1,31 +1,25 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">KEMASKINI KURSUS</font></b></td>
-    </tr>
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">KEMASKINI KURSUS</font></b></td>
+  </tr>
 </table>
 <br>
 
-<%#= start_form_tag :action => 'update', :id => @course_implementation, :course_id => @course %>
-<!--form name=ci_form method=post action="/course_implementations/update/<%=@course_implementation.id%>" 
-	enctype="multipart/form-data" onsubmit="return GoSubmit(ci_form)"-->
-<!--<form name=ci_form method=put action="/course_implementations/update/<%=@course_implementation.id%>"
-         onsubmit="return GoSubmit(ci_form)">-->
 <%= form_for @course_implementation, :url => { :action => "update" }, :html => {:name =>"ci_form", :onsubmit => "return GoSubmit(ci_form)"} do |f| %>
   <%= render :partial => 'form' %>
   <br>
   <div align="center">
-  <br><%= submit_tag 'Simpan' %>
+    <br><%= submit_tag 'Simpan' %>
   </div>
   <% end %>
 <!--</form>-->
 
 <script src="/javascripts/form_validator.js"></script>
 <script>
-$('#course_implementation_code').css({background :"#eeeeee"});
-//$('course_implementation_code').disabled = "disabled"
+  $('#course_implementation_code').css({background :"#eeeeee"});
+  //$('course_implementation_code').disabled = "disabled"
 
-function GoSubmit(df) {
-
+  function GoSubmit(df) {
 	if (!checkSelection(strRegExp,document.getElementById('course_department_id'),'Bahagian')) return false;
 	if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
 	if (!checkInput(slashRegExp,document.getElementById('course_implementation_code'),'Kod Kursus')) return false;
@@ -52,8 +46,8 @@ function GoSubmit(df) {
 	if (!checkSelection(strRegExp,document.getElementById('course_implementation_coordinator1'),'Penyelaras')) return false;
 	if (!checkSelection(strRegExp,document.getElementById('course_implementation_coordinator2'),'Penolong Penyelaras')) return false;
 
-	return true;
-}
+    return true;
+  }
 
 
 </script>

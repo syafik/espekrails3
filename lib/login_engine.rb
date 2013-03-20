@@ -68,7 +68,7 @@ module LoginEngine
     when :confirm_account
       true
     when :salt
-      "dummy salt"
+      "instun"
     end
   end
   # @config = {}
