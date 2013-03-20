@@ -503,7 +503,7 @@ InstunRails3::Application.routes.draw do
   
   match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
   match '/course_implementations/show_public/:id' => 'course_implementations#show_public', :via => [:get]
-  match '/course_implementations/update/:id' => 'course_implementations#update', :via => [:post]
+  #match '/course_implementations/update/:id' => 'course_implementations#update', :via => [:post]
   resources :course_implementations do
     get 'show'
     get 'calendar'
