@@ -272,9 +272,11 @@ class UserApplicationsController < ApplicationController
 
     @a = Array.new
     for student in @students
-      if (student.course_implementation.date_start <= today) and (student.course_implementation.date_end >= today)
+      logger.info student.course_implementation.date_start
+      logger.info today.class
+#      if (student.course_implementation.date_start <= today) and (student.course_implementation.date_end >= today)
         @a.push(student)
-      end
+#      end
     end
 
     
@@ -405,7 +407,7 @@ class UserApplicationsController < ApplicationController
       params[:course_application][:date_supervisor_cfm] = params[:date_supervisor_cfm_month] + "/" + params[:date_supervisor_cfm_day] + "/" + params[:date_supervisor_cfm_year]
       params[:course_application][:student_status_id]   = "4"
       @student.update_attributes(params[:course_application])
-      EspekMailer.deliver_user_hadir(@student.id)
+#      EspekMailer.deliver_user_hadir(@student.id)
       flash[:notice] = "Permohonan Kursus #{@student.course_implementation.code} Telah Disahkan Kehadiran."
     end
     redirect_to("/user_applications/offered/")

@@ -563,9 +563,9 @@ class CourseImplementationsController < ApplicationController
     #@course_implementation.date_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
     @course_implementation.date_end   = "#{params[:month_end]}/#{params[:day_end]}/#{params[:year_end]}"
     #@course_implementation.date_plan_start = params[:month_start]+"/"+params[:day_start]+"/"+params[:year_start]
-    @course_implementation.date_plan_start = "#{params[:month_start]}/#{params[:day_start]}/#{params[:year_start]}"
+    @course_implementation.date_plan_start = Date.strptime("#{params[:month_start]}/#{params[:day_start]}/#{params[:year_start]}", '%m/%d/%Y')
     #@course_implementation.date_plan_end   = params[:month_end]+"/"+params[:day_end]+"/"+params[:year_end]
-    @course_implementation.date_plan_end   = "#{params[:month_end]}/#{params[:day_end]}/#{params[:year_end]}"
+    @course_implementation.date_plan_end   = Date.strptime("#{params[:month_end]}/#{params[:day_end]}/#{params[:year_end]}", '%m/%d/%Y')
     @course_implementation.time_start  = params[:time_start]
     @course_implementation.time_end    = params[:time_end]
 

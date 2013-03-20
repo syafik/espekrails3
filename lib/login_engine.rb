@@ -67,6 +67,8 @@ module LoginEngine
       #  # ONLY if this and use_email_notification are both true
     when :confirm_account
       true
+    when :salt
+      "instun"
     end
   end
   # @config = {}

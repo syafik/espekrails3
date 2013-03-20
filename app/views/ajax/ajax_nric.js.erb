@@ -1,13 +1,33 @@
+
 node_identification_memo = $("#node_identification_memo");
-<% if @ret == "1" %>
-  node_identification_memo.html('<%= "<br>&nbsp;<font color=orange> Data pemohon sudah ada.<br>&nbsp; Loading..</font>".html_safe %>')
-  document.forms[0].action = "/course_applications/new_but_peserta_already_exist?<%=@dr%>";
-  document.forms[0].method = 'get';
-  document.forms[0].submit();
-<% elsif @ret == "2" %>
-  node_identification_memo.html("<%= "<br>&nbsp;<font color=orange> Data pemohon telah memohon.<br>&nbsp; Loading..</font>".html_safe %>")
-  document.forms[0].action = "/course_applications/new";
-  document.forms[0].submit();
+<%if @register %>
+  <% if @ret =="1" %>
+    node_identification_memo.html('<%=  "<br>&nbsp;<font color=blue>Data pengguna ada didalam sistem.<br>&nbsp;Jana login ID dan kata laluan. Sila Tunggu.</font>".html_safe %>');
+    document.forms[0].action = "staff_already_exist";
+    document.forms[0].submit();
+  <% elsif @ret =="2" %>
+    // node_identification_memo.html('<%  "<br>&nbsp;<font color=blue>Pengguna sudah ada login ID didalam sistem.<br>&nbsp;Sila Login.</font>".html_safe %>');
+    alert("Pengguna sudah ada login ID di dalam sistem.\nSila login.");
+    document.forms[0].action = "logout";
+    document.forms[0].submit();
+  <% elsif @ret==3 %>
+    alert('<%=  "Pengguna sudah ada login ID di dalam sistem.\nSila tunggu pengesahan akaun daripada pentadbir eSPEK.".html_safe %>');
+    document.forms[0].action = "logout";
+    document.forms[0].submit();
+  <% else %>
+    node_identification_memo.html('<%=  "<br>&nbsp;<font color=red>No KP tiada lagi didalam sistem.<br>&nbsp;Sila Daftar.</font>".html_safe %>');
+  <% end %>
 <% else %>
-  node_identification_memo.html(<%= "<font color=orange><br>&nbsp; Data pemohon belum ada.</font>".html_safe %>')
+  <% if @ret == "1" %>
+    node_identification_memo.html('<%= "<br>&nbsp;<font color=orange> Data pemohon sudah ada.<br>&nbsp; Loading..</font>".html_safe %>')
+    document.forms[0].action = "/course_applications/new_but_peserta_already_exist?<%=@dr%>";
+    document.forms[0].method = 'get';
+    document.forms[0].submit();
+  <% elsif @ret == "2" %>
+    node_identification_memo.html("<%= "<br>&nbsp;<font color=orange> Data pemohon telah memohon.<br>&nbsp; Loading..</font>".html_safe %>")
+    document.forms[0].action = "/course_applications/new";
+    document.forms[0].submit();
+  <% else %>
+    node_identification_memo.html(<%= "<font color=orange><br>&nbsp; Data pemohon belum ada.</font>".html_safe %>')
+  <% end %>
 <% end %>

@@ -411,7 +411,7 @@ class CourseApplicationsController < ApplicationController
 
     else
       @students = []
-      render :action => "search_not_found"
+#      render :action => "search_not_found"
     end
     @courses = Course.find(:all, :order => "name")
     #render :layout => "standard-layout"
@@ -545,8 +545,8 @@ class CourseApplicationsController < ApplicationController
     if @course_application.save
       #flash[:notice] = 'Permohonan berjaya disimpan'
       #redirect_to("/course_applications/save_for_logged_in_user_successful.rhtml")
-      EspekMailer.deliver_user_recorded(session[:user], @course_implementation.id)
-      EspekMailer.deliver_ketua_jabatan(@course_application.id)
+#      EspekMailer.deliver_user_recorded(session[:user], @course_implementation.id)
+#      EspekMailer.deliver_ketua_jabatan(@course_application.id)
 
       if @profile.update_attributes(params[:profile])
         flash[:notice] = '<br>Data Pemohon berjaya dikemaskini.'

@@ -109,7 +109,7 @@
     </script>
 <% end %>
 <div align="center">
-  <%= flash[:notice] %>
+  <%= flash[:notice].html_safe if flash[:notice]%>
   <%= show_error_messages @course %>
   <%= show_error_messages @course_implementation %>
 </div>

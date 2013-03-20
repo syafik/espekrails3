@@ -16,7 +16,6 @@ Sila lengkapkan maklumat berikut. </td>
 
    <div align="center">
 	<p style="color: red"><%= flash[:notice] %></p></div>
-<%#= start_form_tag :action => 'signup' %>
 <form name="rgs_form" action="signup" method="post" onsubmit="return GoSubmit(rgs_form)"><br />
 <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
 	<tr>
@@ -28,12 +27,21 @@ Sila lengkapkan maklumat berikut. </td>
 	</tr>
 	
 <script>
-node = $("profile_ic_number");
+node = $("#profile_ic_number");
 //node_identification_memo = $("node_identification_memo");
 
 function checkNRIC() {
         node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>Carian No KP didalam sistem. Sila Tunggu.</font>"
-        ajax_request("ajax_nric", "ic_number="+node.value)
+        <%#*ajax_request("ajax_nric", "ic_number="+node.val())%>
+        data = "ic_number=" + node.val()+"&register=true"
+        $.ajax({
+          type:'GET',
+          url:'/ajax/ajax_nric',
+          data:data,
+          success:function (data) {
+            eval(data);
+          }
+        });
 }
 
 function ajax_request(url, data) {
@@ -115,25 +123,25 @@ function ajax_response(originalRequest) {
       <td><font color=red><b>*</b></font>Semua medan wajib diisi.</td>
       </tr>
 </table>
-    <%= end_form_tag %>
+</form>
 
 <script src="/javascripts/form_validator.js"></script>
 <script>
 
 function GoSubmit(df) {
-	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
-	if (!checkInput(anythingRegExp,$('user_name'),'Nama')) return false;
-	if (!checkInput(anythingRegExp,$('user_email'),'Emel')) return false;
-	if (!checkInput(anythingRegExp,$('user_department'),'Jabatan')) return false;
-	if (!checkInput(phoneRegExp,$('user_phone'),'No Tel Jabatan')) return false;
-	if (!checkInput(anythingRegExp,$('user_password'),'Kata Laluan')) return false;
-	if (!checkInput(anythingRegExp,$('user_password_confirmation'),'Pengesahan Kata Laluan')) return false;
-	if ($('user_password').value != $('user_password_confirmation').value) {
-		alert("Kata Laluan dan Pengesahan tidak sama.");
-		HighLightTextField($('user_password_confirmation'));
-		$('user_password_confirmation').focus();
-		return false;
-	}
+	<%#*if (!checkInput(icnumRegExp,$('#profile_ic_number'),'No KP')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_name'),'Nama')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_email'),'Emel')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_department'),'Jabatan')) return false;%>
+	<%#*if (!checkInput(phoneRegExp,$('#user_phone'),'No Tel Jabatan')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_password'),'Kata Laluan')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('#user_password_confirmation'),'Pengesahan Kata Laluan')) return false;%>
+	<%#*if ($('#user_password').val() != $('#user_password_confirmation').val) {%>
+		<%#*alert("Kata Laluan dan Pengesahan tidak sama.");%>
+		<%#*HighLightTextField($('#user_password_confirmation'));%>
+		<%#*$('#user_password_confirmation').focus();%>
+		<%#*return false;%>
+	<%#*}%>
 
 	return true;
 }
