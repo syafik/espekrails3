@@ -619,6 +619,7 @@ InstunRails3::Application.routes.draw do
       get 'pegawai_sijil'
       get 'rnd'
       get 'laporan'
+      get 'pengajar'
     end
   end
   resources :main do
