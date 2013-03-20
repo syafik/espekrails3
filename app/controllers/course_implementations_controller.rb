@@ -698,7 +698,7 @@ class CourseImplementationsController < ApplicationController
       @fav_places = []
     end
     @course_implementation_id = params[:course_implementation_id]
-    @schedule_ids = params[:schedule_ids]
+    @schedule_ids = params[:schedule_ids].join(",") unless params[:schedule_ids].blank?
     #@place_pages, @places = paginate(:places, :per_page => 10000, :order_by => "code asc")
     @places = Place.order("code ASC").paginate( :per_page => 10000, :page => params[:page])
   end
@@ -742,9 +742,13 @@ class CourseImplementationsController < ApplicationController
   end
 
   def edit_surat_iklan_la_apa_lagi
-    @course_implementation = CourseImplementation.find(params["surat_iklan_content"]["course_implementation_id"])
-    @course = Course.find(@course_implementation.course_id)
-    @surat_iklan_content = SuratIklanContent.find_by_course_implementation_id(@course_implementation.id)
+    unless params["surat_iklan_content"]["course_implementation_id"].blank?
+      @course_implementation = CourseImplementation.find(params["surat_iklan_content"]["course_implementation_id"])
+      @course = Course.find(@course_implementation.course_id)
+      @surat_iklan_content = SuratIklanContent.find_by_course_implementation_id(@course_implementation.id)
+    else
+      @course_implementations = CourseImplementation.find(params["surat_iklan_content"]["schedule_ids"].split(","))
+    end
     if !@surat_iklan_content
       @surat_iklan_content = SuratIklanContent.new
     end
@@ -816,22 +820,26 @@ class CourseImplementationsController < ApplicationController
     end
 
     @places = Place.find(params[:place_ids])
-    @format_surat = params[:surat_iklan_content][:format_surat].to_i
-    @rujukan_kami = params[:rujukan_kami]
-    @tarikh_surat_day = params[:tarikh_surat_day]
-    @tarikh_surat_day = "    " if params[:tarikh_surat_day] == ""
-    @tarikh_surat_month = $MONTH_NAMES[params[:tarikh_surat_month].to_i - 1]
-    @tarikh_surat_year = params[:tarikh_surat_year]
-    @tarikh = "#{@tarikh_surat_day} #{@tarikh_surat_month} #{@tarikh_surat_year}"
-    @perkara = params[:surat_iklan_content][:perkara]
-    @perenggan = params[:surat_iklan_content][:perenggan]
-    @tempoh = params[:surat_iklan_content][:tempoh]
-
-
-
     @salinan_kepada = params[:salinan_kepada]
+    @perenggan = params[:surat_iklan_content][:perenggan]
 
-    @per_lines = @perkara.split("\n")
+    unless params[:surat_iklan_content][:course_implementation_id].blank?
+      @format_surat = params[:surat_iklan_content][:format_surat].to_i
+      @rujukan_kami = params[:rujukan_kami]
+      @tarikh_surat_day = params[:tarikh_surat_day]
+      @tarikh_surat_day = "    " if params[:tarikh_surat_day] == ""
+      @tarikh_surat_month = $MONTH_NAMES[params[:tarikh_surat_month].to_i - 1]
+      @tarikh_surat_year = params[:tarikh_surat_year]
+      @tarikh = "#{@tarikh_surat_day} #{@tarikh_surat_month} #{@tarikh_surat_year}"
+      @perkara = params[:surat_iklan_content][:perkara]
+
+      @tempoh = params[:surat_iklan_content][:tempoh]
+      @per_lines = @perkara.split("\n")
+      @schedule = CourseImplementation.find(params[:surat_iklan_content][:course_implementation_id])
+    else
+      @schedules = CourseImplementation.find(params[:course_application_ids])
+    end
+
     @is_cetakan_komputer = params[:surat_iklan_content][:is_cetakan_komputer]
 
     if params[:surat_iklan_content][:is_cetakan_komputer].to_i == 0
@@ -845,8 +853,6 @@ class CourseImplementationsController < ApplicationController
         @signature_file = ""
       end
     end
-
-    @schedule = CourseImplementation.find(params[:surat_iklan_content][:course_implementation_id])
 
     if params[:surat_iklan_content][:format_surat].to_i == 3
       margin = { :top => 10, :left => 10, :bottom => 10, :right => 0 }

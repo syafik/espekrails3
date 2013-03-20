@@ -511,6 +511,7 @@ InstunRails3::Application.routes.draw do
     get 'edit_surat_iklan_la_apa_lagi'
     get 'rujukan_kami'
     collection do
+      get 'edit_surat_iklan_la_apa_lagi'
       get 'edit_surat_iklan_select_pejabat'
       get 'list'
       get 'search'
