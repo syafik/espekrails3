@@ -665,6 +665,16 @@ InstunRails3::Application.routes.draw do
       get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
       post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
       post 'ev_quest_section_c_sub_update/:id', action: :ev_quest_section_c_sub_update
+      get 'topic_new/:id', action: :topic_new
+      post 'topic_create/:id', action: :topic_create
+      get 'topic_destroy/:id', action: :topic_destroy
+      get 'truefalse_new/:id', action: :truefalse_new
+      post 'truefalse_create/:id', action: :truefalse_create
+      get 'ranking_new/:id', action: :ranking_new
+      post 'ranking_create/:id', action: :ranking_create
+      post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
+      get 'ev_quest_section_c_sub_destroy/:id', action: :ev_quest_section_c_sub_destroy
+      get 'ev_quest_section_c_truefalse_sub_destroy/:id', action: :ev_quest_section_c_truefalse_sub_destroy
     end
   end
   match '/ajax/ajax_find_course_field' => 'ajax#ajax_find_course_field', :via => [:post]
