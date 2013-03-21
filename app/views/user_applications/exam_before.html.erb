@@ -72,7 +72,7 @@ end
   <% if @quiz %>
     <% if @check %>
       <%#= start_form_tag :action => 'tambah_update', :id => @quiz.id %>
-      <%=form_for(@quiz, :url => "/user_a[[locations/tambah_update/#{@quiz.id}") do |f|%>
+      <%=form_for(@quiz, :url => "/user_applications/tambah_update/#{@quiz.id}") do |f|%>
         <%= render :partial => 'exam_before' %>
         <BR>
         <div align=center>
@@ -80,7 +80,7 @@ end
         </div>
       <% end %>
     <% else %>
-      <%=form_for(@quiz, :url => "/user_a[[locations/tambah/#{@quiz.id}") do |f|%>
+      <%=form_for(@quiz, :url => "/user_applications/tambah/#{@quiz.id}") do |f|%>
         <%#= start_form_tag :action => 'tambah', :id => @quiz.id %>
         <%= render :partial => 'exam_before' %>
         <BR>
