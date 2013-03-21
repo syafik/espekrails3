@@ -537,7 +537,7 @@ InstunRails3::Application.routes.draw do
       get 'save_course_trainer'
       get 'show_timetable2'
       get 'tambah_jadual'
-      put 'simpan_tambah_jadual'
+      get 'simpan_tambah_jadual'
     end
   end
   match '/user/change_password' => 'user#change_password', :via => [:get]

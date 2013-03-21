@@ -1,102 +1,102 @@
 <style>
-b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-.box {border: solid; border-width:1}
+  b		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  th		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  td		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  a		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  input		{ font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  .box {border: solid; border-width:1}
 </style>
 <form name="list_form" id="list_form">
-<%if @course_implementation%>
- <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">PENDAFTARAN PESERTA </font></strong></td>
-    </tr>
- </table>
- <br />
- <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
-   <tr>
-     <td align="RIGHT"><strong>Kod:</strong></td>
-     <td colspan="3"><font><%=@course_implementation.code%></font></td>
-   </tr>
-   <tr>
-     <td align="RIGHT"><strong>Tempat:</strong></td>
-     <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
-   </tr>
-   <tr>
-     <td align="RIGHT"><strong>Tarikh:</strong></td>
-     <td colspan="3"><font><%=@course_implementation.tempoh%></font></td>
-   </tr>
-   <tr>
-     <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
-     <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name%> &nbsp;<br />
-     </font></td>
-     <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
-     <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile%></font></td>
-   </tr>
-   <tr>
-     <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
-     <td><font><%= nof{@course_implementation.penyelaras2.profile.name}%></font></td>
-     <td align="RIGHT"><font><b>No Tel:</b></font></td>
-     <td><font><b></b><%= nof{@course_implementation.penyelaras2.profile.mobile}%></font></td>
-   </tr>
- </table>
- <br>
-<%end%>
+  <%if @course_implementation%>
+    <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+      <tr>
+        <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">PENDAFTARAN PESERTA </font></strong></td>
+      </tr>
+    </table>
+    <br />
+    <table align="CENTER" border="0" cellspacing="0" cellpadding="2">
+      <tr>
+        <td align="RIGHT"><strong>Kod:</strong></td>
+        <td colspan="3"><font><%=@course_implementation.code%></font></td>
+      </tr>
+      <tr>
+        <td align="RIGHT"><strong>Tempat:</strong></td>
+        <td colspan="3"><font><%=@course_implementation.course.course_location.description.upcase%></font></td>
+      </tr>
+      <tr>
+        <td align="RIGHT"><strong>Tarikh:</strong></td>
+        <td colspan="3"><font><%=@course_implementation.tempoh%></font></td>
+      </tr>
+      <tr>
+        <td valign="TOP" align="RIGHT"><strong>Penyelaras:</strong></td>
+        <td nowrap="nowrap"><font><%=@course_implementation.penyelaras1.profile.name rescue nil%> &nbsp;<br />
+          </font></td>
+        <td width="60" nowrap="nowrap" valign="BOTTOM" align="RIGHT"><font><b>No Tel:</b></font></td>
+        <td><font><b></b><%=@course_implementation.penyelaras1.profile.mobile rescue nil%></font></td>
+      </tr>
+      <tr>
+        <td valign="TOP" align="RIGHT"><strong>Pen. Penyelaras:</strong></td>
+        <td><font><%= nof{@course_implementation.penyelaras2.profile.name rescue nil}%></font></td>
+        <td align="RIGHT"><font><b>No Tel:</b></font></td>
+        <td><font><b></b><%= nof{@course_implementation.penyelaras2.profile.mobile rescue nil}%></font></td>
+      </tr>
+    </table>
+    <br>
+  <%end%>
 
   <div width="95%" style="background: #FFFFFF">
-  <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
-  <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
-    <tr bgcolor="#999999">
-      <td class="el" width="2%" valign="top">&nbsp;</td>
-      <td class="el" width="50" valign="top" align="center"><font color="#FFFFFF"><strong>Daftar?</strong><br />
-        <input type="checkbox" name="check_all" value="0" onclick="checkAll(document.list_form)"></font></td>
-      <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama</a></strong></td>
-      <!-- <td class="el" width="8%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('designation','<%= "DESC" if (@orderby=="nric" && @arrow=="ASC") %>')">Gred Jawatan </a></strong></td> -->
-	  <td class="el" width="8%" align="center"><font color="#FFFFFF"><strong>Gred Jawatan</strong></font></td>
-      <td class="el" align="center"><font color="#FFFFFF"><strong>Jabatan</strong></font></td>
-      <!--td class="el" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('comp_name','<%= "DESC" if (@orderby=="comp_name" && @arrow=="ASC") %>')">Tarikh Mohon </a><a style="color: white" href="javascript: findAndSortWith('date_apply','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')"></a></strong></td-->
-      <td class="el" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('comp_name','<%= "DESC" if (@orderby=="comp_name" && @arrow=="ASC") %>')">Catatan</a></strong></td>
-    </tr>
+    <!--table width="95%" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#777777"-->
+    <table class="seven" width="95%" align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>">
+      <tr bgcolor="#999999">
+        <td class="el" width="2%" valign="top">&nbsp;</td>
+        <td class="el" width="50" valign="top" align="center"><font color="#FFFFFF"><strong>Daftar?</strong><br />
+            <input type="checkbox" name="check_all" value="0" onclick="checkAll(document.list_form)"></font></td>
+        <td class="el" width="30%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('personal_name','<%= "DESC" if (@orderby=="personal_name" && @arrow=="ASC") %>')">Nama</a></strong></td>
+        <!-- <td class="el" width="8%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('designation','<%= "DESC" if (@orderby=="nric" && @arrow=="ASC") %>')">Gred Jawatan </a></strong></td> -->
+        <td class="el" width="8%" align="center"><font color="#FFFFFF"><strong>Gred Jawatan</strong></font></td>
+        <td class="el" align="center"><font color="#FFFFFF"><strong>Jabatan</strong></font></td>
+        <!--td class="el" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('comp_name','<%= "DESC" if (@orderby=="comp_name" && @arrow=="ASC") %>')">Tarikh Mohon </a><a style="color: white" href="javascript: findAndSortWith('date_apply','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')"></a></strong></td-->
+        <td class="el" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('comp_name','<%= "DESC" if (@orderby=="comp_name" && @arrow=="ASC") %>')">Catatan</a></strong></td>
+      </tr>
 
-<%
-i = 0;
-even = true;
-for student in @students
-  i = i + 1
-  bgclr = "#CCCCFF" if (even == true)
-  bgclr = "#FFFFEE" if (even == false)
-  even = !even
-  
-  student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
-  jawatan = nof{student.profile.employments[0].job_profile.job_grade}
-  pejabat = nof{student.profile.employments[0].place.name}
-  
-  arr = Array.new
-  for ca in student.profile.course_applications
-  	arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
-  end
-  related = arr.join(",")
+      <%
+      i = 0;
+      even = true;
+      for student in @students
+        i = i + 1
+        bgclr = "#CCCCFF" if (even == true)
+        bgclr = "#FFFFEE" if (even == false)
+        even = !even
 
-%>
+        student.profile.courses = Course.find(params[:course_ids]) if params[:course_ids]
+        jawatan = nof{student.profile.employments[0].job_profile.job_grade}
+        pejabat = nof{student.profile.employments[0].place.name}
 
-    <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'" 
-        onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
-      <td class="el">&nbsp;<%= i.to_s %>.</td>
-      <td class="el" align="center" height="20">
-	    <% if student.student_status_id == 4 %>
-	    <input type="checkbox" name="course_application_ids[]" value="<%=student.id%>">
-		<% else %>
-		<img src="/images/tick18px.jpg">
-		<% end %>		</td>
-      <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)"><%=h student.profile.name.upcase %></td>
-      <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center">&nbsp;<%=h jawatan %></td>
-      <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="left">&nbsp;<%= pejabat.upcase if pejabat%></td>
-      <!--td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%= student.date_apply.to_formatted_s(:my_format_4) if student.date_apply %></td-->
-      <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%= student.student_status.description %></td>
-    </tr>
-<% end %>
-  </table>
+        arr = Array.new
+        for ca in student.profile.course_applications
+          arr.push(ca.course_implementation.code) if ca.course_implementation.code != @course_implementation.code
+        end
+        related = arr.join(",")
+
+      %>
+
+        <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'"
+            onmousedown="//menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" >
+          <td class="el">&nbsp;<%= i.to_s %>.</td>
+          <td class="el" align="center" height="20">
+            <% if student.student_status_id == 4 %>
+              <input type="checkbox" name="course_application_ids[]" value="<%=student.id%>">
+            <% else %>
+              <img src="/images/tick18px.jpg">
+            <% end %>		</td>
+          <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)"><%=h student.profile.name.upcase %></td>
+          <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center">&nbsp;<%=h jawatan %></td>
+          <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="left">&nbsp;<%= pejabat.upcase if pejabat%></td>
+          <!--td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%= student.date_apply.to_formatted_s(:my_format_4) if student.date_apply %></td-->
+          <td class="el" onmousedown="menuLayers.show('popmenu', '/course_applications', '<%=h student.id %>', '<%= student.profile.name.upcase %>', event)" align="center"><%= student.student_status.description %></td>
+        </tr>
+      <% end %>
+    </table>
   </div>
   <div align="center"><br />
     <input type="hidden" name="course_implementation_code" value="<%=@course_implementation.code if @course_implementation%>">
