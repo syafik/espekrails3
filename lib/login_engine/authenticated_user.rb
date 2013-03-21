@@ -24,7 +24,7 @@ module LoginEngine
         #validates_length_of :login, :within => 5..40
         #validates_uniqueness_of :login
         #validates_uniqueness_of :email, :on => :create
-        attr_accessible :salt, :name, :email, :department, :phone, :password, :password_confirmation
+        attr_accessible :salt, :name, :email, :department, :phone, :password, :password_confirmation, :ic_number
         validates_presence_of :password, :if => :validate_password?
         validates_confirmation_of :password, :if => :validate_password?
         validates_length_of :password, { :minimum => 5, :if => :validate_password? }
