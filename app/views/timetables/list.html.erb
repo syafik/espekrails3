@@ -167,7 +167,7 @@ cid = params[:id]  #ambil data dari link_to
 %>    
 
 <form action="/timetable/list">
-  <%#= "SELECT date_plan_start, date_plan_end, time_start, time_end, code, name FROM vw_detailed_courses WHERE id = '"+ @cid +"'" %>
+<%#= "SELECT date_plan_start, date_plan_end, time_start, time_end, code, name FROM vw_detailed_courses WHERE id = '"+ @cid +"'" %>
   <%
   i = 0;
   even = true;
@@ -189,7 +189,7 @@ cid = params[:id]  #ambil data dari link_to
     #
     #earliest = Timetable.find(:first, :conditions=>"course_implementation_id = #{params[:id]}", :order=> "time_start")
     earliest = Timetable.find_by_sql("select time_start from timetables where course_implementation_id = #{params[:id]} order by time_start limit 1")
-    @start = earliest[0].time_start if earliest[0]
+    #@start = earliest[0].time_start if earliest[0]
     @start = @start.strftime("%H:%M")
     @end = @end.strftime("%H:%M")
   %>
@@ -236,6 +236,8 @@ cid = params[:id]  #ambil data dari link_to
     jumlahs = CourseImplementation.find_by_sql( "SELECT (time '" + @end + "' - time '" + @start + "') AS later")
     for jumlah in jumlahs
       w = jumlah.later
+      %>
+    <%
       wws = w.split(':')
       p = wws[0]
       p = p.to_i
@@ -275,11 +277,13 @@ cid = params[:id]  #ambil data dari link_to
     %>
     <%
     if (@end_hari != @start_hari)
-
+      xxx = @end_hari.to_date - @start_hari.to_date
       haris = Course.find_by_sql( "SELECT age ('" + @end_hari.to_s + "','" + @start_hari.to_s + "')" )
       bil_hari = haris.size
       for hari in haris
         xhari = hari.age
+              %>
+        <%
         jum_all = xhari.split(' ')
         @jum_hari = jum_all[0]
       end
@@ -327,6 +331,7 @@ cid = params[:id]  #ambil data dari link_to
   <!--table width="95%" <%=list_border%> align="center" cellpadding="<%=list_cellpadding%>" cellspacing="<%=list_cellspacing%>" bgcolor="<%=list_bgcolor%>"-->
     <tr>
       <td  class="el" align=center bgcolor="#CCCCCC"><b>Tarikh/Masa </b></td>
+      
       <%
       #Time di atas sekali...
       k = 0
@@ -383,6 +388,7 @@ cid = params[:id]  #ambil data dari link_to
       end #slot
       %>
     </tr>
+    
     <%
 
     for course in courses
@@ -569,9 +575,10 @@ cid = params[:id]  #ambil data dari link_to
   %>
   </table>
   <br />
-              <%
-              link_tambah = "<a href=\"javascript: MM_openBrWindow('/course_implementations/#{@cid}/tambah_jadual?date=#{@end_hari}','','scrollbars=yes,width=600,height=400')\" style=\"margin-left:30px;\"><strong>Tambah Hari</strong></a>"
-            %>
- <%= link_tambah.html_safe %>
+  <%
+  #link_tambah = "<a href=\"javascript: MM_openBrWindow('/course_implementations/#{@cid}/tambah_jadual?date=#{@end_hari}','','scrollbars=yes,width=600,height=400')\" style=\"margin-left:30px;\"><strong>Tambah Hari</strong></a>"
+%>
+  <%#= link_tambah.html_safe %>
 
 </form>
+<%= link_to  "<strong>Tambah Hari</strong>".html_safe, simpan_tambah_jadual_course_implementation_path(:id => @cid) %>
