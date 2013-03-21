@@ -131,23 +131,26 @@
   <tr>
     <td align="right"><b>Kepada :</b></td>
     <td colspan="3">&nbsp;
-      <%=
+      <%
       @securities = Role.find(5).users
-      @options = @securities.map { |t| [t.profile.name, t.profile.staff.id] }
+      
+      @options = @securities.map { |t| ([t.profile.name, t.profile.staff.id]) if t.profile.staff.present? } 
       #@options = @coordinators.map { |t| [t.profile.name, t.id] }
       @options.unshift(["Sila Pilih", ""])
-      select(:reservation, :to_staff_id, @options, "" ,:style=>"width: 300;")
-    %>        </td>
+      %>
+    <%= select(:reservation, :to_staff_id, options_for_select(@options), :style => "width: 300;")%>        
+    </td>
   </tr>
   <tr>
     <td align="right"><b>Salinan :</b></td>
     <td colspan="3">&nbsp;
       <%=
       @securities = Role.find(5).users
-      @options = @securities.map { |t| [t.profile.name, t.profile.staff.id] }
+      @options = @securities.map { |t| [t.profile.name, t.profile.staff.id] if t.profile.staff.present?}
       @options.unshift(["Sila Pilih", ""])
-      select(:reservation, :cc_staff_id, @options, "" ,:style=>"width: 300;")
-    %>        </td>
+      %>
+    <%=select(:reservation, :cc_staff_id, @options_for_select(@options), :style=>"width: 300;")%>        
+    </td>
   </tr>
 
   <tr>

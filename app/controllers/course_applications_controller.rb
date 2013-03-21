@@ -454,7 +454,8 @@ class CourseApplicationsController < ApplicationController
   def new
     init_load
     @courses = Course.all
-    @course_implementation = CourseImplementation.find(params[:course_application_id]) if params[:course_application_id]
+    #raise params[:course_application_id].inspect
+    @course_implementation = CourseImplementation.find(params[:id]) if params[:id]
     @profile = Profile.new
     @relative = Relative.new
     @employment = Employment.new
@@ -739,6 +740,11 @@ class CourseApplicationsController < ApplicationController
       @course_application.course_id = @course_implementation.course_id
     end
 
+    if CourseApplication.where(:profile_id => @profile.id, :course_implementation_id => @course_implementation.id).present?
+      flash[:notice] = "Ic Number #{params[:profile][:ic_number]} has been registered before."
+      return render :action => 'new_but_peserta_already_exist'
+    end
+
     if @course_application.save
       flash[:notice] = 'Application was successfully recorded.'
       if @profile.update_attributes(params[:profile])
@@ -918,11 +924,15 @@ class CourseApplicationsController < ApplicationController
         redirect_to :action => 'show_after_create', :id => @course_application
       else
         @profile.destroy
-        flash[:notice] = "Permohonan tidak berjaya periksa course application"
+        flash[:notice] = "Permohonan tidak berjaya sila periksa course application"
         render :action => 'new'
       end
     else
-      flash[:notice] = "Permohonan tidak berjaya periksa profile"
+       if Profile.find_by_ic_number(@profile.ic_number).present?
+        flash[:notice] = "Ic Number #{params[:profile][:ic_number]} has been registered before."
+       else
+        flash[:notice] = "Permohonan tidak berjaya sila periksa profile"
+       end
       render :action => 'new'
     end
   end
