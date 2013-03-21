@@ -40,8 +40,8 @@ InstunRails3::Application.routes.draw do
   match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
   match '/user_applications/exam_before/:id' => 'user_applications#exam_before', :via => [:get]
   match '/user_applications/exam_after/:id' => 'user_applications#exam_after', :via => [:get]
-  match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:post]
-  match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:post]
+  match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:put]
+  match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:put]
   match '/user_applications/show_attendance/:id' => 'user_applications#show_attendance', :via => [:get]
   resources :user_applications do
     collection do 
@@ -498,12 +498,14 @@ InstunRails3::Application.routes.draw do
       get 'edit_surat_tawaran'
       get 'unprocessed'
       get 'cetak_pemohon'
+      get 'show_after_create'
+      get 'show_after_dr'
     end
   end
   
   match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
   match '/course_implementations/show_public/:id' => 'course_implementations#show_public', :via => [:get]
-  match '/course_implementations/update/:id' => 'course_implementations#update', :via => [:post]
+  #match '/course_implementations/update/:id' => 'course_implementations#update', :via => [:post]
   resources :course_implementations do
     get 'show'
     get 'calendar'
@@ -511,6 +513,7 @@ InstunRails3::Application.routes.draw do
     get 'edit_surat_iklan_la_apa_lagi'
     get 'rujukan_kami'
     collection do
+      get 'edit_surat_iklan_la_apa_lagi'
       get 'edit_surat_iklan_select_pejabat'
       get 'list'
       get 'search'
@@ -550,6 +553,7 @@ InstunRails3::Application.routes.draw do
       post 'authenticate'
       post 'signup'
       post 'staff_already_exist'
+      post 'register_exist'
     end
   end
   
@@ -622,6 +626,7 @@ InstunRails3::Application.routes.draw do
       get 'kewangan'
       get 'rnd'
       get 'laporan'
+      get 'pengajar'
     end
   end
   resources :main do
@@ -660,6 +665,16 @@ InstunRails3::Application.routes.draw do
       get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
       post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
       post 'ev_quest_section_c_sub_update/:id', action: :ev_quest_section_c_sub_update
+      get 'topic_new/:id', action: :topic_new
+      post 'topic_create/:id', action: :topic_create
+      get 'topic_destroy/:id', action: :topic_destroy
+      get 'truefalse_new/:id', action: :truefalse_new
+      post 'truefalse_create/:id', action: :truefalse_create
+      get 'ranking_new/:id', action: :ranking_new
+      post 'ranking_create/:id', action: :ranking_create
+      post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
+      get 'ev_quest_section_c_sub_destroy/:id', action: :ev_quest_section_c_sub_destroy
+      get 'ev_quest_section_c_truefalse_sub_destroy/:id', action: :ev_quest_section_c_truefalse_sub_destroy
     end
   end
   match '/ajax/ajax_find_course_field' => 'ajax#ajax_find_course_field', :via => [:post]

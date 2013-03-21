@@ -84,13 +84,13 @@ class UserApplicationsController < ApplicationController
 
   def exam_before
     @course_application = CourseApplication.find(params[:id]) if params[:id]
-    @quiz = Quiz.find_by_course_implementation_id(@course_application.course_implementation_id) if @course_application
+    @quiz = Quiz.find_all_by_course_implementation_id(@course_application.course_implementation_id).last if @course_application
     @quiz_question = QuizQuestion.find_by_sql("SELECT * from quiz_questions where quiz_id = '#{@quiz.id}' order by id") if @quiz
     #@quiz_question = QuizQuestion.find_by_quiz_id(@quiz.id) if @quiz
     logger.info @quiz
     logger.info @course_application.course_implementation_id
     if !@quiz.nil?
-      @quiz_answers = QuizAnswer.find_by_sql("SELECT * FROM quiz_answers WHERE quiz_question_id = '#{@quiz_question.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before' ORDER BY 1")
+#      @quiz_answers = QuizAnswer.find_by_sql("SELECT * FROM quiz_answers WHERE quiz_question_id = '#{@quiz_question.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before' ORDER BY 1")
       @check = QuizAnswer.find(:first, :conditions=> "quiz_id='#{@quiz.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before'", :order => "quiz_question_id")
       #@check = QuizAnswer.find(:first, :conditions=> "quiz_question_id='#{@quiz_question.id}' AND profile_id = '#{session[:user].profile.id}' AND fraction = 'before'")
     end
@@ -272,9 +272,11 @@ class UserApplicationsController < ApplicationController
 
     @a = Array.new
     for student in @students
-      if (student.course_implementation.date_start <= today) and (student.course_implementation.date_end >= today)
+      logger.info student.course_implementation.date_start
+      logger.info today.class
+#      if (student.course_implementation.date_start <= today) and (student.course_implementation.date_end >= today)
         @a.push(student)
-      end
+#      end
     end
 
     
@@ -405,7 +407,7 @@ class UserApplicationsController < ApplicationController
       params[:course_application][:date_supervisor_cfm] = params[:date_supervisor_cfm_month] + "/" + params[:date_supervisor_cfm_day] + "/" + params[:date_supervisor_cfm_year]
       params[:course_application][:student_status_id]   = "4"
       @student.update_attributes(params[:course_application])
-      EspekMailer.deliver_user_hadir(@student.id)
+#      EspekMailer.deliver_user_hadir(@student.id)
       flash[:notice] = "Permohonan Kursus #{@student.course_implementation.code} Telah Disahkan Kehadiran."
     end
     redirect_to("/user_applications/offered/")

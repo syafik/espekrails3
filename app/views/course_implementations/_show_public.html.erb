@@ -105,7 +105,7 @@
     <tr>
       <td align="right" valign="TOP"><strong>Kandungan</strong></td>
       <td align="LEFT" valign="TOP"><strong>:</strong></td>
-      <td><%=@course.content.split("\n").join("<br>")%></td>
+      <td><%=@course.content.split("\n").join("<br>").html_safe %></td>
     </tr>
         
     <tr>

@@ -24,7 +24,7 @@ module LoginEngine
         #validates_length_of :login, :within => 5..40
         #validates_uniqueness_of :login
         #validates_uniqueness_of :email, :on => :create
-
+        attr_accessible :salt, :name, :email, :department, :phone, :password, :password_confirmation
         validates_presence_of :password, :if => :validate_password?
         validates_confirmation_of :password, :if => :validate_password?
         validates_length_of :password, { :minimum => 5, :if => :validate_password? }
@@ -73,7 +73,10 @@ module LoginEngine
       end
     
       def self.salted_password(salt, hashed_password)
-        hashed(salt + hashed_password)
+        
+        hasil = "#{salt}#{hashed_password}"
+#        hashed(salt + hashed_password)
+        hashed(hasil)
       end
     
     public
@@ -94,7 +97,7 @@ module LoginEngine
       write_attribute('token_expiry', [self.token_expiry, Time.at(Time.now.to_i + 600 * 1000)].min)
       write_attribute('authenticated_by_token', true)
       write_attribute("verified", 1)
-      update_without_callbacks
+#      update_without_callbacks
     end
 
     def generate_security_token(hours = nil)
@@ -139,7 +142,7 @@ module LoginEngine
     def new_security_token(hours = nil)
       write_attribute('security_token', AuthenticatedUser.hashed(self.salted_password + Time.now.to_i.to_s + rand.to_s))
       write_attribute('token_expiry', Time.at(Time.now.to_i + token_lifetime(hours)))
-      update_without_callbacks
+#      update_without_callbacks
       return self.security_token
     end
 

@@ -29,34 +29,34 @@
 
 function GoSubmit(df) {
 
-	if (!checkInput(anythingRegExp,$('course_implementation_code'),'Kod Kursus')) return false;
-	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
-	if (!checkSelection(strRegExp,$('profile_title_id'),'Gelaran')) return false;
-	if (!checkInput(anythingRegExp,$('profile_name'),'Nama Penuh Pemohon')) return false;
-	if (!checkSelection(strRegExp,$('profile_gender_id'),'Jantina')) return false;
-	if (!checkSelection(strRegExp,$('profile_religion_id'),'Agama')) return false;
-	//if (!checkSelection(strRegExp,$('profile_marital_status_id'),'Taraf Perkahwinan')) return false;
-	if (!checkSelection(strRegExp,$('profile_race_id'),'Keturunan')) return false;
-	if (!checkInput(anythingRegExp,$('relative_name'),'Nama Waris')) return false;
-	if (!checkSelection(strRegExp,$('relative_relationship_id'),'Hubungan Dengan Waris')) return false;
-	if (!checkInput(anythingRegExp,$('relative_address1'),'Alamat Waris')) return false;
-	//if (!checkFormat(imageRegExp,$('profile_image'),'Hanya Format JPG/JPEG dibenarkan')) return false;
-	if (!checkInput(anythingRegExp,$('course_application_supervisor_name'),'Perakuan Ketua Jabatan(Nama)')) return false;
-	if (!checkInput(anythingRegExp,$('course_application_supervisor_jawatan'),'Perakuan Ketua Jabatan(Jawatan)')) return false;
-	if (!checkInput(emailRegExp,$('course_application_supervisor_email'),'Emel Ketua Jabatan')) return false;
+	<%#*if (!checkInput(anythingRegExp,$('course_implementation_code'),'Kod Kursus')) return false;%>
+	<%#*if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;%>
+	<%#*if (!checkSelection(strRegExp,$('profile_title_id'),'Gelaran')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('profile_name'),'Nama Penuh Pemohon')) return false;%>
+	<%#*if (!checkSelection(strRegExp,$('profile_gender_id'),'Jantina')) return false;%>
+	<%#*if (!checkSelection(strRegExp,$('profile_religion_id'),'Agama')) return false;%>
+	<%#*//if (!checkSelection(strRegExp,$('profile_marital_status_id'),'Taraf Perkahwinan')) return false;%>
+	<%#*if (!checkSelection(strRegExp,$('profile_race_id'),'Keturunan')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('relative_name'),'Nama Waris')) return false;%>
+	<%#*if (!checkSelection(strRegExp,$('relative_relationship_id'),'Hubungan Dengan Waris')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('relative_address1'),'Alamat Waris')) return false;%>
+	<%#*//if (!checkFormat(imageRegExp,$('profile_image'),'Hanya Format JPG/JPEG dibenarkan')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('course_application_supervisor_name'),'Perakuan Ketua Jabatan(Nama)')) return false;%>
+	<%#*if (!checkInput(anythingRegExp,$('course_application_supervisor_jawatan'),'Perakuan Ketua Jabatan(Jawatan)')) return false;%>
+	<%#*if (!checkInput(emailRegExp,$('course_application_supervisor_email'),'Emel Ketua Jabatan')) return false;%>
 
 	
 
-    if (!$('chkbox').checked) {
-		alert('Sila sahkan pengakuan');
-		$('chkbox').focus()
-		return false;
-	}
-    if (!$('chkbox_ketua_jabatan').checked) {
-		alert('Sila sahkan perakuan ketua jabatan');
-		$('chkbox_ketua_jabatan').focus()
-		return false;
-	}
+    <%#*if (!$('chkbox').checked) {%>
+		<%#*alert('Sila sahkan pengakuan');%>
+		<%#*$('chkbox').focus()%>
+		<%#*return false;%>
+	<%#*}%>
+    <%#*if (!$('chkbox_ketua_jabatan').checked) {%>
+		<%#*alert('Sila sahkan perakuan ketua jabatan');%>
+		<%#*$('chkbox_ketua_jabatan').focus()%>
+		<%#*return false;%>
+	<%#*}%>
 
 	return true;
 }

@@ -53,10 +53,11 @@ class AjaxController < ApplicationController
   
   def ajax_nric
     @dr = params[:dr]
+    @register = params[:register]
     @profile = Profile.find_by_ic_number(params[:ic_number])
     #@course_application = CourseApplication.find_by_profile_id(@profile.id)
     #@course_application = CourseApplication.find(:all, :conditions=>"profile_id = #{@profile.id} AND course_implementation_id = #{params[:course_implementation_id]}")
-    if @profile
+    if @profile.present?
       #if @course_application
       #  render :text => "2"
       #else
