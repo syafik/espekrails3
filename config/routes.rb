@@ -655,10 +655,14 @@ InstunRails3::Application.routes.draw do
     get 'management_report'
     get 'content_report'
     get 'comment_report'
+    get 'topic_new'
+    post 'topic_create'
+    get 'topic_destroy'
     collection do
       get 'user_hyouka'
       get 'shinki'
       get 'ev_quest_section_c_truefalse_sub_edit/:id', action: :ev_quest_section_c_truefalse_sub_edit
+      post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
       get 'ev_quest_sub_edit/:id', action: :ev_quest_sub_edit
       get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
       post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
