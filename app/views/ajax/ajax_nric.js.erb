@@ -28,6 +28,6 @@ node_identification_memo = $("#node_identification_memo");
     document.forms[0].action = "/course_applications/new";
     document.forms[0].submit();
   <% else %>
-    node_identification_memo.html(<%= "<font color=orange><br>&nbsp; Data pemohon belum ada.</font>".html_safe %>')
+    node_identification_memo.html('<%= "<font color=orange><br>&nbsp; Data pemohon belum ada.</font>".html_safe %>')
   <% end %>
 <% end %>

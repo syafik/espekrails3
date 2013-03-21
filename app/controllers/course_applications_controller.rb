@@ -872,7 +872,7 @@ class CourseApplicationsController < ApplicationController
   def create
     init_load
     @profile = Profile.new(params[:profile])
-    @profile.date_of_birth = Date.new(params[:y_dob],params[:m_dob],params[:d_dob])
+    @profile.date_of_birth = Date.parse("#{params[:y_dob]}/#{params[:m_dob]}/#{params[:d_dob]}")
     @relative = Relative.new(params[:relative])
     @relative.profile = @profile
     @relative.save
@@ -884,7 +884,7 @@ class CourseApplicationsController < ApplicationController
     @employment.profile = @profile
     @employment.save
 
-    @course_application = CourseApplication.new(params[:course_application]) if @params[:course_application]
+    @course_application = CourseApplication.new(params[:course_application]) if params[:course_application].present?
     @course_application.date_apply = params[:date_apply_month] + "/" + params[:date_apply_day] + "/" + params[:date_apply_year]
     @course_application.date_approval = params[:date_approval_month] + "/" + params[:date_approval_day] + "/" + params[:date_approval_year]
     @course_application.nama_pejabat = @profile.opis
@@ -918,9 +918,11 @@ class CourseApplicationsController < ApplicationController
         redirect_to :action => 'show_after_create', :id => @course_application
       else
         @profile.destroy
+        flash[:notice] = "Permohonan tidak berjaya periksa course application"
         render :action => 'new'
       end
     else
+      flash[:notice] = "Permohonan tidak berjaya periksa profile"
       render :action => 'new'
     end
   end
@@ -974,9 +976,11 @@ class CourseApplicationsController < ApplicationController
         redirect_to :action => 'show_after_create_dr', :id => @course_application
       else
         @profile.destroy
+        flash[:notice] = "Permohonan tidak berjaya periksa course application"
         render :action => 'new'
       end
     else
+      flash[:notice] = "Permohonan tidak berjaya periksa profile"
       render :action => 'new'
     end
   end

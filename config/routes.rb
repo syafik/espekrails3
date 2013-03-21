@@ -498,6 +498,8 @@ InstunRails3::Application.routes.draw do
       get 'edit_surat_tawaran'
       get 'unprocessed'
       get 'cetak_pemohon'
+      get 'show_after_create'
+      get 'show_after_dr'
     end
   end
   
