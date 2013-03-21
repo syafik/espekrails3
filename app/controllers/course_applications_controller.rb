@@ -454,7 +454,8 @@ class CourseApplicationsController < ApplicationController
   def new
     init_load
     @courses = Course.all
-    @course_implementation = CourseImplementation.find(params[:course_application_id]) if params[:course_application_id]
+    #raise params[:course_application_id].inspect
+    @course_implementation = CourseImplementation.find(params[:id]) if params[:id]
     @profile = Profile.new
     @relative = Relative.new
     @employment = Employment.new
@@ -739,6 +740,11 @@ class CourseApplicationsController < ApplicationController
       @course_application.course_id = @course_implementation.course_id
     end
 
+    if CourseApplication.where(:profile_id => @profile.id, :course_implementation_id => @course_implementation.id).present?
+      flash[:notice] = "Ic Number #{params[:profile][:ic_number]} has been registered before."
+      return render :action => 'new_but_peserta_already_exist'
+    end
+
     if @course_application.save
       flash[:notice] = 'Application was successfully recorded.'
       if @profile.update_attributes(params[:profile])
@@ -872,7 +878,7 @@ class CourseApplicationsController < ApplicationController
   def create
     init_load
     @profile = Profile.new(params[:profile])
-    @profile.date_of_birth = Date.new(params[:y_dob],params[:m_dob],params[:d_dob])
+    @profile.date_of_birth = Date.parse("#{params[:y_dob]}/#{params[:m_dob]}/#{params[:d_dob]}")
     @relative = Relative.new(params[:relative])
     @relative.profile = @profile
     @relative.save
@@ -884,7 +890,7 @@ class CourseApplicationsController < ApplicationController
     @employment.profile = @profile
     @employment.save
 
-    @course_application = CourseApplication.new(params[:course_application]) if @params[:course_application]
+    @course_application = CourseApplication.new(params[:course_application]) if params[:course_application].present?
     @course_application.date_apply = params[:date_apply_month] + "/" + params[:date_apply_day] + "/" + params[:date_apply_year]
     @course_application.date_approval = params[:date_approval_month] + "/" + params[:date_approval_day] + "/" + params[:date_approval_year]
     @course_application.nama_pejabat = @profile.opis
@@ -918,9 +924,15 @@ class CourseApplicationsController < ApplicationController
         redirect_to :action => 'show_after_create', :id => @course_application
       else
         @profile.destroy
+        flash[:notice] = "Permohonan tidak berjaya sila periksa course application"
         render :action => 'new'
       end
     else
+       if Profile.find_by_ic_number(@profile.ic_number).present?
+        flash[:notice] = "Ic Number #{params[:profile][:ic_number]} has been registered before."
+       else
+        flash[:notice] = "Permohonan tidak berjaya sila periksa profile"
+       end
       render :action => 'new'
     end
   end
@@ -974,9 +986,11 @@ class CourseApplicationsController < ApplicationController
         redirect_to :action => 'show_after_create_dr', :id => @course_application
       else
         @profile.destroy
+        flash[:notice] = "Permohonan tidak berjaya periksa course application"
         render :action => 'new'
       end
     else
+      flash[:notice] = "Permohonan tidak berjaya periksa profile"
       render :action => 'new'
     end
   end

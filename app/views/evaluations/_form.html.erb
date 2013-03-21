@@ -8,7 +8,8 @@
         <% else %>
           <%= @student.profile.name%>
         <% end %>
-      </font></th>
+      </font>
+    </th>
   </tr>
 </table>
 
@@ -68,7 +69,8 @@
           <% end %>
         </td>
         <td>
-          <input name="comment_<%=ranking.evaluation_question_id%>" type="text" size="40" <%=  "disabled='disabled'" if (!topic.shown_at.blank? && topic.shown_at >= Time.now) %> ></td>
+          <input name="comment_<%=ranking.evaluation_question_id%>" type="text" size="40" <%=  "disabled='disabled'" if (!topic.shown_at.blank? && topic.shown_at >= Time.now) %> >
+        </td>
       </tr>
 
     <%
