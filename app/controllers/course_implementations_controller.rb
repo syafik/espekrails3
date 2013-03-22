@@ -318,10 +318,11 @@ class CourseImplementationsController < ApplicationController
   def simpan_tambah_jadual
     @course_implementation = CourseImplementation.find(params[:id])
     @course_implementation.update_attributes(
-      :date_plan_end => params[:search_date][0],
-      :date_end => params[:search_date][0]
+      :date_plan_end => @course_implementation.date_plan_end + 1.days,
+      :date_end => @course_implementation.date_end + 1.days
     )
     flash[:notice] = 'Jadual waktu berjaya ditambah'
+    redirect_to list_timetable_path(params[:id])
   end
 
   def create

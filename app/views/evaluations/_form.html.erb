@@ -1,196 +1,200 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
       <font color="#FFFFFF"><%=@evaluation.name.upcase%><br />
-      NAMA PESERTA: 
-	  <% if params[:klm] != nil%>
-	      PESERTA<%=@student.get_index[0]+1%>
-	  <% else %>
-	  <%= @student.profile.name%>
-	  <% end %>
-	   </font></th>
-    </tr>
-  </table>
+        NAMA PESERTA:
+        <% if params[:klm] != nil%>
+          PESERTA<%=@student.get_index[0]+1%>
+        <% else %>
+          <%= @student.profile.name%>
+        <% end %>
+      </font>
+    </th>
+  </tr>
+</table>
 
-  <BR>
-  <table style="width: 700px" border="0" align="center" cellpadding="3" cellspacing="1">
-    <tr>
-      <td colspan=2 width="" align="CENTER" bgcolor="#FFFFFF">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK 5:CEMERLANG </td>
-    </tr>
-  </table>
-  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr>
-      <td colspan="2" bgcolor="#999999"><b>A. MAKLUMAT KURSUS DIHADIRI</b></td>
-    </tr>
-    <tr>
-      <td colspan=2><strong>MODUL:</strong> <%=@evaluation.course_implementation.course.name.upcase%></td>
-    </tr>
-    <tr>
-      <td width="30%"><strong>KOD KURSUS:</strong></td>
-      <td><%=@evaluation.course_implementation.code%></td>
-    </tr>
-    <tr>
-      <td><strong>TARIKH: </strong></td>
-      <td><%=@evaluation.course_implementation.duration_formal_2%> (<%=@evaluation.course_implementation.jumlah_hari%> hari) </td>
-    </tr>
-  </table>
-  <br />
-  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-	<tr>
-		<td colspan="3" bgcolor="#999999"><b>B.PENILAIAN PENCERAMAH</b></td>
-	</tr>
-    <tr>
-      <td width="50%">&nbsp;</td>
-      <td width="20%">&nbsp;</td>
-      <td align="center">Ulasan</td>
-    </tr>
-	
-<%
-   for topic in @topics
-%>
-		<tr>
-		  <td colspan="3" bgcolor="#dddddd">
-		  Topik: <%=topic.title%><br />
-		  Pensyarah: <%=topic.trainer.profile.name%>		  </td>
-        </tr>
-		
+<BR>
+<table style="width: 700px" border="0" align="center" cellpadding="3" cellspacing="1">
+  <tr>
+    <td colspan=2 width="" align="CENTER" bgcolor="#FFFFFF">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK 5:CEMERLANG </td>
+  </tr>
+</table>
+<table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td colspan="2" bgcolor="#999999"><b>A. MAKLUMAT KURSUS DIHADIRI</b></td>
+  </tr>
+  <tr>
+    <td colspan=2><strong>MODUL:</strong> <%=@evaluation.course_implementation.course.name.upcase%></td>
+  </tr>
+  <tr>
+    <td width="30%"><strong>KOD KURSUS:</strong></td>
+    <td><%=@evaluation.course_implementation.code%></td>
+  </tr>
+  <tr>
+    <td><strong>TARIKH: </strong></td>
+    <td><%=@evaluation.course_implementation.duration_formal_2%> (<%=@evaluation.course_implementation.jumlah_hari%> hari) </td>
+  </tr>
+</table>
+<br />
+<table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td colspan="3" bgcolor="#999999"><b>B.PENILAIAN PENCERAMAH</b></td>
+  </tr>
+  <tr>
+    <td width="50%">&nbsp;</td>
+    <td width="20%">&nbsp;</td>
+    <td align="center">Ulasan</td>
+  </tr>
 
-		<% for ranking in topic.evaluation_trainer_rankings	%>
-		<tr>
-		  <td width="50%">
-			<table><tr><td>&nbsp;</td><td><%=ranking.evaluation_question.questiontext%></td></tr></table>
-		  </td>
-		  <td width="20%" nowrap>
-		  <% ranking.max_ranking.times do |i|%>
-		  <input name="<%=ranking.evaluation_question_id%>" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
-		  <% end %>
-		  </td>
-		  <td>
-		  <input name="comment_<%=ranking.evaluation_question_id%>" type="text" size="40"></td>
-       </tr>
+  <%
+  for topic in @topics
+  %>
+    <tr>
+      <td colspan="3" bgcolor="#dddddd">
+        Topik: <%=topic.title%><br />
+        Pensyarah: <%=topic.trainer.profile.name%><br />
+        Tarikh & Masa Mula: <%= topic.shown_at %>
+      </td>
+    </tr>
 
-<% 
-		end #for ranking
+
+    <% for ranking in topic.evaluation_trainer_rankings	%>
+      <tr>
+        <td width="50%">
+          <table><tr><td>&nbsp;</td><td><%=ranking.evaluation_question.questiontext%></td></tr></table>
+        </td>
+        <td width="20%" nowrap>
+          <% ranking.max_ranking.times do |i|%>
+            <input name="<%=ranking.evaluation_question_id%>" type="radio" value="<%=i+1%>" style="height: 11px" <%=  "disabled='disabled'" if (!topic.shown_at.blank? && topic.shown_at >= Time.now) %>><%=i+1%>
+          <% end %>
+        </td>
+        <td>
+          <input name="comment_<%=ranking.evaluation_question_id%>" type="text" size="40" <%=  "disabled='disabled'" if (!topic.shown_at.blank? && topic.shown_at >= Time.now) %> >
+        </td>
+      </tr>
+
+    <%
+    end #for ranking
   end #for topic
+  %>
+</table>
+<br />
+<table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td colspan="3" bgcolor="#999999"><b>C.PENILAIAN KURSUS </b></td>
+  </tr>
+  <!--tr>
+    <td colspan="3" bgcolor="#dddddd" align="center">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK 5:CEMERLANG </td>
+  </tr-->
+
+  <tr>
+    <td width="50%">&nbsp;</td>
+    <td width="20%">&nbsp;</td>
+    <td align="center">Ulasan</td>
+  </tr>
+
+  <% for subc in EvaluationSection.find(3).evaluation_subsections%>
+    <tr>
+      <td colspan="2"><b><%=subc.description%></b></td>
+      <td>&nbsp;</td>
+    </tr>
+
+    <%
+    if subc.evaluation_questions.size > 0
+      @evaluation_questions = EvaluationQuestion.find(:all,
+        :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
+      for eq in @evaluation_questions
+      %>
+        <tr>
+          <td><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
+          <td nowrap>
+            <%		if eq.evaluation_type_id == 5%>
+              <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
+                <input name="<%=eq.id%>" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
+              <% 			end
+            end
+          %>
+
+            <%		if eq.evaluation_type_id == 6%>
+              <input name="<%=eq.id%>" type="radio" value="1" style="height: 11px">Ya
+              <input name="<%=eq.id%>" type="radio" value="0" style="height: 11px">Tidak
+            <%		end
+          %>	  </td>
+          <td>
+            <input name="comment_<%=eq.id%>" type="text" size="40">	  </td>
+        </tr>
+      <%
+      end
+    end
+  end
 %>
 </table>
-  <br />
-  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr>
-      <td colspan="3" bgcolor="#999999"><b>C.PENILAIAN KURSUS </b></td>
-    </tr>
-    <!--tr>
-      <td colspan="3" bgcolor="#dddddd" align="center">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK 5:CEMERLANG </td>
-    </tr-->
+<br />
+<table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td colspan="3" bgcolor="#999999"><b>D.PENILAIAN KEMUDAHAN </b></td>
+  </tr>
 
-    <tr>
-      <td width="50%">&nbsp;</td>
-      <td width="20%">&nbsp;</td>
-      <td align="center">Ulasan</td>
-    </tr>
-		
-	<% for subc in EvaluationSection.find(3).evaluation_subsections%>
+  <tr>
+    <td width="50%">&nbsp;</td>
+    <td width="20%">&nbsp;</td>
+    <td align="center">Ulasan</td>
+  </tr>
+
+  <% for subc in EvaluationSection.find(4).evaluation_subsections%>
     <tr>
       <td colspan="2"><b><%=subc.description%></b></td>
       <td>&nbsp;</td>
-    </tr>
-
-	<% 
-		if subc.evaluation_questions.size > 0
-			@evaluation_questions = EvaluationQuestion.find(:all, 
-			                        :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
-			for eq in @evaluation_questions				
-	%>
-	<tr>
-		<td><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
-	  <td nowrap>
-	<%		if eq.evaluation_type_id == 5%>	
-	<% 			eq.evaluation_ranking.max_ranking.times do |i|%>
-          <input name="<%=eq.id%>" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
-    <% 			end
-			end
-	%>
-
-	<%		if eq.evaluation_type_id == 6%>	
-          <input name="<%=eq.id%>" type="radio" value="1" style="height: 11px">Ya
-          <input name="<%=eq.id%>" type="radio" value="0" style="height: 11px">Tidak
-    <%		end
-	%>	  </td>
-	  <td>
-	     <input name="comment_<%=eq.id%>" type="text" size="40">	  </td>
-	</tr>
-	<%
-			end
-		 end
-		end
-	%>
-  </table>
-  <br />
-  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr>
-      <td colspan="3" bgcolor="#999999"><b>D.PENILAIAN KEMUDAHAN </b></td>
-    </tr>
-
-    <tr>
-      <td width="50%">&nbsp;</td>
-      <td width="20%">&nbsp;</td>
-      <td align="center">Ulasan</td>
-    </tr>
-    
-    <% for subc in EvaluationSection.find(4).evaluation_subsections%>
-    <tr>
-      <td colspan="2"><b><%=subc.description%></b></td>
-      <td>&nbsp;</td>
-    </tr>
-    <% 
-		if subc.evaluation_questions.size > 0
-		@evaluation_questions = EvaluationQuestion.find(:all, 
-			                                            :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
-
-			for eq in @evaluation_questions				
-	%>
-    <tr>
-      <td><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
-      <td nowrap><%		if eq.evaluation_type_id == 5%>
-          <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
-          <input name="<%=eq.id%>" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
-          <%
-		   				end
-					end
-	%>
-    <%		if eq.evaluation_type_id == 6%>
-        <input name="<%=eq.id%>" type="radio" value="1" style="height: 11px">Ya
-        <input name="<%=eq.id%>" type="radio" value="0" style="height: 11px">Tidak
-    <%		end
-	%>	  </td>
-	  <td><input name="comment_<%=eq.id%>" type="text" size="40"></td>
     </tr>
     <%
-			end
-		 end
-		end
-	%>
-  </table>
-  <br />
-  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr>
-      <td width="50%" bgcolor="#999999"><b>E.KOMEN DAN CADANGAN </b></td>
-    </tr>
-    
-    <% for subc in EvaluationSection.find(5).evaluation_subsections%>
+    if subc.evaluation_questions.size > 0
+      @evaluation_questions = EvaluationQuestion.find(:all,
+        :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
+
+      for eq in @evaluation_questions
+      %>
+        <tr>
+          <td><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
+          <td nowrap><%		if eq.evaluation_type_id == 5%>
+              <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
+                <input name="<%=eq.id%>" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
+              <%
+              end
+            end
+          %>
+            <%		if eq.evaluation_type_id == 6%>
+              <input name="<%=eq.id%>" type="radio" value="1" style="height: 11px">Ya
+              <input name="<%=eq.id%>" type="radio" value="0" style="height: 11px">Tidak
+            <%		end
+          %>	  </td>
+          <td><input name="comment_<%=eq.id%>" type="text" size="40"></td>
+        </tr>
+      <%
+      end
+    end
+  end
+%>
+</table>
+<br />
+<table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td width="50%" bgcolor="#999999"><b>E.KOMEN DAN CADANGAN </b></td>
+  </tr>
+
+  <% for subc in EvaluationSection.find(5).evaluation_subsections%>
     <tr>
       <td><b><%=subc.description%></b></td>
     </tr>
-	<%
-			5.times do |i|
-	%>
-    <tr>
-      <td><%=i+1%>.
-      <textarea name="comments[]" rows="2" style="width: 650px"></textarea></td>
-    </tr>
+    <%
+    5.times do |i|
+    %>
+      <tr>
+        <td><%=i+1%>.
+          <textarea name="comments[]" rows="2" style="width: 650px"></textarea></td>
+      </tr>
 
     <%
-			end
-	   end
-	%>
-  </table>
+    end
+  end
+%>
+</table>

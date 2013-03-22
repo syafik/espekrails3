@@ -319,14 +319,14 @@ class EvaluationsController < ApplicationController
 
   def topic_new
     @trainers = Trainer.find_by_sql("SELECT t.id,t.profile_id,p.name from trainers t, profiles p WHERE p.id=t.profile_id ORDER BY name");
-    @evaluation = Evaluation.find(params[:id])
+    @evaluation = Evaluation.find(params[:id] || params[:evaluation_id])
   end
 
   def topic_create
     @topic = Topic.new(params[:topic])
     @topic.save!
 
-    @evaluation = Evaluation.find(params[:id])
+    @evaluation = Evaluation.find(params[:id] || params[:evaluation_id])
     @cid = @evaluation.course_implementation_id
 
     t_list = ["Isi Kandungan", "Penyampaian", "Kaitan Isi Kandungan dengan Kursus"]
@@ -349,7 +349,7 @@ class EvaluationsController < ApplicationController
   end
 
   def topic_destroy
-    @topic = Topic.find(params[:id])
+    @topic = Topic.find(params[:id] || params[:evaluation_id])
 
     if @topic.evaluation_trainer_rankings.size > 0
       @eq = @topic.evaluation_trainer_rankings.first.evaluation_question

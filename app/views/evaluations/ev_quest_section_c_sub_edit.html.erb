@@ -20,13 +20,13 @@
 			</table>
 		  </td>
 		  <td width="20%" nowrap>Skala Ranking:
-		  <select name="max_ranking">
-			<% 10.times do |i|
-					selected = "selected" if @eq.evaluation_ranking.max_ranking == i+1
-			%>
-			<option value="<%=i+1%>" <%=selected%>><%=i+1%></option>
-			<% end%>
-		  </select>
+                    <select name="max_ranking">
+                      <% 10.times do |i|
+                        selected = "selected" if @eq.evaluation_ranking.max_ranking == i+1
+                      %>
+                        <option value="<%=i+1%>" <%=selected%>><%=i+1%></option>
+                      <% end%>
+                    </select>
 		  </td>
        </tr>
 

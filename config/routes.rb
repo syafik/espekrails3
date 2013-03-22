@@ -40,8 +40,8 @@ InstunRails3::Application.routes.draw do
   match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
   match '/user_applications/exam_before/:id' => 'user_applications#exam_before', :via => [:get]
   match '/user_applications/exam_after/:id' => 'user_applications#exam_after', :via => [:get]
-  match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:post]
-  match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:post]
+  match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:put]
+  match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:put]
   match '/user_applications/show_attendance/:id' => 'user_applications#show_attendance', :via => [:get]
   resources :user_applications do
     collection do 
@@ -498,6 +498,8 @@ InstunRails3::Application.routes.draw do
       get 'edit_surat_tawaran'
       get 'unprocessed'
       get 'cetak_pemohon'
+      get 'show_after_create'
+      get 'show_after_dr'
     end
   end
   
@@ -535,7 +537,7 @@ InstunRails3::Application.routes.draw do
       get 'save_course_trainer'
       get 'show_timetable2'
       get 'tambah_jadual'
-      put 'simpan_tambah_jadual'
+      get 'simpan_tambah_jadual'
     end
   end
   match '/user/change_password' => 'user#change_password', :via => [:get]
@@ -655,14 +657,28 @@ InstunRails3::Application.routes.draw do
     get 'management_report'
     get 'content_report'
     get 'comment_report'
+    get 'topic_new'
+    post 'topic_create'
+    get 'topic_destroy'
     collection do
       get 'user_hyouka'
       get 'shinki'
       get 'ev_quest_section_c_truefalse_sub_edit/:id', action: :ev_quest_section_c_truefalse_sub_edit
+      post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
       get 'ev_quest_sub_edit/:id', action: :ev_quest_sub_edit
       get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
       post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
       post 'ev_quest_section_c_sub_update/:id', action: :ev_quest_section_c_sub_update
+      get 'topic_new/:id', action: :topic_new
+      post 'topic_create/:id', action: :topic_create
+      get 'topic_destroy/:id', action: :topic_destroy
+      get 'truefalse_new/:id', action: :truefalse_new
+      post 'truefalse_create/:id', action: :truefalse_create
+      get 'ranking_new/:id', action: :ranking_new
+      post 'ranking_create/:id', action: :ranking_create
+      post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
+      get 'ev_quest_section_c_sub_destroy/:id', action: :ev_quest_section_c_sub_destroy
+      get 'ev_quest_section_c_truefalse_sub_destroy/:id', action: :ev_quest_section_c_truefalse_sub_destroy
     end
   end
   match '/ajax/ajax_find_course_field' => 'ajax#ajax_find_course_field', :via => [:post]

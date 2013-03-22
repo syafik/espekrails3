@@ -28,6 +28,12 @@ class MenuController < ApplicationController
 
   def pegawai_sijil
   end
+  
+  def kewangan
+  end
+  
+  def pengajar
+  end
 
   def rnd
   end

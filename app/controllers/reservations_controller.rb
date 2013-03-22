@@ -252,7 +252,7 @@ class ReservationsController < ApplicationController
     @reservation.created_on = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in]
   	#render :text=> @course_implementation.reservations.size and return;
     if @reservation.save
-      EspekMailer.deliver_hostel_reservation(@course_implementation.id)
+      EspekMailer.hostel_reservation(@course_implementation.id).deliver
       flash[:notice] = 'Tempahan Telah Berjaya Disimpan.'
       if params[:ispopup] and params[:ispopup] == "1"
       	redirect_to :controller => 'reservations', :action => 'show_popup', :id => @reservation

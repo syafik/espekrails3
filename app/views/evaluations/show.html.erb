@@ -1,263 +1,268 @@
 <script>
-function goDel(url) {
-	if (confirm('Adakah anda pasti?')) {
-		location = url
-	}
-	else{
-		return;
-	}
-}
+  function goDel(url) {
+    if (confirm('Adakah anda pasti?')) {
+      location = url
+    }
+    else{
+      return;
+    }
+  }
 </script>
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
       <font color="#FFFFFF"><%=@evaluation.name.upcase%></font></th>
-    </tr>
-    
-    
+  </tr>
+
+
 </table>
-  <br>
-  <center>
+<br>
+<center>
   <span style="padding-bottom: 5px;">
-  <input name="button" type="button" value="Cetak Soalan" title="Cetak soalan penilaian untuk jawab secara manual"  style="background: #eeeeee" onclick="new_cetak(<%=@course_implementation.id%>)">
+    <input name="button" type="button" value="Cetak Soalan" title="Cetak soalan penilaian untuk jawab secara manual"  style="background: #eeeeee" onclick="new_cetak(<%=@course_implementation.id%>)">
   </span><br />
   &nbsp;
-  </center>
-  <table style="width: 800px" border="0" align="center" cellpadding="3" cellspacing="1">
-    
-    <tr>
-      <td colspan=2 width="" align="CENTER" bgcolor="#FFFFFF">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK </td>
-    </tr>
-  </table>
-  <table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr>
-      <td colspan="2" bgcolor="#999999"><b>A. MAKLUMAT KURSUS DIHADIRI</b></td>
-    </tr>
-    <tr>
-      <td colspan=2><strong>MODUL:</strong> <%=@evaluation.course_implementation.course.name.upcase%></td>
-    </tr>
-    <tr>
-      <td width="30%"><strong>KOD KURSUS:</strong></td>
-      <td><%=@evaluation.course_implementation.code%></td>
-    </tr>
-    <tr>
-      <td><strong>TARIKH: </strong></td>
-      <td><%=@evaluation.course_implementation.duration_formal_2%> (<%=@evaluation.course_implementation.jumlah_hari%> hari) </td>
-    </tr>
-  </table>
-  <br />
-<!--section B-->
-  <table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-	<tr>
-		<td colspan="4" bgcolor="#999999"><b>B.PENILAIAN PENCERAMAH </b></td>
-	</tr>
-    <tr>
-      <td width="50%">&nbsp;</td>
-      <td width="20%">&nbsp;</td>
-      <td align="center">Ulasan</td>
-	  <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td colspan="4" align="RIGHT"><a style="color:blue" href="/evaluations/topic_new/<%=@evaluation.id%>?section=2&subsection=2">tambah topik </a></td>
-    </tr>
-	
-<%
-	for topic in @topics
-		
-%>
-		<tr>
-		  <td colspan="3" bgcolor="#dddddd">
-		  
-		  Topik: <%=topic.title%><br />
-		  Penceramah: <%=topic.trainer.profile.name%>		  </td>
-		  <td nowrap>
-		  <a style="color:blue" href="javascript: goDel('/evaluations/topic_destroy/<%=topic.id%>')">padam</a>
-		  <!--|
-		  <a style="color:blue" href="/evaluations/trainer_ranking_new/<%#=eval_quest.evaluation_trainer_ranking.topic_id%>">tambah soalan</a> -->		  </td>
-		</tr>
+</center>
+<table style="width: 800px" border="0" align="center" cellpadding="3" cellspacing="1">
 
-		<% for ranking in topic.evaluation_trainer_rankings	%>
-		<tr>
-		  <td width="50%">
-			<table><tr><td>&nbsp;</td><td><%=ranking.evaluation_question.questiontext%></td></tr></table>		  </td>
-		  <td width="20%" nowrap>
-            <%- total_max_ranking = (ranking.max_ranking < 6 ? (6 - ranking.max_ranking + ranking.max_ranking) : ranking.max_ranking) %>
-		  <% total_max_ranking.times do |i|%>
-		  <input name="radiobutton" type="radio" value="<%= i+1 %>" style="height: 11px"><%=i+1%>
-		  <% end %>
-		  </td>
-		  <td>
-		  <input name="textfield23" type="text" size="40"></td>
-		  <td><a style="color:blue;text-decoration:underlined" href="/evaluations/ev_quest_sub_edit/<%=ranking.evaluation_question_id%>">edit</a>|<a style="color:blue;text-decoration:underlined" href="javascript: goDel('/evaluations/ev_quest_sub_destroy/<%=ranking.evaluation_question_id%>')">padam</a></td>
-       </tr>       
-<% 
-		  end # for ranking
-  end #for eval_quest
-%>
+  <tr>
+    <td colspan=2 width="" align="CENTER" bgcolor="#FFFFFF">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK </td>
+  </tr>
 </table>
-  <br />
-<!--section C-->
-  <table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr>
-      <td colspan="4" bgcolor="#999999"><b>C.PENILAIAN KURSUS </b></td>
-    </tr>
-    <!--tr>
-      <td colspan="4" bgcolor="#dddddd" align="center">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK </td>
-    </tr-->
+<table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td colspan="2" bgcolor="#999999"><b>A. MAKLUMAT KURSUS DIHADIRI</b></td>
+  </tr>
+  <tr>
+    <td colspan=2><strong>MODUL:</strong> <%=@evaluation.course_implementation.course.name.upcase%></td>
+  </tr>
+  <tr>
+    <td width="30%"><strong>KOD KURSUS:</strong></td>
+    <td><%=@evaluation.course_implementation.code%></td>
+  </tr>
+  <tr>
+    <td><strong>TARIKH: </strong></td>
+    <td><%=@evaluation.course_implementation.duration_formal_2%> (<%=@evaluation.course_implementation.jumlah_hari%> hari) </td>
+  </tr>
+</table>
+<br />
+<!--section B-->
+<table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td colspan="4" bgcolor="#999999"><b>B.PENILAIAN PENCERAMAH </b></td>
+  </tr>
+  <tr>
+    <td width="50%">&nbsp;</td>
+    <td width="20%">&nbsp;</td>
+    <td align="center">Ulasan</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="RIGHT">
+      <%= link_to "tambah topik", evaluation_topic_new_path(@evaluation.id, :section=>2, :subsection=>2), :style => "color:blue" %>
+      <!-- <a style="color:blue" href="/evaluations/topic_new/<%#=@evaluation.id%>?section=2&subsection=2">tambah topik </a> -->
+    </td>
+  </tr>
 
+  <%
+  for topic in @topics
+
+  %>
     <tr>
-      <td width="50%">&nbsp;</td>
-      <td width="20%">&nbsp;</td>
-      <td align="center">Ulasan</td>
-      <td>&nbsp;</td>
+      <td colspan="3" bgcolor="#dddddd">
+
+        Topik: <%=topic.title%><br />
+        Penceramah: <%=topic.trainer.profile.name%><br />
+        Tarikh & Masa Mula: <%= topic.shown_at %>
+      </td>
+      <td nowrap>
+        <a style="color:blue" href="javascript: goDel('/evaluations/<%=topic.id%>/topic_destroy')">padam</a>
+        <!--|
+                    <a style="color:blue" href="/evaluations/trainer_ranking_new/<%#=eval_quest.evaluation_trainer_ranking.topic_id%>">tambah soalan</a> -->		  </td>
     </tr>
-		
-	<% for subc in EvaluationSection.find(3).evaluation_subsections%>
+
+    <% for ranking in topic.evaluation_trainer_rankings	%>
+      <tr>
+        <td width="50%">
+          <table><tr><td>&nbsp;</td><td><%=ranking.evaluation_question.questiontext%></td></tr></table>		  </td>
+        <td width="20%" nowrap>
+          <%- total_max_ranking = (ranking.max_ranking < 6 ? (6 - ranking.max_ranking + ranking.max_ranking) : ranking.max_ranking) %>
+          <% total_max_ranking.times do |i|%>
+            <input name="radiobutton" type="radio" value="<%= i+1 %>" style="height: 11px"><%=i+1%>
+          <% end %>
+        </td>
+        <td>
+          <input name="textfield23" type="text" size="40"></td>
+        <td><a style="color:blue;text-decoration:underlined" href="/evaluations/ev_quest_sub_edit/<%=ranking.evaluation_question_id%>">edit</a>|<a style="color:blue;text-decoration:underlined" href="javascript: goDel('/evaluations/ev_quest_sub_destroy/<%=ranking.evaluation_question_id%>')">padam</a></td>
+      </tr>
+    <%
+    end # for ranking
+  end #for eval_quest
+  %>
+</table>
+<br />
+<!--section C-->
+<table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td colspan="4" bgcolor="#999999"><b>C.PENILAIAN KURSUS </b></td>
+  </tr>
+  <!--tr>
+    <td colspan="4" bgcolor="#dddddd" align="center">SKALA 1:LEMAH 2:KURANG MEMUASKAN 3:MEMUASKAN 4:BAIK </td>
+  </tr-->
+
+  <tr>
+    <td width="50%">&nbsp;</td>
+    <td width="20%">&nbsp;</td>
+    <td align="center">Ulasan</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <% for subc in EvaluationSection.find(3).evaluation_subsections%>
     <tr>
       <td colspan="2"><b><%=subc.description%></b></td>
       <td colspan="2" align="right">
-	  <a style="color:blue" href="/evaluations/truefalse_new/<%=@evaluation.id%>?section=3&subsection=<%=subc.id%>">tambah soalan(ya/tidak)</a>
-		|
-	  <a style="color:blue" href="/evaluations/ranking_new/<%=@evaluation.id%>?section=3&subsection=<%=subc.id%>">tambah soalan</a>
-	  </td>
+        <a style="color:blue" href="/evaluations/truefalse_new/<%=@evaluation.id%>?section=3&subsection=<%=subc.id%>">tambah soalan(ya/tidak)</a>
+        |
+        <a style="color:blue" href="/evaluations/ranking_new/<%=@evaluation.id%>?section=3&subsection=<%=subc.id%>">tambah soalan</a>
+      </td>
     </tr>
 
-	<% 
-		if subc.evaluation_questions.size > 0
-			@evaluation_questions = EvaluationQuestion.find(:all, 
-			                       :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
-			for eq in @evaluation_questions				
-	%>
-	<tr>
-		<td>
-		<table>
-			<tr>
-				<td>&nbsp;</td>
-				<td><%=eq.questiontext%></td>
-			</tr>
-		</table>
-		</td>
-	  <td nowrap>
-	<%		if eq.evaluation_type_id == 5%>
-	<%			deletion_url = "ev_quest_section_c_sub_destroy"%>
-	<%			editing_url = "ev_quest_section_c_sub_edit"%>
-    <%-     if eq.evaluation_ranking %>
-    <%-         total_max_ranking = (eq.evaluation_ranking.max_ranking < 6 ? (6 - eq.evaluation_ranking.max_ranking + eq.evaluation_ranking.max_ranking) : eq.evaluation_ranking.max_ranking) %>
-	<% 			total_max_ranking.times do |i|%>
-          <input name="radiobutton" type="radio" value="<%= i+1 %>" style="height: 11px"><%=i+1%>
-    <% 			end
+    <%
+    if subc.evaluation_questions.size > 0
+      @evaluation_questions = EvaluationQuestion.find(:all,
+        :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=#{subc.id}")
+      for eq in @evaluation_questions
+      %>
+        <tr>
+          <td>
+            <table>
+              <tr>
+                <td>&nbsp;</td>
+                <td><%=eq.questiontext%></td>
+              </tr>
+            </table>
+          </td>
+          <td nowrap>
+            <%		if eq.evaluation_type_id == 5%>
+              <%			deletion_url = "ev_quest_section_c_sub_destroy"%>
+              <%			editing_url = "ev_quest_section_c_sub_edit"%>
+              <%-     if eq.evaluation_ranking %>
+                <%-         total_max_ranking = (eq.evaluation_ranking.max_ranking < 6 ? (6 - eq.evaluation_ranking.max_ranking + eq.evaluation_ranking.max_ranking) : eq.evaluation_ranking.max_ranking) %>
+                <% 			total_max_ranking.times do |i|%>
+                  <input name="radiobutton" type="radio" value="<%= i+1 %>" style="height: 11px"><%=i+1%>
+                <% 			end
               end
-			end
-	%>
+            end
+          %>
 
-	<%		if eq.evaluation_type_id == 6%>	
-	<%			deletion_url = "ev_quest_section_c_truefalse_sub_destroy"%>
-	<%			editing_url = "ev_quest_section_c_truefalse_sub_edit"%>
-          <input name="radiobutton" type="radio" value="0" style="height: 11px">Ya
-          <input name="radiobutton" type="radio" value="0" style="height: 11px">Tidak
-    <%		end
-	%>	  
-	  </td>
-	  <td><input name="textfield2" type="text" size="40"></td>
-      <td>
-	  <a style="color:blue;text-decoration:underlined" href="/evaluations/<%=editing_url%>/<%=eq.id%>">edit</a>|<a style="color:blue;text-decoration:underlined" href="javascript: goDel('/evaluations/<%=deletion_url%>/<%=eq.id%>')">padam</a>
-	  
-	  </td>
-	</tr>
-	<%
-			end
-		 end
-		end
-	%>
-  </table>
-  <br />
+            <%		if eq.evaluation_type_id == 6%>
+              <%			deletion_url = "ev_quest_section_c_truefalse_sub_destroy"%>
+              <%			editing_url = "ev_quest_section_c_truefalse_sub_edit"%>
+              <input name="radiobutton" type="radio" value="0" style="height: 11px">Ya
+              <input name="radiobutton" type="radio" value="0" style="height: 11px">Tidak
+            <%		end
+          %>
+          </td>
+          <td><input name="textfield2" type="text" size="40"></td>
+          <td>
+            <a style="color:blue;text-decoration:underlined" href="/evaluations/<%=editing_url%>/<%=eq.id%>">edit</a>|<a style="color:blue;text-decoration:underlined" href="javascript: goDel('/evaluations/<%=deletion_url%>/<%=eq.id%>')">padam</a>
+
+          </td>
+        </tr>
+      <%
+      end
+    end
+  end
+%>
+</table>
+<br />
 <!--section D-->
-  <table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr>
-      <td colspan="4" bgcolor="#999999"><b>D.PENILAIAN KEMUDAHAN </b></td>
-    </tr>
+<table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td colspan="4" bgcolor="#999999"><b>D.PENILAIAN KEMUDAHAN </b></td>
+  </tr>
 
-    <tr>
-      <td width="50%">&nbsp;</td>
-      <td width="20%">&nbsp;</td>
-      <td align="center">Ulasan</td>
-      <td>&nbsp;</td>
-    </tr>
-    
-    <% for subc in EvaluationSection.find(4).evaluation_subsections%>
+  <tr>
+    <td width="50%">&nbsp;</td>
+    <td width="20%">&nbsp;</td>
+    <td align="center">Ulasan</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <% for subc in EvaluationSection.find(4).evaluation_subsections%>
     <tr>
       <td><b><%=subc.description%></b></td>
       <td>&nbsp;</td>
       <td colspan="2" align="RIGHT"><a style="color:blue" href="/evaluations/truefalse_new/<%=@evaluation.id%>?section=3&amp;subsection=<%=subc.id%>">tambah soalan(ya/tidak)</a> | <a style="color:blue" href="/evaluations/ranking_new/<%=@evaluation.id%>?section=3&amp;subsection=<%=subc.id%>">tambah soalan</a></td>
     </tr>
-    <% 
-		if subc.evaluation_questions.size > 0
-		@evaluation_questions = EvaluationQuestion.find(:all, 
-			                                            :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=7")
-
-			for eq in @evaluation_questions				
-	%>
-    <tr>
-      <td>
-		<table>
-			<tr>
-				<td>&nbsp;</td>
-				<td><%=eq.questiontext%></td>
-			</tr>
-		</table>	  </td>
-      <td nowrap><%		if eq.evaluation_type_id == 5%>
-    <%-         total_max_ranking = (eq.evaluation_ranking.max_ranking < 6 ? (6 - eq.evaluation_ranking.max_ranking + eq.evaluation_ranking.max_ranking) : eq.evaluation_ranking.max_ranking) %>
-          <% 			total_max_ranking.times do |i|%>
-          <input name="radiobutton" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
-          <%
-		   				end
-					end
-	%>
-    <%		if eq.evaluation_type_id == 6%>
-        <input name="radiobutton" type="radio" value="0" style="height: 11px">Ya
-        <input name="radiobutton" type="radio" value="0" style="height: 11px">Tidak
-    <%		end
-	%>	  </td>
-	  <td><input name="textfield22" type="text" size="40"></td>
-	  <td>
-	  <a style="color:blue;text-decoration:underlined" href="/evaluations/ev_quest_section_c_truefalse_sub_edit/<%=eq.id%>">edit</a>|<a style="color:blue;text-decoration:underlined" href="javascript: goDel('/evaluations/ev_quest_section_c_truefalse_sub_destroy/<%=eq.id%>')">padam</a>	  </td>
-    </tr>
     <%
-			end
-		 end
-		end
-	%>
-  </table>
-  <br />
-  <table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-    <tr>
-      <td width="50%" bgcolor="#999999"><b>E.KOMEN DAN CADANGAN </b></td>
-    </tr>
-    
-    <% for subc in EvaluationSection.find(5).evaluation_subsections%>
+    if subc.evaluation_questions.size > 0
+      @evaluation_questions = EvaluationQuestion.find(:all,
+        :conditions=>"evaluation_id=#{@evaluation.id} AND evaluation_subsection_id=7")
+
+      for eq in @evaluation_questions
+      %>
+        <tr>
+          <td>
+            <table>
+              <tr>
+                <td>&nbsp;</td>
+                <td><%=eq.questiontext%></td>
+              </tr>
+            </table>	  </td>
+          <td nowrap><%		if eq.evaluation_type_id == 5%>
+              <%-         total_max_ranking = (eq.evaluation_ranking.max_ranking < 6 ? (6 - eq.evaluation_ranking.max_ranking + eq.evaluation_ranking.max_ranking) : eq.evaluation_ranking.max_ranking) %>
+              <% 			total_max_ranking.times do |i|%>
+                <input name="radiobutton" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
+              <%
+              end
+            end
+          %>
+            <%		if eq.evaluation_type_id == 6%>
+              <input name="radiobutton" type="radio" value="0" style="height: 11px">Ya
+              <input name="radiobutton" type="radio" value="0" style="height: 11px">Tidak
+            <%		end
+          %>	  </td>
+          <td><input name="textfield22" type="text" size="40"></td>
+          <td>
+            <a style="color:blue;text-decoration:underlined" href="/evaluations/ev_quest_section_c_truefalse_sub_edit/<%=eq.id%>">edit</a>|<a style="color:blue;text-decoration:underlined" href="javascript: goDel('/evaluations/ev_quest_section_c_truefalse_sub_destroy/<%=eq.id%>')">padam</a>	  </td>
+        </tr>
+      <%
+      end
+    end
+  end
+%>
+</table>
+<br />
+<table style="width: 800px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+  <tr>
+    <td width="50%" bgcolor="#999999"><b>E.KOMEN DAN CADANGAN </b></td>
+  </tr>
+
+  <% for subc in EvaluationSection.find(5).evaluation_subsections%>
     <tr>
       <td><b><%=subc.description%></b></td>
     </tr>
-	<%
-			5.times do |i|
-	%>
-    <tr>
-      <td><%=i+1%>.
-      <textarea rows="1" style="width: 400px"></textarea></td>
-    </tr>
+    <%
+    5.times do |i|
+    %>
+      <tr>
+        <td><%=i+1%>.
+          <textarea rows="1" style="width: 400px"></textarea></td>
+      </tr>
 
     <%
-			end
-	   end
-	%>
-  </table>
-  
-  <br />
-  <center>
+    end
+  end
+%>
+</table>
+
+<br />
+<center>
   <input type="button" value="Keluar" onclick="window.close()">
-  </center>
+</center>
 <script>
-function new_cetak(id) {
-	MM_openBrWindow('/evaluations/cetak_soalan/'+id,'','scrollbars=yes,width=900,height=600')
-}
+  function new_cetak(id) {
+    MM_openBrWindow('/evaluations/cetak_soalan/'+id,'','scrollbars=yes,width=900,height=600')
+  }
 </script>
