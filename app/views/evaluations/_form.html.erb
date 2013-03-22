@@ -52,7 +52,9 @@
     <tr>
       <td colspan="3" bgcolor="#dddddd">
         Topik: <%=topic.title%><br />
-        Pensyarah: <%=topic.trainer.profile.name%>		  </td>
+        Pensyarah: <%=topic.trainer.profile.name%><br />
+        Tarikh & Masa Mula: <%= topic.shown_at %>
+      </td>
     </tr>
 
 
@@ -63,11 +65,12 @@
         </td>
         <td width="20%" nowrap>
           <% ranking.max_ranking.times do |i|%>
-            <input name="<%=ranking.evaluation_question_id%>" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
+            <input name="<%=ranking.evaluation_question_id%>" type="radio" value="<%=i+1%>" style="height: 11px" <%=  "disabled='disabled'" if (!topic.shown_at.blank? && topic.shown_at >= Time.now) %>><%=i+1%>
           <% end %>
         </td>
         <td>
-          <input name="comment_<%=ranking.evaluation_question_id%>" type="text" size="40"></td>
+          <input name="comment_<%=ranking.evaluation_question_id%>" type="text" size="40" <%=  "disabled='disabled'" if (!topic.shown_at.blank? && topic.shown_at >= Time.now) %> >
+        </td>
       </tr>
 
     <%
