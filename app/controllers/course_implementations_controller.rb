@@ -853,8 +853,8 @@ class CourseImplementationsController < ApplicationController
         @signature_file = ""
       end
     end
-
-    if params[:surat_iklan_content][:format_surat].to_i == 3
+    @format_surat = params[:surat_iklan_content][:format_surat].to_i
+    if @format_surat == 3
       margin = { :top => 10, :left => 10, :bottom => 10, :right => 0 }
       #pdf.margins_pt(0, 50, 36, 50)
     else

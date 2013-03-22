@@ -179,5 +179,11 @@ for place in @places
 %>
 <input type="hidden" id="surat_iklan_content_course_implementation_id" name="surat_iklan_content[course_implementation_id]" value="<%=@course_implementation_id%>">
 <input type="hidden" id="surat_iklan_content_schedule_ids" name="surat_iklan_content[schedule_ids]" value="<%=@schedule_ids%>">
+<% if !params[:planning_month].blank? and !params[:planning_month2].blank? and !params[:planning_year].blank? %>
+    <input type="hidden" id="course_department_id" name="course_department_id" value="<%= params[:course_department_id] %>">
+    <input type="hidden" id="planning_month" name="planning_month" value="<%= params[:planning_month] %>">
+    <input type="hidden" id="planning_month2" name="planning_month2" value="<%= params[:planning_month2] %>">
+    <input type="hidden" id="planning_year" name="planning_year" value="<%= params[:planning_year] %>">
+<% end %>
 </form>
 
