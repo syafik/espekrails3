@@ -35,10 +35,10 @@
       <td>&nbsp; <%= nof{@profile.ic_number}%></td>
 	<td align="right" width=20%><b>Gambar Pemohon :</b></td>
 	<td rowspan=6>&nbsp;
-		<% if @profile.image%>
-		<% nof{@profile = Profile.find(@profile.id)}   %>
-		    <%= image_tag url_for_file_column("profile", "image") %>
-		<%end%></td>
+		<%# if @profile.image%>
+		<%# nof{@profile = Profile.find(@profile.id)}   %>
+		    <%#= image_tag url_for_file_column("profile", "image") %>
+		<%#end%></td>
 	</tr>
 	<tr>
       <td align="right"><b>NO K/P Lama :</b></td>
