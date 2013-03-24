@@ -31,7 +31,7 @@
   <td align="right" valign=TOP><b>Peranan:</b></td>
   <td>
   <% @all_roles.each do |role| %>
-    <input type="checkbox" id="user_roles_<%= role.id %>" name="user[roles][]" value="<%= role.id %>" 
+    <input type="checkbox" id="user_roles_<%= role.id %>" name="user[role_ids][]" value="<%= role.id %>" 
       <% if @user.roles.include?(role) %>
         checked="checked"
       <% end %> />

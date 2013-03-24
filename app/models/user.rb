@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   include LoginEngine::AuthenticatedUser
   has_and_belongs_to_many :roles
   # all logic has been moved into login_engine/lib/login_engine/authenticated_user.rb
+  
+  attr_accessible :role_ids
 
   belongs_to :profile
   searches_on :name

@@ -559,7 +559,7 @@ end
             @options.unshift(["Sila Pilih", ""])
 
             #@qualification = nof{@course_application.profile.qualifications[0]}
-            select(:qualification, :cert_level_id, @options,'',:name=>"cert_level_ids[]")
+            #select(:qualification, :cert_level_id, @options,'',:name=>"cert_level_ids[]")
           %> </td>
           <td><%= text_field 'qualification', "pengkhususan", :maxlength=>100, :size=>40, :name=>"pengkhususan[]",:onkeyup=>"this.value=this.value.toUpperCase()"  %></td>
           <td><%= text_field 'qualification', "institution", :maxlength=>100, :size=>40, :name=>"institutions[]",:onkeyup=>"this.value=this.value.toUpperCase()"  %></td>
