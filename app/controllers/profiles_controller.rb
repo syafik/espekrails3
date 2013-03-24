@@ -669,7 +669,7 @@ class ProfilesController < ApplicationController
   end
   
   def is_roles_contain_trainer_role?
-    trainer_role_id = "11"
+    trainer_role_id = Role.find_by_name("Pengajar").id.to_s
     return false if (params["user"]).blank?
     return true if (params[:user][:role_ids].include? trainer_role_id)
     return false
