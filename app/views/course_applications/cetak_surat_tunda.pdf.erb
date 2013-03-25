@@ -10,7 +10,7 @@
 <table width="100%" style="font-size: 14px;">
   <tr>
     <td align="right">
-      <table style="font-size: 12px;">
+      <table style="font-size: 13px; font-family: arial;">
         <tr>
           <td>Ruj. Tuan</td>
           <td>: </td>
@@ -28,7 +28,7 @@
   </tr>
 
   <tr>
-    <td>
+    <td style="font-size: 15px; font-family: arial;">
       <br/>
       <%
          for student in @students
@@ -93,6 +93,7 @@
            office_name = "#{student.profile.opis}"
            p_alamat = "#{p_addr}."
            alamat = "#{company_addr}."
+           state = "#{student.profile.state.description.upcase}"
 
            alamat_instun = "<br/>Pengarah," +
                    "<br/>Institut Tanah dan Ukur Negara(INSTUN)" +
@@ -117,16 +118,17 @@
           <%= "#{job_profile}".html_safe %>
           <%= "<br/>Melalui dan Salinan:".html_safe %>
           <br/>
-          <%= "#{ketua}" %>
-          <%= "#{office_name}".html_safe %>
-          <%= "#{p_alamat}".html_safe %>
+          <%= "#{ketua}".html_safe %><br/>
+          <%= "#{office_name}".html_safe %><br/>
+          <%= "#{p_alamat}".html_safe %><br/>
+          <%= "#{state}".html_safe %>
           <br/>
           <br/>
       <%
          end
       %>
       <br/><br/>
-      <%= "Tuan,<br/><br/>".html_safe %>
+      <%= "Tuan/Puan,<br/><br/>".html_safe %>
       <%
 
          per_lines = @perkara.split("\n")
@@ -139,9 +141,9 @@
       <%= "<br/>#{@perenggan}".html_safe %>
       <br/><br/><br/>
       <%= "<br/><br/>Sekian, terima kasih.<br/><br/>".html_safe %>
-      <%= "<b>`BERKHIDMAT UNTUK NEGARA`</b><br/><br/>".html_safe %>
-      <%= "<b>`MENDAHULUI CABARAN`</b><br/>".html_safe %>
-      <%= "<b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>".html_safe %>
+      <%= "<b>'BERKHIDMAT UNTUK NEGARA'</b><br/>".html_safe %>
+      <%= "<b>'MENDAHULUI CABARAN'</b><br/>".html_safe %>
+      <%= "<b>'MS ISO 9001:2008 - PENGURUSAN LATIHAN'</b><br/><br/>".html_safe %>
       <%= "Saya yang menurut perintah,<br/><br/>".html_safe %>
       <%
          if @signature_file and @signature_file != ""
@@ -174,90 +176,90 @@
      nama = student.profile.name
      kp = student.profile.ic_number
 %>
-    <table width="100%">
+    <table width="630px">
       <tr>
-        <td style="font-size: 13px;">
+        <td style="font-size: 14px; font-family: arial;">
           <%= "<br/><b>LAMPIRAN A</b><br/>".html_safe %>
           <%= "#{alamat_instun}".html_safe %><br/>
           <%= "<b>(u.p : #{@course_department})</b>".html_safe %>
           <br/>
           <br/>
-          <%= "No Telefon : #{@penyelaras_telefon} #{@penyelaras_ext}<br/>".html_safe %>
-          <%= "No Faks : #{@penyelaras_fax}<br/>".html_safe %>
-          <%= "E-mel : #{@penyelaras_email}; #{@penyelaras_email2}<br/><br/>".html_safe %>
+          <%= "No Telefon : #{params["penyelaras_telefon"]} #{params["penyelaras_ext"]}<br/>".html_safe %>
+          <%= "No Faks : #{params["penyelaras_fax"]}<br/>".html_safe %>
+          <%= "E-mel : #{params["penyelaras_email"]}; #{params["penyelaras_email2"]}<br/><br/>".html_safe %>
           <%= "Tuan/Puan," %><br/>
           <%= "#{@perkara2}".html_safe %>
           <%= "<br/><br/>Merujuk kepada perkara di atas, sukacita dimaklumkan bahawa saya <b>#{nof { nama }}</b>  KP: <b>#{nof { kp }}</b><br/><br/>".html_safe %>
-          <table width="100%" style="font-size: 13px; vertical-align: top;">
+          <table width="100%" style="font-size: 13px; vertical-align: top; font-family: arial;">
             <tr>
-              <td width="33%" align="center">
+              <td width="33%" align="center" style="vertical-align: top;">
                 <span style="border: 1px solid black; width: 8px; height: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;</span> HADIR
               </td>
-              <td width="33%" align="center">
+              <td width="33%" align="center" style="vertical-align: top;">
                 <span style="border: 1px solid black; width: 8px; height: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;</span> TIDAK HADIR
               </td>
-              <td width="33%" align="center">
+              <td width="33%" align="center" style="vertical-align: top;">
                 <span style="border: 1px solid black; width: 8px; height: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;</span> TIDAK HADIR<br/>(Dengan PENGGANTI)
               </td>
             </tr>
           </table>
           <%= "<i>** Sila tandakan        pada yang  berkenaan</i><br/><br/>".html_safe %>
-          TANDATANGAN&nbsp;&nbsp;&nbsp;&nbsp; : _______________ TARIKH&nbsp;&nbsp;&nbsp;&nbsp; : _____________________
+          TANDATANGAN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_______________ TARIKH&nbsp;&nbsp;&nbsp;&nbsp; : _____________________
           <br/>
-          <%= "<br/>==========================================================================<br/>".html_safe %>
+          <br/>=====================================================================<br/>
           <span style="font-size: 11px;"><%= "<b>Maklumat Pengganti (Diisi jika pegawai tidak hadir dengan pengganti)</b>".html_safe %></span>
           <br/>
-          <table style="font-size: 13px;">
+          <table style="font-size: 14px; font-family: arial; line-height: 25px;">
             <tr>
               <td>NAMA</td>
-              <td> : ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
             <tr>
               <td>NO. KP </td>
-              <td> : ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
             <tr>
               <td>JAWATAN/GRED</td>
-              <td> : ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
             <tr>
               <td>ALAMAT JABATAN</td>
-              <td> : ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
             <tr>
               <td></td>
-              <td>&nbsp; ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
             <tr>
               <td>NO. TEL</td>
-              <td> : _______________ NO. FAKS : _______________</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________ NO. FAKS&nbsp;&nbsp; : &nbsp;&nbsp;____________________</td>
             </tr>
             <tr>
               <td>EMEL</td>
-              <td> : ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
             <tr>
               <td>TANDATANGAN</td>
-              <td> : _______________ TARIKH : _______________</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________ TARIKH&nbsp;&nbsp; : &nbsp;&nbsp;______________________</td>
             </tr>
           </table>
           <br/>
-          <%= "<br/>==========================================================================<br/>".html_safe %>
-          <span style="font-size: 11px;"><%= "<b>(PENGESAHAN JABATAN)</b>".html_safe %></span>
-          <span style="font-size: 11px;"><%= "<br/>Pegawai * <b>DIBENARKAN / TIDAK DIBENARKAN</b> mengikuti kursus di atas".html_safe %></span>
+          <br/>=====================================================================<br/>
+          <span style="font-size: 11px; font-family: arial;"><%= "<b>(PENGESAHAN JABATAN)</b>".html_safe %></span>
+          <span style="font-size: 11px; font-family: arial;"><%= "<br/>Pegawai * <b>DIBENARKAN / TIDAK DIBENARKAN</b> mengikuti kursus di atas".html_safe %></span>
           <br/>
-          <table style="font-size: 13px;">
+          <table style="font-size: 14px; font-family: arial; line-height: 25px;">
             <tr>
               <td>TANDATANGAN</td>
-              <td> : ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
             <tr>
               <td>NAMA/COP JABATAN</td>
-              <td> : ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
             <tr>
               <td>TARIKH</td>
-              <td> : ___________________________________________________</td>
+              <td>&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;____________________________________________________</td>
             </tr>
           </table>
         </td>
@@ -268,11 +270,11 @@
 
     <table width="100%">
       <tr>
-        <td style="font-size:13px;">
+        <td  style="font-size: 14px; font-family: arial;">
           <%= "<br/><b>LAMPIRAN B</b>".html_safe %>
-          <%= "<br/><br/><br/>MAKLUMAT KURSUS #{@course_implementation_name} (#{@course_implementation_code})".html_safe %>
+          <br/><br/><br/><%= "MAKLUMAT KURSUS #{@course_implementation_name} (#{@course_implementation_code})".html_safe %>
           <br/><br/><br/><br/>
-          <table width="100%" border='0' style="font-size: 13px;">
+          <table width="100%" border='0'  style="font-size: 14px; font-family: arial;">
             <tr>
               <td style="vertical-align: top;">1. </td>
               <td style="vertical-align: top;">TARIKH</td>

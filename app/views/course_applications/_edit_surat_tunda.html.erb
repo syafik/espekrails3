@@ -91,21 +91,32 @@
    cetak_komputer = surat_tawaran_content.is_cetakan_komputer if surat_tawaran_content
    format_surat = "1"
    format_surat = surat_tawaran_content.format_surat if surat_tawaran_content
-   perenggan = []
+   #perenggan = []
    perkara = @perkara
    perkara = surat_tawaran_content.perkara if surat_tawaran_content
-   perenggan[0] = perenggan1 = @perenggan1
-   perenggan[0] = perenggan1 = surat_tawaran_content.perenggan1 if surat_tawaran_content
-   perenggan[1] = perenggan2 = @perenggan2
-   perenggan[1] = perenggan2 = surat_tawaran_content.perenggan2 if surat_tawaran_content
-   perenggan[2] = perenggan3 = @perenggan3
-   perenggan[2] = perenggan3 = surat_tawaran_content.perenggan3 if surat_tawaran_content
-   perenggan[3] = perenggan4 = @perenggan4
-   perenggan[3] = perenggan4 = surat_tawaran_content.perenggan4 if surat_tawaran_content
-   perenggan[4] = perenggan5 = @perenggan5
-   perenggan[4] = perenggan5 = surat_tawaran_content.perenggan5 if surat_tawaran_content
+   #perenggan[0] = perenggan1 = @perenggan1
+   #perenggan[0] = perenggan1 = surat_tawaran_content.perenggan1 if surat_tawaran_content
+   #perenggan[1] = perenggan2 = @perenggan2
+   #perenggan[1] = perenggan2 = surat_tawaran_content.perenggan2 if surat_tawaran_content
+   #perenggan[2] = perenggan3 = @perenggan3
+   #perenggan[2] = perenggan3 = surat_tawaran_content.perenggan3 if surat_tawaran_content
+   #perenggan[3] = perenggan4 = @perenggan4
+   #perenggan[3] = perenggan4 = surat_tawaran_content.perenggan4 if surat_tawaran_content
+   #perenggan[4] = perenggan5 = @perenggan5
+   #perenggan[4] = perenggan5 = surat_tawaran_content.perenggan5 if surat_tawaran_content
 
-   str_perenggan = "<p>#{perenggan.join('</p><p>')}</p>"
+   #str_perenggan = "<p>#{perenggan.join('</p><p>')}</p>"
+   str_perenggan = '<p style="text-align: justify;">Dengan hormatnya saya diarah merujuk kepada perkara di atas.</p>
+<p style="text-align: justify;">2. &nbsp; Dimaklumkan bahawa pegawai seperti nama di atas telah dipilih untuk menghadiri kursus _{KURSUS}_ yang dijadualkan pada _{TARIKH}_.</p>
+<p style="text-align: justify;">3. &nbsp; Oleh yang demikian, di atas sebab-sebab yang tidak dapat dielakkan maka kursus tersebut telah ditangguhkan hingga ke suatu tarikh yang akan diberitahu kelak.</p>
+<p style="text-align: justify;">4. &nbsp; &nbsp;Segala pertanyaan berkaitan penundaan kursus ini sila hubungi&nbsp;
+<ol>
+<li type="i">_{PENYELARAS1_NAMA}_<br />Tel : _{PENYELARAS1_TELEFON}_<br />Email : _{PENYELARAS1_EMAIL}_</li>
+<li type="i">_{PENYELARAS2_NAMA}_<br />Tel : _{PENYELARAS2_TELEFON}_<br />Email : _{PENYELARAS2_EMAIL}_</li>
+</ol>
+</p>
+<p style="text-align: justify;">5. &nbsp; Segala kesulitan amatlah dikesali dan pihak kami terlebih dahulu memohon ribuan maaf.</p>
+<p>&nbsp;</p>'
 %>
 
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
@@ -476,31 +487,31 @@
 <!--<tr>-->
   <!--<td align="right"><strong>Perenggan 1:</strong></td>-->
   <!--<td><span class="blockintro">&nbsp; </span>-->
-    <!--<textarea id="surat_tawaran_content_perenggan1" name="surat_tawaran_content[perenggan1]" cols="80" rows="6" style="width: 550"><%= perenggan1 %></textarea>-->
+    <!--<textarea id="surat_tawaran_content_perenggan1" name="surat_tawaran_content[perenggan1]" cols="80" rows="6" style="width: 550"><%#= perenggan1 %></textarea>-->
   <!--</td>-->
 <!--</tr>-->
 <!--<tr>-->
   <!--<td align="right"><strong>Perenggan 2:</strong></td>-->
   <!--<td><span class="blockintro">&nbsp; </span>-->
-    <!--<textarea id="surat_tawaran_content_perenggan2" name="surat_tawaran_content[perenggan2]" cols="80" rows="6" style="width: 550"><%= perenggan2 %></textarea>-->
+    <!--<textarea id="surat_tawaran_content_perenggan2" name="surat_tawaran_content[perenggan2]" cols="80" rows="6" style="width: 550"><%#= perenggan2 %></textarea>-->
   <!--</td>-->
 <!--</tr>-->
 <!--<tr>-->
   <!--<td align="right"><strong>Perenggan 3:</strong></td>-->
   <!--<td><span class="blockintro">&nbsp; </span>-->
-    <!--<textarea id="surat_tawaran_content_perenggan3" name="surat_tawaran_content[perenggan3]" cols="80" rows="6" style="width: 550"><%= perenggan3 %></textarea>-->
+    <!--<textarea id="surat_tawaran_content_perenggan3" name="surat_tawaran_content[perenggan3]" cols="80" rows="6" style="width: 550"><%#= perenggan3 %></textarea>-->
   <!--</td>-->
 <!--</tr>-->
 <!--<tr>-->
   <!--<td align="right"><strong>Perenggan 4:</strong></td>-->
   <!--<td><span class="blockintro">&nbsp; </span>-->
-    <!--<textarea id="surat_tawaran_content_perenggan4" name="surat_tawaran_content[perenggan4]" cols="80" rows="6" style="width: 550"><%= perenggan4 %></textarea>-->
+    <!--<textarea id="surat_tawaran_content_perenggan4" name="surat_tawaran_content[perenggan4]" cols="80" rows="6" style="width: 550"><%#= perenggan4 %></textarea>-->
   <!--</td>-->
 <!--</tr>-->
 <!--<tr>-->
   <!--<td align="right"><strong>Perenggan 5:</strong></td>-->
   <!--<td><span class="blockintro">&nbsp; </span>-->
-    <!--<textarea id="surat_tawaran_content_perenggan5" name="surat_tawaran_content[perenggan5]" cols="80" rows="6" style="width: 550"><%= perenggan5 %></textarea>-->
+    <!--<textarea id="surat_tawaran_content_perenggan5" name="surat_tawaran_content[perenggan5]" cols="80" rows="6" style="width: 550"><%#= perenggan5 %></textarea>-->
   <!--</td>-->
 <!--</tr>-->
 <tr>

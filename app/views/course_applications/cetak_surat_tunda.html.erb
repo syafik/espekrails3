@@ -10,7 +10,7 @@
 <table width="100%" style="font-size: 14px;">
   <tr>
     <td align="right">
-      <table style="font-size: 12px;">
+      <table style="font-size: 12px; font-family: arial;">
         <tr>
           <td>Ruj. Tuan</td>
           <td>: </td>
@@ -28,7 +28,7 @@
   </tr>
 
   <tr>
-    <td>
+    <td style="font-size: 13px; font-family: arial;">
       <br/>
       <%
          for student in @students
@@ -93,6 +93,7 @@
            office_name = "#{student.profile.opis}"
            p_alamat = "#{p_addr}."
            alamat = "#{company_addr}."
+           state = "#{student.profile.state.description.upcase}"
 
            alamat_instun = "<br/>Pengarah," +
                    "<br/>Institut Tanah dan Ukur Negara(INSTUN)" +
@@ -117,16 +118,17 @@
           <%= "#{job_profile}".html_safe %>
           <%= "<br/>Melalui dan Salinan:".html_safe %>
           <br/>
-          <%= "#{ketua}" %>
-          <%= "#{office_name}".html_safe %>
-          <%= "#{p_alamat}".html_safe %>
+          <%= "#{ketua}".html_safe %><br/>
+          <%= "#{office_name}".html_safe %><br/>
+          <%= "#{p_alamat}".html_safe %><br/>
+          <%= "#{state}".html_safe %>
           <br/>
           <br/>
       <%
          end
       %>
       <br/><br/>
-      <%= "Tuan,<br/><br/>".html_safe %>
+      <%= "Tuan/Puan,<br/><br/>".html_safe %>
       <%
 
          per_lines = @perkara.split("\n")
