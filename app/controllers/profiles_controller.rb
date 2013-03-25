@@ -139,18 +139,18 @@ class ProfilesController < ApplicationController
 
 
   def update_role
-    if (@user_to_update = User.find(params[:profile_id]))
-      user_roles = User.find_by_sql("delete from users_roles where user_id = #{@user_to_update.id}")
-      if params[:user] and params[:user][:roles].size > 0
-        params[:user][:roles].size.times do |i|
-          r_id = params[:user][:roles][i]
-          #user_roles = User.find_by_sql("insert into users_roles(user_id,role_id) values(#{@user_to_update.id},#{r_id})")
-          user_roles = User.find_by_sql("insert into roles_users(user_id,role_id) values(#{@user_to_update.id},#{r_id})")
-        end
-        flash[:notice] = "Peranan telah dikemaskinikan untuk '#{@user_to_update.login}'."
-      end
-      redirect_to :action => 'setrole', :profile_id => @user_to_update
+    set_regular_user_if_empty
+    @user = User.find(params["profile_id"])
+    if is_roles_contain_trainer_role? && !is_previously_trainer? #new request to be trainer
+      create_trainer_profile
     end
+    
+    if @user.update_attributes(params[:user])
+      flash[:notice] = "Peranan telah dikemaskinikan untuk '#{@user.login}'."
+    else
+      flash[:error] = "Peranan Gagal dikemaskinikan untuk '#{@user.login}'."      
+    end
+    redirect_to :action => 'setrole', :profile_id => @user
   end
 
   def verify
@@ -649,6 +649,68 @@ class ProfilesController < ApplicationController
     sql = "SELECT * FROM users WHERE verified = '#{nilai}'"
     b = User.find_by_sql(sql)
     return b
+  end
+
+  def set_regular_user_if_empty
+    default_role = {"role_ids"=>[Role.find_by_name("User").id.to_s]} #regular user
+    params[:user] ||= default_role
+  end
+  
+  def activate_trainer_profile_if_trainer
+    trainer_role_id = Role.find_by_name("Pengajar").id.to_s
+    if params[:user][:role_ids].include? trainer_role_id
+      create_but_profile_exist
+    end
+  end
+
+  def is_previously_trainer?
+    @trainer = Trainer.find_by_profile_id(@user.profile.id)
+    return true if !@trainer.blank?
+  end
+  
+  def is_roles_contain_trainer_role?
+    trainer_role_id = Role.find_by_name("Pengajar").id.to_s
+    return false if (params["user"]).blank?
+    return true if (params[:user][:role_ids].include? trainer_role_id)
+    return false
+  end
+  
+  def deactivate_trainer_profile
+    @trainer = Trainer.find_by_profile_id(@user.profile.id)
+    @trainer.active = false
+    if @trainer.save!
+      flash[:notice] = "Profile Trainer Deactivation is Successful"
+    else
+      flash[:notice] = "Profile Trainer Deactivation is Fail"
+    end    
+  end
+
+  def create_trainer_profile
+    ActiveRecord::Base.transaction do    
+      @trainer = Trainer.new
+      @trainer.profile = @user.profile
+
+      @relative = Relative.new
+      @relative.profile = @user.profile
+      @relative.save
+      @employment = Employment.new
+      @employment.profile = @user.profile
+      @employment.save
+
+      @expertise = Expertise.new
+      @expertise.profile = @user.profile
+      @expertise.save
+    
+      @qualification = Qualification.new
+      @qualification.profile = @user.profile
+      @qualification.save
+
+      if @trainer.save
+        flash[:notice] = 'Tenaga pengajar berjaya disimpan.'
+      else
+        flash[:notice] = 'Gagal membuat Pengajar'
+      end
+    end #transaction
   end
 
 end

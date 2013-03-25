@@ -19,7 +19,7 @@ body {
 <%= render :partial => 'header'%>
 <script type="text/javascript">
 		<!--
-		var user_id = <%= session[:user].id.to_s %>;
+		var trainer_id = <%= session[:user].profile.trainer.id.to_s %>;
 		d = new dTree('d');
 		
 		d.config.useCookies=false;
@@ -29,8 +29,8 @@ body {
 		d.config.target = "main";
 
 		d.add(70, 0, 'Tenaga Pengajar', '', 'Tenaga Pengajar','main','/images/menutree/folder.gif');
-		d.add(701, 70,'Lihat', '/trainer/'+user_id, 'Check-in','main');
-		d.add(702, 70,'Kemaskini', '/trainer/'+ user_id +'/edit', 'Check-in','main');
+		d.add(701, 70,'Lihat', '/trainer/'+trainer_id, 'Check-in','main');
+		d.add(702, 70,'Kemaskini', '/trainer/'+ trainer_id +'/edit', 'Check-in','main');
 		d.add(71, 0,'Tuntutan Bayaran', '/trainer/claim_payment_index', 'Check-in','main');
 		
 		
