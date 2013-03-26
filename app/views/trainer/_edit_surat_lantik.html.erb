@@ -13,7 +13,7 @@
      #@schedule = CourseImplementation.find_by_code(params[:course_implementation_code]
    end
 
-   debug @schedule
+
    @tempoh = "#{@schedule.date_plan_start.to_formatted_s(:my_format_day)} " +
            "#{$MONTH_NAMES[@schedule.date_plan_start.to_formatted_s(:my_format_month).to_i - 1].upcase} " +
            "#{@schedule.date_plan_start.to_formatted_s(:my_format_year)}" + " HINGGA " +

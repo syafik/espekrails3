@@ -923,14 +923,14 @@ class CourseManagementController < ApplicationController
     @course_implementation = CourseImplementation.find(params[:course_management_id]) if (params[:course_management_id] && params[:course_management_id] != "")
 
     if @course_implementation
-
-      params[:orderby] = "personal_name" if !params[:orderby]
+logger.info "--------------------------------"
+      params[:orderby] = "personal_name" if params[:orderby]
       @orderby = params[:orderby]
-      params[:arrow] = "ASC" if !params[:arrow]
+      params[:arrow] = "ASC" if params[:arrow]
       @arrow = params[:arrow]
 
       orderby = "name" if  @orderby == "personal_name"
-      @students = CourseApplication.find_by_sql("select ca.*,p.name from course_applications as ca join profiles as p on ca.profile_id=p.id where course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9) order by #{orderby} #{@arrow}")
+      @students = CourseApplication.find_by_sql("select ca.*,p.name from course_applications as ca join profiles as p on ca.profile_id=p.id where course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9) ")#order by #{orderby} #{@arrow}")
     else
       @students = []
     end

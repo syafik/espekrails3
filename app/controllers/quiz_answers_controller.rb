@@ -7,7 +7,7 @@ class QuizAnswersController < ApplicationController
   end
 
   def list
-    @quiz_answer_pages, @quiz_answers = paginate :quiz_answer, :per_page => 10
+    @quiz_answers = QuizAnswer.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show
@@ -23,8 +23,10 @@ class QuizAnswersController < ApplicationController
   def show_answer2
     @profile = Profile.find(params[:id])
     @quiz = Quiz.find(params[:quiz_id])
+    qq_ids = @quiz.quiz_questions.collect{|s| s.id}
     #@quiz_questions = QuizQuestion.find(:all, :conditions => ["quiz_id = ?", "#{params[:quiz_id]}"], :order => "id")
-    @check = QuizAnswer.find(:first, :conditions=> "quiz_id='#{@quiz.id}' AND profile_id = '#{@profile.id}' AND fraction = 'before'", :order => "quiz_question_id")
+    @check = QuizAnswer.where(:quiz_question_id => qq_ids, :profile_id => @profile.id, :fraction => 'before').order("quiz_question_id").first
+
   end
 
   def show_answer3
@@ -36,6 +38,7 @@ class QuizAnswersController < ApplicationController
   end
   
   def tambah
+    
     @quiz = Quiz.find(params[:id]) if params[:id]
     @profile = Profile.find(params[:profile_id])
     @quiz.quiz_questions.size.times do |n|
@@ -54,12 +57,18 @@ class QuizAnswersController < ApplicationController
   end
   
   def tambah_update
+
     @quiz = Quiz.find(params[:id]) if params[:id]
     @profile = Profile.find(params[:profile_id])
-    @test = QuizAnswer.find(:all, :conditions=> "quiz_id='#{@quiz.id}' AND profile_id = '#{@profile.id}' AND fraction = 'before'")
-      for q in @test
-        q.destroy
+    @quiz.quiz_questions.each do |qq|
+      qq.quiz_answers.where(:profile_id => @profile.id, :fraction => 'before').each do |qa|
+        qa.destroy
       end
+    end
+    #    @test = QuizAnswer.find(:all, :conditions=> "quiz_id='#{@quiz.id}' AND profile_id = '#{@profile.id}' AND fraction = 'before'")
+    #    for q in @test
+    #      q.destroy
+    #    end
     @quiz.quiz_questions.size.times do |n|
       y = n + 1
       next if params["quiz_answer"]["#{y}"].blank?
