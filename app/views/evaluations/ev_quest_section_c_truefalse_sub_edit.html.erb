@@ -20,13 +20,8 @@
         </table>
       </td>
       <td width="20%" nowrap>
-        <select name="max_ranking">
-          <% 10.times do |i|
-            selected = "selected" if @eq.evaluation_ranking.max_ranking == i+1
-          %>
-            <option value="<%=i+1%>" <%=selected%>><%=i+1%></option>
-          <% end%>
-        </select>
+        <input type="radio">Ya &nbsp;
+        <input type="radio">Tidak
         <!--
         <input type="radio" disabled="disabled">Ya &nbsp;<input type="radio" disabled="disabled">Tidak
         -->

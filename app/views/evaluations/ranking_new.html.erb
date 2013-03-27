@@ -1,45 +1,43 @@
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
-      <th width="85%" height="20" bgcolor="#999999">
+  <tr>
+    <th width="85%" height="20" bgcolor="#999999">
       <font color="#FFFFFF">TAMBAH SOALAN </font></th>
-    </tr>
-    
-    
-  </table>
-  <br>
-  <br />
-<form action="/evaluations/ranking_create/<%=@evaluation.id%>?section=<%=params[:section]%>&subsection=<%=params[:subsection]%>" method="post">
-  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
-		<tr>
-		  <td colspan="3" bgcolor="#dddddd">
+  </tr>
 
-		  <%=EvaluationSection.find(params[:section]).description%>: <%=EvaluationSubsection.find(params[:subsection]).description%>
-		  </td>
-		</tr>
-	
-		<tr>
-		  <td width="50%">
-			<table><tr>
-				<td>&nbsp;</td>
-				<td><input name="questiontext" type="text" value="" size="80"></td>
-			</tr>
-			</table>
-		  </td>
-		  <td width="20%" nowrap>Skala Ranking:
-		  <select name="max_ranking">
-			<% 10.times do |i|
-				selected = "selected" if i == 4
-			%>
-			<option value="<%=i+1%>" <%=selected%>><%=i+1%></option>
-			<% end%>
-		  </select>
-		  </td>
-       </tr>
 
 </table>
+<br>
+<br />
+
+<%= form_tag create_ranking_evaluations_path(:section => params[:section], :subsection => params[:subsection]) do %>
+  <table style="width: 700px" border="1" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
+    <tr>
+      <td colspan="3" bgcolor="#dddddd">
+        <%=EvaluationSection.find(params[:section]).description%>: <%=EvaluationSubsection.find(params[:subsection]).description%>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="50%">
+        <table><tr>
+            <td>&nbsp;</td>
+            <td>
+              <%= text_field_tag "questiontext", nil, :size => "80" %>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width="20%" nowrap>Skala Ranking:
+        <%= select_tag "max_ranking", options_for_select((1..10).collect{|i| [i, i]}, :selected => 6 )  %>
+      </td>
+    </tr>
+
+  </table>
   <br />
   <center>
-  <input type="button" value="<<Kembali" onclick="history.back();">
-  <input type="submit" value="Simpan">
+    <input type="button" value="<<Kembali" onclick="history.back();">
+    <%= submit_tag "Simpan" %>
   </center>
-</form>
+
+<% end %>
+ 

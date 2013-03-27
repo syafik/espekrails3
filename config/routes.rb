@@ -686,6 +686,7 @@ InstunRails3::Application.routes.draw do
       get 'ev_quest_section_c_truefalse_sub_edit/:id', action: :ev_quest_section_c_truefalse_sub_edit
       post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
       get 'ev_quest_sub_edit/:id', action: :ev_quest_sub_edit
+      get 'ev_quest_sub_destroy/:id', action: :ev_quest_sub_destroy
       get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
       post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
       post 'ev_quest_section_c_sub_update/:id', action: :ev_quest_section_c_sub_update
@@ -695,7 +696,7 @@ InstunRails3::Application.routes.draw do
       get 'truefalse_new/:id', action: :truefalse_new
       post 'truefalse_create/:id', action: :truefalse_create
       get 'ranking_new/:id', action: :ranking_new
-      post 'ranking_create/:id', action: :ranking_create
+      post 'ranking_create/:id', action: :ranking_create, :as => 'create_ranking'
       post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
       get 'ev_quest_section_c_sub_destroy/:id', action: :ev_quest_section_c_sub_destroy
       get 'ev_quest_section_c_truefalse_sub_destroy/:id', action: :ev_quest_section_c_truefalse_sub_destroy
