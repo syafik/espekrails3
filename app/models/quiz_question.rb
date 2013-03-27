@@ -4,7 +4,7 @@ class QuizQuestion < ActiveRecord::Base
   belongs_to :quiz_type
   has_many :quiz_answers
   has_many :quiz_truefalses
-  has_many :quiz_subjectives
+  has_one :quiz_subjective
   has_many :quiz_objectives
   has_attached_file :picture,
     :styles => { :small  => "400x400>" },
