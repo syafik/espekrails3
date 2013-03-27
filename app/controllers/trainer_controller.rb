@@ -695,23 +695,23 @@ class TrainerController < ApplicationController
   def claim_payment_index
     #@profile = current_user.profile #.find(683) should be changed by current user if roles done
     @profile = Profile.find(session[:user].profile.id) #should be changed by current user if roles done
-    #@months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
+    @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
     #@planning_years = profile.trainer.course_implementations.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations").collect(&:year)
     @planning_years = Timetable.find_by_sql("
-      SELECT Distinct to_char(tt.date, 'MM/YYYY')as year, date FROM timetables tt,course_implementations ci,course_implementations_trainers cit,trainers t, courses c
+      SELECT Distinct to_char(tt.date, 'YYYY')as year FROM timetables tt,course_implementations ci,course_implementations_trainers cit,trainers t, courses c
       WHERE  ci.id = tt.course_implementation_id
       AND cit.course_implementation_id =ci.id
       AND cit.trainer_id = t.id
       AND c.id = ci.course_id
       AND t.id = #{@profile.trainer.id}
-      ORDER by tt.date DESC
+      ORDER by year DESC
       ").collect(&:year)
     #@course_implementations = profile.trainer.course_implementations
-    if params[:tarikh].present?
-      @month = params[:tarikh].split("/")[0]
-      @year = params[:tarikh].split("/")[1]
+    if params[:tarikh_month].present? && params[:tarikh_year].present?
+      @month = params[:tarikh_month]
+      @year = params[:tarikh_year]
       @course_slots = Timetable.find_by_sql("
-      SELECT c.name as name, tt.date as date, tt.topic as topic, ct.name as kategory_pengajar, EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600 as hour
+      SELECT tt.id as timetable_id, c.name as name, tt.date as date, tt.topic as topic, ct.name as kategory_pengajar, ct.id as kategory_pengajar_id, EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600 as hour
       , (EXTRACT(EPOCH FROM ((tt.time_end - tt.time_start))/3600)*
       CASE WHEN ct.id=1 THEN (SELECT rate from trainers where id =#{@profile.trainer.id})
       WHEN ct.id=2 THEN (SELECT fasilitator_rate from trainers where id =#{@profile.trainer.id})
@@ -743,6 +743,19 @@ class TrainerController < ApplicationController
           :right         => 24.8}
       end
     end
+  end
+
+  def claim_payment_sent
+    claim_list = params[:pilih_tuntutan].collect{|a,b| b }
+    claim_list.each do |claim|
+      cek_exist= ClaimPayment.where(:trainer_id =>claim.split("|")[4], :timetable_id => claim.split("|")[0])
+      if cek_exist.blank?
+        claim_row= ClaimPayment.new(:trainer_id =>claim.split("|")[4], :timetable_id => claim.split("|")[0], :total_claim => claim.split("|")[3], :category_trainer_id => claim.split("|")[1], :total_time => claim.split("|")[2], :timetable_date => claim.split("|")[5])
+        claim_row.save
+      end
+    end
+    flash[:notice] = "Tuntutan bayaran yang dipilih sudah dihantar"
+    redirect_to :action => 'claim_payment_index'
   end
 
   #def new_expertise

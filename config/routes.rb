@@ -259,12 +259,21 @@ InstunRails3::Application.routes.draw do
       get 'list'
       get 'search'
       get 'claim_payment_index'
+      post 'claim_payment_sent'
       post 'search_by_name'
       post 'search_by_ic'
       post 'search_by_phone'
       post 'search_by_expertise'
       post 'search_by_state'
       post 'offer'
+    end
+  end
+
+  resources :finances do
+    collection do
+      get 'claim_payment_list'
+      get 'search_claim_payment'
+      post 'claim_payment_approve'
     end
   end
 
