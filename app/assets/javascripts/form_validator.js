@@ -59,7 +59,8 @@ function checkFormat(regex,obj,obj_desc) {
 	if (obj_desc=="") obj_desc = obj.name;
 
 	if (obj.value != "") {
-		if (!regex.test(obj.value)) {
+        var cleanFilename = obj.value.replace(/C:\\fakepath\\/i, '');
+        if (!regex.test(cleanFilename)) {
 			alert('Invalid ' + obj_desc);
 			obj.focus();
 			HighLight(obj);

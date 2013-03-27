@@ -19,7 +19,7 @@ dr = ""
 dr = "dr=1" if params[:dr]
 %>
 <!--form name="ca_form" method="POST" action="/course_applications/create_but_peserta_already_exist?<%=dr%>" enctype="multipart/form-data" onsubmit="return GoSubmit(ca_form)"-->
-<form name="ca_form" method="POST" action="/course_applications/create_but_peserta_already_exist?<%=dr%>" onsubmit="return GoSubmit(ca_form)">
+<form name="ca_form" method="POST" action="/course_applications/create_but_peserta_already_exist?<%=dr%>" enctype="multipart/form-data" onsubmit="return GoSubmit(ca_form)">
 
   <%= render :partial => 'form' %>
   <BR>
@@ -45,7 +45,7 @@ function GoSubmit(df) {
 	if (!checkSelection(strRegExp,document.getElementById('profile_marital_status_id'),'Taraf Perkahwinan')) return false;
 	if (!checkSelection(strRegExp,document.getElementById('profile_race_id'),'Keturunan')) return false;
 	if (!checkInput(anythingRegExp,document.getElementById('job_profile_name'),'Gred/Jawatan')) return false;
-	if (!checkFormat(imageRegExp,document.getElementById('profile_image'),'Hanya Format JPG/JPEG dibenarkan')) return false;
+	if (!checkFormat(imageRegExp,document.getElementById('profile_picture'),'Hanya Format JPG/JPEG dibenarkan')) return false;
 	if (!checkInput(anything,document.getElementById('profile_fax'),'Nombor Fax')) return false;
 	//if (!checkInput(anythingRegExp,$('course_application_supervisor_name'),'Perakuan Ketua Jabatan(Nama)')) return false;
 	//if (!checkInput(anythingRegExp,$('course_application_supervisor_jawatan'),'Perakuan Ketua Jabatan(Jawatan)')) return false;

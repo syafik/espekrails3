@@ -719,46 +719,131 @@ class CourseApplicationsController < ApplicationController
   def create_but_peserta_already_exist
     init_load
     @profile = Profile.find_by_ic_number(params[:profile][:ic_number])
-    @profile.date_of_birth = params[:m_dob]+"/"+params[:d_dob]+"/"+params[:y_dob]
+    if @profile
+      @profile.date_of_birth = params[:m_dob]+"/"+params[:d_dob]+"/"+params[:y_dob]
 
-    if params[:course_application]
-      @course_application = CourseApplication.new(params[:course_application])
+      if params[:course_application]
+        @course_application = CourseApplication.new(params[:course_application])
+        @course_application.date_apply = params[:date_apply_month] + "/" + params[:date_apply_day] + "/" + params[:date_apply_year]
+        @course_application.date_approval = params[:date_approval_month] + "/" + params[:date_approval_day] + "/" + params[:date_approval_year]
+        @course_application.profile_id = @profile.id
+        #get back to this, not sure why set status sahkan hadir(sebelum ni tamat) untuk peserta gantian
+        @course_application.student_status_id = 4 if params[:dr]
+        @course_application.nama_pejabat = @profile.opis
+        @course_application.address1 = params[:profile][:address1]
+        @course_application.address2 = params[:profile][:address2]
+        @course_application.address3 = params[:profile][:address3]
+      end
+
+      @course_implementation = CourseImplementation.find_by_code("#{params[:course_implementation][:code]}")
+      if @course_implementation
+        @course_application.course_implementation_id = @course_implementation.id
+        @course_application.course_id = @course_implementation.course_id
+      end
+
+      if CourseApplication.where(:profile_id => @profile.id, :course_implementation_id => @course_implementation.id).present?
+        flash[:notice] = "Ic Number #{params[:profile][:ic_number]} has been registered before."
+        return render :action => 'new_but_peserta_already_exist'
+      end
+
+      if @course_application.save
+        flash[:notice] = 'Application was successfully recorded.'
+        if @profile.update_attributes(params[:profile])
+          flash[:notice] = '<br>Data Pemohon berjaya dikemaskini.'
+          @certificate = Certificate.new(:course_application_id => "#{@course_application.id}")
+          @certificate.save
+        else
+          render :action => 'new_but_peserta_already_exist'
+        end
+
+        @qualifications = @course_application.profile.qualifications
+        for q in @qualifications
+          q.destroy
+        end
+        if params[:cert_level_ids]
+          params[:cert_level_ids].size.times do |i|
+            q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
+                                  :pengkhususan => params[:majors][i],
+                                  :institution => params[:institutions][i],
+                                  :year_end => params[:year_ends][i])
+
+            @profile.qualifications.push(q)
+          end
+        end
+
+        @employment = Employment.find_by_profile_id(@profile.id)
+        if @employment
+          arr = params[:job_profile_name].split(",")
+          job_profile = JobProfile.find(:first, :conditions => "job_grade='#{arr[0]}' and job_name ilike '%#{arr[1]}%'")
+          params[:employment][:job_profile_id] = job_profile.id if job_profile
+          if @employment.update_attributes(params[:employment])
+            flash[:notice] = 'Data berjaya dikemaskini.'
+          else
+            render :action => 'new_but_peserta_already_exist'
+          end
+        else
+          @employment = Employment.new(params[:employment])
+          @employment.profile = @profile
+          arr = params[:job_profile_name].split(",")
+          job_profile = JobProfile.find(:first, :conditions => "job_grade='#{arr[0]}' and job_name ilike '%#{arr[1]}%'")
+          @employment.job_profile_id = job_profile.id if job_profile
+          if @employment.save
+            flash[:notice] = 'Data berjaya dikemaskini.'
+          else
+            render :action => 'new_but_peserta_already_exist'
+          end
+        end
+
+        @relative = Relative.find_by_profile_id(@profile.id)
+        if @relative
+          if @relative.update_attributes(params[:relative])
+            flash[:notice] = 'Data berjaya dikemaskini.'
+          else
+            render :action => 'new_but_peserta_already_exist'
+          end
+        else
+          @relative = Relative.new(params[:relative])
+          @relative.profile = @profile
+          if @relative.save
+            flash[:notice] = 'Data berjaya dikemaskini.'
+          else
+            render :action => 'new_but_peserta_already_exist'
+          end
+        end
+
+        redirect_to :action => 'show_after_dr', :id => @course_application
+      else
+        render :action => 'new_but_peserta_already_exist'
+      end
+    else
+      init_load
+      @profile = Profile.new(params[:profile])
+      @profile.date_of_birth = Date.parse("#{params[:y_dob]}/#{params[:m_dob]}/#{params[:d_dob]}")
+      @relative = Relative.new(params[:relative])
+      @relative.profile = @profile
+      @relative.save
+
+      arr = params[:job_profile_name].split(",")
+      job_profile = JobProfile.find(:first, :conditions => "job_grade='#{arr[0]}' and job_name ilike '%#{arr[1]}%'")
+      params[:employment][:job_profile_id] = job_profile.id if job_profile
+      @employment = Employment.new(params[:employment])
+      @employment.profile = @profile
+      @employment.save
+
+      @course_application = CourseApplication.new(params[:course_application]) if params[:course_application].present?
       @course_application.date_apply = params[:date_apply_month] + "/" + params[:date_apply_day] + "/" + params[:date_apply_year]
       @course_application.date_approval = params[:date_approval_month] + "/" + params[:date_approval_day] + "/" + params[:date_approval_year]
-      @course_application.profile_id = @profile.id
-      #get back to this, not sure why set status sahkan hadir(sebelum ni tamat) untuk peserta gantian
-      @course_application.student_status_id = 4 if params[:dr]
       @course_application.nama_pejabat = @profile.opis
       @course_application.address1 = params[:profile][:address1]
       @course_application.address2 = params[:profile][:address2]
       @course_application.address3 = params[:profile][:address3]
-    end
-
-    @course_implementation = CourseImplementation.find_by_code("#{params[:course_implementation][:code]}")
-    if @course_implementation
-      @course_application.course_implementation_id = @course_implementation.id
-      @course_application.course_id = @course_implementation.course_id
-    end
-
-    if CourseApplication.where(:profile_id => @profile.id, :course_implementation_id => @course_implementation.id).present?
-      flash[:notice] = "Ic Number #{params[:profile][:ic_number]} has been registered before."
-      return render :action => 'new_but_peserta_already_exist'
-    end
-
-    if @course_application.save
-      flash[:notice] = 'Application was successfully recorded.'
-      if @profile.update_attributes(params[:profile])
-        flash[:notice] = '<br>Data Pemohon berjaya dikemaskini.'
-        @certificate = Certificate.new(:course_application_id => "#{@course_application.id}")
-        @certificate.save
-      else
-        render :action => 'new_but_peserta_already_exist'
+      #@course_implementation = CourseImplementation.find(params[:course_application][:course_implementation_id])
+      @course_implementation = CourseImplementation.find_by_code("#{params[:course_implementation][:code]}")
+      if @course_implementation
+        @course_application.course_implementation_id = @course_implementation.id
+        @course_application.course_id = @course_implementation.course_id
       end
 
-      @qualifications = @course_application.profile.qualifications
-      for q in @qualifications
-        q.destroy
-      end
       if params[:cert_level_ids]
         params[:cert_level_ids].size.times do |i|
           q = Qualification.new(:cert_level_id => params[:cert_level_ids][i],
@@ -770,49 +855,26 @@ class CourseApplicationsController < ApplicationController
         end
       end
 
-      @employment = Employment.find_by_profile_id(@profile.id)
-      if @employment
-        arr = params[:job_profile_name].split(",")
-        job_profile = JobProfile.find(:first, :conditions => "job_grade='#{arr[0]}' and job_name ilike '%#{arr[1]}%'")
-        params[:employment][:job_profile_id] = job_profile.id if job_profile
-        if @employment.update_attributes(params[:employment])
-          flash[:notice] = 'Data berjaya dikemaskini.'
+      #@qualification = Qualification.new(params[:qualification]) if params[:qualification]
+      #@profile.qualifications.push(@qualification)
+      if @profile.save
+        @course_application.profile = @profile
+        if @course_application.save
+          flash[:notice] = "Permohonan telah berjaya disimpan"
+          redirect_to :action => 'show_after_create', :id => @course_application
         else
-          render :action => 'new_but_peserta_already_exist'
+          @profile.destroy
+          flash[:notice] = "Permohonan tidak berjaya sila periksa course application"
+          render :action => 'new'
         end
       else
-        @employment = Employment.new(params[:employment])
-        @employment.profile = @profile
-        arr = params[:job_profile_name].split(",")
-        job_profile = JobProfile.find(:first, :conditions => "job_grade='#{arr[0]}' and job_name ilike '%#{arr[1]}%'")
-        @employment.job_profile_id = job_profile.id if job_profile
-        if @employment.save
-          flash[:notice] = 'Data berjaya dikemaskini.'
-        else
-          render :action => 'new_but_peserta_already_exist'
-        end
+         if Profile.find_by_ic_number(@profile.ic_number).present?
+          flash[:notice] = "Ic Number #{params[:profile][:ic_number]} has been registered before."
+         else
+          flash[:notice] = "Permohonan tidak berjaya sila periksa profile"
+         end
+        render :action => 'new'
       end
-
-      @relative = Relative.find_by_profile_id(@profile.id)
-      if @relative
-        if @relative.update_attributes(params[:relative])
-          flash[:notice] = 'Data berjaya dikemaskini.'
-        else
-          render :action => 'new_but_peserta_already_exist'
-        end
-      else
-        @relative = Relative.new(params[:relative])
-        @relative.profile = @profile
-        if @relative.save
-          flash[:notice] = 'Data berjaya dikemaskini.'
-        else
-          render :action => 'new_but_peserta_already_exist'
-        end
-      end
-
-      redirect_to :action => 'show_after_dr', :id => @course_application
-    else
-      render :action => 'new_but_peserta_already_exist'
     end
 
   end
