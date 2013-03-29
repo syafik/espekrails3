@@ -1,0 +1,68 @@
+<!--
+ chart_title = the title for the chart
+ chart_container = the div ID where chart is located
+ chart_categories = the categories for vertical axis
+    format: ['category 1', 'category 2', 'category 3']
+ chart_data = the data for the chart
+    format: [{:name => 'series 1', :data => [1, 2, 3]}, {:name => 'series 2', :data => [1, 2, 3]}]
+ chart_footer = the label for the footer
+-->
+
+:javascript
+  $(function () {
+    chart = new Highcharts.Chart({
+      chart: {
+          renderTo: '#{chart_container}',
+          type: 'bar'
+      },
+      title: {
+          text: '#{chart_title}'
+      },
+      xAxis: {
+          categories: #{chart_categories},
+          title: {
+              text: null
+          }
+      },
+      yAxis: {
+          min: 0,
+          title: {
+              text: '#{chart_footer}',
+              align: 'high'
+          },
+          labels: {
+              overflow: 'justify'
+          }
+      },
+      tooltip: {
+          formatter: function() {
+              return ''+
+                  this.series.name +': '+ this.y + ' #{chart_footer}';
+          }
+      },
+      plotOptions: {
+          bar: {
+              dataLabels: {
+                  enabled: true
+              }
+          }
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -100,
+          y: 100,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor: '#FFFFFF',
+          shadow: true
+      },
+      credits: {
+          enabled: false
+      },
+      series: #{chart_data.to_json}
+    });
+    
+    #{defined?(size) ? "chart.setSize(#{size['width']}, #{size['height']});" : ""}
+  });

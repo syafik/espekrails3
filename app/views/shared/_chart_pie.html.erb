@@ -1,0 +1,145 @@
+<!--
+chart_title = the title
+for the chart
+chart_container = the div ID where chart is located
+chart_data = the data
+for the chart
+format: [
+	['series 1', value],
+	['series 2', value]
+]
+-->
+<script type="text/javascript">
+  $(function(){
+	$("#test").click(function(){
+		alert("something");
+		return false;
+		})
+	})
+
+	  $(function() {
+	    new Highcharts.Chart({
+	      chart: {
+		    align: 'left',
+		    distance: 24,
+	        renderTo: "jantina",
+	        type: "pie",
+	        showInLegend: true,
+	        width: 250,
+	        height: 250,	
+	        borderWidth: 1
+	      },
+	      title: {
+	        text: "JANTINA"
+	      },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: false
+              },
+              dataLabels: {
+                enabled: true,
+                color: '#000000',
+                connectorColor: '#000000',
+                formatter: function() {
+                  return this.percentage.toFixed(2) +' %';
+                }
+              },
+              showInLegend: true
+            }
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+            percentageDecimals: 1
+          },
+	      series: [{
+			data: [["Lelaki", 12.38], [ 'Perempuan', 20.62 ]]
+		  }]
+	    }); //Highchart 1
+	
+	    new Highcharts.Chart({
+	      chart: {
+		    align: 'left',
+		    distance: 24,
+	        renderTo: "perkhidmatan",
+	        type: "pie",
+	        showInLegend: true,
+	        width: 250,
+	        height: 250,		
+	        borderWidth: 1
+	      },
+	      title: {
+	        text: "Kumpulan Perkhidmatan"
+	      },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: false
+              },
+              dataLabels: {
+                enabled: true,
+                color: '#000000',
+                connectorColor: '#000000',
+                formatter: function() {
+                  return this.percentage.toFixed(2) +' %';
+                }
+              },
+              showInLegend: true
+            }
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+            percentageDecimals: 1
+          },
+	      series: [{
+			data: [["P&P", 0.00], [ 'Pelaksana', 32.100 ]]
+		  }]
+	    }); //Highchart 2
+
+	    new Highcharts.Chart({
+	      chart: {
+		    align: 'left',
+		    distance: 24,
+	        renderTo: "jabatan",
+	        type: "pie",
+	        showInLegend: true,
+	        width: 250,
+	        height: 250,		
+	        borderWidth: 1
+	      },
+	      title: {
+	        text: "JABATAN/AGENSI"
+	      },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: false
+              },
+              dataLabels: {
+                enabled: true,
+                color: '#000000',
+                connectorColor: '#000000',
+                formatter: function() {
+                  return this.percentage.toFixed(2) +' %';
+                }
+              },
+              showInLegend: true
+            }
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+            percentageDecimals: 1
+          },
+	      series: [{
+			data: [["PTG/JKTPG/PTD", 6.16], [ 'JUPEM', 7.22 ], [ 'Lain-lain', 20.62 ]]
+		  }]
+	    }); //Highchart 3
+	
+	  }); //function
+	</script>
