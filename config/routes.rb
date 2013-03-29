@@ -636,6 +636,7 @@ InstunRails3::Application.routes.draw do
       get 'pegawai_sijil'
       get 'pengajar'
       get 'kewangan'
+      get 'eksekutif'      
       get 'rnd'
       get 'laporan'
       get 'pengajar'
@@ -646,6 +647,15 @@ InstunRails3::Application.routes.draw do
       get 'home'
     end
   end
+
+  get 'executives/analysis'
+  get 'executives/achievement'
+  get 'executives/feedback'
+  get 'executives/implementation'
+  get 'executives/realization'
+  
+  resources :executives
+
   
   match '/quiz_answers/show_answer1/:id' => 'quiz_answers#show_answer1', :via => [:get]
   match '/quiz_answers/show_answer2/:id' => 'quiz_answers#show_answer2', :via => [:get]
