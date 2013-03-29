@@ -277,6 +277,12 @@ InstunRails3::Application.routes.draw do
     end
   end
 
+  resources :report_tables do
+    collection do
+      get 'application_and_attendance'
+    end
+  end
+
   resources :staffs do
     collection do
       get 'list'
