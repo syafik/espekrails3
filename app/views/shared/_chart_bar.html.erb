@@ -7,7 +7,6 @@
     format: [{:name => 'series 1', :data => [1, 2, 3]}, {:name => 'series 2', :data => [1, 2, 3]}]
  chart_footer = the label for the footer
 -->
-
 <script type="text/javascript">
   $(function() {
     new Highcharts.Chart({
@@ -17,7 +16,7 @@
                          inverted: true,
                          borderWidth: 1
       }, title: {
-                         text: 'Number of Patents Granted',
+                         text: '<%= @chart_title %>',
                      },
                      credits: {
                         position: {

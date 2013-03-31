@@ -61,10 +61,7 @@
 <div align=center>
 <%#= will_paginate @reports %>
 </div>
-<!-- @reports.course_name -->
-<!-- @reports.collect(&:pemohon) -->
-<!-- @reports.collect(&:dipilih) -->
-<!-- @reports.collect(&:hadir) -->
+
 <% 
   @categories = @reports.collect(&:course_name)
   pemohon = Hash["name", "Jml Pemohon", "data", @reports.collect(&:pemohon).collect{|el| el.to_i}]
@@ -73,12 +70,13 @@
   @chart_data = []
   @chart_data << pemohon << dipilih << hadir
   height = total_pemohon.blank? ? 0 : total_pemohon * 5
+  @chart_title = 'MAKLUMAT PERMOHONAN DAN KEHADIRAN KURSUS'
 %>
 <% unless @reports.blank?  %>
-<div id=table  style="width:95%; height:<%= height %>px;"> something </div>
+<div id=table  style="width:95%; height:<%= height %>px;"/>
 <%= javascript_include_tag "highcharts" %>
   <%= render :partial => 'shared/chart_bar', 
-             :locals => {:chart_title => 'MAKLUMAT PERMOHONAN DAN KEHADIRAN KURSUS', 
+             :locals => {:chart_title => @chart_title, 
   	                   :chart_container => 'table',
   	                   :chart_categories => @categories,
   	                   :chart_data => @chart_data, 
