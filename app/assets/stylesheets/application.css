@@ -10,5 +10,6 @@
  *
  *= require_self
  *= require espek
+ *= require jquery-ui
  *= require_tree .
  */

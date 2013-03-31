@@ -584,7 +584,7 @@ class TrainerController < ApplicationController
         render :action => 'new_but_profile_exist'
       end
     end
-
+    #raise @profile.id.inspect
     @employment = Employment.find_by_profile_id(@profile.id)
     if @employment
       arr = params[:job_profile_name].split(",")
