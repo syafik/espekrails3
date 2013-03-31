@@ -733,6 +733,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'ajax_nric'
       post 'facility_category_type'
+      get 'autocomplete_grade_jawatan'
     end
   end
   match '/register/to_enroll/:id' => 'register#to_enroll', :via => [:get]

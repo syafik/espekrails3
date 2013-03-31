@@ -278,4 +278,13 @@ class AjaxController < ApplicationController
     end
   
   end
+
+  def autocomplete_grade_jawatan
+    if params[:term]
+      like  = "%".concat(params[:term].concat("%"))
+        job_profiles = JobProfile.where("job_name ilike ? OR job_grade ilike ?", like, like)
+    end
+    list = job_profiles.map {|u| Hash[:id => u.id, :label => "#{u.job_grade} (#{u.job_name.upcase})" , :name => u.job_grade]}
+    render :json => list
+  end
 end
