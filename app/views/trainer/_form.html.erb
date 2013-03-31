@@ -554,16 +554,14 @@ end
         i = i + 1
       %>
         <tr align=center id="<%=i%>">
-          <td align="center"><%=
+          <td align="center"><%
             @options = @cert_levels.map { |t| [t.description.capitalize, t.id] }
-            @options.unshift(["Sila Pilih", ""])
+            @options.unshift(["Sila Pilih", ""])%>
 
-            #@qualification = nof{@course_application.profile.qualifications[0]}
-            #select(:qualification, :cert_level_id, @options,'',:name=>"cert_level_ids[]")
-          %> </td>
-          <td><%= text_field 'qualification', "pengkhususan", :maxlength=>100, :size=>40, :name=>"pengkhususan[]",:onkeyup=>"this.value=this.value.toUpperCase()"  %></td>
-          <td><%= text_field 'qualification', "institution", :maxlength=>100, :size=>40, :name=>"institutions[]",:onkeyup=>"this.value=this.value.toUpperCase()"  %></td>
-          <td><%= text_field 'qualification', 'year_end', :maxlength=>4, :size=>5, :name=>"year_ends[]"  %></td>
+            <%=select_tag('cert_level_ids[]', options_for_select(@options, @qualification.cert_level_id.to_i))%> </td>
+          <td><%= text_field_tag "pengkhususan[]", @qualification.pengkhususan, :maxlength=>100, :size=>40, :onkeyup=>"this.value=this.value.toUpperCase()"  %></td>
+          <td><%= text_field_tag "institutions[]",@qualification.institution, :maxlength=>100, :size=>40, :onkeyup=>"this.value=this.value.toUpperCase()"  %></td>
+          <td><%= text_field_tag 'year_ends[]',@qualification.year_end, :maxlength=>4, :size=>5  %></td>
           <td width="30"><a href="" onclick="deleteQualificationRow('qua_table',this.parentNode.parentNode.rowIndex);return false;"><font style="color: blue; font-size:10px;"><u>padam</u></font></a> </td>
         </tr>
       <%
