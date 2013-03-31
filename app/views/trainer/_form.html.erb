@@ -557,9 +557,11 @@ end
           <td align="center"><%=
             @options = @cert_levels.map { |t| [t.description.capitalize, t.id] }
             @options.unshift(["Sila Pilih", ""])
-
+			      binding.pry
             #@qualification = nof{@course_application.profile.qualifications[0]}
             #select(:qualification, :cert_level_id, @options,'',:name=>"cert_level_ids[]")
+            select_tag(:cert_level_ids[], options_for_select(@options, @qualification.cert_level_id.to_i))
+            #select_tag(:qualification :cert_level_id, options_for_select(@options, @qualification.cert_level_id.to_i))
           %> </td>
           <td><%= text_field 'qualification', "pengkhususan", :maxlength=>100, :size=>40, :name=>"pengkhususan[]",:onkeyup=>"this.value=this.value.toUpperCase()"  %></td>
           <td><%= text_field 'qualification', "institution", :maxlength=>100, :size=>40, :name=>"institutions[]",:onkeyup=>"this.value=this.value.toUpperCase()"  %></td>
