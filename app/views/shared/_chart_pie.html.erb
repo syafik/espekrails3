@@ -9,29 +9,30 @@ format: [
 	['series 2', value]
 ]
 -->
+
 <script type="text/javascript">
-  $(function(){
-	$("#test").click(function(){
-		alert("something");
-		return false;
-		})
-	})
+  /*$(function(){
+        $("#test").click(function(){
+                alert("something");
+                return false;
+                })
+        })
 
-	  $(function() {
-	    new Highcharts.Chart({
-	      chart: {
-		    align: 'left',
-		    distance: 24,
-	        renderTo: "jantina",
-	        type: "pie",
-	        showInLegend: true,
-	        width: 250,
-	        height: 250,	
-	        borderWidth: 1
-	      },
-	      title: {
-	        text: "JANTINA"
-	      },
+          $(function() {
+            new Highcharts.Chart({
+              chart: {
+                    align: 'left',
+                    distance: 24,
+                renderTo: "jantina",
+                type: "pie",
+                showInLegend: true,
+                width: 250,
+                height: 250,
+                borderWidth: 1
+              },
+              title: {
+                text: "JANTINA"
+              },
           plotOptions: {
             pie: {
               allowPointSelect: true,
@@ -54,25 +55,25 @@ format: [
             pointFormat: '{series.name}: <b>{point.percentage}%</b>',
             percentageDecimals: 1
           },
-	      series: [{
-			data: [["Lelaki", 12.38], [ 'Perempuan', 20.62 ]]
-		  }]
-	    }); //Highchart 1
+              series: [{
+                        data: [["Lelaki", 12.38], [ 'Perempuan', 20.62 ]]
+                  }]
+            }); //Highchart 1
 	
-	    new Highcharts.Chart({
-	      chart: {
-		    align: 'left',
-		    distance: 24,
-	        renderTo: "perkhidmatan",
-	        type: "pie",
-	        showInLegend: true,
-	        width: 250,
-	        height: 250,		
-	        borderWidth: 1
-	      },
-	      title: {
-	        text: "Kumpulan Perkhidmatan"
-	      },
+            new Highcharts.Chart({
+              chart: {
+                    align: 'left',
+                    distance: 24,
+                renderTo: "perkhidmatan",
+                type: "pie",
+                showInLegend: true,
+                width: 250,
+                height: 250,
+                borderWidth: 1
+              },
+              title: {
+                text: "Kumpulan Perkhidmatan"
+              },
           plotOptions: {
             pie: {
               allowPointSelect: true,
@@ -95,25 +96,25 @@ format: [
             pointFormat: '{series.name}: <b>{point.percentage}%</b>',
             percentageDecimals: 1
           },
-	      series: [{
-			data: [["P&P", 0.00], [ 'Pelaksana', 32.100 ]]
-		  }]
-	    }); //Highchart 2
+              series: [{
+                        data: [["P&P", 0.00], [ 'Pelaksana', 32.100 ]]
+                  }]
+            }); //Highchart 2
 
-	    new Highcharts.Chart({
-	      chart: {
-		    align: 'left',
-		    distance: 24,
-	        renderTo: "jabatan",
-	        type: "pie",
-	        showInLegend: true,
-	        width: 250,
-	        height: 250,		
-	        borderWidth: 1
-	      },
-	      title: {
-	        text: "JABATAN/AGENSI"
-	      },
+            new Highcharts.Chart({
+              chart: {
+                    align: 'left',
+                    distance: 24,
+                renderTo: "jabatan",
+                type: "pie",
+                showInLegend: true,
+                width: 250,
+                height: 250,
+                borderWidth: 1
+              },
+              title: {
+                text: "JABATAN/AGENSI"
+              },
           plotOptions: {
             pie: {
               allowPointSelect: true,
@@ -136,10 +137,63 @@ format: [
             pointFormat: '{series.name}: <b>{point.percentage}%</b>',
             percentageDecimals: 1
           },
-	      series: [{
-			data: [["PTG/JKTPG/PTD", 6.16], [ 'JUPEM', 7.22 ], [ 'Lain-lain', 20.62 ]]
-		  }]
-	    }); //Highchart 3
+              series: [{
+                        data: [["PTG/JKTPG/PTD", 6.16], [ 'JUPEM', 7.22 ], [ 'Lain-lain', 20.62 ]]
+                  }]
+            }); //Highchart 3
 	
-	  }); //function
-	</script>
+          }); //function */
+</script>
+
+
+<script>
+/*********************************************************
+* Generate the example chart
+*********************************************************/
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: '<%=chart_container%>',
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: ' Maklumat Peserta Mengikut Jantina (<%= chart_title %>)'
+      },
+      credits: {
+                        position: {
+                           align: 'left',
+      x: 20 },
+                        href: 'http://www.instun.gov.my',
+                        text: 'Kementrian Pendidikan Kebudayaan Malaysia'
+                     },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               color: '#000000',
+               connectorColor: '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+               }
+            }
+         }
+      },
+       series: [{
+         type: 'pie',
+         name: '<%= chart_title %> (JANTINA)',
+         data: [
+            ['Lelaki',   <%= total_male %>],
+            ['Perempuan', <%= total_female %>]
+         ]
+      }]
+   });
+
+</script>
