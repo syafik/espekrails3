@@ -15,10 +15,20 @@
         <%= select_tag :year, options_for_select([["-pilih Tahun-", ""]]+ @planning_years, params[:year])%>
         <input type="button" value="Cari" onclick="document.forms[0].submit()">
     </tr>
+    <% if @reports.any? %>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+    <td align="center" valign="middle">
+      <input type="radio" name="filter_show" id="filter_show_table" value="table" checked="1"  onclick="toggle_chart()" />
+        <label for="filter_status_all">Table</label>
+        <input type="radio" name="filter_show" id="filter_show_chart" value="chart" onclick="toggle_chart()" />
+        <label for="filter_status_pending">Chart</label>
+      </td></tr>
+    <% end %>
   </table>
 </form>
 <br>
-<table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+<table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
   <tr bgcolor="#999999" id="pisang" onclick="">
     <td width="3%" align="center"><font color="#FFFFFF"><strong>No</strong></font></td>
     <td width="7%" align="left"><font color="#FFFFFF">&nbsp;<strong>Kod</strong></font></td>
@@ -70,10 +80,10 @@
   @chart_data = []
   @chart_data << pemohon << dipilih << hadir
   height = total_pemohon.blank? ? 0 : total_pemohon * 5
-  @chart_title = 'MAKLUMAT PERMOHONAN DAN KEHADIRAN KURSUS'
+  @chart_title = 'MAKLUMAT PERMOHONAN DAN KEHADIRAN KURSUS '
 %>
 <% unless @reports.blank?  %>
-<div id=table  style="width:95%; height:<%= height %>px;"/>
+<div id="table" class="chart" style="display:none;padding-left:33px; width:95%; height:<%= height %>px;"/>
 <%= javascript_include_tag "highcharts" %>
   <%= render :partial => 'shared/chart_bar', 
              :locals => {:chart_title => @chart_title, 
@@ -84,3 +94,15 @@
   	%>	
 	
 <% end %>
+<script>
+  function toggle_chart(){
+    var showed = $('input[name=filter_show]:checked').val();
+    if (showed == "chart"){
+      $(".chart").show();
+      $(".table_report").hide();
+    }else{
+      $(".chart").hide();
+      $(".table_report").show();
+    }
+  }
+</script>

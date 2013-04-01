@@ -28,4 +28,8 @@ class ReportTablesController < ApplicationController
     end
     #@reports =  CourseApplication.paginate_by_sql(sql, :page => params[:page], :per_page => 20 )
   end
+
+  def peserta_mengikuti_jabatan
+    
+  end
 end
