@@ -855,20 +855,30 @@ class CourseImplementationsController < ApplicationController
       end
     end
     @format_surat = params[:surat_iklan_content][:format_surat].to_i
-    if @format_surat == 3
-      margin = { :top => 10, :left => 10, :bottom => 10, :right => 0 }
+    if @format_surat == 3 || @format_surat == 4
+      margin = { :top => 30, :left => 15, :bottom => 10, :right => 20 }
       #pdf.margins_pt(0, 50, 36, 50)
     else
-      margin = { :top => 10, :left => 10, :bottom => 10, :right => 0 }
+      margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
       #pdf.margins_pt(36, 50, 36, 50)
     end
+
+    pdf_render_hash = {}
+    pdf_render_hash[:pdf] = filename
+    pdf_render_hash[:page_size] = 'A4'
+    pdf_render_hash[:margin] = margin
+    pdf_render_hash[:header] = {
+                                    :html => {
+                                        :template => 'layouts/header.pdf.erb',
+                                        :locals => { :format_surat => @format_surat }
+                                    },
+                                    :spacing => 5
+                               } if @format_surat == 3 || @format_surat == 4
 
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => filename,
-               :page_size => 'A4',
-               :margin => margin
+        render pdf_render_hash
       end
     end
   end
