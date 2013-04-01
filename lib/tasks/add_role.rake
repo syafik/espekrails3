@@ -2,13 +2,16 @@ task :create_admin_roles => :environment do
   desc "Create new roles : Pengajar, Kewangan and add the roles to user Admin"
 
   new_role_name_pengajar = "Pengajar"
-  new_role_pengajar_description = "Pengajar Kursus"
+  new_role_pengajar_description = "Tenaga Pengajar"
   new_role_name_kewangan = "Kewangan"
   new_role_kewangan_description = "Pegawai Kewangan"
+  new_role_name_eksekutif = "Eksekutif"
+  new_role_eksekutif_description = "Pegawai Eksekutif"
 
  ActiveRecord::Base.transaction do
    create_role(new_role_name_pengajar, new_role_pengajar_description)
    create_role(new_role_name_kewangan, new_role_kewangan_description)
+   create_role(new_role_name_eksekutif, new_role_eksekutif_description)   
  end # transaction
   
 end #task create_roles

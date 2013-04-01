@@ -1,0 +1,12 @@
+<h1>Laporan Analisis Kursus</h1>
+<p>Maklumat Asas</p>
+<%= javascript_include_tag "highcharts" %>
+<%= render :partial => 'shared/chart_pie', 
+           :locals => {:chart_title => 'Customer Relationship', 
+	                   :chart_container => 'container-user-relationship', 
+	                   :chart_data => @chart_data, 
+	                   :size => {'width' => 300, 'height' => 300}}
+	%>	
+<div id=jantina  style="width:350px; height:350px;"> something </div>
+<div id=perkhidmatan  style="width:350px; height:350px;"> something </div>
+<div id=jabatan  style="width:350px; height:350px;"> something </div>

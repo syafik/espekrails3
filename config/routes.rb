@@ -277,6 +277,13 @@ InstunRails3::Application.routes.draw do
     end
   end
 
+  resources :report_tables do
+    collection do
+      get 'application_and_attendance'
+      get 'peserta_jantina'
+    end
+  end
+
   resources :staffs do
     collection do
       get 'list'
@@ -636,6 +643,7 @@ InstunRails3::Application.routes.draw do
       get 'pegawai_sijil'
       get 'pengajar'
       get 'kewangan'
+      get 'eksekutif'      
       get 'rnd'
       get 'laporan'
       get 'pengajar'
@@ -646,6 +654,15 @@ InstunRails3::Application.routes.draw do
       get 'home'
     end
   end
+
+  get 'executives/analysis'
+  get 'executives/achievement'
+  get 'executives/feedback'
+  get 'executives/implementation'
+  get 'executives/realization'
+  
+  resources :executives
+
   
   match '/quiz_answers/show_answer1/:id' => 'quiz_answers#show_answer1', :via => [:get]
   match '/quiz_answers/show_answer2/:id' => 'quiz_answers#show_answer2', :via => [:get]
@@ -717,6 +734,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'ajax_nric'
       post 'facility_category_type'
+      get 'autocomplete_grade_jawatan'
     end
   end
   match '/register/to_enroll/:id' => 'register#to_enroll', :via => [:get]

@@ -35,6 +35,9 @@ class MenuController < ApplicationController
   def pengajar
   end
 
+  def eksekutif
+  end
+
   def rnd
   end
 end
