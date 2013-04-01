@@ -704,8 +704,8 @@ InstunRails3::Application.routes.draw do
       post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
       get 'ev_quest_sub_edit/:id', action: :ev_quest_sub_edit
       get 'ev_quest_sub_destroy/:id', action: :ev_quest_sub_destroy
-      get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
-      post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
+      get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit, :as => 'ev_quest_section_c_sub_edit'
+      post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update, :as => 'ev_quest_sub_update'
       post 'ev_quest_section_c_sub_update/:id', action: :ev_quest_section_c_sub_update
       get 'topic_new/:id', action: :topic_new
       post 'topic_create/:id', action: :topic_create

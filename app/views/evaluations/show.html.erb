@@ -224,10 +224,10 @@
                 <td><%=eq.questiontext%></td>
               </tr>
             </table>	  </td>
-          <td nowrap><%		if eq.evaluation_type_id == 5%>
-              <% max_ranking = eq.evaluation_ranking.max_ranking || 0 %>
-              <%-         total_max_ranking = (max_ranking < 6 ? (6 - max_ranking + max_ranking) : max_ranking) %>
-              <% 			total_max_ranking.times do |i|%>
+          <td nowrap>
+            <%	if eq.evaluation_type_id == 5%>
+              <% total_max_ranking = (max_ranking < 6 ? (6 - max_ranking + max_ranking) : max_ranking) %>
+              <%  total_max_ranking.times do |i|%>
                 <%= radio_button_tag("radiobutton", i+1, :style => "height:11px") %><%=i+1%>
               <%
               end
