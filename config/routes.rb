@@ -280,6 +280,7 @@ InstunRails3::Application.routes.draw do
   resources :report_tables do
     collection do
       get 'application_and_attendance'
+      get 'peserta_jantina'
     end
   end
 
