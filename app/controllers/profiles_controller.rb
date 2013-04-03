@@ -326,12 +326,13 @@ class ProfilesController < ApplicationController
 
   def update_peribadi
     @profile = Profile.find(session[:user].profile.id)
+    logger.info @profile.id
     @user = User.find_by_profile_id(session[:user].profile.id)
     @profile.date_of_birth = params[:m_dob]+"/"+params[:d_dob]+"/"+params[:y_dob]
     if @profile.update_attributes(params[:profile])
 
       @profile.name = @profile.name.gsub(/\'/, '`').to_s.gsub(/\"/, '`')
-      @profile.save(false)
+      @profile.save!
 
       flash[:notice] = "Profil #{@profile.name} telah dikemaskinikan."
     else
