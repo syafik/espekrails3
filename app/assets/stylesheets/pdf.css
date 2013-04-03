@@ -1,0 +1,63 @@
+.pdf_15 {
+    font-size: 15px;
+    font-family: Arial;
+}
+
+.pdf_14 {
+    font-size: 14px;
+    font-family: Arial;
+}
+
+.pdf_13 {
+    font-size: 13px;
+    font-family: Arial;
+}
+
+.pdf_12 {
+    font-size: 12px;
+    font-family: Arial;
+}
+
+.pdf_11 {
+    font-size: 11px;
+    font-family: Arial;
+}
+
+.lh_25 {
+    line-height: 25px;
+}
+
+.pdf_table {
+    border:1px solid black;
+    border-collapse:collapse;
+    font-family: Arial;
+}
+
+.pdf_tr_odd {
+    background-color: #CCCCCC;
+}
+
+.pdf_table td {
+    border:thin solid black;
+    padding-left: 7px;
+}
+
+.pdf_check_box {
+    border: 1px solid black;
+    width: 8px;
+    height: 8px;
+}
+
+.pdf_next_page {
+    display:block;
+    clear:both;
+    width: 180mm;
+    height: 277mm;
+    overflow: hidden;
+    page-break-after: always;
+}
+
+.header {
+    background: transparent;
+    padding-bottom: 20px;
+}

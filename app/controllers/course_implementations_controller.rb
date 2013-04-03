@@ -81,7 +81,7 @@ class CourseImplementationsController < ApplicationController
 
   def index
     #    list
-    redirect_to :action => 'list'
+    redirect_to list_course_implementations_url(role: params[:role])
   end
   
   def iklan
@@ -410,7 +410,7 @@ class CourseImplementationsController < ApplicationController
         flash[:notice] = "Kursus berjaya ditambah."
         month = sprintf("%02d",params[:month_start].to_i)
 		
-        redirect_to("/course_implementations/list?planning_year=#{params[:start_year]}&planning_month=#{month}&course_department_id=#{@course.course_department_id}")
+        redirect_to("/course_implementations/list?planning_year=#{params[:start_year]}&planning_month=#{month}&course_department_id=#{@course.course_department_id}&role=#{params[:role]}")
 
         params[:prerequisite_codes].size.times do |i|
           if params[:prerequisite_codes][i] != ""
@@ -807,7 +807,7 @@ class CourseImplementationsController < ApplicationController
 
     filename = "surat_iklan_"+ "#{params[:surat_iklan_content][:course_implementation_id]}.pdf"
 
-    @signature = Signature.find_by_filename(params[:signature][:filename])
+    @signature = Signature.find_by_filename(params[:signature_file])
     if @signature
       @tandatangan_nama = @signature.person_name
       if @signature.person_position != ""
@@ -845,30 +845,40 @@ class CourseImplementationsController < ApplicationController
 
     if params[:surat_iklan_content][:is_cetakan_komputer].to_i == 0
       if RUBY_PLATFORM == "i386-mswin32"
-        @signature_file = "public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "public/signatures/#{params[:signature_file]}"
       else
-        @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "/signatures/#{params[:signature_file]}"
       end
 
-      if !params[:signature][:filename] or params[:signature][:filename] == ""
+      if !params[:signature_file] or params[:signature_file] == ""
         @signature_file = ""
       end
     end
     @format_surat = params[:surat_iklan_content][:format_surat].to_i
-    if @format_surat == 3
-      margin = { :top => 10, :left => 10, :bottom => 10, :right => 0 }
+    if @format_surat == 3 || @format_surat == 4
+      margin = { :top => 40, :left => 15, :bottom => 10, :right => 20 }
       #pdf.margins_pt(0, 50, 36, 50)
     else
-      margin = { :top => 10, :left => 10, :bottom => 10, :right => 0 }
+      margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
       #pdf.margins_pt(36, 50, 36, 50)
     end
+
+    pdf_render_hash = {}
+    pdf_render_hash[:pdf] = filename
+    pdf_render_hash[:page_size] = 'A4'
+    pdf_render_hash[:margin] = margin
+    pdf_render_hash[:header] = {
+                                    :html => {
+                                        :template => 'layouts/header.pdf.erb',
+                                        :locals => { :format_surat => @format_surat }
+                                    },
+                                    :spacing => 5
+                               } if @format_surat == 3 || @format_surat == 4
 
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => filename,
-               :page_size => 'A4',
-               :margin => margin
+        render pdf_render_hash
       end
     end
   end

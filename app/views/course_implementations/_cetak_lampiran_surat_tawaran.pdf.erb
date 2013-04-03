@@ -1,0 +1,255 @@
+<table width="600" class="pdf_15">
+  <tr>
+    <td align="left"><strong>LAMPIRAN A</strong></td>
+  </tr>
+</table>
+<table width="660px" class="pdf_14" cellspacing="0">
+  <tr>
+    <td>
+      <%= "#{alamat_instun}".html_safe %><br/>
+      <%= "<b>(u.p : #{@course_department})</b>".html_safe %>
+      <br/>
+      <br/>
+      <%= "No Telefon : #{params["penyelaras_telefon"]} #{params["penyelaras_ext"]}<br/>".html_safe %>
+      <%= "No Faks : #{params["penyelaras_fax"]}<br/>".html_safe %>
+      <%= "E-mel : #{params["penyelaras_email"]}; #{params["penyelaras_email2"]}<br/><br/>".html_safe %>
+      <%= "Tuan/Puan," %><br/>
+      <%= "#{@perkara2}".html_safe %>
+      <%= "<br/><br/>Merujuk kepada perkara di atas, sukacita dimaklumkan bahawa saya <b>#{nof { nama }}</b><br/><br/>KP: <b>#{nof { kp }}</b><br/><br/>".html_safe %>
+      <table width="100%" class="pdf_13" style="vertical-align: top;">
+        <tr>
+          <td width="33%" align="center" style="vertical-align: top;">
+            <span class="pdf_check_box">&nbsp;&nbsp;&nbsp;&nbsp;</span> HADIR
+          </td>
+          <td width="33%" align="center" style="vertical-align: top;">
+            <span class="pdf_check_box">&nbsp;&nbsp;&nbsp;&nbsp;</span> TIDAK HADIR
+          </td>
+          <td width="33%" align="center" style="vertical-align: top;">
+            <span class="pdf_check_box">&nbsp;&nbsp;&nbsp;&nbsp;</span> TIDAK HADIR<br/>(dengan PENGGANTI)
+          </td>
+        </tr>
+      </table>
+      <span class="pdf_12"><i>** Sila tandakan &#x2713; pada yang  berkenaan</i></span>
+      <br/>
+      <br/>
+      TANDATANGAN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_______________ TARIKH&nbsp;&nbsp;&nbsp;&nbsp; : _____________________
+      <br/>
+      <br/>========================================================================<br/>
+      <span class="pdf_11"><%= "<b>Maklumat Pengganti (Diisi jika pegawai tidak hadir dengan pengganti)</b>".html_safe %></span>
+      <br/>
+      <table class="pdf_14 lh_25">
+        <tr>
+          <td>NAMA</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+        <tr>
+          <td>NO. KP </td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+        <tr>
+          <td>JAWATAN/GRED</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+        <tr>
+          <td>ALAMAT JABATAN</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+        <tr>
+          <td>NO. TEL</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;______________________ NO. FAKS&nbsp;&nbsp; : &nbsp;&nbsp;_______________________</td>
+        </tr>
+        <tr>
+          <td>EMEL</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+        <tr>
+          <td>TANDATANGAN</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;______________________ TARIKH&nbsp;&nbsp; : &nbsp;&nbsp;_________________________</td>
+        </tr>
+      </table>
+      <br/>
+      <br/>========================================================================<br/>
+      <span class="pdf_11"><%= "<b>(PENGESAHAN JABATAN)</b>".html_safe %></span>
+      <span class="pdf_11"><%= "<br/>Pegawai * <b>DIBENARKAN / TIDAK DIBENARKAN</b> mengikuti kursus di atas".html_safe %></span>
+      <br/>
+      <table class="pdf_14 lh_25">
+        <tr>
+          <td>TANDATANGAN</td>
+          <td>&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+        <tr>
+          <td>NAMA/COP JABATAN</td>
+          <td>&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+        <tr>
+          <td>TARIKH</td>
+          <td>&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________________________</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<div style="display:block; clear:both; page-break-after:always;"></div>
+
+<table width="600" class="pdf_15">
+  <tr>
+    <td align="left"><strong>LAMPIRAN B</strong></td>
+  </tr>
+</table>
+<table width="660px">
+  <tr>
+    <td class="pdf_15">
+      <br/>
+      <br/>
+      <br/>
+      <div style="text-align: center;">
+        <%= "MAKLUMAT KURSUS #{@course_implementation_name} (#{@course_implementation_code})".html_safe %>
+      </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <table width="100%" border='0' class="pdf_14">
+        <tr>
+          <td width="35px" style="vertical-align: top;">1. </td>
+          <td style="vertical-align: top;">TARIKH</td>
+          <td width="20px" style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;"><%= @duration %></td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">2. </td>
+          <td style="vertical-align: top;">TEMPAT</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;"><%= @location_name.description %></td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">3. </td>
+          <td style="vertical-align: top;">PENGANJUR</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;"><%= @department_name.description + " INSTUN" %></td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">4. </td>
+          <td style="vertical-align: top;">PENDAFTARAN<br/>(CHECK-IN)</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= @check_in %><br/>
+            <%= "Jam : #{@check_in_hour}.#{@check_in_minute} hingga 6.30 petang".html_safe %><br/>
+            <%= "[Lobi Pendaftaran Pejabat Domestik, INSTUN ]" %>
+          </td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">5. </td>
+          <td style="vertical-align: top;">SUAIKENAL DAN<br/>TAKLIMAT KURSUS</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= @briefing %><br/>
+            <%= "Jam : #{@briefing_hour}.#{@briefing_minute} #{am_or_pm}" %><br/>
+            <%= "Tempat: #{@tempat_suaikenal}" %>
+          </td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">6. </td>
+          <td style="vertical-align: top;">PENGINAPAN</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;"><%= "Disediakan di Asrama INSTUN" %></td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">7. </td>
+          <td style="vertical-align: top;">MAKAN/MINUM</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= "Disediakan sepanjang kursus (bermula pada makan malam" %><br/>
+            <%= "pada #{@check_in} hingga makan tengahari pada" %><br/>
+            <%= "#{@check_out})." %>
+          </td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">8. </td>
+          <td style="vertical-align: top;">PAKAIAN/KEPERLUAN<br/>LAIN</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= "(a) Pakaian rasmi ke pejabat" %><br/>
+            <%= "(b) Lain-lain keperluan peribadi" %><br/>
+            <%= "(c) Pakaian dan kasut sukan" %><br/>
+            <%= "(d) Peralatan Sukan" %><br/>
+            <%= "(raket badminton/tenis/ping pong)" %><br/>
+            <%= "(e) Tuala, sabun mandi, berus dan ubat gigi" %><br/>
+            <%= "(f ) Ubat- ubatan yang diperlukan" %><br/>
+          </td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">9. </td>
+          <td style="vertical-align: top;">BUKU RUJUKAN</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= "Sila bawa bersama buku rujukan berikut:" %><br/>
+            <%= @reference_name %>
+          </td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">10. </td>
+          <td style="vertical-align: top;">MAJLIS PENUTUP DAN <br/>PENYAMPAIAN SIJIL</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= @check_out %><br/>
+            <%= "Jam : #{@hour_closed1}.#{@minute_closed1} hingga  #{@hour_closed2}.#{@minute_closed2} #{@timing_closed}" %>
+          </td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">11. </td>
+          <td style="vertical-align: top;">CHECK-OUT</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= @check_out %><br/>
+            <%= "Sebelum jam 5.00 petang" %>
+          </td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">12. </td>
+          <td style="vertical-align: top;">URUSETIA</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= "1. #{@contact1.profile.name}" %><br/>
+            <% if params[:contact_officer_id2].strip=="" %>
+                <%= "2. #{@contact2}" %>
+            <% else %>
+                <%= "2. #{@contact2.profile.name}" %>
+            <% end %>
+          </td>
+        </tr>
+        <tr style="font-size:10px;"><td>&nbsp;</td></tr>
+        <tr>
+          <td style="vertical-align: top;">13. </td>
+          <td style="vertical-align: top;">AKTIVITI LUAR</td>
+          <td style="vertical-align: top;"> : </td>
+          <td style="vertical-align: top;">
+            <%= aktiviti1 %><br/>
+            <%= aktiviti2 %><br/>
+            <%= aktiviti3 %><br/>
+            <%= aktiviti4 %><br/>
+          </td>
+        </tr>
+
+      </table>
+
+    </td>
+  </tr>
+</table>
+<div style="display:block; clear:both; page-break-after:always;"></div>
