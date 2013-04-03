@@ -1,11 +1,4 @@
-<%
-   if @format_surat == 3
-%>
-    <%#= image_tag(header_image) %>
-<%
-   end
-%>
-
+<%= wicked_pdf_stylesheet_link_tag "pdf" -%>
 
 <%
    for opis in @opis_collections
@@ -53,10 +46,10 @@
      temp_perenggan = String.new(@perenggan)
      temp_perenggan ["_{PESERTA}_"] = peserta.join("<br/><br/>")
 %>
-    <table width="750">
+    <table width="660">
       <tr>
         <td align="right">
-          <table style="font-size: 10px;">
+          <table class="pdf_13">
             <tr>
               <td>Ruj.Tuan</td>
               <td>: </td>
@@ -73,49 +66,52 @@
         </td>
       </tr>
       <tr>
-        <td align="left">
+        <td align="left" class="pdf_15">
           <br/>
           <strong><%= "#{ketua}<br/>#{office_name}<br/>#{p_alamat}".html_safe %></strong>
-          <br/><br/>
-          Tuan/Puan,<br/><br/>
+          <br/>
+          <br/>
+          Tuan/Puan,
+          <br/>
+          <p class="pdf_14">
           <%
              per_lines = @perkara.split("\n")
              for per_line in per_lines
           %>
-              <%= "<strong>#{per_line}</strong>".html_safe %><br/>
+              <%= "<strong>#{per_line}</strong>".html_safe %>
           <%
              end
           %>
-          <br/>
+          </p>
           <%= temp_perenggan.html_safe %>
           <!--<div style="display:block; clear:both; page-break-after:always;"></div>-->
           Sekian, terima kasih<br/><br/>
-          <b>`BERKHIDMAT UNTUK NEGARA`</b><br/>
-          <b>`MENDAHULUI CABARAN`</b><br/>
-          <b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>
+          <b>"BERKHIDMAT UNTUK NEGARA"</b><br/>
+          <b>"MENDAHULUI CABARAN"</b><br/>
+          <b>"MS ISO 9001:2008 - PENGURUSAN LATIHAN"</b><br/><br/>
           Saya yang menurut perintah,<br/><br/>
 
 
           <%
-             if @is_cetakan_komputer
+             if @format_surat == 0 || @format_surat == 3
                if !@signature_file.blank? && @signature_file != ""
           %>
-                  <%= image_tag(@signature_file) %>
+                  <img src="<%= @signature_file %>" height="100"/>
               <%
                  else
               %>
                   <br/><br/><br/><br/>
-              <%
+          <%
                  end
-                 end
+             end
 
-                 if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
-              %>
+             if @tandatangan_nama != "SR HJ. ANUAR BIN HJ. SULAIMAN"
+          %>
               <%= "<br/><b>(#{@tandatangan_nama})</b>".html_safe %><br/>
           <%
              end
           %>
-          <%= "#{@tandatangan_jawatan}<br/>".html_safe %><br/>
+          <%= "#{@tandatangan_jawatan}".html_safe %><br/>
           Institut Tanah & Ukur Negara(INSTUN)<br/>
           Kementerian Sumber Asli dan Alam Sekitar<br/>
           <br/>s.k<br/>
