@@ -1,13 +1,6 @@
 <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
 
 <% unless @schedule.blank? %>
-    <%
-       if @format_surat == 3
-    %>
-        <%#= image_tag(header_image) %>
-    <%
-       end
-    %>
     <table width="100%">
       <tr>
         <td align="right">
@@ -258,10 +251,6 @@
     %>
 
 <% else %>
-    <% if @format_surat == 3 %>
-        <%#= image_tag(header_image) %>
-    <% end %>
-
     <% if @format_surat == 1 || @format_surat == 3 %>
         <%
            i = 1
@@ -357,11 +346,12 @@
                   <b>"MS ISO 9001:2008 - PENGURUSAN LATIHAN"</b><br/><br/>
                   Saya yang menurut perintah,<br/><br/>
 
+
                   <%
                      if @is_cetakan_komputer
                        if !@signature_file.blank? && @signature_file != ""
                   %>
-                          <%= image_tag(@signature_file) %>
+                          <img src="<%= @signature_file %>" height="100"/>
                       <%
                          else
                       %>
@@ -376,7 +366,7 @@
                   <%
                      end
                   %>
-                  <%= "#{@tandatangan_jawatan}<br/>".html_safe %><br/>
+                  <%= "#{@tandatangan_jawatan}".html_safe %><br/>
                   Institut Tanah & Ukur Negara(INSTUN)<br/>
                   Kementerian Sumber Asli dan Alam Sekitar<br/>
                   <br/>s.k<br/>
@@ -587,7 +577,7 @@
                  if @is_cetakan_komputer
                    if !@signature_file.blank? && @signature_file != ""
               %>
-                      <%= image_tag(@signature_file) %>
+                      <img src="<%= @signature_file %>" width="200"/>
                   <%
                      else
                   %>
@@ -602,7 +592,7 @@
               <%
                  end
               %>
-              <%= "#{@tandatangan_jawatan}<br/>".html_safe %><br/>
+              <%= "#{@tandatangan_jawatan}".html_safe %><br/>
               Institut Tanah & Ukur Negara(INSTUN)<br/>
               Kementerian Sumber Asli dan Alam Sekitar<br/>
               <br/>s.k<br/>
