@@ -1,0 +1,101 @@
+<form action="search_claim_payment" name="filter">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">PILIHAN KURSUS UNTUK TUNTUTAN BAYARAN </font></b></td>
+    </tr>
+  </table>
+  <br/>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center" valign="middle">
+        No KP Pengajar : <%=text_field_tag "ic_number", params[:ic_number]%>
+      </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+      <td align="center" valign="middle">
+        <input type="radio" name="filter_status" id="filter_status_all" value="all" <%="checked" if ((params[:filter_status]=="all") || (!params[:apply_status]))%> onclick="document.forms[0].submit()" />
+        <label for="filter_status_all">Semua</label>
+        <input type="radio" name="filter_status" id="filter_status_pending" value="sedang diproses" <%="checked" if ((params[:filter_status]=="sedang diproses"))%> onclick="document.forms[0].submit()" />
+        <label for="filter_status_pending">Sedang diproses</label>
+        <input type="radio" name="filter_status" id="filter_status_approved" value="dilulus" <%="checked" if params[:filter_status]=="dilulus"%>  onclick="document.forms[0].submit()" />
+        <label for="filter_status_approved">Dilulus </label>
+      </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+      <td align="center"> <a href="new"></a>Tarikh (Bulan/Tahun):
+        <%= select_tag :tarikh_month, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:tarikh_month])%>
+        <%= select_tag :tarikh_year, options_for_select([["-pilih Tahun-", ""]]+ @planning_years, params[:tarikh_year])%>
+        <input type="button" value="Cari" onclick="document.forms[0].submit()">
+        |  <input type="button" value="Kemaskinikan" onclick="document.forms[1].submit()" id="save_button" style ="display:none;">
+    </tr>
+  </table>
+</form>
+<br>
+<form action="claim_payment_approve" name="tuntutan_bayaran" method="post">
+  <table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999" id="pisang" onclick="">
+      <td width="2%" align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
+      <td width="15%" align="left"><font color="#FFFFFF">&nbsp;<strong>Tenaga Pengajar</strong></font></td>
+      <td width="30%" align="left"><font color="#FFFFFF">&nbsp;<strong>Maklumat Kursus</strong></font></td>
+      <td width="17%" align="left"><font color="#FFFFFF">&nbsp;<strong>Kategori Tenaga pengajar</strong></font></td>
+      <td width="10%" align="left"><font color="#FFFFFF">&nbsp;<strong>Tempoh(jam)</strong></font></td>
+      <td width="5%" align="center"><font color="#FFFFFF"><strong>Jumlah Tuntutan(RM)</strong></font></td>
+      <td width="5%" align="center"><font color="#FFFFFF"><strong>Jumlah disetujui(RM)</strong></font></td>
+      <td width="5%" align="center"><font color="#FFFFFF"><strong>Dilulus</strong></font></td>
+    </tr>
+    <%if @claim_payments.any? %>
+      <% @claim_payments.each_with_index do |cp, index| %>
+        <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
+        <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+          <td align="right" id="name<%=h cp.id %>"><%= (index+1).to_s %>.</td>
+          <td align="left"><%=cp.trainer.profile.name%></td>
+          <td align="left"><%=get_course_info(cp.timetable_id)%></td>
+          <td align="center"><%=h cp.category_trainer.name %></td>
+          <td align="center"><%=h cp.total_time %> jam</td>
+          <td align="center">RM <%=h cp.total_claim %></td>
+          <%  if cp.status =="dilulus"%>
+            <td align="center">RM <%=h cp.total_approved %></td>
+            <td align="center"><%=cp.status %></td>
+
+          <%else%>
+            <td align="center">RM <%=h text_field_tag "total_approved[#{index}]", cp.total_approved ,:size => 10, :class=>"approved_amount"%></td>
+            <td align="center"><%=check_box_tag "dilulus[#{index}]", "#{cp.id}", false, :disabled => true, :class=>"dilulus_checkbox" %><%#= select_tag "status", options_for_select(["sedang diproses", "dilulus"], cp.status)%></td>
+          <%end%>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</form>
+<div align=center>
+</div>
+<script src="/javascripts/form_validator.js"></script>
+<script>
+  $(".approved_amount").keyup(function(){
+    var id = $(this).attr('id').split("_")[2]
+    if ($(this).val() !="")
+    {
+      $("#dilulus_"+id).prop('disabled', false);
+    }else{
+      $("#dilulus_"+id).prop('checked', false);
+      $("#dilulus_"+id).prop('disabled', true);
+    }
+  });
+  $("input[type=checkbox]").change(function(){
+    //function toggleCheckbox(){
+    var id = $(this).attr('id').split("_")[1]
+    if (!checkInput(numRegExp,document.getElementById("total_approved_"+id),'Jumlah Disetujui'))
+    {
+      $("#dilulus_"+id).prop('checked', false);
+      $("#dilulus_"+id).prop('disabled', true);
+    }
+    if ($("input[type=checkbox]:checked").length)
+    {
+      $("#save_button").show();
+    }else{
+      $("#save_button").hide();
+    }
+    //}
+  });
+</script>

@@ -4,6 +4,7 @@ class Timetable < ActiveRecord::Base
     
     has_and_belongs_to_many :facilities
     has_and_belongs_to_many :trainers
+    has_many :claim_payment
 	
 	has_many :evaluation_trainer_rankings
 	

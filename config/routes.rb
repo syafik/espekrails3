@@ -259,12 +259,28 @@ InstunRails3::Application.routes.draw do
       get 'list'
       get 'search'
       get 'claim_payment_index'
+      post 'claim_payment_sent'
       post 'search_by_name'
       post 'search_by_ic'
       post 'search_by_phone'
       post 'search_by_expertise'
       post 'search_by_state'
       post 'offer'
+    end
+  end
+
+  resources :finances do
+    collection do
+      get 'claim_payment_list'
+      get 'search_claim_payment'
+      post 'claim_payment_approve'
+    end
+  end
+
+  resources :report_tables do
+    collection do
+      get 'application_and_attendance'
+      get 'peserta_jantina'
     end
   end
 
@@ -401,6 +417,9 @@ InstunRails3::Application.routes.draw do
   match '/course_management/rujukan_kami/:id' => 'course_management#rujukan_kami', :via => [:get]
   match '/course_management/edit_tempah_sijil' => 'course_management#edit_tempah_sijil', :via => [:post]
   match '/course_management/cetak_sijil' => 'course_management#cetak_sijil', :via => [:post]
+  match 'course_management/evaluation/:course_management_id' => 'course_management#evaluation', :via => [:get]
+  match 'course_management/p_evaluation/:course_management_id' => 'course_management#p_evaluation', :via => [:get]
+  match 'course_management/register/:id' => 'course_management#register', :via => [:get]
   resources :course_management do
     get 'evaluation_done'
     collection do
@@ -624,6 +643,7 @@ InstunRails3::Application.routes.draw do
       get 'pegawai_sijil'
       get 'pengajar'
       get 'kewangan'
+      get 'eksekutif'      
       get 'rnd'
       get 'laporan'
       get 'pengajar'
@@ -634,9 +654,25 @@ InstunRails3::Application.routes.draw do
       get 'home'
     end
   end
+
+  get 'executives/analysis'
+  get 'executives/achievement'
+  get 'executives/feedback'
+  get 'executives/implementation'
+  get 'executives/realization'
   
+  resources :executives
+
+  
+  match '/quiz_answers/show_answer1/:id' => 'quiz_answers#show_answer1', :via => [:get]
+  match '/quiz_answers/show_answer2/:id' => 'quiz_answers#show_answer2', :via => [:get]
   match '/quiz_answers/show_answer3/:id' => 'hr#show_answer3', :via => [:get]
-  resources :quiz_answers
+  resources :quiz_answers do
+    collection do
+      put 'tambah'
+      put 'tambah_update'
+    end
+  end
   resources :quiz_questions do
     collection do
       post 'create_obj'
@@ -648,6 +684,7 @@ InstunRails3::Application.routes.draw do
       get 'new_obj'
     end
   end
+  
   match '/evaluations/user_hyouka' => 'evaluations#user_hyouka', :via => [:get]
   match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:get]
   match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:post]
@@ -666,8 +703,9 @@ InstunRails3::Application.routes.draw do
       get 'ev_quest_section_c_truefalse_sub_edit/:id', action: :ev_quest_section_c_truefalse_sub_edit
       post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
       get 'ev_quest_sub_edit/:id', action: :ev_quest_sub_edit
-      get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit
-      post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update
+      get 'ev_quest_sub_destroy/:id', action: :ev_quest_sub_destroy
+      get 'ev_quest_section_c_sub_edit/:id', action: :ev_quest_section_c_sub_edit, :as => 'ev_quest_section_c_sub_edit'
+      post 'ev_quest_sub_update/:id', action: :ev_quest_sub_update, :as => 'ev_quest_sub_update'
       post 'ev_quest_section_c_sub_update/:id', action: :ev_quest_section_c_sub_update
       get 'topic_new/:id', action: :topic_new
       post 'topic_create/:id', action: :topic_create
@@ -675,7 +713,7 @@ InstunRails3::Application.routes.draw do
       get 'truefalse_new/:id', action: :truefalse_new
       post 'truefalse_create/:id', action: :truefalse_create
       get 'ranking_new/:id', action: :ranking_new
-      post 'ranking_create/:id', action: :ranking_create
+      post 'ranking_create/:id', action: :ranking_create, :as => 'create_ranking'
       post 'ev_quest_section_c_truefalse_sub_update/:id', action: :ev_quest_section_c_truefalse_sub_update
       get 'ev_quest_section_c_sub_destroy/:id', action: :ev_quest_section_c_sub_destroy
       get 'ev_quest_section_c_truefalse_sub_destroy/:id', action: :ev_quest_section_c_truefalse_sub_destroy
@@ -696,6 +734,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'ajax_nric'
       post 'facility_category_type'
+      get 'autocomplete_grade_jawatan'
     end
   end
   match '/register/to_enroll/:id' => 'register#to_enroll', :via => [:get]

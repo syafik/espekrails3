@@ -6,24 +6,31 @@ class EspekMailer < ActionMailer::Base
   end
   
   def hostel_reservation(cimp_id)
-  	@ci = CourseImplementation.find(cimp_id)
-	@r = @ci.reservations.first
-    @recipients = "#{@ci.penyelaras1.profile.email},#{@ci.penyelaras2.profile.email}"
-    @from       = LoginEngine.config(:email_from).to_s
-    @subject    = "[#{LoginEngine.config(:app_name)}] "
+  	ci = CourseImplementation.find(cimp_id)
+	  r = ci.reservations.first
+    #@recipients = "#{@ci.penyelaras1.profile.email},#{@ci.penyelaras2.profile.email}"
+    #@from       = LoginEngine.config(:email_from).to_s
+    subject    = "[#{LoginEngine.config(:app_name)}] "
     @sent_on    = Time.now
-    @headers["cc"]	= "#{Staff.find(@r.to_staff_id).profile.email},#{Staff.find(@r.cc_staff_id).profile.email}"
-    @headers["bcc"]      = "syedmohd@gmail.com,espek@instun.gov.my,mhafizm@gmail.com"
-    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
-	@subject += "Tempahan Asrama"
-    @body["course_name"] = @ci.course.name.upcase
-    @body["course_code"] = @ci.code
-    @body["penyelaras1"] = @ci.penyelaras1.profile.name
-    @body["penyelaras2"] = @ci.penyelaras2.profile.name
-    @body["date_start"] = @ci.date_start.to_formatted_s(:my_format_4)
-    @body["date_end"]   = @ci.date_end.to_formatted_s(:my_format_4)
-    @body["ditempah_oleh"] = @ci.reservations.first.staff.profile.name
-    @body["tarikh_tempahan"] = @ci.reservations.first.created_on.to_formatted_s(:my_format_4)
+    #@headers["cc"]	= "#{Staff.find(@r.to_staff_id).profile.email},#{Staff.find(@r.cc_staff_id).profile.email}"
+    #@headers["bcc"]      = "syedmohd@gmail.com,espek@instun.gov.my,mhafizm@gmail.com"
+    #@headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
+	  subject += "Tempahan Asrama"
+    @course_name = ci.course.name.upcase
+    @course_code = ci.code
+    @penyelaras1 = ci.penyelaras1.profile.name
+    @penyelaras2 = ci.penyelaras2.profile.name
+    @date_start = ci.date_start.to_formatted_s(:my_format_4)
+    @date_end   = ci.date_end.to_formatted_s(:my_format_4)
+    @ditempah_oleh = ci.reservations.first.staff.profile.name
+    @tarikh_tempahan = ci.reservations.first.created_on.to_formatted_s(:my_format_4)
+    mail(
+      :from => LoginEngine.config(:email_from).to_s,
+      :to => [ci.penyelaras1.profile.email,ci.penyelaras2.profile.email],
+      :cc => [Staff.find(r.to_staff_id).profile.email,Staff.find(r.cc_staff_id).profile.email],
+      :bcc => ["syedmohd@gmail.com","espek@instun.gov.my","mhafizm@gmail.com"],
+      :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
+      :subject => subject)
   end
 
   def domestik_sahkan_tempahan(cimp_id)

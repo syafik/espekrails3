@@ -22,9 +22,9 @@
     <td>&nbsp; <%= nof{@course_application.profile.ic_number}%></td>
     <td align="right" width=20%><b>Gambar Pemohon :</b></td>
     <td rowspan=6>&nbsp;
-      <% if @course_application.profile.image%>
-        <% nof{@profile = Profile.find(@course_application.profile.id)}   %>
-        <%#= image_tag url_for_file_column("profile", "image") %>
+      <% if @course_application.profile.picture %>
+        <% #nof{@profile = Profile.find(@course_application.profile.id)}   %>
+        <%= image_tag @course_application.profile.picture.url(:small) %>
           <img></img>
       <%end%></td>
   </tr>

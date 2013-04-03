@@ -41,6 +41,11 @@ class Profile < ActiveRecord::Base
   validates_uniqueness_of :ic_number, :on => :create
   validates_presence_of :name, :ic_number, :race, :gender,
                         :religion
+  has_attached_file :picture,
+    :styles => { :small  => "400x400>" },
+    :path   => ":rails_root/public/system/:class/:attachment/:id_partition/:style/:filename",
+    :url    => "/system/:class/:attachment/:id_partition/:style/:filename"
+
 #  file_column :image, :store_dir => "/aplikasi/www/instun/public/profile/image",
 #              :magick => {:crop => "1:1", :geometry => "156x156>"}
   #validates_filesize_of :image, :in => 0.kilobytes..200.kilobytes

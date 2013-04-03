@@ -81,7 +81,7 @@ class CourseImplementationsController < ApplicationController
 
   def index
     #    list
-    redirect_to :action => 'list'
+    redirect_to list_course_implementations_url(role: params[:role])
   end
   
   def iklan
@@ -410,7 +410,7 @@ class CourseImplementationsController < ApplicationController
         flash[:notice] = "Kursus berjaya ditambah."
         month = sprintf("%02d",params[:month_start].to_i)
 		
-        redirect_to("/course_implementations/list?planning_year=#{params[:start_year]}&planning_month=#{month}&course_department_id=#{@course.course_department_id}")
+        redirect_to("/course_implementations/list?planning_year=#{params[:start_year]}&planning_month=#{month}&course_department_id=#{@course.course_department_id}&role=#{params[:role]}")
 
         params[:prerequisite_codes].size.times do |i|
           if params[:prerequisite_codes][i] != ""

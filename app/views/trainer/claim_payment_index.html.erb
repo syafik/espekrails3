@@ -8,38 +8,55 @@
   <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
       <td align="center"> <a href="new"></a>Tarikh (Bulan/Tahun):
-        <%= select_tag :tarikh, options_for_select(["-pilih tarikh-"]+ @planning_years, params[:tarikh])%>
+        <%= select_tag :tarikh_month, options_for_select(["-pilih Bulan-"]+ @planning_months, params[:tarikh_month])%>
+        <%= select_tag :tarikh_year, options_for_select(["-pilih Tahun-"]+ @planning_years, params[:tarikh_year])%>
         <input type="button" value="Cari" onclick="document.forms[0].submit()">
         <%if @course_slots.any? %>
-          <%= link_to "Cetak PDF", claim_payment_index_trainer_index_path(:tarikh => params[:tarikh], :format =>'pdf')  %>
+         | <%= link_to "Cetak PDF", claim_payment_index_trainer_index_path(:tarikh_month => params[:tarikh_month], :tarikh_year => params[:tarikh_year], :format =>'pdf')  %>
         <%end%>
+       | <input type="button" value="Hantar tuntutan" onclick="document.forms[1].submit()" style ="display:none;" id="hantar_button">
       </td>
     </tr>
   </table>
 </form>
 <br>
-<table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
-  <tr bgcolor="#999999" id="pisang" onclick="">
-    <td width="" align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
-    <td width="50%" align="left"><font color="#FFFFFF">&nbsp;<strong>Maklumat Kursus</strong></font></td>
-    <td width="17%" align="left"><font color="#FFFFFF">&nbsp;<strong>Kategori Tenaga pengajar</strong></font></td>
-    <td width="10%" align="left"><font color="#FFFFFF">&nbsp;<strong>Tempoh(jam)</strong></font></td>
-    <td width="15%" align="center"><font color="#FFFFFF"><strong>Jumlah Tuntutan(RM)</strong></font></td>
-    <!--<td width="5%" align="center"><font color="#FFFFFF"><strong>Pilih Tuntutan</strong></font></td>-->
-    <td width="" align="center"><font color="#FFFFFF"><strong>Status Tuntutan</strong></font></td>
-  </tr>
-  <%if @course_slots.any? %>
-    <% @course_slots.each_with_index do |ci, index| %>
-      <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
-      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
-        <td align="right" id="name<%=h ci.id %>"><%= (index+1).to_s %>.</td>
-        <td align="left">Tarikh:<%=h ci.date.to_formatted_s(:my_format_4) %><br/>Kursus: <%=h ci.name %><br/>Slot: <%=h ci.topic %></td>
-        <td align="center"><%=h ci.kategory_pengajar.capitalize %><%#=select_tag :trainer_category, options_for_select(["Penceramah", "Fasilitator"]) %></td>
-        <td align="center"><%=h ci.hour %> jam</td>
-        <td align="center">RM <%=h ci.rate_hour %></td>
-        <!--<td align="center"><%#=check_box_tag 'pilih_tuntutan', 'TRUE'%></td>-->
-        <td align="center">Dalam proses</td>
-      </tr>
+<form action="claim_payment_sent" name="tuntutan_bayaran" method="post">
+  <table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+    <tr bgcolor="#999999" id="pisang" onclick="">
+      <td width="" align="center"><font color="#FFFFFF"><strong>Kod</strong></font></td>
+      <td width="45%" align="left"><font color="#FFFFFF">&nbsp;<strong>Maklumat Kursus</strong></font></td>
+      <td width="17%" align="left"><font color="#FFFFFF">&nbsp;<strong>Kategori Tenaga pengajar</strong></font></td>
+      <td width="10%" align="left"><font color="#FFFFFF">&nbsp;<strong>Tempoh(jam)</strong></font></td>
+      <td width="12%" align="center"><font color="#FFFFFF"><strong>Jumlah Tuntutan(RM)</strong></font></td>
+      <td width="12%" align="center"><font color="#FFFFFF"><strong>Jumlah disetujui(RM)</strong></font></td>
+      <td width="5%" align="center"><font color="#FFFFFF"><strong>Pilih Tuntutan</strong></font></td>
+      <td width="" align="center"><font color="#FFFFFF"><strong>Status Tuntutan</strong></font></td>
+    </tr>
+    <%if @course_slots.any? %>
+      <% @course_slots.each_with_index do |ci, index| %>
+        <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
+        <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+          <td align="right" id="name<%=h ci.id %>"><%= (index+1).to_s %>.</td>
+          <td align="left">Tarikh:<%=h ci.date.to_formatted_s(:my_format_4) %><br/>Kursus: <%=h ci.name %><br/>Slot: <%=h ci.topic %></td>
+          <td align="center"><%=h ci.kategory_pengajar.capitalize %><%#=select_tag :trainer_category, options_for_select(["Penceramah", "Fasilitator"]) %></td>
+          <td align="center"><%=h ci.hour %> jam</td>
+          <td align="center">RM <%=h ci.rate_hour %></td>
+          <td align="center">RM <%=h get_total_approved(ci.timetable_id, @profile.trainer.id) %></td>
+          <td align="center"><%=check_box_tag "pilih_tuntutan[#{index}]", "#{ci.timetable_id}|#{ci.kategory_pengajar_id}|#{ci.hour}|#{ci.rate_hour}|#{@profile.trainer.id}|#{ci.date}", false, :disabled => check_claim_status(ci.timetable_id, @profile.trainer.id) %></td>
+          <td align="center"><%=  get_claim_status(ci.timetable_id, @profile.trainer.id)%></td>
+        </tr>
+      <% end %>
     <% end %>
-  <% end %>
-</table>
+  </table>
+</form>
+<script>
+$("input[type=checkbox]").change(function(){toggleCheckbox();})
+function toggleCheckbox(){
+if ($("input[type=checkbox]:checked").length)
+  {
+    $("#hantar_button").show();
+  }else{
+    $("#hantar_button").hide();
+  }
+}
+</script>

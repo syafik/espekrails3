@@ -1,0 +1,194 @@
+<form action="peserta_jantina" name="filter">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PESERTA MENGIKUT JANTINA </font></b></td>
+    </tr>
+  </table>
+  <br/>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"> Dari: &nbsp;
+        <%= select_tag :month_from, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_from])%>
+        &nbsp;&nbsp;Hingga: &nbsp;
+        <%= select_tag :month_until, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_until])%>
+        &nbsp;&nbsp;Tahun: &nbsp;
+        <%= select_tag :year, options_for_select([["-pilih Tahun-", ""]]+ @planning_years, params[:year])%>
+        <input type="button" value="Cari" onclick="document.forms[0].submit()">
+    </tr>
+    <% if @reports.any? %>
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+        <td align="center" valign="middle">
+          <input type="radio" name="filter_show" id="filter_show_table" value="table" checked="1"  onclick="toggle_chart()" />
+          <label for="filter_status_all">Table</label>
+          <input type="radio" name="filter_show" id="filter_show_chart" value="chart" onclick="toggle_chart()" />
+          <label for="filter_status_pending">Chart</label>
+        </td></tr>
+    <% end %>
+  </table>
+</form>
+<br>
+<table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" id="pisang" onclick="">
+    <td width="3%" align="center"><font color="#FFFFFF"><strong>No</strong></font></td>
+    <td width="67%" align="left"><font color="#FFFFFF">&nbsp;<strong>Bidang Kursus</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Lelaki</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Perempuan</strong></font></td>
+  </tr>
+  <%if @reports.any? %>
+    <%
+    total_male = 0
+    total_female = 0
+  %>
+    <% @reports.each_with_index do |report, index| %>
+      <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+        <td align="center" id="name<%=h report[:id] %>"><%= (index+1).to_s %>.</td>
+        <td align="left"><%=report[:name].upcase%></td>
+        <td align="center"><%=report[:male] %></td>
+        <td align="center"><%=report[:female] %></td>
+      </tr>
+      <%
+      total_male += report[:male].to_i
+      total_female += report[:female].to_i
+    %>
+    <% end %>
+    <tr bgcolor="#fff">
+      <td align="right" colspan="2">Jumlah Keseluruhan</td>
+      <td align="center"><%=total_male %></td>
+      <td align="center"><%=total_female %></td>
+    </tr>
+
+</table>
+<br/>
+<div align=center>
+<%#= will_paginate @reports %>
+</div>
+
+<div id="container" class="chart" style="display:none; padding-left:33px; width:95%; height:<%= 300 %>px;">
+  <div id="container_1" style="width:47%; height:300px; float:left;"></div>
+  <div id="container_2" style="width:47%; height:300px; float:left;"></div>
+  <div id="container_3" style="width:47%; height:300px; float:left;"></div>
+  <div id="container_4" style="width:47%; height:300px; float:left;"></div>
+</div>
+<%= javascript_include_tag "highcharts" %>
+<script>
+
+  /**
+   * Highcharts gradient fill plugin
+   */
+  (function() {
+    var idCounter = 0,
+    base = Highcharts.Renderer.prototype.color,
+    PREFIX = 'highcharts-',
+    extend = Highcharts.extend,
+    regexRgba = /^rgba/;
+
+    Highcharts.Renderer.prototype.color = function(color, elem, prop) {
+      if (color && color.radialGradient) {
+        // SVG renderer
+        if (this.box.tagName == 'svg') {
+          var renderer = this,
+          strRadialGradient = 'radialGradient',
+          radialGradient = color[strRadialGradient],
+          relativeToShape = !radialGradient.length, // mimic linearGradient's optional syntax
+          id = PREFIX + idCounter++,
+          gradientObject,
+          stopColor,
+          stopOpacity;
+          gradientObject = renderer.createElement(strRadialGradient)
+          .attr(extend({
+            id: id,
+            cx: radialGradient.cx || radialGradient[0] || '50%',
+            cy: radialGradient.cy || radialGradient[1] || '50%',
+            r: radialGradient.r || radialGradient[2] || '50%',
+          }, relativeToShape ? null : { gradientUnits: 'userSpaceOnUse' }))
+          .add(renderer.defs);
+
+          $.each(color.stops, function(i, stop) {
+            if (regexRgba.test(stop[1])) {
+              colorObject = Color(stop[1]);
+              stopColor = colorObject.get('rgb');
+              stopOpacity = colorObject.get('a');
+            } else {
+              stopColor = stop[1];
+              stopOpacity = 1;
+            }
+            renderer.createElement('stop').attr({
+              offset: stop[0],
+              'stop-color': stopColor,
+              'stop-opacity': stopOpacity
+            }).add(gradientObject);
+          });
+
+          return 'url('+ this.url +'#'+ id +')';
+
+          // VML renderer
+        } else {
+
+        }
+
+      } else {
+        return base.apply(this, arguments);
+      }
+    };
+  })();
+
+  // Radialize the colors
+  Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function(color) {
+    return {
+      radialGradient: [
+        290,
+        120,
+        120
+      ],
+      stops: [
+        [0, color],
+        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+      ]
+    };
+  });
+  console.log(Highcharts.getOptions().colors);
+</script>
+<%= render :partial => 'shared/chart_pie',
+  :locals => {:chart_container => 'container_1',
+  :chart_title => @reports[0][:name],
+  :total_male => @reports[0][:male],
+  :total_female => @reports[0][:female],
+}
+%>
+<%= render :partial => 'shared/chart_pie',
+  :locals => {:chart_container => 'container_2',
+  :chart_title => @reports[1][:name],
+  :total_male => @reports[1][:male],
+  :total_female => @reports[1][:female],
+}
+%>
+<%= render :partial => 'shared/chart_pie',
+  :locals => {:chart_container => 'container_3',
+  :chart_title => @reports[2][:name],
+  :total_male => @reports[2][:male],
+  :total_female => @reports[2][:female],
+}
+%>
+<%= render :partial => 'shared/chart_pie',
+  :locals => {:chart_container => 'container_4',
+  :chart_title => @reports[3][:name],
+  :total_male => @reports[3][:male],
+  :total_female => @reports[3][:female],
+}
+%>
+<% end %>
+
+<script>
+  function toggle_chart(){
+    var showed = $('input[name=filter_show]:checked').val();
+    if (showed == "chart"){
+      $(".chart").show();
+      $(".table_report").hide();
+    }else{
+      $(".chart").hide();
+      $(".table_report").show();
+    }
+  }
+</script>

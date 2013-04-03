@@ -67,6 +67,7 @@ class QuizQuestionsController < ApplicationController
         end
       end
     end
+    render layout: "standard-layout"
   end
 
   def list_peserta2
@@ -127,7 +128,7 @@ class QuizQuestionsController < ApplicationController
       if @quiz.quiz_type_id == 1
         QuizTruefalse.create(:quiz_question_id => @quiz_question.id, :answer => params[:quiz_truefalse][:answer])
       elsif @quiz.quiz_type_id == 3
-
+        QuizSubjective.create(:quiz_question_id => @quiz_question.id, :answer => params[:quiz_subjective][:answer])
       else
         5.times do |n|
           next if params[:quiz_objective][n.to_s][:answer].blank?
@@ -185,7 +186,13 @@ class QuizQuestionsController < ApplicationController
       @quiz_truefalse.update_attributes(params[:quiz_truefalse])
     elsif @quiz.quiz_type_id == 3
       @quiz_subjective = QuizSubjective.find_by_quiz_question_id(@quiz_question.id)
-      @quiz_subjective.update_attributes(params[:quiz_subjective])
+      if @quiz_subjective
+        @quiz_subjective.update_attributes(params[:quiz_subjective])
+      else
+        qs = QuizSubjective.new(params[:quiz_subjective])
+        qs.quiz_question_id = @quiz_question.id
+        qs.save
+      end
     else
       for q in @quiz_question.quiz_objectives
         #render :text => q.answer_tyid and return
