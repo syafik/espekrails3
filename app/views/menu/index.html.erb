@@ -18,7 +18,7 @@
     <div align="center"><img src="/images/logo-menu.jpg"></div>
     <br>
     <div align="center"><b>Sila Pilih Peranan:</b></div>
-    <% for role in session[:user].roles %>
+    <% for role in session[:user].roles.uniq %>
     <li><a href="/menu/<%= role.name.downcase.gsub(" ", "_") %>"><%= role.name.downcase%></a>
     <% end %>
     <br>
