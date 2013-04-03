@@ -58,7 +58,7 @@
       <%
          if @signature_file and @signature_file != ""
       %>
-          <%= image_tag(@signature_file) %>
+          <img src="<%= @signature_file %>" height="100"/><br/>
       <%
          else
       %>
@@ -67,7 +67,7 @@
          end
       %>
 
-      <%= "<b>(#{@tandatangan_nama})</b>".html_safe %>
+      <%= "<b>(#{@tandatangan_nama})</b>".html_safe %><br/>
       <%= "#{@tandatangan_jawatan}<br/>".html_safe %>
       <%= "Institut Tanah dan Ukur Negara<br/>".html_safe %>
       <%= "Kementerian Sumber Asli dan Alam Sekitar".html_safe %>

@@ -499,7 +499,7 @@ str_perenggan = '<p style="text-align: justify;">Dengan hormatnya saya diarah me
           @options = @signatures.map { |t| [t.person_name, t.filename] }
           @options.unshift(["Sila Pilih", ""])
           @signature = Signature.new
-          select(:signature, :filename, @options, :name=>"signature_file", :onchange=>"displaySignature(this.value)", :style=>"width: 300;")
+          select(:signature, :filename, @options, {}, :name=>"signature_file", :onchange=>"displaySignature(this.value)", :style=>"width: 300;")
         %> <span class="blockintro"> <a href="javascript: MM_openBrWindow('/signatures/list_popup','','scrollbars=yes,width=700,height=400')">Tambah/Kemaskini/Padam</a></span><br />
           <span id="gambar_sain"></span>
           <%= hidden_field 'surat_tawaran_content', 'tandatangan_nama', :value => @signatures.last.person_name%>
@@ -507,10 +507,10 @@ str_perenggan = '<p style="text-align: justify;">Dengan hormatnya saya diarah me
       <script>
         function displaySignature(file) {
           if (file != "") {
-            $('gambar_sain').innerHTML = '&nbsp; <img border=1 src="/signatures/' + file + '" height="150" >'
+            $('#gambar_sain').html('&nbsp; <img border=1 src="/signatures/' + file + '" height="150" >');
           }
           else {
-            $('gambar_sain').innerHTML = ''
+            $('#gambar_sain').html('');
           }
         }
       </script>
