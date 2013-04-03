@@ -1202,12 +1202,12 @@ class CourseApplicationsController < ApplicationController
 
     if params[:is_cetakan_komputer].to_i == 0
       if RUBY_PLATFORM == "i386-mswin32"
-        @signature_file = "public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "public/signatures/#{params[:signature_file]}"
       else
-        @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "/signatures/#{params[:signature_file]}"
       end
 
-      if !params[:signature][:filename] or params[:signature][:filename] == ""
+      if !params[:signature_file] or params[:signature_file] == ""
         @signature_file = ""
       end
     end
@@ -1382,12 +1382,12 @@ class CourseApplicationsController < ApplicationController
 
     if params[:is_cetakan_komputer].to_i == 0
       if RUBY_PLATFORM == "i386-mswin32"
-        @signature_file = "public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "public/signatures/#{params[:signature_file]}"
       else
-        @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "/signatures/#{params[:signature_file]}"
       end
 
-      if !params[:signature][:filename] or params[:signature][:filename] == ""
+      if !params[:signature_file] or params[:signature_file] == ""
         @signature_file = ""
       end
     end
@@ -1449,11 +1449,31 @@ class CourseApplicationsController < ApplicationController
     #gen_pdf_all_format_2(filename) if params[:format_surat].to_i == 2 or params[:format_surat].to_i == 4
 
     #redirect_to("/surat/" + filename)
+    @format_surat = params[:surat_tawaran_content][:format_surat].to_i
+    if @format_surat == 3 || @format_surat == 4
+      margin = { :top => 40, :left => 15, :bottom => 10, :right => 20 }
+      #pdf.margins_pt(0, 50, 36, 50)
+    else
+      margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
+      #pdf.margins_pt(36, 50, 36, 50)
+    end
+
+    pdf_render_hash = {}
+    pdf_render_hash[:pdf] = filename
+    pdf_render_hash[:page_size] = 'A4'
+    pdf_render_hash[:margin] = margin
+    pdf_render_hash[:header] = {
+        :html => {
+            :template => 'layouts/header.pdf.erb',
+            :locals => { :format_surat => @format_surat }
+        },
+        :spacing => 5
+    } if @format_surat == 3 || @format_surat == 4
+
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => filename,
-               :page_size => 'A4'
+        render pdf_render_hash
       end
     end
   end
