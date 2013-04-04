@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130128134545) do
+ActiveRecord::Schema.define(:version => 20130326151829) do
 
   create_table "acct_statuses", :force => true do |t|
     t.string "description", :limit => 50
@@ -47,6 +47,10 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
     t.text     "url"
   end
 
+  create_table "category_trainers", :force => true do |t|
+    t.string "name", :null => false
+  end
+
   create_table "cert_levels", :force => true do |t|
     t.string "description", :limit => 100
   end
@@ -79,6 +83,17 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
     t.date    "letter_date"
     t.string  "remark",                :limit => 200
     t.integer "is_qualified",                         :default => 0
+  end
+
+  create_table "claim_payments", :force => true do |t|
+    t.integer "trainer_id",                                                                        :null => false
+    t.integer "timetable_id",                                                                      :null => false
+    t.decimal "total_claim",         :precision => 10, :scale => 2
+    t.decimal "total_approved",      :precision => 10, :scale => 2
+    t.string  "status",                                             :default => "sedang diproses"
+    t.integer "category_trainer_id"
+    t.decimal "total_time",          :precision => 10, :scale => 2
+    t.date    "timetable_date"
   end
 
   create_table "contact_persons", :force => true do |t|
@@ -211,6 +226,7 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
   create_table "course_implementations_trainers", :id => false, :force => true do |t|
     t.integer "course_implementation_id"
     t.integer "trainer_id"
+    t.integer "category_trainer_id",      :default => 1
   end
 
   create_table "course_locations", :force => true do |t|
@@ -703,7 +719,7 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
     t.string  "address4",        :limit => 45
     t.string  "head_title",      :limit => 40
     t.string  "name",            :limit => 150
-    t.string  "code",            :limit => 12
+    t.string  "code"
   end
 
   create_table "policy_items", :force => true do |t|
@@ -897,6 +913,9 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
     t.integer "course_implementation_id"
     t.integer "quiz_id"
     t.integer "answer"
+    t.text    "answer_subjective"
+    t.boolean "answer_truefalse"
+    t.integer "markah",                                 :default => 0
   end
 
   create_table "quiz_objectives", :force => true do |t|
@@ -906,12 +925,17 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
   end
 
   create_table "quiz_questions", :force => true do |t|
-    t.integer "category"
-    t.text    "questiontext"
-    t.integer "version"
-    t.integer "quiz_id"
-    t.integer "quiz_type_id"
-    t.string  "file",         :limit => 45
+    t.integer  "category"
+    t.text     "questiontext"
+    t.integer  "version"
+    t.integer  "quiz_id"
+    t.integer  "quiz_type_id"
+    t.string   "file",                 :limit => 45
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.integer  "markah"
   end
 
   create_table "quiz_subjectives", :force => true do |t|
@@ -943,6 +967,7 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
     t.integer  "course_implementation_id"
     t.integer  "course_department_id"
     t.integer  "timelimit"
+    t.integer  "quiz_type_id"
   end
 
   create_table "races", :force => true do |t|
@@ -1228,10 +1253,11 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
   end
 
   create_table "topics", :force => true do |t|
-    t.integer "course_implementation_id"
-    t.integer "trainer_id"
-    t.string  "title",                    :limit => 200
-    t.text    "description"
+    t.integer  "course_implementation_id"
+    t.integer  "trainer_id"
+    t.string   "title",                    :limit => 200
+    t.text     "description"
+    t.datetime "shown_at"
   end
 
   create_table "trainer_contents", :force => true do |t|
@@ -1248,9 +1274,10 @@ ActiveRecord::Schema.define(:version => 20130128134545) do
   end
 
   create_table "trainers", :force => true do |t|
-    t.decimal "rate",        :precision => 10, :scale => 2
+    t.decimal "rate",             :precision => 10, :scale => 2
     t.integer "is_internal"
-    t.integer "profile_id",                                 :null => false
+    t.integer "profile_id",                                      :null => false
+    t.decimal "fasilitator_rate", :precision => 10, :scale => 2
   end
 
   create_table "trainings", :force => true do |t|
