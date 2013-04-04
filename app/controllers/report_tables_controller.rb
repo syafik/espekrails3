@@ -6,22 +6,15 @@ class ReportTablesController < ApplicationController
  
     if params[:month_from].present? && params[:month_until].present? && params[:year].present?
       filter = "AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} AND EXTRACT(year FROM date_apply) = #{params[:year]}"
-      filter2 = "AND EXTRACT(month FROM ci.date_apply_start) >= #{params[:month_from]} AND EXTRACT(month FROM ci.date_apply_start) <= #{params[:month_until]} AND EXTRACT(year FROM ci.date_apply_start) = #{params[:year]}"
 
-      sql = "select ci.code as code, c.name as course_name, (
-        select count(*)
-        FROM vw_detailed_applicants_all vdaa
-        WHERE vdaa.course_implementation_id = ci.id	AND student_status_id IN (4,5,6,8,9,7,2) #{filter}) as pemohon,
-        (select count(*)
-        FROM vw_detailed_applicants_all vdaa
-        WHERE vdaa.course_implementation_id = ci.id	AND student_status_id IN (2) #{filter}) as dipilih,
-        (select count(*)
-        FROM vw_detailed_applicants_all vdaa
-        WHERE vdaa.course_implementation_id = ci.id	AND student_status_id IN (5,8,9) #{filter}) as hadir
-      FROM course_implementations ci, courses c
-      WHERE ci.course_id = c.id #{filter2}
-      "
-      @reports =  CourseApplication.find_by_sql(sql)
+
+      condition_1 = "Select id from course_implementations where code LIKE 'T%' AND code NOT LIKE 'TM%'"
+      condition_2 = "Select id from course_implementations where code LIKE 'U%'"
+      condition_3 = "Select id from course_implementations where code LIKE 'TM%'"
+      result_1 = application_and_attendance_query('Pentadbiran Tanah', condition_1, filter)
+      result_2 = application_and_attendance_query('Ukur dan Pemetaan', condition_2, filter)
+      result_3 = application_and_attendance_query('Teknologi Maklumat', condition_3, filter)
+      @reports = result_1 + result_2 + result_3
     else
       flash[:notice] = "sila isi filter dengan lengkap" if params[:month_from].present? || params[:month_until].present? || params[:year].present?
       @reports =  []
@@ -41,7 +34,7 @@ class ReportTablesController < ApplicationController
     place_p_tanah_ids = (place_p_tanah_rows.collect(&:id) + place_p_tanah_children_ids).uniq
 
     place_jupem_children_ids = []
-    place_jupem_rows = Place.where("id =307 OR (name ilike '%JABATAN KETUA PENGARAH TANAH DAN GALIAN (JKPTG)%' OR name ilike '%galian%' OR name ilike '%tanah%' AND place_type_id = 1)")
+    place_jupem_rows = Place.where("id =307 OR (name ilike '%JABATAN KETUA PENGARAH TANAH DAN GALIAN (JKPTG)%' OR name ilike '%galian%' OR name ilike '%tanah%') AND code NOT IN ('1010000006', '1011250000', '2037110000', '1365080000', '101125')")
     place_jupem_rows.each do |place_jupem_row|
       if place_jupem_row.id != 307
         place_jupem_children_ids += place_jupem_row.children.collect(&:id)
@@ -137,6 +130,29 @@ class ReportTablesController < ApplicationController
     else
       @reports=[]
     end
+  end
+
+  private
+
+  def application_and_attendance_query(title, condition, filter)
+    sql = "select '#{title}' as name, (
+        select count(*)
+        FROM vw_detailed_applicants_all vdaa
+        WHERE vdaa.course_implementation_id IN (
+          #{condition})
+        AND student_status_id IN (4,5,6,8,9,7,2) #{filter}) as pemohon,
+        (select count(*)
+        FROM vw_detailed_applicants_all vdaa
+        WHERE vdaa.course_implementation_id IN (
+          #{condition})
+        AND student_status_id IN (2) #{filter}) as dipilih,
+        (select count(*)
+        FROM vw_detailed_applicants_all vdaa
+        WHERE vdaa.course_implementation_id IN (
+          #{condition})
+        AND student_status_id IN (5,8,9) #{filter}) as hadir
+    "
+    return CourseApplication.find_by_sql(sql)
   end
 
 end
