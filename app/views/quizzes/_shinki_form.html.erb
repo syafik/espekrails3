@@ -69,7 +69,7 @@
   </tr>
   <tr>
     <td align=right><strong>Type Ujian:</strong></td>
-    <td><%= select 'quiz', 'quiz_type_id', options_for_select(@quiz_types.collect{|s| [s.description, s.id]}) %></td>
+    <td><%= select 'quiz', 'quiz_type_id', @quiz_types.collect{|s| [s.description, s.id]} %></td>
   </tr>
 </table>
 <!--[eoform:quiz]-->
