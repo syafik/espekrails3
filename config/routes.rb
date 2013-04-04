@@ -605,6 +605,7 @@ InstunRails3::Application.routes.draw do
       get 'view_kursus'
       get 'edit_peribadi'
       put 'update_peribadi'
+      post 'update_peribadi'
     end
   end
   

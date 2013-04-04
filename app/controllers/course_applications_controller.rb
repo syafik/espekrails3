@@ -1216,22 +1216,22 @@ class CourseApplicationsController < ApplicationController
     #  new_ads_letter.save!
     #end
 
-    @zero_paragraph = "Dengan hormatnya saya diarah merujuk kepada perkara di atas."
-
-    @first1_paragraph = "2.\s\sSukacita dimaklumkan bahawa pegawai seperti nama di atas telah dipilih untuk menghadiri kursus #{params[:course_implementation_name].titleize} (#{params[:course_implementation_code]}) di Institut Tanah dan Ukur Negara (INSTUN), Kementerian Sumber Asli dan Alam Sekitar."
-    @first_paragraph = "2. \s\sSukacita dimaklumkan bahawa pegawai seperti nama diatas telah terpilih untuk menghadiri kursus berkenaan di Institut Tanah dan Ukur Negara (INSTUN),Kementerian Sumber Asli dan Alam Sekitar. "
-    @second2_paragraph = "3.\s\s\s\sBersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu:\n\n\s\s\s\s\s\s\s 3.1\s\s\s\sBorang Pengesahan Kehadiran seperti di Lampiran A \n\s\s\s\s\s\s\s 3.2\s\s\s\sMaklumat kursus seperti di Lampiran B \n\s\s\s\s\s\s\s 3.3\s\s\s\sPeta Lokasi INSTUN di Lampiran C"
-    @second_paragraph = "3.\s\s\s\sBersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu:\n\n\s\s\s\s\s\s\s 3.1\s\s\s\sBorang Pengesahan Kehadiran seperti di Lampiran A \n\s\s\s\s\s\s\s 3.2\s\s\s\sMaklumat kursus seperti di Lampiran B \n\s\s\s\s\s\s\s 3.3\s\s\s\sPeta Lokasi INSTUN di Lampiran C"
-    @third_paragraph = "4.\s\s\s\sPeserta dikehendaki membaca / meneliti dokumen-dokumen di para 3 di atas.Peserta juga akan dikenakan bayaran pendaftaran kursus sebanyak RM30.00 (tunai). Resit rasmi akan dikeluarkan bagi membolehkan para peserta membuat tuntutan semula daripada Jabatan/Agensi masing-masing."
-    @fourth_paragraph = "5.\s\s\s\sYuran Pendaftaran Kursus sebanyak <b>RM30.00</b> akan dikenakan kepada peserta-peserta kursus. Yuran Pendaftaran Kursus ini boleh dituntut dari Jabatan masing-masing dengan menggunakan resit yang akan dikeluarkan oleh pihak INSTUN."
-
-    @fifth_paragraph = "6.\s\s\s\sSemasa berkursus, para peserta adalah <b>diwajibkan</b> untuk menyertai sebarang aktiviti yang dianjurkan oleh pihak INSTUN. " +
-        "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
-        " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
-
-    @sixth_paragraph = "5.\s\s\s\sKerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di"
-
-    @seventh_paragraph ="Sekiranya para peserta kursus mempunyai sebarang pertanyaan atau kemusykilan sila hubungi :"
+    #@zero_paragraph = "Dengan hormatnya saya diarah merujuk kepada perkara di atas."
+    #
+    #@first1_paragraph = "2.\s\sSukacita dimaklumkan bahawa pegawai seperti nama di atas telah dipilih untuk menghadiri kursus #{params[:course_implementation_name].titleize} (#{params[:course_implementation_code]}) di Institut Tanah dan Ukur Negara (INSTUN), Kementerian Sumber Asli dan Alam Sekitar."
+    #@first_paragraph = "2. \s\sSukacita dimaklumkan bahawa pegawai seperti nama diatas telah terpilih untuk menghadiri kursus berkenaan di Institut Tanah dan Ukur Negara (INSTUN),Kementerian Sumber Asli dan Alam Sekitar. "
+    #@second2_paragraph = "3.\s\s\s\sBersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu:\n\n\s\s\s\s\s\s\s 3.1\s\s\s\sBorang Pengesahan Kehadiran seperti di Lampiran A \n\s\s\s\s\s\s\s 3.2\s\s\s\sMaklumat kursus seperti di Lampiran B \n\s\s\s\s\s\s\s 3.3\s\s\s\sPeta Lokasi INSTUN di Lampiran C"
+    #@second_paragraph = "3.\s\s\s\sBersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu:\n\n\s\s\s\s\s\s\s 3.1\s\s\s\sBorang Pengesahan Kehadiran seperti di Lampiran A \n\s\s\s\s\s\s\s 3.2\s\s\s\sMaklumat kursus seperti di Lampiran B \n\s\s\s\s\s\s\s 3.3\s\s\s\sPeta Lokasi INSTUN di Lampiran C"
+    #@third_paragraph = "4.\s\s\s\sPeserta dikehendaki membaca / meneliti dokumen-dokumen di para 3 di atas.Peserta juga akan dikenakan bayaran pendaftaran kursus sebanyak RM30.00 (tunai). Resit rasmi akan dikeluarkan bagi membolehkan para peserta membuat tuntutan semula daripada Jabatan/Agensi masing-masing."
+    #@fourth_paragraph = "5.\s\s\s\sYuran Pendaftaran Kursus sebanyak <b>RM30.00</b> akan dikenakan kepada peserta-peserta kursus. Yuran Pendaftaran Kursus ini boleh dituntut dari Jabatan masing-masing dengan menggunakan resit yang akan dikeluarkan oleh pihak INSTUN."
+    #
+    #@fifth_paragraph = "6.\s\s\s\sSemasa berkursus, para peserta adalah <b>diwajibkan</b> untuk menyertai sebarang aktiviti yang dianjurkan oleh pihak INSTUN. " +
+    #    "Para peserta kursus adalah diminta untuk membawa bersama <b>pakaian sukan/riadah, alatulis dan peralatan yang sesuai</b>" +
+    #    " untuk aktiviti-aktiviti tersebut. Untuk kemudahan para peserta kursus, bersama ini disertakan pelan lokasi INSTUN."
+    #
+    #@sixth_paragraph = "5.\s\s\s\sKerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di"
+    #
+    #@seventh_paragraph ="Sekiranya para peserta kursus mempunyai sebarang pertanyaan atau kemusykilan sila hubungi :"
 
     @rujukan_kami = params[:rujukan_kami]
     @tarikh_surat_day = params[:tarikh_surat_day]
@@ -1241,7 +1241,10 @@ class CourseApplicationsController < ApplicationController
 
     @tarikh = params[:dateline]
     @perkara = params[:surat_tawaran_content][:perkara]
-    @perenggan = params[:surat_tawaran_content][:perenggan]
+    @perenggan = String.new(params[:surat_tawaran_content][:perenggan])
+    @perenggan ["_{KURSUS}_"] = "#{params[:course_implementation_code]} - #{params[:nama_kursus]}"
+    @perenggan ["_{CHECK_IN}_"] = "#{params[:check_in]}, #{params[:check_in_hour]}.#{params[:check_in_minute]} hingga 6.30 petang"
+    @perenggan ["_{CHECK_OUT}_"] = "#{params[:check_out]}, Sebelum jam 5.00 petang"
 
     @signature = Signature.find_by_filename(params[:signature_file])
 
@@ -1261,12 +1264,12 @@ class CourseApplicationsController < ApplicationController
 
     if params[:is_cetakan_komputer].to_i == 0
       if RUBY_PLATFORM == "i386-mswin32"
-        @signature_file = "public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "public/signatures/#{params[:signature_file]}"
       else
-        @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "/signatures/#{params[:signature_file]}"
       end
 
-      if !params[:signature][:filename] or params[:signature][:filename] == ""
+      if !params[:signature_file] or params[:signature_file] == ""
         @signature_file = ""
       end
     end
@@ -1330,11 +1333,31 @@ class CourseApplicationsController < ApplicationController
     #gen_pdf_all_format_2(filename) if params[:format_surat].to_i == 2 or params[:format_surat].to_i == 4
     #
     #redirect_to("/surat/" + filename)
+    @format_surat = params[:surat_tawaran_content][:format_surat].to_i
+    if @format_surat == 3 || @format_surat == 4
+      margin = { :top => 40, :left => 15, :bottom => 10, :right => 20 }
+      #pdf.margins_pt(0, 50, 36, 50)
+    else
+      margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
+      #pdf.margins_pt(36, 50, 36, 50)
+    end
+
+    pdf_render_hash = {}
+    pdf_render_hash[:pdf] = filename
+    pdf_render_hash[:page_size] = 'A4'
+    pdf_render_hash[:margin] = margin
+    pdf_render_hash[:header] = {
+        :html => {
+            :template => 'layouts/header.pdf.erb',
+            :locals => { :format_surat => @format_surat }
+        },
+        :spacing => 5
+    } if @format_surat == 3 || @format_surat == 4
+
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => filename,
-               :page_size => 'A4'
+        render pdf_render_hash
       end
     end
   end
@@ -1421,12 +1444,12 @@ class CourseApplicationsController < ApplicationController
 
     if params[:is_cetakan_komputer].to_i == 0
       if RUBY_PLATFORM == "i386-mswin32"
-        @signature_file = "public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "public/signatures/#{params[:signature_file]}"
       else
-        @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature][:filename]}"
+        @signature_file = "/signatures/#{params[:signature_file]}"
       end
 
-      if !params[:signature][:filename] or params[:signature][:filename] == ""
+      if !params[:signature_file] or params[:signature_file] == ""
         @signature_file = ""
       end
     end
@@ -1488,11 +1511,31 @@ class CourseApplicationsController < ApplicationController
     #gen_pdf_all_format_2(filename) if params[:format_surat].to_i == 2 or params[:format_surat].to_i == 4
 
     #redirect_to("/surat/" + filename)
+    @format_surat = params[:surat_tawaran_content][:format_surat].to_i
+    if @format_surat == 3 || @format_surat == 4
+      margin = { :top => 40, :left => 15, :bottom => 10, :right => 20 }
+      #pdf.margins_pt(0, 50, 36, 50)
+    else
+      margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
+      #pdf.margins_pt(36, 50, 36, 50)
+    end
+
+    pdf_render_hash = {}
+    pdf_render_hash[:pdf] = filename
+    pdf_render_hash[:page_size] = 'A4'
+    pdf_render_hash[:margin] = margin
+    pdf_render_hash[:header] = {
+        :html => {
+            :template => 'layouts/header.pdf.erb',
+            :locals => { :format_surat => @format_surat }
+        },
+        :spacing => 5
+    } if @format_surat == 3 || @format_surat == 4
+
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => filename,
-               :page_size => 'A4'
+        render pdf_render_hash
       end
     end
   end

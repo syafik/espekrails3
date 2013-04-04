@@ -81,11 +81,13 @@ dikenakan kepada setiap peserta kursus, TETAPI MASIH GAGAL MENGHADIRI KURSUS!"
    perenggan[4] = perenggan5 = surat_sah_content.perenggan5 if surat_sah_content
 
    str_perenggan = "<p>#{perenggan.join('</p><p>')}</p>"
-   str_perenggan = '<p style="text-align: justify; margin-top: 0pt; margin-bottom: 0pt;" dir="ltr"><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">Dengan segala hormatnya saya diarah merujuk kepada perkara di atas.</span></p>
-<p><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dukacita memaklumkan bahawa pegawai berikut telah tidak menghadiri kursus di atas yang dianjurkan oleh Institut Tanah dan Ukur Negara (INSTUN).</span></p>
-<p><strong style="color: #000000; font-family: \'Times New Roman\'; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; font-weight: normal;"><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: bold; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">_{PESERTA}_</span></strong></p>
-<p><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Untuk makluman tuan, pihak penganjur telah menyediakan kemudahan makanan dan penginapan sepanjang kursus tersebut kepada peserta-peserta yang telah membuat pengesahan untuk hadir berkursus.</span></p>
-<p><strong id="internal-source-marker_0.037169326562434435" style="color: #000000; font-family: \'Times New Roman\'; font-size: medium; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; font-weight: normal;"><span style="font-size: 16px; font-family: \'Arial Narrow\'; color: #000000; background-color: transparent; font-weight: normal; font-style: normal; font-variant: normal; text-decoration: initial; vertical-align: baseline; white-space: pre-wrap;">4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan itu, pihak kami berharap perkara sedemikian tidak berulang lagi kerana kegagalan pegawai tuan di atas untuk menghadiri kursus tersebut telah menyebabkan kesulitan kepada pihak kami di samping berlaku pembaziran dari segi penyediaan makanan dan penginapan serta menyekat peluang pegawai lain untuk dipilih menghadiri kursus tersebut.</span></strong></p>'
+   str_perenggan = '<p style="text-align: justify;">Dengan segala hormatnya saya diarah merujuk kepada perkara di atas.</p>
+<p style="text-align: justify;">2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dukacita memaklumkan bahawa pegawai berikut telah tidak menghadiri kursus di atas yang dianjurkan oleh Institut Tanah dan Ukur Negara (INSTUN).</p>
+<ol style="list-style-type: none;">
+<li><strong>_{PESERTA}_</strong></li>
+</ol>
+<p style="text-align: justify;">3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Untuk makluman tuan, pihak penganjur telah menyediakan kemudahan makanan dan penginapan sepanjang kursus tersebut kepada peserta-peserta yang telah membuat pengesahan untuk hadir berkursus.</p>
+<p style="text-align: justify;">4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan itu, pihak kami berharap perkara sedemikian tidak berulang lagi kerana kegagalan pegawai tuan di atas untuk menghadiri kursus tersebut telah menyebabkan kesulitan kepada pihak kami di samping berlaku pembaziran dari segi penyediaan makanan dan penginapan serta menyekat peluang pegawai lain untuk dipilih menghadiri kursus tersebut.</p>'
 %>
 
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
@@ -188,7 +190,7 @@ dikenakan kepada setiap peserta kursus, TETAPI MASIH GAGAL MENGHADIRI KURSUS!"
         @options = @signatures.map { |t| [t.person_name, t.filename] }
         @options.unshift(["Sila Pilih", ""])
         @signature = Signature.new
-        select(:signature, :filename, @options, :name => "signature_file", :onchange => "displaySignature(this.value)", :style => "width: 300;")
+        select(:signature, :filename, @options, {}, :name => "signature_file", :onchange => "displaySignature(this.value)", :style => "width: 300;")
     %>
       <span class="blockintro"> <a href="javascript: MM_openBrWindow('/signatures/list_popup','','scrollbars=yes,width=700,height=400')">Tambah/Kemaskini/Padam</a></span><br/>
       <span id="gambar_sain"></span>
@@ -197,10 +199,10 @@ dikenakan kepada setiap peserta kursus, TETAPI MASIH GAGAL MENGHADIRI KURSUS!"
     <script>
         function displaySignature(file) {
             if (file != "") {
-                $('gambar_sain').innerHTML = '&nbsp; <img border=1 src="/signatures/' + file + '" height="150" >'
+                $('#gambar_sain').html('&nbsp; <img border=1 src="/signatures/' + file + '" height="150" >');
             }
             else {
-                $('gambar_sain').innerHTML = ''
+                $('#gambar_sain').html('');
             }
         }
     </script>

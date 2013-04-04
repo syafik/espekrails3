@@ -115,8 +115,7 @@
 <li type="i">_{PENYELARAS2_NAMA}_<br />Tel : _{PENYELARAS2_TELEFON}_<br />Email : _{PENYELARAS2_EMAIL}_</li>
 </ol>
 </p>
-<p style="text-align: justify;">5. &nbsp; Segala kesulitan amatlah dikesali dan pihak kami terlebih dahulu memohon ribuan maaf.</p>
-<p>&nbsp;</p>'
+<p style="text-align: justify;">5. &nbsp; Segala kesulitan amatlah dikesali dan pihak kami terlebih dahulu memohon ribuan maaf.</p>'
 %>
 
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
@@ -525,7 +524,7 @@
       @options = @signatures.map { |t| [t.person_name, t.filename] }
       @options.unshift(["Sila Pilih", ""])
       @signature = Signature.new
-      select(:signature, :filename, @options, :name => "signature_file", :onchange => "displaySignature(this.value)", :style => "width: 300;")
+      select(:signature, :filename, @options, {}, :name => "signature_file", :onchange => "displaySignature(this.value)", :style => "width: 300;")
   %>
     <span class="blockintro"> <a href="javascript: MM_openBrWindow('/signatures/list_popup','','scrollbars=yes,width=700,height=400')">Tambah/Kemaskini/Padam</a></span><br/>
     <span id="gambar_sain"></span>
@@ -534,10 +533,10 @@
   <script>
       function displaySignature(file) {
           if (file != "") {
-              $('gambar_sain').innerHTML = '&nbsp; <img border=1 src="/signatures/' + file + '" height="150" >'
+              $('#gambar_sain').html('&nbsp; <img border=1 src="/signatures/' + file + '" height="150" >');
           }
           else {
-              $('gambar_sain').innerHTML = ''
+              $('#gambar_sain').html('');
           }
       }
   </script>

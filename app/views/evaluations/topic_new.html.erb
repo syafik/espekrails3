@@ -17,7 +17,7 @@
     </tr>
 
     <tr>
-      <td>Topik:
+      <td>Topiik:
         <input name="topic[title]" type="text" value="" size="80"></td>
       <td nowrap>&nbsp;</td>
     </tr>
@@ -34,7 +34,7 @@
     </tr>
     <tr>
       <td>Tarikh & Masa Mula:<br />
-        <%= datetime_select 'topic', 'shown_at' %>
+        <%= datetime_select 'topic', 'shown_at', :include_blank => false %>
       </td>
       <td nowrap>&nbsp;</td>
     </tr>

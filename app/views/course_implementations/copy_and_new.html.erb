@@ -7,6 +7,7 @@
 
 <%#= start_form_tag :action => 'update', :id => @course_implementation, :course_id => @course %>
 <form name=ci_form method=post action="/course_implementations/copy_and_create" enctype="multipart/form-data" onsubmit="return GoSubmit(ci_form)">
+  <%= hidden_field_tag "role", params[:role] %>
   <%= render :partial => 'form' %>
   <br>
   <div align="center">

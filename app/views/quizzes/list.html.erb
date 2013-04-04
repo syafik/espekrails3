@@ -92,6 +92,7 @@
       <td width="30%"><b><font color="#FFFFFF">&nbsp;Nama Kursus</font></b></td>
       <td width="10%" align=center><b><font color="#FFFFFF">&nbsp;Tarikh Mula Kursus</font></b></td>
       <td width="10%" align=center><b><font color="#FFFFFF">&nbsp;Tarikh Ujian</font></b></td>
+      <td width="30%"><b><font color="#FFFFFF">&nbsp;Nama Ujian</font></b></td>
       <td width="30%" align=center><b><font color="#FFFFFF">&nbsp;Catatan</font></b></td>
     </tr>
 
@@ -119,6 +120,7 @@
         <td align=left onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.course.name} %></td>
         <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %></td>
         <td align=center onmousedown="<%=onmousedown%>"><%=h nof{quiz.timeopen.to_formatted_s(:my_format_4)} %></td>
+        <td align=left onmousedown="<%=onmousedown%>"><%=h nof{quiz.name} %></td>
         <td align=left onmousedown="<%=onmousedown%>"><%=h nof{quiz.intro} %></td>
       </tr>
 

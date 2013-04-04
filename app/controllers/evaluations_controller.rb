@@ -320,6 +320,7 @@ class EvaluationsController < ApplicationController
   def topic_new
     @trainers = Trainer.find_by_sql("SELECT t.id,t.profile_id,p.name from trainers t, profiles p WHERE p.id=t.profile_id ORDER BY name");
     @evaluation = Evaluation.find(params[:id] || params[:evaluation_id])
+    @topic = Topic.new
   end
 
   def topic_create

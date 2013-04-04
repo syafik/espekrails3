@@ -1,3 +1,4 @@
+<%= wicked_pdf_stylesheet_link_tag "pdf" -%>
 
 <%
    am_or_pm = "pagi"
@@ -7,10 +8,10 @@
    aktiviti3 = "mana aktiviti-aktiviti ini dimasukkkan ke dalam modul"
    aktiviti4 = "untuk diambil kira bagi penilaian kursus."
 %>
-<table width="100%" style="font-size: 14px;" xmlns="http://www.w3.org/1999/html">
+<table width="660" style="font-size: 14px;">
   <tr>
     <td align="right">
-      <table style="font-size: 12px;">
+      <table class="pdf_13">
         <tr>
           <td>Ruj. Tuan</td>
           <td>: </td>
@@ -28,9 +29,62 @@
   </tr>
 
   <tr>
-    <td>
+    <td width="100%" align="left" class="pdf_15">
       <br/>
       <strong><u>SEGERA DENGAN FAKS 06-7659826</u></strong><br/><br/>
+      <strong><u>SEPERTI SENARAI EDARAN</u></strong>
+
+      <br/><br/>
+      Tuan/Puan,
+      <br/>
+      <p class="pdf_14">
+      <%
+
+         per_lines = @perkara.split("\n")
+         for per_line in per_lines
+      %>
+          <%= "<b>#{per_line}</b>".html_safe %>
+      <%
+         end
+      %>
+      </p>
+      <%= "#{@perenggan}".html_safe %>
+      <br/><br/><br/>
+      <%= "<br/><br/>Sekian, terima kasih.<br/><br/>".html_safe %>
+      <%= "<b>`BERKHIDMAT UNTUK NEGARA`</b><br/><br/>".html_safe %>
+      <%= "<b>`MENDAHULUI CABARAN`</b><br/>".html_safe %>
+      <%= "<b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>".html_safe %>
+      <%= "Saya yang menurut perintah,<br/><br/>".html_safe %>
+      <%
+         if @signature_file and @signature_file != ""
+      %>
+          <img src="<%= @signature_file %>" height="100"/><br/>
+      <%
+         else
+      %>
+          <br/><br/><br/><br/>
+      <%
+         end
+      %>
+
+      <%= "<b>(#{@tandatangan_nama})</b>".html_safe %><br/>
+      <%= "#{@tandatangan_jawatan}<br/>".html_safe %>
+      <%= "Institut Tanah dan Ukur Negara<br/>".html_safe %>
+      <%= "Kementerian Sumber Asli dan Alam Sekitar".html_safe %>
+
+
+    </td>
+  </tr>
+</table>
+
+<div style="display:block; clear:both; page-break-after:always;"></div>
+
+<table width="100%" class="pdf_15">
+  <tr>
+    <td>
+      <strong><u>SEPERTI SENARAI EDARAN</u></strong>
+      <br/>
+      <br/>
       <%
          for student in @students
            font_size = 12
@@ -126,295 +180,47 @@
       <%
          end
       %>
-      <br/><br/>
-      <%= "Tuan/Puan,<br/><br/>".html_safe %>
-      <%
-
-         per_lines = @perkara.split("\n")
-         for per_line in per_lines
-      %>
-          <%= "<b>#{per_line}</b>".html_safe %><br/>
-      <%
-         end
-      %>
-      <%= "<br/>#{@perenggan}".html_safe %>
-      <br/><br/><br/>
-      <%= "<br/><br/>Sekian, terima kasih.<br/><br/>".html_safe %>
-      <%= "<b>`BERKHIDMAT UNTUK NEGARA`</b><br/><br/>".html_safe %>
-      <%= "<b>`MENDAHULUI CABARAN`</b><br/>".html_safe %>
-      <%= "<b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>".html_safe %>
-      <%= "Saya yang menurut perintah,<br/><br/>".html_safe %>
-      <%
-         if @signature_file and @signature_file != ""
-      %>
-          <%= image_tag(@signature_file) %>
-      <%
-         else
-      %>
-          <br/><br/><br/><br/>
-      <%
-         end
-      %>
-
-      <%= "<b>(#{@tandatangan_nama})</b>".html_safe %>
-      <%= "#{@tandatangan_jawatan}<br/>".html_safe %>
-      <%= "Institut Tanah dan Ukur Negara<br/>".html_safe %>
-      <%= "Kementerian Sumber Asli dan Alam Sekitar".html_safe %>
-
-
     </td>
   </tr>
 </table>
 
 <div style="display:block; clear:both; page-break-after:always;"></div>
-<%
-   for student in @students
-     font_size = 12
+<% if @format_surat == 2 || @format_surat == 4 %>
+    <%
+       for student in @students
+         font_size = 12
 
-     i = 1
-     nama = student.profile.name
-     kp = student.profile.ic_number
-%>
-    <table width="100%">
-      <tr>
-        <td style="font-size: 13px;">
-          <%= "<br/><b>LAMPIRAN A</b><br/>".html_safe %>
-          <%= "#{alamat_instun}".html_safe %><br/>
-          <%= "<b>(u.p : #{@course_department})</b>".html_safe %>
-          <br/>
-          <br/>
-          <%= "No Telefon : #{@penyelaras_telefon} #{@penyelaras_ext}<br/>".html_safe %>
-          <%= "No Faks : #{@penyelaras_fax}<br/>".html_safe %>
-          <%= "E-mel : #{@penyelaras_email}; #{@penyelaras_email2}<br/><br/>".html_safe %>
-          <%= "Tuan/Puan," %><br/>
-          <%= "#{@perkara2}".html_safe %>
-          <%= "<br/><br/>Merujuk kepada perkara di atas, sukacita dimaklumkan bahawa saya <b>#{nof { nama }}</b>  KP: <b>#{nof { kp }}</b><br/><br/>".html_safe %>
-          <table width="100%" style="font-size: 13px; vertical-align: top;">
-            <tr>
-              <td width="33%" align="center">
-                <span style="border: 1px solid black; width: 8px; height: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;</span> HADIR
-              </td>
-              <td width="33%" align="center">
-                <span style="border: 1px solid black; width: 8px; height: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;</span> TIDAK HADIR
-              </td>
-              <td width="33%" align="center">
-                <span style="border: 1px solid black; width: 8px; height: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;</span> TIDAK HADIR<br/>(Dengan PENGGANTI)
-              </td>
-            </tr>
-          </table>
-          <%= "<i>** Sila tandakan        pada yang  berkenaan</i><br/><br/>".html_safe %>
-          TANDATANGAN&nbsp;&nbsp;&nbsp;&nbsp; : _______________ TARIKH&nbsp;&nbsp;&nbsp;&nbsp; : _____________________
-          <br/>
-          <%= "<br/>==========================================================================<br/>".html_safe %>
-          <span style="font-size: 11px;"><%= "<b>Maklumat Pengganti (Diisi jika pegawai tidak hadir dengan pengganti)</b>".html_safe %></span>
-          <br/>
-          <table style="font-size: 13px;">
-            <tr>
-              <td>NAMA</td>
-              <td> : ___________________________________________________</td>
-            </tr>
-            <tr>
-              <td>NO. KP </td>
-              <td> : ___________________________________________________</td>
-            </tr>
-            <tr>
-              <td>JAWATAN/GRED</td>
-              <td> : ___________________________________________________</td>
-            </tr>
-            <tr>
-              <td>ALAMAT JABATAN</td>
-              <td> : ___________________________________________________</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>&nbsp; ___________________________________________________</td>
-            </tr>
-            <tr>
-              <td>NO. TEL</td>
-              <td> : _______________ NO. FAKS : _______________</td>
-            </tr>
-            <tr>
-              <td>EMEL</td>
-              <td> : ___________________________________________________</td>
-            </tr>
-            <tr>
-              <td>TANDATANGAN</td>
-              <td> : _______________ TARIKH : _______________</td>
-            </tr>
-          </table>
-          <br/>
-          <%= "<br/>==========================================================================<br/>".html_safe %>
-          <span style="font-size: 11px;"><%= "<b>(PENGESAHAN JABATAN)</b>".html_safe %></span>
-          <span style="font-size: 11px;"><%= "<br/>Pegawai * <b>DIBENARKAN / TIDAK DIBENARKAN</b> mengikuti kursus di atas".html_safe %></span>
-          <br/>
-          <table style="font-size: 13px;">
-            <tr>
-              <td>TANDATANGAN</td>
-              <td> : ___________________________________________________</td>
-            </tr>
-            <tr>
-              <td>NAMA/COP JABATAN</td>
-              <td> : ___________________________________________________</td>
-            </tr>
-            <tr>
-              <td>TARIKH</td>
-              <td> : ___________________________________________________</td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-
-    <div style="display:block; clear:both; page-break-after:always;"></div>
-
-    <table width="100%">
-      <tr>
-        <td style="font-size:13px;">
-          <%= "<br/><b>LAMPIRAN B</b>".html_safe %>
-          <%= "<br/><br/><br/>MAKLUMAT KURSUS #{@course_implementation_name} (#{@course_implementation_code})".html_safe %>
-          <br/><br/><br/><br/>
-          <table width="100%" border='0' style="font-size: 13px;">
-            <tr>
-              <td style="vertical-align: top;">1. </td>
-              <td style="vertical-align: top;">TARIKH</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;"><%= @duration %></td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">2. </td>
-              <td style="vertical-align: top;">TEMPAT</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;"><%= @location_name.description %></td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">3. </td>
-              <td style="vertical-align: top;">PENGANJUR</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;"><%= @department_name.description + " INSTUN" %></td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">4. </td>
-              <td style="vertical-align: top;">PENDAFTARAN<br/>(CHECK-IN)</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= @check_in %><br/>
-                <%= "Jam : #{@check_in_hour}.#{@check_in_minute} hingga 6.30 petang".html_safe %><br/>
-                <%= "[Lobi Pendaftaran Pejabat Domestik, INSTUN ]" %>
-              </td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">5. </td>
-              <td style="vertical-align: top;">SUAIKENAL DAN<br/>TAKLIMAT KURSUS</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= @briefing %><br/>
-                <%= "Jam : #{@briefing_hour}.#{@briefing_minute} #{am_or_pm}" %><br/>
-                <%= "Tempat: #{@tempat_suaikenal}" %>
-              </td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">6. </td>
-              <td style="vertical-align: top;">PENGINAPAN</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;"><%= "Disediakan di Asrama INSTUN" %></td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">7. </td>
-              <td style="vertical-align: top;">MAKAN/MINUM</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= "Disediakan sepanjang kursus (bermula pada makan malam" %><br/>
-                <%= "pada #{@check_in} hingga makan tengahari pada" %><br/>
-                <%= "#{@check_out})." %>
-              </td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">8. </td>
-              <td style="vertical-align: top;">PAKAIAN/KEPERLUAN<br/>LAIN</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= "(a) Pakaian rasmi ke pejabat" %><br/>
-                <%= "(b) Lain-lain keperluan peribadi" %><br/>
-                <%= "(c) Pakaian dan kasut sukan" %><br/>
-                <%= "(d) Peralatan Sukan" %><br/>
-                <%= "(raket badminton/tenis/ping pong)" %><br/>
-                <%= "(e) Tuala, sabun mandi, berus dan ubat gigi" %><br/>
-                <%= "(f ) Ubat- ubatan yang diperlukan" %><br/>
-              </td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">9. </td>
-              <td style="vertical-align: top;">BUKU RUJUKAN</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= "Sila bawa bersama buku rujukan berikut:" %><br/>
-                <%= @reference_name %>
-              </td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">10. </td>
-              <td style="vertical-align: top;">MAJLIS PENUTUP DAN <br/>PENYAMPAIAN SIJIL</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= @check_out %><br/>
-                <%= "Jam : #{@hour_closed1}.#{@minute_closed1} hingga  #{@hour_closed2}.#{@minute_closed2} #{@timing_closed}" %>
-              </td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">11. </td>
-              <td style="vertical-align: top;">CHECK-OUT</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= @check_out %><br/>
-                <%= "Sebelum jam 5.00 petang" %>
-              </td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">12. </td>
-              <td style="vertical-align: top;">URUSETIA</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= "1. #{@contact1.profile.name}" %><br/>
-                <% if params[:contact_officer_id2].strip=="" %>
-                    <%= "2. #{@contact2}" %>
-                <% else %>
-                    <%= "2. #{@contact2.profile.name}" %>
-                <% end %>
-              </td>
-            </tr>
-            <tr style="font-size:10px;"><td>&nbsp;</td></tr>
-            <tr>
-              <td style="vertical-align: top;">13. </td>
-              <td style="vertical-align: top;">AKTIVITI LUAR</td>
-              <td style="vertical-align: top;"> : </td>
-              <td style="vertical-align: top;">
-                <%= aktiviti1 %><br/>
-                <%= aktiviti2 %><br/>
-                <%= aktiviti3 %><br/>
-                <%= aktiviti4 %><br/>
-              </td>
-            </tr>
-
-          </table>
-
-        </td>
-      </tr>
-    </table>
-    <div style="display:block; clear:both; page-break-after:always;"></div>
-<%
-   end
-%>
+         i = 1
+         nama = student.profile.name
+         kp = student.profile.ic_number
+    %>
+        <%= render partial: "course_implementations/cetak_lampiran_surat_tawaran",
+                   :locals => {
+                        :nama => nama,
+                        :kp => kp,
+                        :alamat_instun => alamat_instun,
+                        :am_or_pm => am_or_pm,
+                        :aktiviti1 => aktiviti1,
+                        :aktiviti2 => aktiviti2,
+                        :aktiviti3 => aktiviti3,
+                        :aktiviti4 => aktiviti4
+                   } %>
+    <%
+       end
+    %>
+<% elsif @format_surat == 1 || @format_surat == 3 %>
+    <%= render partial: "course_implementations/cetak_lampiran_surat_tawaran",
+        :locals => {
+            :nama => "..................................................",
+            :kp => "...................................",
+            :alamat_instun => alamat_instun,
+            :am_or_pm => am_or_pm,
+            :aktiviti1 => aktiviti1,
+            :aktiviti2 => aktiviti2,
+            :aktiviti3 => aktiviti3,
+            :aktiviti4 => aktiviti4
+    } %>
+<% end %>
 
 
 
@@ -430,3 +236,4 @@
    #cetak_lampiran_c(pdf)
 
 %>
+
