@@ -147,53 +147,82 @@ format: [
 
 
 <script>
-/*********************************************************
-* Generate the example chart
-*********************************************************/
-   chart = new Highcharts.Chart({
-      chart: {
-         renderTo: '<%=chart_container%>',
-         plotBackgroundColor: null,
-         plotBorderWidth: null,
-         plotShadow: false
-      },
-      title: {
-         text: ' Maklumat Peserta Mengikut Jantina (<%= chart_title %>)'
-      },
-      credits: {
-                        position: {
-                           align: 'left',
-      x: 20 },
-                        href: 'http://www.instun.gov.my',
-                        text: 'Kementrian Pendidikan Kebudayaan Malaysia'
-                     },
-      tooltip: {
-         formatter: function() {
-            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
-         }
-      },
-      plotOptions: {
-         pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-               enabled: true,
-               color: '#000000',
-               connectorColor: '#000000',
-               formatter: function() {
-                  return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
-               }
+
+  /**
+   * Highcharts gradient fill plugin
+   */
+  (function() {
+    var idCounter = 0,
+    base = Highcharts.Renderer.prototype.color,
+    PREFIX = 'highcharts-',
+    extend = Highcharts.extend,
+    regexRgba = /^rgba/;
+
+    Highcharts.Renderer.prototype.color = function(color, elem, prop) {
+      if (color && color.radialGradient) {
+        // SVG renderer
+        if (this.box.tagName == 'svg') {
+          var renderer = this,
+          strRadialGradient = 'radialGradient',
+          radialGradient = color[strRadialGradient],
+          relativeToShape = !radialGradient.length, // mimic linearGradient's optional syntax
+          id = PREFIX + idCounter++,
+          gradientObject,
+          stopColor,
+          stopOpacity;
+          gradientObject = renderer.createElement(strRadialGradient)
+          .attr(extend({
+            id: id,
+            cx: radialGradient.cx || radialGradient[0] || '50%',
+            cy: radialGradient.cy || radialGradient[1] || '50%',
+            r: radialGradient.r || radialGradient[2] || '50%',
+          }, relativeToShape ? null : { gradientUnits: 'userSpaceOnUse' }))
+          .add(renderer.defs);
+
+          $.each(color.stops, function(i, stop) {
+            if (regexRgba.test(stop[1])) {
+              colorObject = Color(stop[1]);
+              stopColor = colorObject.get('rgb');
+              stopOpacity = colorObject.get('a');
+            } else {
+              stopColor = stop[1];
+              stopOpacity = 1;
             }
-         }
-      },
-       series: [{
-         type: 'pie',
-         name: '<%= chart_title %> (JANTINA)',
-         data: [
-            ['Lelaki',   <%= total_male %>],
-            ['Perempuan', <%= total_female %>]
-         ]
-      }]
-   });
+            renderer.createElement('stop').attr({
+              offset: stop[0],
+              'stop-color': stopColor,
+              'stop-opacity': stopOpacity
+            }).add(gradientObject);
+          });
+
+          return 'url('+ this.url +'#'+ id +')';
+
+          // VML renderer
+        } else {
+
+        }
+
+      } else {
+        return base.apply(this, arguments);
+      }
+    };
+  })();
+
+  // Radialize the colors
+  Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function(color) {
+    return {
+      radialGradient: [
+        290,
+        120,
+        120
+      ],
+      stops: [
+        [0, color],
+        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+      ]
+    };
+  });
+  console.log(Highcharts.getOptions().colors);
+
 
 </script>

@@ -45,8 +45,8 @@
       <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
         <td align="center" id="name<%=h report[:id] %>"><%= (index+1).to_s %>.</td>
         <td align="left"><%=report[:name].upcase%></td>
-        <td align="center"><%=report[:male] %></td>
-        <td align="center"><%=report[:female] %></td>
+        <td align="center"><%=number_with_delimiter(report[:male], :delimiter => ',') %></td>
+        <td align="center"><%=number_with_delimiter(report[:female], :delimiter => ',') %></td>
       </tr>
       <%
       total_male += report[:male].to_i
@@ -55,8 +55,8 @@
     <% end %>
     <tr bgcolor="#fff">
       <td align="right" colspan="2">Jumlah Keseluruhan</td>
-      <td align="center"><%=total_male %></td>
-      <td align="center"><%=total_female %></td>
+      <td align="center"><%=number_with_delimiter(total_male, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_female, :delimiter => ',') %></td>
     </tr>
 
 </table>
@@ -65,120 +65,14 @@
 <%#= will_paginate @reports %>
 </div>
 
-<div id="container" class="chart" style="display:none; padding-left:33px; width:95%; height:<%= 300 %>px;">
-  <div id="container_1" style="width:47%; height:300px; float:left;"></div>
-  <div id="container_2" style="width:47%; height:300px; float:left;"></div>
-  <div id="container_3" style="width:47%; height:300px; float:left;"></div>
-  <div id="container_4" style="width:47%; height:300px; float:left;"></div>
+<div id="container" class="chart" style="display:none; padding-left:33px; width:95%; height:<%= 400 %>px;">
+
 </div>
 <%= javascript_include_tag "highcharts" %>
-<script>
 
-  /**
-   * Highcharts gradient fill plugin
-   */
-  (function() {
-    var idCounter = 0,
-    base = Highcharts.Renderer.prototype.color,
-    PREFIX = 'highcharts-',
-    extend = Highcharts.extend,
-    regexRgba = /^rgba/;
-
-    Highcharts.Renderer.prototype.color = function(color, elem, prop) {
-      if (color && color.radialGradient) {
-        // SVG renderer
-        if (this.box.tagName == 'svg') {
-          var renderer = this,
-          strRadialGradient = 'radialGradient',
-          radialGradient = color[strRadialGradient],
-          relativeToShape = !radialGradient.length, // mimic linearGradient's optional syntax
-          id = PREFIX + idCounter++,
-          gradientObject,
-          stopColor,
-          stopOpacity;
-          gradientObject = renderer.createElement(strRadialGradient)
-          .attr(extend({
-            id: id,
-            cx: radialGradient.cx || radialGradient[0] || '50%',
-            cy: radialGradient.cy || radialGradient[1] || '50%',
-            r: radialGradient.r || radialGradient[2] || '50%',
-          }, relativeToShape ? null : { gradientUnits: 'userSpaceOnUse' }))
-          .add(renderer.defs);
-
-          $.each(color.stops, function(i, stop) {
-            if (regexRgba.test(stop[1])) {
-              colorObject = Color(stop[1]);
-              stopColor = colorObject.get('rgb');
-              stopOpacity = colorObject.get('a');
-            } else {
-              stopColor = stop[1];
-              stopOpacity = 1;
-            }
-            renderer.createElement('stop').attr({
-              offset: stop[0],
-              'stop-color': stopColor,
-              'stop-opacity': stopOpacity
-            }).add(gradientObject);
-          });
-
-          return 'url('+ this.url +'#'+ id +')';
-
-          // VML renderer
-        } else {
-
-        }
-
-      } else {
-        return base.apply(this, arguments);
-      }
-    };
-  })();
-
-  // Radialize the colors
-  Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function(color) {
-    return {
-      radialGradient: [
-        290,
-        120,
-        120
-      ],
-      stops: [
-        [0, color],
-        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-      ]
-    };
-  });
-  console.log(Highcharts.getOptions().colors);
-</script>
-<%= render :partial => 'shared/chart_pie',
-  :locals => {:chart_container => 'container_1',
-  :chart_title => @reports[0][:name],
-  :total_male => @reports[0][:male],
-  :total_female => @reports[0][:female],
-}
+<%= render :partial => 'shared/chart_pie'
 %>
-<%= render :partial => 'shared/chart_pie',
-  :locals => {:chart_container => 'container_2',
-  :chart_title => @reports[1][:name],
-  :total_male => @reports[1][:male],
-  :total_female => @reports[1][:female],
-}
-%>
-<%= render :partial => 'shared/chart_pie',
-  :locals => {:chart_container => 'container_3',
-  :chart_title => @reports[2][:name],
-  :total_male => @reports[2][:male],
-  :total_female => @reports[2][:female],
-}
-%>
-<%= render :partial => 'shared/chart_pie',
-  :locals => {:chart_container => 'container_4',
-  :chart_title => @reports[3][:name],
-  :total_male => @reports[3][:male],
-  :total_female => @reports[3][:female],
-}
-%>
-<% end %>
+
 
 <script>
   function toggle_chart(){
@@ -186,9 +80,78 @@
     if (showed == "chart"){
       $(".chart").show();
       $(".table_report").hide();
+      loadChart('MAKLUMAT PESERTA MENGIKUT JANTINA', 'container', <%=  total_male %>, <%=  total_female %>);
     }else{
       $(".chart").hide();
       $(".table_report").show();
     }
+  };
+
+function loadChart(title, container, total_male, total_female){
+  if (total_male < total_female){
+    var sliced_male = true;
+    var sliced_female = false;
+  }else{
+    var sliced_female = true;
+    var sliced_male = false;
   }
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: container,
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: title
+      },
+      credits: {
+                        position: {
+                           align: 'left',
+      x: 20 },
+                        href: 'http://www.instun.gov.my',
+                        text: 'Kementrian Pendidikan Kebudayaan Malaysia'
+                     },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               color: '#000000',
+               connectorColor: '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
+               }
+            },
+               showInLegend: true
+         }
+      },
+       series: [{
+         type: 'pie',
+         name: title,
+         data: [
+            {
+                name: 'Lelaki',
+                y: total_male,
+                sliced: sliced_male,
+                selected: sliced_male
+            },
+            {
+                name: 'Perempuan',
+                y: total_female,
+                sliced: sliced_female,
+                selected: sliced_female
+            }
+         ]
+      }]
+   });
+   }
+
 </script>
+<% end %>
