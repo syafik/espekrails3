@@ -1,0 +1,176 @@
+<form action="peserta_mengikut_jabatan" name="filter">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PESERTA MENGIKUT JABATAN</font></b></td>
+    </tr>
+  </table>
+  <br/>
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"> Dari: &nbsp;
+        <%= select_tag :month_from, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_from])%>
+        &nbsp;&nbsp;Hingga: &nbsp;
+        <%= select_tag :month_until, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_until])%>
+        &nbsp;&nbsp;Tahun: &nbsp;
+        <%= select_tag :year, options_for_select([["-pilih Tahun-", ""]]+ @planning_years, params[:year])%>
+        <input type="button" value="Cari" onclick="document.forms[0].submit()">
+    </tr>
+    <% if @reports.any? %>
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+        <td align="center" valign="middle">
+          <input type="radio" name="filter_show" id="filter_show_table" value="table" checked="1"  onclick="toggle_chart()" />
+          <label for="filter_status_all">Table</label>
+          <input type="radio" name="filter_show" id="filter_show_chart" value="chart" onclick="toggle_chart()" />
+          <label for="filter_status_pending">Chart</label>
+        </td></tr>
+    <% end %>
+  </table>
+</form>
+<br/>
+<table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" id="pisang" onclick="">
+    <td width="3%" align="center"><font color="#FFFFFF"><strong>No</strong></font></td>
+    <td width="67%" align="left"><font color="#FFFFFF">&nbsp;<strong>Bidang Kursus</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>P.Tanah</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>JUPEM</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Lain-lain</strong></font></td>
+  </tr>
+  <%if @reports.any? %>
+    <%
+    total_p_tanah = 0
+    total_jupem = 0
+    total_other = 0
+  %>
+    <% @reports.each_with_index do |report, index| %>
+      <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+        <td align="center" id="name<%=h index+1 %>"><%= (index+1).to_s %>.</td>
+        <td align="left"><%=report.name.upcase%></td>
+        <td align="center"><%=number_with_delimiter(report.p_tanah, :delimiter => ',') %></td>
+        <td align="center"><%=number_with_delimiter(report.jupem, :delimiter => ',') %></td>
+        <td align="center"><%=number_with_delimiter(report.other, :delimiter => ',') %></td>
+      </tr>
+      <%
+      total_p_tanah += report.p_tanah.to_i
+      total_jupem += report.jupem.to_i
+      total_other += report.other.to_i
+    %>
+    <% end %>
+    <tr bgcolor="#fff">
+      <td align="right" colspan="2">Jumlah Keseluruhan</td>
+      <td align="center"><%=number_with_delimiter(total_p_tanah, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_jupem, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_other, :delimiter => ',') %></td>
+    </tr>
+
+</table>
+<br/>
+<div align=center>
+<%#= will_paginate @reports %>
+</div>
+
+<div id="container" class="chart" style="display:none; padding-left:33px; width:95%; height:<%= 400 %>px;">
+
+</div>
+<%= javascript_include_tag "highcharts" %>
+
+<%= render :partial => 'shared/chart_pie'
+%>
+
+
+<script>
+  function toggle_chart(){
+    var showed = $('input[name=filter_show]:checked').val();
+    if (showed == "chart"){
+      $(".chart").show();
+      $(".table_report").hide();
+      loadChart('MAKLUMAT PESERTA MENGIKUT JABATAN', 'container', <%=  total_p_tanah %>, <%=  total_jupem %>, <%=  total_other %>);
+    }else{
+      $(".chart").hide();
+      $(".table_report").show();
+    }
+  };
+
+function loadChart(title, container, total_p_tanah, total_jupem, total_other){
+  if (total_p_tanah > total_jupem && total_p_tanah > total_other){
+    var sliced_p_tanah = true;
+    var sliced_jupem = false;
+    var sliced_other = false;
+  }
+  else if (total_jupem > total_p_tanah  && total_jupem > total_p_tanah){
+    var sliced_p_tanah = false;
+    var sliced_jupem = true;
+    var sliced_other = false;
+  }
+  else{
+    var sliced_p_tanah = false;
+    var sliced_jupem = false;
+    var sliced_other = true;
+  }
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: container,
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: title
+      },
+      credits: {
+                        position: {
+                           align: 'left',
+      x: 20 },
+                        href: 'http://www.instun.gov.my',
+                        text: 'Kementrian Pendidikan Kebudayaan Malaysia'
+                     },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               color: '#000000',
+               connectorColor: '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
+               }
+            },
+               showInLegend: true
+         }
+      },
+       series: [{
+         type: 'pie',
+         name: title,
+         data: [
+            {
+                name: 'P.Tanah',
+                y: total_p_tanah,
+                sliced: sliced_p_tanah,
+                selected: sliced_p_tanah
+            },
+            {
+                name: 'Jupem',
+                y: total_jupem,
+                sliced: sliced_jupem,
+                selected: sliced_jupem
+            },
+            {
+                name: 'Lain-lain',
+                y: total_other,
+                sliced: sliced_other,
+                selected: sliced_other
+            }
+         ]
+      }]
+   });
+   }
+
+</script>
+<% end %>

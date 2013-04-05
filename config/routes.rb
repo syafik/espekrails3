@@ -281,6 +281,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'application_and_attendance'
       get 'peserta_jantina'
+      get 'peserta_mengikut_jabatan'
     end
   end
 
