@@ -1,228 +1,46 @@
-<!--
-chart_title = the title
-for the chart
-chart_container = the div ID where chart is located
-chart_data = the data
-for the chart
-format: [
-	['series 1', value],
-	['series 2', value]
-]
--->
-
-<script type="text/javascript">
-  /*$(function(){
-        $("#test").click(function(){
-                alert("something");
-                return false;
-                })
-        })
-
-          $(function() {
-            new Highcharts.Chart({
-              chart: {
-                    align: 'left',
-                    distance: 24,
-                renderTo: "jantina",
-                type: "pie",
-                showInLegend: true,
-                width: 250,
-                height: 250,
-                borderWidth: 1
-              },
-              title: {
-                text: "JANTINA"
-              },
-          plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                enabled: false
-              },
-              dataLabels: {
-                enabled: true,
-                color: '#000000',
-                connectorColor: '#000000',
-                formatter: function() {
-                  return this.percentage.toFixed(2) +' %';
-                }
-              },
-              showInLegend: true
-            }
-          },
-          tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-            percentageDecimals: 1
-          },
-              series: [{
-                        data: [["Lelaki", 12.38], [ 'Perempuan', 20.62 ]]
-                  }]
-            }); //Highchart 1
-	
-            new Highcharts.Chart({
-              chart: {
-                    align: 'left',
-                    distance: 24,
-                renderTo: "perkhidmatan",
-                type: "pie",
-                showInLegend: true,
-                width: 250,
-                height: 250,
-                borderWidth: 1
-              },
-              title: {
-                text: "Kumpulan Perkhidmatan"
-              },
-          plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                enabled: false
-              },
-              dataLabels: {
-                enabled: true,
-                color: '#000000',
-                connectorColor: '#000000',
-                formatter: function() {
-                  return this.percentage.toFixed(2) +' %';
-                }
-              },
-              showInLegend: true
-            }
-          },
-          tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-            percentageDecimals: 1
-          },
-              series: [{
-                        data: [["P&P", 0.00], [ 'Pelaksana', 32.100 ]]
-                  }]
-            }); //Highchart 2
-
-            new Highcharts.Chart({
-              chart: {
-                    align: 'left',
-                    distance: 24,
-                renderTo: "jabatan",
-                type: "pie",
-                showInLegend: true,
-                width: 250,
-                height: 250,
-                borderWidth: 1
-              },
-              title: {
-                text: "JABATAN/AGENSI"
-              },
-          plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                enabled: false
-              },
-              dataLabels: {
-                enabled: true,
-                color: '#000000',
-                connectorColor: '#000000',
-                formatter: function() {
-                  return this.percentage.toFixed(2) +' %';
-                }
-              },
-              showInLegend: true
-            }
-          },
-          tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-            percentageDecimals: 1
-          },
-              series: [{
-                        data: [["PTG/JKTPG/PTD", 6.16], [ 'JUPEM', 7.22 ], [ 'Lain-lain', 20.62 ]]
-                  }]
-            }); //Highchart 3
-	
-          }); //function */
-</script>
 
 
-<script>
 
-  /**
-   * Highcharts gradient fill plugin
-   */
-  (function() {
-    var idCounter = 0,
-    base = Highcharts.Renderer.prototype.color,
-    PREFIX = 'highcharts-',
-    extend = Highcharts.extend,
-    regexRgba = /^rgba/;
-
-    Highcharts.Renderer.prototype.color = function(color, elem, prop) {
-      if (color && color.radialGradient) {
-        // SVG renderer
-        if (this.box.tagName == 'svg') {
-          var renderer = this,
-          strRadialGradient = 'radialGradient',
-          radialGradient = color[strRadialGradient],
-          relativeToShape = !radialGradient.length, // mimic linearGradient's optional syntax
-          id = PREFIX + idCounter++,
-          gradientObject,
-          stopColor,
-          stopOpacity;
-          gradientObject = renderer.createElement(strRadialGradient)
-          .attr(extend({
-            id: id,
-            cx: radialGradient.cx || radialGradient[0] || '50%',
-            cy: radialGradient.cy || radialGradient[1] || '50%',
-            r: radialGradient.r || radialGradient[2] || '50%',
-          }, relativeToShape ? null : { gradientUnits: 'userSpaceOnUse' }))
-          .add(renderer.defs);
-
-          $.each(color.stops, function(i, stop) {
-            if (regexRgba.test(stop[1])) {
-              colorObject = Color(stop[1]);
-              stopColor = colorObject.get('rgb');
-              stopOpacity = colorObject.get('a');
-            } else {
-              stopColor = stop[1];
-              stopOpacity = 1;
-            }
-            renderer.createElement('stop').attr({
-              offset: stop[0],
-              'stop-color': stopColor,
-              'stop-opacity': stopOpacity
-            }).add(gradientObject);
-          });
-
-          return 'url('+ this.url +'#'+ id +')';
-
-          // VML renderer
-        } else {
-
-        }
-
-      } else {
-        return base.apply(this, arguments);
+  chart = new Highcharts.Chart({
+    chart: {
+      renderTo: '<%=  container %>',
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false
+    },
+    title: {
+      text: '<%= title %>'
+    },
+    credits: {
+      position: {
+        align: 'left',
+        x: 20 },
+      href: 'http://www.instun.gov.my',
+      text: 'Kementrian Pendidikan Kebudayaan Malaysia'
+    },
+    tooltip: {
+      formatter: function() {
+        return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
       }
-    };
-  })();
-
-  // Radialize the colors
-  Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function(color) {
-    return {
-      radialGradient: [
-        290,
-        120,
-        120
-      ],
-      stops: [
-        [0, color],
-        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-      ]
-    };
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          color: '#000000',
+          connectorColor: '#000000',
+          formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
+          }
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+        type: 'pie',
+        name: '<%= title %>',
+        data: <%= data %>
+      }]
   });
-  console.log(Highcharts.getOptions().colors);
-
-
-</script>

@@ -74,9 +74,8 @@
 
 </div>
 <%= javascript_include_tag "highcharts" %>
+<%= javascript_include_tag "gradient-color-highcharts" %>
 
-<%= render :partial => 'shared/chart_pie'
-%>
 
 
 <script>
@@ -85,91 +84,51 @@
     if (showed == "chart"){
       $(".chart").show();
       $(".table_report").hide();
-      loadChart('MAKLUMAT PESERTA MENGIKUT JABATAN', 'container', <%=  total_p_tanah %>, <%=  total_jupem %>, <%=  total_other %>);
+      loadChart();
     }else{
       $(".chart").hide();
       $(".table_report").show();
     }
   };
 
-function loadChart(title, container, total_p_tanah, total_jupem, total_other){
-  if (total_p_tanah > total_jupem && total_p_tanah > total_other){
-    var sliced_p_tanah = true;
-    var sliced_jupem = false;
-    var sliced_other = false;
-  }
-  else if (total_jupem > total_p_tanah  && total_jupem > total_p_tanah){
-    var sliced_p_tanah = false;
-    var sliced_jupem = true;
-    var sliced_other = false;
-  }
-  else{
-    var sliced_p_tanah = false;
-    var sliced_jupem = false;
-    var sliced_other = true;
-  }
-   chart = new Highcharts.Chart({
-      chart: {
-         renderTo: container,
-         plotBackgroundColor: null,
-         plotBorderWidth: null,
-         plotShadow: false
-      },
-      title: {
-         text: title
-      },
-      credits: {
-                        position: {
-                           align: 'left',
-      x: 20 },
-                        href: 'http://www.instun.gov.my',
-                        text: 'Kementrian Pendidikan Kebudayaan Malaysia'
-                     },
-      tooltip: {
-         formatter: function() {
-            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
-         }
-      },
-      plotOptions: {
-         pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-               enabled: true,
-               color: '#000000',
-               connectorColor: '#000000',
-               formatter: function() {
-                  return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
-               }
-            },
-               showInLegend: true
-         }
-      },
-       series: [{
-         type: 'pie',
-         name: title,
-         data: [
-            {
-                name: 'P.Tanah',
-                y: total_p_tanah,
-                sliced: sliced_p_tanah,
-                selected: sliced_p_tanah
-            },
-            {
-                name: 'Jupem',
-                y: total_jupem,
-                sliced: sliced_jupem,
-                selected: sliced_jupem
-            },
-            {
-                name: 'Lain-lain',
-                y: total_other,
-                sliced: sliced_other,
-                selected: sliced_other
-            }
-         ]
-      }]
-   });
+function loadChart(){
+  <%
+    sliced_p_tanah = false
+    sliced_jupem = false
+    sliced_other = false
+  
+    sliced_p_tanah = true if total_p_tanah > total_jupem && total_p_tanah > total_other
+    sliced_jupem = true if total_jupem > total_p_tanah  && total_jupem > total_other
+    sliced_other = true if total_other > total_p_tanah  && total_other > total_jupem
+ %>
+
+<%
+data = "[
+          {
+            name: 'P.Tanah',
+            y: #{total_p_tanah},
+            sliced: #{sliced_p_tanah},
+            selected: #{sliced_p_tanah}
+          },
+          {
+            name: 'Jupem',
+            y: #{total_jupem},
+            sliced: #{sliced_jupem},
+            selected: #{sliced_jupem}
+          },
+          {
+            name: 'Lain-lain',
+            y: #{total_other},
+            sliced: #{sliced_other},
+            selected: #{sliced_other}
+          }
+        ]"
+%>
+
+<%= render :partial => 'shared/chart_pie',
+    :locals => {:data => data.html_safe, :title => 'MAKLUMAT PESERTA MENGIKUT JABATAN', :container => 'container' }
+%>
+
    }
 
 </script>

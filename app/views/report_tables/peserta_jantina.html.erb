@@ -69,9 +69,8 @@
 
 </div>
 <%= javascript_include_tag "highcharts" %>
+<%= javascript_include_tag "gradient-color-highcharts" %>
 
-<%= render :partial => 'shared/chart_pie'
-%>
 
 
 <script>
@@ -80,78 +79,41 @@
     if (showed == "chart"){
       $(".chart").show();
       $(".table_report").hide();
-      loadChart('MAKLUMAT PESERTA MENGIKUT JANTINA', 'container', <%=  total_male %>, <%=  total_female %>);
+      loadChart();
     }else{
       $(".chart").hide();
       $(".table_report").show();
     }
   };
 
-function loadChart(title, container, total_male, total_female){
-  if (total_male < total_female){
-    var sliced_male = true;
-    var sliced_female = false;
-  }else{
-    var sliced_female = true;
-    var sliced_male = false;
-  }
-   chart = new Highcharts.Chart({
-      chart: {
-         renderTo: container,
-         plotBackgroundColor: null,
-         plotBorderWidth: null,
-         plotShadow: false
-      },
-      title: {
-         text: title
-      },
-      credits: {
-                        position: {
-                           align: 'left',
-      x: 20 },
-                        href: 'http://www.instun.gov.my',
-                        text: 'Kementrian Pendidikan Kebudayaan Malaysia'
-                     },
-      tooltip: {
-         formatter: function() {
-            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
-         }
-      },
-      plotOptions: {
-         pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-               enabled: true,
-               color: '#000000',
-               connectorColor: '#000000',
-               formatter: function() {
-                  return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
-               }
-            },
-               showInLegend: true
-         }
-      },
-       series: [{
-         type: 'pie',
-         name: title,
-         data: [
+function loadChart(){
+  <%
+  sliced_female = false
+  sliced_male = false
+  sliced_female = true if total_male < total_female
+  sliced_male = true if total_male > total_female
+  %>
+
+  <%
+  data = "[
             {
                 name: 'Lelaki',
-                y: total_male,
-                sliced: sliced_male,
-                selected: sliced_male
+                y: #{total_male},
+                sliced: #{sliced_male},
+                selected: #{sliced_male}
             },
             {
                 name: 'Perempuan',
-                y: total_female,
-                sliced: sliced_female,
-                selected: sliced_female
+                y: #{total_female},
+                sliced: #{sliced_female},
+                selected: #{sliced_female}
             }
-         ]
-      }]
-   });
-   }
+         ]"
+  %>
 
+  <%= render :partial => 'shared/chart_pie',
+    :locals => {:data => data.html_safe, :title => 'MAKLUMAT PESERTA MENGIKUT JANTINA', :container => 'container' }
+%>
+}
 </script>
 <% end %>
