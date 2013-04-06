@@ -63,7 +63,7 @@ class ReservationsController < ApplicationController
 
     begin
       if params[:report1]
-        tarikh1 = params[:report1].to_s
+        tarikh1 = params[:report1].first.to_s
         tarikhi = tarikh1.split('/')
         d = tarikhi[0]
         m = tarikhi[1]
@@ -73,7 +73,7 @@ class ReservationsController < ApplicationController
       end
 
       if params[:report2]
-        tarikh2 = params[:report2].to_s
+        tarikh2 = params[:report2].first.to_s
         tarikhii = tarikh2.split('/')
         d = tarikhii[0]
         m = tarikhii[1]
