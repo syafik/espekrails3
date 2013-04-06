@@ -1,12 +1,26 @@
 class ReportTablesController < ApplicationController
   layout "standard-layout"
-  def application_and_attendance
+  before_filter :prepare_and_check_month_data, :except => :application_and_attendance_query
+  
+  def prepare_and_check_month_data
     @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
-    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from date_apply)as year from vw_detailed_applicants_all").collect(&:year)
- 
-    if params[:month_from].present? && params[:month_until].present? && params[:year].present?
+    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from date_apply)as year from vw_detailed_applicants_all").collect(&:year)    
+  end
+  
+  def is_param_month_range_valid?
+    if !params[:month_from].present? && !params[:month_until].present? && !params[:year].present?  
+      flash[:notice] = "sila isi filter dengan lengkap" if params[:month_from].present? || params[:month_until].present? || params[:year].present?
+      @reports =  []
+      false
+    else
+      true
+    end
+    
+  end
+  
+  def application_and_attendance 
+    if is_param_month_range_valid?
       filter = "AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} AND EXTRACT(year FROM date_apply) = #{params[:year]}"
-
 
       condition_1 = "Select id from course_implementations where code LIKE 'T%' AND code NOT LIKE 'TM%'"
       condition_2 = "Select id from course_implementations where code LIKE 'U%'"
@@ -15,11 +29,7 @@ class ReportTablesController < ApplicationController
       result_2 = application_and_attendance_query('Ukur dan Pemetaan', condition_2, filter)
       result_3 = application_and_attendance_query('Teknologi Maklumat', condition_3, filter)
       @reports = result_1 + result_2 + result_3
-    else
-      flash[:notice] = "sila isi filter dengan lengkap" if params[:month_from].present? || params[:month_until].present? || params[:year].present?
-      @reports =  []
-    end
-    #@reports =  CourseApplication.paginate_by_sql(sql, :page => params[:page], :per_page => 20 )
+    end  
   end
 
   def peserta_mengikuti_jabatan
@@ -52,11 +62,35 @@ class ReportTablesController < ApplicationController
     sql_1_2 = ""
   end
 
-  def peserta_jantina
-    @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
-    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from date_apply)as year from vw_detailed_applicants_all").collect(&:year)
- 
-    if params[:month_from].present? && params[:month_until].present? && params[:year].present?
+  def summary_group_by_states
+    if is_param_month_range_valid?
+    
+      presence_total_query = "select count(vdaa.profile_id) as total
+        FROM vw_detailed_applicants_all vdaa 
+        WHERE student_status_id IN (5,8,9) 
+        AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
+        AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
+        AND EXTRACT(year FROM date_apply) = #{params[:year]}"
+
+      total = CourseApplication.find_by_sql(presence_total_query)[0][:total].to_i  
+     
+      group_query = "select count(vdaa.profile_id) as subtotal, ((cast (count(vdaa.profile_id) as float)) / #{total.to_i})*100 as percentage, pr.state_id, st.description as state_name
+              FROM vw_detailed_applicants_all vdaa
+              join profiles pr on vdaa.profile_id = pr.id
+              join states st on pr.state_id = st.id
+              WHERE student_status_id IN (5,8,9)
+              AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
+              AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
+              AND EXTRACT(year FROM date_apply) = #{params[:year]}
+              group by state_id, st.description
+              order by st.description asc"              
+              
+      @reports =  CourseApplication.find_by_sql(group_query)      
+    end
+  end
+  
+  def peserta_jantina     
+    if is_param_month_range_valid?    
       sql_1_male ="SELECT count(*) as total FROM course_applications WHERE course_implementation_id IN
     (Select id from course_implementations where code LIKE 'T%' AND code NOT LIKE 'TM%')
     AND profile_id IN (
@@ -127,8 +161,6 @@ class ReportTablesController < ApplicationController
         {:id=> 3, :name => "Teknologi Maklumat", :male => cat_3_male[0].total, :female => cat_3_female[0].total},
         {:id=> 4, :name => "Lain-lain", :male => cat_4_male[0].total, :female => cat_4_female[0].total}
       ]
-    else
-      @reports=[]
     end
   end
 

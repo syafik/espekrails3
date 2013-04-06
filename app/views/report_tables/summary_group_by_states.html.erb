@@ -1,0 +1,137 @@
+<form action="summary_group_by_states" name="filter">
+  <% chart_title = "KEHADIRAN PESERTA MENGIKUT NEGERI" %>
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%= chart_title %></font></b></td>
+    </tr>
+  </table>
+  <br/>
+  <!-- TABLE HEADER -->   
+  <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"> Dari: &nbsp;
+        <%= select_tag :month_from, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_from])%>
+        &nbsp;&nbsp;Hingga: &nbsp;
+        <%= select_tag :month_until, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_until])%>
+        &nbsp;&nbsp;Tahun: &nbsp;
+        <%= select_tag :year, options_for_select([["-pilih Tahun-", ""]]+ @planning_years, params[:year])%>
+        <input type="button" value="Cari" onclick="document.forms[0].submit()">
+    </tr>
+    <% if @reports.any? %>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+      <td align="center" valign="middle">
+        <input type="radio" name="filter_show" id="filter_show_table" value="table" checked="1"  onclick="toggle_chart();" />
+          <label for="filter_status_all">Table</label>
+          <input type="radio" name="filter_show" id="filter_show_chart" value="chart" onclick="toggle_chart();" />
+          <label for="filter_status_pending">Chart</label>
+      </td>
+    </tr-->
+    <% end %>
+  </table>
+</form>
+<br>
+
+<!-- TABLE CONTENT --> 
+<table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" id="pisang" onclick="">
+    <td width="3%" align="center"><font color="#FFFFFF"><strong>Bil.</strong></font></td>
+    <td width="37%" align="center"><font color="#FFFFFF">&nbsp;<strong>PTG/PTD</strong></font></td>
+    <td width="10%" align="center"><font color="#FFFFFF">&nbsp;<strong>PESERTA</strong></font></td>
+    <td width="10%" align="center"><font color="#FFFFFF">&nbsp;<strong>PERCENTAGE</strong></font></td>
+  </tr>
+  <%if @reports.any? %>
+    <% total = 0 %>
+    <% categories = @reports.collect(&:state_name) %>
+    <% student_count = @reports.collect(&:subtotal).map(&:to_i) %>
+    <% student_percentage = @reports.collect(&:percentage).map(&:to_i) %>
+    <% 
+      chart_data = []
+      peserta = {:name => "peserta", :data => student_count}
+      percentage = {:name =>"percentage", :data => student_percentage }
+      chart_data << peserta
+      chart_data << percentage
+    %>
+    
+    <% @reports.each_with_index do |report, index| %>
+      <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+        <td align="center" id="name<%=h report.id %>"><%= (index+1).to_s %>.</td>
+        <td align="left"><%=report.state_name %></td>
+        <td align="right" style="padding-right:70px;"><%=number_with_delimiter(report.subtotal, :delimiter => ',') %></td>
+        <td align="right" style="padding-right:60px;"><%=number_to_percentage(report.percentage, :precision => 1) %></td>
+      </tr>
+    <% total += report.subtotal.to_i %>
+    <% end %>
+    <!-- TABLE TOTAL  --> 
+    <table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+        <tr bgcolor="#fff">
+          <td width="60%" align="right"><strong>TOTAL : </strong></td>
+          <td width="30%" align="right" style="padding-right:240px;"><strong><%=number_with_delimiter(total, :delimiter => ',') %></strong></td>
+        </tr>
+    </table>
+  <% end %>
+</table>
+
+
+
+<br/>
+<div id="container" class="chart" style="display:none; padding-left:33px; width:95%; height:<%= 35 * @reports.count %>px;"/>
+<%= javascript_include_tag "highcharts" %>
+<script type="text/javascript">  
+  function toggle_chart(){
+    var showed = $('input[name=filter_show]:checked').val();
+    var cat = <%= categories.to_json.html_safe %>;
+    var data = <%= chart_data.to_json.html_safe %>;
+    
+    if (showed == "chart"){
+      $(".chart").show();
+      $(".table_report").hide();
+      loadChart('<%=chart_title %>', 'container', cat, data);
+    }else{
+      $(".chart").hide();
+      $(".table_report").show();
+    }
+  }; //function toggle_chart
+  // 
+  function loadChart(title, container, categories, chart_data){  
+    chart = new Highcharts.Chart({
+       chart: {
+         renderTo: container,
+         type: 'column',
+         inverted: true,
+         borderWidth: 1
+       }, 
+       title: { text: title },
+       credits: {
+         position: {
+           align: 'left',
+           x: 20 
+         },
+         href: 'http://www.instun.gov.my',
+         text: 'Kementrian Pendidikan Kebudayaan Malaysia'
+       },
+       xAxis: {
+         categories: categories,
+         lineWidth: 0,
+         tickLength: 0,
+         labels: {
+           align: 'left',
+           x: 0,
+           y: -13,
+           style: { fontWeight: 'bold' }
+         }
+       },
+       yAxis: {
+         title: { text: 'No. of Patents' },
+         labels: {
+           rotation: -45,
+           align: 'right'
+         }
+       },
+       plotOptions: {},
+       series: chart_data
+     }); //Highchart
+   }; //Function load_chart
+
+</script>
