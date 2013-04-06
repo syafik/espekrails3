@@ -104,12 +104,26 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
     <td align="right"><b>Penyelaras: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.name.upcase}%></td>
   </tr>
-      <tr>
+  <tr>
     <td align="right"><b>No. Telefon: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.phone}%> (PEJ)</td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.mobile}%> (HP)</td>
   </tr>
-      <tr>
+  <tr>
+    <td align="right"><b>No. Telefon: </b></td>
+    <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.phone}%> (PEJ)</td>
+    <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.mobile}%> (HP)</td>
+  </tr>
+  <tr>
+    <td align="right"><b>Penceramah: </b></td>
+  </tr>
+  <%= @course_implementation.trainers.each do |trainer| %>
+    <tr>
+      <td></td>
+      <td>&nbsp;<%= trainer.profile.name%> </td>
+    </tr>
+  <% end %>
+  <tr>
     <td align="right"><b>Pen Penyelaras: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.name.upcase}%></td>
   </tr>

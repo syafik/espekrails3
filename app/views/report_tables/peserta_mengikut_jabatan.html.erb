@@ -1,7 +1,7 @@
-<form action="peserta_jantina" name="filter">
+<form action="peserta_mengikut_jabatan" name="filter">
   <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr>
-      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PESERTA MENGIKUT JANTINA </font></b></td>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PESERTA MENGIKUT JABATAN</font></b></td>
     </tr>
   </table>
   <br/>
@@ -27,36 +27,41 @@
     <% end %>
   </table>
 </form>
-<br>
+<br/>
 <table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
   <tr bgcolor="#999999" id="pisang" onclick="">
     <td width="3%" align="center"><font color="#FFFFFF"><strong>No</strong></font></td>
     <td width="67%" align="left"><font color="#FFFFFF">&nbsp;<strong>Bidang Kursus</strong></font></td>
-    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Lelaki</strong></font></td>
-    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Perempuan</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>P.Tanah</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>JUPEM</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Lain-lain</strong></font></td>
   </tr>
   <%if @reports.any? %>
     <%
-    total_male = 0
-    total_female = 0
+    total_p_tanah = 0
+    total_jupem = 0
+    total_other = 0
   %>
     <% @reports.each_with_index do |report, index| %>
       <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
       <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
-        <td align="center" id="name<%=h report[:id] %>"><%= (index+1).to_s %>.</td>
-        <td align="left"><%=report[:name].upcase%></td>
-        <td align="center"><%=number_with_delimiter(report[:male], :delimiter => ',') %></td>
-        <td align="center"><%=number_with_delimiter(report[:female], :delimiter => ',') %></td>
+        <td align="center" id="name<%=h index+1 %>"><%= (index+1).to_s %>.</td>
+        <td align="left"><%=report.name.upcase%></td>
+        <td align="center"><%=number_with_delimiter(report.p_tanah, :delimiter => ',') %></td>
+        <td align="center"><%=number_with_delimiter(report.jupem, :delimiter => ',') %></td>
+        <td align="center"><%=number_with_delimiter(report.other, :delimiter => ',') %></td>
       </tr>
       <%
-      total_male += report[:male].to_i
-      total_female += report[:female].to_i
+      total_p_tanah += report.p_tanah.to_i
+      total_jupem += report.jupem.to_i
+      total_other += report.other.to_i
     %>
     <% end %>
     <tr bgcolor="#fff">
       <td align="right" colspan="2">Jumlah Keseluruhan</td>
-      <td align="center"><%=number_with_delimiter(total_male, :delimiter => ',') %></td>
-      <td align="center"><%=number_with_delimiter(total_female, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_p_tanah, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_jupem, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_other, :delimiter => ',') %></td>
     </tr>
 
 </table>
@@ -88,32 +93,43 @@
 
 function loadChart(){
   <%
-  sliced_female = false
-  sliced_male = false
-  sliced_female = true if total_male < total_female
-  sliced_male = true if total_male > total_female
-  %>
+    sliced_p_tanah = false
+    sliced_jupem = false
+    sliced_other = false
+  
+    sliced_p_tanah = true if total_p_tanah > total_jupem && total_p_tanah > total_other
+    sliced_jupem = true if total_jupem > total_p_tanah  && total_jupem > total_other
+    sliced_other = true if total_other > total_p_tanah  && total_other > total_jupem
+ %>
 
-  <%
-  data = "[
-            {
-                name: 'Lelaki',
-                y: #{total_male},
-                sliced: #{sliced_male},
-                selected: #{sliced_male}
-            },
-            {
-                name: 'Perempuan',
-                y: #{total_female},
-                sliced: #{sliced_female},
-                selected: #{sliced_female}
-            }
-         ]"
-  %>
-
-  <%= render :partial => 'shared/chart_pie',
-    :locals => {:data => data.html_safe, :title => 'MAKLUMAT PESERTA MENGIKUT JANTINA', :container => 'container' }
+<%
+data = "[
+          {
+            name: 'P.Tanah',
+            y: #{total_p_tanah},
+            sliced: #{sliced_p_tanah},
+            selected: #{sliced_p_tanah}
+          },
+          {
+            name: 'Jupem',
+            y: #{total_jupem},
+            sliced: #{sliced_jupem},
+            selected: #{sliced_jupem}
+          },
+          {
+            name: 'Lain-lain',
+            y: #{total_other},
+            sliced: #{sliced_other},
+            selected: #{sliced_other}
+          }
+        ]"
 %>
-}
+
+<%= render :partial => 'shared/chart_pie',
+    :locals => {:data => data.html_safe, :title => 'MAKLUMAT PESERTA MENGIKUT JABATAN', :container => 'container' }
+%>
+
+   }
+
 </script>
 <% end %>
