@@ -32,7 +32,7 @@
           room_font_style = "normal"
           room_font_style = "bold" if room !=nil and room.hostel_type_id == 2
           r_name= nof{room.room_no}
-          the_room = "<a href=\"javascript: showProperties(#{i+1},#{j+1})\">#{r_name}</a>"
+          the_room = "<a href=\"javascript: showProperties(#{i+1},#{r_name})\">#{r_name}</a>"
 
           @room_bg = "#FFFFFF"
           if rooms.size != 0
@@ -53,7 +53,7 @@
             if rooms.first.hostel_status_id == 2 or rooms.first.hostel_status_id == 3
               @room_bg = @color_close
             end
-            the_title = "title=\"#{@hostel_block.description}-#{i+1}-#{j+1}\""
+            the_title = "title=\"#{@hostel_block.description}-#{i+1}-#{r_name}\""
 
           else
             @room_bg = "#888888"

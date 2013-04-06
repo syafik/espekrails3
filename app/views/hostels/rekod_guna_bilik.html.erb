@@ -82,6 +82,7 @@ Check-in </strong></font></td>
       <td class="el" width="24%" align="center"><font color="#FFFFFF"><strong>Tarikh<br />
 	Check-out
 </strong></font></td>
+      <td class="el" width="20%" align="center"><strong><font color="#FFFFFF">Status</font></strong></td>
       <!--td width="11%" align="center"><strong><a style="color: white" href="javascript: findAndSortWith('date_apply','<%= "DESC" if (@orderby=="date_apply" && @arrow=="ASC") %>')">Kursus<br />
 	Berkaitan
 </a></strong></td-->
@@ -123,6 +124,12 @@ for student in @ls
       <td class="el" align="center"><%=student.opis %>&nbsp;</td>
       <td class="el" align="center">&nbsp;<%=tarikh_masuk%></td>
       <td class="el" align="center">&nbsp;<%=tarikh_keluar%></td>
+      <td class="el" align="center">&nbsp;<%= tarikh_keluar %></td>
+      <td class="el" align="center">&nbsp;
+        <% unless student.try(:"date_out").blank? %>
+          <%= (Time.parse(student.date_out) < Date.today) ? "Sudah" : "Belum" %>
+        <% end %>
+      </td>
     </tr>
 <% end %>
   </table>

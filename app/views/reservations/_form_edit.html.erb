@@ -130,6 +130,10 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
     <td align="right"><b>Bil. VIP: </b></td>
     <td><%= text_field 'reservation', 'vip_total', :value=>@check.vip_total, :maxlength=>4, :size=>4  %></td>
   </tr>
+  <tr>
+    <td align="right"><b>Bil. Penceramah: </b></td>
+    <td><%= text_field 'reservation', 'trainer_total', :value=>@course_implementation.trainers.size, :maxlength=>4, :size=>4  %></td>
+  </tr>
    <tr bgcolor="000000">
      <td colspan="4" align="CENTER" bgcolor="#FFFFFF">&nbsp;</td>
    </tr>
