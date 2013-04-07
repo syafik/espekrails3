@@ -425,7 +425,7 @@ InstunRails3::Application.routes.draw do
   resources :course_management do
     get 'evaluation_done'
     collection do
-      get 'select_course'
+      get 'select_course(/:role)', action: :select_course
       get 'sijil_select_course'
       get 'evaluated_courses'
       get 'register'

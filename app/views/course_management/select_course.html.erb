@@ -22,27 +22,30 @@
 
   function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('#popmenu').css({"width" :250});
-    $('#popmenu').html("<ul>" +
-      "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
-      "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
-      "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" +
-      "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" +
+    <% unless params[:role].eql?("penyelaras") %>
+      $('#popmenu').html("<ul>" +
+        "<li><a href=\"" + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
+        "<li><a href=\"" + controller + "/copy_and_new/" + objid + "\">&nbsp;&nbsp;Salin</a>" +
+        "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Padam</font>" +
+        //"<hr size=1>" +
+      //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" +
+      //"<li><a href=\"" + controller + "/booking_hostel/" + objid + "\">&nbsp;&nbsp;Tempahan Asrama</a>" +
+      "<hr size=1>" +
+        "<li><a href=\""  + "/course_applications" + "/new_peserta/" + objid + "?dr=1\">&nbsp;&nbsp;Tambah Peserta(Gantian, dll)</a>" +
+        "<li><a href=\""  + "/course_management" + "/<%= params[:next_action]%>/" + objid + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Lihat Senarai Peserta</a>" +
+        //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
       //"<hr size=1>" +
-    //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" +
-    //"<li><a href=\"" + controller + "/booking_hostel/" + objid + "\">&nbsp;&nbsp;Tempahan Asrama</a>" +
-    "<hr size=1>" +
-      "<li><a href=\""  + "/course_applications" + "/new_peserta/" + objid + "?dr=1\">&nbsp;&nbsp;Tambah Peserta(Gantian, dll)</a>" +
-      "<li><a href=\""  + "/course_management" + "/<%= params[:next_action]%>/" + objid + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Lihat Senarai Peserta</a>" +
-      //"<li><a href=\"javascript: ExportCsvAll('" + controller + "','export_csv_all', " + objid + ")\">&nbsp;&nbsp;Print Surat Tawaran</a>" +
-    //"<hr size=1>" +
-    //"<li><a href=\"" + "javascript: tr(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Penceramah</a>" +
-    //"<li><a href=\"" + "javascript: fr(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Kemudahan</a>" +
-    //"<li><a href=\"" + "javascript: mr(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Penyelarasan</a>" +
-    //"<li><a href=\"" + "javascript: ct(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Isi Kandungan</a>" +
-    //"<li><a href=\"" + "javascript: cm(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Komen Keseluruhan</a>" +
+      //"<li><a href=\"" + "javascript: tr(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Penceramah</a>" +
+      //"<li><a href=\"" + "javascript: fr(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Kemudahan</a>" +
+      //"<li><a href=\"" + "javascript: mr(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Penyelarasan</a>" +
+      //"<li><a href=\"" + "javascript: ct(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Isi Kandungan</a>" +
+      //"<li><a href=\"" + "javascript: cm(" + "" + objid + ")\">&nbsp;&nbsp;Laporan Penilaian Komen Keseluruhan</a>" +
 
-    "</ul>")
-     
+      "</ul>")
+    <% else %>
+      $('#popmenu').html("<ul><li><a href=\""  + "/course_management" + "/<%= params[:next_action]%>/" + objid + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Lihat Senarai Peserta</a></li></ul>");
+    <% end %>
   }
 
   function checkFormDulu(df) {
