@@ -464,6 +464,7 @@ InstunRails3::Application.routes.draw do
       get 'cetak_p_evaluation_iso'
       get 'cetak_p_evaluation'
       get 'list_signature'
+      get 'surat_takhadir'
     end
   end
   match '/course_applications/all/:course_application_id' => 'course_applications#all', :via => [:get]

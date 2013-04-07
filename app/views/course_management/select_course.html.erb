@@ -44,7 +44,7 @@
 
       "</ul>")
     <% else %>
-      $('#popmenu').html("<ul><li><a href=\""  + "/course_management" + "/<%= params[:next_action]%>/" + objid + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Lihat Senarai Peserta</a></li></ul>");
+      $('#popmenu').html("<ul><li><a href=\""  + "/course_management/" + objid + "/<%= params[:next_action]%>" + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Lihat Senarai Peserta</a></li></ul>");
     <% end %>
   }
 
