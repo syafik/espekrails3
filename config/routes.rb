@@ -466,6 +466,7 @@ InstunRails3::Application.routes.draw do
       get 'list_signature'
       get 'surat_takhadir'
       get 'surat_pengesahan'
+      get 'certificate'
     end
   end
   match '/course_applications/all/:course_application_id' => 'course_applications#all', :via => [:get]
