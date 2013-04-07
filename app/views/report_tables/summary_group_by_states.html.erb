@@ -42,15 +42,15 @@
   </tr>
   <%if @reports.any? %>
     <% total = 0 %>
-    <% categories = @reports.collect(&:state_name) %>
-    <% student_count = @reports.collect(&:subtotal).map(&:to_i) %>
-    <% student_percentage = @reports.collect(&:percentage).map(&:to_i) %>
+    <% categories = @reports.sort_by{|e| -e[:subtotal].to_i}.collect(&:state_name) %>
+    <% student_count = @reports.sort_by{|e| -e[:subtotal].to_i}.collect(&:subtotal).map(&:to_i) %>
+    <%# student_percentage = @reports.collect(&:percentage).map(&:to_i) %>
     <% 
       chart_data = []
-      peserta = {:name => "peserta", :data => student_count}
-      percentage = {:name =>"percentage", :data => student_percentage }
+      peserta = {:name => "Peserta", :data => student_count}
+      #percentage = {:name =>"percentage", :data => student_percentage }
       chart_data << peserta
-      chart_data << percentage
+      #chart_data << percentage
     %>
     
     <% @reports.each_with_index do |report, index| %>
@@ -81,21 +81,25 @@
 <script type="text/javascript">  
   function toggle_chart(){
     var showed = $('input[name=filter_show]:checked').val();
-    var cat = <%= categories.to_json.html_safe %>;
-    var data = <%= chart_data.to_json.html_safe %>;
+    //var cat = <%= categories.to_json.html_safe %>;
+    //var data = <%=  chart_data.to_json.html_safe %>;
     
     if (showed == "chart"){
       $(".chart").show();
       $(".table_report").hide();
-      loadChart('<%=chart_title %>', 'container', cat, data);
+      loadChart();
     }else{
       $(".chart").hide();
       $(".table_report").show();
     }
   }; //function toggle_chart
   // 
-  function loadChart(title, container, categories, chart_data){  
-    chart = new Highcharts.Chart({
+  function loadChart(){
+
+  <%= render :partial => 'shared/chart_bar',
+    :locals => {:data => chart_data.to_json.html_safe, :title => chart_title, :container => 'container', :category => categories.to_json.html_safe}
+%>
+ /*   chart = new Highcharts.Chart({
        chart: {
          renderTo: container,
          type: 'column',
@@ -131,7 +135,7 @@
        },
        plotOptions: {},
        series: chart_data
-     }); //Highchart
+     }); //Highchart */
    }; //Function load_chart
 
 </script>
