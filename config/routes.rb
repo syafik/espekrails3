@@ -587,6 +587,7 @@ InstunRails3::Application.routes.draw do
     put 'update_password2'
    
     get 'edit_password2'
+    get 'edit_password'
     get 'verify'
     get 'modrole'
     get 'destroy_peserta'
