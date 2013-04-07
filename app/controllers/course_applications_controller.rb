@@ -61,7 +61,7 @@ class CourseApplicationsController < ApplicationController
       params[:query] = nil
     end
     unless params[:query].blank?
-      @students = CourseApplication.includes(:profile).where("lower(profiles.name) LIKE ?", "%#{params[:query]}%")
+      @students = CourseApplication.includes(:profile).where("profiles.name ILIKE ?", "%#{params[:query]}%")
       #      @students = CourseApplication.search(params[:query], :include => [:profile], :group => 'profiles.id')
       @students = @students.sort_by { |e| e[:profile_id] }.inject([]) { |m, e| m.last.nil? ? [e] : m.last[:profile_id] == e[:profile_id] ? m : m << e }
     else
