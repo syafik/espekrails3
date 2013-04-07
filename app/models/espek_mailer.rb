@@ -140,23 +140,30 @@ class EspekMailer < ActionMailer::Base
   @no = Notification.find(no_id)
   @ci = CourseImplementation.find(@no.course_implementation_id)
 
-    @recipients = "#{@ci.penyelaras1.profile.email},#{@ci.penyelaras2.profile.email},#{@no.user.email}"
+#    @recipients = "#{@ci.penyelaras1.profile.email},#{@ci.penyelaras2.profile.email},#{@no.user.email}"
     #@recipients = "mhafizm@gmail.com"
-    @from       = LoginEngine.config(:email_from).to_s
+#    @from       = LoginEngine.config(:email_from).to_s
     @subject    = "[#{LoginEngine.config(:app_name)}] "
     @sent_on    = Time.now
     #@headers["cc"]  = "#{@no.user.profile.email},#{@ci.k_program.profile.email}"
     #@headers["cc"]  = "#{@no.user.profile.email}"
-    @headers["cc"]  = "ahmadshah@instun.gov.my,fairuszaman@instun.gov.my,ikmal@instun.gov.my,#{@no.user.profile.email}"
-    @headers["bcc"]      = "espek@instun.gov.my"
-    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
+#    @headers["cc"]  = "ahmadshah@instun.gov.my,fairuszaman@instun.gov.my,ikmal@instun.gov.my,#{@no.user.profile.email}"
+#    @headers["bcc"]      = "espek@instun.gov.my"
+#    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
 	  @subject += "Makluman Pelaksanaan Kursus (Seksyen Keselamatan)"
-    @body["course_name"] = @ci.course.name.upcase
-    @body["course_code"] = @ci.code
-    @body["penyelaras1"] = @ci.penyelaras1.profile.name
-    @body["penyelaras2"] = @ci.penyelaras2.profile.name
-    @body["date_start"] = @ci.date_start.to_formatted_s(:my_format_4)
-    @body["date_end"]   = @ci.date_end.to_formatted_s(:my_format_4)
+    @course_name = @ci.course.name.upcase
+    @course_code = @ci.code
+    @penyelaras1 = @ci.penyelaras1.profile.name
+    @penyelaras2 = @ci.penyelaras2.profile.name
+    @date_start = @ci.date_start.to_formatted_s(:my_format_4)
+    @date_end   = @ci.date_end.to_formatted_s(:my_format_4)
+    mail(
+      :from => LoginEngine.config(:email_from).to_s,
+      :to => [@ci.penyelaras1.profile.email,@ci.penyelaras2.profile.email,@no.user.email],
+      :cc => ["ahmadshah@instun.gov.my","fairuszaman@instun.gov.my","ikmal@instun.gov.my",@no.user.profile.email],
+      :bcc => ["espek@instun.gov.my"],
+      :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
+      :subject => @subject)
   end
 
   
