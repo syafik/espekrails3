@@ -1,0 +1,56 @@
+<!--
+ chart_title = the title for the chart
+ chart_container = the div ID where chart is located
+ chart_categories = the categories for vertical axis
+    format: ['category 1', 'category 2', 'category 3']
+ chart_data = the data for the chart
+    format: [{:name => 'series 1', :data => [1, 2, 3]}, {:name => 'series 2', :data => [1, 2, 3]}]
+ chart_footer = the label for the footer
+-->
+<script type="text/javascript">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+                         renderTo: 'table',
+                         type: 'column',
+                         inverted: true,
+                         borderWidth: 1
+      }, title: {
+                         text: '<%= @chart_title %>',
+                     },
+                     credits: {
+                        position: {
+                           align: 'left',
+      x: 20 },
+                        href: 'http://www.instun.gov.my',
+                        text: 'Kementrian Pendidikan Kebudayaan Malaysia'
+                     },
+                     xAxis: {
+                         categories: <%= @categories.to_json.html_safe %>,
+                         lineWidth: 0,
+                         tickLength: 0,
+                         labels: {
+                                                align: 'left',
+                                                x: 0,
+                                                y: -13,
+                                                style: {
+                                                    fontWeight: 'bold'
+                                                }
+                         }                         
+                     }, 
+      yAxis: {
+                         title: {
+                             text: 'No. of Patents'
+      },
+                          labels: {
+                                     rotation: -45,
+                                     align: 'right'
+                             }
+    },
+                     plotOptions: {
+                     },
+                     series: <%= @chart_data.to_json.html_safe %>
+                 }); //Highchart
+}); //function
+  
+</script>

@@ -281,6 +281,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'application_and_attendance'
       get 'peserta_jantina'
+      get 'summary_group_by_states'      
       get 'peserta_mengikut_jabatan'
     end
   end
@@ -424,7 +425,7 @@ InstunRails3::Application.routes.draw do
   resources :course_management do
     get 'evaluation_done'
     collection do
-      get 'select_course'
+      get 'select_course(/:role)', action: :select_course
       get 'sijil_select_course'
       get 'evaluated_courses'
       get 'register'
@@ -463,6 +464,10 @@ InstunRails3::Application.routes.draw do
       get 'cetak_p_evaluation_iso'
       get 'cetak_p_evaluation'
       get 'list_signature'
+      get 'surat_takhadir'
+      get 'surat_pengesahan'
+      get 'certificate'
+      get 'attendance'
     end
   end
   match '/course_applications/all/:course_application_id' => 'course_applications#all', :via => [:get]
@@ -586,6 +591,7 @@ InstunRails3::Application.routes.draw do
     put 'update_password2'
    
     get 'edit_password2'
+    get 'edit_password'
     get 'verify'
     get 'modrole'
     get 'destroy_peserta'

@@ -160,7 +160,7 @@ class NotificationsController < ApplicationController
     @notification.created_on = params[:month_check_in]+"/"+params[:day_check_in]+"/"+params[:year_check_in]
     if @notification.save
       flash[:notice] = 'Makluman Kepada Seksyen Keselamatan Telah Dihantar'
-      EspekMailer.deliver_security_notify(@notification.id)
+      EspekMailer.security_notify(@notification.id).deliver
       if params[:ispopup] and params[:ispopup] == "1"
         redirect_to :controller => 'notifications', :action => 'show_popup', :id => @notification
   	  else
