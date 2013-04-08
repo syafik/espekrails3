@@ -7,17 +7,17 @@ function confirmAndDelete(url, objname) {
 	
 }
 
-function rewritePopupContent(controller, objid, objname) {
-    document.getElementById('popmenu').style.width = 230;
-
-    document.getElementById('popmenu').innerHTML = "<ul>" +
-                             "<li><a href=\"javascript: GoEditSuratTawaran()\">&nbsp;&nbsp;Seterusnya, kemaskini surat pelawaan</a>" + 
-//			     "<li><a href=\""  + controller + "/edit_surat_iklan_la_apa_lagi/" + objid + "\">&nbsp;&nbsp;Pilih Pejabat</a>" + 
-			     "</ul>"
+//function rewritePopupContent(controller, objid, objname) {
+//    document.getElementById('popmenu').style.width = 230;
+//
+//    document.getElementById('popmenu').innerHTML = "<ul>" +
+//                             "<li><a href=\"javascript: GoEditSuratTawaran()\">&nbsp;&nbsp;Seterusnya, kemaskini surat pelawaan</a>" +
+////			     "<li><a href=\""  + controller + "/edit_surat_iklan_la_apa_lagi/" + objid + "\">&nbsp;&nbsp;Pilih Pejabat</a>" +
+//			     "</ul>"
 
 
      
-}
+//}
 </script>
 <script>
 function checkAll(df) {
@@ -73,6 +73,9 @@ function GoEditSuratTawaran() {
   <br>
   <div align="center"><b><font color="">Pilih Kursus</font> &#8250; <font color="blue">Pilih Pejabat </font>&#8250; Kemaskini Isi Surat </b> </div>
   <br>
+  <div align="center"><br />
+    <input type="button" name="Submit" value="Seterusnya, kemaskini surat pelawaan>>" onclick="GoEditSuratTawaran()">
+  </div>
 <!--dari favourite-->
   <br>
   <table width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
