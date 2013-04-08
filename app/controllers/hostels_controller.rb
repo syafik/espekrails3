@@ -759,9 +759,11 @@ class HostelsController < ApplicationController
     d = t.strftime("%d")
     ymd = "#{y}-#{m}-#{d}"
 
-  	$_ = "select * from vw_detail_penghuni_asrama #{w}"
-  	$_ = "select * from vw_detail_penghuni_asrama where expected_date_out='#{ymd}'" if w==nil
-
+    unless w.blank?
+      $_ = "select * from vw_detail_penghuni_asrama #{w}"
+    else
+      $_ = "select * from vw_detail_penghuni_asrama where expected_date_out<'#{ymd}'"
+    end
   	unless params[:to_checkout_kodkursus].blank?
 
 	  	$_ = "select vhp.*,ci.code from vw_detail_penghuni_asrama vhp INNER JOIN course_implementations ci ON ci.id=vhp.course_implementation_id
