@@ -469,6 +469,7 @@ InstunRails3::Application.routes.draw do
       get 'certificate'
       get 'attendance'
       get 'yuran'
+      get 'register'
     end
   end
   match '/course_applications/all/:course_application_id' => 'course_applications#all', :via => [:get]
@@ -526,6 +527,7 @@ InstunRails3::Application.routes.draw do
       get 'cetak_pemohon'
       get 'show_after_create'
       get 'show_after_dr'
+      get 'new_peserta'
     end
   end
   
