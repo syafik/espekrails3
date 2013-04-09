@@ -6,28 +6,10 @@
     </tr>
   </table>
   <br/>
-  <!-- TABLE HEADER -->   
-  <table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td align="center"> Dari: &nbsp;
-        <%= select_tag :month_from, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_from])%>
-        &nbsp;&nbsp;Hingga: &nbsp;
-        <%= select_tag :month_until, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_until])%>
-        &nbsp;&nbsp;Tahun: &nbsp;
-        <%= select_tag :year, options_for_select([["-pilih Tahun-", ""]]+ @planning_years, params[:year])%>
-        <input type="button" value="Cari" onclick="document.forms[0].submit()">
-    </tr>
-    <% if @reports.any? %>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-      <td align="center" valign="middle">
-        <input type="radio" name="filter_show" id="filter_show_table" value="table" checked="1"  onclick="toggle_chart();" />
-          <label for="filter_status_all">Table</label>
-          <input type="radio" name="filter_show" id="filter_show_chart" value="chart" onclick="toggle_chart();" />
-          <label for="filter_status_pending">Chart</label>
-      </td>
-    </tr-->
-    <% end %>
+  <!-- TABLE HEADER -->
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <%= render :partial => "shared/month_range_selection", :locals => {:planning_months => @planning_months, :planning_years => @planning_years} %>
+    <%= render :partial => "shared/chart_table_toggle", :locals => {:reports => @reports} %>
   </table>
 </form>
 <br>
@@ -44,13 +26,10 @@
     <% total = 0 %>
     <% categories = @reports.sort_by{|e| -e[:subtotal].to_i}.collect(&:state_name) %>
     <% student_count = @reports.sort_by{|e| -e[:subtotal].to_i}.collect(&:subtotal).map(&:to_i) %>
-    <%# student_percentage = @reports.collect(&:percentage).map(&:to_i) %>
     <% 
       chart_data = []
       peserta = {:name => "Peserta", :data => student_count}
-      #percentage = {:name =>"percentage", :data => student_percentage }
       chart_data << peserta
-      #chart_data << percentage
     %>
     
     <% @reports.each_with_index do |report, index| %>
@@ -77,12 +56,12 @@
 
 <br/>
 <div id="container" class="chart" style="display:none; padding-left:33px; width:95%; height:<%= 35 * @reports.count %>px;"/>
+
 <%= javascript_include_tag "highcharts" %>
+
 <script type="text/javascript">  
   function toggle_chart(){
     var showed = $('input[name=filter_show]:checked').val();
-    //var cat = <%= categories.to_json.html_safe %>;
-    //var data = <%=  chart_data.to_json.html_safe %>;
     
     if (showed == "chart"){
       $(".chart").show();
@@ -93,49 +72,14 @@
       $(".table_report").show();
     }
   }; //function toggle_chart
-  // 
+  
   function loadChart(){
 
-  <%= render :partial => 'shared/chart_bar',
-    :locals => {:data => chart_data.to_json.html_safe, :title => chart_title, :container => 'container', :category => categories.to_json.html_safe}
-%>
- /*   chart = new Highcharts.Chart({
-       chart: {
-         renderTo: container,
-         type: 'column',
-         inverted: true,
-         borderWidth: 1
-       }, 
-       title: { text: title },
-       credits: {
-         position: {
-           align: 'left',
-           x: 20 
-         },
-         href: 'http://www.instun.gov.my',
-         text: 'Kementrian Pendidikan Kebudayaan Malaysia'
-       },
-       xAxis: {
-         categories: categories,
-         lineWidth: 0,
-         tickLength: 0,
-         labels: {
-           align: 'left',
-           x: 0,
-           y: -13,
-           style: { fontWeight: 'bold' }
-         }
-       },
-       yAxis: {
-         title: { text: 'No. of Patents' },
-         labels: {
-           rotation: -45,
-           align: 'right'
-         }
-       },
-       plotOptions: {},
-       series: chart_data
-     }); //Highchart */
+    <%= render :partial => 'shared/chart_bar',
+               :locals => {:data => chart_data.to_json.html_safe, 
+                           :title => chart_title, :container => 'container', 
+                           :category => categories.to_json.html_safe}
+     %>
    }; //Function load_chart
 
 </script>
