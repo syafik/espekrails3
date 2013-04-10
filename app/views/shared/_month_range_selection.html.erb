@@ -1,0 +1,9 @@
+<tr>
+  <td align="center"> Dari: &nbsp;
+    <%= select_tag :month_from, options_for_select([["-pilih Bulan-", ""]]+ planning_months, params[:month_from])%>
+    &nbsp;&nbsp;Hingga: &nbsp;
+    <%= select_tag :month_until, options_for_select([["-pilih Bulan-", ""]]+ planning_months, params[:month_until])%>
+    &nbsp;&nbsp;Tahun: &nbsp;
+    <%= select_tag :year, options_for_select([["-pilih Tahun-", ""]]+ planning_years, params[:year])%>
+    <input type="button" value="Cari" onclick="document.forms[0].submit()">
+</tr>

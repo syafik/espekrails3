@@ -44,7 +44,12 @@
 
       "</ul>")
     <% else %>
-      $('#popmenu').html("<ul><li><a href=\""  + "/course_management/" + objid + "/<%= params[:next_action]%>" + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Lihat Senarai Peserta</a></li></ul>");
+      <% if params[:next_action].eql?("register") %>
+        $('#popmenu').html("<ul><li><a href=\""  + "/course_applications/" + objid + "/new_peserta" + "?dr=1\">&nbsp;&nbsp;Tambah Peserta(Gantian, dll)</a></li>" +
+          "<li><a href=\""  + "/course_management/" + objid + "/<%= params[:next_action]%>" + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Lihat Senarai Peserta</a></li></ul>");
+      <% else %>
+        $('#popmenu').html("<ul><a href=\""  + "/course_management/" + objid + "/<%= params[:next_action]%>" + "?apply_status=<%= params[:next_action]%>" + "\">&nbsp;&nbsp;Lihat Senarai Peserta</a></li></ul>");
+      <% end %>
     <% end %>
   }
 

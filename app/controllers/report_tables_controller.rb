@@ -1,6 +1,6 @@
 class ReportTablesController < ApplicationController
   layout "standard-layout"
-  before_filter :prepare_and_check_month_data, :except => :application_and_attendance_query
+  before_filter :prepare_and_check_month_data, :except => [:application_and_attendance_query, :peserta_mengikut_jabatan_query, :custom_filter]
   
   def prepare_and_check_month_data
     @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
@@ -32,12 +32,9 @@ class ReportTablesController < ApplicationController
     end  
   end
 
-  def peserta_mengikut_jabatan
-    @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
-    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from date_apply)as year from vw_detailed_applicants_all").collect(&:year)
- 
+  def peserta_mengikut_jabatan 
     if params[:month_from].present? && params[:month_until].present? && params[:year].present?
-      filter = " AND EXTRACT(month FROM date_apply) >= #{params[:month_from]}
+      filter = " WHERE EXTRACT(month FROM date_apply) >= #{params[:month_from]}
                  AND EXTRACT(month FROM date_apply) <= #{params[:month_until]}
                  AND EXTRACT(year FROM date_apply) = #{params[:year]}"
 
@@ -68,6 +65,7 @@ class ReportTablesController < ApplicationController
       result_1 = peserta_mengikut_jabatan_query('Pentadbiran Tanah', condition_1, place_p_tanah_ids, place_jupem_ids, place_other_ids, filter)
       result_2 = peserta_mengikut_jabatan_query('Ukur dan Pemetaan', condition_2, place_p_tanah_ids, place_jupem_ids, place_other_ids, filter)
       result_3 = peserta_mengikut_jabatan_query('Teknologi Maklumat', condition_3, place_p_tanah_ids, place_jupem_ids, place_other_ids, filter)
+
       @reports = result_1 + result_2 + result_3
     else
       flash[:notice] = "sila isi filter dengan lengkap" if params[:month_from].present? || params[:month_until].present? || params[:year].present?
@@ -201,29 +199,63 @@ class ReportTablesController < ApplicationController
   end
 
   def peserta_mengikut_jabatan_query(title, condition, ids1, ids2, ids3, filter)
-    sql ="select '#{title}' as name, (
-    SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    (#{condition})
-    AND profile_id IN (
-      select profile_id from employments  WHERE
-      place_id IN (#{ids1.join(",")}))
-    #{filter}) as p_tanah,
-    (
-    SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    (#{condition})
-    AND profile_id IN (
-      select profile_id from employments WHERE
-      place_id IN (#{ids2.join(",")}))
-    #{filter}) as jupem,
-    (
-    SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    (#{condition})
-    AND profile_id IN (
-      select profile_id from employments WHERE
-      place_id NOT IN (#{ids3.join(",")}))
-    #{filter}) as other
-    "
-    return CourseApplication.find_by_sql(sql)
+    result = OpenStruct.new
+    result.name = title
+    result.p_tanah = custom_filter(condition, ids1, filter, true).to_s
+    result.jupem   = custom_filter(condition, ids2, filter, true).to_s
+    result.other   = custom_filter(condition, ids3, filter, false).to_s
+     
+    return [result]
+         
+    # sql ="select '#{title}' as name, (
+    # SELECT count(*) FROM course_applications WHERE course_implementation_id IN
+    # (#{condition})
+    # AND profile_id IN (
+    #   select profile_id from employments  WHERE
+    #   place_id IN (#{ids1.join(",")}))
+    # #{filter}) as p_tanah,
+    # 
+    # (
+    # SELECT count(*) FROM course_applications WHERE course_implementation_id IN
+    # (#{condition})
+    # AND profile_id IN (
+    #   select profile_id from employments WHERE
+    #   place_id IN (#{ids2.join(",")}))
+    # #{filter}) as jupem,
+    # (
+    # SELECT count(*) FROM course_applications WHERE course_implementation_id IN
+    # (#{condition})
+    # AND profile_id IN (
+    #   select profile_id from employments WHERE
+    #   place_id NOT IN (#{ids3.join(",")}))
+    # #{filter}) as other
+    # "
+    #     return CourseApplication.find_by_sql(sql)
   end
-
+  
+  def custom_filter(condition, ids, filter, keep)
+    a = "select course_implementation_id as cid, profile_id as pid FROM course_applications #{filter}"
+    rows = CourseApplication.find_by_sql(a)
+    
+    #filter 1 course_implementation.id
+    cids = CourseImplementation.find_by_sql(condition)      
+    cids = cids.collect(&:id).collect{|el|el.to_i}
+    
+    rows.keep_if {|el| cids.include?(el.cid.to_i)}
+        
+    #filter 2 place_id
+    c = "select profile_id, place_id from employments"
+    pids = Employment.find_by_sql(c)
+    if keep
+      pids.keep_if {|el| ids.include?(el.place_id.to_i)}
+    else
+      pids.delete_if {|el| ids.include?(el.place_id.to_i)}
+    end
+    pids = pids.collect(&:profile_id).collect{|el|el.to_i}
+    
+    rows.keep_if {|el| pids.include?(el.pid.to_i)}
+      
+    rows.count
+  end
+    
 end

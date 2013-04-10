@@ -5,26 +5,10 @@
     </tr>
   </table>
   <br/>
+  <!-- TABLE HEADER -->
   <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td align="center"> Dari: &nbsp;
-        <%= select_tag :month_from, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_from])%>
-        &nbsp;&nbsp;Hingga: &nbsp;
-        <%= select_tag :month_until, options_for_select([["-pilih Bulan-", ""]]+ @planning_months, params[:month_until])%>
-        &nbsp;&nbsp;Tahun: &nbsp;
-        <%= select_tag :year, options_for_select([["-pilih Tahun-", ""]]+ @planning_years, params[:year])%>
-        <input type="button" value="Cari" onclick="document.forms[0].submit()">
-    </tr>
-    <% if @reports.any? %>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-        <td align="center" valign="middle">
-          <input type="radio" name="filter_show" id="filter_show_table" value="table" checked="1"  onclick="toggle_chart()" />
-          <label for="filter_status_all">Table</label>
-          <input type="radio" name="filter_show" id="filter_show_chart" value="chart" onclick="toggle_chart()" />
-          <label for="filter_status_pending">Chart</label>
-        </td></tr>
-    <% end %>
+    <%= render :partial => "shared/month_range_selection", :locals => {:planning_months => @planning_months, :planning_years => @planning_years} %>
+    <%= render :partial => "shared/chart_table_toggle", :locals => {:reports => @reports} %>
   </table>
 </form>
 <br/>
