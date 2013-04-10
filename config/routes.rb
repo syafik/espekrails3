@@ -492,7 +492,8 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/new_but_peserta_already_exist' => 'course_applications#new_but_peserta_already_exist', :via => [:get]
   match '/course_applications/user_daftar/:id' => 'course_applications#user_daftar', :via => [:get]
   match '/course_applications/new/:id' => 'course_applications#new', :via => [:get]
-  
+  match '/course_applications/new_peserta/:id' => 'course_applications#new_peserta', :via => [:get]
+
   resources :course_applications, :except => [ :destroy ] do
     get 'new'
     get 'all'
