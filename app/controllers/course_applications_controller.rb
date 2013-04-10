@@ -1173,7 +1173,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def destroy
-    CourseApplication.find(params[:id]).destroy
+    CourseApplication.find(params[:course_application_id]).destroy
     redirect_to :action => 'select_course'
     #redirect_to :action => 'list'
   end

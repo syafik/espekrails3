@@ -3,7 +3,7 @@ class Trainer < ActiveRecord::Base
 
 	belongs_to :profile
 	
-	has_many :topics
+	has_many :topics, :dependent => :nullify
 
 	#has_and_belongs_to_many :expertises
 	has_and_belongs_to_many :courses

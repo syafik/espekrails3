@@ -14,7 +14,7 @@
   </table>
   <BR>
 
-<form name="t_form" method="post" action="/trainer/create" onsubmit="return GoSubmit(t_form)">
+<form name="t_form" method="post" action="/trainer" onsubmit="return GoSubmit(t_form)">
 
   <%= render :partial => 'form' %>
   <BR>
@@ -27,13 +27,13 @@
 
 function GoSubmit(df) {
 
-	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
-	if (!checkSelection(strRegExp,$('profile_title_id'),'Gelaran')) return false;
-	if (!checkInput(anythingRegExp,$('profile_name'),'Nama Penuh Pemohon')) return false;
-	if (!checkSelection(strRegExp,$('profile_gender_id'),'Jantina')) return false;
-	if (!checkSelection(strRegExp,$('profile_religion_id'),'Agama')) return false;
-	if (!checkSelection(strRegExp,$('profile_marital_status_id'),'Taraf Perkahwinan')) return false;
-	if (!checkSelection(strRegExp,$('profile_race_id'),'Keturunan')) return false;
+	if (!checkInput(icnumRegExp,$('#profile_ic_number'),'No KP')) return false;
+	if (!checkSelection(strRegExp,$('#profile_title_id'),'Gelaran')) return false;
+	if (!checkInput(anythingRegExp,$('#profile_name'),'Nama Penuh Pemohon')) return false;
+	if (!checkSelection(strRegExp,$('#profile_gender_id'),'Jantina')) return false;
+	if (!checkSelection(strRegExp,$('#profile_religion_id'),'Agama')) return false;
+	if (!checkSelection(strRegExp,$('#profile_marital_status_id'),'Taraf Perkahwinan')) return false;
+	if (!checkSelection(strRegExp,$('#profile_race_id'),'Keturunan')) return false;
 
 	return true;
 }

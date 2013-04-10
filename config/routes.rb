@@ -491,10 +491,11 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/user_daftar/:id' => 'course_applications#user_daftar', :via => [:get]
   match '/course_applications/new/:id' => 'course_applications#new', :via => [:get]
   
-  resources :course_applications do
+  resources :course_applications, :except => [ :destroy ] do
     get 'new'
     get 'all'
     get 'edit_surat_tawaran_select_peserta'
+    get 'destroy'
     collection do
       get 'applicant'
       get 'all'
@@ -735,6 +736,8 @@ InstunRails3::Application.routes.draw do
   match '/ajax/find_course_by_code' => 'ajax#find_course_by_code', :via => [:post]
   match '/ajax/find_course_by_code_ca' => 'ajax#find_course_by_code_ca', :via => [:get]
   match '/ajax/find_course_by_code_2' => 'ajax#find_course_by_code_2', :via => [:get]
+  match '/ajax/ajax_trainer_nric' => 'ajax#ajax_trainer_nric', :via => [:get]
+  match '/ajax/ajax_trainer_codename' => 'ajax#ajax_trainer_codename', :via => [:get]
   match '/ajax/children_of_place' => 'ajax#children_of_place', :via => [:post]
   match '/ajax/grand_and_children_of_place' => 'ajax#grand_and_children_of_place', :via => [:post]
   match '/ajax/staff_find_jawatan' => 'ajax#staff_find_jawatan', :via => [:post]

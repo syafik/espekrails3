@@ -37,14 +37,14 @@ function checkInput(regex,obj,obj_desc) {
 
 	if (obj_desc=="") obj_desc = obj.name;
 
-	if (obj.value == "") {
+	if (obj.val() == "") {
 		alert('Sila Masukkan ' + obj_desc);
 		obj.focus();
 		HighLightTextField(obj);
 		return false;
 	}
 	else {
-		if (!regex.test(obj.value)) {
+		if (!regex.test(obj.val())) {
 			alert('Invalid ' + obj_desc);
 			obj.focus();
 			HighLightTextField(obj);
@@ -76,7 +76,7 @@ function checkSelection(regex,obj,obj_desc) {
 //alert(obj.value);
 	if (obj_desc=="") obj_desc = obj.name;
 
-	if (obj.value == 0) {
+	if (obj.val() == 0) {
 		alert('Sila Pilih ' + obj_desc);
 		obj.focus();
 		HighLight(obj);
