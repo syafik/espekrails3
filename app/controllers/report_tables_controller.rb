@@ -1,22 +1,6 @@
 class ReportTablesController < ApplicationController
   layout "standard-layout"
-  before_filter :prepare_and_check_month_data, :except => [:application_and_attendance_query, :peserta_mengikut_jabatan_query, :custom_filter]
-  
-  def prepare_and_check_month_data
-    @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
-    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from date_apply)as year from vw_detailed_applicants_all").collect(&:year)    
-  end
-  
-  def is_param_month_range_valid?
-    if !params[:month_from].present? && !params[:month_until].present? && !params[:year].present?  
-      flash[:notice] = "sila isi filter dengan lengkap" if params[:month_from].present? || params[:month_until].present? || params[:year].present?
-      @reports =  []
-      false
-    else
-      true
-    end
-    
-  end
+  before_filter :prepare_and_check_month_data, :except => [:application_and_attendance_query]
   
   def application_and_attendance 
     if is_param_month_range_valid?
@@ -60,7 +44,7 @@ class ReportTablesController < ApplicationController
       end
       place_jupem_ids = (place_jupem_rows.collect(&:id) + place_jupem_children_ids).uniq
 
-      place_other_ids = place_p_tanah_ids + place_jupem_ids
+      place_other_ids = (Place.all.collect(&:id) - (place_p_tanah_ids + place_jupem_ids)).uniq
 
       result_1 = peserta_mengikut_jabatan_query('Pentadbiran Tanah', condition_1, place_p_tanah_ids, place_jupem_ids, place_other_ids, filter)
       result_2 = peserta_mengikut_jabatan_query('Ukur dan Pemetaan', condition_2, place_p_tanah_ids, place_jupem_ids, place_other_ids, filter)
@@ -175,7 +159,60 @@ class ReportTablesController < ApplicationController
     end
   end
 
+  def trainer_by_department
+    total_all = Trainer.find_by_sql("select count(*) as amount from trainers t, profiles p where t.profile_id = p.id")[0].amount.to_i
+    total_internal_but_no_department = Trainer.find_by_sql("SELECT count(*) as amount FROM trainers t, profiles p WHERE t.profile_id = p.id AND t.is_internal = 1 AND course_department_id is NULL")[0].amount.to_i
+    total = total_all - total_internal_but_no_department
+    #raise total.inspect
+    sql = []
+    sql[0] = "SELECT 'Pengurusan dan Perundangan Tanah' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
+    sql[1] = "SELECT 'Ukur dan Pemetaan' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
+    sql[2] = "SELECT 'Teknologi Maklumat' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
+    sql[3] = "SELECT 'Pentadbiran dan Kewangan' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
+    sql[4] = "SELECT 'Luaran' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL)) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL)) as float) / #{total}*100) as percentage"
+
+    @reports = []
+    sql.each do |i|
+      @reports += Trainer.find_by_sql(i)
+    end
+  end
+
   private
+
+  def prepare_and_check_month_data
+    @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
+    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from date_apply)as year from vw_detailed_applicants_all").collect(&:year)
+  end
+
+  def is_param_month_range_valid?
+    if !params[:month_from].present? && !params[:month_until].present? && !params[:year].present?
+      flash[:notice] = "sila isi filter dengan lengkap" if params[:month_from].present? || params[:month_until].present? || params[:year].present?
+      @reports =  []
+      false
+    else
+      true
+    end
+  end
 
   def application_and_attendance_query(title, condition, filter)
     sql = "select '#{title}' as name, (
@@ -201,39 +238,39 @@ class ReportTablesController < ApplicationController
   def peserta_mengikut_jabatan_query(title, condition, ids1, ids2, ids3, filter)
     result = OpenStruct.new
     result.name = title
-    result.p_tanah = custom_filter(condition, ids1, filter, true).to_s
-    result.jupem   = custom_filter(condition, ids2, filter, true).to_s
-    result.other   = custom_filter(condition, ids3, filter, false).to_s
-     
+    result.p_tanah = custom_filter(condition, ids1, filter).to_s
+    result.jupem   = custom_filter(condition, ids2, filter).to_s
+    result.other   = custom_filter(condition, ids3, filter).to_s
+
     return [result]
          
-    # sql ="select '#{title}' as name, (
-    # SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    # (#{condition})
-    # AND profile_id IN (
-    #   select profile_id from employments  WHERE
-    #   place_id IN (#{ids1.join(",")}))
-    # #{filter}) as p_tanah,
-    # 
-    # (
-    # SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    # (#{condition})
-    # AND profile_id IN (
-    #   select profile_id from employments WHERE
-    #   place_id IN (#{ids2.join(",")}))
-    # #{filter}) as jupem,
-    # (
-    # SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    # (#{condition})
-    # AND profile_id IN (
-    #   select profile_id from employments WHERE
-    #   place_id NOT IN (#{ids3.join(",")}))
-    # #{filter}) as other
-    # "
-    #     return CourseApplication.find_by_sql(sql)
+    #     sql ="select '#{title}' as name, (
+    #     SELECT count(*) FROM course_applications WHERE course_implementation_id IN
+    #     (#{condition})
+    #     AND profile_id IN (
+    #       select profile_id from employments  WHERE
+    #       place_id IN (#{ids1.join(",")}))
+    #     #{filter}) as p_tanah,
+    #
+    #     (
+    #     SELECT count(*) FROM course_applications WHERE course_implementation_id IN
+    #     (#{condition})
+    #     AND profile_id IN (
+    #       select profile_id from employments WHERE
+    #       place_id IN (#{ids2.join(",")}))
+    #     #{filter}) as jupem,
+    #     (
+    #     SELECT count(*) FROM course_applications WHERE course_implementation_id IN
+    #     (#{condition})
+    #     AND profile_id IN (
+    #       select profile_id from employments WHERE
+    #       place_id NOT IN (#{ids3.join(",")}))
+    #     #{filter}) as other
+    #     "
+    #         return CourseApplication.find_by_sql(sql)
   end
   
-  def custom_filter(condition, ids, filter, keep)
+  def custom_filter(condition, ids, filter)
     a = "select course_implementation_id as cid, profile_id as pid FROM course_applications #{filter}"
     rows = CourseApplication.find_by_sql(a)
     
@@ -246,15 +283,9 @@ class ReportTablesController < ApplicationController
     #filter 2 place_id
     c = "select profile_id, place_id from employments"
     pids = Employment.find_by_sql(c)
-    if keep
-      pids.keep_if {|el| ids.include?(el.place_id.to_i)}
-    else
-      pids.delete_if {|el| ids.include?(el.place_id.to_i)}
-    end
+    pids.keep_if {|el| ids.include?(el.place_id.to_i)}
     pids = pids.collect(&:profile_id).collect{|el|el.to_i}
-    
-    rows.keep_if {|el| pids.include?(el.pid.to_i)}
-      
+    rows.keep_if {|el| pids.include?(el.pid.to_i)} 
     rows.count
   end
     

@@ -1,5 +1,9 @@
 
+var fixed_num = 0
 
+<% if defined? fixed_num%>
+<%= "fixed_num = #{fixed_num}"  %>
+<% end %>
 
   chart = new Highcharts.Chart({
     chart: {
@@ -20,7 +24,7 @@
     },
     tooltip: {
       formatter: function() {
-        return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
+        return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(fixed_num) +' %';
       }
     },
     plotOptions: {
@@ -32,11 +36,22 @@
           color: '#000000',
           connectorColor: '#000000',
           formatter: function() {
-            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(0) +' %';
+            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(fixed_num) +' %';
           }
         },
         showInLegend: true
       }
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'top',
+      x: -175,
+      y: 125,
+      floating: true,
+      borderWidth: 1,
+      backgroundColor: '#FFFFFF',
+      shadow: true
     },
     series: [{
         type: 'pie',
