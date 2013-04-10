@@ -283,6 +283,7 @@ InstunRails3::Application.routes.draw do
       get 'peserta_jantina'
       get 'summary_group_by_states'      
       get 'peserta_mengikut_jabatan'
+      get 'trainer_by_department'
     end
   end
 

@@ -159,6 +159,44 @@ class ReportTablesController < ApplicationController
     end
   end
 
+  def trainer_by_department
+    total_all = Trainer.find_by_sql("select count(*) as amount from trainers t, profiles p where t.profile_id = p.id")[0].amount.to_i
+    total_internal_but_no_department = Trainer.find_by_sql("SELECT count(*) as amount FROM trainers t, profiles p WHERE t.profile_id = p.id AND t.is_internal = 1 AND course_department_id is NULL")[0].amount.to_i
+    total = total_all - total_internal_but_no_department
+    #raise total.inspect
+    sql = []
+    sql[0] = "SELECT 'Pengurusan dan Perundangan Tanah' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
+    sql[1] = "SELECT 'Ukur dan Pemetaan' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
+    sql[2] = "SELECT 'Teknologi Maklumat' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
+    sql[3] = "SELECT 'Pentadbiran dan Kewangan' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
+    sql[4] = "SELECT 'Luaran' AS name, (
+      SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL)) AS amount,
+      (cast ((SELECT count(*) FROM trainers t, profiles p
+      WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL)) as float) / #{total}*100) as percentage"
+
+    @reports = []
+    sql.each do |i|
+      @reports += Trainer.find_by_sql(i)
+    end
+  end
+
   private
 
   def prepare_and_check_month_data
