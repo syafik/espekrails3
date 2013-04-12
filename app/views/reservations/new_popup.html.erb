@@ -7,7 +7,8 @@
 <BR>
 <% if !@check %>
   <%#= start_form_tag :action => 'create', :id=>@course_implementation.id %>
-  <form method="post" action="/reservations/create/<%=@course_implementation.id%>" onsubmit="return GoSubmit(this)">
+  <form method="post" action="/reservations" onsubmit="return GoSubmit(this)">
+    <%= hidden_field_tag "id", @course_implementation.id %>
 
     <%= render :partial => 'form' %>
     <div align="center">

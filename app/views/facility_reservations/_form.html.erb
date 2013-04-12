@@ -169,25 +169,25 @@ function intOnly(i) {
      <tr>
       <td align="left"><b>Kepada :</b></td>
       <td colspan="3">&nbsp;
-            <%=
+            <%
 		  @securities = Role.find(8).users
 		  @options = @securities.map { |t| [t.profile.name, t.profile.id] }
                   #@options = @staffs.map { |t| [t.profile.name, t.profile.id] }
                   @options.unshift(["Sila Pilih", ""])
-                  select(:facility_reservation, :to_profile_id, @options, "" ,:style=>"width: 300;")
-                %>        </td>
+                  %>
+                  <%= select(:facility_reservation, :to_profile_id, options_for_select(@options),:style=>"width: 300;") %>        </td>
 
       </tr>
       <tr>
       <td align="left"><b>Salinan :</b></td>
       <td colspan="3">&nbsp;
-            <%=
+            <%
 		  @securities = Role.find(8).users
 		  @options = @securities.map { |t| [t.profile.name, t.profile.id] }
                   #@options = @staffs.map { |t| [t.profile.name, t.profile.id] }
                   @options.unshift(["Sila Pilih", ""])
-                  select(:facility_reservation, :cc_profile_id, @options, "" ,:style=>"width: 300;")
-                %>        </td>
+                  %>
+                  <%= select(:facility_reservation, :cc_profile_id, options_for_select(@options), :style=>"width: 300;") %>        </td>
     </tr>
          <tr>
       <td colspan="4" align="center"><span class="blockintro">&nbsp;<b>&nbsp;</b></span></td>
