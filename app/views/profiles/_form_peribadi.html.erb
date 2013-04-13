@@ -428,14 +428,14 @@ end
     &nbsp;
     <input id="job_profile_name" name="job_profile_name" type="text" maxlength="100" size="60" value="<%=@job_grade_and_job_name%>" onfocus="this.select()">
     <div class="auto_complete" id="job_profile_name_auto_complete"></div>
-    <%= javascript_tag("new Autocompleter.Local('job_profile_name' ,
-  'job_profile_name_auto_complete' ,
-  grades,
-  {fullSearch: true,
-  frequency: 0,
-  minChars: 1
-  }
-  );") %> <%= hidden_field 'employment', 'job_profile_id', :size=>3  %></td>
+<%#= javascript_tag("new Autocompleter.Local('job_profile_name' ,
+'job_profile_name_auto_complete' ,
+grades,
+{fullSearch: true,
+frequency: 0,
+minChars: 1
+}
+);") %> <%= hidden_field 'employment', 'job_profile_id', :size=>3  %></td>
 </tr>
 <tr>
   <td align="right" nowrap="nowrap"><b>Gelaran Jawatan :</b></td>
@@ -531,63 +531,11 @@ end
     </table>
     <table id="qua_table" border="0" width="90%" align="center">
       <tr>
-        <td align="right"><a href="javascript: addQualification('qua_table')"><font style="color: blue; font-size:10px;"><u>Tambah..</u></font> </a></td>
+        <td align="right"><a href="#qua_table" id="add_qua_table"><font style="color: blue; font-size:10px;"><u>Tambah..</u></font> </a></td>
+<%#*<td align="right"><a href="#qua_table" id="add_qua_table" onclick="addQualification('.qua_table')"><font style="color: blue; font-size:10px;"><u>Tambah..</u></font> </a></td>%>
       </tr>
     </table></td>
-<script>
-  var cert_level_options = [
-    {name: "Sila Pilih", id: ""},
-<% @cert_levels.each do |cl| %>
-  <%= "{name: \"#{cl.description}\", id: \"#{cl.id}\"}," %>
-<% end %>
-    {name: " ", id: "00"}
-  ];
 
-  var major_options = [
-    {name: "Sila Pilih", id: ""},
-<% @majors.each do |m| %>
-  <%= "{name: \"#{m.description}\", id: \"#{m.id}\"}," %>
-<% end %>
-    {name: " ", id: "00"}
-  ];
-
-  function addQualification(tn) {
-    var tbl = $(tn);
-    var newRow = tbl.insertRow(tbl.rows.length);
-    row_id = "row_" + (tbl.rows.length-1);
-    if ($(row_id)) {
-      row_id = row_id + "_1"
-    }
-    newRow.id = row_id;
-	
-    option_strings = ""
-    for (i=0;i<cert_level_options.length;i++) {
-      option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
-    }
-    major_option_strings = ""
-    for (i=0;i<major_options.length;i++) {
-      major_option_strings += '<option value="'+major_options[i].id +'">'+major_options[i].name+'</option>'
-    }
-    var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
-    var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<input type="text" name="majors[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Pengkhususan\')) return false;">';
-    var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
-    var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
-    var cell_4 = newRow.insertCell(4);cell_4.align="center";
-    cell_4.innerHTML = '<a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
-  }
-
-  function deleteQualificationRow(tn,id) {
-    row = $(id)
-    tbl = row.parentNode.parentNode
-    for (i=1;i<tbl.rows.length;i++) {
-      //alert(tbl.rows[i].id)
-		
-      if (tbl.rows[i].id == row.id) {
-        tbl.deleteRow(i)
-      }
-    }
-  }
-</script>
 </tr>
 <tr>
   <td colspan=4>&nbsp;</td>
@@ -620,3 +568,48 @@ end
     padding:0;
   }
 </style>
+<script>
+<% xx = @cert_levels.unshift({"name" => "Sila Pilih", "id" => ""}) + ["name" => " ", "id" => "00"]  %>
+  var cert_level_options = <%= xx.to_json.gsub("description", "name").html_safe %>;
+<% yy = @majors.unshift({"name" => "Sila Pilih", "id" => ""}) + ["name" => " ", "id" => "00"]  %>
+var major_options = <%= yy.to_json.gsub("description", "name").html_safe %>;
+  $(function() {
+    $('#add_qua_table').click(function(){
+      addQualification('#qua_table');
+    });
+    function addQualification(tn) {
+      var tbl = $(tn);
+      row_id = "row_" + ($(tn+' tr').length-1);
+      option_strings = ""
+      for (i=0;i<cert_level_options.length;i++) {
+        option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
+      }
+      major_option_strings = ""
+      for (i=0;i<major_options.length;i++) {
+        major_option_strings += '<option value="'+major_options[i].id +'">'+major_options[i].name+'</option>'
+      }
+      content = '<tr id="'+row_id+'">'+
+        '<td><select name="cert_level_ids[]">'+option_strings+'</select></td>'+
+        '<td><input type="text" name="majors[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Pengkhususan\')) return false;"> </td>'+
+        '<td><input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;"> </td>'+
+        '<td><input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;"> </td>'+
+        '<td><a href="#qua_table" onclick="deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a></td>'+
+        '</tr>';
+      tbl.append(content);
+    }
+
+    
+  });
+  function deleteQualificationRow(tn,id) {
+      <%#*row = $(id)%>
+          row = document.getElementById(id)
+      tbl = row.parentNode.parentNode
+      for (i=1;i<tbl.rows.length;i++) {
+        //alert(tbl.rows[i].id)
+
+        if (tbl.rows[i].id == row.id) {
+          tbl.deleteRow(i)
+        }
+      }
+    }
+</script>

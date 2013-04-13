@@ -6,9 +6,9 @@
 <br>
 <div align=center>
 
-<%= start_form_tag({:action=> "create"} , { :name => 'form', :onSubmit => "return check_form(this);"}) %>
+<%= form_tag({:action=> "create"} , { :name => 'form', :onSubmit => "return check_form(this);"}) do %>
   <%= render :partial => 'form' %>
   <%= submit_tag "Simpan" %>
-<%= end_form_tag %>
+<% end %>
 </div>
 

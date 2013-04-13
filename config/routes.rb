@@ -401,6 +401,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'list'
       post 'hozon'
+      get 'destroy/:id', action: :destroy
     end
     member do
       get 'shiken_ichiran'
@@ -531,6 +532,7 @@ InstunRails3::Application.routes.draw do
       get 'show_after_create'
       get 'show_after_dr'
       get 'new_peserta'
+      get 'accepted'
     end
   end
   
