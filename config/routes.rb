@@ -539,7 +539,7 @@ InstunRails3::Application.routes.draw do
   match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
   match '/course_implementations/show_public/:id' => 'course_implementations#show_public', :via => [:get]
   #match '/course_implementations/update/:id' => 'course_implementations#update', :via => [:post]
-  resources :course_implementations do
+  resources :course_implementations, except: :destroy do
     get 'show'
     get 'calendar'
     get 'edit_surat_iklan_select_pejabat'
@@ -560,6 +560,7 @@ InstunRails3::Application.routes.draw do
       post 'search_for_user'
       get 'list_public'
       get 'calendar_public'
+      get 'destroy/:id', action: :destroy
     end
     member do
       get 'add_course_trainer_refresh_opener'
