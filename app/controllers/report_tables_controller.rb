@@ -22,7 +22,8 @@ class ReportTablesController < ApplicationController
                  AND EXTRACT(month FROM date_apply) <= #{params[:month_until]}
                  AND EXTRACT(year FROM date_apply) = #{params[:year]}"
 
-      condition_1 = "Select id from course_implementations where code LIKE 'T%' AND code NOT LIKE 'TM%'"
+      condition_1 = "Select id from course_implementations where code LIKE 'T%' AND
+       code NOT LIKE 'TM%'"
       condition_2 = "Select id from course_implementations where code LIKE 'U%'"
       condition_3 = "Select id from course_implementations where code LIKE 'TM%'"
     
@@ -59,10 +60,11 @@ class ReportTablesController < ApplicationController
 
   def summary_group_by_states
     if is_param_month_range_valid?
-    
+          
       presence_total_query = "select count(vdaa.profile_id) as total
         FROM vw_detailed_applicants_all vdaa 
         WHERE student_status_id IN (5,8,9) 
+        AND UPPER(OPIS) LIKE ('JKPTG%') OR OPIS LIKE('JABATAN KETUA PENGARAH TANAH DAN GALIAN%')
         AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
         AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
         AND EXTRACT(year FROM date_apply) = #{params[:year]}"
@@ -74,10 +76,41 @@ class ReportTablesController < ApplicationController
               join profiles pr on vdaa.profile_id = pr.id
               join states st on pr.state_id = st.id
               WHERE student_status_id IN (5,8,9)
+              AND UPPER(vdaa.OPIS) LIKE ('JKPTG%') OR UPPER(vdaa.OPIS) LIKE('JABATAN KETUA PENGARAH TANAH DAN GALIAN%')
               AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
               AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
               AND EXTRACT(year FROM date_apply) = #{params[:year]}
               group by state_id, st.description
+              order by st.description asc"              
+              
+      @reports =  CourseApplication.find_by_sql(group_query)      
+    end
+  end
+  
+  def summary_group_jupem
+    if is_param_month_range_valid?
+    
+      presence_total_query = "select count(vdaa.profile_id) as total
+        FROM vw_detailed_applicants_all vdaa 
+        WHERE student_status_id IN (5,8,9)
+        AND UPPER(OPIS) LIKE('JABATAN UKUR DAN PEMETAAN MALAYSIA%') OR UPPER(OPIS) LIKE ('JUPEM%')        
+        AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
+        AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
+        AND EXTRACT(year FROM date_apply) = #{params[:year]}"
+
+      total = CourseApplication.find_by_sql(presence_total_query)[0][:total].to_i  
+     
+      group_query = "select count(vdaa.profile_id) as subtotal, ((cast (count(vdaa.profile_id) as float)) / #{total.to_i})*100 as percentage, pr.state_id, st.description as state_name
+              FROM vw_detailed_applicants_all vdaa
+              join profiles pr on vdaa.profile_id = pr.id
+              join states st on pr.state_id = st.id
+              WHERE student_status_id IN (5,8,9)
+              AND UPPER(vdaa.OPIS) LIKE('JABATAN UKUR DAN PEMETAAN MALAYSIA%') OR UPPER(vdaa.OPIS) LIKE ('JUPEM%')        
+              AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
+              AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
+              AND EXTRACT(year FROM date_apply) = #{params[:year]}
+              group by state_id, st.description, vdaa.opis
+              having vdaa.opis = 'JABATAN UKUR DAN PEMETAAN MALAYSIA'
               order by st.description asc"              
               
       @reports =  CourseApplication.find_by_sql(group_query)      
@@ -242,32 +275,7 @@ class ReportTablesController < ApplicationController
     result.jupem   = custom_filter(condition, ids2, filter).to_s
     result.other   = custom_filter(condition, ids3, filter).to_s
 
-    return [result]
-         
-    #     sql ="select '#{title}' as name, (
-    #     SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    #     (#{condition})
-    #     AND profile_id IN (
-    #       select profile_id from employments  WHERE
-    #       place_id IN (#{ids1.join(",")}))
-    #     #{filter}) as p_tanah,
-    #
-    #     (
-    #     SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    #     (#{condition})
-    #     AND profile_id IN (
-    #       select profile_id from employments WHERE
-    #       place_id IN (#{ids2.join(",")}))
-    #     #{filter}) as jupem,
-    #     (
-    #     SELECT count(*) FROM course_applications WHERE course_implementation_id IN
-    #     (#{condition})
-    #     AND profile_id IN (
-    #       select profile_id from employments WHERE
-    #       place_id NOT IN (#{ids3.join(",")}))
-    #     #{filter}) as other
-    #     "
-    #         return CourseApplication.find_by_sql(sql)
+    return [result]         
   end
   
   def custom_filter(condition, ids, filter)
