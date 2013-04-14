@@ -286,6 +286,7 @@ InstunRails3::Application.routes.draw do
       get 'peserta_mengikut_jabatan'
       get 'trainer_by_department'
       get 'teach_hour_by_department'
+      get 'students_feedback'
     end
   end
 

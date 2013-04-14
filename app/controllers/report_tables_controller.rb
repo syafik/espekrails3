@@ -368,6 +368,51 @@ class ReportTablesController < ApplicationController
     end
   end
 
+  def students_feedback
+    
+    sql_faedah = "select 'Mendapat Faedah Daripada Kursus' as name , (
+    select count(answer)  
+    from evaluation_questions eqs 
+    join evaluation_truefalses etfs on etfs.evaluation_question_id = eqs.id
+    where questiontext = 'Apakah anda telah mendapat faedah dari kursus ini?'
+    and answer = true) as ya,
+    (select count(answer)  
+    from evaluation_questions eqs 
+    join evaluation_truefalses etfs on etfs.evaluation_question_id = eqs.id
+    where questiontext = 'Apakah anda telah mendapat faedah dari kursus ini?'
+    and answer = false) as tidak"
+    
+    @report_faedah = EvaluationTruefalse.find_by_sql(sql_faedah)
+
+    sql_memperaku = "select 'Memperaku kepada Rakan di Jabatan' as name, (
+    select count(answer)  
+    from evaluation_questions eqs 
+    join evaluation_truefalses etfs on etfs.evaluation_question_id = eqs.id
+    where questiontext = 'Adakah anda ingin memperakukan kursus ini kepada orang lain'
+    and answer = true) as ya,
+    (select count(answer)  
+    from evaluation_questions eqs 
+    join evaluation_truefalses etfs on etfs.evaluation_question_id = eqs.id
+    where questiontext = 'Apakah anda telah mendapat faedah dari kursus ini?'
+    and answer = false) as tidak"
+    
+    @report_memperaku = EvaluationTruefalse.find_by_sql(sql_memperaku)
+    
+    sql_kesesuaian = "select 'Kesesuaian Jangka Masa Kursus' as name , (
+    select count(answer)  
+    from evaluation_questions eqs 
+    join evaluation_truefalses etfs on etfs.evaluation_question_id = eqs.id
+    where questiontext = 'Adakah jangkamasa kursus bersesuaian'
+    and answer = true) as ya,
+    (select count(answer)  
+    from evaluation_questions eqs 
+    join evaluation_truefalses etfs on etfs.evaluation_question_id = eqs.id
+    where questiontext = 'Adakah jangkamasa kursus bersesuaian'
+    and answer = false) as tidak"
+    @report_kesesuaian = EvaluationTruefalse.find_by_sql(sql_kesesuaian)
+    
+  end
+  
   private
 
   def prepare_and_check_month_data
