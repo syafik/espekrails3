@@ -537,8 +537,8 @@ cid = params[:id]  #ambil data dari link_to
                   <%@timetable = Timetable.find(@timetable_id)%>
                   <b>Penceramah :</b><br />
                   <span style="text-align: left">
-                    <%@timetable.trainers.each_with_index do |trainer, i|%>
-                      <%=1+i%>. <%=  trainer.profile.name.titleize %> <br/>
+                    <%@timetable.timetables_trainers.each_with_index do |t_trainer, i|%>
+                      <%=1+i%>. <%=  t_trainer.trainer.profile.name.titleize %> <%= t_trainer.category.eql?(1) ? "(P)" : (t_trainer.category.eql?(2) ? "(F)" : "") %><br/>
                     <% end %>
                   </span>
                 </td>
