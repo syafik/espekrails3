@@ -10,6 +10,13 @@
     el1.id = "timetable-id-"+count;
     el1.innerHTML =  original.innerHTML;
 
+    // radio button
+    var firstRbElement = "<input id=\"ttable_categories_"+count+"_1\" type=\"radio\" value=\"1\" name=\"ttable[categories]["+count+"]\" checked=\"checked\"> Pengajar";
+    var secondRbElement = "<input id=\"ttable_categories_"+count+"_2\" type=\"radio\" value=\"2\" name=\"ttable[categories]["+count+"]\"> Fasilitator";
+    var hdnElement = "<input type=\"hidden\" value=\""+count+"\" name=\"category[index][]\">";
+
+    el1.innerHTML += hdnElement + firstRbElement + secondRbElement;
+
     a = document.createElement('a')
     a.href = "#"
     a.onclick = function() {
@@ -117,15 +124,26 @@
       <td align="right" valign="top"><strong>Pengajar:</strong></td>
       <td>
         <div style="float:left;">
-          <% unless @timetable.trainers.size == 0 %>
-            <% @timetable.trainers.each_with_index do |peg, index| %>
+          <% unless @timetable.timetables_trainers.size == 0 %>
+            <% @timetable.timetables_trainers.each_with_index do |peg, index| %>
               <div id="timetable-id-<%= index %>">
                 <select name="timetable[trainer_ids][]">
                   <% @trainers.each do |t| %>
-                    <option value="<%= t.id %>" <%= 'selected' if t.id == peg.id %>>
+                    <option value="<%= t.id %>" <%= 'selected' if t.id == peg.trainer_id %>>
                       <%= t.profile.name.upcase %></option>
                   <% end %>
                 </select>
+              <%= hidden_field_tag "category[index][]", index %>
+              <% if peg.category.eql?(1) %>
+                <%= radio_button_tag "ttable[categories][#{index}]", 1, checked: true %> Pengajar
+                <% else %>
+                <%= radio_button_tag "ttable[categories][#{index}]", 1 %> Pengajar
+                <% end %>
+              <% if peg.category.eql?(2) %>
+                <%= radio_button_tag "ttable[categories][#{index}]", 2, checked: true %> Fasilitator
+                <% else %>
+                <%= radio_button_tag "ttable[categories][#{index}]", 2 %> Fasilitator
+                <% end %>
                 <a href="#" onclick="delete_pengajar(this)">Padam</a>
               </div>
             <% end %>
@@ -137,6 +155,9 @@
                     <%= t.profile.name.upcase %></option>
                 <% end %>
               </select>
+              <%= hidden_field_tag "category[index][]", 0 %>
+                <%= radio_button_tag "ttable[categories][0]", 1, checked: true %> Pengajar
+                <%= radio_button_tag "ttable[categories][0]", 2 %> Fasilitator
             </div>
           <% end %>
           <div id="duplicater_target"></div>

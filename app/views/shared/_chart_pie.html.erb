@@ -24,7 +24,7 @@ var fixed_num = 0
     },
     tooltip: {
       formatter: function() {
-        return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(fixed_num) +' %';
+        return '<b>'+ this.point.name +'</b>: '+ this.point.y +' ('+ this.percentage.toFixed(fixed_num) +' %)';
       }
     },
     plotOptions: {
@@ -36,7 +36,7 @@ var fixed_num = 0
           color: '#000000',
           connectorColor: '#000000',
           formatter: function() {
-            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(fixed_num) +' %';
+            return '<b>'+ this.point.name +'</b>: '+ this.point.y +' ('+ this.percentage.toFixed(fixed_num) +' %)';
           }
         },
         showInLegend: true
@@ -46,8 +46,8 @@ var fixed_num = 0
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'top',
-      x: -175,
-      y: 125,
+      x: -100,
+      y: 225,
       floating: true,
       borderWidth: 1,
       backgroundColor: '#FFFFFF',

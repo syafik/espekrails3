@@ -1,7 +1,7 @@
-<form action="trainer_by_department" name="filter">
+<form action="teach_hour_by_department" name="filter">
 <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
   <tr>
-    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PENCERAMAH MENGIKUT BAHAGIAN </font></b></td>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT JAM MENGAJAR  MENGIKUT BAHAGIAN </font></b></td>
   </tr>
 </table>
 <br/>
@@ -16,31 +16,31 @@
   <tr bgcolor="#999999" id="pisang" onclick="">
     <td width="3%" align="center"><font color="#FFFFFF"><strong>No</strong></font></td>
     <td width="67%" align="left"><font color="#FFFFFF">&nbsp;<strong>Bahagian</strong></font></td>
-    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Bilangan</strong></font></td>
-    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>&#37;</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Dalam </strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>Luar</strong></font></td>
   </tr>
   <%if @reports.any? %>
     <%
-    total_amount = 0
-    total_percentage = 0
+    total_dalaman = 0
+    total_luaran = 0
   %>
     <% @reports.each_with_index do |report, index| %>
       <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
       <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
-        <td align="center" id="name<%=h report[:id] %>"><%= (index+1).to_s %>.</td>
+        <td align="center" id="name<%=h (index+1).to_s %>"><%= (index+1).to_s %>.</td>
         <td align="left"><%=report.name.upcase%></td>
-        <td align="center"><%=number_with_delimiter(report.amount, :delimiter => ',') %></td>
-        <td align="center"><%=number_to_percentage(report.percentage, :precision => 1)  %></td>
+        <td align="center"><%=number_with_delimiter(report.amount_dalaman.to_f, :delimiter => ',', :precision => 1) %></td>
+        <td align="center"><%=number_with_delimiter(report.amount_luaran.to_f, :delimiter => ',', :precision => 1)  %></td>
       </tr>
       <%
-      total_amount += report.amount.to_i
-      total_percentage += number_to_percentage(report.percentage, :precision => 1).to_f
+      total_dalaman += report.amount_dalaman.to_f
+      total_luaran += report.amount_luaran.to_f
     %>
     <% end %>
     <tr bgcolor="#fff">
       <td align="right" colspan="2">Jumlah Keseluruhan</td>
-      <td align="center"><%=number_with_delimiter(total_amount, :delimiter => ',') %></td>
-      <td align="center"><%=number_to_percentage(total_percentage, :precision => 0) %></td>
+      <td align="center"><%=number_with_delimiter(total_dalaman.to_f, :delimiter => ',', :precision => 1) %></td>
+      <td align="center"><%=number_with_delimiter(total_luaran.to_f, :delimiter => ',', :precision => 1) %></td>
     </tr>
 
   </table>
@@ -73,18 +73,21 @@
   <%
    data_for_chart = []
   @reports.each do |report|
-    if report.amount.to_i > 0
-      sliced = @reports.map{|x| x.amount}.max == report.amount ? true:false
-      data_for_chart << "{name: '#{report.name}', y: #{report.amount}, sliced: #{sliced}, selected: #{sliced}}"
+    if report.amount_dalaman.to_i > 0
+      sliced = (@reports.map{|x| x.amount_dalaman.to_i}.max == report.amount_dalaman.to_i && report.amount_dalaman.to_i > total_luaran.to_i) ? true:false
+      data_for_chart << "{name: '#{report.name}', y: #{report.amount_dalaman}, sliced: #{sliced}, selected: #{sliced}}"
     end
   end
+  sliced = @reports.map{|x| x.amount_dalaman.to_i}.max < total_luaran.to_i ? true:false
+  data_for_chart <<  "{name: 'Luaran', y: #{total_luaran}, sliced: #{sliced}, selected: #{sliced}, drilldown: {name: 'MSIE versions',categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],data: [10.85, 7.35, 33.06, 2.81]}}"
+
 
 
   data = "[#{data_for_chart.join(",")}]"
 %>
 
   <%= render :partial => 'shared/chart_pie',
-    :locals => {:data => data.html_safe, :title => 'MAKLUMAT PENCERAMAH MENGIKUT BAHAGIAN', :container => 'container', :fixed_num => 1 }
+    :locals => {:data => data.html_safe, :title => 'MAKLUMAT JAM MENGAJAR MENGIKUT BAHAGIAN', :container => 'container', :fixed_num => 1 }
 %>
     }
   </script>

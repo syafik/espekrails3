@@ -29,9 +29,9 @@
       "<hr size=1>" +
       //"<li><a href=\"" + "/timetables" + "/list/" + objid + "\">&nbsp;&nbsp;Jadual Waktu</a>" +
     "<li><a href=\"" + "javascript: a(" + "" + objid + ")\">&nbsp;&nbsp;Tambah Penceramah</a>" +
-      "<li><a href=\"" + "/reservations" + "/new/" + objid + "\">&nbsp;&nbsp;Tempahan Asrama</a>" +
-      "<li><a href=\"" + "/facility_reservations" + "/new/" + objid + "\">&nbsp;&nbsp;Tempahan Kemudahan Kursus</a>" +
-      "<li><a href=\"" + "/notifications" + "/new/" + objid + "\">&nbsp;&nbsp;Makluman Keselamatan</a>" +
+      "<li><a href=\"" + "/reservations" + "/new?id=" + objid + "\">&nbsp;&nbsp;Tempahan Asrama</a>" +
+      "<li><a href=\"" + "/facility_reservations" + "/new?id=" + objid + "\">&nbsp;&nbsp;Tempahan Kemudahan Kursus</a>" +
+      "<li><a href=\"" + "/notifications" + "/new?id=" + objid + "\">&nbsp;&nbsp;Makluman Keselamatan</a>" +
       "<hr size=1>" +
       "<li><a href=\""  + "/course_applications" + "/new?id=" + objid + "\">&nbsp;&nbsp;Tambah Permohonan</a>" +
       "<li><a href=\""  + "/course_applications" + "/" + objid + "/unprocessed?apply_status=unprocessed" + "\">&nbsp;&nbsp;Lihat Senarai Pemohon(Dalam Proses)</a>" +
@@ -62,7 +62,7 @@
   }
 
   function a(id) {
-    MM_openBrWindow('/course_implementations/add_course_trainer/'+id,'','scrollbars=yes,width=700,height=600')
+    MM_openBrWindow('/course_implementations/'+id+'/add_course_trainer','','scrollbars=yes,width=700,height=600')
   }
 
 </script>

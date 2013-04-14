@@ -6,17 +6,17 @@
   </table>
 <BR>
 <% if !@check %>
-<%= start_form_tag :action => 'create' %>
+<%= form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
   <div align="center">
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+<% end %>
 <% else %>
-<%= start_form_tag :action => 'update', :id => @check %>
+<%= form_tag :action => 'update', :id => @check do %>
   <%= render :partial => 'form_edit' %>
   <div align="center">
   <%= submit_tag 'Kemaskini' %>
   </div>
-<%= end_form_tag %>
+<% end %>
 <% end %>

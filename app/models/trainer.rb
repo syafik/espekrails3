@@ -7,7 +7,8 @@ class Trainer < ActiveRecord::Base
 
 	#has_and_belongs_to_many :expertises
 	has_and_belongs_to_many :courses
-	has_and_belongs_to_many :timetables
+  has_many :timetables_trainers, dependent: :destroy
+	has_many :timetables, through: :timetables_trainers
 	has_and_belongs_to_many :course_implementations
   has_many :claim_payment
 	
