@@ -160,52 +160,179 @@ class ReportTablesController < ApplicationController
   end
 
   def trainer_by_department
-    total = Trainer.find_by_sql("select count(*) as amount from trainers t, profiles p where t.profile_id = p.id")[0].amount.to_i
+    @planning_years = Trainer.find_by_sql("SELECT distinct extract(year from tt.date)as year FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id  AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id").collect(&:year)
+    if is_param_month_range_valid?
+      date_filter = "EXTRACT(month FROM tt.date) >= #{params[:month_from]} AND EXTRACT(month FROM tt.date) <= #{params[:month_until]} AND EXTRACT(year FROM tt.date) = #{params[:year]}"
+      total = Trainer.find_by_sql("select count(*) as amount from (SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id 
+        AND ci.id = tt.course_implementation_id AND #{date_filter} group by t.id) tt")[0].amount.to_i
 
-    #raise total.inspect
-    sql = []
-    sql[0] = "SELECT 'Pengurusan dan Perundangan Tanah' AS name, (
-      SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1) AS amount,
-      (cast ((SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
-    sql[1] = "SELECT 'Ukur dan Pemetaan' AS name, (
-      SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1) AS amount,
-      (cast ((SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
-    sql[2] = "SELECT 'Teknologi Maklumat' AS name, (
-      SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1) AS amount,
-      (cast ((SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
-    sql[3] = "SELECT 'Pentadbiran dan Kewangan' AS name, (
-      SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1) AS amount,
-      (cast ((SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1) as float) / #{total}*100) as percentage"
-    sql[4] = "SELECT 'Luaran' AS name, (
-      SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL)) AS amount,
-      (cast ((SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL)) as float) / #{total}*100) as percentage"
-    sql[5] = "SELECT 'Dalaman tanpa bahagian' AS name, (
-      SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND t.is_internal = 1 AND course_department_id is NULL) AS amount,
-      (cast ((SELECT count(*) FROM trainers t, profiles p
-      WHERE t.profile_id = p.id AND t.is_internal = 1 AND course_department_id is NULL) as float) / #{total}*100) as percentage"
+      sql = []
+      
+      sql[0] = "SELECT 'Pengurusan dan Perundangan Tanah' AS name, (select count(*) from (
+        SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id
+        AND #{date_filter} group by t.id) tt) as amount,
 
-    total_internal_but_no_department = Trainer.find_by_sql("SELECT count(*) as amount FROM trainers t, profiles p WHERE t.profile_id = p.id ")[0].amount.to_i
+        (cast ((select count(*) from (SELECT t.id trainer_id FROM trainers t, profiles p, course_implementations_trainers cit,
+        course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1 AND cit.trainer_id = t.id
+        AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+        group by t.id) tt) as float) / #{total}*100) as percentage"
 
-    @reports = []
-    sql.each do |i|
-      @reports += Trainer.find_by_sql(i)
+      sql[1] = "SELECT 'Ukur dan Pemetaan' AS name, (select count(*) from (
+        SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id
+        AND #{date_filter} group by t.id) tt) as amount,
+
+        (cast ((select count(*) from (SELECT t.id trainer_id FROM trainers t, profiles p, course_implementations_trainers cit,
+        course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1 AND cit.trainer_id = t.id
+        AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+        group by t.id) tt) as float) / #{total}*100) as percentage"
+
+      sql[2] = "SELECT 'Teknologi Maklumat' AS name, (select count(*) from (
+        SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id
+        AND #{date_filter} group by t.id) tt) as amount,
+
+        (cast ((select count(*) from (SELECT t.id trainer_id FROM trainers t, profiles p, course_implementations_trainers cit,
+        course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1 AND cit.trainer_id = t.id
+        AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+        group by t.id) tt) as float) / #{total}*100) as percentage"
+
+      sql[3] = "SELECT 'Pentadbiran dan Kewangan' AS name, (select count(*) from (
+        SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id
+        AND #{date_filter} group by t.id) tt) as amount,
+
+        (cast ((select count(*) from (SELECT t.id trainer_id FROM trainers t, profiles p, course_implementations_trainers cit,
+        course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1 AND cit.trainer_id = t.id
+        AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+        group by t.id) tt) as float) / #{total}*100) as percentage"
+
+      sql[4] = "SELECT 'Luaran' AS name, (select count(*) from (
+        SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL)
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id
+        AND #{date_filter} group by t.id) tt) as amount,
+
+        (cast ((select count(*) from (SELECT t.id trainer_id FROM trainers t, profiles p, course_implementations_trainers cit,
+        course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL) AND cit.trainer_id = t.id
+        AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+        group by t.id) tt) as float) / #{total}*100) as percentage"
+
+      sql[5] = "SELECT 'Dalaman tanpa bahagian' AS name, (select count(*) from (
+        SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND t.is_internal = 1 AND course_department_id is NULL
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id
+        AND #{date_filter} group by t.id) tt) as amount,
+
+        (cast ((select count(*) from (SELECT t.id trainer_id FROM trainers t, profiles p, course_implementations_trainers cit,
+        course_implementations ci, timetables tt
+        WHERE t.profile_id = p.id AND t.is_internal = 1 AND course_department_id is NULL AND cit.trainer_id = t.id
+        AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+        group by t.id) tt) as float) / #{total}*100) as percentage"
+
+      @reports = []
+      sql.each do |i|
+        @reports += Trainer.find_by_sql(i)
+      end
     end
   end
 
   def teach_hour_by_department
-    sql = "SELECT 'tets' as title, sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci, timetables tt
-      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1 AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id group by title"
+     @planning_years = Trainer.find_by_sql("SELECT distinct extract(year from tt.date)as year FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id  AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id").collect(&:year)
+     if is_param_month_range_valid?
+      date_filter = "EXTRACT(month FROM tt.date) >= #{params[:month_from]} AND EXTRACT(month FROM tt.date) <= #{params[:month_until]} AND EXTRACT(year FROM tt.date) = #{params[:year]}"
+
+      sql = []
+      
+      sql[0] = "SELECT 'Pengurusan dan Perundangan Tanah' AS name, (
+      SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_dalaman,
+      (SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_luaran"
+
+      sql[1] = "SELECT 'Ukur dan Pemetaan' AS name, (
+      SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_dalaman,
+      (SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_luaran"
+
+      sql[2] = "SELECT 'Teknologi Maklumat' AS name, (
+      SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_dalaman,
+      (SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_luaran"
+
+      sql[3] = "SELECT 'Pentadbiran dan Kewangan' AS name, (
+      SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_dalaman,
+      (SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_luaran"
+
+      sql[4] = "SELECT 'Tanpa Bahagian' AS name, (
+      SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id is NULL AND t.is_internal = 1 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_dalaman,
+      (SELECT sum(EXTRACT(EPOCH FROM (tt.time_end - tt.time_start))/3600) as hour FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id AND p.course_department_id is NULL AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount_luaran"
+
+      @reports = []
+      sql.each do |i|
+        @reports += Trainer.find_by_sql(i)
+      end
+    end
   end
 
   private
