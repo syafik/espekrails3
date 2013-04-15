@@ -21,10 +21,10 @@
 
 function GoSubmit(df) {
 
-	if (!checkSelection(strRegExp,$('contact_officer_id'),'Pegawai Untuk Dihubungi')) return false;
-        if (!checkSelection(strRegExp,$('contact_officer_id2'),'Pegawai Untuk Dihubungi')) return false;
-	if (!checkInput(anythingRegExp,$('penyelaras_jawatan'),'Jawatan Pegawai Untuk Dihubungi')) return false;
-	if (!checkInput(anythingRegExp,$('dateline'),'Tarikh tutup')) return false;
+	if (!checkSelection(strRegExp,$('#contact_officer_id'),'Pegawai Untuk Dihubungi')) return false;
+    if (!checkSelection(strRegExp,$('#contact_officer_id2'),'Pegawai Untuk Dihubungi')) return false;
+	if (!checkInput(anythingRegExp,$('#penyelaras_jawatan'),'Jawatan Pegawai Untuk Dihubungi')) return false;
+	if (!checkInput(anythingRegExp,$('#dateline'),'Tarikh tutup')) return false;
 	//if (!checkInput(anythingRegExp,$('hour_closed1'),'Waktu Majlis Penutup')) return false;
 	//if (!checkInput(anythingRegExp,$('hour_minute1'),'Waktu Majlis Penutup')) return false;
 	//if (!checkInput(anythingRegExp,$('hour_closed2'),'Waktu Majlis Penutup')) return false;
