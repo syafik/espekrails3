@@ -506,7 +506,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def send_successful_email(user, cid)
-    EspekMailer.deliver_user_successful(user, cid)
+    EspekMailer.user_successful(user, cid).deliver
     #EspekMailer.deliver_coordinator_successful
   end
 
@@ -635,6 +635,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def user_daftar
+    init_load
     @course_application = CourseApplication.find(params[:id])
     @course_implementation = @course_application.course_implementation
     @profile = Profile.find_by_ic_number(session[:user].profile.ic_number)
