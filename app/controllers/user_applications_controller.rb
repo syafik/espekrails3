@@ -279,6 +279,8 @@ class UserApplicationsController < ApplicationController
       end
     end
 
+    @students = []
+    @students = @a
     
     render layout: "standard-layout"
   end
