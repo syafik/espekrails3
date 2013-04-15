@@ -274,11 +274,13 @@ class UserApplicationsController < ApplicationController
     for student in @students
       logger.info student.course_implementation.date_start
       logger.info today.class
-#      if (student.course_implementation.date_start <= today) and (student.course_implementation.date_end >= today)
+      if (student.course_implementation.date_start <= today) and (student.course_implementation.date_end >= today)
         @a.push(student)
-#      end
+      end
     end
 
+    @students = []
+    @students = @a
     
     render layout: "standard-layout"
   end

@@ -281,9 +281,12 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'application_and_attendance'
       get 'peserta_jantina'
-      get 'summary_group_by_states'      
+      get 'summary_group_by_states'
+      get 'summary_group_jupem'
       get 'peserta_mengikut_jabatan'
       get 'trainer_by_department'
+      get 'teach_hour_by_department'
+      get 'students_feedback'
     end
   end
 
@@ -539,7 +542,7 @@ InstunRails3::Application.routes.draw do
   match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
   match '/course_implementations/show_public/:id' => 'course_implementations#show_public', :via => [:get]
   #match '/course_implementations/update/:id' => 'course_implementations#update', :via => [:post]
-  resources :course_implementations do
+  resources :course_implementations, except: :destroy do
     get 'show'
     get 'calendar'
     get 'edit_surat_iklan_select_pejabat'
@@ -560,6 +563,7 @@ InstunRails3::Application.routes.draw do
       post 'search_for_user'
       get 'list_public'
       get 'calendar_public'
+      get 'destroy/:id', action: :destroy
     end
     member do
       get 'add_course_trainer_refresh_opener'

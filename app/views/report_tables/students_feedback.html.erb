@@ -1,0 +1,87 @@
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUM BALAS PESERTA </font></b></td>
+    </tr>
+  </table>
+  <br/>
+<br/>
+<div align=center>
+
+<div id="container1" class="chart" style="padding-left:33px; width:95%; height:<%= 400 %>px;"/>
+<div id="container2" class="chart" style="padding-left:33px; width:95%; height:<%= 400 %>px;"/>
+<div id="container3" class="chart" style="padding-left:33px; width:95%; height:<%= 400 %>px;"/>
+
+<%= javascript_include_tag "highcharts" %>
+<%= javascript_include_tag "gradient-color-highcharts" %>
+
+<script>
+  loadChart();
+
+function loadChart(){
+  <%
+  data = "[
+            {
+                name: 'Ya',
+                y: #{@report_faedah[0].ya.to_i},
+                sliced: #{@report_faedah[0].ya.to_i > @report_faedah[0].tidak.to_i},
+                selected: #{@report_faedah[0].ya.to_i > @report_faedah[0].tidak.to_i}
+            },
+            {
+                name: 'Tidak',
+                y: #{@report_faedah[0].tidak.to_i},
+                sliced: #{@report_faedah[0].ya.to_i < @report_faedah[0].tidak.to_i},
+                selected: #{@report_faedah[0].ya.to_i < @report_faedah[0].tidak.to_i}
+            }
+         ]"
+  %>
+
+  <%= render :partial => 'shared/chart_pie', :locals => {:data => data.html_safe, 
+             :title => @report_faedah[0].name.to_s, :container => 'container1' }
+  %>
+
+  <%
+  data = "[
+            {
+                name: 'Ya',
+                y: #{@report_memperaku[0].ya.to_i},
+                sliced: #{@report_memperaku[0].ya.to_i > @report_memperaku[0].tidak.to_i},
+                selected: #{@report_memperaku[0].ya.to_i > @report_memperaku[0].tidak.to_i}
+            },
+            {
+                name: 'Tidak',
+                y: #{@report_memperaku[0].tidak.to_i},
+                sliced: #{@report_memperaku[0].ya.to_i > @report_memperaku[0].tidak.to_i},
+                selected: #{@report_memperaku[0].ya.to_i > @report_memperaku[0].tidak.to_i}
+            }
+         ]"
+  %>
+
+  <%= render :partial => 'shared/chart_pie',
+    :locals => {:data => data.html_safe, :title => @report_memperaku[0].name, :container => 'container2' }
+  %>
+
+  <%
+  data = "[
+            {
+                name: 'Ya',
+                y: #{@report_kesesuaian[0].ya},
+                sliced: #{@report_kesesuaian[0].ya > @report_kesesuaian[0].tidak},
+                selected: #{@report_kesesuaian[0].ya > @report_kesesuaian[0].tidak}
+            },
+            {
+                name: 'Tidak',
+                y: #{@report_kesesuaian[0].tidak},
+                sliced: #{@report_kesesuaian[0].ya > @report_kesesuaian[0].tidak},
+                selected: #{@report_kesesuaian[0].ya > @report_kesesuaian[0].tidak}
+            }
+         ]"
+  %>
+
+  <%= render :partial => 'shared/chart_pie',
+    :locals => {:data => data.html_safe, :title => @report_kesesuaian[0].name, :container => 'container3' }
+%>
+
+
+
+}
+</script>

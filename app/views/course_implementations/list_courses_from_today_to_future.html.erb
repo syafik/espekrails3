@@ -73,9 +73,8 @@ the_year = params[:planning_year]
                     <%	 x = x + 1
                   end  %>
         </select>
-
         <select name="planning_year">
-          <% @planning_years.each do |cf| %>
+          <% @planning_years.sort {|x,y| y.year <=> x.year }.each do |cf| %>
             <%
             if (the_year == nil)
             %>
