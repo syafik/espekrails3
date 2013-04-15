@@ -165,7 +165,7 @@ class CourseImplementation < ActiveRecord::Base
 
 
 	def jumlah_hari
-		(self.date_plan_end - self.date_plan_start) + 1
+		(self.date_plan_end - self.date_plan_start).to_i #/1.days #+ 1
 	end
 
 	def editable?(user)
