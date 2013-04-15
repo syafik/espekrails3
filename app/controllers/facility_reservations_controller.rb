@@ -9,7 +9,7 @@ class FacilityReservationsController < ApplicationController
 	@facility_purposes = FacilityPurpose.find(:all, :order=>"id")
 	@profiles = Profile.find(:all, :order=>"id")
 	
-	@planning_years = FacilityReservation.find_by_sql("SELECT distinct extract(year from date_from)as year from facility_reservations")    
+	@planning_years = FacilityReservation.find_by_sql("SELECT distinct extract(year from date_from)as year from facility_reservations ORDER BY year DESC")
   end
   
   def index

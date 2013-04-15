@@ -3,7 +3,7 @@ class FinancesController < ApplicationController
   
   def claim_payment_list
     @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
-    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from timetable_date)as year from claim_payments").collect(&:year)
+    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from timetable_date)as year from claim_payments ORDER BY year DESC").collect(&:year)
     condition = ""
     condition += "status = '#{params[:filter_status]}'" if  (params[:filter_status].present? && params[:filter_status] != "all")
     if params[:tarikh_month].present? && params[:tarikh_year].present?
@@ -17,7 +17,7 @@ class FinancesController < ApplicationController
 
   def search_claim_payment
     @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
-    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from timetable_date)as year from claim_payments").collect(&:year)
+    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from timetable_date)as year from claim_payments ORDER BY year DESC").collect(&:year)
     if params[:ic_number].present?
       profile = Profile.find_by_ic_number(params[:ic_number])
       if profile.present?

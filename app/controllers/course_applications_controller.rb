@@ -1158,7 +1158,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def select_course
-    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")
+    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations ORDER BY year DESC")
     #    cur_year = Time.now.to_formatted_s(:my_format_year).to_s
     params[:year_start] = Time.now.strftime("%Y") if params[:year_start].blank?
 

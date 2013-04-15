@@ -13,7 +13,7 @@ class CourseImplementationsController < ApplicationController
     #@profiles = Profile.find_all    
     @methodologies = Methodology.all
     @course_departments = CourseDepartment.find(:all, :order=>"id")
-    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")    
+    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations ORDER BY year DESC")
     #@list_dates = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses")
     super
   end

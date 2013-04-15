@@ -5,7 +5,7 @@ class HrController < ApplicationController
 
   def initialize
     @course_departments = CourseDepartment.find(:all, :order=>"id")
-    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")
+    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations ORDER BY year DESC")
     @course_statuses = CourseStatus.find(:all, :order=>"id")        
   end
   
