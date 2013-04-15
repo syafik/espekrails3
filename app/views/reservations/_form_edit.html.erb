@@ -1,14 +1,14 @@
 <style>
-b               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-th              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-td              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-a               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
-.box {border: solid; border-width:1}
+  b               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  th              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  td              { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  a               { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
+  .box {border: solid; border-width:1}
 </style>
 <div align="center">
 
-<% if @reservation.errors.any? %>
+  <% if @reservation.errors.any? %>
     <ul>
       <% @reservation.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -19,27 +19,27 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
 
 </div>
 <!--[form:reservation]-->
-  <table width="95%" border="0" align="center" bgcolor="#FFFFFF">
+<table width="95%" border="0" align="center" bgcolor="#FFFFFF">
   <tr bgcolor="#000000">
-    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT KURSUS </font></b></td>
-    </tr>
+    <td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT KURSUS </font></b></td>
+  </tr>
   <tr>
     <td align="right"><b>Kod/Nama Kursus: </b></td>
     <td colspan=3>&nbsp;<%= nof{@course_implementation.code}%> <%= "("+nof{@course_implementation.course.name} + ")" %></td>
   </tr>
-   <tr>
+  <tr>
     <td align="right"><b>Tarikh Mula Kursus: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.date_plan_start.to_formatted_s(:my_format_4)} %></td>
     <td align="right"><b>Tarikh Tamat Kursus: </b></td>
     <td>&nbsp;<%=
-	         if !@course_implementation.date_end
-			 	@course_implementation.date_plan_end.to_formatted_s(:my_format_4)
-			 else
-			 	@course_implementation.date_end.to_formatted_s(:my_format_4)
-			 end
-				-%>    </td>
+      if !@course_implementation.date_end
+        @course_implementation.date_plan_end.to_formatted_s(:my_format_4)
+      else
+        @course_implementation.date_end.to_formatted_s(:my_format_4)
+      end
+      -%>    </td>
   </tr>
-   <tr>
+  <tr>
     <td align="right"><b>Tarikh/Waktu Check In: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.check_in.to_formatted_s(:my_format_7)} %></td>
     <td align="right"><b>Tarikh/Waktu Check Out: </b></td>
@@ -49,16 +49,16 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
     <td align="right"><b>Bil. Peserta Kursus (Lelaki): </b></td>
     <td><%= text_field 'reservation', 'male_total', :value=>@check.male_total, :maxlength=>4, :size=>4  %></td>
   </tr>
-    <tr>
+  <tr>
     <td align="right"><b>Bil. Peserta Kursus (Perempuan): </b></td>
     <td><%= text_field 'reservation', 'female_total', :value=>@check.female_total, :maxlength=>4, :size=>4  %></td>
   </tr>
-    <tr>
-      <td align="right">&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td align="CENTER" colspan="4"><fieldset style="width:90%">
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="CENTER" colspan="4"><fieldset style="width:90%">
         <legend><b>Penyediaan Makanan</b></legend>
         <table width="95%" align="center" border=0>
           <tr>
@@ -66,67 +66,67 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
             <td><a style="color: blue; text-decoration: underline;" href="javascript:checkall(0)">None</a> | <a style="color: blue; text-decoration: underline;" href="javascript:checkall(1)">Check all</a></td>
           </tr>
           <%
-	  	  ds = @course_implementation.date_start-1
-		  de = @course_implementation.date_end
-		  howlong = (de-ds).to_i+1
-		  @options = Array.new;
-		  @days = Array.new
-		  howlong.times do |i|
-		  	b = ds+i
-			c = dmy(b,"-","/");
-		  	@options.push([c,ds+i]);
-		  end
-		  @days = @options;
-		
-		  @days.each { |day|
-				sql = "SELECT * FROM sesi_makanan WHERE course_implementation_id=#{@course_implementation.id} and tarikh='#{day[1]}'"
-				sesi_makanan = SesiMakanan.find_by_sql(sql)
-				sm = sesi_makanan.first
-				br_chk = ""
-				mt_chk = ""
-				lu_chk = ""
-				et_chk = ""
-				di_chk = ""
-				
-			if sm != nil
-				br_chk = "checked" if sm.breakfast == "1"
-				mt_chk = "checked" if sm.morning_tea == "1"
-				lu_chk = "checked" if sm.lunch == "1"
-				et_chk = "checked" if sm.evening_tea == "1"
-				di_chk = "checked" if sm.dinner == "1"
-			end
-%>
-          <tr>
-            <td width="100" align="right"><%=day[0]%>:</td>
-            <td><input type="checkbox" name="hari[<%=day[1]%>][breakfast]" value="1" <%=br_chk%>>
-              Sarapan
-              <input type="checkbox" name="hari[<%=day[1]%>][morning_tea]" value="1" <%=mt_chk%>>
-              Minum Pagi
-              <input type="checkbox" name="hari[<%=day[1]%>][lunch]" value="1" <%=lu_chk%>>
-              Makan Tengahari
-              <input type="checkbox" name="hari[<%=day[1]%>][evening_tea]" value="1" <%=et_chk%>>
-              Minum Petang
-              <input type="checkbox" name="hari[<%=day[1]%>][dinner]" value="1" <%=di_chk%>>
-              Makan Malam </td>
-          </tr>
+          ds = @course_implementation.date_start-1
+          de = @course_implementation.date_end
+          howlong = (de-ds).to_i+1
+          @options = Array.new;
+          @days = Array.new
+          howlong.times do |i|
+            b = ds+i
+            c = dmy(b,"-","/");
+            @options.push([c,ds+i]);
+          end
+          @days = @options;
+
+          @days.each { |day|
+            sql = "SELECT * FROM sesi_makanan WHERE course_implementation_id=#{@course_implementation.id} and tarikh='#{day[1]}'"
+            sesi_makanan = SesiMakanan.find_by_sql(sql)
+            sm = sesi_makanan.first
+            br_chk = ""
+            mt_chk = ""
+            lu_chk = ""
+            et_chk = ""
+            di_chk = ""
+
+            if sm != nil
+              br_chk = "checked" if sm.breakfast == "1"
+              mt_chk = "checked" if sm.morning_tea == "1"
+              lu_chk = "checked" if sm.lunch == "1"
+              et_chk = "checked" if sm.evening_tea == "1"
+              di_chk = "checked" if sm.dinner == "1"
+            end
+          %>
+            <tr>
+              <td width="100" align="right"><%=day[0]%>:</td>
+              <td><input type="checkbox" name="hari[<%=day[1]%>][breakfast]" value="1" <%=br_chk%>>
+                Sarapan
+                <input type="checkbox" name="hari[<%=day[1]%>][morning_tea]" value="1" <%=mt_chk%>>
+                Minum Pagi
+                <input type="checkbox" name="hari[<%=day[1]%>][lunch]" value="1" <%=lu_chk%>>
+                Makan Tengahari
+                <input type="checkbox" name="hari[<%=day[1]%>][evening_tea]" value="1" <%=et_chk%>>
+                Minum Petang
+                <input type="checkbox" name="hari[<%=day[1]%>][dinner]" value="1" <%=di_chk%>>
+                Makan Malam </td>
+            </tr>
           <%        } %>
         </table>
       </fieldset>      </td>
-    </tr>
-    <tr>
-      <td align="right">&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
-   <tr>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
     <td align="right"><b>Bil. Urusetia: </b></td>
     <td><%= text_field 'reservation', 'urusetia_total', :value=>@check.urusetia_total, :maxlength=>4, :size=>4  %>
-    <%= hidden_field 'reservation', 'trainer_total', :value=>@check.trainer_total, :maxlength=>4, :size=>4  %>
-    <%= hidden_field 'reservation', 'date_plan_start', :value=> @course_implementation.date_plan_start %>
-    <%= hidden_field 'reservation', 'date_plan_end', :value=> @course_implementation.date_plan_end %>
-    <%= hidden_field 'reservation', 'course_implementation_id', :value=> @course_implementation.id %>
-    <%= hidden_field 'reservation', 'course_id', :value=> @course_implementation.course.id %></td>
+      <%= hidden_field 'reservation', 'trainer_total', :value=>@check.trainer_total, :maxlength=>4, :size=>4  %>
+      <%= hidden_field 'reservation', 'date_plan_start', :value=> @course_implementation.date_plan_start %>
+      <%= hidden_field 'reservation', 'date_plan_end', :value=> @course_implementation.date_plan_end %>
+      <%= hidden_field 'reservation', 'course_implementation_id', :value=> @course_implementation.id %>
+      <%= hidden_field 'reservation', 'course_id', :value=> @course_implementation.course.id %></td>
   </tr>
-   <tr>
+  <tr>
     <td align="right"><b>Bil. VIP: </b></td>
     <td><%= text_field 'reservation', 'vip_total', :value=>@check.vip_total, :maxlength=>4, :size=>4  %></td>
   </tr>
@@ -134,101 +134,101 @@ input           { font-family: Verdana, Arial, Helvetica; font-size: 11px;}
     <td align="right"><b>Bil. Penceramah: </b></td>
     <td><%= text_field 'reservation', 'trainer_total', :value=>@course_implementation.trainers.size, :maxlength=>4, :size=>4  %></td>
   </tr>
-   <tr bgcolor="000000">
-     <td colspan="4" align="CENTER" bgcolor="#FFFFFF">&nbsp;</td>
-   </tr>
-   <tr bgcolor="000000">
-    	<td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PENYELARAS </font></b></td>
-    </tr>
+  <tr bgcolor="000000">
+    <td colspan="4" align="CENTER" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr bgcolor="000000">
+    <td colspan="4" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PENYELARAS </font></b></td>
+  </tr>
 
-     <tr>
-       <td align="right">&nbsp;</td>
-       <td colspan="3">&nbsp;</td>
-     </tr>
-     <tr>
-      <td align="right"><b>Kepada :</b></td>
-      <td colspan="3">&nbsp;
-            <%=
-                  @options = @coordinators.map { |t| [t.profile.name, t.id] }
-                  @options.unshift(["Sila Pilih", ""])
-                  select(:reservation, :to_staff_id, @options, :style=>"width: 300;")
-                %>        </td>
-      </tr>
-      <tr>
-      <td align="right"><b>Salinan :</b></td>
-      <td colspan="3">&nbsp;
-            <%=
-                  @options = @coordinators.map { |t| [t.profile.name, t.id] }
-                  @options.unshift(["Sila Pilih", ""])
-                  select(:reservation, :cc_staff_id, @options, :style=>"width: 300;")
-                %>        </td>
-    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td colspan="3">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right"><b>Kepada :</b></td>
+    <td colspan="3">&nbsp;
+      <%=
+      @options = @coordinators.map { |t| [t.profile.name, t.id] }
+      @options.unshift(["Sila Pilih", ""])
+      select(:reservation, :to_staff_id, @options, :style=>"width: 300;")
+    %>        </td>
+  </tr>
+  <tr>
+    <td align="right"><b>Salinan :</b></td>
+    <td colspan="3">&nbsp;
+      <%=
+      @options = @coordinators.map { |t| [t.profile.name, t.id] }
+      @options.unshift(["Sila Pilih", ""])
+      select(:reservation, :cc_staff_id, @options, :style=>"width: 300;")
+    %>        </td>
+  </tr>
 
-    <tr>
+  <tr>
     <td align="right"><b>Penyelaras 1: </b></td>
     <td colspan="2">&nbsp;<%= nof{@course_implementation.penyelaras1.profile.name.upcase}%></td>
   </tr>
-      <tr>
+  <tr>
     <td align="right"><b>No. Telefon: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.phone}%> (PEJ)</td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras1.profile.mobile}%> (HP)</td>
   </tr>
-      <tr>
+  <tr>
     <td align="right"><b>Penyelaras 2: </b></td>
     <td colspan="2">&nbsp;<%= nof{@course_implementation.penyelaras2.profile.name.upcase}%></td>
   </tr>
-      <tr>
+  <tr>
     <td align="right"><b>No. Telefon: </b></td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.phone}%> (PEJ)</td>
     <td>&nbsp;<%= nof{@course_implementation.penyelaras2.profile.mobile}%> (HP)</td>
   </tr>
-      <tr>
-        <td align="right">&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td align="right"><b>Ditempah Oleh :</b></td>
-        <td><select name="reservation[staff_id]" style="">
-          <option value="0">Sila Pilih</option>
-          <% @coordinators.each do |c| %>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right"><b>Ditempah Oleh :</b></td>
+    <td><select name="reservation[staff_id]" style="">
+        <option value="0">Sila Pilih</option>
+        <% @coordinators.each do |c| %>
           <option value="<%= c.id %>"
-         	<%= ' selected' if c.id == @check.staff_id %>> <%= c.profile.name.upcase %> </option>
-          <% end %>
-        </select></td>
-      </tr>
-    <tr>
-      <td align="right"><b>Tarikh Tempahan:</b></td>
-      <td>&nbsp;
-      <input id="day_check_in" type=text name="day_check_in" value="<%=@check.created_on.day%>" size=2 maxlength=2 >
--
-  <input id="month_check_in" type=text name="month_check_in" value="<%=@check.created_on.month%>" size=2 maxlength=2 >
--
-<input id="year_check_in" type=text name="year_check_in" value="<%=@check.created_on.year%>" size=4 maxlength=4></td>
-    </tr>
-    <tr>
-      <td align="right"><b>Status Tempahan:</b></td>
-	  
-	  <%
-	  checked_0 = checked_1 = ""
-	  checked_1 = "checked" if @check.status == "1"
-	  checked_0 = "checked" if @check.status == "0"
-	  %>
-      <td><input name="reservation[status]" type="radio" value="0" <%=checked_0%>>Baru
+                  <%= ' selected' if c.id == @check.staff_id %>> <%= c.profile.name.upcase %> </option>
+                <% end %>
+      </select></td>
+  </tr>
+  <tr>
+    <td align="right"><b>Tarikh Tempahan:</b></td>
+    <td>&nbsp;
+      <input id="day_check_in" type=text name="day_check_in" value="<%=@check.created_on.day rescue nil %>" size=2 maxlength=2 >
+      -
+      <input id="month_check_in" type=text name="month_check_in" value="<%=@check.created_on.month rescue nil%>" size=2 maxlength=2 >
+      -
+      <input id="year_check_in" type=text name="year_check_in" value="<%=@check.created_on.year rescue nil %>" size=4 maxlength=4></td>
+  </tr>
+  <tr>
+    <td align="right"><b>Status Tempahan:</b></td>
+
+    <%
+    checked_0 = checked_1 = ""
+    checked_1 = "checked" if @check.status == "1"
+    checked_0 = "checked" if @check.status == "0"
+  %>
+    <td><input name="reservation[status]" type="radio" value="0" <%=checked_0%>>Baru
       <input name="reservation[status]" type="radio" value="1"<%=checked_1%>>Disahkan	  </td>
-    </tr>
+  </tr>
 </table>
 </BR>
 <!--[eoform:reservation]-->
 
 <script>
-function checkall(val) {
-	n = document.forms[0].elements.length
-	for (i=0;i<n;i++) {
-		obj = document.forms[0].elements[i];
-		if (obj.type == "checkbox")
-			obj.checked = val;
+  function checkall(val) {
+    n = document.forms[0].elements.length
+    for (i=0;i<n;i++) {
+      obj = document.forms[0].elements[i];
+      if (obj.type == "checkbox")
+        obj.checked = val;
 			
-	}
-}
+    }
+  }
 
 </script>
