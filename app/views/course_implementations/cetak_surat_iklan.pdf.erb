@@ -294,7 +294,7 @@
              tarikh = "#{current_day} #{current_month} #{current_year}"
 
              per_lines = []
-             per_lines << "PELAWAAN MENGHADIRI KURSUS #{dept.description.upcase} PADA BULAN #{$MONTH_NAMES[params[:planning_month].to_i].upcase} HINGGA #{$MONTH_NAMES[params[:planning_month2].to_i].upcase} #{params[:planning_year]}"
+             per_lines << "PELAWAAN MENGHADIRI KURSUS #{dept.description.upcase} PADA BULAN #{$MONTH_NAMES[params[:planning_month].to_i - 1].upcase} HINGGA #{$MONTH_NAMES[params[:planning_month2].to_i - 1].upcase} #{params[:planning_year]}"
              per_lines << "DI INSTITUT TANAH DAN UKUR NEGARA"
         %>
             <table width="660">
@@ -521,7 +521,7 @@
            tarikh = "#{current_day} #{current_month} #{current_year}"
 
            per_lines = []
-           per_lines << "PELAWAAN MENGHADIRI KURSUS #{dept.description.upcase} PADA BULAN #{$MONTH_NAMES[params[:planning_month].to_i].upcase} HINGGA #{$MONTH_NAMES[params[:planning_month2].to_i].upcase} #{params[:planning_year]}"
+           per_lines << "PELAWAAN MENGHADIRI KURSUS #{dept.description.upcase} PADA BULAN #{$MONTH_NAMES[params[:planning_month].to_i - 1].upcase} HINGGA #{$MONTH_NAMES[params[:planning_month2].to_i - 1].upcase} #{params[:planning_year]}"
            per_lines << "DI INSTITUT TANAH DAN UKUR NEGARA"
         %>
         <table width="660">
