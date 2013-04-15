@@ -199,11 +199,11 @@
   <tr>
     <td align="right"><b>Tarikh Tempahan:</b></td>
     <td>&nbsp;
-      <input id="day_check_in" type=text name="day_check_in" value="<%=@check.created_on.day rescue nil %>" size=2 maxlength=2 >
+      <input id="day_check_in" type=text name="day_check_in" value="<%=@check.created_on.day rescue Time.now.day %>" size=2 maxlength=2 >
       -
-      <input id="month_check_in" type=text name="month_check_in" value="<%=@check.created_on.month rescue nil%>" size=2 maxlength=2 >
+      <input id="month_check_in" type=text name="month_check_in" value="<%=@check.created_on.month rescue Time.now.month%>" size=2 maxlength=2 >
       -
-      <input id="year_check_in" type=text name="year_check_in" value="<%=@check.created_on.year rescue nil %>" size=4 maxlength=4></td>
+      <input id="year_check_in" type=text name="year_check_in" value="<%=@check.created_on.year rescue Time.now.year %>" size=4 maxlength=4></td>
   </tr>
   <tr>
     <td align="right"><b>Status Tempahan:</b></td>
