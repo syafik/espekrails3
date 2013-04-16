@@ -7,7 +7,7 @@ class HostelReservationsController < ApplicationController
 	@hostels = Hostel.find(:all, :order=>"id")
 	@profiles = Profile.find(:all, :order=>"id")
 	#@hostel_policies = HostelPolicy.find(:all, :order=>"id")
-	@planning_years = HostelReservation.find_by_sql("SELECT distinct extract(year from created_on)as year from hostel_reservations")    
+	@planning_years = HostelReservation.find_by_sql("SELECT distinct extract(year from created_on)as year from hostel_reservations ORDER BY year DESC")
   end
   
   def index

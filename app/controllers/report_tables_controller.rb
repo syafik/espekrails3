@@ -196,7 +196,7 @@ class ReportTablesController < ApplicationController
     @planning_years = Trainer.find_by_sql("SELECT distinct extract(year from tt.date)as year FROM trainers t, profiles p,
       course_implementations_trainers cit, course_implementations ci, timetables tt
       WHERE t.profile_id = p.id  AND cit.trainer_id = t.id
-      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id").collect(&:year)
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id ORDER BY year DESC").collect(&:year)
     if is_param_month_range_valid?
       date_filter = "EXTRACT(month FROM tt.date) >= #{params[:month_from]} AND EXTRACT(month FROM tt.date) <= #{params[:month_until]} AND EXTRACT(year FROM tt.date) = #{params[:year]}"
       total = Trainer.find_by_sql("select count(*) as amount from (SELECT t.id trainer_id
@@ -295,7 +295,7 @@ class ReportTablesController < ApplicationController
      @planning_years = Trainer.find_by_sql("SELECT distinct extract(year from tt.date)as year FROM trainers t, profiles p,
       course_implementations_trainers cit, course_implementations ci, timetables tt
       WHERE t.profile_id = p.id  AND cit.trainer_id = t.id
-      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id").collect(&:year)
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id ORDER BY year DESC").collect(&:year)
      if is_param_month_range_valid?
       date_filter = "EXTRACT(month FROM tt.date) >= #{params[:month_from]} AND EXTRACT(month FROM tt.date) <= #{params[:month_until]} AND EXTRACT(year FROM tt.date) = #{params[:year]}"
 
@@ -417,7 +417,7 @@ class ReportTablesController < ApplicationController
 
   def prepare_and_check_month_data
     @planning_months = [["Januari","01"],["Februari","02"],["Mac","03"],["April","04"],["Mei","05"],["Jun","06"],["Julai","07"],["Ogos","08"],["September","09"],["Oktober","10"],["November","11"],["Disember","12"]]
-    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from date_apply)as year from vw_detailed_applicants_all").collect(&:year)
+    @planning_years = ClaimPayment.find_by_sql("SELECT distinct extract(year from date_apply)as year from vw_detailed_applicants_all ORDER BY year DESC").collect(&:year)
   end
 
   def is_param_month_range_valid?

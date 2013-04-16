@@ -8,7 +8,7 @@ class TimetablesController < ApplicationController
     @profiles = Profile.all
     @facilities = Facility.all
     
-    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")    
+    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations ORDER BY year DESC")
   end
   
   def index

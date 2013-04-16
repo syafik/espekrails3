@@ -44,7 +44,7 @@ class CourseManagementController < ApplicationController
   end
 
   def evaluated_courses
-    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")
+    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations ORDER BY year DESC")
     cur_year = Time.now.year
     if  !params[:year_start]
       params[:year_start] = cur_year
@@ -73,7 +73,7 @@ class CourseManagementController < ApplicationController
   end
 
   def select_course
-    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations")
+    @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations ORDER BY year DESC")
     cur_year = Time.now.year
     Rails.logger.info cur_year
     params[:year_start] = cur_year if !params[:year_start]
