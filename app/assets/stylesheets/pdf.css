@@ -33,6 +33,19 @@
     font-family: Arial;
 }
 
+thead {display: table-header-group;}
+.avoid_break_inside {
+    page-break-inside: avoid !important;
+}
+
+.pdf_table_padding_right {
+    padding-right:8px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
 .pdf_tr_odd {
     background-color: #CCCCCC;
 }
