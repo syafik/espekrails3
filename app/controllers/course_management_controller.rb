@@ -1026,7 +1026,7 @@ logger.info "--------------------------------"
       @student = CourseApplication.find(id)
     end
     flash[:notice] = "Yuran peserta kursus telah dikemaskini."
-    redirect_to("/course_management/yuran/#{@student.course_implementation.id}?apply_status=yuran")
+    redirect_to("/course_management/#{@student.course_implementation.id}/yuran?apply_status=yuran")
   end
 
   def isi_markah
