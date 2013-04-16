@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'style' %>
 <%#= start_form_tag :action => 'hyouka_hozon' %>
 <form action="/evaluations/hyouka_hozon/<%=@course_implementation.id%>?ca_id=<%=@student.id%><%="&klm=1" if params[:klm]=="1"%>" method="post" onsubmit="//return goSubmit()">
   <%= render :partial => 'form' %>
