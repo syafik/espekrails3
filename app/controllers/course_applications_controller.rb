@@ -511,7 +511,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def test_mail
-    EspekMailer.deliver_test_mail
+    EspekMailer.test_mail.deliver
   end
 
   def create_for_logged_in_user
