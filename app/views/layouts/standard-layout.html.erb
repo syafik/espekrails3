@@ -3,6 +3,9 @@
     <title>Sistem Pengurusan Kursus :: INSTITUT TANAH DAN UKUR NEGARA(INSTUN)</title>
     <%= stylesheet_link_tag 'style', 'jquery-ui' %>
     <%= javascript_include_tag "application" %>
+    <script type="text/javascript">
+      $.ajaxSetup({ cache: false });
+    </script>
     <%= csrf_meta_tag %>
     <%= yield :js %>
 
