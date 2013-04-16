@@ -1246,6 +1246,7 @@ class CourseApplicationsController < ApplicationController
     @perenggan ["_{KURSUS}_"] = "#{params[:course_implementation_code]} - #{params[:nama_kursus]}"
     @perenggan ["_{CHECK_IN}_"] = "#{params[:check_in]}, #{params[:check_in_hour]}.#{params[:check_in_minute]} hingga 6.30 petang"
     @perenggan ["_{CHECK_OUT}_"] = "#{params[:check_out]}, Sebelum jam 5.00 petang"
+    @perenggan ["_{TARIKH_SEBELUM}_"] = params[:dateline]
 
     @signature = Signature.find_by_filename(params[:signature_file])
 
