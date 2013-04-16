@@ -64,7 +64,8 @@
           <table><tr><td>&nbsp;</td><td><%=ranking.evaluation_question.questiontext%></td></tr></table>
         </td>
         <td width="20%" nowrap>
-          <% ranking.max_ranking.times do |i|%>
+          <%- total_max_ranking = (ranking.max_ranking < 6 ? 6 : ranking.max_ranking) %>
+          <% total_max_ranking.times do |i|%>
             <input name="<%=ranking.evaluation_question_id%>" type="radio" value="<%=i+1%>" style="height: 11px" <%=  "disabled='disabled'" if (!topic.shown_at.blank? && topic.shown_at >= Time.now) %>><%=i+1%>
           <% end %>
         </td>
@@ -108,10 +109,11 @@
         <tr>
           <td><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
           <td nowrap>
-            <%		if eq.evaluation_type_id == 5%>
-              <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
+            <% if eq.evaluation_type_id == 5%>
+              <%- total_max_ranking = (eq.evaluation_ranking.max_ranking < 6 ? 6 : eq.evaluation_ranking.max_ranking) %>
+              <% total_max_ranking.times do |i|%>
                 <input name="<%=eq.id%>" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
-              <% 			end
+              <% end
             end
           %>
 
@@ -155,8 +157,10 @@
       %>
         <tr>
           <td><table><tr><td>&nbsp;</td><td><%=eq.questiontext%></td></tr></table></td>
-          <td nowrap><%		if eq.evaluation_type_id == 5%>
-              <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
+          <td nowrap>
+            <%  if eq.evaluation_type_id == 5%>
+              <%- total_max_ranking = (eq.evaluation_ranking.max_ranking < 6 ? 6 : eq.evaluation_ranking.max_ranking) %>
+              <% total_max_ranking.times do |i|%>
                 <input name="<%=eq.id%>" type="radio" value="<%=i+1%>" style="height: 11px"><%=i+1%>
               <%
               end
