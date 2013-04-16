@@ -228,6 +228,7 @@ InstunRails3::Application.routes.draw do
       get 'show_pejabat'
       get 'edit_pejabat'
       get 'destroy_kementerian'
+      get 'destroy_pejabat'
     end
   end
 
