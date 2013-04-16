@@ -336,6 +336,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'list'
       get 'listp'
+      get 'destroy/:id', action: :destroy
     end
     member do
       get 'new_popup'
