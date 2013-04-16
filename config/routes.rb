@@ -218,6 +218,7 @@ InstunRails3::Application.routes.draw do
       post 'search_by_code'
       post 'search_by_phone'
       post 'search_by_state'
+      get 'destroy/:id', action: :destroy
     end
     member do
       get 'show_kementerian'
