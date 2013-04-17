@@ -17,7 +17,7 @@ class UserNotify < ActionMailer::Base
     mail(
       :from => LoginEngine.config(:email_from).to_s,
       :to => user.email,
-      :bcc => ["espek@instun.gov.my", "adila@instun.gov.my"],
+#      :bcc => ["espek@instun.gov.my", "adila@instun.gov.my"],
       :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
       :subject => "[#{LoginEngine.config(:app_name)}] Permohonan Akaun ")
     
@@ -106,8 +106,8 @@ class UserNotify < ActionMailer::Base
     @from       = LoginEngine.config(:email_from).to_s
     @subject    = "[#{LoginEngine.config(:app_name)}] "
     @sent_on    = Time.now
-    @headers["bcc"]      = "espek@instun.gov.my, adila@instun.gov.my" #syedmohd@gmail.com,espek@instun.gov.my,mhafizm@gmail.com"
-    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
+#    @headers["bcc"]      = "espek@instun.gov.my, adila@instun.gov.my" #syedmohd@gmail.com,espek@instun.gov.my,mhafizm@gmail.com"
+#    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
   end
 
   def sample
