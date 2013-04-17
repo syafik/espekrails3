@@ -815,10 +815,12 @@ class UserController < ApplicationController
         flash.now[:notice] = "Tiada pengguna didalam eSPEK. Sila hubungi espek@instun.gov.my"
       else
         begin
-          User.transaction(user) do
+          #User.transaction(user) do
+          User.transaction do
             key = user.generate_security_token
             url = url_for(:action => 'change_password', :user_id => user.id, :key => key)
-            UserNotify.deliver_forgot_password(user, url)
+            #UserNotify.deliver_forgot_password(user, url)
+            UserNotify.forgot_password(user, url).deliver
             flash[:notice] = "Penerangan untuk penukaran kata laluan telah diemelkan ke #{user.email}"
           end
           unless user?
