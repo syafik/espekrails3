@@ -218,6 +218,7 @@ InstunRails3::Application.routes.draw do
       post 'search_by_code'
       post 'search_by_phone'
       post 'search_by_state'
+      get 'destroy/:id', action: :destroy
     end
     member do
       get 'show_kementerian'
@@ -226,6 +227,8 @@ InstunRails3::Application.routes.draw do
       put 'update_pejabat'
       get 'show_pejabat'
       get 'edit_pejabat'
+      get 'destroy_kementerian'
+      get 'destroy_pejabat'
     end
   end
 
@@ -336,6 +339,7 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'list'
       get 'listp'
+      get 'destroy/:id', action: :destroy
     end
     member do
       get 'new_popup'
@@ -445,6 +449,7 @@ InstunRails3::Application.routes.draw do
       get 'surat_pengesahan'
       get 'surat_takhadir'
       post 'isi_markah'
+      get 'make_payment'
     end
     member do
       put 'jana_surat_pengesahan_pdf'
@@ -602,7 +607,7 @@ InstunRails3::Application.routes.draw do
     get 'view'
     get 'addrole'
     get 'show_profile'
-#    put 'update_password'
+    #    put 'update_password'
     put 'update_password2'
    
     get 'edit_password2'
@@ -614,8 +619,8 @@ InstunRails3::Application.routes.draw do
     get 'setrole'
     put 'update_role'
     collection do
-       get 'edit_password'
-       put 'update_password'
+      get 'edit_password'
+      put 'update_password'
       get 'search_akaun'
       get 'list'
       get 'list_all'

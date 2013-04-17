@@ -42,7 +42,7 @@ class UserController < ApplicationController
 
 
 	  if @student.update_attributes(params[:course_application])
-      EspekMailer.deliver_user_cancel(@student.id)
+      EspekMailer.user_cancel(@student.id).deliver
       flash[:notice] = "Permohonan Kursus #{@student.course_implementation.code} Telah Dibatalkan."
 	  end
 
@@ -625,8 +625,8 @@ class UserController < ApplicationController
 
         flash[:notice] = 'Pendaftaran berjaya.<BR>'
         if LoginEngine.config(:use_email_notification) and LoginEngine.config(:confirm_account)
-          #            UserNotify.deliver_signup(@user8, params[:user][:password], url)
-          #  flash[:notice] << "<script>alert('Tahniah, pendaftaran telah berjaya. Anda hanya dibenarkan mengakses sistem setelah Administrator mengesahkan pendaftaran anda.')</script><BR>"
+          UserNotify.signup(@user8, params[:user][:password], url).deliver
+          flash[:notice] << "<script>alert('Tahniah, pendaftaran telah berjaya. Anda hanya dibenarkan mengakses sistem setelah Administrator mengesahkan pendaftaran anda.')</script><BR>"
         end
         flash[:notice] = "Tahniah, pendaftaran telah berjaya. Anda hanya dibenarkan mengakses sistem setelah Administrator mengesahkan pendaftaran anda"
         redirect_to :action => 'success'

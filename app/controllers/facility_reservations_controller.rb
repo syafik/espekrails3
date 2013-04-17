@@ -89,7 +89,7 @@ class FacilityReservationsController < ApplicationController
     
     if @facility_reservation.save
       flash[:notice] = 'Tempahan berjaya.'
-      EspekMailer.deliver_hantar_tempahan_kemudahan(params[:facility_reservation][:course_implementation_id])
+      EspekMailer.hantar_tempahan_kemudahan(params[:facility_reservation][:course_implementation_id]).deliver
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -156,7 +156,11 @@ class FacilityReservationsController < ApplicationController
     end
     end
         flash[:notice] = 'Tempahan Kemudahan Kursus Telah Disahkan.'
+<<<<<<< Updated upstream
         EspekMailer.deliver_domestik_sahkan_tempahan_kemudahan(@ci.id)
+=======
+        EspekMailer.domestik_sahkan_tempahan_kemudahan(@ci.id).deliver
+>>>>>>> Stashed changes
        redirect_to :action => 'list'
   end
   

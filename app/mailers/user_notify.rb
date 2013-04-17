@@ -7,12 +7,20 @@ class UserNotify < ActionMailer::Base
     @subject += "Permohonan Akaun"
 
     # Email body substitutions
-    @body["name"] = "#{user.firstname} #{user.lastname}"
-    @body["login"] = user.login
-    @body["ic_number"] = user.ic_number
-    @body["password"] = password
-    @body["url"] = url || LoginEngine.config(:app_url).to_s
-    @body["app_name"] = LoginEngine.config(:app_name).to_s
+    @name = "#{user.firstname} #{user.lastname}"
+    @login = user.login
+    @ic_number = user.ic_number
+    @password = password
+    @url = url || LoginEngine.config(:app_url).to_s
+    @app_name = LoginEngine.config(:app_name).to_s
+
+    mail(
+      :from => LoginEngine.config(:email_from).to_s,
+      :to => user.email,
+      :bcc => ["espek@instun.gov.my", "adila@instun.gov.my"],
+      :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
+      :subject => "[#{LoginEngine.config(:app_name)}] Permohonan Akaun ")
+    
   end
 
   def approve(user, url=nil)
@@ -98,7 +106,7 @@ class UserNotify < ActionMailer::Base
     @from       = LoginEngine.config(:email_from).to_s
     @subject    = "[#{LoginEngine.config(:app_name)}] "
     @sent_on    = Time.now
-    @headers["bcc"]      = "syedmohd@gmail.com,espek@instun.gov.my,mhafizm@gmail.com"
+    @headers["bcc"]      = "espek@instun.gov.my, adila@instun.gov.my" #syedmohd@gmail.com,espek@instun.gov.my,mhafizm@gmail.com"
     @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
   end
 

@@ -200,11 +200,6 @@ class PlacesController < ApplicationController
     end
   end
   
-  def destroy
-    Place.find(params[:id]).destroy
-    redirect_to :action => 'list'
-  end
-  
   def destroy_pejabat
     Place.find(params[:id]).destroy
     redirect_to :action => 'list_pejabat'

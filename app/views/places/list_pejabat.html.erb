@@ -26,7 +26,7 @@ var menuLayers = {
     document.getElementById('popmenu').innerHTML = "<ul>" + 
                                                "<li><a href=\""  + controller + "/" + objid + "/show_pejabat\">&nbsp;&nbsp;Lihat</a>" +
 					       "<li><a href=\""  + controller + "/" + objid + "/edit_pejabat\">&nbsp;&nbsp;Kemaskini</a>" +
-					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy_pejabat/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/" + objid + "/destroy_pejabat' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					       "</ul>"
     this.position(mnu,e);
   },
