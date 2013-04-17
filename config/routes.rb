@@ -15,7 +15,10 @@ InstunRails3::Application.routes.draw do
   #   resources :products
 
   match '/timetables/timetable_for_user/:id' => 'timetables#timetable_for_user', :via => [:get]
-  resources :timetables do 
+  resources :timetables do
+    collection do
+      get 'destroy/:id', action: :destroy
+    end
     member do
       get 'list'
     end
