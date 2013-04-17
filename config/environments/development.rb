@@ -41,7 +41,7 @@ InstunRails3::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     port: 25,
-    address: 'espek.instun.gov.my',
+    address: '10.137.81.22',
     domain: 'instun.gov.my'
   }
 

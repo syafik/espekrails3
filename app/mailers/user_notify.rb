@@ -17,7 +17,7 @@ class UserNotify < ActionMailer::Base
     mail(
       :from => LoginEngine.config(:email_from).to_s,
       :to => user.email,
-#      :bcc => ["espek@instun.gov.my", "adila@instun.gov.my"],
+      :bcc => ["espek@instun.gov.my", "adila@instun.gov.my", "whashim@gmail.com"],
       :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
       :subject => "[#{LoginEngine.config(:app_name)}] Permohonan Akaun ")
     
