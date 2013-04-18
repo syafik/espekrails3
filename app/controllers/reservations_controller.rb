@@ -132,7 +132,7 @@ class ReservationsController < ApplicationController
     for trainer in @course_implementation.reservation_trainers
       trainer.update_attributes(:status=>"1")
     end
-    #EspekMailer.deliver_domestik_sahkan_tempahan(@course_implementation.id)
+    EspekMailer.domestik_sahkan_tempahan(@course_implementation.id).deliver
     flash[:notice] = 'Tempahan Asrama (Penceramah) Telah Berjaya Disahkan.'
     redirect_to :action => 'show_trainer_book', :id => @course_implementation.id
   end

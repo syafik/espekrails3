@@ -506,7 +506,7 @@ class CourseApplicationsController < ApplicationController
   end
 
   def send_successful_email(user, cid)
-    EspekMailer.user_successful(user, cid).deliver
+#    EspekMailer.user_successful(user, cid).deliver
     #EspekMailer.deliver_coordinator_successful
   end
 

@@ -511,7 +511,7 @@ class ProfilesController < ApplicationController
       sql = "UPDATE users SET salt='#{s}' , salted_password='#{sp}' WHERE id=#{@user.id}"
       a = Profile.find_by_sql(sql);
       flash[:notice] = "Tahniah Kerana Penukaran Kata Laluan Berjaya<BR>"
-      #EspekMailer.deliver_user_password(@user.id, params[:user][:password])
+      EspekMailer.user_password(@user.id, params[:user][:password]).deliver
       redirect_to :action => 'edit_password2', :id => @user.id
     end
   end
@@ -594,7 +594,7 @@ class ProfilesController < ApplicationController
       end
     end
 
-    #EspekMailer.deliver_peserta_kursus(session[:user], @profile.id)
+    EspekMailer.peserta_kursus(session[:user], @profile.id).deliver
     redirect_to :action => 'show', :id => @profile
 
   end

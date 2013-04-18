@@ -80,19 +80,28 @@ class UserNotify < ActionMailer::Base
 
   def change_password(user, password, url=nil)
     setup_email(user)
-    @headers["bcc"]      = "syedmohd@gmail.com,mhafizm@gmail.com"
-    @headers["cc"]      = nof{user.profile.email}
+#    @headers["bcc"]      = "syedmohd@gmail.com,mhafizm@gmail.com"
+#    @headers["cc"]      = nof{user.profile.email}
     # Email header info
     @subject += "Pemberitahuan 'Tukar Kata Laluan'"
 
     # Email body substitutions
-    @body["name"] = nof{user.profile.name}
-    @body["title"] = nof{user.profile.title.description}
-    @body["login"] = user.login
-    @body["ic_number"] = user.ic_number
-    @body["password"] = password
-    @body["url"] = url || LoginEngine.config(:app_url).to_s
-    @body["app_name"] = LoginEngine.config(:app_name).to_s
+    @name = nof{user.profile.name}
+    @title = nof{user.profile.title.description}
+    @login = user.login
+    @ic_number = user.ic_number
+    @password = password
+    @url = url || LoginEngine.config(:app_url).to_s
+    @app_name = LoginEngine.config(:app_name).to_s
+
+    mail(
+        :from => LoginEngine.config(:email_from).to_s,
+        :to => user.email,
+        :cc => nof{user.profile.email},
+        :bcc => ["espek@instun.gov.my", "adila@instun.gov.my", "whashim@gmail.com"],
+        :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
+        :subject => @subject)
+      
   end
 
   def pending_delete(user, url=nil)
@@ -102,10 +111,15 @@ class UserNotify < ActionMailer::Base
     @subject += "Delete user notification"
 
     # Email body substitutions
-    @body["name"] = "#{user.firstname} #{user.lastname}"
-    @body["url"] = url || LoginEngine.config(:app_url).to_s
-    @body["app_name"] = LoginEngine.config(:app_name).to_s
-    @body["days"] = LoginEngine.config(:delayed_delete_days).to_s
+    @name = "#{user.firstname} #{user.lastname}"
+    @url = url || LoginEngine.config(:app_url).to_s
+    @app_name = LoginEngine.config(:app_name).to_s
+    @days = LoginEngine.config(:delayed_delete_days).to_s
+    mail(
+        :from => LoginEngine.config(:email_from).to_s,
+        :to => user.email,
+        :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
+        :subject => @subject)
   end
 
   def delete(user, url=nil)

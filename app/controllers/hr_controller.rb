@@ -266,9 +266,9 @@ class HrController < ApplicationController
       @course_application.cancel_spv_jawatan = params[:cancel_spv_jawatan]
       @course_application.cancel_spv_email = params[:cancel_spv_email]
       if @course_application.save
-      	#EspekMailer.deliver_user_recorded(session[:user], @course_implementation.id)
-      	#EspekMailer.deliver_ketua_jabatan(@course_application.id)
-      	#EspekMailer.deliver_send_after_apply_course(@course_application.id)
+      	EspekMailer.user_recorded(session[:user], @course_implementation.id).deliver
+      	EspekMailer.ketua_jabatan(@course_application.id).deliver
+#      	EspekMailer.send_after_apply_course(@course_application.id).deliver
       end
     end
     flash[:notice] = '<br>Pembatalan permohonan telah berjaya.'
@@ -297,9 +297,9 @@ class HrController < ApplicationController
       @course_application.course_id = @course_implementation.course_id
       @course_application.profile = @profile
       if @course_application.save
-      	#EspekMailer.deliver_user_recorded(session[:user], @course_implementation.id)
-      	#EspekMailer.deliver_ketua_jabatan(@course_application.id)
-      	#EspekMailer.deliver_send_after_apply_course(@course_application.id)
+      	EspekMailer.user_recorded(session[:user], @course_implementation.id).deliver
+      	EspekMailer.ketua_jabatan(@course_application.id).deliver
+#      	EspekMailer.send_after_apply_course(@course_application.id).deliver
       end
     end
     flash[:notice] = '<br>Data Pemohon berjaya disimpan.'
