@@ -639,6 +639,9 @@ InstunRails3::Application.routes.draw do
       put 'update_peribadi'
       post 'update_peribadi'
     end
+    member do
+      delete 'delete_user'
+    end
   end
   
   match '/hr/semak_by_ic' => 'hr#semak_by_ic', :via => [:post]
