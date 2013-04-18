@@ -53,6 +53,7 @@ InstunRails3::Application.routes.draw do
       get 'surat_tawaran'
       get 'attend'
       get 'history'
+      get 'user_cancel/:id', :action => :user_cancel
       post 'sah_hadir_selected'
     end
   end
