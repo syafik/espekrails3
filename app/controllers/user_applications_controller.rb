@@ -42,7 +42,7 @@ class UserApplicationsController < ApplicationController
 
 
 	  if @student.update_attributes(params[:course_application])
-      EspekMailer.deliver_user_cancel(@student.id)
+      EspekMailer.user_cancel(@student.id).deliver
       flash[:notice] = "Permohonan Kursus #{@student.course_implementation.code} Telah Dibatalkan."
 	  end
 
@@ -409,7 +409,7 @@ class UserApplicationsController < ApplicationController
       params[:course_application][:date_supervisor_cfm] = params[:date_supervisor_cfm_month] + "/" + params[:date_supervisor_cfm_day] + "/" + params[:date_supervisor_cfm_year]
       params[:course_application][:student_status_id]   = "4"
       @student.update_attributes(params[:course_application])
-#      EspekMailer.deliver_user_hadir(@student.id)
+      EspekMailer.user_hadir(@student.id).deliver
       flash[:notice] = "Permohonan Kursus #{@student.course_implementation.code} Telah Disahkan Kehadiran."
     end
     redirect_to("/user_applications/offered/")

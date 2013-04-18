@@ -161,7 +161,7 @@ class EvaluationsController < ApplicationController
             eval_trn_rnkg = EvaluationTrainerRanking.new(:timetable_id => tt.id,
                                                          :trainer_id => tt.trainers.first.id,
                                                          :evaluation_question_id => eval_quest.id,
-                                                         :max_ranking => 5)
+                                                         :max_ranking => 6)
             eval_trn_rnkg.save!
           end
 
@@ -208,7 +208,7 @@ class EvaluationsController < ApplicationController
 
   def shinki #create penilaian guna link dengan timetable
 
-    @max_rating = 4; #have to take value from table 'scales'?
+    @max_rating = 6; #have to take value from table 'scales'?
 
     @course_implementation = CourseImplementation.find(params[:id])
 
@@ -396,7 +396,7 @@ class EvaluationsController < ApplicationController
                                                          :trainer_id => tt.trainers.first.id,
                                                          :evaluation_question_id => eval_quest.id,
                                                          :created_by => session[:user].login,
-                                                         :max_ranking => 5)
+                                                         :max_ranking => 6)
             eval_trn_rnkg.save!
           end
         end

@@ -506,12 +506,12 @@ class CourseApplicationsController < ApplicationController
   end
 
   def send_successful_email(user, cid)
-    EspekMailer.user_successful(user, cid).deliver
+#    EspekMailer.user_successful(user, cid).deliver
     #EspekMailer.deliver_coordinator_successful
   end
 
   def test_mail
-    EspekMailer.deliver_test_mail
+    EspekMailer.test_mail.deliver
   end
 
   def create_for_logged_in_user

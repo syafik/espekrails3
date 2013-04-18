@@ -31,7 +31,7 @@ sql = "SELECT t.id,t.profile_id,p.name from course_implementations_trainers as c
 
         <!--input name="submit" type="button" class="button" value="Padam" onClick="location.href='/timetables/destroy?id=<%=@tid%>'"!-->
 
-  <input name="submit" type="button" class="button" value="Padam" onClick="return confirm_delete('/timetables/destroy?id=<%=@tid%>')">
+  <input name="submit" type="button" class="button" value="Padam" onClick="return confirm_delete('/timetables/destroy/<%=@tid%>')">
   <input name="submit" type="button" class="button" value="Kembali" onClick="if  (window.opener) {  window.opener.location.reload();window.close() } else { location='?'}">
 <% end  %>
 

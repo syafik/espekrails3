@@ -20,31 +20,36 @@ class ReservationsController < ApplicationController
 
     begin
       if params[:report1]
-        tarikh1 = params[:report1].to_s
+        tarikh1 = params[:report1][0].to_s
         tarikhi = tarikh1.split('/')
         d = tarikhi[0]
         m = tarikhi[1]
         y = tarikhi[2]
         date_start = m+"/"+d+"/"+y
+#        date_start = tarikh1
         @report_date_from = tarikh1
       end
 
       if params[:report2]
-        tarikh2 = params[:report2].to_s
+        tarikh2 = params[:report2][0].to_s
         tarikhii = tarikh2.split('/')
         d = tarikhii[0]
         m = tarikhii[1]
         y = tarikhii[2]
         date_end = m+"/"+d+"/"+y
+#        date_end = tarikh2
         @report_date_to = tarikh2
       end
 
-      date_start = "#{@month_next}/#{@day_next}/#{@year_next}" if !params[:report1]
-      date_end = "#{@month}/#{@day}/#{@year}" if !params[:report2]
+      date_start = "#{@month_next}/#{@day_next}/#{@year_next}" if params[:report1].blank?
+      date_end = "#{@month}/#{@day}/#{@year}" if params[:report2].blank?
       
-      @reservations = Reservation.find(:all, :conditions=>"(date_plan_start BETWEEN '#{date_start}' AND '#{date_end}') OR (date_plan_end BETWEEN '#{date_start}' AND '#{date_end}') OR ('#{date_start}' BETWEEN date_plan_start AND date_plan_end) OR ('#{date_end}' BETWEEN date_plan_start AND date_plan_end)", :order => "updated_on desc")
+      @reservations = Reservation.find(:all,        
+        :conditions=>"(date_plan_start BETWEEN '#{date_start}' AND '#{date_end}') OR (date_plan_end BETWEEN '#{date_start}' AND '#{date_end}') OR ('#{date_start}' BETWEEN date_plan_start AND date_plan_end) OR ('#{date_end}' BETWEEN date_plan_start AND date_plan_end)", :order => "updated_on desc")
           
-    rescue
+    rescue Exception => s
+      logger.debug "s==================="
+      logger.debug s
       redirect_to :action => 'listp'
     end
   end
@@ -127,7 +132,7 @@ class ReservationsController < ApplicationController
     for trainer in @course_implementation.reservation_trainers
       trainer.update_attributes(:status=>"1")
     end
-    #EspekMailer.deliver_domestik_sahkan_tempahan(@course_implementation.id)
+    EspekMailer.domestik_sahkan_tempahan(@course_implementation.id).deliver
     flash[:notice] = 'Tempahan Asrama (Penceramah) Telah Berjaya Disahkan.'
     redirect_to :action => 'show_trainer_book', :id => @course_implementation.id
   end

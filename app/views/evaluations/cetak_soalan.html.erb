@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'style' %>
 <script>
 function goDel(url) {
 	if (confirm('Adakah anda pasti?')) {
@@ -60,9 +61,11 @@ function goDel(url) {
 		  <td width="50%">
 			<table><tr><td>&nbsp;</td><td><%=ranking.evaluation_question.questiontext%></td></tr></table>		  </td>
 		  <td width="20%" nowrap>
-		  <% ranking.max_ranking.times do |i|%>
-		  <input name="radiobutton" type="radio" value="#{i+1}" style="height: 11px"><%=i+1%>
-		  <% end %>		  </td>
+                    <% total_ranking = (ranking.max_ranking < 6) ? 6 : ranking.max_ranking %>
+                    <% total_ranking.times do |i|%>
+                      <input name="radiobutton" type="radio" value="#{i+1}" style="height: 11px"><%=i+1%>
+                    <% end %>
+                  </td>
 		  <td>
 		  <input name="textfield23" type="text" size="40"></td>
 	   </tr>       
@@ -165,8 +168,9 @@ function goDel(url) {
 			</tr>
 		</table>	  </td>
       <td nowrap><%		if eq.evaluation_type_id == 5%>
-          <% 			eq.evaluation_ranking.max_ranking.times do |i|%>
-          <input name="radiobutton" type="radio" value="#{i+1}" style="height: 11px"><%=i+1%>
+          <% total_ranking = (eq.evaluation_ranking.max_ranking < 6) ? 6 : eq.evaluation_ranking.max_ranking%>
+          <% total_ranking.times do |i|%>
+            <input name="radiobutton" type="radio" value="#{i+1}" style="height: 11px"><%=i+1%>
           <%
 		   				end
 					end

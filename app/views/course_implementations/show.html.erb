@@ -1,3 +1,4 @@
+<% course_implementation_id = params[:course_implementation_id].blank? ? params[:id] : params[:course_implementation_id] %>
   <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <!--tr>
       <td height="21" align="LEFT">eSPEK&gt;Perancangan Kursus&gt;<a href="/course_implementations/">Senarai Kursus</a>&gt;Maklumat Kursus</td>
@@ -32,32 +33,32 @@
       <td align="center">
 <%if session[:user].roles[0].name == "Admin" %>
 	  <% if @course_implementation.course.course_status_id == 2 %>
-	  <input name="button2" type="button" value="Buka" class="button" onClick="location='/course_implementations/open/<%=params[:id]%>'">
+	  <input name="button2" type="button" value="Buka" class="button" onClick="location='/course_implementations/open/<%=course_implementation_id%>'">
 	  <% end %>
 	  <% if @course_implementation.course.course_status_id == 1 %>
-      <input name="button22" type="button" value="Tangguh" class="button" onClick="location='/course_implementations/postpone/<%=params[:id]%>'">
+      <input name="button22" type="button" value="Tangguh" class="button" onClick="location='/course_implementations/postpone/<%=course_implementation_id%>'">
 	  <% end %>
 	  <% if @course_implementation.course.course_status_id != 2%>
-      <input name="button223" type="button" value="Tutup" class="button" onClick="location='/course_implementations/close/<%=params[:id]%>'">
+      <input name="button223" type="button" value="Tutup" class="button" onClick="location='/course_implementations/close/<%=course_implementation_id%>'">
 	  <% end %>
 <%else
  	if session[:user].profile.staff
 		if (session[:user].profile.staff.id == @course_implementation.coordinator1 ||
 		    session[:user].profile.staff.id == @course_implementation.coordinator2 ) %>
 	  <% if @course_implementation.course.course_status_id == 2 %>
-	  <input name="button2" type="button" value="Buka" class="button" onClick="location='/course_implementations/open/<%=params[:id]%>'">
+	  <input name="button2" type="button" value="Buka" class="button" onClick="location='/course_implementations/open/<%=course_implementation_id%>'">
 	  <% end %>
 	  <% if @course_implementation.course.course_status_id == 1 %>
-      <input name="button22" type="button" value="Tangguh" class="button" onClick="location='/course_implementations/postpone/<%=params[:id]%>'">
+      <input name="button22" type="button" value="Tangguh" class="button" onClick="location='/course_implementations/postpone/<%=course_implementation_id%>'">
 	  <% end %>
 	  <% if @course_implementation.course.course_status_id != 2%>
-      <input name="button223" type="button" value="Tutup" class="button" onClick="location='/course_implementations/close/<%=params[:id]%>'">
+      <input name="button223" type="button" value="Tutup" class="button" onClick="location='/course_implementations/close/<%=course_implementation_id%>'">
 	  <% end %>
 
 <%  	end
     end%>
 <%end%>
-      <input name="button222" type="button" value="Salin" class="button" onClick="location='/course_implementations/<%=params[:id]%>/copy_and_new?role=<%= params[:role] %>'">
+      <input name="button222" type="button" value="Salin" class="button" onClick="location='/course_implementations/<%=course_implementation_id%>/copy_and_new?role=<%= params[:role] %>'">
       </td>
     </tr>
   </table>
