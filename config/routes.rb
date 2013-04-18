@@ -281,12 +281,13 @@ InstunRails3::Application.routes.draw do
     collection do
       get 'application_and_attendance'
       get 'peserta_jantina'
-      get 'summary_group_by_states'
+      get 'summary_group_ptg_ptd'
       get 'summary_group_jupem'
       get 'peserta_mengikut_jabatan'
       get 'trainer_by_department'
       get 'teach_hour_by_department'
       get 'students_feedback'
+      get 'summary_group_jkptg'
     end
   end
 
