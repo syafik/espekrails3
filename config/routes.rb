@@ -47,7 +47,7 @@ InstunRails3::Application.routes.draw do
   match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:put]
   match '/user_applications/show_attendance/:id' => 'user_applications#show_attendance', :via => [:get]
   resources :user_applications do
-    collection do 
+    collection do
       get 'applied'
       get 'offered'
       get 'surat_tawaran'
@@ -77,7 +77,7 @@ InstunRails3::Application.routes.draw do
       get 'list_all'
     end
   end
-  
+
   resources :job_profiles
   resources :religions
   resources :states
@@ -164,7 +164,7 @@ InstunRails3::Application.routes.draw do
       get 'list'
     end
   end
-  
+
   resources :course_departments do
     collection do
       get 'list'
@@ -183,13 +183,13 @@ InstunRails3::Application.routes.draw do
     end
   end
   resources :course_locations do
-    collection do 
+    collection do
       get 'new_popup'
       post 'create_popup'
     end
   end
   resources :methodologies do
-    collection do 
+    collection do
       get 'list'
       get 'new_popup'
       post 'create_popup'
@@ -307,7 +307,7 @@ InstunRails3::Application.routes.draw do
       post 'search_by_dept'
     end
   end
-  
+
   resources :report do
     collection do
       get 'list'
@@ -339,7 +339,7 @@ InstunRails3::Application.routes.draw do
       get 'status_perlaksanaan'
     end
   end
-  
+
   resources :reservations do
     collection do
       get 'list'
@@ -422,7 +422,7 @@ InstunRails3::Application.routes.draw do
       put 'simpan_copy_shiken_ichiran'
     end
   end
-  
+
   match '/course_management/override_kelayakan/:id' => 'course_management#override_kelayakan', :via => [:post]
   match '/course_management/cetak_tempahan_iso/:id' => 'course_management#cetak_tempahan_iso', :via => [:post]
   match '/course_management/hantar_tempahan/:id' => 'course_management#hantar_tempahan', :via => [:post]
@@ -551,7 +551,7 @@ InstunRails3::Application.routes.draw do
       get 'accepted'
     end
   end
-  
+
   match '/course_implementations/show_only_for_peserta/:id' => 'course_implementations#show_only_for_peserta', :via => [:get]
   match '/course_implementations/show_public/:id' => 'course_implementations#show_public', :via => [:get]
   #match '/course_implementations/update/:id' => 'course_implementations#update', :via => [:post]
@@ -606,15 +606,15 @@ InstunRails3::Application.routes.draw do
       post 'register_exist'
     end
   end
-  
-  resources :profiles do
+
+  resources :profiles, :except => [:destroy] do
     #    get 'show'
     get 'view'
     get 'addrole'
     get 'show_profile'
     #    put 'update_password'
     put 'update_password2'
-   
+
     get 'edit_password2'
     get 'edit_password'
     get 'verify'
@@ -643,7 +643,7 @@ InstunRails3::Application.routes.draw do
       delete 'delete_user'
     end
   end
-  
+
   match '/hr/semak_by_ic' => 'hr#semak_by_ic', :via => [:post]
   match '/hr/search_by_ic' => 'hr#search_by_ic', :via => [:post]
   match '/hr/semak_by_name' => 'hr#semak_by_name', :via => [:post]
@@ -679,7 +679,7 @@ InstunRails3::Application.routes.draw do
       get 'pegawai_sijil'
       get 'pengajar'
       get 'kewangan'
-      get 'eksekutif'      
+      get 'eksekutif'
       get 'rnd'
       get 'laporan'
       get 'pengajar'
@@ -696,10 +696,10 @@ InstunRails3::Application.routes.draw do
   get 'executives/feedback'
   get 'executives/implementation'
   get 'executives/realization'
-  
+
   resources :executives
 
-  
+
   match '/quiz_answers/show_answer1/:id' => 'quiz_answers#show_answer1', :via => [:get]
   match '/quiz_answers/show_answer2/:id' => 'quiz_answers#show_answer2', :via => [:get]
   match '/quiz_answers/show_answer3/:id' => 'hr#show_answer3', :via => [:get]
@@ -720,7 +720,7 @@ InstunRails3::Application.routes.draw do
       get 'new_obj'
     end
   end
-  
+
   match '/evaluations/user_hyouka' => 'evaluations#user_hyouka', :via => [:get]
   match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:get]
   match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:post]
