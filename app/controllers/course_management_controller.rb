@@ -621,7 +621,7 @@ class CourseManagementController < ApplicationController
 
   def certificate
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
-    @course_implementation = CourseImplementation.find(params[:id]) if (params[:id] && params[:id] != "")
+    @course_implementation = CourseImplementation.find(params[:id]) unless params[:id].blank?
 
     if @course_implementation
 
