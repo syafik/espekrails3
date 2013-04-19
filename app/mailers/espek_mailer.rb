@@ -4,7 +4,7 @@ class EspekMailer < ActionMailer::Base
   def test_mail
     setup_email
   end
-  
+
   def hostel_reservation(cimp_id)
   	ci = CourseImplementation.find(cimp_id)
 	  r = ci.reservations.first
@@ -61,7 +61,7 @@ class EspekMailer < ActionMailer::Base
       :bcc => ["syedmohd@gmail.com","espek@instun.gov.my","mhafizm@gmail.com"],
       :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
       :subject => @subject)
-    
+
   end
 
   def domestik_sahkan_tempahan_kemudahan(cimp_id)
@@ -93,9 +93,9 @@ class EspekMailer < ActionMailer::Base
 
   def hantar_tempahan(cimp_id, staff_id)
     @ci = CourseImplementation.find(cimp_id)
-    
-    @staff = Staff.find(staff_id)
 
+    @staff = Staff.find(staff_id)
+    @headers = Hash.new
     @recipients = "#{@ci.penyelaras1.profile.email},#{@ci.penyelaras2.profile.email}, #{@staff.profile.email}"
     #CC : {Ketua Program Kursus; KB R&D}
     #    @from       = LoginEngine.config(:email_from).to_s
@@ -138,7 +138,7 @@ class EspekMailer < ActionMailer::Base
       :bcc => ["syedmohd@gmail.com","mhafizm@gmail.com"],
       :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
       :subject => @subject)
-    
+
   end
 
   def security_approve(no_id)
@@ -170,9 +170,9 @@ class EspekMailer < ActionMailer::Base
       :bcc      => "espek@instun.gov.my",
       :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
       :subject => @subject)
-    
+
   end
-  
+
   def security_notify(no_id)
     @no = Notification.find(no_id)
     @ci = CourseImplementation.find(@no.course_implementation_id)
@@ -203,7 +203,7 @@ class EspekMailer < ActionMailer::Base
       :subject => @subject)
   end
 
-  
+
   def edit_by_user(ca_id)
     @ca = CourseApplication.find(ca_id)
     @ci = @ca.course_implementation
@@ -438,12 +438,12 @@ class EspekMailer < ActionMailer::Base
       :to => @pid.email,
       :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
       :subject => @subject)
-    
+
   end
 
   def send_after_apply_course(user, pid)
     @pid = Profile.find(pid)
-    
+
   end
 
   def coordinator_successful(coordinator)
@@ -461,5 +461,5 @@ class EspekMailer < ActionMailer::Base
     @sent_on    = Time.now
     @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
   end
-  
+
 end

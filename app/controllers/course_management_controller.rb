@@ -193,8 +193,8 @@ class CourseManagementController < ApplicationController
       params[:tempahan_sijil]["tarikh"] = arr[1] + "/" + arr[0] + "/" + arr[2]
       @course_implementation.tempahan_sijil.update_attributes(params[:tempahan_sijil])
     end
-    EspekMailer.hantar_tempahan(@course_implementation.id, params[:tempahan_sijil]["penerima"]).deliver
-    flash[:notice] = "Tempahan pengeluaran sijil telah berjaya dihantar."
+    EspekMailer.hantar_tempahan(@course_implementation.id, params[:tempahan_sijil]["penerima"]).deliver rescue puts "Failed send email"
+    flash[:notice] =  "Tempahan pengeluaran sijil telah berjaya dihantar."
     redirect_to :action => "tempah_sijil", :id => @course_implementation.id
   end
 
