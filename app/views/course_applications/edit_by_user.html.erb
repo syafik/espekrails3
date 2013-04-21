@@ -16,18 +16,18 @@ $('#course_implementation_code').css({"background":'#eeeeee'});
 
 function GoSubmit(df) {
 
-	if (!checkInput(anythingRegExp,$('course_implementation_code'),'Kod Kursus')) return false;
-	if (!checkInput(icnumRegExp,$('profile_ic_number'),'No KP')) return false;
-	if (!checkSelection(strRegExp,$('profile_title_id'),'Gelaran')) return false;
-	if (!checkInput(anythingRegExp,$('profile_name'),'Nama Penuh Pemohon')) return false;
-	if (!checkInput(dateDayformat,$('d_dob'),'Hari Tarikh Lahir')) return false;
-	if (!checkInput(dateMonthformat,$('m_dob'),'Bulan Tarikh Lahir')) return false;
-	if (!checkInput(dateAllYearformat,$('y_dob'),'Tahun Tarikh Lahir')) return false;
-	if (!checkSelection(strRegExp,$('profile_gender_id'),'Jantina')) return false;
-	if (!checkSelection(strRegExp,$('profile_religion_id'),'Agama')) return false;
-	if (!checkSelection(strRegExp,$('profile_marital_status_id'),'Taraf Perkahwinan')) return false;
-	if (!checkSelection(strRegExp,$('profile_race_id'),'Keturunan')) return false;
-	if (!checkFormat(imageRegExp,$('profile_image'),'Hanya Format JPG/JPEG dibenarkan')) return false;
+	if (!checkInput(anythingRegExp,document.getElementById('course_implementation_code'),'Kod Kursus')) return false;
+	if (!checkInput(icnumRegExp,document.getElementById('profile_ic_number'),'No KP')) return false;
+	if (!checkSelection(strRegExp,document.getElementById('profile_title_id'),'Gelaran')) return false;
+	if (!checkInput(anythingRegExp,document.getElementById('profile_name'),'Nama Penuh Pemohon')) return false;
+	if (!checkInput(dateDayformat,document.getElementById('d_dob'),'Hari Tarikh Lahir')) return false;
+	if (!checkInput(dateMonthformat,document.getElementById('m_dob'),'Bulan Tarikh Lahir')) return false;
+	if (!checkInput(dateAllYearformat,document.getElementById('y_dob'),'Tahun Tarikh Lahir')) return false;
+	if (!checkSelection(strRegExp,document.getElementById('profile_gender_id'),'Jantina')) return false;
+	if (!checkSelection(strRegExp,document.getElementById('profile_religion_id'),'Agama')) return false;
+	if (!checkSelection(strRegExp,document.getElementById('profile_marital_status_id'),'Taraf Perkahwinan')) return false;
+	if (!checkSelection(strRegExp,document.getElementById('profile_race_id'),'Keturunan')) return false;
+	if (!checkFormat(imageRegExp,document.getElementById('profile_picture'),'Hanya Format JPG/JPEG dibenarkan')) return false;
 
 	//if (!checkInput(anythingRegExp,$('course_application_supervisor_name'),'Perakuan Ketua Jabatan(Nama)')) return false;
 	//if (!checkInput(anythingRegExp,$('course_application_supervisor_jawatan'),'Perakuan Ketua Jabatan(Jawatan)')) return false;
@@ -35,14 +35,14 @@ function GoSubmit(df) {
 
 	//if (!checkSelection(strRegExp,document.getElementById('course_field_id'),'Bidang')) return false;
 	
-	if (!$('chkbox').checked) {
+	if (!document.getElementById('chkbox').checked) {
 		alert('Sila sahkan pengakuan');
-		$('chkbox').focus()
+		document.getElementById('chkbox').focus()
 		return false;
 	}
-    if (!$('chkbox_ketua_jabatan').checked) {
+    if (!document.getElementById('chkbox_ketua_jabatan').checked) {
 		alert('Sila sahkan perakuan ketua jabatan');
-		$('chkbox_ketua_jabatan').focus()
+		document.getElementById('chkbox_ketua_jabatan').focus()
 		return false;
 	}
 
