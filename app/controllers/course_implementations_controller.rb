@@ -223,7 +223,7 @@ class CourseImplementationsController < ApplicationController
     begin
     
       if params[:search_date]
-        tarikh1 = params[:search_date].to_s
+        tarikh1 = params[:search_date].first.to_s
         tarikhi = tarikh1.split('/')
         d = tarikhi[0]
         m = tarikhi[1]

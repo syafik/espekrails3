@@ -44,6 +44,8 @@ InstunRails3::Application.configure do
     address: '10.137.81.22',
     domain: 'instun.gov.my'
   }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 
 
 end

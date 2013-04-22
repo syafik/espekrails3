@@ -104,7 +104,6 @@ class ProfilesController < ApplicationController
   def delete_user
     User.find(params[:id]).destroy
     flash[:notice] = "Permohonan telah dibatalkan"
-    redirect_to :action => 'list'
   end
 
   def setrole
@@ -144,11 +143,11 @@ class ProfilesController < ApplicationController
     if is_roles_contain_trainer_role? && !is_previously_trainer? #new request to be trainer
       create_trainer_profile
     end
-    
+
     if @user.update_attributes(params[:user])
       flash[:notice] = "Peranan telah dikemaskinikan untuk '#{@user.login}'."
     else
-      flash[:error] = "Peranan Gagal dikemaskinikan untuk '#{@user.login}'."      
+      flash[:error] = "Peranan Gagal dikemaskinikan untuk '#{@user.login}'."
     end
     redirect_to :action => 'setrole', :profile_id => @user
   end
@@ -511,7 +510,7 @@ class ProfilesController < ApplicationController
       sql = "UPDATE users SET salt='#{s}' , salted_password='#{sp}' WHERE id=#{@user.id}"
       a = Profile.find_by_sql(sql);
       flash[:notice] = "Tahniah Kerana Penukaran Kata Laluan Berjaya<BR>"
-      #EspekMailer.deliver_user_password(@user.id, params[:user][:password])
+      EspekMailer.user_password(@user.id, params[:user][:password]).deliver
       redirect_to :action => 'edit_password2', :id => @user.id
     end
   end
@@ -594,7 +593,7 @@ class ProfilesController < ApplicationController
       end
     end
 
-    #EspekMailer.deliver_peserta_kursus(session[:user], @profile.id)
+    EspekMailer.peserta_kursus(session[:user], @profile.id).deliver
     redirect_to :action => 'show', :id => @profile
 
   end
@@ -658,7 +657,7 @@ class ProfilesController < ApplicationController
     default_role = {"role_ids"=>[Role.find_by_name("User").id.to_s]} #regular user
     params[:user] ||= default_role
   end
-  
+
   def activate_trainer_profile_if_trainer
     trainer_role_id = Role.find_by_name("Pengajar").id.to_s
     if params[:user][:role_ids].include? trainer_role_id
@@ -670,14 +669,14 @@ class ProfilesController < ApplicationController
     @trainer = Trainer.find_by_profile_id(@user.profile.id)
     return true if !@trainer.blank?
   end
-  
+
   def is_roles_contain_trainer_role?
     trainer_role_id = Role.find_by_name("Pengajar").id.to_s
     return false if (params["user"]).blank?
     return true if (params[:user][:role_ids].include? trainer_role_id)
     return false
   end
-  
+
   def deactivate_trainer_profile
     @trainer = Trainer.find_by_profile_id(@user.profile.id)
     @trainer.active = false
@@ -685,11 +684,11 @@ class ProfilesController < ApplicationController
       flash[:notice] = "Profile Trainer Deactivation is Successful"
     else
       flash[:notice] = "Profile Trainer Deactivation is Fail"
-    end    
+    end
   end
 
   def create_trainer_profile
-    ActiveRecord::Base.transaction do    
+    ActiveRecord::Base.transaction do
       @trainer = Trainer.new
       @trainer.profile = @user.profile
 
@@ -703,7 +702,7 @@ class ProfilesController < ApplicationController
       @expertise = Expertise.new
       @expertise.profile = @user.profile
       @expertise.save
-    
+
       @qualification = Qualification.new
       @qualification.profile = @user.profile
       @qualification.save

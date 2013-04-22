@@ -58,60 +58,103 @@ class ReportTablesController < ApplicationController
     end
   end
 
-  def summary_group_by_states
+  def summary_group_ptg_ptd
     if is_param_month_range_valid?
-          
-      presence_total_query = "select count(vdaa.profile_id) as total
-        FROM vw_detailed_applicants_all vdaa 
-        WHERE student_status_id IN (5,8,9) 
-        AND UPPER(OPIS) LIKE ('JKPTG%') OR OPIS LIKE('JABATAN KETUA PENGARAH TANAH DAN GALIAN%')
-        AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
-        AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
-        AND EXTRACT(year FROM date_apply) = #{params[:year]}"
+      
+      filter = " WHERE EXTRACT(month FROM date_apply) >= #{params[:month_from]}
+                 AND EXTRACT(month FROM date_apply) <= #{params[:month_until]}
+                 AND EXTRACT(year FROM date_apply) = #{params[:year]}"      
 
-      total = CourseApplication.find_by_sql(presence_total_query)[0][:total].to_i  
-     
-      group_query = "select count(vdaa.profile_id) as subtotal, ((cast (count(vdaa.profile_id) as float)) / #{total.to_i})*100 as percentage, pr.state_id, st.description as state_name
-              FROM vw_detailed_applicants_all vdaa
-              join profiles pr on vdaa.profile_id = pr.id
-              join states st on pr.state_id = st.id
-              WHERE student_status_id IN (5,8,9)
-              AND UPPER(vdaa.OPIS) LIKE ('JKPTG%') OR UPPER(vdaa.OPIS) LIKE('JABATAN KETUA PENGARAH TANAH DAN GALIAN%')
+      valid_children_place_ids = []
+      ptg_ptd_rows = Place.where("id =307 OR (name ilike '%galian%' OR name ilike '%tanah%' and name NOT ilike '%JABATAN KETUA PENGARAH TANAH DAN GALIAN (JKPTG)%') AND code NOT IN ('1010000006', '1011250000', '2037110000', '1365080000', '101125')")
+      ptg_ptd_rows.each do |row|
+        if row.id != 307
+          valid_children_place_ids += row.children.collect(&:id)
+        end
+      end
+      valid_place_ids = (ptg_ptd_rows.collect(&:id) + valid_children_place_ids) .uniq
+      
+      pids = ptg_ptd_filter(valid_place_ids, filter)
+      pids = pids.collect(&:pid).collect{|el|el.to_i}
+      
+      group_query = "select count(ca.id) as subtotal, ((cast (count(ca.id) as float)) / #{pids.count})*100 as percentage, st.id, st.description as state_name
+              from course_applications ca join profiles pf on ca.profile_id = pf.id
+              join states st on pf.state_id = st.id
               AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
               AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
               AND EXTRACT(year FROM date_apply) = #{params[:year]}
-              group by state_id, st.description
-              order by st.description asc"              
-              
+              AND pf.id in (#{pids.split.join(',')})
+              group by st.id, st.description
+              order by (count(ca.id)) desc"
+                            
       @reports =  CourseApplication.find_by_sql(group_query)      
     end
   end
+
+  def summary_group_jkptg
+    if is_param_month_range_valid?
+      
+      filter = " WHERE EXTRACT(month FROM date_apply) >= #{params[:month_from]}
+                 AND EXTRACT(month FROM date_apply) <= #{params[:month_until]}
+                 AND EXTRACT(year FROM date_apply) = #{params[:year]}"      
+
+      valid_children_place_ids = []
+      ptg_ptd_rows = Place.where("id =307 OR (name ilike '%JABATAN KETUA PENGARAH TANAH DAN GALIAN (JKPTG)%' OR name ilike '%galian%' OR name ilike '%tanah%') AND code NOT IN ('1010000006', '1011250000', '2037110000', '1365080000', '101125')")
+      ptg_ptd_rows.each do |row|
+        if row.id != 307
+          valid_children_place_ids += row.children.collect(&:id)
+        end
+      end
+      valid_place_ids = (ptg_ptd_rows.collect(&:id) + valid_children_place_ids) .uniq
+      
+      pids = ptg_ptd_filter(valid_place_ids, filter)
+      pids = pids.collect(&:pid).collect{|el|el.to_i}
+      
+      group_query = "select count(ca.id) as subtotal, ((cast (count(ca.id) as float)) / #{pids.count})*100 as percentage, st.id, st.description as state_name
+              from course_applications ca join profiles pf on ca.profile_id = pf.id
+              join states st on pf.state_id = st.id
+              AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
+              AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
+              AND EXTRACT(year FROM date_apply) = #{params[:year]}
+              AND pf.id in (#{pids.split.join(',')})
+              group by st.id, st.description
+              order by (count(ca.id)) desc"
+                            
+      @reports =  CourseApplication.find_by_sql(group_query)      
+    end
+  end
+
   
   def summary_group_jupem
     if is_param_month_range_valid?
     
-      presence_total_query = "select count(vdaa.profile_id) as total
-        FROM vw_detailed_applicants_all vdaa 
-        WHERE student_status_id IN (5,8,9)
-        AND UPPER(OPIS) LIKE('JABATAN UKUR DAN PEMETAAN MALAYSIA%') OR UPPER(OPIS) LIKE ('JUPEM%')        
-        AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
-        AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
-        AND EXTRACT(year FROM date_apply) = #{params[:year]}"
+      filter = " WHERE EXTRACT(month FROM date_apply) >= #{params[:month_from]}
+                 AND EXTRACT(month FROM date_apply) <= #{params[:month_until]}
+                 AND EXTRACT(year FROM date_apply) = #{params[:year]}"      
 
-      total = CourseApplication.find_by_sql(presence_total_query)[0][:total].to_i  
-     
-      group_query = "select count(vdaa.profile_id) as subtotal, ((cast (count(vdaa.profile_id) as float)) / #{total.to_i})*100 as percentage, pr.state_id, st.description as state_name
-              FROM vw_detailed_applicants_all vdaa
-              join profiles pr on vdaa.profile_id = pr.id
-              join states st on pr.state_id = st.id
-              WHERE student_status_id IN (5,8,9)
-              AND UPPER(vdaa.OPIS) LIKE('JABATAN UKUR DAN PEMETAAN MALAYSIA%') OR UPPER(vdaa.OPIS) LIKE ('JUPEM%')        
+      valid_children_place_ids = []
+      ptg_ptd_rows = Place.where("UPPER(name) ilike '%JUPEM%'")
+      ptg_ptd_rows.each do |row|
+        if row.id != 307
+          valid_children_place_ids += row.children.collect(&:id)
+        end
+      end
+      valid_place_ids = (ptg_ptd_rows.collect(&:id) + valid_children_place_ids).uniq
+      
+      pids = ptg_ptd_filter(valid_place_ids, filter)
+      pids = pids.collect(&:pid).collect{|el|el.to_i}
+      
+      group_query = "select count(ca.id) as subtotal, ((cast (count(ca.id) as float)) / #{pids.count})*100 as percentage, st.id, st.description as state_name
+              from course_applications ca join profiles pf on ca.profile_id = pf.id
+              join states st on pf.state_id = st.id
               AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} 
               AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} 
               AND EXTRACT(year FROM date_apply) = #{params[:year]}
-              group by state_id, st.description, vdaa.opis
-              having vdaa.opis = 'JABATAN UKUR DAN PEMETAAN MALAYSIA'
-              order by st.description asc"              
+              AND pf.id in (#{pids.split.join(',')})
+              group by st.id, st.description
+              order by (count(ca.id)) desc"
+                            
+      @reports =  CourseApplication.find_by_sql(group_query)      
               
       @reports =  CourseApplication.find_by_sql(group_query)      
     end
@@ -479,5 +522,24 @@ class ReportTablesController < ApplicationController
     rows.keep_if {|el| pids.include?(el.pid.to_i)} 
     rows.count
   end
+  
+  def ptg_ptd_filter(ids, filter)
+    a = "select course_implementation_id as cid, profile_id as pid FROM course_applications #{filter}"
+    rows = CourseApplication.find_by_sql(a)
     
+    #filter 1 course_implementation.id
+    cids = CourseImplementation.all      
+    cids = cids.collect(&:id).collect{|el|el.to_i}
+    
+    rows.keep_if {|el| cids.include?(el.cid.to_i)}
+        
+    #filter 2 place_id
+    c = "select profile_id, place_id from employments"
+    pids = Employment.find_by_sql(c)
+    pids.keep_if {|el| ids.include?(el.place_id.to_i)}
+    pids = pids.collect(&:profile_id).collect{|el|el.to_i}
+    rows.keep_if {|el| pids.include?(el.pid.to_i)} 
+    return rows
+  end  
+
 end

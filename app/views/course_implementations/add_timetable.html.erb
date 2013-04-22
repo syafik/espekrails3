@@ -15,7 +15,7 @@
 <script>
 function GoSubmit(df) {
 
-if (!checkFormat(fileRegExp,$('course_implementation_file'),'Hanya Format PDF dibenarkan')) return false;
+if (!checkFormat(fileRegExp,document.getElementById('course_implementation_file'),'Hanya Format PDF dibenarkan')) return false;
 
 	return true;
 }

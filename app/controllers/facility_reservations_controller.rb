@@ -156,11 +156,7 @@ class FacilityReservationsController < ApplicationController
     end
     end
         flash[:notice] = 'Tempahan Kemudahan Kursus Telah Disahkan.'
-<<<<<<< Updated upstream
-        EspekMailer.deliver_domestik_sahkan_tempahan_kemudahan(@ci.id)
-=======
         EspekMailer.domestik_sahkan_tempahan_kemudahan(@ci.id).deliver
->>>>>>> Stashed changes
        redirect_to :action => 'list'
   end
   

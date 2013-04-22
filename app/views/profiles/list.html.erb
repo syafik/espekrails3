@@ -1,9 +1,12 @@
 <script>
-  function confirmAndDelete(url, objname) {
+  function confirmAndDeleteUser(url, objname) {
     if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
-      location = url
+      $.ajax({
+        url: url,
+        type: 'DELETE',
+        dataType: 'script',
+      })
     }
-	
   }
 
   function rewritePopupContent(controller, objid, objname) {
@@ -11,12 +14,9 @@
     $('#popmenu').html("<ul>" +
       "<li><a href=\""  + "/profiles" + "/" + objid + "/setrole\">&nbsp;&nbsp;Set Peranan</a>" +
       "<li><a href=\""  + "/profiles" + "/" + objid + "/verify\">&nbsp;&nbsp;Sahkan Permohonan</a>" +
-      //"<li><a href=\""  + "/profiles" + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
-    "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/delete_user' , '" + objname + "')\">&nbsp;&nbsp;Batal</a>" +
-      //"<hr size=1>" +
-    //"<li><a href=\"javascript: acceptSelected(document.unprocess_form)\">&nbsp;&nbsp;Diterima</a>" +
-    "</ul>")
-     
+      "<li><a href=\"javascript: confirmAndDeleteUser('"  + controller + "/" + objid + "/delete_user' , '" + objname + "')\">&nbsp;&nbsp;Batal</a>" +
+      "</ul>")
+
   }
 </script>
 

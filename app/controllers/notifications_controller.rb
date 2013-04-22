@@ -207,7 +207,7 @@ class NotificationsController < ApplicationController
     @notification.approved_on = params[:month_approve]+"/"+params[:day_approve]+"/"+params[:year_approve]
     if @notification.update_attributes(params[:notification])
       flash[:notice] = 'Makluman Pelaksanaan Kursus Telah Disahkan'
-      EspekMailer.deliver_security_approve(@notification.id)
+      EspekMailer.security_approve(@notification.id).deliver
       if params[:ispopup] and params[:ispopup] == "1"
         redirect_to :action => 'show_popup', :id => @notification
       else

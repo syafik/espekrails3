@@ -400,7 +400,7 @@ class UserController < ApplicationController
       params[:course_application][:date_supervisor_cfm] = params[:date_supervisor_cfm_month] + "/" + params[:date_supervisor_cfm_day] + "/" + params[:date_supervisor_cfm_year]
       params[:course_application][:student_status_id]   = "4"
       @student.update_attributes(params[:course_application])
-      EspekMailer.deliver_user_hadir(@student.id)
+      EspekMailer.user_hadir(@student.id).deliver
       flash[:notice] = "Permohonan Kursus #{@student.course_implementation.code} Telah Disahkan Kehadiran."
     end
     redirect_to("/user_applications/offered/")
@@ -769,7 +769,7 @@ class UserController < ApplicationController
           sql = "UPDATE users SET salt='#{s}' , salted_password='#{sp}' WHERE id=#{@user.id}"
           a = User.find_by_sql(sql);
           if LoginEngine.config(:use_email_notification)
-            UserNotify.deliver_change_password(user, params[:user][:password])
+            UserNotify.change_password(user, params[:user][:password]).deliver
             flash[:notice] = "Updated password emailed to #{@user.email}"
           else
             flash[:notice] = "Password updated."
@@ -876,7 +876,7 @@ class UserController < ApplicationController
           key = user.set_delete_after
           if LoginEngine.config(:use_email_notification)
             url = url_for(:action => 'restore_deleted', :user_id => user.id, :key => key)
-            UserNotify.deliver_pending_delete(user, url)
+            UserNotify.pending_delete(user, url).deliver
           end
         end
       else
@@ -909,7 +909,7 @@ class UserController < ApplicationController
   protected
 
   def destroy(user)
-    UserNotify.deliver_delete(user) if LoginEngine.config(:use_email_notification)
+#    UserNotify.delete(user).deliver if LoginEngine.config(:use_email_notification)
     flash[:notice] = "The account for #{user['login']} was successfully deleted."
     user.destroy()
   end
