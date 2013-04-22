@@ -68,7 +68,7 @@
               end
             end
           %>
-            <input name="<%=ranking.evaluation_question.id%>" type="radio" value="<%=i+1%>" style="height: 11px" <%=checked%> disabled=disabled><%=choice.html_safe%>
+            <input name="<%=ranking.evaluation_question.id%>" type="radio" value="<%=i+1%>" style="height: 11px" <%=checked%> disabled=disabled><%=choice.html_safe if choice%>
           <% end %>
         </td>
         <td>

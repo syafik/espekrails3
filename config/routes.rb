@@ -435,6 +435,7 @@ InstunRails3::Application.routes.draw do
   match '/course_management/cetak_sijil' => 'course_management#cetak_sijil', :via => [:post]
   match 'course_management/evaluation/:course_management_id' => 'course_management#evaluation', :via => [:get]
   match 'course_management/p_evaluation/:course_management_id' => 'course_management#p_evaluation', :via => [:get]
+  match '/course_management/:course_management_id/p_evaluation' => 'course_management#p_evaluation', :via => [:get]
   match 'course_management/register/:id' => 'course_management#register', :via => [:get]
   resources :course_management do
     get 'evaluation_done'
@@ -724,6 +725,7 @@ InstunRails3::Application.routes.draw do
   match '/evaluations/user_hyouka' => 'evaluations#user_hyouka', :via => [:get]
   match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:get]
   match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:post]
+  match '/evaluations/user_hyouka_update/:id' => 'evaluations#user_hyouka_update', :via => [:post]
   resources :evaluations do
     get 'trainer_report'
     get 'facility_report'
