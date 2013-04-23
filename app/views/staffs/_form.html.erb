@@ -52,32 +52,32 @@ end
     }
 
     function ajax_request(url, data) {
-      <%#*var myAjax = new Ajax.Request(%>
-      <%#*url,%>
-      <%#*{method:'get', parameters:data, onComplete:ajax_response}%>
-    <%#*);%>
-      $.ajax({
-        type:'GET',
-        url: url,
-        data: data,
-        success:function (data) {
-          eval(data);
-        }
-      });
-    }
+<%#*var myAjax = new Ajax.Request(%>
+<%#*url,%>
+<%#*{method:'get', parameters:data, onComplete:ajax_response}%>
+<%#*);%>
+    $.ajax({
+      type:'GET',
+      url: url,
+      data: data,
+      success:function (data) {
+        eval(data);
+      }
+    });
+  }
 
-    function ajax_response(originalRequest) {
-      //alert(originalRequest.responseText)
-      if (originalRequest.responseText == 1) {
-        node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange> Data kakitangan sudah ada.<br>&nbsp; Loading..</font>"
-        document.forms[0].action = "/staffs/new_but_staff_already_exist";
-        document.forms[0].submit();
-      }
-      else {
-        node_identification_memo.innerHTML = "<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>"
-        document.forms[0].action = "/staffs/create";
-      }
+  function ajax_response(originalRequest) {
+    //alert(originalRequest.responseText)
+    if (originalRequest.responseText == 1) {
+      node_identification_memo.innerHTML = "<br>&nbsp;<font color=orange> Data kakitangan sudah ada.<br>&nbsp; Loading..</font>"
+      document.forms[0].action = "/staffs/new_but_staff_already_exist";
+      document.forms[0].submit();
     }
+    else {
+      node_identification_memo.innerHTML = "<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>"
+      document.forms[0].action = "/staffs/create";
+    }
+  }
   </script>
   <tr>
     <td align="right"><b>Gelaran : </b></td>
@@ -248,7 +248,7 @@ end
           @grandparent = Place.new
         end
         @grandparent = Place.new if @grandparent == nil
-        select(:grandparent, :id, @options, :id => "kementerian_id", :name => "kementerian_id", :onchange => "checkJabatan()")
+        select(:grandparent, :id, @options, :id => "kementerian_id", :name => "kementerian_id")
       %></span></td>
   </tr>
   <tr>
@@ -274,7 +274,7 @@ end
         end
         @options = @departments.map { |t| [t.name.upcase, t.id] }
         @options.unshift(["Sila Pilih", ""])
-        select(:parent, :id, @options, :id => "jabatan_id", :name => "jabatan_id", :onchange => "checkPejabat()")
+        select(:parent, :id, @options, :id => "jabatan_id", :name => "jabatan_id")
       %></span>
   </tr>
   <tr>
@@ -301,7 +301,7 @@ end
 
         @options = @offices.map { |t| [t.name.upcase, t.id] }
         @options.unshift(["Sila Pilih", ""])
-        select(:office, :id, @options, :id => "pejabat_id", :name => "pejabat_id", :onchange => "updatePlaceId()")
+        select(:office, :id, @options, :id => "pejabat_id", :name => "pejabat_id")
       %></span> <%= hidden_field 'employment', 'place_id', :size => 3 %> </td>
   </tr>
   <script>
@@ -477,90 +477,90 @@ end
 <% @cert_levels.each do |cl| %>
   <%= "{name: \"#{cl.description}\", id: \"#{cl.id}\"},".html_safe %>
 <% end %>
-  {name:" ", id:"00"}
-];
+    {name:" ", id:"00"}
+  ];
 
-var major_options = [
-  {name:"Sila Pilih", id:""},
+  var major_options = [
+    {name:"Sila Pilih", id:""},
 <% @majors.each do |m| %>
   <%= "{name: \"#{m.description}\", id: \"#{m.id}\"},".html_safe %>
 <% end %>
-  {name:" ", id:"00"}
-];
+    {name:" ", id:"00"}
+  ];
 
-function addQualification(tn) {
-  var tbl = $('#' + tn);
-  var tbl_len = $('#' + tn + ' tr').length;
-  row_id = "row_" + (tbl_len - 1);
-  if ($(row_id)) {
-    row_id = row_id + "_1"
+  function addQualification(tn) {
+    var tbl = $('#' + tn);
+    var tbl_len = $('#' + tn + ' tr').length;
+    row_id = "row_" + (tbl_len - 1);
+    if ($(row_id)) {
+      row_id = row_id + "_1"
+    }
+
+    $row = ""
+    option_strings = ""
+    for (i = 0; i < cert_level_options.length; i++) {
+      option_strings += '<option value="' + cert_level_options[i].id + '">' + cert_level_options[i].name + '</option>'
+    }
+    major_option_strings = ""
+    for (i = 0; i < major_options.length; i++) {
+      major_option_strings += '<option value="' + major_options[i].id + '">' + major_options[i].name + '</option>'
+    }
+    //	var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
+    //	var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<select name="major_ids[]">'+major_option_strings+'</select>';
+    //	var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
+    //	var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
+    //	var cell_4 = newRow.insertCell(4);cell_4.align="center";
+    //	cell_4.innerHTML = '<a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
+
+    $row += '<tr id="' + row_id + '">';
+    $row += '<td align="center"><select name="cert_level_ids[]">' + option_strings + '</select></td>';
+    $row += '<td align="center"><select name="major_ids[]">' + major_option_strings + '</select></td>';
+    $row += '<td align="center"><input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;"></td>';
+    $row += '<td align="center"><input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;"></td>';
+    $row += '<td align="center"><a href="javascript: deleteQualificationRow(\'qua_table\',\'' + (row_id) + '\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a></td>';
+    $row += '</tr>';
+    tbl.append($row);
   }
 
-  $row = ""
-  option_strings = ""
-  for (i = 0; i < cert_level_options.length; i++) {
-    option_strings += '<option value="' + cert_level_options[i].id + '">' + cert_level_options[i].name + '</option>'
-  }
-  major_option_strings = ""
-  for (i = 0; i < major_options.length; i++) {
-    major_option_strings += '<option value="' + major_options[i].id + '">' + major_options[i].name + '</option>'
-  }
+  //function addQualification(tn) {
+  //	var tbl = $(tn);
+  //	var newRow = tbl.insertRow(tbl.rows.length);
+  //	row_id = "row_" + (tbl.rows.length-1);
+  //	if ($(row_id)) {
+  //		row_id = row_id + "_1"
+  //	}
+  //	newRow.id = row_id;
+  //
+  //	option_strings = ""
+  //	for (i=0;i<cert_level_options.length;i++) {
+  //		option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
+  //	}
+  //	major_option_strings = ""
+  //	for (i=0;i<major_options.length;i++) {
+  //		major_option_strings += '<option value="'+major_options[i].id +'">'+major_options[i].name+'</option>'
+  //	}
   //	var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
   //	var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<select name="major_ids[]">'+major_option_strings+'</select>';
   //	var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
   //	var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
   //	var cell_4 = newRow.insertCell(4);cell_4.align="center";
   //	cell_4.innerHTML = '<a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
-
-  $row += '<tr id="' + row_id + '">';
-  $row += '<td align="center"><select name="cert_level_ids[]">' + option_strings + '</select></td>';
-  $row += '<td align="center"><select name="major_ids[]">' + major_option_strings + '</select></td>';
-  $row += '<td align="center"><input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;"></td>';
-  $row += '<td align="center"><input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;"></td>';
-  $row += '<td align="center"><a href="javascript: deleteQualificationRow(\'qua_table\',\'' + (row_id) + '\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a></td>';
-  $row += '</tr>';
-  tbl.append($row);
-}
-
-//function addQualification(tn) {
-//	var tbl = $(tn);
-//	var newRow = tbl.insertRow(tbl.rows.length);
-//	row_id = "row_" + (tbl.rows.length-1);
-//	if ($(row_id)) {
-//		row_id = row_id + "_1"
-//	}
-//	newRow.id = row_id;
-//
-//	option_strings = ""
-//	for (i=0;i<cert_level_options.length;i++) {
-//		option_strings += '<option value="'+cert_level_options[i].id +'">'+cert_level_options[i].name+'</option>'
-//	}
-//	major_option_strings = ""
-//	for (i=0;i<major_options.length;i++) {
-//		major_option_strings += '<option value="'+major_options[i].id +'">'+major_options[i].name+'</option>'
-//	}
-//	var cell_0 = newRow.insertCell(0);cell_0.align="center";cell_0.innerHTML = '<select name="cert_level_ids[]">'+option_strings+'</select>';
-//	var cell_1 = newRow.insertCell(1);cell_1.align="center";cell_1.innerHTML = '<select name="major_ids[]">'+major_option_strings+'</select>';
-//	var cell_2 = newRow.insertCell(2);cell_2.align="center";cell_2.innerHTML = '<input type="text" name="institutions[]" value="" maxlength="100" size="30" onblur="//if (!checkInput(anythingRegExp,this,\'Nama Institusi\')) return false;">';
-//	var cell_3 = newRow.insertCell(3);cell_3.align="center";cell_3.innerHTML = '<input type="text" name="year_ends[]" value="" maxlength="4" size="5" onblur="//if (!checkInput(dateAllYearformat,this,\'Tahun\')) return false;">';
-//	var cell_4 = newRow.insertCell(4);cell_4.align="center";
-//	cell_4.innerHTML = '<a href="javascript: deleteQualificationRow(\'qua_table\',\''+(row_id)+'\')"><font style="color: blue; font-size:10px;"><u>padam</u></font></a>';
-//}
-//
-function deleteQualificationRow(tn, id) {
-  $('#' + id).remove();
-}
-//function deleteQualificationRow(tn,id) {
-//	row = $(id)
-//	tbl = row.parentNode.parentNode
-//	for (i=1;i<tbl.rows.length;i++) {
-//		//alert(tbl.rows[i].id)
-//
-//		if (tbl.rows[i].id == row.id) {
-//			tbl.deleteRow(i)
-//		}
-//	}
-//}
+  //}
+  //
+  function deleteQualificationRow(tn, id) {
+    $('#' + id).remove();
+  }
+  //function deleteQualificationRow(tn,id) {
+  //	row = $(id)
+  //	tbl = row.parentNode.parentNode
+  //	for (i=1;i<tbl.rows.length;i++) {
+  //		//alert(tbl.rows[i].id)
+  //
+  //		if (tbl.rows[i].id == row.id) {
+  //			tbl.deleteRow(i)
+  //		}
+  //	}
+  //}
 </script>
 </tr>
 <tr>
@@ -599,3 +599,103 @@ function deleteQualificationRow(tn, id) {
     padding: 0;
   }
 </style>
+
+<% content_for :js do %>
+
+  <script type="text/javascript">
+
+    $(function() {
+
+      $("#grandparent_id").change(function() {
+        $('#employment_place_id').val($('#grandparent_id :selected').val())
+        $('#pejabat_selection').html("<font color=orange>Sila pilih jabatan</font>")
+        $('#department_selection').html("<font color=orange>Carian jabatan...sila tunggu</font>")
+        $.ajax({
+          type: 'POST',
+          url: '/ajax/children_of_place',
+          data: "id=" + $('#grandparent_id :selected').val(),
+          success: function(data){eval(data);}
+        });
+      });
+    });
+    //jabatan selection
+    function checkJabatan() {
+      $('employment_place_id').value = $('kementerian_id').value
+      $('pejabat_selection').innerHTML = "<font color=orange>Sila pilih jabatan</font>"
+      $('department_selection').innerHTML = "<font color=orange>Carian jabatan...sila tunggu</font>"
+      ajax_department_request("/ajax/children_of_place", "id="+$("kementerian_id").value)
+    }
+
+    function ajax_department_request(url, data) {
+      var myAjax = new Ajax.Request(
+      url,
+      {method: 'post', parameters: data, onComplete: ajax_department_response}
+    );
+    }
+
+    function ajax_department_response(originalRequest) {
+      if (originalRequest.responseText != 0) {
+        var a = originalRequest.responseText.split("$$")
+        var k = new Array(a.length)
+        for (i=0; i<k.length; i++) {
+          k[i] = a[i].split("=")
+        }
+        //alert(originalRequest.responseText)
+
+        str  = "<select  id=\"jabatan_id\" name=\"jabatan_id]\" class=\"px200\" onchange=\"checkPejabat()\">\n";
+        str += "<option value=\"\">Sila Pilih</option>\n"
+        for (i=0; i<k.length; i++) {
+          str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+        }
+        str += "</select>\n";
+        $("department_selection").innerHTML = str;
+      }
+      else {
+        $('department_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
+      }
+    }
+    //EO department selection
+
+    //pejabat selection
+    function checkPejabat() {
+      $('employment_place_id').value = $('jabatan_id').value
+      $('pejabat_selection').innerHTML = "<font color=orange>Carian pejabat...sila tunggu</font>"
+      ajax_pejabat_request("/ajax/grand_and_children_of_place", "id="+$("jabatan_id").value)
+    }
+
+    function ajax_pejabat_request(url, data) {
+      var myAjax = new Ajax.Request(
+      url,
+      {method: 'post', parameters: data, onComplete: ajax_pejabat_response}
+    );
+    }
+
+    function ajax_pejabat_response(originalRequest) {
+      if (originalRequest.responseText != 0) {
+        var a = originalRequest.responseText.split("$$")
+        var k = new Array(a.length)
+        for (i=0; i<k.length; i++) {
+          k[i] = a[i].split("=")
+        }
+        //alert(originalRequest.responseText)
+
+        str  = "<select  id=\"pejabat_id\" name=\"pejabat_id]\" class=\"px200\" onchange=\"updatePlaceId()\">\n";
+        str += "<option value=\"\">Sila Pilih</option>\n"
+        for (i=0; i<k.length; i++) {
+          str += "<option value=\"" + k[i][1] + "\">" + k[i][0] + "</option>\n";
+        }
+        str += "</select>\n";
+        $("pejabat_selection").innerHTML = str;
+      }
+      else {
+        $('pejabat_selection').innerHTML = "<font color=orange>Tiada senarai</font>"
+      }
+    }
+    //EO pejabat selection
+
+    function updatePlaceId() {
+      $('employment_place_id').value = $('pejabat_id').value
+    }
+
+  </script>
+<% end %>

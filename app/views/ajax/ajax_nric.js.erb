@@ -23,8 +23,8 @@ node_identification_memo = $("#node_identification_memo");
     document.forms[0].action = "/staffs/new_but_staff_already_exist";
     document.forms[0].submit();
   <% else %>
-    node_identification_memo.innerHTML = "<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>"
-    document.forms[0].action = "/staffs/create";
+    node_identification_memo.html('<%= "<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>".html_safe %>')
+    document.forms[0].action = "/staffs";
   <% end %>
 <% else %>
   <% if @ret == "1" %>
