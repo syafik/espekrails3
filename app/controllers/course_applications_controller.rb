@@ -1146,7 +1146,7 @@ class CourseApplicationsController < ApplicationController
     if @profile.update_attributes(params[:profile])
       flash[:notice] = '<br>Data Pemohon berjaya dikemaskini.'
       if (params[:by_user])
-        EspekMailer.deliver_edit_by_user(@course_application.id)
+        EspekMailer.edit_by_user(@course_application.id).deliver
         redirect_to :controller => 'user_applications', :action => 'show', :id => @course_application and return
       else
         redirect_to :action => 'show', :id => @course_application and return
