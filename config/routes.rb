@@ -295,6 +295,7 @@ InstunRails3::Application.routes.draw do
       get 'teach_hour_by_department'
       get 'students_feedback'
       get 'summary_group_jkptg'
+      get 'payment_by_department'
     end
   end
 
