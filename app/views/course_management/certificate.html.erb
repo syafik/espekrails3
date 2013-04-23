@@ -3,7 +3,7 @@ function confirmAndDelete(url, objname) {
 	if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
 		location = url
 	}
-	
+
 }
 
 function JanaSuratTawaran(schedule_id) {
@@ -33,7 +33,7 @@ function daftarPeserta(df) {
        if (df.elements[i].checked == true) {
          sum_checked++
        }
-     } 
+     }
   }
   if (1) {
     df.action = "/course_management/set_kelayakan_sijil"
@@ -50,17 +50,16 @@ function checkAll(df) {
      if (df.elements[i].type == "checkbox")
      {
        df.elements[i].checked = df.check_all.checked
-     } 
+     }
   }
 }
 
 
 </script>
-    
- <!----------------------------------------------------------------------------------------->
+
 <%if @course_implementation%>
  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
-    <tr> 
+    <tr>
       <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF"><%=@course_implementation.code%>&nbsp; <%=@course_implementation.course.name.upcase%>&nbsp;&nbsp;(<%=@course_implementation.tempoh%>)</font></b></td>
     </tr>
  </table>
@@ -69,36 +68,41 @@ function checkAll(df) {
 
 <%= render :partial => 'certificate_list'%>
 
-<%else%>
-<script>
-alert("Kursus tidak wujud. Sila masukkan kursus yang betul");
-history.back();
-</script>
-<%end%>
 
-<!-- popup menu initial layer----->
 <div id="popmenu" class="menu"></div>
 
 <script>
 function set_polisi(id) {
-	MM_openBrWindow('/course_management/'+id+'/new_polisi_sijil','','scrollbars=yes,width=800,height=600')
+  MM_openBrWindow('/course_management/'+id+'/new_polisi_sijil','','scrollbars=yes,width=800,height=600')
 }
 
 function confirmJana() {
-	if (confirm("Proses ini akan mengemaskini kelayakan sijil secara automatik. \nAdakah anda pasti?")) {
-		location = '/course_management/<%=@course_implementation.id%>/jana_kelayakan'
-	}
+  if (confirm("Proses ini akan mengemaskini kelayakan sijil secara automatik. \nAdakah anda pasti?")) {
+    location = '/course_management/<%=@course_implementation.id%>/jana_kelayakan'
+  }
 }
 
 function tempah_sijil(id) {
-	MM_openBrWindow('/course_management/'+id+'/tempah_sijil','','scrollbars=yes,width=800,height=600')
+  MM_openBrWindow('/course_management/'+id+'/tempah_sijil','','scrollbars=yes,width=800,height=600')
 }
 
 function tempah_sijil_iso(id) {
-	MM_openBrWindow('/course_management/'+id+'/tempah_sijil_iso','','scrollbars=yes,width=800,height=600')
+  MM_openBrWindow('/course_management/'+id+'/tempah_sijil_iso','','scrollbars=yes,width=800,height=600')
 }
 
 </script>
+
+<%else%>
+
+  <script>
+  alert("Kursus tidak wujud. Sila masukkan kursus yang betul");
+  history.back();
+  </script>
+
+<%end%>
+
+
+
 
 
 

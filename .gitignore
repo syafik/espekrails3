@@ -1,0 +1,18 @@
+# Rubymine configs
+/.idea
+
+
+# Ignore bundler config
+/.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/schema.rb
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+.DS_Store
+.rbenv-gemsets
+.DS_Store
+.DS_Store
