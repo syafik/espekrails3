@@ -552,6 +552,7 @@ InstunRails3::Application.routes.draw do
       get 'show_after_dr'
       get 'new_peserta'
       get 'accepted'
+      get "cetak_for_logged_in_user"
     end
   end
 
