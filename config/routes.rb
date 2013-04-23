@@ -305,6 +305,7 @@ InstunRails3::Application.routes.draw do
       post 'search_by_name'
       post 'search_by_phone'
       post 'search_by_dept'
+      post 'new_but_staff_already_exist'
     end
   end
 
