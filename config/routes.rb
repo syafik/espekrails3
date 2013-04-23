@@ -58,6 +58,7 @@ InstunRails3::Application.routes.draw do
     end
     member do
       put 'update_user_cancel'
+      get 'print_offer_letter'
     end
   end
   resources :post_individus do
