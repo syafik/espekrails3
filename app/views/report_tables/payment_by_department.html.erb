@@ -1,0 +1,88 @@
+<form action="payment_by_department" name="filter">
+<table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <tr>
+    <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT SUGIHATI PENCERAMAH MENGIKUT BAHAGIAN </font></b></td>
+  </tr>
+</table>
+<br/>
+<!-- TABLE HEADER -->
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <%= render :partial => "shared/month_range_selection", :locals => {:planning_months => @planning_months, :planning_years => @planning_years} %>
+  <%= render :partial => "shared/chart_table_toggle", :locals => {:reports => @reports} %>
+</table>
+</form>
+<br/>
+<table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" id="pisang" onclick="">
+    <td width="3%" align="center"><font color="#FFFFFF"><strong>No</strong></font></td>
+    <td width="67%" align="left"><font color="#FFFFFF">&nbsp;<strong>Bahagian</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>RM</strong></font></td>
+    <td width="15%" align="center"><font color="#FFFFFF">&nbsp;<strong>&#37;</strong></font></td>
+  </tr>
+  <%if @reports.any? %>
+    <%
+    total_amount = 0
+    total_percentage = 0
+  %>
+    <% @reports.each_with_index do |report, index| %>
+      <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+        <td align="center" id="name<%=h report[:id] %>"><%= (index+1).to_s %>.</td>
+        <td align="left"><%=report.name.upcase%></td>
+        <td align="center"><%=number_with_delimiter(report.amount, :delimiter => ',') %></td>
+        <td align="center"><%=number_to_percentage(report.percentage, :precision => 1)  %></td>
+      </tr>
+      <%
+      total_amount += report.amount.to_i
+      total_percentage += number_to_percentage(report.percentage, :precision => 1).to_f
+    %>
+    <% end %>
+    <tr bgcolor="#fff">
+      <td align="right" colspan="2">Jumlah Keseluruhan</td>
+      <td align="center"><%=number_with_delimiter(total_amount, :delimiter => ',') %></td>
+      <td align="center"><%=number_to_percentage(total_percentage, :precision => 0) %></td>
+    </tr>
+
+  </table>
+  <br/>
+
+  <div id="container" class="chart" style="display:none; padding-left:33px; width:95%; height:<%= 400 %>px;">
+
+  </div>
+  <%= javascript_include_tag "highcharts" %>
+  <%= javascript_include_tag "gradient-color-highcharts" %>
+
+  <script>
+    function toggle_chart(){
+      var showed = $('input[name=filter_show]:checked').val();
+      if (showed == "chart"){
+        $(".chart").show();
+        $(".table_report").hide();
+        loadChart();
+      }else{
+        $(".chart").hide();
+        $(".table_report").show();
+      }
+    };
+
+    function loadChart(){
+
+  <%
+   data_for_chart = []
+  @reports.each do |report|
+    if report.amount.to_i > 0
+      sliced = @reports.map{|x| x.amount.to_i}.max == report.amount.to_i ? true:false
+      data_for_chart << "{name: '#{report.name}', y: #{report.amount}, sliced: #{sliced}, selected: #{sliced}}"
+    end
+  end
+
+
+  data = "[#{data_for_chart.join(",")}]"
+%>
+
+  <%= render :partial => 'shared/chart_pie',
+    :locals => {:data => data.html_safe, :title => 'MAKLUMAT SUGIHATI PENCERAMAH MENGIKUT BAHAGIAN', :container => 'container', :fixed_num => 1 }
+%>
+    }
+  </script>
+<% end %>

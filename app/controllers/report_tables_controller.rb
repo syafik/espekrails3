@@ -335,11 +335,11 @@ class ReportTablesController < ApplicationController
   end
 
   def teach_hour_by_department
-     @planning_years = Trainer.find_by_sql("SELECT distinct extract(year from tt.date)as year FROM trainers t, profiles p,
+    @planning_years = Trainer.find_by_sql("SELECT distinct extract(year from tt.date)as year FROM trainers t, profiles p,
       course_implementations_trainers cit, course_implementations ci, timetables tt
       WHERE t.profile_id = p.id  AND cit.trainer_id = t.id
       AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id ORDER BY year DESC").collect(&:year)
-     if is_param_month_range_valid?
+    if is_param_month_range_valid?
       date_filter = "EXTRACT(month FROM tt.date) >= #{params[:month_from]} AND EXTRACT(month FROM tt.date) <= #{params[:month_until]} AND EXTRACT(year FROM tt.date) = #{params[:year]}"
 
       sql = []
@@ -454,6 +454,97 @@ class ReportTablesController < ApplicationController
     and answer = false) as tidak"
     @report_kesesuaian = EvaluationTruefalse.find_by_sql(sql_kesesuaian)
     
+  end
+
+  def payment_by_department
+    @planning_years = Trainer.find_by_sql("SELECT distinct extract(year from tt.date)as year FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id  AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id ORDER BY year DESC").collect(&:year)
+    if is_param_month_range_valid?
+      date_filter = "EXTRACT(month FROM tt.date) >= #{params[:month_from]} AND EXTRACT(month FROM tt.date) <= #{params[:month_until]} AND EXTRACT(year FROM tt.date) = #{params[:year]}"
+      total = Trainer.find_by_sql("SELECT sum(cp.total_approved) as total FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      group by p.course_department_id, t.is_internal")[0].total.to_f
+      sql = []
+
+      sql[0] = "SELECT 'Pengurusan dan Perundangan Tanah' AS name, (
+      SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id =1 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount,
+      ((cast ((SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id =1 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as float) / #{total}*100)) as percentage"
+
+      sql[1] = "SELECT 'Ukur dan Pemetaan' AS name, (
+      SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id =2 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount,
+      ((cast ((SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id =2 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as float) / #{total}*100)) as percentage"
+
+      sql[2] = "SELECT 'Teknologi Maklumat' AS name, (
+      SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id =3 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount,
+      ((cast ((SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id =3 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as float) / #{total}*100)) as percentage"
+
+      sql[3] = "SELECT 'Pentadbiran dan Kewangan' AS name, (
+      SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id =9 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount,
+      ((cast ((SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id =9 AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as float) / #{total}*100)) as percentage"
+
+      sql[4] = "SELECT 'Tanpa Bahagian' AS name, (
+      SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id is NULL AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as amount,
+      ((cast ((SELECT sum(cp.total_approved) FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
+      WHERE t.profile_id = p.id AND p.course_department_id is NULL AND t.is_internal = 0 AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
+      AND #{date_filter}
+      group by p.course_department_id, t.is_internal) as float) / #{total}*100)) as percentage"
+
+      @reports = []
+      sql.each do |i|
+        @reports += Trainer.find_by_sql(i)
+      end
+    end
   end
   
   private

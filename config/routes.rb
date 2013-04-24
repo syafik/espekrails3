@@ -56,6 +56,10 @@ InstunRails3::Application.routes.draw do
       get 'user_cancel/:id', :action => :user_cancel
       post 'sah_hadir_selected'
     end
+    member do
+      put 'update_user_cancel'
+      get 'print_offer_letter'
+    end
   end
   resources :post_individus do
     collection do
@@ -295,6 +299,7 @@ InstunRails3::Application.routes.draw do
       get 'teach_hour_by_department'
       get 'students_feedback'
       get 'summary_group_jkptg'
+      get 'payment_by_department'
     end
   end
 
@@ -552,6 +557,7 @@ InstunRails3::Application.routes.draw do
       get 'show_after_dr'
       get 'new_peserta'
       get 'accepted'
+      get "cetak_for_logged_in_user"
     end
   end
 
