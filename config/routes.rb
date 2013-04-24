@@ -457,6 +457,7 @@ InstunRails3::Application.routes.draw do
       get 'surat_takhadir'
       post 'isi_markah'
       get 'make_payment'
+      get 'cetak_yuran'
     end
     member do
       put 'jana_surat_pengesahan_pdf'
