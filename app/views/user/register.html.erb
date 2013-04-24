@@ -29,7 +29,7 @@ Sila lengkapkan maklumat berikut. </td>
 	
 <script>
 node = $("#profile_ic_number");
-//node_identification_memo = $("node_identification_memo");
+node_identification_memo = $("#node_identification_memo");
 
 function checkNRIC() {
         node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>Carian No KP didalam sistem. Sila Tunggu.</font>"
@@ -37,10 +37,10 @@ function checkNRIC() {
         data = "ic_number=" + node.val()+"&register=true"
         $.ajax({
           type:'GET',
-          url:'/ajax/ajax_nric',
+          url:'/user/ajax_nric',
           data:data,
           success:function (data) {
-            eval(data);
+            ajax_response(data);
           }
         });
 }
@@ -53,18 +53,19 @@ function ajax_request(url, data) {
 }
 
 function ajax_response(originalRequest) {
-        if (originalRequest.responseText == 1) {
+        if (originalRequest == 1) {
                 node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Data pengguna ada didalam sistem.<br>&nbsp;Jana login ID dan kata laluan. Sila Tunggu.</font>"
                 document.forms[0].action = "staff_already_exist";
                 document.forms[0].submit();
         }
-        else if (originalRequest.responseText == 2) {
+        else if (originalRequest == 2) {
                // node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Pengguna sudah ada login ID didalam sistem.<br>&nbsp;Sila Login.</font>"
                 alert("Pengguna sudah ada login ID di dalam sistem.\nSila login.");
+		document.forms[0].method = "GET";
 		document.forms[0].action = "logout";
                 document.forms[0].submit();
         }
-	else if (originalRequest.responseText == 3) {
+	else if (originalRequest == 3) {
                // node_identification_memo.innerHTML = "<br>&nbsp;<font color=blue>Pengguna sudah ada login ID didalam sistem.<br>&nbsp;Sila Login.</font>"
                 alert("Pengguna sudah ada login ID di dalam sistem.\nSila tunggu pengesahan akaun daripada pentadbir eSPEK.");
                 document.forms[0].action = "logout";
@@ -72,7 +73,7 @@ function ajax_response(originalRequest) {
         }
 
         else {
-                node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>No KP tiada lagi didalam sistem.<br>&nbsp;Sila Daftar.</font>"
+                node_identification_memo.html("<br>&nbsp;<font color=red>No KP tiada lagi didalam sistem.<br>&nbsp;Sila Daftar.</font>");
         }
 }
 </script>

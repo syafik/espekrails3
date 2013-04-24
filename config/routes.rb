@@ -610,6 +610,7 @@ InstunRails3::Application.routes.draw do
       get 'logout'
       get 'register'
       get 'forgot_password'
+      get 'ajax_nric'
       post 'authenticate'
       post 'signup'
       post 'staff_already_exist'
