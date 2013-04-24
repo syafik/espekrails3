@@ -56,6 +56,10 @@ InstunRails3::Application.routes.draw do
       get 'user_cancel/:id', :action => :user_cancel
       post 'sah_hadir_selected'
     end
+    member do
+      put 'update_user_cancel'
+      get 'print_offer_letter'
+    end
   end
   resources :post_individus do
     collection do
@@ -307,6 +311,7 @@ InstunRails3::Application.routes.draw do
       post 'search_by_phone'
       post 'search_by_dept'
       post 'new_but_staff_already_exist'
+      post 'create_but_staff_already_exist'
     end
   end
 
@@ -458,6 +463,7 @@ InstunRails3::Application.routes.draw do
       get 'surat_takhadir'
       post 'isi_markah'
       get 'make_payment'
+      get 'cetak_yuran'
     end
     member do
       put 'jana_surat_pengesahan_pdf'
@@ -552,6 +558,7 @@ InstunRails3::Application.routes.draw do
       get 'show_after_dr'
       get 'new_peserta'
       get 'accepted'
+      get "cetak_for_logged_in_user"
     end
   end
 
@@ -603,6 +610,7 @@ InstunRails3::Application.routes.draw do
       get 'logout'
       get 'register'
       get 'forgot_password'
+      get 'ajax_nric'
       post 'authenticate'
       post 'signup'
       post 'staff_already_exist'

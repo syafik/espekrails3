@@ -1,11 +1,11 @@
-<form name="ca_form" method="post" action="/course_applications/update/<%=@course_application.id%>" enctype="multipart/form-data" onsubmit="return GoSubmit(ca_form)">
+  <%= form_tag @course_application, method: :put, multipart: true, onsubmit: "return GoSubmit(ca_form)", name: "ca_form" do %>
 <input type="hidden" name="by_user" value="1">
   <%= render :partial => 'form' %>
   
   <br>
    <div id="apply_button" align="center" style="visibility: visible">
   <%= submit_tag 'Simpan' %></div>
-</form>
+  <% end %>
 
 <script src="/javascripts/form_validator.js"></script>
 <script>

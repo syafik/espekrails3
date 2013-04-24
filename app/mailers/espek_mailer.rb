@@ -209,22 +209,27 @@ class EspekMailer < ActionMailer::Base
     @ci = @ca.course_implementation
     @employment = Employment.find_by_profile_id(@ca.profile_id)
 
-    @recipients = "#{@ci.penyelaras1.profile.email},#{@ci.penyelaras2.profile.email},#{@ca.profile.email}"
-    @from       = LoginEngine.config(:email_from).to_s
+    #    @recipients = "#{@ci.penyelaras1.profile.email},#{@ci.penyelaras2.profile.email},#{@ca.profile.email}"
+    #    @from       = LoginEngine.config(:email_from).to_s
     @subject    = "[#{LoginEngine.config(:app_name)}] "
     @sent_on    = Time.now
-    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
+    #    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
 	  @subject += "Peserta Telah Mengemaskini Maklumat Permohonan Kursus"
-    @body["title"] = @ca.profile.title.description
-    @body["course_name"] = @ci.course.name.upcase
-    @body["course_code"] = @ci.code
-    @body["nama_peg_melulus"] = @ca.cancel_spv_name
-    @body["student_name"] = @ca.profile.name
-    @body["jawatan"] = nof{@employment.job_profile.job_name}
-	  @body["gred"] = nof{@employment.job_profile.job_grade}
-    @body["date_start"] = @ci.date_start.to_formatted_s(:my_format_4)
-    @body["date_end"]   = @ci.date_end.to_formatted_s(:my_format_4)
-    @body["reason"]     = @ca.cancel_reason
+    #    @body["title"] = @ca.profile.title.description
+    @course_name = @ci.course.name.upcase
+    @course_code = @ci.code
+    #    @body["nama_peg_melulus"] = @ca.cancel_spv_name
+    @student_name = @ca.profile.name
+    @jawatan = nof{@employment.job_profile.job_name}
+	  @gred = nof{@employment.job_profile.job_grade}
+    @date_start = @ci.date_start.to_formatted_s(:my_format_4)
+    @date_end = @ci.date_end.to_formatted_s(:my_format_4)
+    #    @body["reason"]     = @ca.cancel_reason
+    mail(
+      :from => LoginEngine.config(:email_from).to_s,
+      :to => [@ci.penyelaras1.profile.email,@ci.penyelaras2.profile.email,@ca.profile.email],
+      :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed",
+      :subject => @subject)
   end
 
   def user_hadir(student_id)
@@ -237,7 +242,7 @@ class EspekMailer < ActionMailer::Base
     @from       = LoginEngine.config(:email_from).to_s
     @subject    = "[#{LoginEngine.config(:app_name)}] "
     @sent_on    = Time.now
-#    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
+    #    @headers['Content-Type'] = "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
 	  @subject += "Pengesahan Kehadiran Kursus"
     @title = @ca.profile.title.description
 	  @nama_pegawai = @supervisor.name
