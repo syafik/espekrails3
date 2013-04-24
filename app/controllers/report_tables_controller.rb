@@ -463,11 +463,13 @@ class ReportTablesController < ApplicationController
       AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id ORDER BY year DESC").collect(&:year)
     if is_param_month_range_valid?
       date_filter = "EXTRACT(month FROM tt.date) >= #{params[:month_from]} AND EXTRACT(month FROM tt.date) <= #{params[:month_until]} AND EXTRACT(year FROM tt.date) = #{params[:year]}"
-      total = Trainer.find_by_sql("SELECT sum(cp.total_approved) as total FROM trainers t, profiles p,
+      total_payment = Trainer.find_by_sql("SELECT sum(cp.total_approved) as total FROM trainers t, profiles p,
       course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
       WHERE t.profile_id = p.id AND t.is_internal = 0 AND cit.trainer_id = t.id
       AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
-      group by p.course_department_id, t.is_internal")[0].total.to_f
+      group by p.course_department_id, t.is_internal")[0]
+
+      total = total_payment.present? ? total_payment.total.to_f : 0
       sql = []
 
       sql[0] = "SELECT 'Pengurusan dan Perundangan Tanah' AS name, (
