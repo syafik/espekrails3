@@ -824,14 +824,15 @@ class CourseImplementationsController < ApplicationController
     @salinan_kepada = params[:salinan_kepada]
     @perenggan = params[:surat_iklan_content][:perenggan]
 
+    @tarikh_surat_day = params[:tarikh_surat_day]
+    @tarikh_surat_day = "    " if params[:tarikh_surat_day] == ""
+    @tarikh_surat_month = $MONTH_NAMES[params[:tarikh_surat_month].to_i - 1]
+    @tarikh_surat_year = params[:tarikh_surat_year]
+    @tarikh = "#{@tarikh_surat_day} #{@tarikh_surat_month} #{@tarikh_surat_year}"
+
     unless params[:surat_iklan_content][:course_implementation_id].blank?
       @format_surat = params[:surat_iklan_content][:format_surat].to_i
       @rujukan_kami = params[:rujukan_kami]
-      @tarikh_surat_day = params[:tarikh_surat_day]
-      @tarikh_surat_day = "    " if params[:tarikh_surat_day] == ""
-      @tarikh_surat_month = $MONTH_NAMES[params[:tarikh_surat_month].to_i - 1]
-      @tarikh_surat_year = params[:tarikh_surat_year]
-      @tarikh = "#{@tarikh_surat_day} #{@tarikh_surat_month} #{@tarikh_surat_year}"
       @perkara = params[:surat_iklan_content][:perkara]
 
       @tempoh = params[:surat_iklan_content][:tempoh]

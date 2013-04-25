@@ -39,7 +39,11 @@ thead {display: table-header-group;}
 }
 
 .pdf_table_padding_right {
-    padding-right:8px;
+    padding-right:80px;
+}
+
+.pdf_table_padding_right_10 {
+    padding-right:10px;
 }
 
 .bold {

@@ -1,13 +1,29 @@
+//function HighLightTextField(obj) {
+//	obj.style.borderColor = "#FF6666"
+//	percentageMoved = 0;
+//	hglt_obj = obj;
+//	//timerId = setInterval('MerahSekejap()',100);
+//}
+
 function HighLightTextField(obj) {
-	obj.style.borderColor = "#FF6666"
+//	obj.style.borderColor = "#FF6666"
+    obj.css('backgroundColor', '#FF6666')
 	percentageMoved = 0;
 	hglt_obj = obj;
 	//timerId = setInterval('MerahSekejap()',100);
 }
 
+//function HighLight(obj) {
+//	//obj.style.background = "#FFdddd"
+//	obj.style.color = "#FF6666"
+//	percentageMoved = 0;
+//	hglt_obj = obj;
+//	//timerId = setInterval('MerahSekejap()',100);
+//}
+
 function HighLight(obj) {
 	//obj.style.background = "#FFdddd"
-	obj.style.color = "#FF6666"
+    obj.css('backgroundColor', '#FF6666')
 	percentageMoved = 0;
 	hglt_obj = obj;
 	//timerId = setInterval('MerahSekejap()',100);
@@ -34,10 +50,9 @@ function : checkInput
 @output : boolean
 */
 function checkInput(regex,obj,obj_desc) {
+	if (obj_desc.trim()=="") obj_desc = obj.name;
 
-	if (obj_desc=="") obj_desc = obj.name;
-
-	if (obj.value == "") {
+	if (obj.value.trim()=="") {
 		alert('Sila Masukkan ' + obj_desc);
 		obj.focus();
 		HighLightTextField(obj);
@@ -56,9 +71,9 @@ function checkInput(regex,obj,obj_desc) {
 /////////////////////////////////////////////////////////////////////////////////////////
 function checkFormat(regex,obj,obj_desc) {
 
-	if (obj_desc=="") obj_desc = obj.name;
+	if (obj_desc.trim()=="") obj_desc = obj.name;
 
-	if (obj.value != "") {
+	if (obj.value.trim() != "") {
         var cleanFilename = obj.value.replace(/C:\\fakepath\\/i, '');
         if (!regex.test(cleanFilename)) {
 			alert('Invalid ' + obj_desc);
@@ -74,9 +89,9 @@ function checkFormat(regex,obj,obj_desc) {
 
 function checkSelection(regex,obj,obj_desc) {
 //alert(obj.value);
-	if (obj_desc=="") obj_desc = obj.name;
+	if (obj_desc.trim()=="") obj_desc = obj.name;
 
-	if (obj.value == 0) {
+	if (obj.value == "") {
 		alert('Sila Pilih ' + obj_desc);
 		obj.focus();
 		HighLight(obj);

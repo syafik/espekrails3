@@ -18,7 +18,7 @@ class SignaturesController < ApplicationController
   end
 
   def show
-    @signature = Signature.find(params[:id])
+    @signature = Signature.find(params[:signature_id])
   end
 
   def show_popup
@@ -63,13 +63,13 @@ class SignaturesController < ApplicationController
 	if RUBY_PLATFORM == "i386-mswin32"
 		@file_to_save = "public/signatures/#{@signature.filename}"
 	else
-		@file_to_save = "/aplikasi/www/instun/public/signatures/#{@signature.filename}"
+		@file_to_save = "public/signatures/#{@signature.filename}"
 	end
 
 	if @signature.save
 	  File.open(@file_to_save, "wb") { |f| f.write(params[:file2upload].read) }
       flash[:notice] = 'signature was successfully created.'
-      redirect_to :action => 'show_popup', :id=> @signature
+      redirect_to signature_show_popup_path(@signature)
     else
       render :action => 'new_popup'
     end
@@ -95,7 +95,7 @@ class SignaturesController < ApplicationController
 
   def update_popup
 
-    @signature = Signature.find(params[:id])
+    @signature = Signature.find(params[:signature_id])
 	if params[:file2upload] and params[:file2upload].original_filename!=""
 		params[:signature][:filename] = params[:file2upload].original_filename
 	end
@@ -105,14 +105,14 @@ class SignaturesController < ApplicationController
 			if RUBY_PLATFORM == "i386-mswin32"
 				@file_to_save = "public/signatures/#{@signature.filename}"
 			else
-				@file_to_save = "/aplikasi/www/instun/public/signatures/#{@signature.filename}"
+				@file_to_save = "public/signatures/#{@signature.filename}"
 			end
 
 			File.open(@file_to_save, "wb") { |f| f.write(params[:file2upload].read) }
 		end
 
 	flash[:notice] = 'signature was successfully updated.'
-	redirect_to :action => 'show_popup', :id => @signature
+	redirect_to signature_show_popup_path(@signature)
 
     else
       render :action => 'edit_popup'
@@ -120,7 +120,7 @@ class SignaturesController < ApplicationController
   end
 
   def destroy
-    Signature.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    Signature.find(params[:signature_id]).destroy
+    redirect_to signatures_path
   end
 end

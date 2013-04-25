@@ -95,8 +95,8 @@
 <script>
 
 function GoSubmit(df) {
-	if (!checkInput(emailRegExp,$('#course_application_cancel_spv_email'),'Emel Pegawai')) return false;
 
+	if (!checkInput(emailRegExp,document.getElementById('course_application_cancel_spv_email'),'Emel Pegawai')) return false;
 	if (confirm("Adakah anda pasti untuk membatalkan kursus ini?"))
 		return true;
 	else

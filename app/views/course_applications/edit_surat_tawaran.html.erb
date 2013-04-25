@@ -21,14 +21,23 @@
 
 function GoSubmit(df) {
 
+//	if (!checkSelection(strRegExp,document.getElementById('contact_officer_id'),'Pegawai Untuk Dihubungi')) return false;
+//    if (!checkSelection(strRegExp,document.getElementById('contact_officer_id2'),'Pegawai Untuk Dihubungi')) return false;
+//	if (!checkInput(anythingRegExp,document.getElementById('penyelaras_jawatan'),'Jawatan Pegawai Untuk Dihubungi')) return false;
+//	if (!checkInput(anythingRegExp,document.getElementById('dateline'),'Tarikh tutup')) return false;
+//	if (!checkInput(numRegExp,document.getElementById('hour_closed1'),'Waktu Majlis Penutup')) return false;
+//	if (!checkInput(numRegExp,document.getElementById('minute_closed1'),'Waktu Majlis Penutup')) return false;
+//	if (!checkInput(numRegExp,document.getElementById('hour_closed2'),'Waktu Majlis Penutup')) return false;
+//	if (!checkInput(numRegExp,document.getElementById('minute_closed2'),'Waktu Majlis Penutup')) return false;
+//	df.submit()
 	if (!checkSelection(strRegExp,$('#contact_officer_id'),'Pegawai Untuk Dihubungi')) return false;
     if (!checkSelection(strRegExp,$('#contact_officer_id2'),'Pegawai Untuk Dihubungi')) return false;
 	if (!checkInput(anythingRegExp,$('#penyelaras_jawatan'),'Jawatan Pegawai Untuk Dihubungi')) return false;
 	if (!checkInput(anythingRegExp,$('#dateline'),'Tarikh tutup')) return false;
-	//if (!checkInput(anythingRegExp,$('hour_closed1'),'Waktu Majlis Penutup')) return false;
-	//if (!checkInput(anythingRegExp,$('hour_minute1'),'Waktu Majlis Penutup')) return false;
-	//if (!checkInput(anythingRegExp,$('hour_closed2'),'Waktu Majlis Penutup')) return false;
-	//if (!checkInput(anythingRegExp,$('hour_minute2'),'Waktu Majlis Penutup')) return false;
+	if (!checkInput(numRegExp,$('#hour_closed1'),'Waktu Majlis Penutup')) return false;
+	if (!checkInput(numRegExp,$('#minute_closed1'),'Waktu Majlis Penutup')) return false;
+	if (!checkInput(numRegExp,$('#hour_closed2'),'Waktu Majlis Penutup')) return false;
+	if (!checkInput(numRegExp,$('#minute_closed2'),'Waktu Majlis Penutup')) return false;
 	df.submit()
 
 }

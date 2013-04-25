@@ -22,7 +22,7 @@
         </tr>
         <tr>
           <td>Tarikh</td>
-          <td>: <%= msian_date_very_formal(Time.now.to_date) %></td>
+          <td>: <%= "#{@tarikh_surat_day} #{$MONTH_NAMES[@tarikh_surat_month.to_i - 1]}, #{@tarikh_surat_year}" %></td>
         </tr>
       </table>
     </td>
