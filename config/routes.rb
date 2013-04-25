@@ -607,6 +607,8 @@ InstunRails3::Application.routes.draw do
   resources :user do
     collection do
       get 'home'
+      get 'semakan'
+      post 'semakan'
       get 'success'
       get 'login'
       get 'logout'
