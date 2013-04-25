@@ -14,11 +14,13 @@
   </table>
   <BR>
 
-<%= start_form_tag :action => 'create_but_staff_already_exist' %>
+<%#= start_form_tag :action => 'create_but_staff_already_exist' %>
+  <%= form_for(@staff, :url => { :action => 'create_but_staff_already_exist' }) do |f| %>
+  
   <%= render :partial => 'form' %>
   <BR>
    <div id="apply_button" align="center" >
   <%= submit_tag "Simpan" %>
   </div>
-<%= end_form_tag %>
+<% end %>
 
