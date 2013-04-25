@@ -3,7 +3,7 @@
     if (confirm("Adakah anda pasti untuk padam " + objname + "?")) {
       location = url
     }
-	
+
   }
 
   function rewritePopupContent(controller, objid, objname) {
@@ -31,17 +31,17 @@
       "<hr size=1>" +
       "<li><a href=\"javascript: acceptSelected(document.list_form)\">&nbsp;&nbsp;Dipilih</a>" +
       "<li><a href=\"javascript: rejectSelected(document.list_form)\">&nbsp;&nbsp;Ditolak</a>" +
-      "<li><a href=\""  + "/course_applications" + "/user_cancel/" + objid + "\">&nbsp;&nbsp;Batal</a>" +
+      "<li><a href=\""  + "/course_applications" + "/user_cancel?id=" + objid + "\">&nbsp;&nbsp;Batal</a>" +
       "<hr size=1>" +
-      "<li><a href=\"javascript: MM_openBrWindow('" + "/profiles" + "/view_kursus3/" + objid +"','','scrollbars=yes,width=800,height=600,url=yes')\">&nbsp;&nbsp;Kursus Dihadiri</a>" +
-      "<li><a href=\"javascript: MM_openBrWindow('" + "/profiles" + "/view_kursus2/" + objid +"','','scrollbars=yes,width=800,height=600,url=yes')\">&nbsp;&nbsp;Rekod Kursus</a>" +
+      "<li><a href=\"javascript: MM_openBrWindow('" + "/profiles" + "/view_kursus3?id=" + objid +"','','scrollbars=yes,width=800,height=600,url=yes')\">&nbsp;&nbsp;Kursus Dihadiri</a>" +
+      "<li><a href=\"javascript: MM_openBrWindow('" + "/profiles" + "/view_kursus2?id=" + objid +"','','scrollbars=yes,width=800,height=600,url=yes')\">&nbsp;&nbsp;Rekod Kursus</a>" +
       "<hr size=1>" +
       "<li><a href=\""  + controller + "/cetak_pemohon/" + objid + "\">&nbsp;&nbsp;Cetak</a>" +
       "<li><a href=\""  + controller + "/cetak_pemohon_semua/" + "<%=@course_implementation.id if @course_implementation%>" + "?type=unprocessed\">&nbsp;&nbsp;Cetak Semua</a>" +
-					        
+
       //"<li><a href=\"/register/to_enroll/" + objid + "\">&nbsp;&nbsp;Lihat & Daftar</a>" +
     "</ul>");
-     
+
   }
 </script>
 

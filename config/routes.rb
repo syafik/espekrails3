@@ -511,6 +511,7 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/user_daftar_create/:id' => 'course_applications#user_daftar_create', :via => [:post]
   match '/course_applications/edit_by_user/:id' => 'course_applications#edit_by_user', :via => [:get]
   match '/course_applications/update/:id' => 'course_applications#edit_by_user', :via => [:post]
+  match '/course_applications/show_user_cancel/:id' => 'course_applications#show_user_cancel', :via => [:get]
 
   resources :course_applications, :except => [ :destroy ] do
     get 'new'
@@ -537,6 +538,8 @@ InstunRails3::Application.routes.draw do
       post 'create_peserta'
       post 'cetak_surat_iklan'
       get 'new_popup'
+      get 'user_cancel'
+      post 'update_user_cancel'
     end
     member do
       post 'cetak_surat_tawaran'
@@ -638,6 +641,8 @@ InstunRails3::Application.routes.draw do
       get 'edit_peribadi'
       put 'update_peribadi'
       post 'update_peribadi'
+      get 'view_kursus2'
+      get 'view_kursus3'
     end
     member do
       delete 'delete_user'

@@ -1,4 +1,4 @@
-<form method="post" action="/course_applications/update_user_cancel/<%=@course_application.id%>" onsubmit="return GoSubmit(this)">
+<form method="post" action="/course_applications/update_user_cancel?id=<%=@course_application.id%>" onsubmit="return GoSubmit(this)">
 <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
   <tr bgcolor="000000">
     <td colspan="3" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PEMBATALAN PERMOHONAN KURSUS </font></b></td>
@@ -6,13 +6,13 @@
   <tr>
     <td colspan="3" align="right">&nbsp;</td>
   </tr>
-  
-  
+
+
   <tr>
     <td width="20%" align="right"><b>Nama  : </b></td>
     <td colspan=3>&nbsp; <%=nof{@student.profile.name} %></td>
   </tr>
-  
+
   <tr>
     <td align="right"><b>Gred/Jawatan :</b></td>
     <td colspan="2" width="40">&nbsp; <%= nof{@employment.job_profile.job_grade} %> &nbsp; <%= "(#{@employment.job_profile.job_name.upcase})" if @employment && @employment.job_profile%></td>
@@ -65,7 +65,7 @@
       <td align="right"><b>Nama Pegawai :</b></td>
       <td colspan="2">&nbsp;<input type="text" value="<%=@course_application.supervisor_name%>" size="60" onchange="this.value=this.value.toUpperCase()" name="course_application[cancel_spv_name]" maxlength="80" id="course_application_cancel_spv_name"/></td>
     </tr>
-  
+
   <tr>
     <td align="right"><b>Jawatan :</b></td>
     <td colspan="2" >&nbsp;<input type="text" value="<%= nof{@course_application.supervisor_jawatan.upcase}%>" size="50" onchange="this.value=this.value.toUpperCase()" name="course_application[cancel_spv_jawatan]" id="course_application_cancel_spv_jawatan" /></td>
@@ -76,7 +76,7 @@
   </tr>
   <tr>
     <td align="right"><b>Tarikh Diluluskan:</b></td>
-    <td colspan="2" >&nbsp;<input type="text" value="<%=Time.now.strftime("%d/%m/%Y")%>" size="12" onchange="this.value=this.value.toUpperCase()" name="course_application[cancel_date]" id="course_application_cancel_date" /> 
+    <td colspan="2" >&nbsp;<input type="text" value="<%=Time.now.strftime("%d/%m/%Y")%>" size="12" onchange="this.value=this.value.toUpperCase()" name="course_application[cancel_date]" id="course_application_cancel_date" />
 	<font color="orange">dd/mm/yyyy</font></td>
   </tr>
   <tr>
@@ -95,8 +95,8 @@
 <script>
 
 function GoSubmit(df) {
-	if (!checkInput(emailRegExp,$('course_application_cancel_spv_email'),'Emel Pegawai')) return false;
-	
+	if (!checkInput(emailRegExp,$('#course_application_cancel_spv_email'),'Emel Pegawai')) return false;
+
 	if (confirm("Adakah anda pasti untuk membatalkan kursus ini?"))
 		return true;
 	else
