@@ -244,6 +244,8 @@ InstunRails3::Application.routes.draw do
     get 'new_popup'
     get 'edit_popup'
     put 'update_popup'
+    get 'show_popup'
+    get 'destroy'
     collection do
       post 'create_popup'
       get 'list_popup'

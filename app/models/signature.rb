@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Signature < ActiveRecord::Base
+  set_primary_key :id
   attr_accessible :filename, :person_name, :person_position, :description
   #def self.save(signature)
   	# `cp #{person.picture.path} pictures/#{person.name}/picture.jpg`
