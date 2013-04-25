@@ -17,6 +17,15 @@ node_identification_memo = $("#node_identification_memo");
   <% else %>
     node_identification_memo.html('<%=  "<br>&nbsp;<font color=red>No KP tiada lagi didalam sistem.<br>&nbsp;Sila Daftar.</font>".html_safe %>');
   <% end %>
+<% elsif @staff %>
+  <% if @ret =="1" %>
+    node_identification_memo.html('<%= "<br>&nbsp;<font color=orange> Data kakitangan sudah ada.<br>&nbsp; Loading..</font>".html_safe %>')
+    document.forms[0].action = "/staffs/new_but_staff_already_exist";
+    document.forms[0].submit();
+  <% else %>
+    node_identification_memo.html('<%= "<font color=orange><br>&nbsp; Data kakitangan belum ada.</font>".html_safe %>')
+    document.forms[0].action = "/staffs";
+  <% end %>
 <% else %>
   <% if @ret == "1" %>
     node_identification_memo.html('<%= "<br>&nbsp;<font color=orange> Data pemohon sudah ada.<br>&nbsp; Loading..</font>".html_safe %>')

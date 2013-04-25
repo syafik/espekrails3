@@ -572,7 +572,7 @@ class UserController < ApplicationController
     sql = "SELECT * from course_applications c, profiles p,course_implementations d where c.profile_id = p.id and c.course_implementation_id = d.id "
     where = "and date_plan_start > 'today' and p.ic_number= '#{params[:ic_number]}'"
 
-    if params[:ic_number]!=nil
+    if !params[:ic_number].nil?
       @status = CourseApplication.find_by_sql(sql + where)
     else
       @status = []

@@ -21,7 +21,7 @@
         </tr>
         <tr>
           <td>Tarikh</td>
-          <td>: <%= @tarikh %></td>
+          <td>: <%= "#{@tarikh_surat_day} #{$MONTH_NAMES[@tarikh_surat_month.to_i - 1]}, #{@tarikh_surat_year}" %></td>
         </tr>
       </table>
     </td>
@@ -156,7 +156,7 @@
      office_name = "#{student.profile.opis}"
      p_alamat = "#{p_addr}."
      alamat = "#{company_addr}."
-     state = "#{student.profile.state.description.upcase}"
+     state = student.profile.state.blank? ? "" : "#{student.profile.state.description.upcase}"
 
      alamat_instun = "<br/>Pengarah," +
              "<br/>Institut Tanah dan Ukur Negara(INSTUN)" +

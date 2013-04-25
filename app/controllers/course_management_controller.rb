@@ -920,7 +920,7 @@ class CourseManagementController < ApplicationController
 
   def evaluation
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
-    @course_implementation = CourseImplementation.find(params[:course_management_id]) if (params[:course_management_id] && params[:course_management_id] != "")
+    @course_implementation = CourseImplementation.find( params[:id] || params[:course_management_id]) if params[:id] || (params[:course_management_id] && params[:course_management_id] != "")
 
     if @course_implementation
 logger.info "--------------------------------"
@@ -1712,149 +1712,162 @@ logger.info "--------------------------------"
     #@students = CourseApplication.find_by_sql("select * from profiles join course_applications on course_applications.profile_id=profiles.id WHERE course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9) order by #{orderby} #{@arrow}")
     @students = CourseApplication.find_by_sql("select * from course_applications join profiles on course_applications.profile_id=profiles.id WHERE course_implementation_id = #{@course_implementation.id} AND (student_status_id=5 OR student_status_id=8 OR student_status_id=9) order by #{orderby} #{@arrow}")
 
-    pdf = PDF::Writer.new(:paper => "A4", :orientation => :landscape)
-    pdf.select_font("Helvetica")
-    pdf.margins_mm(5)
+    pdf_render_hash = {}
+    pdf_render_hash[:pdf] = "cetak_yuran.pdf"
+    pdf_render_hash[:page_size] = 'A4'
+    pdf_render_hash[:margin] = { :top => 10, :left => 15, :bottom => 10, :right => 15 }
+    pdf_render_hash[:orientation] = 'Landscape'
 
-    @font_size_normal = 9
-    pdf.text "Lampiran: A", :font_size => @font_size_normal, :justification => :right
-
-    @font_size_large = 11
-    pdf.text "<b>KUTIPAN YURAN PENDAFTARAN", :font_size => @font_size_large, :justification => :center
-    #put_text_center(10,"<b>KUTIPAN YURAN PENDAFTARAN</b>",13,pdf)
-    pdf.text(" \n")
-    #pdf.text(" \n")
-    #pdf.text(" \n")
-
-    @rujukan_font_size = 9
-    pdf.add_text(60, pdf.y, "Kursus", @rujukan_font_size)
-    pdf.add_text(140, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(160, pdf.y, "#{@course_implementation.course.name.upcase} (#{@course_implementation.code})", @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.add_text(60, pdf.y, "Tarikh Kursus", @rujukan_font_size)
-    pdf.add_text(140, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(160, pdf.y, "#{@course_implementation.tempoh_h}", @rujukan_font_size)
-    pdf.text(" \n")
-
-    table = PDF::SimpleTable.new
-    table.column_order.push(*%w(1st 2nd 3rd 4th 5th 6th 7th))
-
-    table.columns["1st"] = PDF::SimpleTable::Column.new("1st")
-    table.columns["1st"].heading = "Bil"
-
-    table.columns["2nd"] = PDF::SimpleTable::Column.new("2nd")
-    table.columns["2nd"].heading = "Nama"
-    table.columns["2nd"].heading.justification = :center
-
-    table.columns["3rd"] = PDF::SimpleTable::Column.new("3rd")
-    table.columns["3rd"].heading = "No. K/P"
-    table.columns["3rd"].heading.justification = :center
-
-    table.columns["4th"] = PDF::SimpleTable::Column.new("4th")
-    table.columns["4th"].heading = "Kem./Jab./Agensi"
-    table.columns["4th"].heading.justification = :center
-
-    table.columns["5th"] = PDF::SimpleTable::Column.new("5th")
-    table.columns["5th"].heading = "Tandatangan"
-    table.columns["5th"].heading.justification = :center
-
-    table.columns["6th"] = PDF::SimpleTable::Column.new("6th")
-    table.columns["6th"].heading = "Tarikh"
-    table.columns["6th"].heading.justification = :center
-
-    table.columns["7th"] = PDF::SimpleTable::Column.new("7th")
-    table.columns["7th"].heading = "Bayaran\n(RM)"
-    table.columns["7th"].heading.justification = :center
-
-
-    table.show_lines = :all
-    table.show_headings = true
-    table.orientation = :center
-    table.position = :center
-    table.font_size = 9
-    table.heading_font_size = 10
-
-    data_all=[]
-    jumlah = 0
-    @students.each_with_index do |stu, idx|
-      data = [
-          #{"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> , "5th"=> , "6th"=> , "7th"=> , "8th"=> }
-          {"1st" => idx+1, "2nd" => stu.profile.name, "3rd" => stu.profile.ic_number, "4th" => nof { stu.profile.opis.upcase }, "5th" => "", "6th" => nof { stu.payment_date.to_formatted_s(:my_format_4) }, "7th" => stu.fee_amount.to_i}
-      ]
-      #data["5th"].justification = :center
-      data_all = data_all + data
-      stu.fee_amount = 0 if stu.fee_amount == nil
-      jumlah += stu.fee_amount
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf_render_hash
+      end
     end
-    data_all= data_all + [{"2nd" => "JUMLAH BESAR :", "7th" => jumlah.to_i}]
 
-    table.data.replace data_all
-    table.columns["6th"].justification = :center
-    table.render_on(pdf)
-    @font_size_normal = 9
+    #pdf = PDF::Writer.new(:paper => "A4", :orientation => :landscape)
+    #pdf.select_font("Helvetica")
+    #pdf.margins_mm(5)
+    #
+    #@font_size_normal = 9
+    #pdf.text "Lampiran: A", :font_size => @font_size_normal, :justification => :right
+    #
+    #@font_size_large = 11
+    #pdf.text "<b>KUTIPAN YURAN PENDAFTARAN", :font_size => @font_size_large, :justification => :center
+    ##put_text_center(10,"<b>KUTIPAN YURAN PENDAFTARAN</b>",13,pdf)
+    #pdf.text(" \n")
+    ##pdf.text(" \n")
+    ##pdf.text(" \n")
+    #
+    #@rujukan_font_size = 9
+    #pdf.add_text(60, pdf.y, "Kursus", @rujukan_font_size)
+    #pdf.add_text(140, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(160, pdf.y, "#{@course_implementation.course.name.upcase} (#{@course_implementation.code})", @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.add_text(60, pdf.y, "Tarikh Kursus", @rujukan_font_size)
+    #pdf.add_text(140, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(160, pdf.y, "#{@course_implementation.tempoh_h}", @rujukan_font_size)
+    #pdf.text(" \n")
+    #
+    #table = PDF::SimpleTable.new
+    #table.column_order.push(*%w(1st 2nd 3rd 4th 5th 6th 7th))
+    #
+    #table.columns["1st"] = PDF::SimpleTable::Column.new("1st")
+    #table.columns["1st"].heading = "Bil"
+    #
+    #table.columns["2nd"] = PDF::SimpleTable::Column.new("2nd")
+    #table.columns["2nd"].heading = "Nama"
+    #table.columns["2nd"].heading.justification = :center
+    #
+    #table.columns["3rd"] = PDF::SimpleTable::Column.new("3rd")
+    #table.columns["3rd"].heading = "No. K/P"
+    #table.columns["3rd"].heading.justification = :center
+    #
+    #table.columns["4th"] = PDF::SimpleTable::Column.new("4th")
+    #table.columns["4th"].heading = "Kem./Jab./Agensi"
+    #table.columns["4th"].heading.justification = :center
+    #
+    #table.columns["5th"] = PDF::SimpleTable::Column.new("5th")
+    #table.columns["5th"].heading = "Tandatangan"
+    #table.columns["5th"].heading.justification = :center
+    #
+    #table.columns["6th"] = PDF::SimpleTable::Column.new("6th")
+    #table.columns["6th"].heading = "Tarikh"
+    #table.columns["6th"].heading.justification = :center
+    #
+    #table.columns["7th"] = PDF::SimpleTable::Column.new("7th")
+    #table.columns["7th"].heading = "Bayaran\n(RM)"
+    #table.columns["7th"].heading.justification = :center
+    #
+    #
+    #table.show_lines = :all
+    #table.show_headings = true
+    #table.orientation = :center
+    #table.position = :center
+    #table.font_size = 9
+    #table.heading_font_size = 10
 
-    ##################################
-    @dotdot = "......................................"
-    @rujukan_font_size = 10
-    pdf.text(" \n")
-    pdf.text(" \n")
-    pdf.add_text(60, pdf.y, "Dikutip oleh (Penyelaras Kursus)", @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.text(" \n")
-    pdf.add_text(70, pdf.y, "Tandatangan", @rujukan_font_size)
-    pdf.add_text(130, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(140, pdf.y, @dotdot, @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.text(" \n")
-    pdf.add_text(70, pdf.y, "Nama", @rujukan_font_size)
-    pdf.add_text(130, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(140, pdf.y, @dotdot, @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.add_text(70, pdf.y, "Jawatan", @rujukan_font_size)
-    pdf.add_text(130, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(140, pdf.y, @dotdot, @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.add_text(70, pdf.y, "Tarikh", @rujukan_font_size)
-    pdf.add_text(130, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(140, pdf.y, @dotdot, @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.y = pdf.y + 115
-    pdf.text(" \n")
-    pdf.text(" \n")
-    pdf.text(" \n")
-    pdf.add_text(400, pdf.y, "Diterima oleh (Seksyen Kewangan)", @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.text(" \n")
-    pdf.add_text(410, pdf.y, "Tandatangan", @rujukan_font_size)
-    pdf.add_text(470, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(480, pdf.y, @dotdot, @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.text(" \n")
-    pdf.add_text(410, pdf.y, "Nama", @rujukan_font_size)
-    pdf.add_text(470, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(480, pdf.y, @dotdot, @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.add_text(410, pdf.y, "Jawatan", @rujukan_font_size)
-    pdf.add_text(470, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(480, pdf.y, @dotdot, @rujukan_font_size)
-    pdf.text(" \n")
-    pdf.add_text(410, pdf.y, "Tarikh", @rujukan_font_size)
-    pdf.add_text(470, pdf.y, ":", @rujukan_font_size)
-    pdf.add_text(480, pdf.y, @dotdot, @rujukan_font_size)
-    pdf.text(" \n")
+    #data_all=[]
+    #jumlah = 0
+    #@students.each_with_index do |stu, idx|
+    #  data = [
+    #      #{"1st"=> idx+1 , "2nd"=> stu.profile.name, "3rd"=> stu.profile.ic_number, "4th"=> , "5th"=> , "6th"=> , "7th"=> , "8th"=> }
+    #      {"1st" => idx+1, "2nd" => stu.profile.name, "3rd" => stu.profile.ic_number, "4th" => nof { stu.profile.opis.upcase }, "5th" => "", "6th" => nof { stu.payment_date.to_formatted_s(:my_format_4) }, "7th" => stu.fee_amount.to_i}
+    #  ]
+    #  #data["5th"].justification = :center
+    #  data_all = data_all + data
+    #  stu.fee_amount = 0 if stu.fee_amount == nil
+    #  jumlah += stu.fee_amount
+    #end
+    #data_all= data_all + [{"2nd" => "JUMLAH BESAR :", "7th" => jumlah.to_i}]
+
+    #table.data.replace data_all
+    #table.columns["6th"].justification = :center
+    #table.render_on(pdf)
+    #@font_size_normal = 9
+    #
+    ###################################
+    #@dotdot = "......................................"
+    #@rujukan_font_size = 10
+    #pdf.text(" \n")
+    #pdf.text(" \n")
+    #pdf.add_text(60, pdf.y, "Dikutip oleh (Penyelaras Kursus)", @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.text(" \n")
+    #pdf.add_text(70, pdf.y, "Tandatangan", @rujukan_font_size)
+    #pdf.add_text(130, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(140, pdf.y, @dotdot, @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.text(" \n")
+    #pdf.add_text(70, pdf.y, "Nama", @rujukan_font_size)
+    #pdf.add_text(130, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(140, pdf.y, @dotdot, @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.add_text(70, pdf.y, "Jawatan", @rujukan_font_size)
+    #pdf.add_text(130, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(140, pdf.y, @dotdot, @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.add_text(70, pdf.y, "Tarikh", @rujukan_font_size)
+    #pdf.add_text(130, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(140, pdf.y, @dotdot, @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.y = pdf.y + 115
+    #pdf.text(" \n")
+    #pdf.text(" \n")
+    #pdf.text(" \n")
+    #pdf.add_text(400, pdf.y, "Diterima oleh (Seksyen Kewangan)", @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.text(" \n")
+    #pdf.add_text(410, pdf.y, "Tandatangan", @rujukan_font_size)
+    #pdf.add_text(470, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(480, pdf.y, @dotdot, @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.text(" \n")
+    #pdf.add_text(410, pdf.y, "Nama", @rujukan_font_size)
+    #pdf.add_text(470, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(480, pdf.y, @dotdot, @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.add_text(410, pdf.y, "Jawatan", @rujukan_font_size)
+    #pdf.add_text(470, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(480, pdf.y, @dotdot, @rujukan_font_size)
+    #pdf.text(" \n")
+    #pdf.add_text(410, pdf.y, "Tarikh", @rujukan_font_size)
+    #pdf.add_text(470, pdf.y, ":", @rujukan_font_size)
+    #pdf.add_text(480, pdf.y, @dotdot, @rujukan_font_size)
+    #pdf.text(" \n")
 
 
     ###################################
 
     #pdf.save_as("#{RAILS_ROOT}/public/yuran/report.pdf")
 
-    if RUBY_PLATFORM == "i386-mswin32"
-      pdf.save_as("public/yuran/" + "report.pdf") #kat windows
-    else
-      pdf.save_as("/aplikasi/www/instun/public/yuran/" + "report.pdf") #kalu kat bsd
-    end
-    #redirect_to("/course_management/yuran/#{@course_implementation.id}?apply_status=yuran")
-    redirect_to("/yuran/" + "report.pdf")
+    #if RUBY_PLATFORM == "i386-mswin32"
+    #  pdf.save_as("public/yuran/" + "report.pdf") #kat windows
+    #else
+    #  pdf.save_as("/aplikasi/www/instun/public/yuran/" + "report.pdf") #kalu kat bsd
+    #end
+    ##redirect_to("/course_management/yuran/#{@course_implementation.id}?apply_status=yuran")
+    #redirect_to("/yuran/" + "report.pdf")
 
   end
 

@@ -1,13 +1,29 @@
+//function HighLightTextField(obj) {
+//	obj.style.borderColor = "#FF6666"
+//	percentageMoved = 0;
+//	hglt_obj = obj;
+//	//timerId = setInterval('MerahSekejap()',100);
+//}
+
 function HighLightTextField(obj) {
-	obj.style.borderColor = "#FF6666"
+//	obj.style.borderColor = "#FF6666"
+    obj.css('backgroundColor', '#FF6666')
 	percentageMoved = 0;
 	hglt_obj = obj;
 	//timerId = setInterval('MerahSekejap()',100);
 }
 
+//function HighLight(obj) {
+//	//obj.style.background = "#FFdddd"
+//	obj.style.color = "#FF6666"
+//	percentageMoved = 0;
+//	hglt_obj = obj;
+//	//timerId = setInterval('MerahSekejap()',100);
+//}
+
 function HighLight(obj) {
 	//obj.style.background = "#FFdddd"
-	obj.style.color = "#FF6666"
+    obj.css('backgroundColor', '#FF6666')
 	percentageMoved = 0;
 	hglt_obj = obj;
 	//timerId = setInterval('MerahSekejap()',100);

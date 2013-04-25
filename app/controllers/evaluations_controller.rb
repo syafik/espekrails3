@@ -530,9 +530,10 @@ class EvaluationsController < ApplicationController
       #                                                  :answer_comment=>params["comment_#{q.id}"],
       #                                                  :created_by=>session[:user].login)
       #z.save
-      z = EvaluationAnswer.find_by_sql("SELECT * from evaluation_answers WHERE evaluation_question_id=#{q.id} AND course_application_id=#{params[:ca_id]}")
-      if z!=nil
-        z.first.update_attributes(:answer => params["#{q.id}"],
+      #z = EvaluationAnswer.find_by_sql("SELECT * from evaluation_answers WHERE evaluation_question_id=#{q.id} AND course_application_id=#{params[:ca_id]}")
+      z = EvaluationAnswer.find(:first, :conditions => ["evaluation_question_id = ? AND course_application_id = ? ", q.id, params[:ca_id]])
+      unless z.nil?
+        z.update_attributes(:answer => params["#{q.id}"],
                                   :answer_comment => params["comment_#{q.id}"])
       end
     end

@@ -10,7 +10,7 @@ function confirmAndDelete(url, objname) {
 function rewritePopupContent(controller, objid, objname) {
     $('#popmenu').css({"width":190});
     $('#popmenu').html("<ul>" +
-                             "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat Permohonan</a>" +
+                             "<li><a href=\""  + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat Permohonan</a>" +
                              //"<li><a target=\"blank\" href=\""  + controller + "/cetak_surat_tawaran_user/" + objid + "\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
 			                 "<hr size=1>" +
 			                 "<li><font color=\"#aaaaaa\">&nbsp;&nbsp;Pengesahan Kehadiran</font>" +
@@ -22,7 +22,7 @@ function rewritePopupContent(controller, objid, objname) {
 function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('#popmenu').css({"width":230});
     $('#popmenu').html("<ul>" +
-                             "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat Permohonan</a>" +
+                             "<li><a href=\""  + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat Permohonan</a>" +
                              //"<li><a target=\"blank\" href=\""  + controller + "/cetak_surat_tawaran_user/" + objid + "\">&nbsp;&nbsp;Cetak Surat Tawaran</a>" +
 			                 "<hr size=1>" +
 			                 "<li><a href=\"javascript: sahHadirSelected(" + objid + ")\">&nbsp;&nbsp;Pengesahan Kehadiran</a>" +
@@ -40,7 +40,7 @@ function sahHadirSelected(student_id) {
 }
 
 function cetakSuratTawaran(student_id) {
-	MM_openBrWindow( "/user_applications/print_offer_letter/" + student_id + "?course_application_ids%5B%5D=" + student_id,'','scrollbars=yes,width=800,height=600')
+	MM_openBrWindow( "/user_applications/" + student_id + "/print_offer_letter?course_application_ids%5B%5D=" + student_id,'','scrollbars=yes,width=800,height=600')
 }
 
 
