@@ -578,6 +578,7 @@ class UserController < ApplicationController
       @status = []
     end
     #@status = CourseApplication.find_by_sql("SELECT * from course_applications c, profiles p,course_implementations d where c.profile_id = p.id and c.course_implementation_id = d.id and p.ic_number = '#{params[:search][ic_number]}' and d.code= '#{params[:search][:code]}'")
+    render layout: "standard-layout"
   end
 
   def signup
