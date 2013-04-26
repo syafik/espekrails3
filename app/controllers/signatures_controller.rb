@@ -121,6 +121,6 @@ class SignaturesController < ApplicationController
 
   def destroy
     Signature.find(params[:signature_id]).destroy
-    redirect_to signatures_path
+    redirect_to list_popup_signatures_path
   end
 end

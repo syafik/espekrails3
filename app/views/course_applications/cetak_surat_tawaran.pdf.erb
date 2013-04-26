@@ -58,7 +58,8 @@
       <%
          if @signature_file and @signature_file != ""
       %>
-          <img src="<%= @signature_file %>" height="100"/><br/>
+          <!--<img src="<%#= @signature_file %>" height="100"/>-->
+          <%= image_tag @signature_file %><br/>
       <%
          else
       %>

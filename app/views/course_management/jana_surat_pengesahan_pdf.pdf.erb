@@ -95,7 +95,8 @@
              if @format_surat == 0 || @format_surat == 3
                if !@signature_file.blank? && @signature_file != ""
           %>
-                  <img src="<%= @signature_file %>" height="100"/>
+                  <!--<img src="<%#= @signature_file %>" height="100"/>-->
+                  <%= image_tag @signature_file %>
               <%
                  else
               %>
