@@ -25,7 +25,7 @@ var menuLayers = {
 
     document.getElementById('popmenu').innerHTML = "<ul>" + 
                            "<li><a href=\""  + controller + "/new/" + objid + "\">&nbsp;&nbsp;Tambah</a>" +
-					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
+					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
 					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
 					       "</ul>"
     this.position(mnu,e);
@@ -127,7 +127,7 @@ for signature in @signatures
  <% end %>
 </table>
 <BR><BR>
-<div align=center>  
+<div align=center>
 <%= link_to 'Previous page', { :page => @signature_pages.current.previous } if @signature_pages.current.previous %>
-<%= link_to 'Next page', { :page => @signature_pages.current.next } if @signature_pages.current.next %> 
+<%= link_to 'Next page', { :page => @signature_pages.current.next } if @signature_pages.current.next %>
 </div>

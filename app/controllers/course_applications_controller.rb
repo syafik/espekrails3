@@ -1268,7 +1268,7 @@ class CourseApplicationsController < ApplicationController
       if RUBY_PLATFORM == "i386-mswin32"
         @signature_file = "public/signatures/#{params[:signature_file]}"
       else
-        @signature_file = "/signatures/#{params[:signature_file]}"
+        @signature_file = "file://#{Rails.root.join('public', 'signatures', params[:signature_file])}"
       end
 
       if !params[:signature_file] or params[:signature_file] == ""
@@ -1448,7 +1448,7 @@ class CourseApplicationsController < ApplicationController
       if RUBY_PLATFORM == "i386-mswin32"
         @signature_file = "public/signatures/#{params[:signature_file]}"
       else
-        @signature_file = "/signatures/#{params[:signature_file]}"
+        @signature_file = "file://#{Rails.root.join('public', 'signatures', params[:signature_file])}"
       end
 
       if !params[:signature_file] or params[:signature_file] == ""
