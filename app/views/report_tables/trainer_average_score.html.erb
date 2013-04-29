@@ -68,7 +68,11 @@
         end
       else
         categories.each_with_index do |month, index_2|
-          data_for_chart_dalam[index_2] += report["#{month}"].to_f
+          if report["#{month}"].to_i != 0 && data_for_chart_dalam[index_2] == 0
+            data_for_chart_dalam[index_2] += report["#{month}"].to_f
+          elsif report["#{month}"].to_i != 0 && data_for_chart_dalam[index_2] != 0
+            data_for_chart_dalam[index_2] = (data_for_chart_dalam[index_2] + report["#{month}"].to_f) / 2
+          end
         end
       end
     end
