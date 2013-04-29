@@ -300,6 +300,7 @@ InstunRails3::Application.routes.draw do
       get 'students_feedback'
       get 'summary_group_jkptg'
       get 'payment_by_department'
+      get 'trainer_average_score'
     end
   end
 
