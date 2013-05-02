@@ -1,0 +1,105 @@
+<form action="general_achievement" name="filter">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">PENCAPAIAN UMUM </font></b></td>
+    </tr>
+  </table>
+  <br/>
+  <!-- TABLE HEADER -->
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <%= render :partial => "shared/month_range_selection", :locals => {:planning_months => @planning_months, :planning_years => @planning_years} %>
+  </table>
+</form>
+<br>
+<table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" id="pisang" onclick="">
+    <td width="3%" align="center"><font color="#FFFFFF"><strong>Bil.</strong></font></td>
+    <td width="50%" align="left"><font color="#FFFFFF">&nbsp;<strong>Program/Bidang</strong></font></td>
+    <td width="10%" align="center"><font color="#FFFFFF">&nbsp;<strong>Kursus Rancang</strong></font></td>
+    <td width="10%" align="center"><font color="#FFFFFF">&nbsp;<strong>Kursus Laksana</strong></font></td>
+    <td width="10%" align="center"><font color="#FFFFFF">&nbsp;<strong>Peserta Sasar</strong></font></td>
+	<td width="10%" align="center"><font color="#FFFFFF">&nbsp;<strong>Peserta Hadir</strong></font></td>
+  </tr>
+  <%if @reports.any? %>
+    <%
+    total_plan = 0
+    total_realization = 0
+    total_target = 0
+    total_presence = 0
+  %>
+    <% @reports.each_with_index do |report, index| %>
+      <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+        <td align="center" id="name<%=h report.id %>"><%= (index+1).to_s %>.</td>
+        <td align="left"><%=report.name%></td>
+        <td align="center"><%=number_with_delimiter(report.plan.to_i, :delimiter => ',') %></td>
+        <td align="center"><%=number_with_delimiter(report.realization.to_i, :delimiter => ',') %></td>
+        <td align="center"><%=number_with_delimiter(report.target.to_i, :delimiter => ',') %></td>
+        <td align="center"><%=number_with_delimiter(report.apresence.to_i, :delimiter => ',') %></td>
+      </tr>
+    <%
+    total_plan += report.plan.to_i
+    total_realization += report.realization.to_i
+    total_target += report.target.to_i
+    total_presence += report.apresence.to_i
+    %>
+    <% end %>
+    <tr bgcolor="#fff">
+      <td align="right" colspan="2">Jumlah Keseluruhan</td>
+      <td align="center"><%=number_with_delimiter(total_plan, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_realization, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_target, :delimiter => ',') %></td>
+      <td align="center"><%=number_with_delimiter(total_presence, :delimiter => ',') %></td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+<%if @reports.any? %>
+<% 
+  achievement_percentage = (total_realization.to_f / total_plan.to_f) * 100
+  presence_percentage = (total_presence.to_f/total_target.to_f) * 100
+%>
+<table style ="margin-left: 40px;">
+  <tr>
+    <td>Peratus Pencapaian Kursus</td><td>:</td><td><%= number_with_delimiter(achievement_percentage, :delimiter => ',') %>%</td>
+  </tr>
+  <tr>
+    <td>Peratus Kehadiran Peserta</td><td>:</td><td><%= number_with_delimiter(presence_percentage, :delimiter => ',') %>%</td>
+  </tr>
+</table>
+<% end %>
+
+<%#
+  @categories = @reports.collect(&:name)
+  pemohon = Hash["name", "Jml Pemohon", "data", @reports.collect(&:pemohon).collect{|el| el.to_i}]
+  dipilih = Hash["name", "Jml Dipilih", "data", @reports.collect(&:dipilih).collect{|el| el.to_i}]
+  hadir = Hash["name", "Jml Hadir", "data", @reports.collect(&:hadir).collect{|el| el.to_i}]
+  @chart_data = []
+  @chart_data << pemohon << dipilih << hadir
+  height = total_pemohon.blank? ? 0 : total_pemohon * 5
+  @chart_title = 'MAKLUMAT PERMOHONAN DAN KEHADIRAN KURSUS '
+%>
+<%# unless @reports.blank?  %>
+<!--div id="table" class="chart" style="display:none;padding-left:33px; width:95%; height:<%#= height %>px;"/-->
+<%#= javascript_include_tag "highcharts" %>
+  <%#= render :partial => 'shared/chart_bar',
+             :locals => {:chart_title => @chart_title, 
+  	                   :chart_container => 'table',
+  	                   :chart_categories => @categories,
+  	                   :chart_data => @chart_data, 
+  	                   :size => {'width' => 900, 'height' => 300}}
+  	%>	
+	
+<%# end %>
+<!--script>
+  function toggle_chart(){
+    var showed = $('input[name=filter_show]:checked').val();
+    if (showed == "chart"){
+      $(".chart").show();
+      $(".table_report").hide();
+    }else{
+      $(".chart").hide();
+      $(".table_report").show();
+    }
+  }
+</script-->

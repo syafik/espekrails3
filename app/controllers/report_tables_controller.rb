@@ -1,6 +1,28 @@
 class ReportTablesController < ApplicationController
   layout "standard-layout"
   before_filter :prepare_and_check_month_data, :except => [:application_and_attendance_query]
+
+  def general_achievement
+    if is_param_month_range_valid?
+      filter_plan = "AND EXTRACT(month FROM date_plan_start) >= #{params[:month_from]} AND EXTRACT(month FROM date_plan_end) <= #{params[:month_until]} 
+                 AND EXTRACT(year FROM date_plan_start) = #{params[:year]} AND EXTRACT(year FROM date_plan_end) = #{params[:year]} "
+      filter_realization = "AND EXTRACT(month FROM date_start) >= #{params[:month_from]} AND EXTRACT(month FROM date_end) <= #{params[:month_until]} 
+                          AND EXTRACT(year FROM date_start) = #{params[:year]} AND EXTRACT(year FROM date_end) = #{params[:year]} "
+      filter_target = "AND EXTRACT(month FROM date_start) >= #{params[:month_from]} AND EXTRACT(month FROM date_end) <= #{params[:month_until]} 
+                       AND EXTRACT(year FROM date_start) = #{params[:year]} AND EXTRACT(year FROM date_end) = #{params[:year]} "
+      filter_presence = "AND EXTRACT(month FROM date_apply) >= #{params[:month_from]} AND EXTRACT(month FROM date_apply) <= #{params[:month_until]} AND EXTRACT(year FROM date_apply) = #{params[:year]}"
+                          
+      condition_1 = "Select id from course_implementations where code LIKE 'T%' AND code NOT LIKE 'TM%'"
+      condition_2 = "Select id from course_implementations where code LIKE 'U%'"
+      condition_3 = "Select id from course_implementations where code LIKE 'TM%'"
+      result_1 = general_achievement_query('Pentadbiran Tanah', condition_1, filter_plan, filter_realization, filter_target, filter_presence)
+      result_2 = general_achievement_query('Ukur dan Pemetaan', condition_2, filter_plan, filter_realization, filter_target, filter_presence)
+      result_3 = general_achievement_query('Teknologi Maklumat', condition_3, filter_plan, filter_realization, filter_target, filter_presence)
+
+      @reports = result_1 + result_2 + result_3
+    end  
+  end
+
   
   def application_and_attendance 
     if is_param_month_range_valid?
@@ -564,6 +586,35 @@ class ReportTablesController < ApplicationController
     end
   end
 
+  def general_achievement_query(title, condition, filter_plan, filter_realization, filter_target, filter_presence)
+    sql = "select '#{title}' as name, 
+    (select count(ci.id)
+    from course_implementations ci
+    where ci.id in (
+      #{condition}
+      #{filter_plan})) as plan,
+      
+      (select count(ci.id)
+      from course_implementations ci
+      where ci.id in (
+        #{condition}
+        #{filter_realization})) as realization,
+
+      (select sum(ci.capacity)
+      from course_implementations ci
+      where ci.id in (
+        #{condition}
+        #{filter_plan})) as target,
+
+      (select count(vdaa.profile_id)
+        FROM vw_detailed_applicants_all vdaa
+        WHERE vdaa.course_implementation_id IN (
+        #{condition})
+        AND student_status_id IN (5,8,9) #{filter_presence}) as apresence"
+
+        return CourseApplication.find_by_sql(sql)
+  end
+  
   def application_and_attendance_query(title, condition, filter)
     sql = "select '#{title}' as name, (
         select count(*)

@@ -286,6 +286,7 @@ InstunRails3::Application.routes.draw do
 
   resources :report_tables do
     collection do
+      get 'general_achievement'
       get 'application_and_attendance'
       get 'peserta_jantina'
       get 'summary_group_ptg_ptd'
