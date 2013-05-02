@@ -68,7 +68,7 @@
       <tr>
         <td align="left" class="pdf_15">
           <br/>
-          <strong><%= "#{ketua}<br/>#{office_name}<br/>#{p_alamat}".html_safe %></strong>
+          <strong><%= "#{ketua}<br/>#{office_name}<br/>#{p_alamat.gsub(",", ",<br/>")}".html_safe %></strong>
           <br/>
           <br/>
           Tuan/Puan,
@@ -96,7 +96,8 @@
              if @format_surat == 0 || @format_surat == 3
                if !@signature_file.blank? && @signature_file != ""
           %>
-                  <img src="<%= @signature_file %>" height="100"/>
+                  <!--<img src="<%#= @signature_file %>" height="100"/>-->
+                  <%= image_tag @signature_file %>
               <%
                  else
               %>

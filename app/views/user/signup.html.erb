@@ -28,7 +28,7 @@
 
         function checkNRIC() {
           node_identification_memo.innerHTML = "<br>&nbsp;<font color=red>Carian No KP didalam sistem. Sila Tunggu.</font>"
-          ajax_request("ajax_nric", "ic_number="+node.value)
+          ajax_request("ajax_nric", "sign_up=1&ic_number="+node.value)
         }
 
         function ajax_request(url, data) {

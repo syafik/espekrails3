@@ -1,0 +1,127 @@
+<%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+<table width="100%">
+  <tr>
+    <td width="100%" align="right">
+      Lampiran: A
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>KUTIPAN YURAN PENDAFTARAN</strong>
+    </td>
+  </tr>
+</table>
+
+<table class="pdf_11">
+  <tr>
+    <td>Kursus</td>
+    <td> : </td>
+    <td><%= "#{@course_implementation.course.name.upcase} (#{@course_implementation.code})" %></td>
+  </tr>
+  <tr>
+    <td>Tarikh Kursus</td>
+    <td> : </td>
+    <td><%= "#{@course_implementation.tempoh_h}" %></td>
+  </tr>
+</table>
+
+<table class="pdf_table pdf_11">
+  <tr>
+    <td align="center">Bil</td>
+    <td align="center">Nama</td>
+    <td align="center">No. K/P</td>
+    <td align="center">Kem./Jab./Agensi</td>
+    <td align="center">Tandatangan</td>
+    <td align="center">Tarikh</td>
+    <td align="center">Bayaran<br/>(RM)</td>
+  </tr>
+  <% jml = 0 %>
+  <% @students.each_with_index do |s, i| %>
+    <tr class="<%= cycle('pdf_tr_odd', '') %>">
+      <td class="pdf_table_padding_right_10"><%= i + 1 %></td>
+      <td class="pdf_table_padding_right_10"><%= s.profile.name %></td>
+      <td class="pdf_table_padding_right_10"><%= s.profile.ic_number %></td>
+      <td class="pdf_table_padding_right_10"><%= nof { s.profile.opis.upcase } %></td>
+      <td class="pdf_table_padding_right_10"></td>
+      <td class="pdf_table_padding_right_10"><%= nof { s.payment_date.to_formatted_s(:my_format_4) } %></td>
+      <td class="pdf_table_padding_right_10"><%= s.fee_amount.to_i %></td>
+    </tr>
+    <%
+      s.fee_amount = 0 if s.fee_amount == nil
+      jml += s.fee_amount
+    %>
+  <% end %>
+  <tr>
+    <td></td>
+    <td colspan="5" class="pdf_table_padding_right">JUMLAH BESAR :</td>
+    <td class="pdf_table_padding_right"><%= jml %></td>
+  </tr>
+</table>
+
+<div style="display:block; clear:both; page-break-after:always;"></div>
+
+<table width="100%">
+  <tr>
+    <td>
+      <table class="pdf_12">
+        <tr>
+          <td colspan="3">
+            Dikutip oleh (Penyelaras Kursus)
+          </td>
+        </tr>
+        <tr>
+          <td>Tandatangan</td>
+          <td> : </td>
+          <td>......................................</td>
+        </tr>
+        <tr>
+          <td>Nama</td>
+          <td> : </td>
+          <td>......................................</td>
+        </tr>
+        <tr>
+          <td>Jawatan</td>
+          <td> : </td>
+          <td>......................................</td>
+        </tr>
+        <tr>
+          <td>Tarikh</td>
+          <td> : </td>
+          <td>......................................</td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table class="pdf_12">
+        <tr>
+          <td colspan="3">
+            Diterima oleh (Seksyen Kewangan)
+          </td>
+        </tr>
+        <tr>
+          <td>Tandatangan</td>
+          <td> : </td>
+          <td>......................................</td>
+        </tr>
+        <tr>
+          <td>Nama</td>
+          <td> : </td>
+          <td>......................................</td>
+        </tr>
+        <tr>
+          <td>Jawatan</td>
+          <td> : </td>
+          <td>......................................</td>
+        </tr>
+        <tr>
+          <td>Tarikh</td>
+          <td> : </td>
+          <td>......................................</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+

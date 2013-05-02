@@ -1,7 +1,8 @@
 
 <div align="center"><a href="javascript: history.back()"> Kembali</a></div>
 <br />
-<form method="post" action="/user_applications/update_user_cancel/<%=@course_application.id%>" onsubmit="return GoSubmit(this)">
+  <%= form_tag update_user_cancel_user_application_path(@course_application.id), method: :put, onsubmit: "return GoSubmit(this)" do %>
+
 <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#eeeeee">
   <tr bgcolor="000000">
     <td colspan="3" align="CENTER" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT PEMBATALAN PERMOHONAN KURSUS </font></b></td>
@@ -69,7 +70,7 @@
    <div id="apply_button" align="center" style="visibility: visible">
   <%= submit_tag "Batalkan Permohonan" %>
   </div>
-</form>
+  <% end %>
 <br />
 
 <script src="/javascripts/form_validator.js"></script>

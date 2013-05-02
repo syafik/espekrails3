@@ -46,6 +46,7 @@ InstunRails3::Application.routes.draw do
   match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:put]
   match '/user_applications/tambah/:id' => 'user_applications#tambah', :via => [:put]
   match '/user_applications/show_attendance/:id' => 'user_applications#show_attendance', :via => [:get]
+
   resources :user_applications do
     collection do
       get 'applied'
@@ -55,6 +56,10 @@ InstunRails3::Application.routes.draw do
       get 'history'
       get 'user_cancel/:id', :action => :user_cancel
       post 'sah_hadir_selected'
+    end
+    member do
+      put 'update_user_cancel'
+      get 'print_offer_letter'
     end
   end
   resources :post_individus do
@@ -240,6 +245,8 @@ InstunRails3::Application.routes.draw do
     get 'new_popup'
     get 'edit_popup'
     put 'update_popup'
+    get 'show_popup'
+    get 'destroy'
     collection do
       post 'create_popup'
       get 'list_popup'
@@ -297,6 +304,7 @@ InstunRails3::Application.routes.draw do
       get 'students_feedback'
       get 'summary_group_jkptg'
       get 'payment_by_department'
+      get 'trainer_average_score'
     end
   end
 
@@ -308,6 +316,7 @@ InstunRails3::Application.routes.draw do
       post 'search_by_phone'
       post 'search_by_dept'
       post 'new_but_staff_already_exist'
+      post 'create_but_staff_already_exist'
     end
   end
 
@@ -459,6 +468,7 @@ InstunRails3::Application.routes.draw do
       get 'surat_takhadir'
       post 'isi_markah'
       get 'make_payment'
+      get 'cetak_yuran'
     end
     member do
       put 'jana_surat_pengesahan_pdf'
@@ -515,7 +525,8 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/user_daftar_create/:id' => 'course_applications#user_daftar_create', :via => [:post]
   match '/course_applications/edit_by_user/:id' => 'course_applications#edit_by_user', :via => [:get]
   match '/course_applications/update/:id' => 'course_applications#edit_by_user', :via => [:post]
-
+  match '/course_applications/show_user_cancel/:id' => 'course_applications#show_user_cancel', :via => [:get]
+  match '/course_applications/user_cancel/:id' => 'course_applications#user_cancel', :via => [:get]
   resources :course_applications, :except => [ :destroy ] do
     get 'new'
     get 'all'
@@ -541,6 +552,9 @@ InstunRails3::Application.routes.draw do
       post 'create_peserta'
       post 'cetak_surat_iklan'
       get 'new_popup'
+      get 'user_cancel'
+      post 'update_user_cancel'
+      post 'reject_selected_with_reason'
     end
     member do
       post 'cetak_surat_tawaran'
@@ -553,6 +567,7 @@ InstunRails3::Application.routes.draw do
       get 'show_after_dr'
       get 'new_peserta'
       get 'accepted'
+      get "cetak_for_logged_in_user"
     end
   end
 
@@ -599,11 +614,14 @@ InstunRails3::Application.routes.draw do
   resources :user do
     collection do
       get 'home'
+      get 'semakan'
+      post 'semakan'
       get 'success'
       get 'login'
       get 'logout'
       get 'register'
       get 'forgot_password'
+      get 'ajax_nric'
       post 'authenticate'
       post 'signup'
       post 'staff_already_exist'
@@ -642,6 +660,8 @@ InstunRails3::Application.routes.draw do
       get 'edit_peribadi'
       put 'update_peribadi'
       post 'update_peribadi'
+      get 'view_kursus2'
+      get 'view_kursus3'
     end
     member do
       delete 'delete_user'

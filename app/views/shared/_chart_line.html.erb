@@ -1,0 +1,43 @@
+
+  var fixed_num = 0
+
+<% if defined? fixed_num%>
+  <%= "fixed_num = #{fixed_num}"  %>
+<% end %>
+  
+  chart = new Highcharts.Chart({
+    chart: {
+      type: 'line',
+      renderTo: '<%=  container %>'
+    },
+    title: {
+      text: '<%= title %>'
+    },
+    xAxis: {
+      categories: <%= categories %>
+    },
+    yAxis: {
+      title: {
+        text: '<%= side_title %>'
+      }
+    },
+    tooltip: {
+      enabled: true,
+      formatter: function() {
+        return '<b>'+ this.series.name +'</b><br/>'+
+          this.x +': '+ this.y.toFixed(fixed_num) +'%';
+      }
+    },
+    plotOptions: {
+      line: {
+        dataLabels: {
+          enabled: true,
+          formatter: function() {
+            return '<b>'+  this.y.toFixed(fixed_num) +'%</b>';
+          }
+        },
+        enableMouseTracking: true
+      }
+    },
+    series: [<%= data %>]
+});

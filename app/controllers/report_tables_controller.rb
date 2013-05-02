@@ -485,11 +485,13 @@ class ReportTablesController < ApplicationController
       AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id ORDER BY year DESC").collect(&:year)
     if is_param_month_range_valid?
       date_filter = "EXTRACT(month FROM tt.date) >= #{params[:month_from]} AND EXTRACT(month FROM tt.date) <= #{params[:month_until]} AND EXTRACT(year FROM tt.date) = #{params[:year]}"
-      total = Trainer.find_by_sql("SELECT sum(cp.total_approved) as total FROM trainers t, profiles p,
+      total_payment = Trainer.find_by_sql("SELECT sum(cp.total_approved) as total FROM trainers t, profiles p,
       course_implementations_trainers cit, course_implementations ci, timetables tt, claim_payments cp
       WHERE t.profile_id = p.id AND t.is_internal = 0 AND cit.trainer_id = t.id
       AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id AND cp.timetable_id = tt.id
-      group by p.course_department_id, t.is_internal")[0].total.to_f
+      group by p.course_department_id, t.is_internal")[0]
+
+      total = total_payment.present? ? total_payment.total.to_f : 0
       sql = []
 
       sql[0] = "SELECT 'Pengurusan dan Perundangan Tanah' AS name, (
@@ -566,6 +568,99 @@ class ReportTablesController < ApplicationController
       sql.each do |i|
         @reports += Trainer.find_by_sql(i)
       end
+    end
+  end
+
+  def trainer_average_score
+    @planning_years = Trainer.find_by_sql("SELECT distinct extract(year from tt.date)as year FROM trainers t, profiles p,
+      course_implementations_trainers cit, course_implementations ci, timetables tt
+      WHERE t.profile_id = p.id  AND cit.trainer_id = t.id
+      AND ci.id = cit.course_implementation_id AND ci.id = tt.course_implementation_id ORDER BY year DESC").collect(&:year)
+    @malay_months = ["Jan","Feb","Mac","Apr","Mei","Jun","Jul","Ogos","Sept","Okt","Nov","Dis"]
+    if is_param_month_range_valid?
+      @month_list = ((params[:month_from].to_i)..(params[:month_until].to_i)).to_a
+      sqls = []
+      sqls[0] = "SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci
+        WHERE t.profile_id = p.id AND p.course_department_id = 1 AND t.is_internal = 1
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id"
+
+      sqls[1] = "SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci
+        WHERE t.profile_id = p.id AND p.course_department_id = 2 AND t.is_internal = 1
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id"
+
+      sqls[2] = "SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci
+        WHERE t.profile_id = p.id AND p.course_department_id = 3 AND t.is_internal = 1
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id"
+
+      sqls[3] = "SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci
+        WHERE t.profile_id = p.id AND p.course_department_id = 9 AND t.is_internal = 1
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id"
+
+      sqls[4] = "SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci
+        WHERE t.profile_id = p.id AND (t.is_internal = 0 OR t.is_internal IS NULL)
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id"
+
+      sqls[5] = "SELECT t.id trainer_id
+        FROM trainers t, profiles p, course_implementations_trainers cit, course_implementations ci
+        WHERE t.profile_id = p.id AND t.is_internal = 1 AND course_department_id is NULL
+        AND cit.trainer_id = t.id AND ci.id = cit.course_implementation_id"
+
+      departments = CourseDepartment.order("id ASC").all.collect(&:description) + ["Luaran", "Dalaman tanpa bahagian"]
+
+
+      @reports = []
+      sqls.each_with_index do |sql, sql_index|
+        col = {}
+        @month_list.each_with_index do |month, index|
+          date_filter = " AND EXTRACT(month FROM ci.date_start) = #{month} AND EXTRACT(year FROM ci.date_start) = #{params[:year]} group by t.id"
+          #sql += date_filter
+          trainers = Trainer.find_by_sql(sql+date_filter).collect(&:trainer_id)
+          if trainers.any?
+            sum_trainer_average = 0
+            sum_trainers = 0
+            trainers.each do |trainer_id|
+              trainer = Trainer.find(trainer_id)
+              if trainer.topics.any?
+#                trainer_counted = false
+#                trainer.topics.each do |topic|
+#                  if topic.evaluation_trainer_rankings.any?
+#                    trainer_counted = true
+#                    break
+#                  end
+#                end
+                #if trainer_counted
+                sum_trainers += 1
+                sum_topic_average = 0
+                sum_topics = 0
+                trainer.topics.each do |topic|
+                  if topic.evaluation_trainer_rankings.any?
+                    sum_topics += 1
+                    sum_skor = 0
+                    for etr in topic.evaluation_trainer_rankings
+                      curr_skor = etr.evaluation_question.sum_trainer_ranking
+                      sum_skor = sum_skor + curr_skor
+                    end
+                    average_by_topic = sum_skor.to_f/topic.evaluation_trainer_rankings.size
+                    sum_topic_average += average_by_topic
+                  end
+                end
+                average_by_trainer = sum_topic_average.to_f/sum_topics
+                sum_trainer_average += average_by_trainer
+                #end
+              end
+            end
+            col["#{@malay_months[month-1]}"] = sum_trainer_average.to_f/sum_trainers
+          end
+        end
+        col["name"] = departments[sql_index]
+        @reports << col
+      end
+
     end
   end
   

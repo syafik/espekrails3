@@ -1,0 +1,95 @@
+<form action="trainer_average_score" name="filter">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+    <tr>
+      <td width="86%" height="21" align="center" bgcolor="#999999"><b><font color="#FFFFFF">MAKLUMAT SKOR PURATA PENCERAMAH </font></b></td>
+    </tr>
+  </table>
+  <br/>
+  <!-- TABLE HEADER -->
+  <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <%= render :partial => "shared/month_range_selection", :locals => {:planning_months => @planning_months, :planning_years => @planning_years} %>
+    <%= render :partial => "shared/chart_table_toggle", :locals => {:reports => @reports} %>
+  </table>
+</form>
+<br/>
+<table class ="table_report" width="95%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#777777">
+  <tr bgcolor="#999999" id="pisang" onclick="">
+    <td width="3%" align="center"><font color="#FFFFFF"><strong>No</strong></font></td>
+    <td width="35%" align="left"><font color="#FFFFFF">&nbsp;<strong>Bahagian</strong></font></td>
+    <%if @reports.any? %>
+      <%  categories = [] %>
+      <% @month_list.each do |month| %>
+        <td align="center"><font color="#FFFFFF">&nbsp;<strong><%= @malay_months[month-1] %></strong></font></td>
+        <%  categories << @malay_months[month-1] %>
+      <% end %>
+    <% end %>
+  </tr>
+  <%if @reports.any? %>
+    <% @reports.each_with_index do |report, index| %>
+      <%  bgclr = cycle('#FFFFFF', '#CCCCFF') %>
+      <tr bgcolor="<%=bgclr%>" onmouseover="this.style.background='#FFFFCC'" onmouseout="this.style.background='<%=bgclr%>'">
+        <td align="center" id="name<%=h report[:id] %>"><%= (index+1).to_s %>.</td>
+        <td align="left"><%=report["name"].upcase%></td>
+        <% @month_list.each do |month| %>
+          <td align="center"><%=number_with_precision(report["#{@malay_months[month-1]}"], :delimiter => ',', :precision => 1) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <br/>
+
+  <div id="container" class="chart" style="display:none; padding-left:33px; width:95%; height:<%= 400 %>px;">
+
+  </div>
+  <%= javascript_include_tag "highcharts" %>
+
+  <script>
+    function toggle_chart(){
+      var showed = $('input[name=filter_show]:checked').val();
+      if (showed == "chart"){
+        $(".chart").show();
+        $(".table_report").hide();
+        loadChart();
+      }else{
+        $(".chart").hide();
+        $(".table_report").show();
+      }
+    };
+
+    function loadChart(){
+
+  <%
+  data_for_chart_dalam = []
+  @reports.each_with_index do |report, index_1|
+    if report["name"] != "Luaran"
+      if index_1 == 0
+        categories.each do |month|
+          data_for_chart_dalam << report["#{month}"].to_f
+        end
+      else
+        categories.each_with_index do |month, index_2|
+          if report["#{month}"].to_i != 0 && data_for_chart_dalam[index_2] == 0
+            data_for_chart_dalam[index_2] += report["#{month}"].to_f
+          elsif report["#{month}"].to_i != 0 && data_for_chart_dalam[index_2] != 0
+            data_for_chart_dalam[index_2] = (data_for_chart_dalam[index_2] + report["#{month}"].to_f) / 2
+          end
+        end
+      end
+    end
+  end
+
+  data_for_chart_luar = []
+  categories.each do |month|
+    data_for_chart_luar << @reports[4]["#{month}"].to_f
+  end
+
+  categories = "[#{categories.map{|c| "'#{c}'"}.join(",")}]"
+  data = "{name:'Dalam', data: [#{data_for_chart_dalam.join(",")}]},{name:'Luar', data: [#{data_for_chart_luar.join(",")}]}"
+%>
+
+  <%= render :partial => 'shared/chart_line',
+    :locals => {:data => data.html_safe, :title => 'PURATA SKOR MARKAH PENCERAMAH MENGIKUT BULAN', :side_title => 'Purata Skor (%)', :categories=> categories.html_safe, :container => 'container', :fixed_num => 1 }
+%>
+  };
+  </script>
+<% end %>
