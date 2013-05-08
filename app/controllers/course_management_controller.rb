@@ -920,7 +920,7 @@ class CourseManagementController < ApplicationController
 
   def evaluation
     @course_implementation = CourseImplementation.find_by_code(params[:course_implementation_code]) if params[:course_implementation_code]
-    @course_implementation = CourseImplementation.find( params[:id] || params[:course_management_id]) if params[:id] || (params[:course_management_id] && params[:course_management_id] != "")
+    @course_implementation = CourseImplementation.find( (params[:id] && !params[:id].blank?) || params[:course_management_id]) if (params[:id] && !params[:id].blank?) || (params[:course_management_id] && params[:course_management_id] != "")
 
     if @course_implementation
 logger.info "--------------------------------"
