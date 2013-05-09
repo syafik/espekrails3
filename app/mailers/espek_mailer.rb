@@ -253,7 +253,8 @@ class EspekMailer < ActionMailer::Base
     @course_code = @ci.code
     @date_start = @ci.date_start.to_formatted_s(:my_format_4)
     @date_end   = @ci.date_end.to_formatted_s(:my_format_4)
-    @tarikh_pengesahan     = @ca.date_approval.to_formatted_s(:my_format_4)
+    logger.info @ca.date_approval
+    @tarikh_pengesahan     = @ca.date_approval.to_formatted_s(:my_format_4) rescue nil
 
     mail(
       :to => @recipients ,
