@@ -75,7 +75,8 @@ var menuLayers = {
     document.getElementById('popmenu').innerHTML = "<ul>" + 
                                                "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;View Detail</a>" +
 					       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Edit</a>" + 
-					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
+					       "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
+                                               //"<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
 					       "<hr size=1>" +
 					       "<li><a href=\""  + controller + "/quit_course/" + objid + "\">&nbsp;&nbsp;Quit Course</a>" +
 					       "<li><a href=\""  + controller + "/complete_course/" + objid + "\">&nbsp;&nbsp;Complete Course</a>" +

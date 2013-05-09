@@ -103,8 +103,8 @@
 
       document.getElementById('popmenu').innerHTML = "<ul><li><a href=\"" + controller + "/show/" + objid +
         "\">&nbsp;&nbsp;View Detail</a><li><a href=\""  + controller + "/edit/" + objid +
-        "\">&nbsp;&nbsp;Edit</a><li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a></ul>"
-      //document.getElementById('jongos').innerHTML = "<a>ssssssss</a>"
+        "\">&nbsp;&nbsp;Edit</a>"+//<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a></ul>"
+ "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>"     //document.getElementById('jongos').innerHTML = "<a>ssssssss</a>"
       this.position(mnu,e);
     },
   

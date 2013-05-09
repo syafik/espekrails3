@@ -30,7 +30,8 @@ function rewritePopupContent(controller, objid, objname) {
     document.getElementById('popmenu').innerHTML = "<ul>" +
                             "<li><a href=\""  + "/trainer" + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
 					        "<li><a href=\""  + "/trainer" + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
-					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+					        //"<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+                                                "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
 					        "<hr size=1>" +
 							"<li><a href=\""  + "/trainer" + "/" + objid + "/offer\">&nbsp;&nbsp;Jana Surat Lantikan</a>" +
 					        "<li><a href=\""  + "/trainer" + "/" + objid + "/eval\">&nbsp;&nbsp;Papar Rekod Penilaian</a>" +

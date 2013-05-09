@@ -28,8 +28,9 @@
     $('#popmenu').html("<ul>" +
       "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
       "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
-      "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
-      "<hr size=1>" +
+      //"<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
+      "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
+        "<hr size=1>" +
       "<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
       "<hr size=1>" +
       "<li><a href=\""  + controller + "/edit_surat_tawaran_select_peserta/" + "<%=@course_implementation.id if @course_implementation%>" + "\">&nbsp;&nbsp;Jana Surat Tawaran</a>" +

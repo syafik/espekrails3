@@ -1,43 +1,45 @@
 <script>
-function confirmAndDelete(url, objname) {
-	if (confirm("Adakah anda pasti?")) {
-		location = url
-	}
+  function confirmAndDelete(url, objname) {
+    if (confirm("Adakah anda pasti?")) {
+      location = url
+    }
 	
-}
+  }
 
-function rewritePopupContent(controller, objid, objname) {
+  function rewritePopupContent(controller, objid, objname) {
     $('#popmenu').css({"width": 150});
     $('#popmenu').html("<ul>" +
-                            "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
-					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
-					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
-					        "<hr size=1>" +
-					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Penyelenggaraan</a>" + 
-					        "</ul>")
+      "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+      "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
+//      "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+      "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
+      "<hr size=1>" +
+      "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Penyelenggaraan</a>" +
+      "</ul>")
      
-}
+  }
 
-function rewritePopupContentNoRestraint(controller, objid, objname) {
+  function rewritePopupContentNoRestraint(controller, objid, objname) {
     $('#popmenu').css({"width": 150});
     $('#popmenu').html("<ul>" +
-                            "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
-					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" + 
-					        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
-					        "<hr size=1>" +
-					        "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Penyelenggaraan</a>" + 
-					        "</ul>")
+      "<li><a href=\""  + controller + "/show/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
+      "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Kemaskini</a>" +
+      //"<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+      "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
+      "<hr size=1>" +
+      "<li><a href=\""  + controller + "/edit/" + objid + "\">&nbsp;&nbsp;Penyelenggaraan</a>" +
+      "</ul>")
      
-}
+  }
 </script>
 
 <!----------------------------------------------------------------------------------------->
 <form action="/hostels/showchkin_trainer/<%=@trainer.id%>" method="get">
- <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
+  <table border="0" cellspacing="0" cellpadding="0" width="95%" align="center">
     <tr> 
       <td width="86%" height="21" align="center" bgcolor="#999999"><strong><font color="#FFFFFF">CHECKED IN (PENCERAMAH) </font></strong></td>
     </tr>
- </table>
+  </table>
   <br />
   <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1">
     <tr>
@@ -78,103 +80,103 @@ function rewritePopupContentNoRestraint(controller, objid, objname) {
     </tr>
   </table>
   <br>
-  
+
   <table width="70%" align="center">
     <tr>
       <td style="" align="CENTER"><fieldset style=" width:60%;">
-        <legend>Maklumat:</legend>
-        <table width="" align="center">
-          <!--tr>
-            <td align="RIGHT"><strong>No Telefon:</strong></td>
-            <td><input name="no_tel" type="text" id="no_tel"></td>
-          </tr-->
-<%
-@myrooms = Hostel.find_by_sql("select * from hostel_penghuni where profile_id=#{@profile.id}")
-@hp = @myrooms.first
-@myroom = Hostel.find(@myrooms.first.hostel_id)
-%>
-          <tr>
-            <td align="RIGHT"><strong>No Kenderaan:</strong></td>
-            <td><%=@hp.no_kenderaan%></td>
-          </tr>
-          <tr>
-            <td align="RIGHT"><strong>No Kunci:</strong></td>
-            <td><%=@hp.no_kunci%></td>
-          </tr>
-        </table>
-      </fieldset></td>
+          <legend>Maklumat:</legend>
+          <table width="" align="center">
+            <!--tr>
+              <td align="RIGHT"><strong>No Telefon:</strong></td>
+              <td><input name="no_tel" type="text" id="no_tel"></td>
+            </tr-->
+            <%
+            @myrooms = Hostel.find_by_sql("select * from hostel_penghuni where profile_id=#{@profile.id}")
+            @hp = @myrooms.first
+            @myroom = Hostel.find(@myrooms.first.hostel_id)
+          %>
+            <tr>
+              <td align="RIGHT"><strong>No Kenderaan:</strong></td>
+              <td><%=@hp.no_kenderaan%></td>
+            </tr>
+            <tr>
+              <td align="RIGHT"><strong>No Kunci:</strong></td>
+              <td><%=@hp.no_kunci%></td>
+            </tr>
+          </table>
+        </fieldset></td>
     </tr>
   </table>
   <table width="70%" align="center">
-   <tr>
-    <td style="color: blue" align="CENTER">Peserta didaftarkan di bilik: 
-	<%=@myroom.block.description%>-
-	<%=@myroom.level%>-
-	<%=@myroom.room%>
-	<br />
+    <tr>
+      <td style="color: blue" align="CENTER">Peserta didaftarkan di bilik:
+        <%=@myroom.block.description%>-
+        <%=@myroom.level%>-
+        <%=@myroom.room%>
+        <br />
 	Sila klik pada nombor bilik untuk menukar bilik. </td>
-   </tr>
+    </tr>
   </table>
-<hr size="1" width="70%">  
-  
+  <hr size="1" width="70%">
+
   <br />
   <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
+    <tr>
       <td align="center"> <a href="new_one"></a>Blok : 
-          <select name="block_id" onchange="document.forms[0].submit()">
-	        <option value="">Sila Pilih</option>
-            <% @hostel_blocks.each do |b| %>
+        <select name="block_id" onchange="document.forms[0].submit()">
+          <option value="">Sila Pilih</option>
+          <% @hostel_blocks.each do |b| %>
             <option value="<%= b.id %>"
-         	<%= ' selected' if b.id == params[:block_id].to_i %>> <%= b.description.upcase %> </option>
-            <% end %>
-          </select>
+                    <%= ' selected' if b.id == params[:block_id].to_i %>> <%= b.description.upcase %> </option>
+                  <% end %>
+        </select>
       </td>    
-  </tr>
+    </tr>
   </table>
 
-<% if @hostel_block.max_room_by_level < 30%>  
-<%= render :partial => 'list_chkin'%>
-<% else %>
-<%= render :partial => 'list_above30_chkin'%>
-<% end %>
-  
+  <% if @hostel_block.max_room_by_level < 30%>
+    <%= render :partial => 'list_chkin'%>
+  <% else %>
+    <%= render :partial => 'list_above30_chkin'%>
+  <% end %>
+
   <br>
   <center>
-  <div id="room_properties" style="width: 95%;background:#FFFFFF; font-weight:bold">
-&nbsp;  </div>
+    <div id="room_properties" style="width: 95%;background:#FFFFFF; font-weight:bold">
+      &nbsp;  </div>
   </center>
 
-<div id="bapa_kertas" align="center" style="width: inherit; visibility:hidden">
-<IFRAME id="kertas" SRC="/hostels/blank" TITLE="The Famous Recipe" width="95%" frameborder="0">
-<!-- Alternate content for non-supporting browsers -->
-<H2>The Famous Recipe</H2>
-<H3>Ingredients</H3>
-...
-</IFRAME>
-</div>
-<script>
-function checkThatGuyIn(lvl,room,room_gdr,profile_gdr) {
-	url = "/hostels/change_room_trainer/<%=@trainer.id%>?profile_id=<%=@trainer.profile.id%>&block_id=<%=@hostel_block.id%>" + 
-	      "&level=" + lvl +  
-	      "&room="  + room  
+  <div id="bapa_kertas" align="center" style="width: inherit; visibility:hidden">
+    <IFRAME id="kertas" SRC="/hostels/blank" TITLE="The Famous Recipe" width="95%" frameborder="0">
+      <!-- Alternate content for non-supporting browsers -->
+      <H2>The Famous Recipe</H2>
+      <H3>Ingredients</H3>
+      ...
+    </IFRAME>
+  </div>
+  <script>
+    function checkThatGuyIn(lvl,room,room_gdr,profile_gdr) {
+      url = "/hostels/change_room_trainer/<%=@trainer.id%>?profile_id=<%=@trainer.profile.id%>&block_id=<%=@hostel_block.id%>" +
+        "&level=" + lvl +
+        "&room="  + room
 		  
-	if (room_gdr != profile_gdr) {
-		if (confirm("Peserta tidak boleh tukar bilik di blok ini. Teruskan?")) {
-			location.href = url
-		}
-	}
-	else {
-		if (confirm("Adakah anda pasti untuk membuat penukaran bilik?")) {
-			location.href = url
-		}
-	}
-}
+      if (room_gdr != profile_gdr) {
+        if (confirm("Peserta tidak boleh tukar bilik di blok ini. Teruskan?")) {
+          location.href = url
+        }
+      }
+      else {
+        if (confirm("Adakah anda pasti untuk membuat penukaran bilik?")) {
+          location.href = url
+        }
+      }
+    }
 
-function hide() {
-	$('room_properties').style.visibility = "hidden"
-	$('bapa_kertas').style.visibility = "hidden"
-}
-</script>
+    function hide() {
+      $('room_properties').style.visibility = "hidden"
+      $('bapa_kertas').style.visibility = "hidden"
+    }
+  </script>
 </form>
 
 <div id="popmenu" class="menu"></div>

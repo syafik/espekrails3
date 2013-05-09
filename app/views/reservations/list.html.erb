@@ -26,7 +26,8 @@ var menuLayers = {
 	document.getElementById('popmenu').style.width = "250";
     document.getElementById('popmenu').innerHTML = "<ul>" + 
 					       "<li><a href=\""  + controller + "/" + objid + "/edit_sah\">&nbsp;&nbsp;Pengesahan Tempahan</a>" +
-					       "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Tempahan</a>" +
+					       "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
+                                               //"<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Tempahan</a>" +
 					       "<li><a href=\""  + controller + "/" + objid + "/detail\">&nbsp;&nbsp;Senarai Terperinci Tempahan</a>" +
                            //"<hr size=1>" +
 					       //"<li><a href=\""  + controller + "/edit_trainer_book_sah/" + objid + "\">&nbsp;&nbsp;Pengesahan Tempahan (Penceramah)</a>" + 

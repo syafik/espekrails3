@@ -16,7 +16,8 @@
       document.getElementById('popmenu').innerHTML = "<ul>" +
         "<li><a href=\""  + controller + "/new\">&nbsp;&nbsp;New</a>" +
         "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Edit</a>" +
-        "<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
+        //"<li><a href=\"javascript: confirmAndGo('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Delete</a>" +
+        "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
         "</ul>"
       rewritePopupContent(controller, objid, objname);
       this.position(mnu,e);

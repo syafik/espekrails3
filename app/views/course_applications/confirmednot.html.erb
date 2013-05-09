@@ -30,8 +30,9 @@
     $('#popmenu').html("<ul>" +
       "<li><a href=\""  + controller + "/" + objid + "\">&nbsp;&nbsp;Lihat</a>" +
       "<li><a href=\""  + controller + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini</a>" +
-      "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
-      "<hr size=1>" +
+      //"<li><a href=\"javascript: confirmAndDelete('"  + controller + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+      "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
+        "<hr size=1>" +
       "<li><a href=\"javascript: sahHadirSelected(document.list_form)\">&nbsp;&nbsp;Sah Hadir</a>" +
       "<hr size=1>" +
       "<li><a href=\""  + controller + "/cetak_pemohon/" + objid + "\">&nbsp;&nbsp;Cetak</a>" +

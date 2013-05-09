@@ -29,7 +29,8 @@
         "<hr size=1>" +
         "<li><a href=\""  + controller + "/" + objid + "/cetak_pemohon\">&nbsp;&nbsp;Cetak</a>" +
         "<li><a href=\""  + controller + "/cetak_pemohon_semua?id=" + "<%=@course_implementation.id if @course_implementation%>" + "?type=all\">&nbsp;&nbsp;Cetak Semua</a>" +
-        "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+       // "<li><a href=\"javascript: confirmAndDelete('"  + controller + "/" + objid + "/destroy' , '" + objname + "')\">&nbsp;&nbsp;Padam</a>" +
+        "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
         //"<li><a href=\"javascript: sahHadirSelected(document.accepted_form)\">&nbsp;&nbsp;Batal Kehadiran</a>" +
       //"<li><a href=\"javascript: rejectSelected(document.accepted_form)\">&nbsp;&nbsp;Ditolak</a>" +
       //"<hr size=1>" +

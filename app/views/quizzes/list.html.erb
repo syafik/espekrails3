@@ -10,7 +10,8 @@
     $('#popmenu').css({"width" :230});
     $('#popmenu').html("<ul>" +
       "<li><a href=\""  + "/quizzes" + "/" + objid + "/edit\">&nbsp;&nbsp;Kemaskini Ujian</a>" +
-      "<li><a href=\"javascript: confirmAndGo('"  + "/quizzes" + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Ujian</a>" +
+      "<li><a rel=\"nofollow\" data-method=\"delete\" data-confirm = \"Adakah anda pasti untuk padam " + objname + "?\" href= \""+ controller + "/" + objid+"\" >&nbsp;&nbsp;Padam</a>" +
+      //"<li><a href=\"javascript: confirmAndGo('"  + "/quizzes" + "/destroy/" + objid + "' , '" + objname + "')\">&nbsp;&nbsp;Padam Ujian</a>" +
       "<hr size=1>" +
       //"<li><a href=\""  + "/quiz_questions" + "/new/" + objid + "\">&nbsp;&nbsp;Tambah Soalan</a>" +
     "<li><a href=\""  + "/quiz_questions" + "/" + objid + "/list_soalan\">&nbsp;&nbsp;Senarai Soalan</a>" +
