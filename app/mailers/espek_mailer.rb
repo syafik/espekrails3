@@ -258,6 +258,7 @@ class EspekMailer < ActionMailer::Base
 
     mail(
       :to => @recipients ,
+      :from => @from,
       :subject => @subject,
       :content_type => "text/plain; charset=#{LoginEngine.config(:mail_charset)}; format=flowed"
     )
