@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326151829) do
+ActiveRecord::Schema.define(:version => 20130509071342) do
 
   create_table "acct_statuses", :force => true do |t|
     t.string "description", :limit => 50
@@ -293,8 +293,7 @@ ActiveRecord::Schema.define(:version => 20130326151829) do
     t.integer "version"
   end
 
-  create_table "evaluation_answers", :id => false, :force => true do |t|
-    t.integer "id",                                                      :null => false
+  create_table "evaluation_answers", :force => true do |t|
     t.integer "profile_id"
     t.integer "course_application_id"
     t.integer "evaluation_question_id"
@@ -310,8 +309,7 @@ ActiveRecord::Schema.define(:version => 20130326151829) do
   add_index "evaluation_answers", ["course_application_id", "evaluation_question_id"], :name => "evaluation_answers_course_application_id_key", :unique => true
   add_index "evaluation_answers", ["profile_id", "evaluation_question_id"], :name => "evaluation_answers_profile_id_key", :unique => true
 
-  create_table "evaluation_comments", :id => false, :force => true do |t|
-    t.integer "id",                                                      :null => false
+  create_table "evaluation_comments", :force => true do |t|
     t.integer "profile_id"
     t.integer "course_application_id"
     t.integer "course_implementation_id"
@@ -769,48 +767,52 @@ ActiveRecord::Schema.define(:version => 20130326151829) do
   end
 
   create_table "profiles", :force => true do |t|
-    t.string  "name",                     :limit => 80
-    t.string  "ic_number",                :limit => 12
-    t.string  "old_ic_number",            :limit => 8
-    t.string  "police_ic_number",         :limit => 8
-    t.string  "army_ic_number",           :limit => 8
-    t.string  "birth_certificate_number", :limit => 15
-    t.date    "date_of_birth"
-    t.string  "place_of_birth",           :limit => 30
-    t.string  "passport_number",          :limit => 10
-    t.integer "gender_id"
-    t.integer "race_id"
-    t.integer "religion_id"
-    t.integer "nationality_status_id"
-    t.integer "nationality_id"
-    t.integer "marital_status_id"
-    t.string  "road_place",               :limit => 30
-    t.string  "postcode_area",            :limit => 30
-    t.string  "postcode",                 :limit => 5
-    t.string  "city",                     :limit => 30
-    t.integer "state_id"
-    t.integer "country_id"
-    t.string  "phone",                    :limit => 12
-    t.string  "mobile",                   :limit => 12
-    t.string  "fax",                      :limit => 12
-    t.string  "email",                    :limit => 60
-    t.integer "title_id"
-    t.integer "place_id"
-    t.string  "designation",              :limit => 50
-    t.string  "address1",                 :limit => 50
-    t.string  "address2",                 :limit => 50
-    t.string  "address3",                 :limit => 50
-    t.integer "handicap_id",                            :default => 1
-    t.integer "is_vegetarian",                          :default => 0
-    t.string  "office_phone",             :limit => 12
-    t.string  "codename",                 :limit => 10
-    t.string  "salary_number",            :limit => 15
-    t.string  "bank_account_number",      :limit => 15
-    t.string  "bank_account_name",        :limit => 50
-    t.integer "course_department_id"
-    t.string  "hod",                      :limit => 80
-    t.string  "opis",                     :limit => 60
-    t.string  "image",                    :limit => 45
+    t.string   "name",                     :limit => 80
+    t.string   "ic_number",                :limit => 12
+    t.string   "old_ic_number",            :limit => 8
+    t.string   "police_ic_number",         :limit => 8
+    t.string   "army_ic_number",           :limit => 8
+    t.string   "birth_certificate_number", :limit => 15
+    t.date     "date_of_birth"
+    t.string   "place_of_birth",           :limit => 30
+    t.string   "passport_number",          :limit => 10
+    t.integer  "gender_id"
+    t.integer  "race_id"
+    t.integer  "religion_id"
+    t.integer  "nationality_status_id"
+    t.integer  "nationality_id"
+    t.integer  "marital_status_id"
+    t.string   "road_place",               :limit => 30
+    t.string   "postcode_area",            :limit => 30
+    t.string   "postcode",                 :limit => 5
+    t.string   "city",                     :limit => 30
+    t.integer  "state_id"
+    t.integer  "country_id"
+    t.string   "phone",                    :limit => 12
+    t.string   "mobile",                   :limit => 12
+    t.string   "fax",                      :limit => 12
+    t.string   "email",                    :limit => 60
+    t.integer  "title_id"
+    t.integer  "place_id"
+    t.string   "designation",              :limit => 50
+    t.string   "address1",                 :limit => 50
+    t.string   "address2",                 :limit => 50
+    t.string   "address3",                 :limit => 50
+    t.integer  "handicap_id",                            :default => 1
+    t.integer  "is_vegetarian",                          :default => 0
+    t.string   "office_phone",             :limit => 12
+    t.string   "codename",                 :limit => 10
+    t.string   "salary_number",            :limit => 15
+    t.string   "bank_account_number",      :limit => 15
+    t.string   "bank_account_name",        :limit => 50
+    t.integer  "course_department_id"
+    t.string   "hod",                      :limit => 80
+    t.string   "opis",                     :limit => 60
+    t.string   "image",                    :limit => 45
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   add_index "profiles", ["codename"], :name => "profiles_codename_key", :unique => true
@@ -1246,6 +1248,7 @@ ActiveRecord::Schema.define(:version => 20130326151829) do
   create_table "timetables_trainers", :id => false, :force => true do |t|
     t.integer "trainer_id",   :null => false
     t.integer "timetable_id", :null => false
+    t.integer "category"
   end
 
   create_table "titles", :force => true do |t|

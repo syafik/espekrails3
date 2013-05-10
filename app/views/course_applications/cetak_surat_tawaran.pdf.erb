@@ -1,3 +1,6 @@
+<div class="first-header" >
+  <%= wicked_pdf_image_tag 'header.jpg' %>
+</div>
 <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
 
 <%
@@ -31,7 +34,7 @@
   <tr>
     <td width="100%" align="left" class="pdf_15">
       <br/>
-      <strong><u>SEGERA DENGAN FAKS 06-7659826</u></strong><br/><br/>
+      <strong><u>SEGERA DENGAN FAKS</u></strong><br/><br/>
       <strong><u>SEPERTI SENARAI EDARAN</u></strong>
 
       <br/><br/>
@@ -39,7 +42,6 @@
       <br/>
       <p class="pdf_14">
       <%
-
          per_lines = @perkara.split("\n")
          for per_line in per_lines
       %>
@@ -49,9 +51,8 @@
       %>
       </p>
       <%= "#{@perenggan}".html_safe %>
-      <br/><br/><br/>
-      <%= "<br/><br/>Sekian, terima kasih.<br/><br/>".html_safe %>
-      <%= "<b>`BERKHIDMAT UNTUK NEGARA`</b><br/><br/>".html_safe %>
+      <%= "<br/>Sekian, terima kasih.<br/>".html_safe %>
+      <%= "<b>`BERKHIDMAT UNTUK NEGARA`</b><br/>".html_safe %>
       <%= "<b>`MENDAHULUI CABARAN`</b><br/>".html_safe %>
       <%= "<b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>".html_safe %>
       <%= "Saya yang menurut perintah,<br/><br/>".html_safe %>
@@ -63,7 +64,7 @@
       <%
          else
       %>
-          <br/><br/><br/><br/>
+          <br/><br/>
       <%
          end
       %>
@@ -80,14 +81,13 @@
 
 <div style="display:block; clear:both; page-break-after:always;"></div>
 
-<table width="100%" class="pdf_15">
+<table width="100%" class="pdf_15 marginT20">
   <tr>
     <td>
       <strong><u>SEPERTI SENARAI EDARAN</u></strong>
       <br/>
       <br/>
-      <%
-         for student in @students
+      <% for student in @students
            font_size = 12
 
            i = 1
@@ -149,6 +149,7 @@
            office_name = "#{student.profile.opis}"
            p_alamat = "#{p_addr}."
            alamat = "#{company_addr}."
+           no_fax = student.profile.fax
 
            alamat_instun = "<br/>Pengarah," +
                    "<br/>Institut Tanah dan Ukur Negara(INSTUN)" +
@@ -171,11 +172,12 @@
       %>
           <%= "<b>#{nof { student.profile.name }}</b><br/>".html_safe %>
           <%= "#{job_profile}".html_safe %>
-          <%= "<br/><strong>Melalui dan Salinan:</strong>".html_safe %>
           <br/>
           <%= "#{ketua}" %>
           <%= "#{office_name}".html_safe %>
           <%= "#{p_alamat}".html_safe %>
+          <br />
+          <%= "NO. FAKS : #{no_fax}".html_safe %>
           <br/>
           <br/>
       <%

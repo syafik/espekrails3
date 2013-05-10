@@ -1243,10 +1243,10 @@ class CourseApplicationsController < ApplicationController
     @tarikh = params[:dateline]
     @perkara = params[:surat_tawaran_content][:perkara]
     @perenggan = String.new(params[:surat_tawaran_content][:perenggan])
-    @perenggan ["_{KURSUS}_"] = "#{params[:course_implementation_code]} - #{params[:nama_kursus]}"
-    @perenggan ["_{CHECK_IN}_"] = "#{params[:check_in]}, #{params[:check_in_hour]}.#{params[:check_in_minute]} hingga 6.30 petang"
-    @perenggan ["_{CHECK_OUT}_"] = "#{params[:check_out]}, Sebelum jam 5.00 petang"
-    @perenggan ["_{TARIKH_SEBELUM}_"] = params[:dateline]
+    @perenggan["_{KURSUS}_"] = "#{params[:course_implementation_code]} - #{params[:nama_kursus]}"
+    @perenggan["_{CHECK_IN}_"] = "#{params[:check_in]}, #{params[:check_in_hour]}.#{params[:check_in_minute]} hingga 6.30 petang"
+    @perenggan["_{CHECK_OUT}_"] = "#{params[:check_out]}, Sebelum jam 5.00 petang"
+    @perenggan["_{TARIKH_SEBELUM}_"] = params[:dateline]
 
     @signature = Signature.find_by_filename(params[:signature_file])
 
@@ -1336,9 +1336,11 @@ class CourseApplicationsController < ApplicationController
     #
     #redirect_to("/surat/" + filename)
     @format_surat = params[:surat_tawaran_content][:format_surat].to_i
-    if @format_surat == 3 || @format_surat == 4
+    if @format_surat == 4
       margin = { :top => 40, :left => 15, :bottom => 10, :right => 20 }
       #pdf.margins_pt(0, 50, 36, 50)
+    elsif @format_surat == 3
+      margin = { :top => 0, :left => 15, :bottom => 10, :right => 20 }
     else
       margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
       #pdf.margins_pt(36, 50, 36, 50)
@@ -1354,7 +1356,7 @@ class CourseApplicationsController < ApplicationController
             :locals => { :format_surat => @format_surat }
         },
         :spacing => 5
-    } if @format_surat == 3 || @format_surat == 4
+    } if @format_surat == 4
 
     respond_to do |format|
       format.html
@@ -1369,7 +1371,7 @@ class CourseApplicationsController < ApplicationController
 
     course_implementation = CourseImplementation.find(params[:course_implementation_id])
     course = Course.find(course_implementation.course_id)
-    #rujukan = LatestOfferReference.find_by_course_department_id(course.course_department_id)	
+    #rujukan = LatestOfferReference.find_by_course_department_id(course.course_department_id)
     #if rujukan
     #	rujukan.update_attributes(:latest_ref_no => params[:rujukan_kami])
     #else
@@ -1546,54 +1548,54 @@ class CourseApplicationsController < ApplicationController
   def cetak_pemohon_semua
 
     if params[:type] == "all"
-      #render_text params[:type] + ">>" + params[:id] 
+      #render_text params[:type] + ">>" + params[:id]
       @course_applications = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]}")
       @students = @course_applications
     end
 
     if params[:type] == "unprocessed"
-      #render_text params[:type] + ">>" + params[:id] 
+      #render_text params[:type] + ">>" + params[:id]
       @course_applications = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]}")
       @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]} AND student_status_id=1", :order => "date_apply")
       #render_text @course_applications.size and return
     end
 
     if params[:type] == "accepted"
-      #render_text params[:type] + ">>" + params[:id] 
+      #render_text params[:type] + ">>" + params[:id]
       @course_applications = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]}")
       @students = @course_applications[0].course_implementation.selected_applicants
 
     end
 
     if params[:type] == "rejected"
-      #render_text params[:type] + ">>" + params[:id] 
+      #render_text params[:type] + ">>" + params[:id]
       @course_applications = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]}")
       @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]} AND student_status_id=3", :order => "date_apply")
     end
 
 
     if params[:type] == "confirmed"
-      #render_text params[:type] + ">>" + params[:id] 
+      #render_text params[:type] + ">>" + params[:id]
       @course_applications = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]}")
       @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]} AND (student_status_id=4 or student_status_id=5 or student_status_id=6 or student_status_id=8 or student_status_id=9)", :order => "date_apply")
     end
 
     if params[:type] == "confirmednot"
-      #render_text params[:type] + ">>" + params[:id] 
+      #render_text params[:type] + ">>" + params[:id]
       @course_applications = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]}")
       @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]} AND student_status_id=7", :order => "date_apply")
 
     end
 
     if params[:type] == "norespon"
-      #render_text params[:type] + ">>" + params[:id] 
+      #render_text params[:type] + ">>" + params[:id]
       @course_applications = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]}")
       @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]} AND student_status_id=2", :order => "date_apply")
 
     end
 
     if params[:type] == "hadir"
-      #render_text params[:type] + ">>" + params[:id] 
+      #render_text params[:type] + ">>" + params[:id]
       @course_applications = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]}")
       @students = CourseApplication.find(:all, :conditions => "course_implementation_id = #{params[:id]} AND (student_status_id=5 or student_status_id=8 or student_status_id=9)", :order => "date_apply")
 
@@ -2188,13 +2190,13 @@ class CourseApplicationsController < ApplicationController
     pdf.select_font("Helvetica")
     pdf.font_size=8
     pdf.margins_mm(20)
-    bi = "i" # font detail style bold or italic bold= b , italic = i 
+    bi = "i" # font detail style bold or italic bold= b , italic = i
 
     #if RUBY_PLATFORM == "i386-mswin32"
     #	espek_header_image = "public/images/espek-header.jpg"
     #else
     #	espek_header_image = "/aplikasi/www/instun/public/images/espek-header.jpg"
-    #end	
+    #end
 
     #pdf.image(espek_header_image)
     pdf.stroke_color Color::RGB::Red
@@ -2585,7 +2587,7 @@ class CourseApplicationsController < ApplicationController
           "\nPerak Darul Ridzuan."
 
       #salinan_kepada = "Pengarah\n"+
-      #                 "Institut Tanah dan Ukur Negara(INSTUN)\n\n" 
+      #                 "Institut Tanah dan Ukur Negara(INSTUN)\n\n"
 
       if params[:format_surat].to_i == 3
         pdf.y = @my_margin -120
@@ -2840,7 +2842,7 @@ class CourseApplicationsController < ApplicationController
           "\nPerak Darul Ridzuan."
 
       #salinan_kepada = "Pengarah\n"+
-      #                 "Institut Tanah dan Ukur Negara(INSTUN)\n\n" 
+      #                 "Institut Tanah dan Ukur Negara(INSTUN)\n\n"
 
 
       if params[:format_surat].to_i == 4
@@ -2949,7 +2951,7 @@ class CourseApplicationsController < ApplicationController
       pdf.y = pdf.absolute_bottom_margin - 20
       pdf.add_text(70, pdf.y, "Nota: Surat ini adalah cetakan komputer. Tiada tandatangan diperlukan.", @nota_font_size) if params[:is_cetakan_komputer].to_i==1
 
-      pdf.new_page #if i < @students.size  
+      pdf.new_page #if i < @students.size
       i = i+1
       pdf.y = @my_margin
 
@@ -3143,7 +3145,7 @@ class CourseApplicationsController < ApplicationController
     #pdf.add_text(pdf.left_margin, pdf.y, "\n14.", @font_size)
     #pdf.add_text(80, pdf.y, "LAIN-LAIN", @font_size)
     #pdf.add_text(210, pdf.y, ":", @font_size)
-    #pdf.add_text(230, pdf.y, @passport, @font_size)		
+    #pdf.add_text(230, pdf.y, @passport, @font_size)
     #pdf.text "\n\n", :font_size => @font_size, :justification => :left
     #pdf.add_text(230, pdf.y, @tuntutan1, @font_size)
     #pdf.text "\n", :font_size => @font_size, :justification => :left

@@ -78,3 +78,14 @@ thead {display: table-header-group;}
     background: transparent;
     padding-bottom: 20px;
 }
+
+.first-header {
+    background: transparent;
+    padding-bottom: 20px;
+    /*position: absolute;*/
+    margin-top: -20px;
+}
+
+.marginT20 {
+    margin-top: 80px;
+}
