@@ -32,6 +32,7 @@ GEM
     acts_as_tree_rails3 (0.1.0)
     afm (0.2.0)
     arel (3.0.2)
+    awesome_print (1.1.0)
     better_errors (0.8.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -192,6 +193,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_tree_rails3
+  awesome_print
   better_errors
   binding_of_caller
   calendar_helper

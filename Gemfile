@@ -57,6 +57,7 @@ end
 group :development, :test do
   gem 'debugger'
   gem 'mailcatcher'
+  gem 'awesome_print'
 end
 
 gem 'thin'

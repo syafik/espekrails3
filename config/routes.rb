@@ -40,7 +40,9 @@ InstunRails3::Application.routes.draw do
       get 'list'
     end
   end
-  match '/user_applications/akuan_sah_hadir' => 'user_applications#akuan_sah_hadir', :via => [:get]
+  match '/user_applications/akuan_sah_hadir'    => 'user_applications#akuan_sah_hadir', :via => [:get]
+  match '/user_applications/akuan_tidak_hadir'  => 'user_applications#akuan_tidak_hadir', :via => [:get]
+  match '/user_applications/tidak_hadir_wakil'  => 'user_applications#tidak_hadir_wakil', :via => [:get]
   match '/user_applications/exam_before/:id' => 'user_applications#exam_before', :via => [:get]
   match '/user_applications/exam_after/:id' => 'user_applications#exam_after', :via => [:get]
   match '/user_applications/tambah_update/:id' => 'user_applications#tambah_update', :via => [:put]
@@ -56,6 +58,7 @@ InstunRails3::Application.routes.draw do
       get 'history'
       get 'user_cancel/:id', :action => :user_cancel
       post 'sah_hadir_selected'
+      post 'create_wakil'
     end
     member do
       put 'update_user_cancel'
