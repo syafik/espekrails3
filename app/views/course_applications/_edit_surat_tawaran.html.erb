@@ -1,4 +1,4 @@
-<% 
+<%
 ###set default value
 
 
@@ -53,7 +53,7 @@ dateline_new = msian_date_very_formal(dateline)
 @perenggan1 = "Dengan hormatnya saya diarah merujuk kepada perkara di atas."
 @perenggan2 = "2.   Sukacita dimaklumkan bahawa pegawai seperti nama di atas telah dipilih untuk menghadiri kursus #{@schedule.course.name.upcase} (#{@schedule.code}) di Institut Tanah dan Ukur Negara (INSTUN), Kementerian Sumber Asli dan Alam Sekitar."
 @perenggan3 = "3.     Bersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu:
-3.1 Borang Pengesahan Kehadiran seperti di Lampiran A 
+3.1 Borang Pengesahan Kehadiran seperti di Lampiran A
 3.2 Maklumat kursus seperti di Lampiran B"
 @perenggan4 = "4.    Peserta dikehendaki membaca / meneliti dokumen-dokumen di para 3 di atas.Peserta juga akan dikenakan bayaran pendaftaran kursus sebanyak RM30.00 (tunai). Resit rasmi akan dikeluarkan bagi membolehkan para peserta membuat tuntutan semula daripada Jabatan/Agensi masing-masing."
 @perenggan5 = "5.    Kerjasama tuan/puan adalah dipohon untuk mengesahkan kehadiran melalui faks seperti di <b>Lampiran A</b> yang disertakan atau secara on-line di laman web INSTUN http://www.instun.gov.my <c:uline>pada atau sebelum #{dateline_new}</c:uline>."
@@ -81,44 +81,10 @@ str_perenggan = "<p>#{perenggan.join('</p><p>')}</p>"
 
 str_perenggan = '<p style="text-align: justify;">Dengan hormatnya saya diarah merujuk kepada perkara di atas.&nbsp;</p>
 <p style="text-align: justify;">2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dengan &nbsp;sukacita dimaklumkan bahawa pegawai seperti nama di atas telah dipilih untuk menghadiri Kursus _{KURSUS}_ di Institut Tanah dan Ukur Negara (INSTUN), Kementerian Sumber Asli dan Alam Sekitar.</p>
-<p style="text-align: justify;">3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maklumat kursus adalah seperti berikut:</p>
-<table>
-<tbody>
-<tr>
-<td>&nbsp; &nbsp;&nbsp;&nbsp;</td>
-<td>
-<table border="0">
-<tbody>
-<tr>
-<td valign="top"><strong>Tempat Kursus</strong></td>
-<td valign="top"><strong>:</strong></td>
-<td valign="top"><strong>Institut Tanah dan Ukur Negara (INSTUN)</strong><br /><strong>Kementerian Sumber Asli dan Alam Sekitar</strong><br /><strong>Behrang Ulu, Behrang</strong><br /><strong>35950 Tg. Malim, Perak Darul Ridzuan</strong></td>
-</tr>
-<tr>
-<td valign="top"><strong>Tempat Pendaftaran</strong></td>
-<td valign="top"><strong>:</strong></td>
-<td valign="top"><strong>Lobi Pendaftaran Domestik, INSTUN</strong></td>
-</tr>
-<tr>
-<td valign="top"><strong>Tarikh dan Waktu <em>Check In</em></strong></td>
-<td valign="top"><strong>:</strong></td>
-<td valign="top"><strong>_{CHECK_IN}_</strong></td>
-</tr>
-<tr>
-<td valign="top"><strong>Tarikh dan Waktu <em>Check Out</em></strong></td>
-<td valign="top"><strong>:</strong></td>
-<td valign="top"><strong>_{CHECK_OUT}_</strong></td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-<p style="text-align: justify;">4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borang Pengesahan Kehadiran seperti di Lampiran A <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maklumat kursus seperti di Lampiran B</p>
-<p style="text-align: justify;">5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Peserta dikehendaki membaca/meneliti dokumen-dokumen di para 3 di atas. Peserta juga akan dikenakan bayaran pendaftaran kursus sebanyak RM30.00 (tunai). Resit rasmi akan dikeluarkan bagi membolehkan para peserta membuat tuntutan semula daripada Jabatan/ Agensi masing-masing.</p>
-<p style="text-align: justify;">6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Untuk makluman tuan/puan, INSTUN hanya akan membekalkan nota kursus dalam bentuk cakera padat (CD). Selain itu, peserta juga boleh memuat turun nota tersebut di pautan <a href="http://www.instun.gov.my/">http://www.instun.gov.my</a>.</p>
-<p style="text-align: justify;">7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kerjasama tuan/puan dipohon untuk mengesahkan kehadiran melalui faks seperti di Lampiran A atau secara dalam talian melalui Sistem eSPEK di laman sesawang INSTUN pada atau sebelum _{TARIKH_SEBELUM}_.</p>'
+<p style="text-align: justify;">3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bersama-sama ini disertakan dokumen-dokumen berkaitan kursus di atas iaitu: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borang Pengesahan Kehadiran seperti di Lampiran A <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maklumat kursus seperti di Lampiran B</p>
+<p style="text-align: justify;">4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Peserta dikehendaki membaca/meneliti dokumen-dokumen di para 3 di atas. Peserta juga akan dikenakan bayaran pendaftaran kursus sebanyak RM30.00 (tunai). Resit rasmi akan dikeluarkan bagi membolehkan para peserta membuat tuntutan semula daripada Jabatan/ Agensi masing-masing.</p>
+<p style="text-align: justify;">5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Untuk makluman tuan/puan, INSTUN hanya akan membekalkan nota kursus dalam bentuk cakera padat (CD). Selain itu, peserta juga boleh memuat turun nota tersebut di pautan <a href="http://www.instun.gov.my/">http://www.instun.gov.my</a>.</p>
+<p style="text-align: justify;">6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kerjasama tuan/puan dipohon untuk mengesahkan kehadiran melalui faks seperti di Lampiran A atau secara dalam talian melalui Sistem eSPEK di laman sesawang INSTUN pada atau sebelum _{TARIKH_SEBELUM}_.</p>'
 %>
 
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
@@ -228,7 +194,7 @@ str_perenggan = '<p style="text-align: justify;">Dengan hormatnya saya diarah me
             <input type="text" id="hour_closed1" name="hour_closed1" value="12" size=2 maxlength=2&quot; onblur="">
             :
             <input type="text" id="minute_closed1" name="minute_closed1" value="00" size=2 maxlength=2&quot;>
-	hingga 
+	hingga
             <input type="text" id="hour_closed2" name="hour_closed2" value="01" size=2 maxlength=2&quot; onblur="checkClosedTime(this.value)">
             :
             <input type="text" id="minute_closed2" name="minute_closed2" value="30" size=2 maxlength=2&quot;>
@@ -256,7 +222,7 @@ str_perenggan = '<p style="text-align: justify;">Dengan hormatnya saya diarah me
           if (hour >= 12){
             if((hour -12) == 0){document.getElementById("check_in_hour").value = 12;}
             else {document.getElementById("check_in_hour").value = (hour - 12);}
-		
+
             if ((hour - 12)<=8)
               document.getElementById("timing").value = "petang";
             else
@@ -556,7 +522,7 @@ Fail Timbul</textarea></td>
 <input type="hidden" name="briefing_hour" value="<%=@briefing_hour%>" size=2 maxlength=2&quot;>
 <input type="hidden" name="briefing" value="<%=@briefing%>">
 <%= hidden_field 'surat_tawaran_content', 'user_id', :value=>session[:user].id %>
-<% 
+<%
 for id in params[:course_application_ids]
 %>
   <input type="hidden" name="course_application_ids[]" value="<%=id%>">

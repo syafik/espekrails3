@@ -41,33 +41,24 @@
       Tuan/Puan,
       <br/>
       <p class="pdf_14">
-      <%
-         per_lines = @perkara.split("\n")
-         for per_line in per_lines
-      %>
-          <%= "<b>#{per_line}</b>".html_safe %>
-      <%
-         end
-      %>
+        <% per_lines = @perkara.split("\n")
+           for per_line in per_lines %>
+            <%= "<b>#{per_line}</b>".html_safe %>
+        <% end %>
       </p>
+
       <%= "#{@perenggan}".html_safe %>
       <%= "<br/>Sekian, terima kasih.<br/>".html_safe %>
       <%= "<b>`BERKHIDMAT UNTUK NEGARA`</b><br/>".html_safe %>
       <%= "<b>`MENDAHULUI CABARAN`</b><br/>".html_safe %>
       <%= "<b>`MS ISO 9001:2008 - PENGURUSAN LATIHAN`</b><br/><br/>".html_safe %>
       <%= "Saya yang menurut perintah,<br/><br/>".html_safe %>
-      <%
-         if @signature_file and @signature_file != ""
-      %>
+      <% if @signature_file and @signature_file != "" %>
           <!--<img src="<%#= @signature_file %>" height="100"/>-->
           <%= image_tag @signature_file %><br/>
-      <%
-         else
-      %>
+      <% else %>
           <br/><br/>
-      <%
-         end
-      %>
+      <% end %>
 
       <%= "<b>(#{@tandatangan_nama})</b>".html_safe %><br/>
       <%= "#{@tandatangan_jawatan}<br/>".html_safe %>
@@ -79,124 +70,120 @@
   </tr>
 </table>
 
-<div style="display:block; clear:both; page-break-after:always;"></div>
+<% for students in @students.each_slice(6) %>
+  <div style="display:block; clear:both; page-break-after:always;"></div>
+  <table width="100%" class="pdf_15 marginT80">
+    <tr>
+      <td>
+        <strong><u>SEPERTI SENARAI EDARAN</u></strong>
+        <br/>
+        <br/>
+        <% for student in students
+             font_size = 12
+             i = 1
+             nama = student.profile.name
+             kp = student.profile.ic_number
 
-<table width="100%" class="pdf_15 marginT20">
-  <tr>
-    <td>
-      <strong><u>SEPERTI SENARAI EDARAN</u></strong>
-      <br/>
-      <br/>
-      <% for student in @students
-           font_size = 12
+             employment = Employment.find_by_profile_id(student.profile.id)
+             place = nof { employment.place }
+             if place
+               addr1 = nof { place.address1.split(" ").map! { |e| e }.join(" ") }
+               addr2 = nof { place.address2.split(" ").map! { |e| e }.join(" ") }
+               addr3 = nof { place.address3.split(" ").map! { |e| e }.join(" ") }
+               addr4 = nof { place.address4.split(" ").map! { |e| e }.join(" ") }
+               state = nof { place.state.description.split(" ").map! { |e| e }.join(" ") }
 
-           i = 1
-           nama = student.profile.name
-           kp = student.profile.ic_number
+               addr_arr = Array.new
+               addr_arr.push(place.name) if place.name != "" and place.name !=nil
+               addr_arr.push(addr1) if place.address1 != ""
+               addr_arr.push(addr2) if place.address2 != ""
+               addr_arr.push(addr3) if place.address3 != ""
+               addr_arr.push(addr4) if place.address4 != ""
+               company_addr = addr_arr.join(",<br/>")
+               company_addr = company_addr.tr_s(',', ',')
+             else
+               addr_arr = Array.new
+               addr_arr.push(" ")
+               addr_arr.push(" ")
+               addr_arr.push(" ")
+               addr_arr.push(" ")
+               addr_arr.push(" ")
+               company_addr = addr_arr.join(" <br/>")
+             end
 
-           employment = Employment.find_by_profile_id(student.profile.id)
-           place = nof { employment.place }
-           if place
-             addr1 = nof { place.address1.split(" ").map! { |e| e }.join(" ") }
-             addr2 = nof { place.address2.split(" ").map! { |e| e }.join(" ") }
-             addr3 = nof { place.address3.split(" ").map! { |e| e }.join(" ") }
-             addr4 = nof { place.address4.split(" ").map! { |e| e }.join(" ") }
-             state = nof { place.state.description.split(" ").map! { |e| e }.join(" ") }
+             if (student.profile.address1 != nil) && (student.profile.state != nil)
+               p_addr1 = student.profile.address1.split(" ").map! { |e| e }.join(" ")
+               p_addr2 = student.profile.address2.split(" ").map! { |e| e }.join(" ")
+               p_addr3 = student.profile.address3.split(" ").map! { |e| e }.join(" ")
+               p_state = student.profile.state.description.split(" ").map! { |e| e }.join(" ")
 
-             addr_arr = Array.new
-             addr_arr.push(place.name) if place.name != "" and place.name !=nil
-             addr_arr.push(addr1) if place.address1 != ""
-             addr_arr.push(addr2) if place.address2 != ""
-             addr_arr.push(addr3) if place.address3 != ""
-             addr_arr.push(addr4) if place.address4 != ""
-             company_addr = addr_arr.join(",<br/>")
-             company_addr = company_addr.tr_s(',', ',')
-           else
-             addr_arr = Array.new
-             addr_arr.push(" ")
-             addr_arr.push(" ")
-             addr_arr.push(" ")
-             addr_arr.push(" ")
-             addr_arr.push(" ")
-             company_addr = addr_arr.join(" <br/>")
-           end
+               p_addr_arr = Array.new
+               p_addr_arr.push(p_addr1) if student.profile.address1 != ""
+               p_addr_arr.push(p_addr2) if student.profile.address2 != ""
+               p_addr_arr.push(p_addr3) if student.profile.address3 != ""
+               p_addr = p_addr_arr.join("<br/>")
+               p_addr = p_addr.tr_s(',', ',')
+             else
+               p_addr_arr = Array.new
+               p_addr_arr.push(" ")
+               p_addr_arr.push(" ")
+               p_addr_arr.push(" ")
+               p_addr_arr.push(" ")
+               p_addr = p_addr_arr.join(" <br/>")
+             end
 
-           if (student.profile.address1 != nil) && (student.profile.state != nil)
-             p_addr1 = student.profile.address1.split(" ").map! { |e| e }.join(" ")
-             p_addr2 = student.profile.address2.split(" ").map! { |e| e }.join(" ")
-             p_addr3 = student.profile.address3.split(" ").map! { |e| e }.join(" ")
-             p_state = student.profile.state.description.split(" ").map! { |e| e }.join(" ")
+             ketua = "#{student.profile.hod}"
+             office_name = "#{student.profile.opis}"
+             p_alamat = "#{p_addr}."
+             alamat = "#{company_addr}."
+             no_fax = student.profile.fax
 
-             p_addr_arr = Array.new
-#p_addr_arr.push(student.profile.name.upcase) if student.profile.name != "" and student.profile.name !=nil
-             p_addr_arr.push(p_addr1) if student.profile.address1 != ""
-             p_addr_arr.push(p_addr2) if student.profile.address2 != ""
-             p_addr_arr.push(p_addr3) if student.profile.address3 != ""
-#p_addr_arr.push(p_state) if student.profile.state != "" and student.profile.state !=nil
-             p_addr = p_addr_arr.join("<br/>")
-             p_addr = p_addr.tr_s(',', ',')
-           else
-             p_addr_arr = Array.new
-#p_addr_arr.push(" ")
-             p_addr_arr.push(" ")
-             p_addr_arr.push(" ")
-             p_addr_arr.push(" ")
-             p_addr_arr.push(" ")
-             p_addr = p_addr_arr.join(" <br/>")
-           end
+             alamat_instun = "<br/>Pengarah," +
+                     "<br/>Institut Tanah dan Ukur Negara(INSTUN)" +
+                     "<br/>Kementerian Sumber Asli dan Alam Sekitar(NRE)" +
+                     "<br/>Behrang" +
+                     " 35950 Tanjung Malim" +
+                     "<br/>Perak Darul Ridzuan."
+             salinan_kepada = "Pengarah<br/>"+
+                     "Institut Tanah dan Ukur Negara(INSTUN)<br/><br/>"
+             ic_number = "#{student.profile.ic_number[0, 6]}-#{student.profile.ic_number[6, 2]}-#{student.profile.ic_number[8, 4]}"
 
-           ketua = "#{student.profile.hod}"
-           office_name = "#{student.profile.opis}"
-           p_alamat = "#{p_addr}."
-           alamat = "#{company_addr}."
-           no_fax = student.profile.fax
+             if employment and employment.job_profile
+               job_name = nof { employment.job_profile.job_name }
+               job_name = employment.job_profile.job_name.split(" ").map! { |e| e.capitalize }.join(" ") if job_name != nil
+               job_grade = nof { employment.job_profile.job_grade }
+               job_profile = "<b>#{job_name} Gred #{job_grade}</b>"
+             else
+               job_profile = " "
+             end
+        %>
+            <%= "<b>#{nof { student.profile.name }}</b><br/>".html_safe %>
+            <%= "#{job_profile}".html_safe %>
+            <br/>
+            <%= "#{ketua}" %>
+            <%= "#{office_name}".html_safe %>
+            <%= "#{p_alamat}".html_safe %>
+            <br />
+            <%= "NO. FAKS : #{no_fax}".html_safe %>
+            <br/>
+            <br/>
+        <% end %>
+      </td>
+    </tr>
+  </table>
 
-           alamat_instun = "<br/>Pengarah," +
-                   "<br/>Institut Tanah dan Ukur Negara(INSTUN)" +
-                   "<br/>Kementerian Sumber Asli dan Alam Sekitar(NRE)" +
-                   "<br/>Behrang" +
-                   " 35950 Tanjung Malim" +
-                   "<br/>Perak Darul Ridzuan."
-           salinan_kepada = "Pengarah<br/>"+
-                   "Institut Tanah dan Ukur Negara(INSTUN)<br/><br/>"
-           ic_number = "#{student.profile.ic_number[0, 6]}-#{student.profile.ic_number[6, 2]}-#{student.profile.ic_number[8, 4]}"
-
-           if employment and employment.job_profile
-             job_name = nof { employment.job_profile.job_name }
-             job_name = employment.job_profile.job_name.split(" ").map! { |e| e.capitalize }.join(" ") if job_name != nil
-             job_grade = nof { employment.job_profile.job_grade }
-             job_profile = "<b>#{job_name} Gred #{job_grade}</b>"
-           else
-             job_profile = " "
-           end
-      %>
-          <%= "<b>#{nof { student.profile.name }}</b><br/>".html_safe %>
-          <%= "#{job_profile}".html_safe %>
-          <br/>
-          <%= "#{ketua}" %>
-          <%= "#{office_name}".html_safe %>
-          <%= "#{p_alamat}".html_safe %>
-          <br />
-          <%= "NO. FAKS : #{no_fax}".html_safe %>
-          <br/>
-          <br/>
-      <%
-         end
-      %>
-    </td>
-  </tr>
-</table>
+<% end %>
 
 <div style="display:block; clear:both; page-break-after:always;"></div>
+
 <% if @format_surat == 2 || @format_surat == 4 %>
-    <%
-       for student in @students
-         font_size = 12
+    <% for student in @students
+        font_size = 12
 
-         i = 1
-         nama = student.profile.name
-         kp = student.profile.ic_number
-    %>
+        i = 1
+        nama = student.profile.name
+        kp = student.profile.ic_number %>
+
         <%= render partial: "course_implementations/cetak_lampiran_surat_tawaran",
                    :locals => {
                         :nama => nama,
@@ -208,10 +195,9 @@
                         :aktiviti3 => aktiviti3,
                         :aktiviti4 => aktiviti4
                    } %>
-    <%
-       end
-    %>
-<% elsif @format_surat == 1 || @format_surat == 3 %>
+    <% end %>
+
+<% elsif @format_surat == 1 || @format_surat == 3  %>
     <%= render partial: "course_implementations/cetak_lampiran_surat_tawaran",
         :locals => {
             :nama => "..................................................",
@@ -224,19 +210,4 @@
             :aktiviti4 => aktiviti4
     } %>
 <% end %>
-
-
-
-<%
-   #@nota_font_size = 9
-   #current_y = pdf.y
-   #pdf.y = pdf.absolute_bottom_margin - 20
-   #pdf.add_text(70, pdf.y, "Nota: Surat ini adalah cetakan komputer. Tiada tandatangan diperlukan.", @nota_font_size) if params[:is_cetakan_komputer].to_i==1
-
-   #pdf.new_page
-
-   #cetak_surat_sah_hadir2(pdf)
-   #cetak_lampiran_c(pdf)
-
-%>
 

@@ -1,3 +1,7 @@
+<div class="first-header" >
+  <%= wicked_pdf_image_tag 'header.jpg' %>
+</div>
+
 <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
 <%
    am_or_pm = "pagi"
@@ -7,6 +11,7 @@
    aktiviti3 = "mana aktiviti-aktiviti ini dimasukkkan ke dalam modul"
    aktiviti4 = "untuk diambil kira bagi penilaian kursus."
 %>
+
 <table width="660">
   <tr>
     <td align="right">
@@ -35,15 +40,11 @@
       <br/><br/>
       Tuan/Puan,<br/>
       <p class="pdf_14">
-      <%
-
-         per_lines = @perkara.split("\n")
-         for per_line in per_lines
-      %>
+      <% per_lines = @perkara.split("\n")
+         for per_line in per_lines  %>
           <%= "<b>#{per_line}</b>".html_safe %><br/>
-      <%
-         end
-      %>
+      <% end %>
+
       </p>
       <%= "#{@perenggan}".html_safe %>
       <br/>
@@ -89,139 +90,134 @@
 
 <div style="display:block; clear:both; page-break-after:always;"></div>
 
-<table width="100%" class="pdf_15">
-  <tr>
-    <td>
-      <strong><u>SEPERTI SENARAI EDARAN</u></strong>
-      <br/>
-      <br/>
-<%
-   for student in @students
-     font_size = 12
+<% for students in @students.each_slice(6) %>
+  <table width="100%" class="pdf_15 marginT80">
+    <tr>
+      <td>
+        <strong><u>SEPERTI SENARAI EDARAN</u></strong>
+        <br/>
+        <br/>
+          <% for student in students
+               font_size = 12
 
-     i = 1
-     nama = student.profile.name
-     kp = student.profile.ic_number
+               i = 1
+               nama = student.profile.name
+               kp = student.profile.ic_number
 
-     employment = Employment.find_by_profile_id(student.profile.id)
-     place = nof { employment.place }
-     if place
-       addr1 = nof { place.address1.split(" ").map! { |e| e }.join(" ") }
-       addr2 = nof { place.address2.split(" ").map! { |e| e }.join(" ") }
-       addr3 = nof { place.address3.split(" ").map! { |e| e }.join(" ") }
-       addr4 = nof { place.address4.split(" ").map! { |e| e }.join(" ") }
-       state = nof { place.state.description.split(" ").map! { |e| e }.join(" ") }
+               employment = Employment.find_by_profile_id(student.profile.id)
+               place = nof { employment.place }
+               if place
+                 addr1 = nof { place.address1.split(" ").map! { |e| e }.join(" ") }
+                 addr2 = nof { place.address2.split(" ").map! { |e| e }.join(" ") }
+                 addr3 = nof { place.address3.split(" ").map! { |e| e }.join(" ") }
+                 addr4 = nof { place.address4.split(" ").map! { |e| e }.join(" ") }
+                 state = nof { place.state.description.split(" ").map! { |e| e }.join(" ") }
 
-       addr_arr = Array.new
-       addr_arr.push(place.name) if place.name != "" and place.name !=nil
-       addr_arr.push(addr1) if place.address1 != ""
-       addr_arr.push(addr2) if place.address2 != ""
-       addr_arr.push(addr3) if place.address3 != ""
-       addr_arr.push(addr4) if place.address4 != ""
-       company_addr = addr_arr.join(",<br/>")
-       company_addr = company_addr.tr_s(',', ',')
-     else
-       addr_arr = Array.new
-       addr_arr.push(" ")
-       addr_arr.push(" ")
-       addr_arr.push(" ")
-       addr_arr.push(" ")
-       addr_arr.push(" ")
-       company_addr = addr_arr.join(" <br/>")
-     end
+                 addr_arr = Array.new
+                 addr_arr.push(place.name) if place.name != "" and place.name !=nil
+                 addr_arr.push(addr1) if place.address1 != ""
+                 addr_arr.push(addr2) if place.address2 != ""
+                 addr_arr.push(addr3) if place.address3 != ""
+                 addr_arr.push(addr4) if place.address4 != ""
+                 company_addr = addr_arr.join(",<br/>")
+                 company_addr = company_addr.tr_s(',', ',')
+               else
+                 addr_arr = Array.new
+                 addr_arr.push(" ")
+                 addr_arr.push(" ")
+                 addr_arr.push(" ")
+                 addr_arr.push(" ")
+                 addr_arr.push(" ")
+                 company_addr = addr_arr.join(" <br/>")
+               end
 
-     if (student.profile.address1 != nil) && (student.profile.state != nil)
-       p_addr1 = student.profile.address1.split(" ").map! { |e| e }.join(" ")
-       p_addr2 = student.profile.address2.split(" ").map! { |e| e }.join(" ")
-       p_addr3 = student.profile.address3.split(" ").map! { |e| e }.join(" ")
-       p_state = student.profile.state.description.split(" ").map! { |e| e }.join(" ")
+               if (student.profile.address1 != nil) && (student.profile.state != nil)
+                 p_addr1 = student.profile.address1.split(" ").map! { |e| e }.join(" ")
+                 p_addr2 = student.profile.address2.split(" ").map! { |e| e }.join(" ")
+                 p_addr3 = student.profile.address3.split(" ").map! { |e| e }.join(" ")
+                 p_state = student.profile.state.description.split(" ").map! { |e| e }.join(" ")
 
-       p_addr_arr = Array.new
-#p_addr_arr.push(student.profile.name.upcase) if student.profile.name != "" and student.profile.name !=nil
-       p_addr_arr.push(p_addr1) if student.profile.address1 != ""
-       p_addr_arr.push(p_addr2) if student.profile.address2 != ""
-       p_addr_arr.push(p_addr3) if student.profile.address3 != ""
-#p_addr_arr.push(p_state) if student.profile.state != "" and student.profile.state !=nil
-       p_addr = p_addr_arr.join("<br/>")
-       p_addr = p_addr.tr_s(',', ',')
-     else
-       p_addr_arr = Array.new
-#p_addr_arr.push(" ")
-       p_addr_arr.push(" ")
-       p_addr_arr.push(" ")
-       p_addr_arr.push(" ")
-       p_addr_arr.push(" ")
-       p_addr = p_addr_arr.join(" <br/>")
-     end
+                 p_addr_arr = Array.new
+                 p_addr_arr.push(p_addr1) if student.profile.address1 != ""
+                 p_addr_arr.push(p_addr2) if student.profile.address2 != ""
+                 p_addr_arr.push(p_addr3) if student.profile.address3 != ""
+                 p_addr = p_addr_arr.join("<br/>")
+                 p_addr = p_addr.tr_s(',', ',')
+               else
+                 p_addr_arr = Array.new
+                 p_addr_arr.push(" ")
+                 p_addr_arr.push(" ")
+                 p_addr_arr.push(" ")
+                 p_addr_arr.push(" ")
+                 p_addr = p_addr_arr.join(" <br/>")
+               end
 
-     ketua = "#{student.profile.hod}"
-     office_name = "#{student.profile.opis}"
-     p_alamat = "#{p_addr}."
-     alamat = "#{company_addr}."
-     state = student.profile.state.blank? ? "" : "#{student.profile.state.description.upcase}"
+               ketua = "#{student.profile.hod}"
+               office_name = "#{student.profile.opis}"
+               p_alamat = "#{p_addr}."
+               alamat = "#{company_addr}."
+               state = student.profile.state.blank? ? "" : "#{student.profile.state.description.upcase}"
 
-     alamat_instun = "<br/>Pengarah," +
-             "<br/>Institut Tanah dan Ukur Negara(INSTUN)" +
-             "<br/>Kementerian Sumber Asli dan Alam Sekitar(NRE)" +
-             "<br/>Behrang" +
-             " 35950 Tanjung Malim" +
-             "<br/>Perak Darul Ridzuan."
-     salinan_kepada = "Pengarah<br/>"+
-             "Institut Tanah dan Ukur Negara(INSTUN)<br/><br/>"
-     ic_number = "#{student.profile.ic_number[0, 6]}-#{student.profile.ic_number[6, 2]}-#{student.profile.ic_number[8, 4]}"
+               alamat_instun = "<br/>Pengarah," +
+                       "<br/>Institut Tanah dan Ukur Negara(INSTUN)" +
+                       "<br/>Kementerian Sumber Asli dan Alam Sekitar(NRE)" +
+                       "<br/>Behrang" +
+                       " 35950 Tanjung Malim" +
+                       "<br/>Perak Darul Ridzuan."
+               salinan_kepada = "Pengarah<br/>"+
+                       "Institut Tanah dan Ukur Negara(INSTUN)<br/><br/>"
+               ic_number = "#{student.profile.ic_number[0, 6]}-#{student.profile.ic_number[6, 2]}-#{student.profile.ic_number[8, 4]}"
 
-     if employment and employment.job_profile
-       job_name = nof { employment.job_profile.job_name }
-       job_name = employment.job_profile.job_name.split(" ").map! { |e| e.capitalize }.join(" ") if job_name != nil
-       job_grade = nof { employment.job_profile.job_grade }
-       job_profile = "<b>#{job_name} Gred #{job_grade}</b>"
-     else
-       job_profile = " "
-     end
-%>
-    <%= "<b>#{nof { student.profile.name }}</b><br/>".html_safe %>
-    <%= "#{job_profile}".html_safe %>
-    <%= "<br/>Melalui dan Salinan:".html_safe %>
-    <br/>
-    <%= "#{ketua}".html_safe %><br/>
-    <%= "#{office_name}".html_safe %><br/>
-    <%= "#{p_alamat}".html_safe %><br/>
-    <%= "#{state}".html_safe %>
-    <br/>
-    <br/>
-<%
-   end
-%>
-    </td>
-  </tr>
-</table>
+               if employment and employment.job_profile
+                 job_name = nof { employment.job_profile.job_name }
+                 job_name = employment.job_profile.job_name.split(" ").map! { |e| e.capitalize }.join(" ") if job_name != nil
+                 job_grade = nof { employment.job_profile.job_grade }
+                 job_profile = "<b>#{job_name} Gred #{job_grade}</b>"
+               else
+                 job_profile = " "
+               end %>
 
-<div style="display:block; clear:both; page-break-after:always;"></div>
+              <%= "<b>#{nof { student.profile.name }}</b><br/>".html_safe %>
+              <%= "#{job_profile}".html_safe %>
+              <%= "<br/>Melalui dan Salinan:".html_safe %>
+              <br/>
+              <%= "#{ketua}".html_safe %><br/>
+              <%= "#{office_name}".html_safe %><br/>
+              <%= "#{p_alamat}".html_safe %><br/>
+              <%= "#{state}".html_safe %>
+              <br/>
+              <br/>
+          <% end %>
 
+      </td>
+    </tr>
+  </table>
+  <div style="display:block; clear:both; page-break-after:always;"></div>
+<% end %>
 
 <% if @format_surat == 2 || @format_surat == 4 %>
-<%
-   for student in @students
-     font_size = 12
+    <% for students in @students.each_slice(6) %>
+      <% for student in students
+          font_size = 12
 
-     i = 1
-     nama = student.profile.name
-     kp = student.profile.ic_number
-%>
-    <%= render partial: "course_implementations/cetak_lampiran_surat_tawaran",
-        :locals => {
-            :nama => nama,
-            :kp => kp,
-            :alamat_instun => alamat_instun,
-            :am_or_pm => am_or_pm,
-            :aktiviti1 => aktiviti1,
-            :aktiviti2 => aktiviti2,
-            :aktiviti3 => aktiviti3,
-            :aktiviti4 => aktiviti4
-    } %>
-<%
-   end
-%>
+          i = 1
+          nama = student.profile.name
+          kp = student.profile.ic_number %>
+          <%= render partial: "course_implementations/cetak_lampiran_surat_tawaran",
+              :locals => {
+                  :nama => nama,
+                  :kp => kp,
+                  :alamat_instun => alamat_instun,
+                  :am_or_pm => am_or_pm,
+                  :aktiviti1 => aktiviti1,
+                  :aktiviti2 => aktiviti2,
+                  :aktiviti3 => aktiviti3,
+                  :aktiviti4 => aktiviti4
+          } %>
+      <% end %>
+    <% end %>
+
+
 <% elsif @format_surat == 1 || @format_surat == 3 %>
     <%= render partial: "course_implementations/cetak_lampiran_surat_tawaran",
         :locals => {
@@ -236,17 +232,3 @@
     } %>
 <% end %>
 
-
-
-<%
-   #@nota_font_size = 9
-   #current_y = pdf.y
-   #pdf.y = pdf.absolute_bottom_margin - 20
-   #pdf.add_text(70, pdf.y, "Nota: Surat ini adalah cetakan komputer. Tiada tandatangan diperlukan.", @nota_font_size) if params[:is_cetakan_komputer].to_i==1
-
-   #pdf.new_page
-
-   #cetak_surat_sah_hadir2(pdf)
-   #cetak_lampiran_c(pdf)
-
-%>

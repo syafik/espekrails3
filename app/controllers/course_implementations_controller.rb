@@ -7,10 +7,10 @@ class CourseImplementationsController < ApplicationController
     @courses = Course.find(:all, :order=>"name")
     @places = Place.find(:all, :order=>"code ASC")
     @course_fields = CourseField.find(:all, :order=>"description")
-    #@course_types = CourseType.find(:all, :order=>"id")    
-    @course_locations = CourseLocation.find(:all, :order=>"description")    
-    @course_statuses = CourseStatus.find(:all, :order=>"id")        
-    #@profiles = Profile.find_all    
+    #@course_types = CourseType.find(:all, :order=>"id")
+    @course_locations = CourseLocation.find(:all, :order=>"description")
+    @course_statuses = CourseStatus.find(:all, :order=>"id")
+    #@profiles = Profile.find_all
     @methodologies = Methodology.all
     @course_departments = CourseDepartment.find(:all, :order=>"id")
     @planning_years = CourseImplementation.find_by_sql("SELECT distinct extract(year from date_plan_start)as year from course_implementations ORDER BY year DESC")
@@ -21,53 +21,53 @@ class CourseImplementationsController < ApplicationController
   def add_course_trainer
     @course_implementation = CourseImplementation.find(params[:id])
   end
-  
+
   def add_timetable
     @course_implementation = CourseImplementation.find(params[:id])
   end
-  
+
   def save_timetable
     @course_implementation = CourseImplementation.find(params[:id])
     if @course_implementation.update_attributes(params[:course_implementation])
       redirect_to :action => 'show_timetable', :id => @course_implementation
     end
   end
-  
+
   def show_timetable
     @course_implementation = CourseImplementation.find(params[:id])
     render layout: "standard-layout"
   end
-  
+
   def show_timetable2
     @course_implementation = CourseImplementation.find(params[:id])
     render layout: "standard-layout"
   end
-  
+
   def delete_timetable
     @course_implementation = CourseImplementation.find(params[:id])
     delete = CourseImplementation.find_by_sql("UPDATE course_implementations SET file ='' where id ='#{@course_implementation.id}'")
     redirect_to :action => 'show_timetable', :id => @course_implementation
   end
-  
+
   def add_course_trainer_refresh_opener
     add_course_trainer
     #render :layout => "standard-layout"
   end
 
   def save_course_trainer
-	
+
     @course_implementation = CourseImplementation.find(params[:id])
-	
+
     @course_implementation.trainer_ids = []
     if params[:trainer_ids] and params[:trainer_ids].size > 0
       @course_implementation.trainer_ids = params[:trainer_ids]
     end
     redirect_to :action=>"add_course_trainer", :id=>@course_implementation
   end
-  
+
   def save_course_trainer_refresh_opener
     @course_implementation = CourseImplementation.find(params[:id])
-	
+
     @course_implementation.trainer_ids = []
     if params[:trainer_ids] and params[:trainer_ids].size > 0
       @course_implementation.trainer_ids = params[:trainer_ids]
@@ -83,7 +83,7 @@ class CourseImplementationsController < ApplicationController
     #    list
     redirect_to list_course_implementations_url(role: params[:role])
   end
-  
+
   def iklan
     @course_implementation_pages, @course_implementations = paginate :course_implementations, :per_page => 10
   end
@@ -100,14 +100,14 @@ class CourseImplementationsController < ApplicationController
     params[:year_start] = Time.now.strftime("%Y") if !params[:year_start]
 
     if !params[:course_department_id]
-  		if session[:user].profile.staff 
+  		if session[:user].profile.staff
         params[:course_department_id] = session[:user].profile.staff.course_department_id.to_s
       end
     end
 
     @cond = Array.new()
     @cond.push("year_start="  +  params[:year_start])
-    @cond.push("month_start=" +  params[:month_start]) unless params[:month_start].blank? 
+    @cond.push("month_start=" +  params[:month_start]) unless params[:month_start].blank?
     @cond.push("course_department_id=" +  params[:course_department_id]) unless params[:course_department_id].blank?
 
     @where_sql = @cond.join(" AND ")
@@ -172,16 +172,16 @@ class CourseImplementationsController < ApplicationController
   end
 
   def calendar
-  
+
   end
 
-  def calendar_public	
+  def calendar_public
   end
-  
+
   def calendar_user
     #@course_implementations = CourseImplementation.find(:all, :order=>"code")
   end
-  
+
   def list_courses_from_today_to_future
     #@course_implementation_pages, @course_implementations = paginate :course_implementations, :per_page => 100
     #@course_implementations = CourseImplementation.find(:all, :conditions=>"date_plan_start > '2001-09-09' AND ")
@@ -191,7 +191,7 @@ class CourseImplementationsController < ApplicationController
 
   def search
     begin
-    
+
       if params[:search_date]
         tarikh1 = params[:search_date][0].to_s
         tarikhi = tarikh1.split('/')
@@ -200,12 +200,12 @@ class CourseImplementationsController < ApplicationController
         y = tarikhi[2]
         tarikhii = m+"/"+d+"/"+y
       end
-    
+
       sql = "SELECT * from vw_detailed_courses WHERE "
       where = "name ilike '%#{params[:search_name]}%'order by date_plan_start desc" if params[:search_name]
       where = "code ilike '%#{params[:search_code]}%' order by date_plan_start desc" if params[:search_code]
       where = "date_plan_start = '#{tarikhii}'order by date_plan_start desc" if params[:search_date]
-	
+
       if where != nil
         @course_implementations = CourseImplementation.find_by_sql(sql + where)
       else
@@ -221,7 +221,7 @@ class CourseImplementationsController < ApplicationController
 
   def search_for_user
     begin
-    
+
       if params[:search_date]
         tarikh1 = params[:search_date].first.to_s
         tarikhi = tarikh1.split('/')
@@ -241,7 +241,7 @@ class CourseImplementationsController < ApplicationController
       else
         @course_implementations = []
       end
-	
+
     rescue
       flash['notice'] = 'Carian Tidak Sah'
       redirect_to :action => 'search_for_user'
@@ -277,7 +277,7 @@ class CourseImplementationsController < ApplicationController
     @course_implementation = CourseImplementation.find_by_id(params[:course_implementation_id] || params[:id])
     @course_application = CourseApplication.find(:first,:conditions => ["profile_id = ? and course_implementation_id = ?",session[:user].profile_id, @course_implementation.id])
     @course = @course_implementation.course
-    list_bulans = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses WHERE id = #{@course_implementation.id}")    
+    list_bulans = CourseImplementation.find_by_sql("SELECT * from vw_detailed_courses WHERE id = #{@course_implementation.id}")
     for list_bulan in list_bulans
       @day_start = list_bulan.day_start
       @month_start = list_bulan.month_start
@@ -341,7 +341,7 @@ class CourseImplementationsController < ApplicationController
     @year_check_in   = params[:@year_check_in]
     @hour_check_in   = params[:@hour_check_in]
     @minute_check_in = params[:@minute_check_in]
-	  
+
     @day_check_out    = params[:@day_check_out]
     @month_check_out  = params[:@month_check_out]
     @year_check_out   = params[:@year_check_out]
@@ -362,7 +362,7 @@ class CourseImplementationsController < ApplicationController
     @day_apply_end   = params[:day_apply_end]
     @month_apply_end = params[:month_apply_end]
     @year_apply_end  = params[:year_apply_end]
-      
+
     @day_check       = params[:day_check]
     @month_check     = params[:month_check]
     @year_check      = params[:year_check]
@@ -370,7 +370,7 @@ class CourseImplementationsController < ApplicationController
     @day_evaluation_end   = params[:day_evaluation_end]
     @month_evaluation_end = params[:month_evaluation_end]
     @year_evaluation_end  = params[:year_evaluation_end]
-	
+
     @day_publish       = params[:day_publish]
     @month_publish     = params[:month_publish]
     @year_publish      = params[:year_publish]
@@ -378,7 +378,7 @@ class CourseImplementationsController < ApplicationController
     ##########
 
     @course_implementation = CourseImplementation.new(params[:course_implementation]) if params[:course_implementation]
-	
+
     @course = Course.new(params[:course])
     @course.methodologies = Methodology.find(params[:methodology_ids]) if params[:methodology_ids]
     @course.methodologies.names = params[:names] if params[:names]
@@ -409,7 +409,7 @@ class CourseImplementationsController < ApplicationController
       if @course_implementation.save
         flash[:notice] = "Kursus berjaya ditambah."
         month = sprintf("%02d",params[:month_start].to_i)
-		
+
         redirect_to("/course_implementations/list?planning_year=#{params[:start_year]}&planning_month=#{month}&course_department_id=#{@course.course_department_id}&role=#{params[:role]}")
 
         params[:prerequisite_codes].size.times do |i|
@@ -418,7 +418,7 @@ class CourseImplementationsController < ApplicationController
             @course.prerequisites.push(@pre.course) if @pre
           end
         end
-		
+
         #redirect_to :action => 'list'
         #render :text => @course_implementation.check_date
       else
@@ -427,7 +427,7 @@ class CourseImplementationsController < ApplicationController
       end
     else
       flash[:error]= "<font color=\"red\"><b>#{@course.valid?}</b></font><br>"
-	                 
+
       render :action => 'new'
     end
 
@@ -436,7 +436,7 @@ class CourseImplementationsController < ApplicationController
   def edit
     @course_implementation = CourseImplementation.find(params[:id])
     @course = @course_implementation.course
-    
+
     schedule = CourseImplementation.find(params[:id])
     if !schedule.date_start
       @day_start   = schedule.date_plan_start.to_formatted_s(:my_format_day)
@@ -490,7 +490,7 @@ class CourseImplementationsController < ApplicationController
     @year_check_out  = schedule.check_out.to_formatted_s(:my_format_year)  if schedule.check_out
     @hour_check_out  = schedule.check_out.to_formatted_s(:my_format_hour)  if schedule.check_out
     @minute_check_out  = schedule.check_out.to_formatted_s(:my_format_minute)  if schedule.check_out
-     
+
     @day_briefing   = schedule.briefing.to_formatted_s(:my_format_day)   if schedule.briefing
     @month_briefing = schedule.briefing.to_formatted_s(:my_format_month) if schedule.briefing
     @year_briefing  = schedule.briefing.to_formatted_s(:my_format_year)  if schedule.briefing
@@ -508,7 +508,7 @@ class CourseImplementationsController < ApplicationController
     @day_end         = params[:day_end]
     @month_end       = params[:month_end]
     @year_end        = params[:year_end]
-      
+
     @day_apply_start   = params[:day_apply_start]
     @month_apply_start = params[:month_apply_start]
     @year_apply_start  = params[:year_apply_start]
@@ -516,7 +516,7 @@ class CourseImplementationsController < ApplicationController
     @day_apply_end   = params[:day_apply_end]
     @month_apply_end = params[:month_apply_end]
     @year_apply_end  = params[:year_apply_end]
-      
+
     @day_check       = params[:day_check]
     @month_check     = params[:month_check]
     @year_check      = params[:year_check]
@@ -524,7 +524,7 @@ class CourseImplementationsController < ApplicationController
     @day_evaluation_end   = params[:day_evaluation_end]
     @month_evaluation_end = params[:month_evaluation_end]
     @year_evaluation_end  = params[:year_evaluation_end]
-	
+
     @day_publish       = params[:day_publish]
     @month_publish     = params[:month_publish]
     @year_publish      = params[:year_publish]
@@ -534,7 +534,7 @@ class CourseImplementationsController < ApplicationController
     @year_check_in   = params[:@year_check_in]
     @hour_check_in   = params[:@hour_check_in]
     @minute_check_in = params[:@minute_check_in]
-	  
+
     @day_check_out    = params[:@day_check_out]
     @month_check_out  = params[:@month_check_out]
     @year_check_out   = params[:@year_check_out]
@@ -547,7 +547,7 @@ class CourseImplementationsController < ApplicationController
     @hour_briefing = params[:hour_briefing]
     @minute_briefing = params[:minute_briefing]
     ##########
-    
+
     @course_implementation = CourseImplementation.find(params[:id])
     @course_implementation.date_publish     = Date.new(params[:year_publish].to_i,params[:month_publish].to_i,params[:day_publish].to_i)
     @course_implementation.date_apply_start = Date.new(params[:year_apply_start].to_i, params[:month_apply_start].to_i,params[:day_apply_start].to_i)
@@ -580,7 +580,7 @@ class CourseImplementationsController < ApplicationController
       end
     end
     @course.update_attributes(params[:course])
-	    
+
     if @course_implementation.update_attributes(params[:course_implementation])
       #render :text => @course.id
       flash[:notice] = "Kursus telah dikemaskini."
@@ -630,7 +630,7 @@ class CourseImplementationsController < ApplicationController
     @day_end         = params[:day_end]
     @month_end       = params[:month_end]
     @year_end        = params[:year_end]
-      
+
     @day_apply_start   = params[:day_apply_start]
     @month_apply_start = params[:month_apply_start]
     @year_apply_start  = params[:year_apply_start]
@@ -638,7 +638,7 @@ class CourseImplementationsController < ApplicationController
     @day_apply_end   = params[:day_apply_end]
     @month_apply_end = params[:month_apply_end]
     @year_apply_end  = params[:year_apply_end]
-      
+
     @day_check       = params[:day_check]
     @month_check     = params[:month_check]
     @year_check      = params[:year_check]
@@ -646,7 +646,7 @@ class CourseImplementationsController < ApplicationController
     @day_evaluation_end   = params[:day_evaluation_end]
     @month_evaluation_end = params[:month_evaluation_end]
     @year_evaluation_end  = params[:year_evaluation_end]
-	
+
     @day_publish       = params[:day_publish]
     @month_publish     = params[:month_publish]
     @year_publish      = params[:year_publish]
@@ -676,7 +676,7 @@ class CourseImplementationsController < ApplicationController
 
   end
 
-  
+
   def destroy
     CourseImplementation.find(params[:id]).destroy
     flash[:notice]='Course Successfully Deleted'
@@ -754,11 +754,11 @@ class CourseImplementationsController < ApplicationController
       @surat_iklan_content = SuratIklanContent.new
     end
   end
-  
+
   def rujukan_kami
     @surats = SuratIklanContent.find(:all, :conditions => "course_department_id = #{params[:course_implementation_id]}")
   end
-  
+
   def cetak_surat_iklan
     #filename = "surat_iklan_"+ "#{params[:surat_iklan_content][:course_implementation_id]}.pdf"
     #
@@ -856,25 +856,16 @@ class CourseImplementationsController < ApplicationController
       end
     end
     @format_surat = params[:surat_iklan_content][:format_surat].to_i
-    if @format_surat == 3 || @format_surat == 4
-      margin = { :top => 40, :left => 15, :bottom => 10, :right => 20 }
-      #pdf.margins_pt(0, 50, 36, 50)
+    if (@format_surat == 4) || (@format_surat == 3)
+      margin = { :top => 0, :left => 15, :bottom => 10, :right => 20 }
     else
       margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
-      #pdf.margins_pt(36, 50, 36, 50)
     end
 
     pdf_render_hash = {}
     pdf_render_hash[:pdf] = filename
     pdf_render_hash[:page_size] = 'A4'
     pdf_render_hash[:margin] = margin
-    pdf_render_hash[:header] = {
-                                    :html => {
-                                        :template => 'layouts/header.pdf.erb',
-                                        :locals => { :format_surat => @format_surat }
-                                    },
-                                    :spacing => 5
-                               } if @format_surat == 3 || @format_surat == 4
 
     respond_to do |format|
       format.html
@@ -889,7 +880,7 @@ class CourseImplementationsController < ApplicationController
     filename = "show.pdf"
     @course_implementation = CourseImplementation.find(params[:id])
     @course = @course_implementation.course
-    
+
     gen_show_pdf (filename)
     redirect_to("/surat/" + filename)
   end
@@ -918,7 +909,7 @@ class CourseImplementationsController < ApplicationController
         pdf.add_image_from_file(header_image, 0, 730, 600, nil)
       end
       pdf.text "", :font_size => @font_size, :justification => :left
-	
+
       @rujukan_kami = params[:rujukan_kami]
       @tarikh_surat_day = params[:tarikh_surat_day]
       @tarikh_surat_day = "    " if params[:tarikh_surat_day] == ""
@@ -932,12 +923,12 @@ class CourseImplementationsController < ApplicationController
       @perenggan4 = params[:surat_iklan_content][:perenggan4]
       @perenggan5 = params[:surat_iklan_content][:perenggan5]
       @tempoh = params[:surat_iklan_content][:tempoh]
- 
+
       addr1 = place.address1.split(" ").map! {|e| e}.join(" ") if ( (place.address1 != "") && place.address1 )
       addr2 = place.address2.split(" ").map! {|e| e}.join(" ") if ( (place.address2 != "") && place.address2 )
       addr3 = place.address3.split(" ").map! {|e| e}.join(" ") if ( (place.address3 != "") && place.address3 )
       addr4 = place.address4.split(" ").map! {|e| e}.join(" ") if ( (place.address4 != "") && place.address4 )
-	
+
       addr1 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
       addr2 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
       addr3 = "(SILA KEMASKINI ALAMAT)" if place.address1 == ""
@@ -1023,7 +1014,7 @@ class CourseImplementationsController < ApplicationController
         else
           @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature_file]}"
         end
-		
+
         if params[:signature_file] and params[:signature_file] != ""
           pdf.image @signature_file, :resize => 0.5
         else
@@ -1135,7 +1126,7 @@ class CourseImplementationsController < ApplicationController
     #pdf.select_font("Arial")
     pdf.select_font("Helvetica")
     @my_margin = pdf.absolute_top_margin - 30
-  
+
     ###set dulu isi surat
     if params[:surat_iklan_content][:format_surat].to_i == 4
       pdf.add_image_from_file(header_image, 0, 730, 600, nil)
@@ -1163,10 +1154,10 @@ class CourseImplementationsController < ApplicationController
     else
       pdf.y = @my_margin -50
     end
-    
+
     pdf.text "", :font_size => @font_size, :justification => :left
     pdf.text "\n\n", :font_size => @font_size, :justification => :left
-    
+
     @rujukan_font_size = 10
     @rujukan_font_size2 = 13
     #pdf.y = @my_margin -50
@@ -1180,7 +1171,7 @@ class CourseImplementationsController < ApplicationController
     pdf.add_text(345, pdf.y, "Tarikh", @rujukan_font_size)
     pdf.add_text(395, pdf.y, ":", @rujukan_font_size)
     pdf.add_text(405, pdf.y, "#{@tarikh}", @rujukan_font_size)
-    
+
     pdf.text "\n<b>SEPERTI SENARAI EDARAN </b>", :font_size => @rujukan_font_size2, :justification => :left
     pdf.text "\n\n", :font_size => @font_size, :justification => :center
     pdf.text "Tuan,\n\n", :font_size => @font_size, :justification => :left
@@ -1216,7 +1207,7 @@ class CourseImplementationsController < ApplicationController
       else
         @signature_file = "/aplikasi/www/instun/public/signatures/#{params[:signature_file]}"
       end
-		
+
       if params[:signature_file] and params[:signature_file] != ""
         pdf.image @signature_file, :resize => 0.5
       else
@@ -1230,7 +1221,7 @@ class CourseImplementationsController < ApplicationController
     pdf.text "Institut Tanah & Ukur Negara(INSTUN)", :font_size => @font_size, :justification => :left
     pdf.text "Kementerian Sumber Asli dan Alam Sekitar", :font_size => @font_size, :justification => :left
     pdf.text "\ns.k", :font_size => @font_size, :justification => :left
-	
+
     sk_lines = salinan_kepada.split("\n")
     for sk_line in sk_lines
       pdf.add_text(100, pdf.y, "#{sk_line}", @font_size)
@@ -1244,7 +1235,7 @@ class CourseImplementationsController < ApplicationController
     @places = Place.find(params[:place_ids])
     for place in @places
       pdf.text "", :font_size => @font_size, :justification => :left
- 
+
       addr1 = place.address1.split(" ").map! {|e| e}.join(" ") if ( (place.address1 != "") && place.address1 )
       addr2 = place.address2.split(" ").map! {|e| e}.join(" ") if ( (place.address2 != "") && place.address2 )
       addr3 = place.address3.split(" ").map! {|e| e}.join(" ") if ( (place.address3 != "") && place.address3 )
@@ -1328,7 +1319,7 @@ class CourseImplementationsController < ApplicationController
       table.show_lines = :inner
       table.width = 500
       table.render_on(pdf)
-    
+
       #i = i + 1
     end
 
@@ -1342,8 +1333,8 @@ class CourseImplementationsController < ApplicationController
 
   #################################################################################
 
-  
-  
+
+
   private
   def gen_pdf (file)
     @font_size = 11
@@ -1352,11 +1343,11 @@ class CourseImplementationsController < ApplicationController
     pdf.margins_pt(36, 70, 36, 70) # 36 54 72 90
     pdf.select_font("Times-Roman")
     #pdf.select_font("Helvetica")
-  
+
     #pdf.image "public/images/header_install.png", :justification => :center
     #pdf.add_image_from_file("public/images/logo.jpg",100,660)
     pdf.text "", :font_size => @font_size, :justification => :left
-	
+
     @rujukan_kami = params[:rujukan_kami]
     @tarikh_surat_day = params[:tarikh_surat_day]
     @tarikh_surat_month = $MONTH_NAMES[params[:tarikh_surat_month].to_i - 1]
@@ -1400,7 +1391,7 @@ Fail FLoat"
     pdf.text "", :font_size => @font_size, :justification => :left
     pdf.text "#{alamat}", :font_size => @font_size, :justification => :left
     pdf.text "\n\n", :font_size => @font_size, :justification => :left
-         
+
     pdf.add_text(345, pdf.y, "Ruj. Tuan", @font_size)
     pdf.add_text(395, pdf.y, ": ", @font_size)
     pdf.text "\n", :font_size => @font_size
@@ -1465,8 +1456,8 @@ Fail FLoat"
     end
 
   end
-  
- 
+
+
 
 
 
@@ -1477,10 +1468,10 @@ Fail FLoat"
     pdf = PDF::Writer.new
     pdf.select_font("Times-Roman")
     #pdf.select_font("Helvetica")
-  
-	
+
+
     a = "show #{@course.name}"
-  
+
     #pdf.text @pattern.logo.name, :font_size => 10, :justification => :left
     pdf.text "\n\n", :font_size => 10, :justification => :left
     pdf.text "Adalah diperakukan bahawa #{a}", :font_size => 10, :justification => :center
@@ -1491,4 +1482,4 @@ Fail FLoat"
 end
 
 #@where_sql += " AND (coordinator1=#{params[:coordinator]} OR coordinator2=#{params[:coordinator]})"
-	
+

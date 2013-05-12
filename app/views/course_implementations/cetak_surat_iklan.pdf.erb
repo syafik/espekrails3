@@ -1,3 +1,6 @@
+<div class="first-header" >
+  <%= wicked_pdf_image_tag 'header.jpg' %>
+</div>
 <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
 
 <% unless @schedule.blank? %>
@@ -129,7 +132,7 @@
         <div style="display:block; clear:both; page-break-after:always;"></div>
         Lampiran A<br/>
 
-        <table width="400" style="border:1px solid black;" cellspacing="0" cellpadding="2">
+        <table width="400" style="border:1px solid black;" cellspacing="0" cellpadding="2" class="marginT80">
           <tr  class="pdf_tr_odd">
             <td style="border:1px solid black;">Kod Kursus</td>
             <td style="border:1px solid black;"><%= @schedule.code %></td>
@@ -382,7 +385,7 @@
 
             <div style="display:block; clear:both; page-break-after:always;"></div>
 
-            <table width="600" class="pdf_13">
+            <table width="600" class="pdf_13 marginT80">
               <tr>
                 <td align="right">Lampiran A</td>
               </tr>
@@ -410,7 +413,7 @@
                  str_content = s.course.content.gsub(/\n/, '<br>').force_encoding('UTF-8')
 
             %>
-                <table width="660" class="pdf_table pdf_14" cellspacing="0">
+                <table width="660" class=" marginT80 pdf_table pdf_14" cellspacing="0">
                   <tr class="pdf_tr_odd">
                     <td width="140">Kod Kursus</td>
                     <td><%= s.code %></td>
@@ -524,7 +527,7 @@
            per_lines << "PELAWAAN MENGHADIRI KURSUS #{dept.description.upcase} PADA BULAN #{$MONTH_NAMES[params[:planning_month].to_i - 1].upcase} HINGGA #{$MONTH_NAMES[params[:planning_month2].to_i - 1].upcase} #{params[:planning_year]}"
            per_lines << "DI INSTITUT TANAH DAN UKUR NEGARA"
         %>
-        <table width="660">
+        <table width="660" class="marginT80">
           <tr>
             <td align="right">
               <table class="pdf_13">
@@ -603,7 +606,7 @@
           </tr>
         </table>
         <div style="display:block; clear:both; page-break-after:always;"></div>
-        <table width="660">
+        <table width="660" class="marginT80">
           <tr>
             <td class="pdf_15">
               <strong>SEPERTI SENARAI EDARAN</strong><br/><br/>
@@ -613,7 +616,7 @@
         </table>
 
         <div style="display:block; clear:both; page-break-after:always;"></div>
-        <table width="600" class="pdf_13">
+        <table width="600" class="pdf_13 marginT80">
           <tr>
             <td align="right">Lampiran A</td>
           </tr>
@@ -641,7 +644,7 @@
              str_content = s.course.content.gsub(/\n/, '<br>').force_encoding('UTF-8')
 
         %>
-            <table width="660" class="pdf_table pdf_14" cellspacing="0">
+            <table width="660" class="marginT80 pdf_table pdf_14" cellspacing="0">
               <tr  class="pdf_tr_odd">
                 <td width="140" >Kod Kursus</td>
                 <td ><%= s.code %></td>

@@ -1244,8 +1244,8 @@ class CourseApplicationsController < ApplicationController
     @perkara = params[:surat_tawaran_content][:perkara]
     @perenggan = String.new(params[:surat_tawaran_content][:perenggan])
     @perenggan["_{KURSUS}_"] = "#{params[:course_implementation_code]} - #{params[:nama_kursus]}"
-    @perenggan["_{CHECK_IN}_"] = "#{params[:check_in]}, #{params[:check_in_hour]}.#{params[:check_in_minute]} hingga 6.30 petang"
-    @perenggan["_{CHECK_OUT}_"] = "#{params[:check_out]}, Sebelum jam 5.00 petang"
+    # @perenggan["_{CHECK_IN}_"] = "#{params[:check_in]}, #{params[:check_in_hour]}.#{params[:check_in_minute]} hingga 6.30 petang"
+    # @perenggan["_{CHECK_OUT}_"] = "#{params[:check_out]}, Sebelum jam 5.00 petang"
     @perenggan["_{TARIKH_SEBELUM}_"] = params[:dateline]
 
     @signature = Signature.find_by_filename(params[:signature_file])
@@ -1336,10 +1336,7 @@ class CourseApplicationsController < ApplicationController
     #
     #redirect_to("/surat/" + filename)
     @format_surat = params[:surat_tawaran_content][:format_surat].to_i
-    if @format_surat == 4
-      margin = { :top => 40, :left => 15, :bottom => 10, :right => 20 }
-      #pdf.margins_pt(0, 50, 36, 50)
-    elsif @format_surat == 3
+    if (@format_surat == 4) || (@format_surat == 3)
       margin = { :top => 0, :left => 15, :bottom => 10, :right => 20 }
     else
       margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
@@ -1356,7 +1353,7 @@ class CourseApplicationsController < ApplicationController
             :locals => { :format_surat => @format_surat }
         },
         :spacing => 5
-    } if @format_surat == 4
+    } if (@format_surat == 4) && (@format_surat == 3)
 
     respond_to do |format|
       format.html
@@ -1420,14 +1417,14 @@ class CourseApplicationsController < ApplicationController
     profile1 = Staff.find(params[:contact_officer_id]).profile
     profile2 = Staff.find(params[:contact_officer_id2]).profile
     @perenggan = String.new(params[:surat_tawaran_content][:perenggan])
-    @perenggan ["_{KURSUS}_"] = "#{params[:nama_kursus]} (#{params[:course_implementation_code]})"
-    @perenggan ["_{TARIKH}_"] = params[:duration]
-    @perenggan ["_{PENYELARAS1_NAMA}_"] = profile1.name
-    @perenggan ["_{PENYELARAS2_NAMA}_"] = profile2.name
-    @perenggan ["_{PENYELARAS1_TELEFON}_"] = profile1.office_phone
-    @perenggan ["_{PENYELARAS2_TELEFON}_"] = profile2.office_phone
-    @perenggan ["_{PENYELARAS1_EMAIL}_"] = profile1.email
-    @perenggan ["_{PENYELARAS2_EMAIL}_"] = profile2.email
+    @perenggan["_{KURSUS}_"] = "#{params[:nama_kursus]} (#{params[:course_implementation_code]})"
+    @perenggan["_{TARIKH}_"] = params[:duration]
+    @perenggan["_{PENYELARAS1_NAMA}_"] = profile1.name
+    @perenggan["_{PENYELARAS2_NAMA}_"] = profile2.name
+    @perenggan["_{PENYELARAS1_TELEFON}_"] = profile1.office_phone
+    @perenggan["_{PENYELARAS2_TELEFON}_"] = profile2.office_phone
+    @perenggan["_{PENYELARAS1_EMAIL}_"] = profile1.email
+    @perenggan["_{PENYELARAS2_EMAIL}_"] = profile2.email
 
 
     @signature = Signature.find_by_filename(params[:signature_file])
@@ -1517,24 +1514,15 @@ class CourseApplicationsController < ApplicationController
     #redirect_to("/surat/" + filename)
     @format_surat = params[:surat_tawaran_content][:format_surat].to_i
     if @format_surat == 3 || @format_surat == 4
-      margin = { :top => 40, :left => 15, :bottom => 10, :right => 20 }
-      #pdf.margins_pt(0, 50, 36, 50)
+      margin = { :top => 0, :left => 15, :bottom => 10, :right => 20 }
     else
       margin = { :top => 20, :left => 15, :bottom => 10, :right => 20 }
-      #pdf.margins_pt(36, 50, 36, 50)
     end
 
     pdf_render_hash = {}
     pdf_render_hash[:pdf] = filename
     pdf_render_hash[:page_size] = 'A4'
     pdf_render_hash[:margin] = margin
-    pdf_render_hash[:header] = {
-        :html => {
-            :template => 'layouts/header.pdf.erb',
-            :locals => { :format_surat => @format_surat }
-        },
-        :spacing => 5
-    } if @format_surat == 3 || @format_surat == 4
 
     respond_to do |format|
       format.html
