@@ -100,11 +100,11 @@ fr = FacilityReservation.find(:first, :conditions =>"course_implementation_id='#
   <tr>
 	<td align="left">Tarikh Permohonan</td>
 	<td>:&nbsp;
-      <input id="day_check_in" type=text name="day_check_in" value="<%=@check.created_on.day%>" size=2 maxlength=2 >
+      <input id="day_check_in" type=text name="day_check_in" value="<%=@check.created_on.day rescue nil%>" size=2 maxlength=2 >
 -
-  <input id="month_check_in" type=text name="month_check_in" value="<%=@check.created_on.month%>" size=2 maxlength=2 >
+  <input id="month_check_in" type=text name="month_check_in" value="<%=@check.created_on.month rescue nil%>" size=2 maxlength=2 >
 -
-<input id="year_check_in" type=text name="year_check_in" value="<%=@check.created_on.year%>" size=4 maxlength=4></td>
+<input id="year_check_in" type=text name="year_check_in" value="<%=@check.created_on.year rescue nil%>" size=4 maxlength=4></td>
     </tr>
    <tr bgcolor="000000">
      <td colspan="4" align="CENTER" bgcolor="#FFFFFF">&nbsp;</td>
