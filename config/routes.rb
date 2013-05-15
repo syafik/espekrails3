@@ -752,6 +752,7 @@ InstunRails3::Application.routes.draw do
   match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:get]
   match '/evaluations/user_hyouka_answer' => 'evaluations#user_hyouka_answer', :via => [:post]
   match '/evaluations/user_hyouka_update/:id' => 'evaluations#user_hyouka_update', :via => [:post]
+  match '/evaluations/hyouka_hozon/:id' => 'evaluations#hyouka_hozon', :via => [:post]
   resources :evaluations do
     get 'trainer_report'
     get 'facility_report'
