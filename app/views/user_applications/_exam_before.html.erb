@@ -17,6 +17,10 @@
     <tr bgcolor="<%=bgclr%>" >
       <td><%= i %></td>
       <td align=left>&nbsp;<%= nl2br(quiz_question.questiontext) %>
+        <% unless "#{quiz_question.picture}" == "/pictures/original/missing.png"%>
+          <%= image_tag quiz_question.picture.url(:small) %>
+        <% end %>
+        
         <% if quiz_question.file%>
           </BR>
           <% nof{@quiz_question = QuizQuestion.find(quiz_question.id)}   %>
