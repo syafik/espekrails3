@@ -524,8 +524,8 @@ class UserController < ApplicationController
       redirect_to_stored_or_default :action => 'home'
     else
       @login = params[:user][:ic_number]
+      flash[:notice] = '<font color="red" size="0.5"><b>Login gagal . No. Kad Pengenalan atau Kata Laluan tidak Sah</b></style></font>'
       render :action => "login"
-      flash[:notice] = '<font color="blue" size="0.5"><br><br><br><br><br><br><br><br><b>Login ID atau Password Tidak Sah</b></style></font>'
     end
   end
 

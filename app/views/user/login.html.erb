@@ -77,6 +77,9 @@
         <tr>
           <td colspan="2" align="center"><%= submit_tag 'Log Masuk' %></td>
         </tr>
+         <% if flash[:notice]%>
+        <tr><td colspan="2">   <%= flash[:notice].html_safe%> </td></tr>
+        <% end %>
         <tr>
           <td colspan="2" align="center"><span class="style15"><%= link_to 'Lupa Kata Laluan?', :action => 'forgot_password' %> | <%= link_to 'Pertama Kali Mendaftar', :action => 'register' %></span></td>
         </tr>
