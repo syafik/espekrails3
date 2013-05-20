@@ -28,7 +28,7 @@ gem 'wkhtmltopdf-binary'
 #gem 'pdf-writer'
 
 #gem 'magic_encoding'
-#gem 'pdf-writer'
+gem 'pdf-writer', :git => 'git://github.com/metaskills/pdf-writer.git'
 gem 'jquery-rails'
 gem 'tinymce-rails'
 gem "paperclip", "~> 3.0"
