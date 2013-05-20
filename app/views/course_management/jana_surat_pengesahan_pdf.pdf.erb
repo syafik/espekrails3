@@ -1,21 +1,21 @@
 <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
 
 <%
-   for opis in @opis_collections
+   for student in @students
      peserta = []
      ketua = office_name = p_alamat = ""
-     @students.find_all { |s| s[:profile_opis] == opis }.each do |ss|
-       if (ss.profile_address1 != nil) && (ss.profile_state != nil)
-         p_addr1 = ss.profile_address1.split(" ").map! { |e| e }.join(" ")
-         p_addr2 = ss.profile_address2.split(" ").map! { |e| e }.join(" ")
-         p_addr3 = ss.profile_address3.split(" ").map! { |e| e }.join(" ")
-         p_state = ss.profile_state.split(" ").map! { |e| e.capitalize }.join(" ")
+
+       if (student.profile_address1 != nil) && (student.profile_state != nil)
+         p_addr1 = student.profile_address1.split(" ").map! { |e| e }.join(" ")
+         p_addr2 = student.profile_address2.split(" ").map! { |e| e }.join(" ")
+         p_addr3 = student.profile_address3.split(" ").map! { |e| e }.join(" ")
+         p_state = student.profile_state.split(" ").map! { |e| e.capitalize }.join(" ")
 
          p_addr_arr = Array.new
-         p_addr_arr.push(p_addr1) if ss.profile_address1 != ""
-         p_addr_arr.push(p_addr2) if ss.profile_address2 != ""
-         p_addr_arr.push(p_addr3) if ss.profile_address3 != ""
-         p_addr_arr.push(p_state.upcase) if ss.profile_state != ""
+         p_addr_arr.push(p_addr1) if student.profile_address1 != ""
+         p_addr_arr.push(p_addr2) if student.profile_address2 != ""
+         p_addr_arr.push(p_addr3) if student.profile_address3 != ""
+         p_addr_arr.push(p_state.upcase) if student.profile_state != ""
          p_addr = p_addr_arr.join("\n")
          p_addr = p_addr.tr_s(',', ',')
        else
@@ -27,12 +27,12 @@
          p_addr = p_addr_arr.join(" \n")
        end
 
-       ketua = "#{ss.profile_hod}"
-       office_name = "#{ss.profile_opis}"
+       ketua = "#{student.profile_hod}"
+       office_name = "#{student.profile_opis}"
        p_alamat = "#{p_addr}"
 
 
-       employment = Employment.find_by_profile_id(ss.profile.id)
+       employment = Employment.find_by_profile_id(student.profile.id)
        if employment and employment.job_profile
          job_name = nof { employment.job_profile.job_name }
          job_name = employment.job_profile.job_name.split(" ").map! { |e| e.capitalize }.join(" ") if @job_name != nil
@@ -41,8 +41,9 @@
        else
          job_profile = " "
        end
-       peserta << "Nama : #{ss.profile_name}<br/>Jawatan : #{job_profile}"
-     end
+       peserta << "Nama : #{student.profile_name}<br/>Jawatan : #{job_profile}"
+
+
      temp_perenggan = String.new(@perenggan)
      temp_perenggan ["_{PESERTA}_"] = peserta.join("<br/><br/>")
 %>
