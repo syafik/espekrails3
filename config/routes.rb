@@ -530,6 +530,7 @@ InstunRails3::Application.routes.draw do
   match '/course_applications/update/:id' => 'course_applications#edit_by_user', :via => [:post]
   match '/course_applications/show_user_cancel/:id' => 'course_applications#show_user_cancel', :via => [:get]
   match '/course_applications/user_cancel/:id' => 'course_applications#user_cancel', :via => [:get]
+  match '/course_applications/cetak_direktory/:id' => 'course_applications#cetak_direktory', :via => [:get]
   resources :course_applications, :except => [ :destroy ] do
     get 'new'
     get 'all'
